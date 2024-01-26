@@ -68,7 +68,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/">
-          <Image width={176} height={32} src={"/images/logo/logo.svg"} alt="Logo" />
+          <Image
+            width={176}
+            height={32}
+            src={"/images/logo/logo.svg"}
+            alt="Logo"
+          />
         </Link>
 
         <button
@@ -95,9 +100,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+        <nav className="px-4 py-4 mt-5 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
@@ -198,7 +203,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Analytics
-                              <span className="absolute right-4 block rounded bg-primary px-2 py-1 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -212,7 +217,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Marketing
-                              <span className="absolute right-4 block rounded bg-primary px-2 py-1 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -225,7 +230,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               CRM
-                              <span className="absolute right-4 block rounded bg-primary px-2 py-1 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -393,7 +398,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               List
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -407,7 +412,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Kanban
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -669,7 +674,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               File Manager
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -683,7 +688,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Data Tables
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -697,7 +702,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Pricing Tables
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -710,7 +715,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Error Page
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -724,7 +729,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Mail Success
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -773,7 +778,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <span className="absolute right-14 top-1/2 -translate-y-1/2 rounded bg-primary py-1 px-2.5 text-xs font-medium text-white">
                     5
                   </span>
-                  <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                  <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                     Pro
                   </span>
                 </Link>
@@ -806,7 +811,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     />
                   </svg>
                   Inbox
-                  <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                  <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                     Pro
                   </span>
                 </Link>
@@ -871,7 +876,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </defs>
                   </svg>
                   Invoice
-                  <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                  <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                     Pro
                   </span>
                 </Link>
@@ -980,7 +985,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Advanced Chart
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1101,7 +1106,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Buttons Group
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1114,7 +1119,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Badge
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1127,7 +1132,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Breadcrumbs
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1140,7 +1145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Cards
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1153,7 +1158,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Dropdowns
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1166,7 +1171,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Modals
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1179,7 +1184,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Tabs
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1192,7 +1197,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Tooltips
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1205,7 +1210,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Popovers
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1218,7 +1223,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Accordion
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1231,7 +1236,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Notifications
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1244,7 +1249,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Pagination
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1257,7 +1262,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Progress
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1270,7 +1275,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Carousel
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1283,7 +1288,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Images
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1296,7 +1301,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Videos
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
@@ -1416,7 +1421,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }`}
                             >
                               Reset Password
-                              <span className="absolute right-4 block rounded bg-primary py-1 px-2 text-xs font-medium text-white">
+                              <span className="absolute block px-2 py-1 text-xs font-medium text-white rounded right-4 bg-primary">
                                 Pro
                               </span>
                             </Link>
