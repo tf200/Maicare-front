@@ -1,9 +1,7 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from "react";
 
 const ClientsPage: FunctionComponent = (props) => {
-  return (
-    <div>[clients list]</div>
-  );
-}
+  return <div>[clients list]</div>;
+};
 
 export default ClientsPage;

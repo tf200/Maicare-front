@@ -18,7 +18,7 @@ const FormElements = () => {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Input Fields
@@ -26,7 +26,7 @@ const FormElements = () => {
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Default Input
                 </label>
                 <input
@@ -37,7 +37,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Active Input
                 </label>
                 <input
@@ -48,7 +48,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block font-medium text-black dark:text-white">
+                <label className="block mb-3 font-medium text-black dark:text-white">
                   Disabled label
                 </label>
                 <input
@@ -62,7 +62,7 @@ const FormElements = () => {
           </div>
 
           {/* <!-- Toggle switch input --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Toggle switch input
@@ -77,7 +77,7 @@ const FormElements = () => {
           </div>
 
           {/* <!-- Time and date --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Time and date
@@ -85,7 +85,7 @@ const FormElements = () => {
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Date picker
                 </label>
                 <div className="relative">
@@ -97,7 +97,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Select date
                 </label>
                 <div className="relative">
@@ -111,7 +111,7 @@ const FormElements = () => {
           </div>
 
           {/* <!-- File upload --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 File upload
@@ -119,7 +119,7 @@ const FormElements = () => {
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Attach file
                 </label>
                 <input
@@ -129,7 +129,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Attach file
                 </label>
                 <input
@@ -143,7 +143,7 @@ const FormElements = () => {
 
         <div className="flex flex-col gap-9">
           {/* <!-- Textarea Fields --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Textarea Fields
@@ -151,7 +151,7 @@ const FormElements = () => {
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Default textarea
                 </label>
                 <textarea
@@ -162,7 +162,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Active textarea
                 </label>
                 <textarea
@@ -173,7 +173,7 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Disabled textarea
                 </label>
                 <textarea
@@ -187,7 +187,7 @@ const FormElements = () => {
           </div>
 
           {/* <!-- Checkbox and radio --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Checkbox and radio
@@ -203,7 +203,7 @@ const FormElements = () => {
           </div>
 
           {/* <!-- Select input --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Select input
@@ -211,11 +211,11 @@ const FormElements = () => {
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Select Country
                 </label>
                 <div className="relative z-20 bg-white dark:bg-form-input">
-                  <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
+                  <span className="absolute z-30 -translate-y-1/2 top-1/2 left-4">
                     <svg
                       width="20"
                       height="20"
@@ -245,12 +245,12 @@ const FormElements = () => {
                       </g>
                     </svg>
                   </span>
-                  <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
+                  <select className="relative z-20 w-full px-12 py-3 transition bg-transparent border rounded outline-none appearance-none border-stroke focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
                     <option value="">USA</option>
                     <option value="">UK</option>
                     <option value="">Canada</option>
                   </select>
-                  <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+                  <span className="absolute z-10 -translate-y-1/2 top-1/2 right-4">
                     <svg
                       width="24"
                       height="24"
@@ -272,14 +272,14 @@ const FormElements = () => {
               </div>
 
               <div>
-                <label className="mb-3 block text-black dark:text-white">
+                <label className="block mb-3 text-black dark:text-white">
                   Multiselect Dropdown
                 </label>
                 <div className="relative z-20 w-full rounded border border-stroke p-1.5 pr-8 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
                   <div className="flex flex-wrap items-center">
                     <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium dark:border-strokedark dark:bg-white/30">
                       Design
-                      <span className="cursor-pointer pl-2 hover:text-danger">
+                      <span className="pl-2 cursor-pointer hover:text-danger">
                         <svg
                           width="12"
                           height="12"
@@ -298,7 +298,7 @@ const FormElements = () => {
                     </span>
                     <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium dark:border-strokedark dark:bg-white/30">
                       Development
-                      <span className="cursor-pointer pl-2 hover:text-danger">
+                      <span className="pl-2 cursor-pointer hover:text-danger">
                         <svg
                           width="12"
                           height="12"
@@ -319,12 +319,12 @@ const FormElements = () => {
                   <select
                     name=""
                     id=""
-                    className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"
+                    className="absolute top-0 left-0 z-20 w-full h-full bg-transparent opacity-0"
                   >
                     <option value="">Option</option>
                     <option value="">Option</option>
                   </select>
-                  <span className="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+                  <span className="absolute z-10 -translate-y-1/2 top-1/2 right-4">
                     <svg
                       width="24"
                       height="24"

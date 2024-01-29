@@ -8,7 +8,7 @@ const FormLayout = () => {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Contact Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Contact Form
@@ -67,13 +67,13 @@ const FormLayout = () => {
                     Subject
                   </label>
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
-                    <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                    <select className="relative z-20 w-full px-5 py-3 transition bg-transparent border rounded outline-none appearance-none border-stroke focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                       <option value="">Type your subject</option>
                       <option value="">USA</option>
                       <option value="">UK</option>
                       <option value="">Canada</option>
                     </select>
-                    <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
+                    <span className="absolute z-30 -translate-y-1/2 top-1/2 right-4">
                       <svg
                         className="fill-current"
                         width="24"
@@ -106,7 +106,7 @@ const FormLayout = () => {
                   ></textarea>
                 </div>
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                <button className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray">
                   Send Message
                 </button>
               </div>
@@ -116,7 +116,7 @@ const FormLayout = () => {
 
         <div className="flex flex-col gap-9">
           {/* <!-- Sign In Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Sign In Form
@@ -152,9 +152,9 @@ const FormLayout = () => {
                       <input
                         type="checkbox"
                         id="formCheckbox"
-                        className="taskCheckbox sr-only"
+                        className="sr-only taskCheckbox"
                       />
-                      <div className="box mr-3 flex h-5 w-5 items-center justify-center rounded border border-stroke dark:border-strokedark">
+                      <div className="flex items-center justify-center w-5 h-5 mr-3 border rounded box border-stroke dark:border-strokedark">
                         <span className="text-white opacity-0">
                           <svg
                             className="fill-current"
@@ -182,7 +182,7 @@ const FormLayout = () => {
                   </a>
                 </div>
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                <button className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray">
                   Sign In
                 </button>
               </div>
@@ -190,7 +190,7 @@ const FormLayout = () => {
           </div>
 
           {/* <!-- Sign Up Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Sign Up Form
@@ -242,7 +242,7 @@ const FormLayout = () => {
                   />
                 </div>
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                <button className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray">
                   Sign Up
                 </button>
               </div>
