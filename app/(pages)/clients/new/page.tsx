@@ -2,17 +2,11 @@
 
 import React, { FunctionComponent, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import CheckboxOne from "@/components/Checkboxes/CheckboxOne";
-import CheckboxTwo from "@/components/Checkboxes/CheckboxTwo";
-import CheckboxThree from "@/components/Checkboxes/CheckboxThree";
-import CheckboxFour from "@/components/Checkboxes /CheckboxFour";
-import CheckboxFive from "@/components/Checkboxes/CheckboxFive";
 import Checkbox from "@/components/Checkboxes/CheckboxFour";
 import Image from "next/image";
 import CameraIcon from "@/components/svg/CameraIcon";
 
 const ClientNewPage: FunctionComponent = (props) => {
-  // const [selectedValues, setSelectedValues] = useState(null);
   const [selectedGender, setSelectedGender] = useState(null);
 
   const handleCheckboxChange = (label, isChecked) => {
@@ -20,7 +14,7 @@ const ClientNewPage: FunctionComponent = (props) => {
       console.log("checked DONE", label);
       setSelectedGender(label);
     } else if (selectedGender === label) {
-      setSelectedGender(null); // Uncheck if the same label is clicked again
+      setSelectedGender(null);
     }
   };
 
