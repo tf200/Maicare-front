@@ -1,12 +1,18 @@
 import React, { FunctionComponent, PropsWithChildren } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "HealtyTool",
+  description: "This is Login Page for HealtyTool",
+};
 
 const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
-    <main className="h-full">
+    <main className="h-[100vh]">
       <div className="rounded-sm h-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center h-full">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" href="/public">
@@ -19,10 +25,10 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
                 />
                 <Image
                   className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
+                  src={"/images/logo/logo.ico"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width={90}
+                  height={12}
                 />
               </Link>
 
