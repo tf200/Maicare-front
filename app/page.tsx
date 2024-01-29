@@ -10,6 +10,4 @@ export const metadata: Metadata = {
 
 export default function Home() {
   redirect("/dashboard/crm");
-
-  return <>{/* <ECommerce /> */}</>;
 }
