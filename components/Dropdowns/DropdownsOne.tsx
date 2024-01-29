@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 
 const DropdownsOne: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -19,8 +19,8 @@ const DropdownsOne: React.FC = () => {
         return;
       setDropdownOpen(false);
     };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
   });
 
   // close if the esc key is pressed
@@ -29,8 +29,8 @@ const DropdownsOne: React.FC = () => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
   });
 
   return (
@@ -51,7 +51,7 @@ const DropdownsOne: React.FC = () => {
             Dropdown Button
             <svg
               className={`fill-current duration-200 ease-linear ${
-                dropdownOpen && "rotate-180"
+                dropdownOpen && 'rotate-180'
               }`}
               width="12"
               height="7"
@@ -76,7 +76,7 @@ const DropdownsOne: React.FC = () => {
             onFocus={() => setDropdownOpen(true)}
             onBlur={() => setDropdownOpen(false)}
             className={`absolute left-0 top-full z-40 mt-2 w-full rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark ${
-              dropdownOpen === true ? "block" : "hidden"
+              dropdownOpen === true ? 'block' : 'hidden'
             }`}
           >
             <ul className="flex flex-col">

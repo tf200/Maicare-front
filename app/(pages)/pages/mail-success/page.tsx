@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import Image from "next/image";
+import React from 'react';
+import Link from 'next/link';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import Image from 'next/image';
 
 const MailSuccess: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const MailSuccess: React.FC = () => {
           <Image
             width={400}
             height={400}
-            src={"/images/illustration/illustration-02.svg"}
+            src={'/images/illustration/illustration-02.svg'}
             alt="illustration"
           />
 

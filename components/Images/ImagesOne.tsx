@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import ImageResize from "@/js/image-resize";
-import Image from "next/image";
+import React, { useEffect } from 'react';
+import ImageResize from '@/js/image-resize';
+import Image from 'next/image';
 
 const ImagesOne: React.FC = () => {
   useEffect(() => {
@@ -18,7 +18,7 @@ const ImagesOne: React.FC = () => {
         <div className="relative">
           <div id="pane" className="overflow-hidden">
             <Image
-              src={"/images/cover/cover-02.jpg"}
+              src={'/images/cover/cover-02.jpg'}
               width={1190}
               height={450}
               alt="Cover"

@@ -1,4 +1,4 @@
-import CRM from "@/components/Dashboard/CRM";
+import CRM from '@/components/Dashboard/CRM';
 
 const CrmPage = () => {
   return (

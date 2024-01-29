@@ -1,13 +1,13 @@
-"use client";
-import React from "react";
-import DataStatsTwo from "../DataStats/DataStatsTwo";
-import ChartFive from "../Charts/ChartFive";
-import TableFour from "../Tables/TableFour";
-import ExternalLink from "../ExternalLink";
-import ChartSix from "../Charts/ChartSix";
-import FeaturedCampaigns from "../FeaturedCampaigns";
-import Feedback from "../Feedback";
- 
+'use client';
+import React from 'react';
+import DataStatsTwo from '../DataStats/DataStatsTwo';
+import ChartFive from '../Charts/ChartFive';
+import TableFour from '../Tables/TableFour';
+import ExternalLink from '../ExternalLink';
+import ChartSix from '../Charts/ChartSix';
+import FeaturedCampaigns from '../FeaturedCampaigns';
+import Feedback from '../Feedback';
+
 const Marketing: React.FC = () => {
   return (
     <>

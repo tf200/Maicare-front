@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import { CardItemProps } from "@/types/cards";
-import Image from "next/image";
+import React from 'react';
+import Link from 'next/link';
+import { CardItemProps } from '@/types/cards';
+import Image from 'next/image';
 
 const CardsItemOne: React.FC<CardItemProps> = ({
   imageSrc,
@@ -15,8 +15,7 @@ const CardsItemOne: React.FC<CardItemProps> = ({
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex items-center gap-3 py-5 px-6">
         <div className="h-10 w-10 rounded-full">
-       
-          <Image width={40} height={40} src={imageSrc || ""} alt="User" />
+          <Image width={40} height={40} src={imageSrc || ''} alt="User" />
         </div>
         <div>
           <h4 className="font-medium text-black dark:text-white">{name}</h4>
@@ -25,7 +24,7 @@ const CardsItemOne: React.FC<CardItemProps> = ({
       </div>
 
       <Link href="#" className="block px-4">
-        <Image width={340} height={188} src={cardImageSrc || ""} alt="Cards" />
+        <Image width={340} height={188} src={cardImageSrc || ''} alt="Cards" />
       </Link>
 
       <div className="p-6">

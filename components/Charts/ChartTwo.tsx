@@ -1,18 +1,18 @@
-import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { ApexOptions } from 'apexcharts';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const options: ApexOptions = {
-  colors: ["#3C50E0", "#80CAEE"],
+  colors: ['#3C50E0', '#80CAEE'],
   chart: {
     // events: {
     //   beforeMount: (chart) => {
     //     chart.windowResizeHandler();
     //   },
     // },
-    fontFamily: "Satoshi, sans-serif",
-    type: "bar",
+    fontFamily: 'Satoshi, sans-serif',
+    type: 'bar',
     height: 335,
     stacked: true,
     toolbar: {
@@ -30,7 +30,7 @@ const options: ApexOptions = {
         plotOptions: {
           bar: {
             borderRadius: 0,
-            columnWidth: "25%",
+            columnWidth: '25%',
           },
         },
       },
@@ -40,9 +40,9 @@ const options: ApexOptions = {
     bar: {
       horizontal: false,
       borderRadius: 0,
-      columnWidth: "25%",
-      borderRadiusApplication: "end",
-      borderRadiusWhenStacked: "last",
+      columnWidth: '25%',
+      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'last',
     },
   },
   dataLabels: {
@@ -50,14 +50,14 @@ const options: ApexOptions = {
   },
 
   xaxis: {
-    categories: ["M", "T", "W", "T", "F", "S", "S"],
+    categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
   },
   legend: {
-    position: "top",
-    horizontalAlign: "left",
-    fontFamily: "Satoshi",
+    position: 'top',
+    horizontalAlign: 'left',
+    fontFamily: 'Satoshi',
     fontWeight: 500,
-    fontSize: "14px",
+    fontSize: '14px',
 
     markers: {
       radius: 99,
@@ -79,11 +79,11 @@ const ChartTwo: React.FC = () => {
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
-        name: "Sales",
+        name: 'Sales',
         data: [44, 55, 41, 67, 22, 43, 65],
       },
       {
-        name: "Revenue",
+        name: 'Revenue',
         data: [13, 23, 20, 8, 13, 27, 15],
       },
     ],

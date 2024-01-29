@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
 import { FaqItem } from '@/types/faqItem';
 
 const AccordionItemOne: React.FC<FaqItem> = ({ active, handleToggle, faq }) => {
@@ -52,4 +52,4 @@ const AccordionItemOne: React.FC<FaqItem> = ({ active, handleToggle, faq }) => {
   );
 };
 
-export default AccordionItemOne
+export default AccordionItemOne;

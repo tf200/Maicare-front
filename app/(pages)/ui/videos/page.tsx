@@ -1,6 +1,6 @@
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import VideosItem from "@/components/VideosItem";
+import React from 'react';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import VideosItem from '@/components/VideosItem';
 
 const Videos: React.FC = () => {
   return (

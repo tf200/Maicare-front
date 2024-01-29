@@ -1,7 +1,7 @@
-import React from "react";
-import {InputField} from "@/components/FormFields/InputField";
-import MailIcon from "@/components/icons/MailIcon";
-import LockIcon from "@/components/icons/LockIcon";
+import React from 'react';
+import { InputField } from '@/components/FormFields/InputField';
+import MailIcon from '@/components/icons/MailIcon';
+import LockIcon from '@/components/icons/LockIcon';
 
 const SignIn: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const SignIn: React.FC = () => {
           id="signin-email"
           type="email"
           placeholder="Enter your email"
-          icon={<MailIcon/>}
+          icon={<MailIcon />}
         />
 
         <InputField
@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
           id="signin-password"
           type="password"
           placeholder="6+ Characters, 1 Capital letter"
-          icon={<LockIcon/>}
+          icon={<LockIcon />}
         />
 
         <div className="mb-5">

@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import { Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import Image from "next/image";
+import React, { useRef } from 'react';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import Image from 'next/image';
 
 const CarouselOne: React.FC = () => {
   const prevRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ const CarouselOne: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-01.jpg"}
+              src={'/images/carousel/carousel-01.jpg'}
               alt="carousel"
             />
           </SwiperSlide>
@@ -43,7 +43,7 @@ const CarouselOne: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-02.jpg"}
+              src={'/images/carousel/carousel-02.jpg'}
               alt="carousel"
             />
           </SwiperSlide>
@@ -51,7 +51,7 @@ const CarouselOne: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-03.jpg"}
+              src={'/images/carousel/carousel-03.jpg'}
               alt="carousel"
             />
           </SwiperSlide>

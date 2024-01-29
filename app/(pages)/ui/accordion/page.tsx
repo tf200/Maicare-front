@@ -1,7 +1,7 @@
-"use client";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import AccordionOne from "@/components/Accordions/AccordionOne";
-import AccordionTwo from "@/components/Accordions/AccordionTwo";
+'use client';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import AccordionOne from '@/components/Accordions/AccordionOne';
+import AccordionTwo from '@/components/Accordions/AccordionTwo';
 
 const Accordion: React.FC = () => {
   return (

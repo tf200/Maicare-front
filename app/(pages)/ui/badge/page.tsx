@@ -1,9 +1,9 @@
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import BadgeOne from "@/components/Badges/BadgeOne";
-import BadgeTwo from "@/components/Badges/BadgeTwo";
-import BadgeThree from "@/components/Badges/BadgeThree";
-import BadgeFour from "@/components/Badges/BadgeFour";
+import React from 'react';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import BadgeOne from '@/components/Badges/BadgeOne';
+import BadgeTwo from '@/components/Badges/BadgeTwo';
+import BadgeThree from '@/components/Badges/BadgeThree';
+import BadgeFour from '@/components/Badges/BadgeFour';
 
 const Badge: React.FC = () => {
   return (

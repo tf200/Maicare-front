@@ -1,79 +1,79 @@
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import CardsItemOne from "@/components/cards/CardsItemOne";
-import CardsItemTwo from "@/components/cards/CardsItemTwo";
-import CardsItemThree from "@/components/cards/CardsItemThree";
+import React from 'react';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import CardsItemOne from '@/components/cards/CardsItemOne';
+import CardsItemTwo from '@/components/cards/CardsItemTwo';
+import CardsItemThree from '@/components/cards/CardsItemThree';
 
 const cardsItemOneData = [
   {
-    imageSrc: "/images/user/user-11.png",
-    name: "Naimur Rahman",
-    role: "Content Writer",
-    cardImageSrc: "/images/cards/cards-01.png",
-    cardTitle: "Card Title here",
+    imageSrc: '/images/user/user-11.png',
+    name: 'Naimur Rahman',
+    role: 'Content Writer',
+    cardImageSrc: '/images/cards/cards-01.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 
   {
-    imageSrc: "/images/user/user-12.png",
-    name: "Musharof Chy",
-    role: "Web Developer",
-    cardImageSrc: "/images/cards/cards-02.png",
-    cardTitle: "Card Title here",
+    imageSrc: '/images/user/user-12.png',
+    name: 'Musharof Chy',
+    role: 'Web Developer',
+    cardImageSrc: '/images/cards/cards-02.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 
   {
-    imageSrc: "/images/user/user-13.png",
-    name: "Shafiq Hammad",
-    role: "Front-end Developer",
-    cardImageSrc: "/images/cards/cards-03.png",
-    cardTitle: "Card Title here",
+    imageSrc: '/images/user/user-13.png',
+    name: 'Shafiq Hammad',
+    role: 'Front-end Developer',
+    cardImageSrc: '/images/cards/cards-03.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 ];
 
 const cardsItemTwoData = [
   {
-    cardImageSrc: "/images/cards/cards-04.png",
-    cardTitle: "Card Title here",
+    cardImageSrc: '/images/cards/cards-04.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 
   {
-    cardImageSrc: "/images/cards/cards-05.png",
-    cardTitle: "Card Title here",
+    cardImageSrc: '/images/cards/cards-05.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 
   {
-    cardImageSrc: "/images/cards/cards-06.png",
-    cardTitle: "Card Title here",
+    cardImageSrc: '/images/cards/cards-06.png',
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 ];
 
 const cardsItemThreeData = [
   {
-    cardTitle: "Card Title here",
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
   {
-    cardTitle: "Card Title here",
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
   {
-    cardTitle: "Card Title here",
+    cardTitle: 'Card Title here',
     cardContent:
-      "Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.",
+      'Lorem ipsum dolor sit amet, vehiculaum ero felis loreum fitiona fringilla goes scelerisque Interdum et.',
   },
 ];
 

@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from "react";
-import {IconProps} from "@/types/IconProps";
+import React, { FunctionComponent } from 'react';
+import { IconProps } from '@/types/IconProps';
 
 const MailIcon: FunctionComponent<IconProps> = ({
-                                                  width = 22,
-                                                  height = 22
-                                                }) => {
+  width = 22,
+  height = 22,
+}) => {
   return (
     <svg
       width={width}
@@ -21,7 +21,7 @@ const MailIcon: FunctionComponent<IconProps> = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
 export default MailIcon;

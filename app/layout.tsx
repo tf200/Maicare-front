@@ -1,6 +1,6 @@
-"use client";
-import "./globals.css";
-import "./data-tables-css.css";
+'use client';
+import './globals.css';
+import './data-tables-css.css';
 // import "./satoshi.css";
 
 export default function RootLayout({
@@ -10,10 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
-

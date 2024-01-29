@@ -1,10 +1,10 @@
-import React from "react";
-import { Pagination, Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
-import Image from "next/image";
+import React from 'react';
+import { Pagination, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/pagination';
+import Image from 'next/image';
 
 const CarouselTwo: React.FC = () => {
   return (
@@ -29,7 +29,7 @@ const CarouselTwo: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-02.jpg"}
+              src={'/images/carousel/carousel-02.jpg'}
               alt="carousel"
             />
           </SwiperSlide>
@@ -37,7 +37,7 @@ const CarouselTwo: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-03.jpg"}
+              src={'/images/carousel/carousel-03.jpg'}
               alt="carousel"
             />
           </SwiperSlide>
@@ -45,7 +45,7 @@ const CarouselTwo: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={"/images/carousel/carousel-01.jpg"}
+              src={'/images/carousel/carousel-01.jpg'}
               alt="carousel"
             />
           </SwiperSlide>

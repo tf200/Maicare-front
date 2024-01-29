@@ -1,9 +1,13 @@
-import React, {FunctionComponent, InputHTMLAttributes, ReactNode} from "react";
+import React, {
+  FunctionComponent,
+  InputHTMLAttributes,
+  ReactNode,
+} from 'react';
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
-  label: string
-  icon?: ReactNode
-}
+  label: string;
+  icon?: ReactNode;
+};
 
 export const InputField: FunctionComponent<InputFieldType> = ({
   label,
@@ -11,10 +15,13 @@ export const InputField: FunctionComponent<InputFieldType> = ({
   icon,
   id,
   ...props
-                                                       }) => {
+}) => {
   return (
-    <div className={"mb-4"}>
-      <label htmlFor={id} className="mb-2.5 block font-medium text-black dark:text-white">
+    <div className={'mb-4'}>
+      <label
+        htmlFor={id}
+        className="mb-2.5 block font-medium text-black dark:text-white"
+      >
         {label}
       </label>
       <div className="relative">
@@ -23,10 +30,8 @@ export const InputField: FunctionComponent<InputFieldType> = ({
           id={id}
           {...props}
         />
-        {icon && <span className="absolute right-4 top-4">
-          {icon}
-        </span>}
+        {icon && <span className="absolute right-4 top-4">{icon}</span>}
       </div>
     </div>
-  )
-}
+  );
+};

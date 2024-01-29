@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 
 const ErrorPage: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const ErrorPage: React.FC = () => {
       <div className="rounded-sm border border-stroke bg-white px-5 py-10 shadow-default dark:border-strokedark dark:bg-boxdark sm:py-20">
         <div className="mx-auto max-w-[410px]">
           <Image
-            src={"/images/illustration/illustration-01.svg"}
+            src={'/images/illustration/illustration-01.svg'}
             alt="illustration"
             width={400}
             height={400}

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import TaskPopup from "./TaskPopup";
-import Image from "next/image";
+import { useEffect, useRef, useState } from 'react';
+import TaskPopup from './TaskPopup';
+import Image from 'next/image';
 
 const TaskHeader = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -20,8 +20,8 @@ const TaskHeader = () => {
         return;
       setPopupOpen(false);
     };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
   });
 
   // close if the esc key is pressed
@@ -30,8 +30,8 @@ const TaskHeader = () => {
       if (!popupOpen || keyCode !== 27) return;
       setPopupOpen(false);
     };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
   });
 
   return (
@@ -44,16 +44,36 @@ const TaskHeader = () => {
       <div className="flex flex-col gap-4 2xsm:flex-row 2xsm:items-center">
         <div className="flex -space-x-2">
           <button className="h-9 w-9 rounded-full border-2 border-white dark:border-boxdark">
-            <Image width={36} height={36} src={"/images/user/user-07.png"} alt="User" />
+            <Image
+              width={36}
+              height={36}
+              src={'/images/user/user-07.png'}
+              alt="User"
+            />
           </button>
           <button className="h-9 w-9 rounded-full border-2 border-white dark:border-boxdark">
-            <Image width={36} height={36} src={"/images/user/user-08.png"} alt="User" />
+            <Image
+              width={36}
+              height={36}
+              src={'/images/user/user-08.png'}
+              alt="User"
+            />
           </button>
           <button className="h-9 w-9 rounded-full border-2 border-white dark:border-boxdark">
-            <Image width={36} height={36} src={"/images/user/user-09.png"} alt="User" />
+            <Image
+              width={36}
+              height={36}
+              src={'/images/user/user-09.png'}
+              alt="User"
+            />
           </button>
           <button className="h-9 w-9 rounded-full border-2 border-white dark:border-boxdark">
-            <Image width={36} height={36} src={"/images/user/user-10.png"} alt="User" />
+            <Image
+              width={36}
+              height={36}
+              src={'/images/user/user-10.png'}
+              alt="User"
+            />
           </button>
           <button className="flex h-9 w-9 items-center justify-center rounded-full border border-stroke bg-white text-primary dark:border-strokedark dark:bg-[#4f5e77] dark:text-white">
             <svg

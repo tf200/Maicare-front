@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
 const ImagesTwo: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const ImagesTwo: React.FC = () => {
             <Image
               width={370}
               height={330}
-              src={"/images/cover/cover-03.jpg"}
+              src={'/images/cover/cover-03.jpg'}
               alt="Cover"
             />
           </div>
@@ -22,7 +22,7 @@ const ImagesTwo: React.FC = () => {
             <Image
               width={370}
               height={330}
-              src={"/images/cover/cover-04.jpg"}
+              src={'/images/cover/cover-04.jpg'}
               alt="Cover"
             />
           </div>
@@ -30,7 +30,7 @@ const ImagesTwo: React.FC = () => {
             <Image
               width={370}
               height={330}
-              src={"/images/cover/cover-05.jpg"}
+              src={'/images/cover/cover-05.jpg'}
               alt="Cover"
             />
           </div>

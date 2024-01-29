@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 
 const PopoversTwo: React.FC = () => {
   const [popoversOpen, setPopoversOpen] = useState(false);
@@ -90,4 +90,4 @@ const PopoversTwo: React.FC = () => {
   );
 };
 
-export default PopoversTwo
+export default PopoversTwo;

@@ -1,7 +1,7 @@
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import PricingTableOne from "@/components/PricingTables/PricingTableOne";
-import PricingTableTwo from "@/components/PricingTables/PricingTableTwo";
+import React from 'react';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import PricingTableOne from '@/components/PricingTables/PricingTableOne';
+import PricingTableTwo from '@/components/PricingTables/PricingTableTwo';
 
 const PricingTables: React.FC = () => {
   return (

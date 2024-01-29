@@ -1,7 +1,7 @@
-import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { ApexOptions } from 'apexcharts';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface ChartTenState {
   series: {
@@ -14,15 +14,15 @@ const ChartTen: React.FC = () => {
   const [state, setState] = useState<ChartTenState>({
     series: [
       {
-        name: "Media",
+        name: 'Media',
         data: [268, 385, 201, 298, 187, 195, 291],
       },
       {
-        name: "Photos",
+        name: 'Photos',
         data: [345, 160, 291, 187, 195, 298, 201],
       },
       {
-        name: "Docs",
+        name: 'Docs',
         data: [195, 260, 191, 258, 265, 160, 213],
       },
     ],
@@ -38,10 +38,10 @@ const ChartTen: React.FC = () => {
   updateState;
 
   const options: ApexOptions = {
-    colors: ["#3C50E0", "#13C296", "#F2994A"],
+    colors: ['#3C50E0', '#13C296', '#F2994A'],
     chart: {
-      fontFamily: "Satoshi, sans-serif",
-      type: "bar",
+      fontFamily: 'Satoshi, sans-serif',
+      type: 'bar',
       height: 318,
       toolbar: {
         show: false,
@@ -50,7 +50,7 @@ const ChartTen: React.FC = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "35%",
+        columnWidth: '35%',
         // endingShape: 'rounded',
         borderRadius: 1,
       },
@@ -61,10 +61,10 @@ const ChartTen: React.FC = () => {
     stroke: {
       show: true,
       width: 4,
-      colors: ["transparent"],
+      colors: ['transparent'],
     },
     xaxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       axisBorder: {
         show: false,
       },
@@ -74,10 +74,10 @@ const ChartTen: React.FC = () => {
     },
     legend: {
       show: true,
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "Satoshi",
-      fontSize: "16px",
+      position: 'top',
+      horizontalAlign: 'left',
+      fontFamily: 'Satoshi',
+      fontSize: '16px',
       fontWeight: 500,
       offsetY: -5,
 

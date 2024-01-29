@@ -4,7 +4,6 @@ const DownloadList: React.FC = () => {
   return (
     <div className="col-span-12">
       <div className="rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark">
-        
         <div className="flex justify-between gap-2.5 py-3 px-6 hover:bg-gray-2 dark:hover:bg-meta-4 sm:items-center sm:justify-start">
           <div className="flex items-center gap-5.5 sm:w-5/12 xl:w-3/12">
             <div className="hidden h-14 w-full max-w-14 items-center justify-center rounded-full border border-stroke bg-gray text-black-2 dark:border-strokedark dark:bg-graydark dark:text-white sm:flex">

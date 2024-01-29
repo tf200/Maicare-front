@@ -1,8 +1,8 @@
-"use client"
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import CarouselTwo from "@/components/Carousels/CarouselTwo";
-import CarouselOne from "@/components/Carousels/CarouselOne";
-import CarouselThree from "@/components/Carousels/CarouselThree";
+'use client';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import CarouselTwo from '@/components/Carousels/CarouselTwo';
+import CarouselOne from '@/components/Carousels/CarouselOne';
+import CarouselThree from '@/components/Carousels/CarouselThree';
 
 const Carousel: React.FC = () => {
   return (

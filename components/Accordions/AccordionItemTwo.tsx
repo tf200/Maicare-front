@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
 import { FaqItem } from '@/types/faqItem';
 
 const AccordionItemTwo: React.FC<FaqItem> = ({ active, handleToggle, faq }) => {
   const contentEl = useRef<HTMLDivElement>(null);
-  
+
   const { header, id, text } = faq;
 
   return (
@@ -66,4 +66,4 @@ const AccordionItemTwo: React.FC<FaqItem> = ({ active, handleToggle, faq }) => {
   );
 };
 
-export default AccordionItemTwo
+export default AccordionItemTwo;

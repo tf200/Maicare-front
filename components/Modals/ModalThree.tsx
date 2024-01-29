@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 
 const ModalThree: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -116,4 +116,4 @@ const ModalThree: React.FC = () => {
   );
 };
 
-export default ModalThree
+export default ModalThree;

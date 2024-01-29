@@ -1,8 +1,8 @@
-import React from "react";
-import PopoversBottom from "./PopoversBottom";
-import PopoversRight from "./PopoversRight";
-import PopoversTop from "./PopoversTop";
-import PopoversLeft from "./PopoversLeft";
+import React from 'react';
+import PopoversBottom from './PopoversBottom';
+import PopoversRight from './PopoversRight';
+import PopoversTop from './PopoversTop';
+import PopoversLeft from './PopoversLeft';
 
 const PopoversOne: React.FC = () => {
   return (

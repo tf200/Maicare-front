@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface VideosItemProps {
   title: string;
@@ -37,4 +37,4 @@ const VideosItem: React.FC<VideosItemProps> = ({
   );
 };
 
-export default VideosItem
+export default VideosItem;

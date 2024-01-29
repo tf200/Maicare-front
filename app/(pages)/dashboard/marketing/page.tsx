@@ -1,4 +1,4 @@
-import Marketing from "@/components/Dashboard/Marketing";
+import Marketing from '@/components/Dashboard/Marketing';
 
 const MarketingPage = () => {
   return (

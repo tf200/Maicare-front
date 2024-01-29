@@ -58,8 +58,8 @@ const ModalOne: React.FC = () => {
           <span className="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"></span>
           <p className="mb-10">
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-            ever since
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy
+            text ever since
           </p>
           <div className="-mx-3 flex flex-wrap gap-y-4">
             <div className="w-full px-3 2xsm:w-1/2">

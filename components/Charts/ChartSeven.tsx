@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useState } from 'react';
-import dynamic from "next/dynamic";
-const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface ChartSevenState {
   series: {
@@ -111,7 +111,7 @@ const ChartSeven: React.FC = () => {
         title: {
           formatter: function (e) {
             return '';
-            e
+            e;
           },
         },
       },

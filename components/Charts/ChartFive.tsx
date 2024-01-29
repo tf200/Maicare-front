@@ -1,11 +1,11 @@
-import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { ApexOptions } from 'apexcharts';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface ChartFiveState {
   series: { data: number[] }[];
-} 
+}
 
 const ChartFive: React.FC = () => {
   const [state, setState] = useState<ChartFiveState>({
@@ -26,10 +26,10 @@ const ChartFive: React.FC = () => {
   updateState;
 
   const options: ApexOptions = {
-    colors: ["#3C50E0"],
+    colors: ['#3C50E0'],
     chart: {
-      fontFamily: "Satoshi, sans-serif",
-      type: "bar",
+      fontFamily: 'Satoshi, sans-serif',
+      type: 'bar',
       height: 350,
       toolbar: {
         show: false,
@@ -38,7 +38,7 @@ const ChartFive: React.FC = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "25%",
+        columnWidth: '25%',
         // endingShape: 'rounded',
         borderRadius: 0,
       },
@@ -49,10 +49,10 @@ const ChartFive: React.FC = () => {
     stroke: {
       show: true,
       width: 4,
-      colors: ["transparent"],
+      colors: ['transparent'],
     },
     xaxis: {
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
       axisBorder: {
         show: false,
       },
@@ -62,9 +62,9 @@ const ChartFive: React.FC = () => {
     },
     legend: {
       show: true,
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "Satoshi",
+      position: 'top',
+      horizontalAlign: 'left',
+      fontFamily: 'Satoshi',
 
       markers: {
         radius: 99,

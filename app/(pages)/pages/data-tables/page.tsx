@@ -1,7 +1,7 @@
-"use client";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import DataTableOne from "@/components/DataTables/DataTableOne";
-import DataTableTwo from "@/components/DataTables/DataTableTwo";
+'use client';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import DataTableOne from '@/components/DataTables/DataTableOne';
+import DataTableTwo from '@/components/DataTables/DataTableTwo';
 
 const DataTables: React.FC = () => {
   return (

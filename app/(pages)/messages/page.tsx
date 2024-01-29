@@ -1,34 +1,34 @@
-"use client";
-import Image from "next/image";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
+'use client';
+import Image from 'next/image';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import DropdownDefault from '@/components/Dropdowns/DropdownDefault';
 
 const Messages: React.FC = () => {
   const chatList = [
     {
-      imgSrc: "/images/user/user-03.png",
-      name: "Henry Dholi",
-      message: "I cam across your profile and...",
+      imgSrc: '/images/user/user-03.png',
+      name: 'Henry Dholi',
+      message: 'I cam across your profile and...',
     },
     {
-      imgSrc: "/images/user/user-04.png",
-      name: "Mariya Desoja",
-      message: "I like your confidence 💪",
+      imgSrc: '/images/user/user-04.png',
+      name: 'Mariya Desoja',
+      message: 'I like your confidence 💪',
     },
     {
-      imgSrc: "/images/user/user-05.png",
-      name: "Robert Jhon",
-      message: "Can you share your offer?",
+      imgSrc: '/images/user/user-05.png',
+      name: 'Robert Jhon',
+      message: 'Can you share your offer?',
     },
     {
-      imgSrc: "/images/user/user-01.png",
-      name: "Cody Fisher",
+      imgSrc: '/images/user/user-01.png',
+      name: 'Cody Fisher',
       message: `I'm waiting for you response!`,
     },
     {
-      imgSrc: "/images/user/user-02.png",
-      name: "Jenny Wilson",
-      message: "I cam across your profile and...",
+      imgSrc: '/images/user/user-02.png',
+      name: 'Jenny Wilson',
+      message: 'I cam across your profile and...',
     },
   ];
 
@@ -116,7 +116,7 @@ const Messages: React.FC = () => {
               <div className="flex items-center">
                 <div className="mr-4.5 h-13 w-full max-w-13 overflow-hidden rounded-full">
                   <Image
-                    src={"/images/user/user-01.png"}
+                    src={'/images/user/user-01.png'}
                     alt="avatar"
                     className="h-full w-full object-cover object-center"
                     width={52}

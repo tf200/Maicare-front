@@ -1,6 +1,6 @@
-import React from "react";
-import Link from "next/link";
-import DropdownDefault from "./Dropdowns/DropdownDefault";
+import React from 'react';
+import Link from 'next/link';
+import DropdownDefault from './Dropdowns/DropdownDefault';
 
 const ExternalLink: React.FC = () => {
   return (

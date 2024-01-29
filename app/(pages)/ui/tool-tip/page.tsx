@@ -1,7 +1,7 @@
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TooltipsOne from "@/components/ToolTips/TooltipsOne";
-import TooltipsTwo from "@/components/ToolTips/TooltipsTwo";
+import React from 'react';
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import TooltipsOne from '@/components/ToolTips/TooltipsOne';
+import TooltipsTwo from '@/components/ToolTips/TooltipsTwo';
 
 const Tooltips: React.FC = () => {
   return (

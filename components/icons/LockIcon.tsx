@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from "react";
-import {IconProps} from "@/types/IconProps";
+import React, { FunctionComponent } from 'react';
+import { IconProps } from '@/types/IconProps';
 
 const LockIcon: FunctionComponent<IconProps> = ({
-                                                  width = 22,
-                                                  height = 22,
-                                                }) => {
+  width = 22,
+  height = 22,
+}) => {
   return (
     <svg
       className="fill-current"
@@ -25,7 +25,7 @@ const LockIcon: FunctionComponent<IconProps> = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
 export default LockIcon;
