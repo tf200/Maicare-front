@@ -1,4 +1,4 @@
-import Analytics from '@/components/Dashboard/Analytics';
+import Analytics from "@/components/Dashboard/Analytics";
 
 const AnalyticsPage = () => {
   return (

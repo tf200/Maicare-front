@@ -2,7 +2,7 @@ import React, {
   FunctionComponent,
   InputHTMLAttributes,
   ReactNode,
-} from 'react';
+} from "react";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -17,7 +17,7 @@ export const InputField: FunctionComponent<InputFieldType> = ({
   ...props
 }) => {
   return (
-    <div className={'mb-4'}>
+    <div className={"mb-4"}>
       <label
         htmlFor={id}
         className="mb-2.5 block font-medium text-black dark:text-white"

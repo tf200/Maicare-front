@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import Image from 'next/image';
+import React, { useRef } from "react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import Image from "next/image";
 
 const CarouselThree: React.FC = () => {
   const prevRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ const CarouselThree: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={'/images/carousel/carousel-03.jpg'}
+              src={"/images/carousel/carousel-03.jpg"}
               alt="carousel"
             />
           </SwiperSlide>
@@ -48,7 +48,7 @@ const CarouselThree: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={'/images/carousel/carousel-02.jpg'}
+              src={"/images/carousel/carousel-02.jpg"}
               alt="carousel"
             />
           </SwiperSlide>
@@ -56,7 +56,7 @@ const CarouselThree: React.FC = () => {
             <Image
               width={1190}
               height={450}
-              src={'/images/carousel/carousel-01.jpg'}
+              src={"/images/carousel/carousel-01.jpg"}
               alt="carousel"
             />
           </SwiperSlide>

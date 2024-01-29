@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import CheckMark from '../CheckMarks/CheckMark';
-import CloseMark from '../CloseMarks/CloseMark';
+import React from "react";
+import Link from "next/link";
+import CheckMark from "../CheckMarks/CheckMark";
+import CloseMark from "../CloseMarks/CloseMark";
 
 const PricingTableTwo: React.FC = () => {
   return (

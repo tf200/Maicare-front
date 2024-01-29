@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import Image from "next/image";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 const Invoice: React.FC = () => {
   return (
@@ -49,7 +49,7 @@ const Invoice: React.FC = () => {
           <div className="items-center sm:flex">
             <div className="mb-3 mr-6 h-20 w-20 sm:mb-0">
               <Image
-                src={'/images/product/product-thumb.png'}
+                src={"/images/product/product-thumb.png"}
                 alt="product"
                 className="h-full w-full rounded-sm object-cover object-center"
                 width={80}

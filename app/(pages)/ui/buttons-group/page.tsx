@@ -1,7 +1,7 @@
-import React from 'react';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
-import ButtonsGroupOne from '@/components/ButtonsGroups/ButtonsGroupOne';
-import ButtonsGroupTwo from '@/components/ButtonsGroups/ButtonsGroupTwo';
+import React from "react";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import ButtonsGroupOne from "@/components/ButtonsGroups/ButtonsGroupOne";
+import ButtonsGroupTwo from "@/components/ButtonsGroups/ButtonsGroupTwo";
 
 const ButtonsGroup: React.FC = () => {
   return (

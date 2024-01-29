@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface TaskPopupProps {
   popupOpen: boolean;
@@ -11,7 +11,7 @@ const TaskPopup: React.FC<TaskPopupProps> = (props) => {
   return (
     <div
       className={`fixed top-0 left-0 z-99999 flex h-screen w-full justify-center overflow-y-scroll bg-black/80 py-5 px-4 ${
-        props.popupOpen === true ? 'block' : 'hidden'
+        props.popupOpen === true ? "block" : "hidden"
       }`}
     >
       <div className="relative m-auto w-full max-w-180 rounded-sm border border-stroke bg-gray p-4 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 xl:p-10">

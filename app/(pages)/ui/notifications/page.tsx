@@ -1,8 +1,8 @@
-import React from 'react';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
-import NotificationsOne from '@/components/Notifications/NotificationsOne';
-import NotificationsTwo from '@/components/Notifications/NotificationsTwo';
-import NotificationsThree from '@/components/Notifications/NotificationsThree';
+import React from "react";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import NotificationsOne from "@/components/Notifications/NotificationsOne";
+import NotificationsTwo from "@/components/Notifications/NotificationsTwo";
+import NotificationsThree from "@/components/Notifications/NotificationsThree";
 
 const Notifications: React.FC = () => {
   return (

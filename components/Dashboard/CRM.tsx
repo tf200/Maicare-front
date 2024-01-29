@@ -1,11 +1,11 @@
-'use client';
-import React from 'react';
-import DataStatsThree from '../DataStats/DataStatsThree';
-import ChartSeven from '../Charts/ChartSeven';
-import ChartEight from '../Charts/ChartEight';
-import ChartNine from '../Charts/ChartNine';
-import LeadsReport from '../LeadsReport';
-import ToDoList from '../Todo/ToDoList';
+"use client";
+import React from "react";
+import DataStatsThree from "../DataStats/DataStatsThree";
+import ChartSeven from "../Charts/ChartSeven";
+import ChartEight from "../Charts/ChartEight";
+import ChartNine from "../Charts/ChartNine";
+import LeadsReport from "../LeadsReport";
+import ToDoList from "../Todo/ToDoList";
 
 const CRM: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 const Buttons = () => {
   return (

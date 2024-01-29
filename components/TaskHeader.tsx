@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import TaskPopup from './TaskPopup';
-import Image from 'next/image';
+import { useEffect, useRef, useState } from "react";
+import TaskPopup from "./TaskPopup";
+import Image from "next/image";
 
 const TaskHeader = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -20,8 +20,8 @@ const TaskHeader = () => {
         return;
       setPopupOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -30,8 +30,8 @@ const TaskHeader = () => {
       if (!popupOpen || keyCode !== 27) return;
       setPopupOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -47,7 +47,7 @@ const TaskHeader = () => {
             <Image
               width={36}
               height={36}
-              src={'/images/user/user-07.png'}
+              src={"/images/user/user-07.png"}
               alt="User"
             />
           </button>
@@ -55,7 +55,7 @@ const TaskHeader = () => {
             <Image
               width={36}
               height={36}
-              src={'/images/user/user-08.png'}
+              src={"/images/user/user-08.png"}
               alt="User"
             />
           </button>
@@ -63,7 +63,7 @@ const TaskHeader = () => {
             <Image
               width={36}
               height={36}
-              src={'/images/user/user-09.png'}
+              src={"/images/user/user-09.png"}
               alt="User"
             />
           </button>
@@ -71,7 +71,7 @@ const TaskHeader = () => {
             <Image
               width={36}
               height={36}
-              src={'/images/user/user-10.png'}
+              src={"/images/user/user-10.png"}
               alt="User"
             />
           </button>

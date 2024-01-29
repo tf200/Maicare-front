@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import DropdownDefault from './Dropdowns/DropdownDefault';
+import React, { useState } from "react";
+import DropdownDefault from "./Dropdowns/DropdownDefault";
 
 const FeaturedCampaigns: React.FC = () => {
   const [openTab, setOpenTab] = useState(1);
 
-  const activeClasses = 'bg-primary/[0.08] text-primary border-primary';
-  const inactiveClasses = 'border-stroke dark:border-strokedark';
+  const activeClasses = "bg-primary/[0.08] text-primary border-primary";
+  const inactiveClasses = "border-stroke dark:border-strokedark";
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6">
@@ -204,7 +204,7 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content One --> */}
           <div
             className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 1 ? 'block' : 'hidden'
+              openTab === 1 ? "block" : "hidden"
             }`}
           >
             {/* <!-- Featured Tab Content Item --> */}
@@ -307,7 +307,7 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content Two --> */}
           <div
             className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 2 ? 'block' : 'hidden'
+              openTab === 2 ? "block" : "hidden"
             }`}
           >
             {/* <!-- Featured Tab Content Item --> */}
@@ -410,7 +410,7 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content Three --> */}
           <div
             className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 3 ? 'block' : 'hidden'
+              openTab === 3 ? "block" : "hidden"
             }`}
           >
             {/* <!-- Featured Tab Content Item --> */}
@@ -513,7 +513,7 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content Four --> */}
           <div
             className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 4 ? 'block' : 'hidden'
+              openTab === 4 ? "block" : "hidden"
             }`}
           >
             {/* <!-- Featured Tab Content Item --> */}

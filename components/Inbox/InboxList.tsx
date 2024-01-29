@@ -1,5 +1,5 @@
-import React from 'react';
-import Start from '../Start';
+import React from "react";
+import Start from "../Start";
 
 const InboxList: React.FC = () => {
   return (

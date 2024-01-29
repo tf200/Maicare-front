@@ -1,27 +1,27 @@
-import Image from 'next/image';
-import DropdownDefault from '../Dropdowns/DropdownDefault';
+import Image from "next/image";
+import DropdownDefault from "../Dropdowns/DropdownDefault";
 
 const todoData = [
   {
-    logo: '/images/todo/uideck.svg',
-    title: 'Uideck Yearly Meetings',
-    time: '10:20 AM - 3:00 PM',
-    date: '14 February,2025',
-    status: 'Completed',
+    logo: "/images/todo/uideck.svg",
+    title: "Uideck Yearly Meetings",
+    time: "10:20 AM - 3:00 PM",
+    date: "14 February,2025",
+    status: "Completed",
   },
   {
-    logo: '/images/todo/dribble.svg',
-    title: '2025 Dribbble Meet Up',
-    time: '09:30 AM - 12:00 AM',
-    date: '14 February,2025',
-    status: 'Upcoming',
+    logo: "/images/todo/dribble.svg",
+    title: "2025 Dribbble Meet Up",
+    time: "09:30 AM - 12:00 AM",
+    date: "14 February,2025",
+    status: "Upcoming",
   },
   {
-    logo: '/images/todo/linkdin.svg',
-    title: '2025 Linkedin Meet Up',
-    time: '10:30 AM - 11:00 PM',
-    date: '14 February,2025',
-    status: 'Canceled',
+    logo: "/images/todo/linkdin.svg",
+    title: "2025 Linkedin Meet Up",
+    time: "10:30 AM - 11:00 PM",
+    date: "14 February,2025",
+    status: "Canceled",
   },
 ];
 
@@ -106,11 +106,11 @@ const ToDoList: React.FC = () => {
 
                 <span
                   className={`rounded py-1.5 px-2.5 text-sm font-medium ${
-                    todo.status === 'Completed'
-                      ? 'bg-meta-3/[0.08] text-meta-3'
-                      : todo.status === 'Upcoming'
-                        ? 'bg-primary/[0.08] text-primary'
-                        : 'bg-red/[0.08] text-red'
+                    todo.status === "Completed"
+                      ? "bg-meta-3/[0.08] text-meta-3"
+                      : todo.status === "Upcoming"
+                        ? "bg-primary/[0.08] text-primary"
+                        : "bg-red/[0.08] text-red"
                   } `}
                 >
                   {todo.status}

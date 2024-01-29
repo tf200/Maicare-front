@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
 const PopoversRight: React.FC = () => {
   const [popoversOpen, setPopoversOpen] = useState(false);
@@ -18,8 +18,8 @@ const PopoversRight: React.FC = () => {
         return;
       setPopoversOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -28,8 +28,8 @@ const PopoversRight: React.FC = () => {
       if (!popoversOpen || keyCode !== 27) return;
       setPopoversOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -48,7 +48,7 @@ const PopoversRight: React.FC = () => {
             onFocus={() => setPopoversOpen(true)}
             onBlur={() => setPopoversOpen(false)}
             className={`absolute top-0 left-full z-20 ml-3 w-max max-w-[311px] rounded bg-white drop-shadow-5 dark:bg-meta-4 ${
-              popoversOpen === true ? 'block' : 'hidden'
+              popoversOpen === true ? "block" : "hidden"
             }`}
           >
             <span className="absolute -left-1.5 top-4 -z-10 h-4 w-4 rotate-45 rounded-sm bg-white dark:bg-meta-4"></span>

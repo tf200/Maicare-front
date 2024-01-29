@@ -1,7 +1,7 @@
-import React from 'react';
-import { InputField } from '@/components/FormFields/InputField';
-import MailIcon from '@/components/icons/MailIcon';
-import LockIcon from '@/components/icons/LockIcon';
+import React from "react";
+import { InputField } from "@/components/FormFields/InputField";
+import MailIcon from "@/components/icons/MailIcon";
+import LockIcon from "@/components/icons/LockIcon";
 
 const SignIn: React.FC = () => {
   return (

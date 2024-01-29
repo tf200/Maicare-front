@@ -1,67 +1,67 @@
-'use client';
+"use client";
 // @ts-ignore
-import jsVectorMap from 'jsvectormap';
-import React, { useEffect } from 'react';
-import 'jsvectormap/dist/maps/world';
-import 'jsvectormap/dist/css/jsvectormap.css';
-import { Country } from '@/types/country';
-import Image from 'next/image';
+import jsVectorMap from "jsvectormap";
+import React, { useEffect } from "react";
+import "jsvectormap/dist/maps/world";
+import "jsvectormap/dist/css/jsvectormap.css";
+import { Country } from "@/types/country";
+import Image from "next/image";
 
 const countryData: Country[] = [
   {
-    flag: '/images/country/country-01.svg',
+    flag: "/images/country/country-01.svg",
     percentage: 35,
-    name: 'United States',
+    name: "United States",
   },
   {
-    flag: '/images/country/country-02.svg',
+    flag: "/images/country/country-02.svg",
     percentage: 26,
-    name: 'Canada',
+    name: "Canada",
   },
   {
-    flag: '/images/country/country-03.svg',
+    flag: "/images/country/country-03.svg",
     percentage: 18,
-    name: 'France',
+    name: "France",
   },
   {
-    flag: '/images/country/country-04.svg',
+    flag: "/images/country/country-04.svg",
     percentage: 14,
-    name: 'Italy',
+    name: "Italy",
   },
   {
-    flag: '/images/country/country-05.svg',
+    flag: "/images/country/country-05.svg",
     percentage: 10,
-    name: 'Australia',
+    name: "Australia",
   },
   {
-    flag: '/images/country/country-06.svg',
+    flag: "/images/country/country-06.svg",
     percentage: 7,
-    name: 'India',
+    name: "India",
   },
 ];
 
 const MapTwo: React.FC = () => {
   useEffect(() => {
     const mapTwo = new jsVectorMap({
-      selector: '#mapTwo',
-      map: 'world',
+      selector: "#mapTwo",
+      map: "world",
       zoomButtons: true,
 
       regionStyle: {
         initial: {
-          fontFamily: 'Satoshi',
-          fill: '#A9BDFF',
+          fontFamily: "Satoshi",
+          fill: "#A9BDFF",
         },
         hover: {
           fillOpacity: 1,
-          fill: '#3056D3',
+          fill: "#3056D3",
         },
       },
 
       onRegionTooltipShow: function (tooltip: any, code: string) {
-        if (code === 'EG') {
+        if (code === "EG") {
           tooltip.selector.innerHTML =
-            tooltip.text() + ' <b>(Hello Russia)</b>';
+            tooltip.text() + " <b>(Hello Russia)</b>";
         }
       },
     });
@@ -127,7 +127,7 @@ const MapTwo: React.FC = () => {
               <div
                 className={`absolute left-0 top-0 flex h-full items-center justify-center rounded bg-primary text-xs font-medium text-white`}
                 style={{
-                  width: country.percentage + '%',
+                  width: country.percentage + "%",
                 }}
               >
                 {country.percentage}%

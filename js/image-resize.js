@@ -3,8 +3,8 @@
  * See post @ http://www.lab4games.net/zz85/blog/2014/11/15/resizing-moving-snapping-windows-with-js-css/
  */
 const ImageResize = () => {
-  if (document.querySelectorAll('#pane').length) {
-    ('use strict');
+  if (document.querySelectorAll("#pane").length) {
+    ("use strict");
 
     // Minimum resizable area
     var minWidth = 60;
@@ -26,14 +26,14 @@ const ImageResize = () => {
 
     var redraw = false;
 
-    var pane = document.getElementById('pane');
-    var ghostpane = document.getElementById('ghostpane');
+    var pane = document.getElementById("pane");
+    var ghostpane = document.getElementById("ghostpane");
 
     function setBounds(element, x, y, w, h) {
-      element.style.left = x + 'px';
-      element.style.top = y + 'px';
-      element.style.width = w + 'px';
-      element.style.height = h + 'px';
+      element.style.left = x + "px";
+      element.style.top = y + "px";
+      element.style.width = w + "px";
+      element.style.height = h + "px";
     }
 
     function hintHide() {
@@ -48,14 +48,14 @@ const ImageResize = () => {
     }
 
     // Mouse events
-    pane.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
+    pane.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
 
     // Touch events
-    pane.addEventListener('touchstart', onTouchDown);
-    document.addEventListener('touchmove', onTouchMove);
-    document.addEventListener('touchend', onTouchEnd);
+    pane.addEventListener("touchstart", onTouchDown);
+    document.addEventListener("touchmove", onTouchMove);
+    document.addEventListener("touchend", onTouchEnd);
 
     function onTouchDown(e) {
       onDown(e.touches[0]);
@@ -133,9 +133,9 @@ const ImageResize = () => {
 
       if (clicked && clicked.isResizing) {
         if (clicked.onRightEdge)
-          pane.style.width = Math.max(x, minWidth) + 'px';
+          pane.style.width = Math.max(x, minWidth) + "px";
         if (clicked.onBottomEdge)
-          pane.style.height = Math.max(y, minHeight) + 'px';
+          pane.style.height = Math.max(y, minHeight) + "px";
 
         if (clicked.onLeftEdge) {
           var currentWidth = Math.max(
@@ -143,8 +143,8 @@ const ImageResize = () => {
             minWidth
           );
           if (currentWidth > minWidth) {
-            pane.style.width = currentWidth + 'px';
-            pane.style.left = e.clientX + 'px';
+            pane.style.width = currentWidth + "px";
+            pane.style.left = e.clientX + "px";
           }
         }
 
@@ -154,8 +154,8 @@ const ImageResize = () => {
             minHeight
           );
           if (currentHeight > minHeight) {
-            pane.style.height = currentHeight + 'px';
-            pane.style.top = e.clientY + 'px';
+            pane.style.height = currentHeight + "px";
+            pane.style.top = e.clientY + "px";
           }
         }
 
@@ -218,8 +218,8 @@ const ImageResize = () => {
         }
 
         // moving
-        pane.style.top = e.clientY - clicked.y + 'px';
-        pane.style.left = e.clientX - clicked.x + 'px';
+        pane.style.top = e.clientY - clicked.y + "px";
+        pane.style.left = e.clientX - clicked.x + "px";
 
         return;
       }
@@ -228,17 +228,17 @@ const ImageResize = () => {
 
       // style cursor
       if ((onRightEdge && onBottomEdge) || (onLeftEdge && onTopEdge)) {
-        pane.style.cursor = 'nwse-resize';
+        pane.style.cursor = "nwse-resize";
       } else if ((onRightEdge && onTopEdge) || (onBottomEdge && onLeftEdge)) {
-        pane.style.cursor = 'nesw-resize';
+        pane.style.cursor = "nesw-resize";
       } else if (onRightEdge || onLeftEdge) {
-        pane.style.cursor = 'ew-resize';
+        pane.style.cursor = "ew-resize";
       } else if (onBottomEdge || onTopEdge) {
-        pane.style.cursor = 'ns-resize';
+        pane.style.cursor = "ns-resize";
       } else if (canMove()) {
-        pane.style.cursor = 'move';
+        pane.style.cursor = "move";
       } else {
-        pane.style.cursor = 'default';
+        pane.style.cursor = "default";
       }
     }
 

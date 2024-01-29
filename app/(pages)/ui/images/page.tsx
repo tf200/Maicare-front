@@ -1,7 +1,7 @@
-'use client';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
-import ImagesTwo from '@/components/Images/ImagesTwo';
-import ImagesOne from '@/components/Images/ImagesOne';
+"use client";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import ImagesTwo from "@/components/Images/ImagesTwo";
+import ImagesOne from "@/components/Images/ImagesOne";
 
 const Images: React.FC = () => {
   return (

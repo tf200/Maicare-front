@@ -1,10 +1,10 @@
-'use client';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
-import ChartFour from '@/components/Charts/ChartFour';
-import ChartSeven from '@/components/Charts/ChartSeven';
-import ChartEight from '@/components/Charts/ChartEight';
-import ChartSix from '@/components/Charts/ChartSix';
-import ChartNine from '@/components/Charts/ChartNine';
+"use client";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import ChartFour from "@/components/Charts/ChartFour";
+import ChartSeven from "@/components/Charts/ChartSeven";
+import ChartEight from "@/components/Charts/ChartEight";
+import ChartSix from "@/components/Charts/ChartSix";
+import ChartNine from "@/components/Charts/ChartNine";
 
 const AdvancedChart: React.FC = () => {
   return (

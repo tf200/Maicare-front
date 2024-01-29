@@ -1,41 +1,41 @@
-'use client';
-import React, { useEffect } from 'react';
-import flatpickr from 'flatpickr';
-import 'flatpickr/dist/flatpickr.min.css';
-import ChartFour from '../Charts/ChartFour';
-import DataStats from '../DataStats/DataStats';
-import ChartThree from '../Charts/ChartThree';
-import TopContent from '../TopContent';
-import TopChannels from '../TopChannels';
-import TableTwo from '../Tables/TableTwo';
+"use client";
+import React, { useEffect } from "react";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+import ChartFour from "../Charts/ChartFour";
+import DataStats from "../DataStats/DataStats";
+import ChartThree from "../Charts/ChartThree";
+import TopContent from "../TopContent";
+import TopChannels from "../TopChannels";
+import TableTwo from "../Tables/TableTwo";
 
 // without this the component renders on server and throws an error
-import dynamic from 'next/dynamic';
-const MapTwo = dynamic(() => import('../Maps/MapTwo'), {
+import dynamic from "next/dynamic";
+const MapTwo = dynamic(() => import("../Maps/MapTwo"), {
   ssr: false,
 });
 
 const Analytics: React.FC = () => {
   useEffect(() => {
     // Init flatpickr
-    const fp = flatpickr('.datepicker', {
-      mode: 'range',
+    const fp = flatpickr(".datepicker", {
+      mode: "range",
       static: true,
-      monthSelectorType: 'static',
-      dateFormat: 'M j, Y',
+      monthSelectorType: "static",
+      dateFormat: "M j, Y",
       defaultDate: [new Date().setDate(new Date().getDate() - 6), new Date()],
       prevArrow:
         '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
       nextArrow:
         '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
       onReady: (selectedDates: Date[], dateStr: string, instance: any) => {
-        instance.element.value = dateStr.replace('to', '-');
-        const customClass = instance.element.getAttribute('data-class');
+        instance.element.value = dateStr.replace("to", "-");
+        const customClass = instance.element.getAttribute("data-class");
         instance.calendarContainer.classList.add(customClass!);
         selectedDates;
       },
       onChange: (selectedDates: Date[], dateStr: string, instance: any) => {
-        instance.element.value = dateStr.replace('to', '-');
+        instance.element.value = dateStr.replace("to", "-");
         selectedDates;
       },
     });

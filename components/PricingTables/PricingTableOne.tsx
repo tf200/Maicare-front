@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 const PricingTableOne: React.FC = () => {
   return (
@@ -42,7 +42,7 @@ const PricingTableOne: React.FC = () => {
           <Image
             width={109}
             height={34}
-            src={'/images/best-value-banner.png'}
+            src={"/images/best-value-banner.png"}
             alt="Banner"
           />
         </span>

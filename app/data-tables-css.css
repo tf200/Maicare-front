@@ -57,7 +57,7 @@
 
 .datatable-sorter::before,
 .datatable-sorter::after {
-  content: '';
+  content: "";
   height: 0;
   width: 0;
   position: absolute;
@@ -86,7 +86,7 @@
 }
 
 .datatable-filter::before {
-  content: '';
+  content: "";
   position: absolute;
   right: 4px;
   opacity: 0.2;
@@ -110,7 +110,7 @@
 .datatable-top::after,
 .datatable-bottom::after {
   clear: both;
-  content: ' ';
+  content: " ";
   display: table;
 }
 

@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { IconProps } from '@/types/IconProps';
+import React, { FunctionComponent } from "react";
+import { IconProps } from "@/types/IconProps";
 
 const LockIcon: FunctionComponent<IconProps> = ({
   width = 22,

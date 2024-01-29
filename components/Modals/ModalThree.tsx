@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 const ModalThree: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,8 +18,8 @@ const ModalThree: React.FC = () => {
         return;
       setModalOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -28,8 +28,8 @@ const ModalThree: React.FC = () => {
       if (!modalOpen || keyCode !== 27) return;
       setModalOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -43,7 +43,7 @@ const ModalThree: React.FC = () => {
       </button>
       <div
         className={`fixed top-0 left-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
-          modalOpen ? 'block' : 'hidden'
+          modalOpen ? "block" : "hidden"
         }`}
       >
         <div
