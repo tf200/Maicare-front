@@ -32,9 +32,8 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
                 />
               </Link>
 
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+              <p className="2xl:px-20 text-[30px]">
+                Health<span className="font-bold">People</span>
               </p>
             </div>
           </div>

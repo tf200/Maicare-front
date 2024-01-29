@@ -34,14 +34,17 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="p-4 sm:p-12.5 xl:p-17.5">
-      <div className="flex justify-center">
-          <Image
-            className="dark:hidden xl:hidden mb-6"
-            src={"/images/logo/logo.ico"}
-            alt="Logo"
-            width={90}
-            height={12}
-          />
+      <div className="flex flex-col items-center justify-center xl:hidden mb-6">
+        <Image
+          className="dark:hidden pb-2"
+          src={"/images/logo/logo.ico"}
+          alt="Logo"
+          width={80}
+          height={12}
+        />
+        <p className="2xl:px-20 text-[24px]">
+          Health<span className="font-bold">People</span>
+        </p>
       </div>
       <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
         Sign In to the website
