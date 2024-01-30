@@ -7,12 +7,14 @@ import React, {
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   icon?: ReactNode;
+  error?: string;
 };
 
 export const InputField: FunctionComponent<InputFieldType> = ({
   label,
   className,
   icon,
+  error,
   id,
   ...props
 }) => {
@@ -32,6 +34,7 @@ export const InputField: FunctionComponent<InputFieldType> = ({
         />
         {icon && <span className="absolute right-4 top-4">{icon}</span>}
       </div>
+      {error ? <p className="text-red pt-1">{error}</p> : <></>}
     </div>
   );
 };

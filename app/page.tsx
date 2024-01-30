@@ -1,4 +1,3 @@
-import ECommerce from "@/components/Dashboard/E-commerce";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -9,13 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  redirect("/dashboard/crm")
-
-
-
-  return (
-    <>
-      {/* <ECommerce /> */}
-    </>
-  );
+  redirect("/dashboard/crm");
 }

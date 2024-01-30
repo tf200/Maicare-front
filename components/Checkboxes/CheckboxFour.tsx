@@ -1,22 +1,22 @@
-import { useState } from "react";
-
-const CheckboxFour = () => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+const Checkbox = ({ id, label, onChange, isChecked }) => {
+  const handleChange = () => {
+    const newCheckedState = !isChecked;
+    onChange(label, newCheckedState);
+  };
 
   return (
     <div>
       <label
-        htmlFor="checkboxLabelFour"
-        className="flex cursor-pointer select-none items-center"
+        htmlFor={id}
+        className="flex items-center cursor-pointer select-none"
       >
         <div className="relative">
           <input
             type="checkbox"
-            id="checkboxLabelFour"
+            id={id}
             className="sr-only"
-            onChange={() => {
-              setIsChecked(!isChecked);
-            }}
+            checked={isChecked}
+            onChange={handleChange}
           />
           <div
             className={`mr-4 flex h-5 w-5 items-center justify-center rounded-full border ${
@@ -27,15 +27,13 @@ const CheckboxFour = () => {
               className={`h-2.5 w-2.5 rounded-full bg-transparent ${
                 isChecked && "!bg-primary"
               }`}
-            >
-              {" "}
-            </span>
+            ></span>
           </div>
         </div>
-        Checkbox Text
+        {label}
       </label>
     </div>
   );
 };
 
-export default CheckboxFour;
+export default Checkbox;
