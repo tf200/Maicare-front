@@ -88,7 +88,7 @@ const SignIn: React.FC = () => {
           >
             {isLoading ? (
               <div
-                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status"
               ></div>
             ) : (
@@ -99,7 +99,7 @@ const SignIn: React.FC = () => {
         {alertState[0] != "" && (
           <h5
             style={{ color: alertState[1] }}
-            className="w-full text-center mb-3 text-lg font-semibold text-red"
+            className="w-full text-center mb-3 text-md font-semibold text-red"
           >
             {alertState[0]}
           </h5>
