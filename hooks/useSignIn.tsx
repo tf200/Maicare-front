@@ -12,8 +12,8 @@ const UseSignIn = async (
   await axios
     .post(process.env.NEXT_PUBLIC_API_URL + "/token/", authData)
     .then((response) => {
-      localStorage.setItem("a", response.data.access);
-      localStorage.setItem("r", response.data.refresh);
+      window.localStorage.setItem("a", response.data.access);
+      window.localStorage.setItem("r", response.data.refresh);
       setAlertState(["Successfully login in", "green"]);
       setTimeout(() => {
         router.push("/dashboard/crm");
