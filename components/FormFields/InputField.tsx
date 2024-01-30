@@ -34,7 +34,7 @@ export const InputField: FunctionComponent<InputFieldType> = ({
         />
         {icon && <span className="absolute right-4 top-4">{icon}</span>}
       </div>
-      <p className="text-red pt-1">{error}</p>
+      {error ? <p className="text-red pt-1">{error}</p> : <></>}
     </div>
   );
 };

@@ -4,13 +4,18 @@ import { InputField } from "@/components/FormFields/InputField";
 import UseSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const SignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [älertMessage, setAlertMessage] = useState<string>("");
+  const initialAlertState: [string, string] = ["", ""];
+  const [alertState, setAlertState] =
+    useState<[string, string]>(initialAlertState);
+
+  const router = useRouter();
 
   const requiredMessage = "This field is required.";
   const formik = useFormik({
@@ -23,8 +28,7 @@ const SignIn: React.FC = () => {
       password: Yup.string().required(requiredMessage),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      UseSignIn(values, setIsLoading, setAlertMessage);
+      UseSignIn(values, setIsLoading, setAlertState, router);
     },
   });
 
@@ -77,16 +81,29 @@ const SignIn: React.FC = () => {
           icon={<LockIcon />}
         />
         <div className="mb-5">
-          <input
+          <button
             disabled={isLoading}
             type="submit"
-            value="Sign In"
             className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-          />
+          >
+            {isLoading ? (
+              <div
+                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status"
+              ></div>
+            ) : (
+              "Sign In"
+            )}
+          </button>
         </div>
-        <h5 className="w-full text-center mb-3 text-lg font-semibold text-red">
-          {älertMessage}
-        </h5>
+        {alertState[0] != "" && (
+          <h5
+            style={{ color: alertState[1] }}
+            className="w-full text-center mb-3 text-lg font-semibold text-red"
+          >
+            {alertState[0]}
+          </h5>
+        )}
       </form>
     </div>
   );
