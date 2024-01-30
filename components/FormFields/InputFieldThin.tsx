@@ -6,15 +6,15 @@ import React, {
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  icon?: ReactNode;
+  error?: string;
 };
 
 const InputFieldThin: FunctionComponent<InputFieldType> = ({
   label,
   className,
-  icon,
   id,
   required,
+  error,
   ...props
 }) => {
   return (
@@ -28,6 +28,11 @@ const InputFieldThin: FunctionComponent<InputFieldType> = ({
         required={required}
         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
       />
+      {error && (
+        <p role="alert" className="text-red pt-1">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

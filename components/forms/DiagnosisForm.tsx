@@ -65,7 +65,14 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
       onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
-      {({ values, handleChange, handleSubmit }) => (
+      {({
+        values,
+        handleChange,
+        handleBlur,
+        touched,
+        handleSubmit,
+        errors,
+      }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <InputFieldThin
@@ -77,27 +84,31 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               placeholder={"Enter summary of the diagnosis"}
               value={values.title}
               onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.title && errors.title}
             />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputFieldThin
                 label={"Condition"}
                 id={"description"}
-                required={true}
                 placeholder={"Enter Condition of the patient"}
                 type={"text"}
                 className="w-full xl:w-1/2"
                 value={values.description}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.description && errors.description}
               />
               <InputFieldThin
                 className={"w-full xl:w-1/2"}
                 id={"diagnosis_code"}
-                required={true}
                 label={"ICD Code"}
                 type={"text"}
                 placeholder={"Enter ICD Code of the diagnosis"}
                 value={values.diagnosis_code}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.diagnosis_code && errors.diagnosis_code}
               />
             </div>
 
@@ -107,19 +118,21 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 id={"severity"}
                 options={DIAGNOSIS_SEVERITY_OPTIONS}
                 className="w-full xl:w-1/2"
-                required={true}
                 value={values.severity}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.severity && errors.severity}
               />
               <InputFieldThin
                 className={"w-full xl:w-1/2"}
                 id={"status"}
-                required={true}
                 label={"Status"}
                 type={"text"}
                 placeholder={"Enter current status of the patient"}
                 value={values.status}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.status && errors.status}
               />
             </div>
 
@@ -131,9 +144,16 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               placeholder={"Provide notes for the diagnosis"}
               value={values.notes}
               onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.notes && errors.notes}
             />
 
-            <Button type={"submit"} disabled={isLoading} isLoading={isLoading}>
+            <Button
+              type={"submit"}
+              disabled={isLoading}
+              isLoading={isLoading}
+              formNoValidate={true}
+            >
               Submit Diagnosis
             </Button>
           </div>
