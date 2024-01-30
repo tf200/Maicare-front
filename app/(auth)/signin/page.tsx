@@ -4,17 +4,13 @@ import { InputField } from "@/components/FormFields/InputField";
 import useSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
-import LoadingButton from "@mui/lab/LoadingButton";
-import CircularProgress from "@mui/material/CircularProgress";
 import Image from "next/image";
-import { makeStyles } from "@mui/styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const SignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [älertMessage, setAlertMessage] = useState<string>("");
-  const classes = useStyles();
 
   const requiredMessage = "This field is required.";
   const formik = useFormik({
@@ -81,19 +77,12 @@ const SignIn: React.FC = () => {
           icon={<LockIcon />}
         />
         <div className="mb-5">
-          <LoadingButton
-            loadingIndicator={
-              <CircularProgress
-                size={26}
-                className={classes.customCircularProgress}
-              />
-            }
-            loading={isLoading}
-            className={classes.loadingButton}
+          <input
+            disabled={isLoading}
             type="submit"
-          >
-            <span className="normal-case text-[16px]">Sign In</span>
-          </LoadingButton>
+            value="Sign In"
+            className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+          />
         </div>
         <h5 className="w-full text-center mb-3 text-lg font-semibold text-red">
           {älertMessage}
@@ -104,22 +93,3 @@ const SignIn: React.FC = () => {
 };
 
 export default SignIn;
-
-const useStyles = makeStyles(() => ({
-  loadingButton: {
-    "&:hover": {
-      backgroundColor: "#4F61E3",
-    },
-    width: "100%",
-    cursor: "pointer",
-    borderRadius: "8px",
-    borderWidth: "1px",
-    color: "white",
-    backgroundColor: "#3C50E0",
-    paddingTop: "16px",
-    paddingBottom: "16px",
-  },
-  customCircularProgress: {
-    color: "white",
-  },
-}));
