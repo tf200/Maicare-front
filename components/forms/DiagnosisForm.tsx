@@ -2,70 +2,68 @@
 
 import { NewDiagnosisRequest } from "@/types/dto/new-diagnosis-request";
 import * as Yup from "yup";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { Formik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
-import { DIAGNOSIS_SEVERITY_OPTIONS } from "@/consts";
+import { DIAGNOSIS_SEVERITY_ARRAY, DIAGNOSIS_SEVERITY_OPTIONS } from "@/consts";
 import Textarea from "@/components/FormFields/Textarea";
+import { DiagnosisSeverity } from "@/types/dagnosis-servity";
+import { useCreateDiagnosis } from "@/utils/diagnosis/createDiagnosis";
+import { FormikHelpers } from "formik/dist/types";
+import Button from "@/components/buttons/Button";
 
 type FormType = Omit<
   NewDiagnosisRequest,
   "client" | "severity" | "date_of_diagnosis" | "diagnosing_clinician"
 > & {
-  severity: string;
+  severity: DiagnosisSeverity | "";
 };
+
+export type DiagnosisFormType = FormType;
 
 const initialValues: FormType = {
   title: "",
-  condition: "",
+  description: "",
   diagnosis_code: "",
   severity: "",
   status: "",
   notes: "",
 };
 
-const newDiagnosisSchema = Yup.object().shape({
+export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   title: Yup.string().required("Please provide diagnosis summary"),
-  condition: Yup.string().required("Please provide condition of the patient"),
+  description: Yup.string().required("Please provide condition of the patient"),
   diagnosis_code: Yup.string().required("Please provide diagnosis code"),
-  severity: Yup.string().required("Please provide severity of the diagnosis"),
+  severity: Yup.string()
+    .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Please select a valid severity")
+    .required("Please provide severity of the diagnosis"),
   status: Yup.string().required("Please provide status of the diagnosis"),
   notes: Yup.string().required("Please provide notes for the diagnosis"),
 });
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-type FormComponentType = {
+type PropsType = {
   clientId: string;
 };
 
-export const DiagnosisForm: FunctionComponent<FormComponentType> = ({
-  clientId,
-}) => {
-  console.log("clientId", clientId);
+export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
+  const { mutate, isLoading } = useCreateDiagnosis(
+    parseInt(clientId),
+    "mock-clinician"
+  );
+  const onSubmit = useCallback(
+    (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
+      mutate(values, {
+        onSuccess: resetForm,
+      });
+    },
+    [mutate]
+  );
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values) => {
-        const data: NewDiagnosisRequest = {
-          ...values,
-          severity: "Mild",
-          client: parseInt(clientId),
-          diagnosing_clinician: "DUMMY DATA",
-          date_of_diagnosis: new Date().toISOString().split("T")[0],
-        };
-        const tempData = { ...data, description: data.notes };
-        delete tempData.condition;
-        const response = await fetch(`${API_URL}/client/diagnosis_create`, {
-          method: "POST",
-          body: JSON.stringify(tempData),
-        });
-        if (response.ok) {
-          console.log("Diagnosis created successfully", await response.json());
-        }
-      }}
-      validationSchema={newDiagnosisSchema}
+      onSubmit={onSubmit}
+      validationSchema={diagnosisSchema}
     >
       {({ values, handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
@@ -83,12 +81,12 @@ export const DiagnosisForm: FunctionComponent<FormComponentType> = ({
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputFieldThin
                 label={"Condition"}
-                id={"condition"}
+                id={"description"}
                 required={true}
                 placeholder={"Enter Condition of the patient"}
                 type={"text"}
                 className="w-full xl:w-1/2"
-                value={values.condition}
+                value={values.description}
                 onChange={handleChange}
               />
               <InputFieldThin
@@ -135,12 +133,9 @@ export const DiagnosisForm: FunctionComponent<FormComponentType> = ({
               onChange={handleChange}
             />
 
-            <button
-              type={"submit"}
-              className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
-            >
-              Submit Diagnostic
-            </button>
+            <Button type={"submit"} disabled={isLoading}>
+              Submit Diagnosis
+            </Button>
           </div>
         </form>
       )}
