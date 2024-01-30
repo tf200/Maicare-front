@@ -133,7 +133,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               onChange={handleChange}
             />
 
-            <Button type={"submit"} disabled={isLoading}>
+            <Button type={"submit"} disabled={isLoading} isLoading={isLoading}>
               Submit Diagnosis
             </Button>
           </div>
