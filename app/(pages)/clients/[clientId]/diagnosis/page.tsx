@@ -25,7 +25,6 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       return response.data;
     }
   );
-  if (isLoading) return <div>Loading...</div>;
   return (
     <div>
       <div className="mb-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -44,12 +43,6 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               Add new diagnosis
             </Link>
           </div>
-        </div>
-
-        <div className="p-4 md:p-6 xl:p-9">
-          <pre>
-            <code>{JSON.stringify(data, null, 2)}</code>
-          </pre>
         </div>
       </div>
     </div>
