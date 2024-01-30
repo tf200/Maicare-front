@@ -5,6 +5,7 @@ import ChevronDown from "@/components/icons/ChevronDown";
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   options: SelectionOption[];
+  error?: string;
 };
 
 const Select: FunctionComponent<SelectProps> = ({
@@ -13,6 +14,7 @@ const Select: FunctionComponent<SelectProps> = ({
   id,
   className,
   required,
+  error,
   ...props
 }) => {
   return (
@@ -39,6 +41,11 @@ const Select: FunctionComponent<SelectProps> = ({
           <ChevronDown />
         </span>
       </div>
+      {error && (
+        <p role="alert" className="text-red pt-1">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

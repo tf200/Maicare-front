@@ -31,6 +31,7 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "18.2.0",
     "react-flatpickr": "^3.10.13",
+    "react-query": "^3.39.3",
     "react-table": "^7.8.0",
     "sort-by": "^0.0.2",
     "swiper": "^10.0.4",
