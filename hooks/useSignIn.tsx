@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const useSignIn = async (
+const UseSignIn = async (
   authData: {},
   setIsLoading: any,
   setAlertMessage: any
@@ -23,4 +23,4 @@ const useSignIn = async (
     });
 };
 
-export default useSignIn;
+export default UseSignIn;

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { InputField } from "@/components/FormFields/InputField";
-import useSignIn from "@/hooks/useSignIn";
+import UseSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
 import Image from "next/image";
@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      useSignIn(values, setIsLoading, setAlertMessage);
+      UseSignIn(values, setIsLoading, setAlertMessage);
     },
   });
 
