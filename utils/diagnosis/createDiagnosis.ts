@@ -25,8 +25,12 @@ export const useCreateDiagnosis = (
       });
     },
     onSuccess: (data: DiagnosisResDto) => {
-      queryClient.invalidateQueries([client, "diagnosis"]);
-      queryClient.invalidateQueries([client, "diagnosis", data.id]);
+      queryClient.invalidateQueries([
+        "diagnosis",
+        {
+          client,
+        },
+      ]);
     },
   });
 };
