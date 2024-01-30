@@ -1,14 +1,17 @@
 import "./globals.css";
 import "./data-tables-css.css";
-import Providers from "@/components/Providers";
-import { ReactNode } from "react";
+import Guards from "@/components/Guards";
 // import "./satoshi.css";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html suppressHydrationWarning lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Guards>{children}</Guards>
       </body>
     </html>
   );
