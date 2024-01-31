@@ -1,17 +1,20 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { useQuery } from "react-query";
 import api from "@/utils/api";
 import { DiagnosisListDto } from "@/types/diagnosis/diagnosis-list-dto";
 import Link from "next/link";
+import Table from "@/components/Table";
+import { ColumnDef } from "@tanstack/table-core";
+import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 
 type Props = {
   params: { clientId: string };
 };
 
 const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     [
       "diagnosis",
       {
@@ -25,12 +28,40 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       return response.data;
     }
   );
+
+  const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(
+    () => [
+      {
+        accessorKey: "title",
+        header: () => "Summary",
+      },
+      {
+        accessorKey: "description",
+        header: () => "Diagnosis",
+      },
+      {
+        accessorKey: "diagnosis_code",
+        header: () => "Diagnosis code",
+      },
+      {
+        accessorKey: "severity",
+        header: () => "Severity",
+      },
+      {
+        accessorKey: "date_of_diagnosis",
+        header: () => "Date of diagnosis",
+      },
+    ],
+    []
+  );
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div>
       <div className="mb-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
           <h3 className="font-medium text-black dark:text-white">
-            Diagnosis list (WORK IN PROGRESS!)
+            Diagnosis list
           </h3>
         </div>
 
@@ -44,6 +75,12 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             </Link>
           </div>
         </div>
+        {data && <Table data={data} columns={columnDef} />}
+        {isError && (
+          <p role="alert" className="text-red">
+            An error has occurred
+          </p>
+        )}
       </div>
     </div>
   );

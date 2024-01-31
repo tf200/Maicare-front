@@ -38,10 +38,10 @@
   color: inherit;
 }
 
-.datatable-one tbody tr td:first-child {
-  color: #3c50e0;
-  font-weight: 500;
-}
+/*.datatable-one tbody tr td:first-child {*/
+/*  color: #3c50e0;*/
+/*  font-weight: 500;*/
+/*}*/
 
 .datatable-table tbody tr:hover {
   background: #f8fbff;
