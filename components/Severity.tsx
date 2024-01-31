@@ -6,22 +6,14 @@ type Props = {
   severity: DiagnosisSeverity;
 };
 
+const mappingRecord: Record<DiagnosisSeverity, BadgeType> = {
+  Mild: "Success",
+  Moderate: "Warning",
+  Severe: "Danger",
+};
+
 const Severity: FunctionComponent<Props> = ({ severity }) => {
-  console.log(severity);
-  return (
-    <StatusBadge
-      text={severity}
-      type={
-        (
-          {
-            Mild: "Success",
-            Moderate: "Warning",
-            Severe: "Danger",
-          } as Record<DiagnosisSeverity, BadgeType>
-        )[severity]
-      }
-    />
-  );
+  return <StatusBadge text={severity} type={mappingRecord[severity]} />;
 };
 
 export default Severity;

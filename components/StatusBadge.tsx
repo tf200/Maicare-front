@@ -68,8 +68,7 @@ const BadgesRecord: Record<Props["type"], FunctionComponent<BadgeProps>> = {
 };
 
 const StatusBadge: FunctionComponent<Props> = ({ type, text }) => {
-  console.log(type);
-  const Badge = useMemo(() => BadgesRecord[type] ?? BadgesRecord.Gray, [type]);
+  const Badge = useMemo(() => BadgesRecord[type] ?? BadgesRecord.Light, [type]);
   return <Badge text={text} />;
 };
 
