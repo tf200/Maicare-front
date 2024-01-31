@@ -14,7 +14,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       router.push("/signin");
     }
   } else {
-    return null;
+    return <></>;
   }
 };
 
