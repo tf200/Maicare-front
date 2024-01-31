@@ -34,7 +34,9 @@ const initialValues: FormType = {
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   title: Yup.string().required("Please provide diagnosis summary"),
   description: Yup.string().required("Please provide condition of the patient"),
-  diagnosis_code: Yup.string().required("Please provide diagnosis code"),
+  diagnosis_code: Yup.string()
+    .max(10, "Diagnosis code can't be more than 10 in length")
+    .required("Please provide diagnosis code"),
   severity: Yup.string()
     .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Please select a valid severity")
     .required("Please provide severity of the diagnosis"),
@@ -90,6 +92,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputFieldThin
                 label={"Condition"}
+                required={true}
                 id={"description"}
                 placeholder={"Enter Condition of the patient"}
                 type={"text"}
@@ -102,6 +105,8 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               <InputFieldThin
                 className={"w-full xl:w-1/2"}
                 id={"diagnosis_code"}
+                required={true}
+                maxLength={10}
                 label={"ICD Code"}
                 type={"text"}
                 placeholder={"Enter ICD Code of the diagnosis"}
@@ -116,6 +121,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               <Select
                 label={"Severity"}
                 id={"severity"}
+                required={true}
                 options={DIAGNOSIS_SEVERITY_OPTIONS}
                 className="w-full xl:w-1/2"
                 value={values.severity}
@@ -126,6 +132,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               <InputFieldThin
                 className={"w-full xl:w-1/2"}
                 id={"status"}
+                required={true}
                 label={"Status"}
                 type={"text"}
                 placeholder={"Enter current status of the patient"}
@@ -139,6 +146,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
             <Textarea
               rows={6}
               id={"notes"}
+              required={true}
               className={"mb-6"}
               label={"Diagnosis Notes"}
               placeholder={"Provide notes for the diagnosis"}

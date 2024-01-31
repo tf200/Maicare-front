@@ -15,3 +15,6 @@ export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
   { label: "Relation 2", value: "Relation 2" },
   { label: "Relation 3", value: "Relation 3" },
 ];
+
+// TODO: this is assumed to be 10, it should come from the backend
+export const PAGE_SIZE = 10;
