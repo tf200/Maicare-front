@@ -8,3 +8,6 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SelectionOption[] = [
   { label: "Moderate", value: "Moderate" },
   { label: "Severe", value: "Severe" },
 ];
+
+// TODO: this is assumed to be 10, it should come from the backend
+export const PAGE_SIZE = 10;

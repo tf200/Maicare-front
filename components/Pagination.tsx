@@ -7,6 +7,7 @@ type Props = {
   totalPages: number;
   adjacentPagesShown?: number;
   onClick: (page: number) => void;
+  disabled?: boolean;
 };
 
 const usePagination = (props: Props) => {
@@ -45,6 +46,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
     isShowFirstPage,
     isShowLastPage,
   } = usePagination(props);
+  const onClick = props.disabled ? () => {} : props.onClick;
   return (
     <div className="p-4 sm:p-6 xl:p-7.5">
       <nav>
@@ -56,7 +58,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
           ) : (
             <li>
               <a
-                onClick={() => props.onClick(props.page - 1)}
+                onClick={() => onClick(props.page - 1)}
                 href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
@@ -67,7 +69,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
           {isShowFirstPage && (
             <li>
               <a
-                onClick={() => props.onClick(1)}
+                onClick={() => onClick(1)}
                 href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
@@ -90,7 +92,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
               return (
                 <li key={page}>
                   <a
-                    onClick={() => props.onClick(page)}
+                    onClick={() => onClick(page)}
                     href="#"
                     className={`inline-flex items-center px-3 py-1.5 rounded-md ${
                       page === props.page
@@ -115,7 +117,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
           {isShowLastPage && (
             <li>
               <a
-                onClick={() => props.onClick(pages.length)}
+                onClick={() => onClick(pages.length)}
                 href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
@@ -131,7 +133,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
             <li>
               <a
                 href="#"
-                onClick={() => props.onClick(props.page + 1)}
+                onClick={() => onClick(props.page + 1)}
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
                 Next
