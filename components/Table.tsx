@@ -5,6 +5,7 @@ import {
   getSortedRowModel,
 } from "@tanstack/table-core";
 import { flexRender, useReactTable } from "@tanstack/react-table";
+import ChevronDown from "@/components/icons/ChevronDown";
 
 const debugTable = process.env.NEXT_PUBLIC_DEBUG_TABLES === "true";
 
@@ -49,8 +50,16 @@ function Table<T>({ data, columns }: Props<T>) {
                       </div>
                       <div className="ml-auto">
                         {{
-                          asc: "🔼",
-                          desc: "🔽",
+                          asc: (
+                            <div className="rotate-180">
+                              <ChevronDown />
+                            </div>
+                          ),
+                          desc: (
+                            <div>
+                              <ChevronDown />
+                            </div>
+                          ),
                         }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     </div>
