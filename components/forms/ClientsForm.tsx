@@ -1,7 +1,12 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Formik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import { FormikHelpers } from "formik/dist/types";
@@ -12,6 +17,7 @@ import { NewClientsRequest } from "@/types/clients/new-clients-request";
 import RadioCustom from "../Checkboxes/RadioCustom";
 import Button from "../buttons/Button";
 import CheckIcon from "../svg/CheckIcon";
+import { useRouter } from "next/navigation";
 
 type FormType = NewClientsRequest;
 
@@ -47,6 +53,8 @@ type PropsType = {};
 export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const router = useRouter();
+
   const onSuccessCallback = () => {
     setIsSuccess(true);
     setTimeout(() => setIsSuccess(false), 3000); // Hide alert after 3 seconds
@@ -66,6 +74,14 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
     },
     [mutate]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        router.push("/clients");
+      }, 5000);
+    }
+  }, [isSuccess, router]);
 
   return (
     <>
