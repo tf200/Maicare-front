@@ -1,6 +1,6 @@
 "use client";
 
-import { NewDiagnosisRequest } from "@/types/dto/new-diagnosis-request";
+import { NewDiagnosisReqDto } from "@/types/diagnosis/new-diagnosis-req-dto";
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { Formik } from "formik";
@@ -14,7 +14,7 @@ import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
 
 type FormType = Omit<
-  NewDiagnosisRequest,
+  NewDiagnosisReqDto,
   "client" | "severity" | "date_of_diagnosis" | "diagnosing_clinician"
 > & {
   severity: DiagnosisSeverity | "";

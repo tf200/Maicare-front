@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   // TODO: remove this when auth is implemented and use the real token
-  const token = process.env.NEXT_PUBLIC_MOCK_ACCESS_TOKEN;
+  const token = localStorage.getItem("a");
   if (token) {
     config.headers.authorization = `Bearer ${token}`;
   }

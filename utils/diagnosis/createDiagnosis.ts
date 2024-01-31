@@ -1,11 +1,11 @@
-import { NewDiagnosisRequest } from "@/types/dto/new-diagnosis-request";
+import { NewDiagnosisReqDto } from "@/types/diagnosis/new-diagnosis-req-dto";
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
-import { DiagnosisResponse } from "@/types/dto/diagnosis-response";
+import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 import { DiagnosisSeverity } from "@/types/dagnosis-servity";
 import { DiagnosisFormType } from "@/components/forms/DiagnosisForm";
 
-export async function createDiagnosis(data: NewDiagnosisRequest) {
+export async function createDiagnosis(data: NewDiagnosisReqDto) {
   const response = await api.post("/client/diagnosis_create/", data);
   return response.data;
 }
@@ -24,9 +24,13 @@ export const useCreateDiagnosis = (
         diagnosing_clinician,
       });
     },
-    onSuccess: (data: DiagnosisResponse) => {
-      queryClient.invalidateQueries([client, "diagnosis"]);
-      queryClient.invalidateQueries([client, "diagnosis", data.id]);
+    onSuccess: (data: DiagnosisResDto) => {
+      queryClient.invalidateQueries([
+        "diagnosis",
+        {
+          client,
+        },
+      ]);
     },
   });
 };
