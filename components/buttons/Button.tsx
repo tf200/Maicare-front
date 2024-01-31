@@ -14,7 +14,7 @@ const Button: FunctionComponent<PropsType> = ({
     <button
       type={type}
       {...props}
-      className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
+      className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray"
     >
       {isLoading ? "Submitting..." : children}
     </button>
