@@ -14,9 +14,13 @@ const Button: FunctionComponent<PropsType> = ({
     <button
       type={type}
       {...props}
-      className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
+      className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray"
     >
-      {isLoading ? "Submitting..." : children}
+      {isLoading ? (
+        <div className="inline-block my-[2px] h-[1.23rem] w-[1.23rem] animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+      ) : (
+        children
+      )}
     </button>
   );
 };

@@ -10,7 +10,7 @@ const UseSignIn = async (
   setAlertState(["", ""]);
 
   await axios
-    .post(process.env.NEXT_PUBLIC_AUTH_API, authData)
+    .post(process.env.NEXT_PUBLIC_API_URL + "/token/", authData)
     .then((response) => {
       localStorage.setItem("a", response.data.access);
       localStorage.setItem("r", response.data.refresh);
