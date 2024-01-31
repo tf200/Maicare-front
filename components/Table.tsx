@@ -35,23 +35,23 @@ function Table<T>({ data, columns }: Props<T>) {
                     <div
                       {...{
                         className:
-                          "flex items-center" +
+                          "flex items-center relative " +
                           (header.column.getCanSort()
                             ? "cursor-pointer select-none"
                             : ""),
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      <div>
+                      <div className="w-full">
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
                       </div>
-                      <div className="ml-auto">
+                      <div className="ml-auto w-6 absolute right-0 top-0">
                         {{
                           asc: (
-                            <div className="rotate-180">
+                            <div className="rotate-180 z-1">
                               <ChevronDown />
                             </div>
                           ),
