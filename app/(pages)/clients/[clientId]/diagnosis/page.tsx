@@ -6,8 +6,9 @@ import api from "@/utils/api";
 import { DiagnosisListDto } from "@/types/diagnosis/diagnosis-list-dto";
 import Link from "next/link";
 import Table from "@/components/Table";
-import { ColumnDef } from "@tanstack/table-core";
+import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
 import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
+import Severity from "@/components/Severity";
 
 type Props = {
   params: { clientId: string };
@@ -28,9 +29,10 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       return response.data;
     }
   );
+  const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(() => {
+    const columnHelper = createColumnHelper<DiagnosisResDto>();
 
-  const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(
-    () => [
+    return [
       {
         accessorKey: "title",
         header: () => "Summary",
@@ -43,17 +45,16 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorKey: "diagnosis_code",
         header: () => "Diagnosis code",
       },
-      {
-        accessorKey: "severity",
+      columnHelper.accessor("severity", {
         header: () => "Severity",
-      },
+        cell: (info) => <Severity severity={info.getValue()} />,
+      }),
       {
         accessorKey: "date_of_diagnosis",
         header: () => "Date of diagnosis",
       },
-    ],
-    []
-  );
+    ];
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   return (

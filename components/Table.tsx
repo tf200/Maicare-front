@@ -6,6 +6,8 @@ import {
 } from "@tanstack/table-core";
 import { flexRender, useReactTable } from "@tanstack/react-table";
 
+const debugTable = process.env.NEXT_PUBLIC_DEBUG_TABLES === "true";
+
 type Props<InstanceType> = {
   data: InstanceType[];
   columns: ColumnDef<InstanceType>[];
@@ -17,7 +19,7 @@ function Table<T>({ data, columns }: Props<T>) {
     data,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    debugTable: true,
+    debugTable,
   });
   return (
     <table className="datatable-table datatable-one border-collapse w-full break-words table-auto overflow-hidden px-4 md:overflow-auto md:table-fixed md:px-8">
@@ -31,20 +33,25 @@ function Table<T>({ data, columns }: Props<T>) {
                     <div
                       {...{
                         className:
-                          "flex items-center" + header.column.getCanSort()
+                          "flex items-center" +
+                          (header.column.getCanSort()
                             ? "cursor-pointer select-none"
-                            : "",
+                            : ""),
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      {{
-                        asc: " 🔼",
-                        desc: " 🔽",
-                      }[header.column.getIsSorted() as string] ?? null}
+                      <div>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </div>
+                      <div className="ml-auto">
+                        {{
+                          asc: " 🔼",
+                          desc: " 🔽",
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
                     </div>
                   )}
                 </th>
