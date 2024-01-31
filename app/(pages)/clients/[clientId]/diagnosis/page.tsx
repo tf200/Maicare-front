@@ -9,6 +9,7 @@ import Severity from "@/components/Severity";
 import Pagination from "@/components/Pagination";
 import { useDiagnosisList } from "@/utils/diagnosis/getDiagnosisList";
 import { PAGE_SIZE } from "@/consts";
+import Panel from "@/components/Panel";
 
 type Props = {
   params: { clientId: string };
@@ -51,44 +52,36 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 
   if (isLoading) return <div>Loading...</div>;
   return (
-    <div>
-      <div className="mb-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-          <h3 className="font-medium text-black dark:text-white">
-            Diagnosis list
-          </h3>
-        </div>
-
-        <div className="p-4 md:p-6 xl:p-9">
-          <div className="mb-7.5 flex flex-wrap gap-5 xl:gap-20">
-            <Link
-              href={`/clients/${clientId}/diagnosis/new`}
-              className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Add new diagnosis
-            </Link>
-          </div>
-        </div>
-        <Pagination
-          page={page}
-          disabled={isFetching}
-          onClick={setPage}
-          totalPages={Math.ceil(data.count / PAGE_SIZE)}
-        />
-        {data && <Table data={data.results} columns={columnDef} />}
-        <Pagination
-          page={page}
-          disabled={isFetching}
-          onClick={setPage}
-          totalPages={Math.ceil(data.count / PAGE_SIZE)}
-        />
-        {isError && (
-          <p role="alert" className="text-red">
-            An error has occurred
-          </p>
-        )}
-      </div>
-    </div>
+    <Panel
+      title={"Diagnosis List"}
+      sideActions={
+        <Link
+          href={`/clients/${clientId}/diagnosis/new`}
+          className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          Add new diagnosis
+        </Link>
+      }
+    >
+      <Pagination
+        page={page}
+        disabled={isFetching}
+        onClick={setPage}
+        totalPages={Math.ceil(data.count / PAGE_SIZE)}
+      />
+      {data && <Table data={data.results} columns={columnDef} />}
+      <Pagination
+        page={page}
+        disabled={isFetching}
+        onClick={setPage}
+        totalPages={Math.ceil(data.count / PAGE_SIZE)}
+      />
+      {isError && (
+        <p role="alert" className="text-red">
+          An error has occurred
+        </p>
+      )}
+    </Panel>
   );
 };
 
