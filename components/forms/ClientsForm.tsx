@@ -10,6 +10,7 @@ import CameraIcon from "@/components/svg/CameraIcon";
 import { useCreateClients } from "@/utils/clients/createClients";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
 import RadioCustom from "../Checkboxes/RadioCustom";
+import Button from "../buttons/Button";
 
 type FormType = NewClientsRequest;
 
@@ -42,8 +43,6 @@ export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 type PropsType = {};
 
 export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
-  const [selectedGender, setSelectedGender] = useState(initialValues.gender);
-
   const { mutate, isLoading } = useCreateClients();
 
   const onSubmit = useCallback(
@@ -228,9 +227,14 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
               />
             </div>
 
-            <button className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray">
-              Send Message
-            </button>
+            <Button
+              type={"submit"}
+              disabled={isLoading}
+              isLoading={isLoading}
+              formNoValidate={true}
+            >
+              Submit Clients
+            </Button>
           </div>
         </form>
       )}
