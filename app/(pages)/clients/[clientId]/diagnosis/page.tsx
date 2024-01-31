@@ -50,7 +50,20 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  const pagination = data ? (
+    <div className="p-4 sm:p-6 xl:p-7.5 flex items-center justify-between">
+      <Pagination
+        page={page}
+        disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+        onClick={setPage}
+        totalPages={Math.ceil(data.count / PAGE_SIZE)}
+      />
+      {isFetching && <div className="text-sm">Fetching page {page}...</div>}
+    </div>
+  ) : (
+    <></>
+  );
+
   return (
     <Panel
       title={"Diagnosis List"}
@@ -63,19 +76,10 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         </Link>
       }
     >
-      <Pagination
-        page={page}
-        disabled={isFetching}
-        onClick={setPage}
-        totalPages={Math.ceil(data.count / PAGE_SIZE)}
-      />
+      {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+      {pagination}
       {data && <Table data={data.results} columns={columnDef} />}
-      <Pagination
-        page={page}
-        disabled={isFetching}
-        onClick={setPage}
-        totalPages={Math.ceil(data.count / PAGE_SIZE)}
-      />
+      {pagination}
       {isError && (
         <p role="alert" className="text-red">
           An error has occurred

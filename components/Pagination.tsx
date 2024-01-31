@@ -48,7 +48,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
   } = usePagination(props);
   const onClick = props.disabled ? () => {} : props.onClick;
   return (
-    <div className="p-4 sm:p-6 xl:p-7.5">
+    <div>
       <nav>
         <ul className="flex flex-wrap items-center gap-2">
           {isFirstPage ? (
