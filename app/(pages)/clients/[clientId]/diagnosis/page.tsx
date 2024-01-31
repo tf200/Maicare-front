@@ -47,7 +47,11 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
       columnHelper.accessor("severity", {
         header: () => "Severity",
-        cell: (info) => <Severity severity={info.getValue()} />,
+        cell: (info) => (
+          <div className="w-full flex justify-center">
+            <Severity severity={info.getValue()} />
+          </div>
+        ),
       }),
       {
         accessorKey: "date_of_diagnosis",

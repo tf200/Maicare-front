@@ -48,8 +48,8 @@ function Table<T>({ data, columns }: Props<T>) {
                       </div>
                       <div className="ml-auto">
                         {{
-                          asc: " 🔼",
-                          desc: " 🔽",
+                          asc: "🔼",
+                          desc: "🔽",
                         }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     </div>
@@ -61,25 +61,19 @@ function Table<T>({ data, columns }: Props<T>) {
         ))}
       </thead>
       <tbody>
-        {table
-          .getRowModel()
-          .rows.slice(0, 10)
-          .map((row) => {
-            return (
-              <tr key={row.id} className="border-t border-stroke">
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+        {table.getRowModel().rows.map((row) => {
+          return (
+            <tr key={row.id} className="border-t border-stroke">
+              {row.getVisibleCells().map((cell) => {
+                return (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
