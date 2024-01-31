@@ -31,6 +31,18 @@ const ClientsPage: FunctionComponent = (props) => {
             >
               Add new diagnosis
             </Link>
+            <Link
+              href={`/clients/2/emergency`}
+              className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Emergency contact list
+            </Link>
+            <Link
+              href={`/clients/2/emergency/new`}
+              className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Add new emergency contact
+            </Link>
           </div>
         </div>
       </div>
