@@ -1,34 +1,50 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import api from "@/utils/api";
-import { DiagnosisListDto } from "@/types/diagnosis/diagnosis-list-dto";
+import { DiagnosisListResDto } from "@/types/diagnosis/diagnosis-list-res-dto";
 import Link from "next/link";
 import Table from "@/components/Table";
 import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
 import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 import Severity from "@/components/Severity";
+import Pagination from "@/components/Pagination";
 
 type Props = {
   params: { clientId: string };
 };
 
-const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { data, isLoading, isError } = useQuery(
-    [
-      "diagnosis",
+// TODO: this is assumed to be 10,
+const PAGE_SIZE = 10;
+
+const fetchDiagnosis =
+  (clientId: string, page = 1) =>
+  async () => {
+    const response = await api.get<DiagnosisListResDto>(
+      `client/diagnosis_list/${clientId}/`,
       {
-        client: clientId,
-      },
-    ],
-    async () => {
-      const response = await api.get<DiagnosisListDto>(
-        `client/diagnosis_list/${clientId}`
-      );
-      return response.data;
-    }
-  );
+        params: {
+          page,
+        },
+      }
+    );
+    return response.data;
+  };
+
+const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [clientId, "diagnosis", page],
+    queryFn: fetchDiagnosis(clientId, page),
+    keepPreviousData: true,
+    getNextPageParam: (lastPage) => {
+      return lastPage.next;
+    },
+    getPreviousPageParam: (lastPage) => {
+      return lastPage.previous;
+    },
+  });
   const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(() => {
     const columnHelper = createColumnHelper<DiagnosisResDto>();
 
@@ -80,7 +96,17 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             </Link>
           </div>
         </div>
-        {data && <Table data={data} columns={columnDef} />}
+        <Pagination
+          page={page}
+          onClick={setPage}
+          totalPages={Math.ceil(data.count / PAGE_SIZE)}
+        />
+        {data && <Table data={data.results} columns={columnDef} />}
+        <Pagination
+          page={page}
+          onClick={setPage}
+          totalPages={Math.ceil(data.count / PAGE_SIZE)}
+        />
         {isError && (
           <p role="alert" className="text-red">
             An error has occurred

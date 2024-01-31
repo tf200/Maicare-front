@@ -20,6 +20,7 @@ function Table<T>({ data, columns }: Props<T>) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable,
+    manualPagination: true,
   });
   return (
     <table className="datatable-table datatable-one border-collapse w-full break-words table-auto overflow-hidden px-4 md:overflow-auto md:table-fixed md:px-8">
