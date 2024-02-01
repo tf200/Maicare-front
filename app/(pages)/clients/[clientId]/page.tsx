@@ -27,7 +27,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
         </div>
         <div className="flex flex-col gap-9">
           <Panel title={"Medical Record"} containerClassName="px-7 py-4">
-            <MedicalRecordSummary clientId={clientId} />
+            <MedicalRecordSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel title={"Reports & Documents"} containerClassName="px-7 py-4">
             <DocumentsSummary clientId={clientId} />
