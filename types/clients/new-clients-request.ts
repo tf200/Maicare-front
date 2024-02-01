@@ -1,5 +1,5 @@
 export type NewClientsRequest = {
-  id: number;
+  // id: number;
   first_name: string;
   last_name: string;
   email: string;
@@ -9,5 +9,5 @@ export type NewClientsRequest = {
   gender: string;
   filenumber: number;
   phone_number: string;
-  profile_picture: null;
+  // profile_picture: null;
 };
