@@ -17,7 +17,7 @@ type Props = {
 
 const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
-    useDiagnosisList(clientId);
+    useDiagnosisList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(() => {
     const columnHelper = createColumnHelper<DiagnosisResDto>();

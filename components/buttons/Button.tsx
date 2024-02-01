@@ -1,13 +1,16 @@
 import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
+import LoadingCircle from "@/components/icons/LoadingCircle";
 
 type PropsType = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
+  loadingText?: string;
 };
 
 const Button: FunctionComponent<PropsType> = ({
   isLoading = false,
   children,
   type = "button",
+  loadingText,
   ...props
 }) => {
   return (
@@ -17,7 +20,12 @@ const Button: FunctionComponent<PropsType> = ({
       className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray"
     >
       {isLoading ? (
-        <div className="inline-block my-[2px] h-[1.23rem] w-[1.23rem] animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+        <>
+          <span className="animate-spin">
+            <LoadingCircle />
+          </span>
+          <span className="ml-2">{loadingText ?? "Loading..."}</span>
+        </>
       ) : (
         children
       )}
