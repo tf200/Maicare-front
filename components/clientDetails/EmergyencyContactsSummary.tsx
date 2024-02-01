@@ -4,6 +4,7 @@ import React, { FunctionComponent } from "react";
 import { useEmergencyContacts } from "@/utils/emergency/getEmergencyContacts";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
+import { useRouter } from "next/navigation";
 
 type Props = {
   clientId: number;
@@ -11,12 +12,19 @@ type Props = {
 
 const EmergencyContactsSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading } = useEmergencyContacts(clientId);
+  const router = useRouter();
   if (isLoading) return <Loader />;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((contact) => {
         return (
-          <li key={contact.id} className="grid grid-cols-2 hover:bg-gray-3 p-2">
+          <li
+            key={contact.id}
+            onClick={() =>
+              router.push(`/clients/${clientId}/emergency/${contact.id}`)
+            }
+            className="grid grid-cols-2 hover:bg-gray-3 p-2 cursor-pointer rounded-xl"
+          >
             <DetailCell
               ignoreIfEmpty={true}
               label={contact.first_name + " " + contact.last_name}
