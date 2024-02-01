@@ -37,10 +37,10 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
       columnHelper.accessor("severity", {
         header: (Header) => (
-          <div className="w-full flex justify-center">Severity</div>
+          <div className="flex justify-center w-full">Severity</div>
         ),
         cell: (info) => (
-          <div className="w-full flex justify-center">
+          <div className="flex justify-center w-full">
             <Severity severity={info.getValue()} />
           </div>
         ),
@@ -72,7 +72,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       sideActions={
         <Link
           href={`/clients/${clientId}/diagnosis/new`}
-          className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Add new diagnosis
         </Link>
