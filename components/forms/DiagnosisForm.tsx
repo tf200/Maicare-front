@@ -161,6 +161,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
+              loadingText={"Submitting Diagnosis..."}
             >
               Submit Diagnosis
             </Button>
