@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <main className="h-[100vh]">
-      <div className="rounded-sm h-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="h-full bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center h-full">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -33,7 +33,7 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
               </Link>
 
               <p className="2xl:px-20 text-[30px]">
-                Health<span className="font-bold">People</span>
+                MAI<span className="font-bold">Care</span>
               </p>
             </div>
           </div>

@@ -75,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             alt="Logo"
           />
           <p className="px-4 text-[24px] text-white">
-            health<span className="font-bold">People</span>
+            MAI<span className="font-bold">Care</span>
           </p>
         </Link>
 

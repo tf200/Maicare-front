@@ -34,19 +34,19 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="p-4 sm:p-12.5 xl:p-17.5">
-      <div className="flex flex-col items-center justify-center xl:hidden mb-6">
+      <div className="flex flex-col items-center justify-center mb-6 xl:hidden">
         <Image
-          className="dark:hidden pb-2"
+          className="pb-2 dark:hidden"
           src={"/images/logo/logo.ico"}
           alt="Logo"
           width={80}
           height={12}
         />
         <p className="2xl:px-20 text-[24px]">
-          Health<span className="font-bold">People</span>
+          MAI<span className="font-bold">Care</span>
         </p>
       </div>
-      <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+      <h2 className="text-2xl font-bold text-black mb-9 dark:text-white sm:text-title-xl2">
         Sign In to the website
       </h2>
 
@@ -84,7 +84,7 @@ const SignIn: React.FC = () => {
           <button
             disabled={isLoading}
             type="submit"
-            className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+            className="w-full p-4 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
           >
             {isLoading ? (
               <div className="inline-block h-[1.23rem] w-[1.23rem] animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
@@ -96,7 +96,7 @@ const SignIn: React.FC = () => {
         {alertState[0] != "" && (
           <h5
             style={{ color: alertState[1] }}
-            className="w-full text-center mb-3 text-md font-semibold text-red"
+            className="w-full mb-3 font-semibold text-center text-md text-red"
           >
             {alertState[0]}
           </h5>
