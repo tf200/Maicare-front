@@ -23,7 +23,7 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
           <ProfilePicture profilePicture={data.profile_picture} />
         </div>
         <DetailCell
-          label={"Name"}
+          label={"Full Name"}
           value={`${data.first_name} ${data.last_name}`}
         />
         <DetailCell label={"Email"} type={"email"} value={data.email} />
