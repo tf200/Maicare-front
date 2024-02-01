@@ -148,10 +148,10 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                   id={"firt_name"}
                   placeholder={"Enter your first name"}
                   className="w-full xl:w-1/2"
-                  value={values.firt_name}
+                  value={values.first_name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.firt_name && errors.firt_name}
+                  error={touched.first_name && errors.first_name}
                   required={true}
                 />
 
