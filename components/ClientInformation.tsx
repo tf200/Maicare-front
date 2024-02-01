@@ -4,6 +4,8 @@ import React, { FunctionComponent } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
+import ProfilePicturePlaceholder from "@/components/icons/ProfilePicturePlaceholder";
+import ProfilePicture from "@/components/ProfilePicture";
 
 type Props = {
   clientId: string;
@@ -17,6 +19,9 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
   if (data) {
     return (
       <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-2">
+          <ProfilePicture profilePicture={data.profile_picture} />
+        </div>
         <DetailCell
           label={"Name"}
           value={`${data.first_name} ${data.last_name}`}
