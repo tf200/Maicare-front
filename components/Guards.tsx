@@ -1,5 +1,5 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, redirect, useRouter } from "next/navigation";
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -7,14 +7,14 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   if (typeof window !== "undefined") {
     if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
-      router.push("/dashboard/crm");
+      redirect("/dashboard/crm");
     } else if (localStorage.getItem("a") || pathName.startsWith("/signin")) {
       return children;
     } else {
-      router.push("/signin");
+      redirect("/signin");
     }
   } else {
-    return <></>;
+    router.push("/signin");
   }
 };
 
