@@ -1,3 +1,4 @@
+"use client";
 import "./globals.css";
 import "./data-tables-css.css";
 import Guards from "@/components/Guards";
