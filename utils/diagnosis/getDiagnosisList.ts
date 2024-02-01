@@ -6,7 +6,6 @@ import { useQuery } from "react-query";
 const fetchDiagnosis =
   (clientId: string, page = 1) =>
   async () => {
-    console.log("page changed", page);
     const response = await api.get<DiagnosisListResDto>(
       `client/diagnosis_list/${clientId}/`,
       {
@@ -21,7 +20,6 @@ const fetchDiagnosis =
 export const useDiagnosisList = (clientId: string) => {
   const [page, setPage] = useState(1);
 
-  console.log("page changed hook", page);
   const query = useQuery({
     queryKey: [clientId, "diagnosis", page],
     queryFn: fetchDiagnosis(clientId, page),
