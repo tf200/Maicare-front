@@ -19,10 +19,10 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           <Panel title={"Client information"} containerClassName="px-7 py-4">
-            <ClientInformation clientId={clientId} />
+            <ClientInformation clientId={parseInt(clientId)} />
           </Panel>
           <Panel title={"Emergency Contacts"} containerClassName="px-7 py-4">
-            <EmergencyContactsSummary clientId={clientId} />
+            <EmergencyContactsSummary clientId={parseInt(clientId)} />
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
@@ -30,7 +30,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <MedicalRecordSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel title={"Reports & Documents"} containerClassName="px-7 py-4">
-            <DocumentsSummary clientId={clientId} />
+            <DocumentsSummary clientId={parseInt(clientId)} />
           </Panel>
         </div>
       </div>

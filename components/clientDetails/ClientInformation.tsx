@@ -4,11 +4,10 @@ import React, { FunctionComponent } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
-import ProfilePicturePlaceholder from "@/components/icons/ProfilePicturePlaceholder";
 import ProfilePicture from "@/components/ProfilePicture";
 
 type Props = {
-  clientId: string;
+  clientId: number;
 };
 
 const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 
 type Props = {
-  clientId: string;
+  clientId: number;
 };
 
 const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
