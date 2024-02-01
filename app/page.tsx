@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "HealtyTool",
-  description: "This is Home for HealtyTool",
+  title: "MAICare",
+  description: "This is Home for MAICare",
   // other metadata
 };
 

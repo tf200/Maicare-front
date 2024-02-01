@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "HealtyTool",
-  description: "This is Login Page for HealtyTool",
+  title: "MAICare",
+  description: "This is Login Page for MAICare",
 };
 
 const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
