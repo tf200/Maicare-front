@@ -3,6 +3,7 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
+import { FormikHelpers } from "formik/dist/types";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
 import { EMERGENCY_RELATION_OPTIONS } from "@/consts";
@@ -13,39 +14,48 @@ type PropsType = {
   clientId: string;
 };
 
+type FormTypes = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  relationship: string;
+  address: string;
+};
+
+const initialValues: FormTypes = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone_number: "",
+  relationship: "",
+  address: "",
+};
+
 export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   clientId,
 }) => {
   const { mutate, isLoading } = useCreateEmergencyContact(parseInt(clientId));
-  const Submit = useCallback(
-    (values: {}) => {
-      mutate(values);
+  const submit = useCallback(
+    (values: FormTypes) => {
+      mutate(values, {
+        onSuccess: formik.resetForm,
+      });
     },
     [mutate]
   );
 
-  const formik = useFormik({
-    initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone_number: "",
-      relationship: "",
-      adress: "",
-    },
+  const formik = useFormik<FormTypes>({
+    initialValues: initialValues,
     validationSchema: Yup.object({
       first_name: Yup.string().required("Please provide first name"),
       last_name: Yup.string().required("Please provide last name"),
       email: Yup.string().required("Please provide email address"),
       phone_number: Yup.string().required("Please provide phone number"),
       relationship: Yup.string().required("Please provide relation"),
-      adress: Yup.string().required(
-        "Please provide address physique"
-      ),
+      address: Yup.string().required("Please provide address physique"),
     }),
-    onSubmit: (values) => {
-      Submit(values);
-    },
+    onSubmit: submit,
   });
 
   return (
@@ -56,6 +66,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           name={"first_name"}
           placeholder={"Enter First Name"}
           type={"text"}
+          value={formik.values.first_name}
           className="w-full xl:w-1/2"
           error={
             formik.touched.first_name && formik.errors.first_name
@@ -70,6 +81,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           label={"Last Name"}
           name={"last_name"}
           type={"text"}
+          value={formik.values.last_name}
           placeholder={"Enter Last Name"}
           error={
             formik.touched.last_name && formik.errors.last_name
@@ -85,6 +97,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         label={"Email address"}
         name={"email"}
         type={"text"}
+        value={formik.values.email}
         placeholder={"Enter email address"}
         error={
           formik.touched.email && formik.errors.email
@@ -100,6 +113,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           name={"phone_number"}
           placeholder={"Enter phone number"}
           type={"text"}
+          value={formik.values.phone_number}
           className="w-full xl:w-1/2"
           error={
             formik.touched.phone_number && formik.errors.phone_number
@@ -115,6 +129,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           name={"relationship"}
           options={EMERGENCY_RELATION_OPTIONS}
           className="w-full xl:w-1/2"
+          value={formik.values.relationship}
           error={
             formik.touched.relationship && formik.errors.relationship
               ? formik.errors.relationship
@@ -128,12 +143,13 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       <InputFieldThin
         className={"w-full mb-4.5"}
         label={"Address physique"}
-        name={"adress"}
+        name={"address"}
         type={"text"}
+        value={formik.values.address}
         placeholder={"Enter address physique"}
         error={
-          formik.touched.adress && formik.errors.adress
-            ? formik.errors.adress
+          formik.touched.address && formik.errors.address
+            ? formik.errors.address
             : null
         }
         onChange={formik.handleChange}
