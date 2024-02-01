@@ -1,4 +1,3 @@
-"use client";
 import "./globals.css";
 import "./data-tables-css.css";
 import Guards from "@/components/Guards";
@@ -13,9 +12,9 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body>
-        <Guards>
-          <Providers>{children}</Providers>
-        </Guards>
+        <Providers>
+          <Guards>{children}</Guards>
+        </Providers>
       </body>
     </html>
   );
