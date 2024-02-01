@@ -9,10 +9,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ClientsResDto } from "@/types/clients/clients-res-dto";
 import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
+import { useRouter } from "next/navigation";
 
 const ClientsPage: FunctionComponent = () => {
   const { page, setPage, data, isError, isFetching, isLoading } =
     useClientsList();
+
+  const router = useRouter();
 
   const columnDef = useMemo<ColumnDef<ClientsResDto>[]>(() => {
     return [
@@ -54,6 +57,10 @@ const ClientsPage: FunctionComponent = () => {
     <></>
   );
 
+  const handleRowClick = (client: ClientsResDto) => {
+    router.push(`/clients/${client.id}`);
+  };
+
   return (
     <Panel
       title={"Clients List"}
@@ -69,7 +76,13 @@ const ClientsPage: FunctionComponent = () => {
       {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
       {pagination}
 
-      {data && <Table data={data.results} columns={columnDef} />}
+      {data && (
+        <Table
+          onRowClick={handleRowClick}
+          data={data.results}
+          columns={columnDef}
+        />
+      )}
 
       {pagination}
 
