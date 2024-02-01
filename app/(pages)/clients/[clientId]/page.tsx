@@ -1,7 +1,10 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
-import ClientInformation from "@/components/ClientInformation";
+import ClientInformation from "@/components/clientDetails/ClientInformation";
+import MedicalRecordSummary from "@/components/clientDetails/MedicalRecordSummary";
+import EmergencyContactsSummary from "@/components/clientDetails/EmergyencyContactsSummary";
+import DocumentsSummary from "@/components/clientDetails/DocumentsSummary";
 
 type Props = {
   params: { clientId: string };
@@ -19,31 +22,15 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <ClientInformation clientId={clientId} />
           </Panel>
           <Panel title={"Emergency Contacts"} containerClassName="px-7 py-4">
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
-            <p>These are emergency contacts</p>
+            <EmergencyContactsSummary clientId={clientId} />
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
           <Panel title={"Medical Record"} containerClassName="px-7 py-4">
-            <p>Diagnosis</p>
-            <p>Treatment</p>
-            <p>Treatment</p>
-            <p>Diagnosis</p>
-            <p>Treatment</p>
-            <p>Diagnosis</p>
+            <MedicalRecordSummary clientId={clientId} />
           </Panel>
           <Panel title={"Reports & Documents"} containerClassName="px-7 py-4">
-            <p>Reports and documents</p>
-            <p>Reports and documents</p>
-            <p>Reports and documents</p>
-            <p>Reports and documents</p>
-            <p>Reports and documents</p>
+            <DocumentsSummary clientId={clientId} />
           </Panel>
         </div>
       </div>
