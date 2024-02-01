@@ -24,7 +24,7 @@ function Table<T>({ data, columns }: Props<T>) {
     manualPagination: true,
   });
   return (
-    <table className="datatable-table datatable-one border-collapse w-full break-words table-auto overflow-hidden px-4 md:overflow-auto md:table-fixed md:px-8">
+    <table className="w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8">
       <thead className="px-4 border-separate">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr className="border-t border-stroke" key={headerGroup.id}>
@@ -48,7 +48,7 @@ function Table<T>({ data, columns }: Props<T>) {
                           header.getContext()
                         )}
                       </div>
-                      <div className="ml-auto w-6 absolute right-0 top-0">
+                      <div className="absolute top-0 right-0 w-6 ml-auto">
                         {{
                           asc: (
                             <div className="rotate-180 z-1">

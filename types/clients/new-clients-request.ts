@@ -1,5 +1,6 @@
 export type NewClientsRequest = {
-  firt_name: string;
+  // id: number;
+  first_name: string;
   last_name: string;
   email: string;
   organisation: string;
@@ -8,4 +9,5 @@ export type NewClientsRequest = {
   gender: string;
   filenumber: number;
   phone_number: string;
+  // profile_picture: null;
 };

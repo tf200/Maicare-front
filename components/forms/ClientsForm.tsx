@@ -24,7 +24,7 @@ type FormType = NewClientsRequest;
 export type ClientsFormType = FormType;
 
 const initialValues: FormType = {
-  firt_name: "",
+  first_name: "",
   last_name: "",
   email: "",
   organisation: "",
@@ -36,7 +36,7 @@ const initialValues: FormType = {
 };
 
 export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  firt_name: Yup.string().required("Please provide first name"),
+  first_name: Yup.string().required("Please provide first name"),
   last_name: Yup.string().required("Please provide last Name"),
   email: Yup.string().required("Please provide your email Address"),
   phone_number: Yup.string().required("Please provide phon number"),
@@ -148,10 +148,10 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                   id={"firt_name"}
                   placeholder={"Enter your first name"}
                   className="w-full xl:w-1/2"
-                  value={values.firt_name}
+                  value={values.first_name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched.firt_name && errors.firt_name}
+                  error={touched.first_name && errors.first_name}
                   required={true}
                 />
 
