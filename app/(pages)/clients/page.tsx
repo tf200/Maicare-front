@@ -1,52 +1,84 @@
-import React, { FunctionComponent } from "react";
+"use client";
+
+import React, { FunctionComponent, useMemo } from "react";
 import Link from "next/link";
+import Panel from "@/components/Panel";
+import { useClientsList } from "../../../utils/clients/getClientsList";
+import Table from "@/components/Table";
+import { ColumnDef } from "@tanstack/react-table";
+import { ClientsResDto } from "@/types/clients/clients-res-dto";
+import Pagination from "@/components/Pagination";
+import { PAGE_SIZE } from "@/consts";
 
-const ClientsPage: FunctionComponent = (props) => {
-  return (
-    <div>
-      <div className="mb-10 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="py-4 border-b border-stroke px-7 dark:border-strokedark">
-          <h3 className="font-medium text-black dark:text-white">
-            Clients list (WORK IN PROGRESS!)
-          </h3>
-        </div>
+const ClientsPage: FunctionComponent = () => {
+  const { page, setPage, data, isError, isFetching, isLoading } =
+    useClientsList();
 
-        <div className="p-4 md:p-6 xl:p-9">
-          <div className="mb-7.5 flex flex-wrap gap-5 xl:gap-20">
-            <Link
-              href={`/clients/new`}
-              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Add new client
-            </Link>
-            <Link
-              href={`/clients/2/diagnosis`}
-              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Diagnosis list
-            </Link>
-            <Link
-              href={`/clients/2/diagnosis/new`}
-              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Add new diagnosis
-            </Link>
-            <Link
-              href={`/clients/2/emergency`}
-              className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Emergency contact list
-            </Link>
-            <Link
-              href={`/clients/2/emergency/new`}
-              className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Add new emergency contact
-            </Link>
-          </div>
-        </div>
-      </div>
+  const columnDef = useMemo<ColumnDef<ClientsResDto>[]>(() => {
+    return [
+      {
+        accessorKey: "first_name",
+        header: () => "First Name",
+        cell: (info) => info.getValue() || "Not Available",
+      },
+      {
+        accessorKey: "last_name",
+        header: () => "Last Name",
+        cell: (info) => info.getValue() || "Not Available",
+      },
+      {
+        accessorKey: "email",
+        header: () => "Email",
+        cell: (info) => info.getValue() || "Not Available",
+      },
+
+      {
+        accessorKey: "phone_number",
+        header: () => "Phone Number",
+        cell: (info) => info.getValue() || "Not Available",
+      },
+    ];
+  }, []);
+
+  const pagination = data ? (
+    <div className="p-4 sm:p-6 xl:p-7.5 flex items-center justify-between">
+      <Pagination
+        page={page}
+        disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+        onClick={setPage}
+        totalPages={Math.ceil(data.count / PAGE_SIZE)}
+      />
+      {isFetching && <div className="text-sm">Fetching page {page}...</div>}
     </div>
+  ) : (
+    <></>
+  );
+
+  return (
+    <Panel
+      title={"Clients List"}
+      sideActions={
+        <Link
+          href={`/clients/new`}
+          className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+        >
+          Add new Clients
+        </Link>
+      }
+    >
+      {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+      {pagination}
+
+      {data && <Table data={data.results} columns={columnDef} />}
+
+      {pagination}
+
+      {isError && (
+        <p role="alert" className="text-red">
+          An error has occurred
+        </p>
+      )}
+    </Panel>
   );
 };
 
