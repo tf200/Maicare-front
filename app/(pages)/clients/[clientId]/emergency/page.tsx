@@ -22,26 +22,32 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
       {
         accessorKey: "first_name",
         header: () => "First name",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "last_name",
         header: () => "Last name",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "email",
         header: () => "Email address",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "phone_number",
         header: () => "Phone number",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "relationship",
         header: () => "Relation",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "address",
         header: () => "Address physique",
+        cell: (info) => info.getValue() || "Not Available",
       },
     ];
   }, []);
