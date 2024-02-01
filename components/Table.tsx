@@ -12,9 +12,10 @@ const debugTable = process.env.NEXT_PUBLIC_DEBUG_TABLES === "true";
 type Props<InstanceType> = {
   data: InstanceType[];
   columns: ColumnDef<InstanceType>[];
+  onRowClick?: (instance: InstanceType) => void;
 };
 
-function Table<T>({ data, columns }: Props<T>) {
+function Table<T>({ data, columns, onRowClick }: Props<T>) {
   const table = useReactTable({
     columns,
     data,
@@ -73,7 +74,11 @@ function Table<T>({ data, columns }: Props<T>) {
       <tbody>
         {table.getRowModel().rows.map((row) => {
           return (
-            <tr key={row.id} className="border-t border-stroke">
+            <tr
+              onClick={() => onRowClick?.(row.original)}
+              key={row.id}
+              className="border-t border-stroke"
+            >
               {row.getVisibleCells().map((cell) => {
                 return (
                   <td key={cell.id}>
