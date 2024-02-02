@@ -9,6 +9,8 @@ import Pagination from "@/components/Pagination";
 import { useDiagnosisList } from "@/utils/diagnosis/getDiagnosisList";
 import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
+import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
+import LinkButton from "@/components/buttons/LinkButton";
 
 type Props = {
   params: { clientId: string };
@@ -18,8 +20,8 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
     useDiagnosisList(parseInt(clientId));
 
-  const columnDef = useMemo<ColumnDef<DiagnosisResDto>[]>(() => {
-    const columnHelper = createColumnHelper<DiagnosisResDto>();
+  const columnDef = useMemo<ColumnDef<DiagnosisListItem>[]>(() => {
+    const columnHelper = createColumnHelper<DiagnosisListItem>();
 
     return [
       {
@@ -52,28 +54,39 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   }, []);
 
   const pagination = data ? (
-    <div className="p-4 sm:p-6 xl:p-7.5 flex items-center justify-between">
+    <>
       <Pagination
         page={page}
         disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
         onClick={setPage}
         totalPages={Math.ceil(data.count / PAGE_SIZE)}
       />
-      {isFetching && <div className="text-sm">Fetching page {page}...</div>}
-    </div>
+      {isFetching && (
+        <div className="text-sm ml-2">Fetching page {page}...</div>
+      )}
+    </>
   ) : (
     <></>
   );
 
   return (
     <>
+      <div className="flex flex-wrap items-center p-4">
+        {pagination}
+        <LinkButton
+          text={"Add a Diagnosis"}
+          href={"diagnosis/new"}
+          className="ml-auto"
+        />
+      </div>
       {isLoading && <Loader />}
-      {pagination}
       {data && <Table data={data.results} columns={columnDef} />}
-      {pagination}
+      <div className="flex flex-wrap justify-between items-center p-4">
+        {pagination}
+      </div>
       {isError && (
         <p role="alert" className="text-red">
-          An error has occurred
+          Sorry an error has prevented us from loading the diagnosis list.
         </p>
       )}
     </>

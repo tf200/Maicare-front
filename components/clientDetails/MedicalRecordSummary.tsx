@@ -3,9 +3,9 @@
 import React, { FunctionComponent } from "react";
 import { useLatestDiagnosis } from "@/utils/diagnosis/getLatestDiagnosis";
 import Loader from "@/components/common/Loader";
-import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 import Severity from "@/components/Severity";
 import { useRouter } from "next/navigation";
+import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
 
 type Props = {
   clientId: number;
@@ -28,7 +28,7 @@ const MedicalRecordSummary: FunctionComponent<Props> = ({ clientId }) => {
 export default MedicalRecordSummary;
 
 type DiagnosisItemProps = {
-  diagnosis: DiagnosisResDto;
+  diagnosis: DiagnosisListItem;
 };
 
 const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({
