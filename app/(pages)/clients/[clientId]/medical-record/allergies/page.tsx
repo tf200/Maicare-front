@@ -73,8 +73,8 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Diagnosis"}
-          href={"../diagnosis/new"}
+          text={"Record New Allergy"}
+          href={"../allergies/new"}
           className="ml-auto"
         />
       </div>
