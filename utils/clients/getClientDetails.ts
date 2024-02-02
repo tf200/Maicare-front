@@ -13,5 +13,6 @@ export const useClientDetails = (clientId: number) => {
   return useQuery<ClientDetailsResDto>({
     queryFn: () => getClientDetails(clientId),
     queryKey: [clientId],
+    enabled: !!clientId,
   });
 };
