@@ -9,5 +9,5 @@ export type NewClientsRequest = {
   gender: string;
   filenumber: number;
   phone_number: string;
-  // profile_picture: null;
+  profile_picture: string;
 };
