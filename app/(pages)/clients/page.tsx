@@ -22,9 +22,9 @@ const ClientsPage: FunctionComponent = () => {
     return [
       {
         id: "profilePicture",
-        header: "Profile",
+        header: () => <div className="text-center">Profile</div>,
         cell: (info) => (
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <ProfilePicture
               profilePicture={info.row.original.profile_picture}
             />
