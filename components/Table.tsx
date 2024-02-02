@@ -77,7 +77,7 @@ function Table<T>({ data, columns, onRowClick }: Props<T>) {
             <tr
               onClick={() => onRowClick?.(row.original)}
               key={row.id}
-              className="border-t border-stroke cursor-pointer hover:bg-gray-3 px-4 py-6 rounded-2xl"
+              className="px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl"
             >
               {row.getVisibleCells().map((cell) => {
                 return (

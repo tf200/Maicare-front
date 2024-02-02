@@ -10,6 +10,7 @@ import { ClientsResDto } from "@/types/clients/clients-res-dto";
 import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
 import { useRouter } from "next/navigation";
+import ProfilePicture from "@/components/ProfilePicture";
 
 const ClientsPage: FunctionComponent = () => {
   const { page, setPage, data, isError, isFetching, isLoading } =
@@ -19,6 +20,17 @@ const ClientsPage: FunctionComponent = () => {
 
   const columnDef = useMemo<ColumnDef<ClientsResDto>[]>(() => {
     return [
+      {
+        id: "profilePicture",
+        header: "Profile",
+        cell: (info) => (
+          <div className="flex justify-center items-center">
+            <ProfilePicture
+              profilePicture={info.row.original.profile_picture}
+            />
+          </div>
+        ),
+      },
       {
         accessorKey: "first_name",
         header: () => "First Name",
