@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import { UrlObject } from "node:url";
 
 type Props = {
   text: string;

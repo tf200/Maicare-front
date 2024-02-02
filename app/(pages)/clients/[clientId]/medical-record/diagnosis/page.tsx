@@ -3,7 +3,6 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Table from "@/components/Table";
 import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
-import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 import Severity from "@/components/Severity";
 import Pagination from "@/components/Pagination";
 import { useDiagnosisList } from "@/utils/diagnosis/getDiagnosisList";
@@ -53,21 +52,24 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const pagination = data ? (
-    <>
-      <Pagination
-        page={page}
-        disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
-        onClick={setPage}
-        totalPages={Math.ceil(data.count / PAGE_SIZE)}
-      />
-      {isFetching && (
-        <div className="text-sm ml-2">Fetching page {page}...</div>
-      )}
-    </>
-  ) : (
-    <></>
-  );
+  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
+
+  const pagination =
+    data && pageCount > 0 ? (
+      <>
+        <Pagination
+          page={page}
+          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+          onClick={setPage}
+          totalPages={pageCount}
+        />
+        {isFetching && (
+          <div className="text-sm ml-2">Fetching page {page}...</div>
+        )}
+      </>
+    ) : (
+      <></>
+    );
 
   return (
     <>
@@ -75,7 +77,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         {pagination}
         <LinkButton
           text={"Add a Diagnosis"}
-          href={"diagnosis/new"}
+          href={"../diagnosis/new"}
           className="ml-auto"
         />
       </div>
