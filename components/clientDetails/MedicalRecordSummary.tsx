@@ -15,6 +15,7 @@ const MedicalRecordSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading } = useLatestDiagnosis(clientId, 5);
   if (isLoading) return <Loader />;
   if (data.results?.length === 0) return <div>No diagnosis found</div>;
+  console.log(data);
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((diagnosis) => {
