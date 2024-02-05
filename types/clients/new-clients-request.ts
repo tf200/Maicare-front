@@ -10,4 +10,10 @@ export type NewClientsRequest = {
   filenumber: number;
   phone_number: string;
   profile_picture: string;
+
+  city: string;
+  Zipcode: string;
+  infix: string;
+  streetname: string;
+  street_number: string;
 };
