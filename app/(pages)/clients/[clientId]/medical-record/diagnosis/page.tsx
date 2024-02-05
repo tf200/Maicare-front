@@ -10,6 +10,9 @@ import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
 import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
 import LinkButton from "@/components/buttons/LinkButton";
+import DetailCell from "@/components/DetailCell";
+import ChevronDown from "@/components/icons/ChevronDown";
+import clsx from "clsx";
 
 type Props = {
   params: { clientId: string };
@@ -82,7 +85,13 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         />
       </div>
       {isLoading && <Loader />}
-      {data && <Table data={data.results} columns={columnDef} />}
+      {data && (
+        <Table
+          data={data.results}
+          columns={columnDef}
+          renderRowDetails={({ original }) => <RowDetails data={original} />}
+        />
+      )}
       <div className="flex flex-wrap justify-between items-center p-4">
         {pagination}
       </div>
@@ -96,3 +105,31 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 };
 
 export default DiagnosisPage;
+
+type RowDetailsProps = {
+  data: DiagnosisListItem;
+};
+
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  return (
+    <div className={"grid grid-cols-3 gap-2"}>
+      <DetailCell label={"Summary"} value={data.title} />
+      <DetailCell label={"Diagnosis Code"} value={data.diagnosis_code} />
+      <DetailCell label={"Diagnosis"} value={data.description} />
+      <DetailCell
+        label={"Severity"}
+        value={
+          <div className="mt-2">
+            <Severity severity={data.severity} />
+          </div>
+        }
+      />
+      <DetailCell label={"Status"} value={data.status} />
+      <DetailCell
+        label={"Diagnosing Clinician"}
+        value={data.diagnosing_clinician}
+      />
+      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+    </div>
+  );
+};

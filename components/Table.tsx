@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import {
   ColumnDef,
+  createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
   Row,
@@ -21,14 +22,39 @@ type Props<InstanceType> = {
 
 function Table<T>({
   data,
-  columns,
+  columns: columnDefs,
   onRowClick,
   className,
   renderRowDetails,
 }: Props<T>) {
   const [showRowDetails, setShowRowDetails] = useState<Row<T>>();
 
-  console.log("can render row details", !!renderRowDetails);
+  const columns = useMemo<ColumnDef<T>[]>(() => {
+    if (!renderRowDetails) {
+      return columnDefs;
+    }
+    const columnHelper = createColumnHelper<T>();
+    return [
+      ...columnDefs,
+      columnHelper.display({
+        id: "expand",
+        cell: ({ row }) => {
+          return (
+            <div className="flex justify-end w-full">
+              <ChevronDown
+                width={36}
+                height={36}
+                className={clsx({
+                  "rotate-[-90deg]": row.getIsExpanded(),
+                })}
+              />
+            </div>
+          );
+        },
+      }),
+    ];
+  }, [columnDefs, renderRowDetails]);
+
   const table = useReactTable({
     columns,
     data,

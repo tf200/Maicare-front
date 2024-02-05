@@ -10,6 +10,9 @@ import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
 import Severity from "@/components/Severity";
+import DetailCell from "@/components/DetailCell";
+import ChevronDown from "@/components/icons/ChevronDown";
+import clsx from "clsx";
 
 type Props = {
   params: { clientId: string };
@@ -41,10 +44,6 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           </div>
         ),
       }),
-      {
-        accessorKey: "notes",
-        header: "Notes",
-      },
     ];
   }, []);
 
@@ -68,11 +67,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     );
 
   const renderRowDetails = ({ original }: Row<AllergiesResDto>) => {
-    return (
-      <code>
-        <pre>{JSON.stringify(original, null, 2)}</pre>
-      </code>
-    );
+    return <RowDetails data={original} />;
   };
 
   return (
@@ -106,3 +101,25 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 };
 
 export default AllergiesPage;
+
+type RowDetailsProps = {
+  data: AllergiesResDto;
+};
+
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  return (
+    <div className={"grid grid-cols-3 gap-2"}>
+      <DetailCell label={"Allergy Type"} value={data.allergy_type} />
+      <DetailCell label={"Reaction"} value={data.reaction} />
+      <DetailCell
+        label={"Severity"}
+        value={
+          <div className="mt-2">
+            <Severity severity={data.severity} />
+          </div>
+        }
+      />
+      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+    </div>
+  );
+};
