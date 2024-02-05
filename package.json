@@ -19,6 +19,7 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
+    "dayjs": "^1.11.10",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "flatpickr": "^4.6.13",
