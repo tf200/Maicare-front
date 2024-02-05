@@ -14,8 +14,21 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const [error, setError] = useState("");
   const [file, setFile] = useState(null);
 
+  function checkFileExtension(filename: string) {
+    const extension = filename.slice(-4).toLowerCase();
+    if (extension === ".pdf" || extension === "docx" || extension === ".txt") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const handleFileChange = (e: any) => {
     setError("");
+    if (!checkFileExtension(e.target.files[0].name)) {
+      setError("Please provide a document file");
+      return;
+    }
     setFile(e.target.files[0]);
   };
 
