@@ -15,6 +15,12 @@
   word-wrap: break-word;
 }
 
+
+.datatable-table > tbody > tr > td,
+.datatable-table > tbody > tr > th {
+  vertical-align: middle;
+}
+
 .datatable-table > thead > tr > th {
   vertical-align: bottom;
   text-align: left;
