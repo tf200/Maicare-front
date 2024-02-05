@@ -3,7 +3,6 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
-import { FormikHelpers } from "formik/dist/types";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
 import { EMERGENCY_RELATION_OPTIONS } from "@/consts";
