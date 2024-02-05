@@ -9,23 +9,10 @@ import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import { useDeleteDocument } from "@/utils/document/deleteDocument";
-
+import bytesToSize from "@/hooks/useSizeConverter";
 type Props = {
   params: { clientId: string };
 };
-
-function bytesToSize(bytes: number) {
-  const kilobyte = 1024;
-  const megabyte = kilobyte * 1024;
-  if (!bytes) return;
-  if (bytes < kilobyte) {
-    return bytes + " Bytes";
-  } else if (bytes < megabyte) {
-    return (bytes / kilobyte).toFixed(0) + " KB";
-  } else {
-    return (bytes / megabyte).toFixed(1) + " MB";
-  }
-}
 
 const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
@@ -37,9 +24,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const onSubmit = useCallback(
     (documentId: number) => {
       mutate(documentId, {
-        onSuccess: () => {
-          console.log("frgrg");
-        },
+        onSuccess: () => {},
       });
     },
     [mutate]
@@ -51,7 +36,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorKey: "none",
         header: () => "",
         cell: () => (
-          <div className="w-full px-6">
+          <div className="w-full flex justify-center">
             <svg
               className="fill-current"
               width="32"
