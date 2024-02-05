@@ -12,7 +12,7 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
     Accept: "application/json",
   },
 });
