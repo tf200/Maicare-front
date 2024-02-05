@@ -17,6 +17,19 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
     useDocumentList(clientId);
   const columnDef = useMemo(() => {
+    function bytesToSize(bytes: number) {
+      const kilobyte = 1024; // 1 KB = 1024 bytes
+      const megabyte = kilobyte * 1024; // 1 MB = 1024 KB
+      if (!bytes) return;
+      if (bytes < kilobyte) {
+        return bytes + " Bytes";
+      } else if (bytes < megabyte) {
+        return (bytes / kilobyte).toFixed(0) + " KB";
+      } else {
+        return (bytes / megabyte).toFixed(0) + " MB";
+      }
+    }
+
     return [
       {
         accessorKey: "none",
@@ -47,9 +60,10 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => info.getValue() || "Not Available",
       },
       {
-        accessorKey: "notyet",
+        accessorKey: "file_size",
         header: () => "File size",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) =>
+          bytesToSize(parseInt(info.getValue())) || "Not Available",
       },
       {
         accessorKey: "uploaded_at",
