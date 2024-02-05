@@ -41,8 +41,8 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Diagnosis List"}
-                href={`/clients/${clientId}/diagnosis`}
+                text={"Full Medical Record"}
+                href={`${clientId}/medical-record/diagnosis`}
               />
             }
           >

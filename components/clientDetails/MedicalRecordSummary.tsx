@@ -3,9 +3,9 @@
 import React, { FunctionComponent } from "react";
 import { useLatestDiagnosis } from "@/utils/diagnosis/getLatestDiagnosis";
 import Loader from "@/components/common/Loader";
-import { DiagnosisResDto } from "@/types/diagnosis/diagnosis-res-dto";
 import Severity from "@/components/Severity";
 import { useRouter } from "next/navigation";
+import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
 
 type Props = {
   clientId: number;
@@ -15,7 +15,6 @@ const MedicalRecordSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading } = useLatestDiagnosis(clientId, 5);
   if (isLoading) return <Loader />;
   if (data.results?.length === 0) return <div>No diagnosis found</div>;
-  console.log(data);
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((diagnosis) => {
@@ -28,7 +27,7 @@ const MedicalRecordSummary: FunctionComponent<Props> = ({ clientId }) => {
 export default MedicalRecordSummary;
 
 type DiagnosisItemProps = {
-  diagnosis: DiagnosisResDto;
+  diagnosis: DiagnosisListItem;
 };
 
 const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({

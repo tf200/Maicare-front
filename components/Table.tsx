@@ -6,6 +6,7 @@ import {
 } from "@tanstack/table-core";
 import { flexRender, useReactTable } from "@tanstack/react-table";
 import ChevronDown from "@/components/icons/ChevronDown";
+import clsx from "clsx";
 
 const debugTable = process.env.NEXT_PUBLIC_DEBUG_TABLES === "true";
 
@@ -13,9 +14,10 @@ type Props<InstanceType> = {
   data: InstanceType[];
   columns: ColumnDef<InstanceType>[];
   onRowClick?: (instance: InstanceType) => void;
+  className?: string;
 };
 
-function Table<T>({ data, columns, onRowClick }: Props<T>) {
+function Table<T>({ data, columns, onRowClick, className }: Props<T>) {
   const table = useReactTable({
     columns,
     data,
@@ -25,7 +27,12 @@ function Table<T>({ data, columns, onRowClick }: Props<T>) {
     manualPagination: true,
   });
   return (
-    <table className="w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8">
+    <table
+      className={clsx(
+        "w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8 yyyyyyy",
+        className
+      )}
+    >
       <thead className="px-4 border-separate">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr className="border-t border-stroke" key={headerGroup.id}>
