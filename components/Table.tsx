@@ -1,23 +1,34 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import {
   ColumnDef,
   getCoreRowModel,
   getSortedRowModel,
+  Row,
 } from "@tanstack/table-core";
 import { flexRender, useReactTable } from "@tanstack/react-table";
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 
-const debugTable = process.env.NEXT_PUBLIC_DEBUG_TABLES === "true";
+const debugTable = process.env.NODE_ENV === "development";
 
 type Props<InstanceType> = {
   data: InstanceType[];
   columns: ColumnDef<InstanceType>[];
   onRowClick?: (instance: InstanceType) => void;
   className?: string;
+  renderRowDetails?: (row: Row<InstanceType>) => React.ReactNode;
 };
 
-function Table<T>({ data, columns, onRowClick, className }: Props<T>) {
+function Table<T>({
+  data,
+  columns,
+  onRowClick,
+  className,
+  renderRowDetails,
+}: Props<T>) {
+  const [showRowDetails, setShowRowDetails] = useState<Row<T>>();
+
+  console.log("can render row details", !!renderRowDetails);
   const table = useReactTable({
     columns,
     data,
@@ -25,6 +36,8 @@ function Table<T>({ data, columns, onRowClick, className }: Props<T>) {
     getSortedRowModel: getSortedRowModel(),
     debugTable,
     manualPagination: true,
+    getRowCanExpand: () => !!renderRowDetails,
+    getIsRowExpanded: (row) => row.id === showRowDetails?.id,
   });
   return (
     <table
@@ -81,19 +94,44 @@ function Table<T>({ data, columns, onRowClick, className }: Props<T>) {
       <tbody>
         {table.getRowModel().rows.map((row) => {
           return (
-            <tr
-              onClick={() => onRowClick?.(row.original)}
-              key={row.id}
-              className="px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl"
-            >
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            <Fragment key={row.id}>
+              <tr
+                onClick={() => {
+                  onRowClick?.(row.original);
+                  setShowRowDetails((r) => {
+                    if (!row.getCanExpand()) {
+                      return r;
+                    }
+                    if (r?.id === row.id) {
+                      return undefined;
+                    }
+                    return row;
+                  });
+                }}
+                className="px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl"
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+              {row.getCanExpand() && row.getIsExpanded() && (
+                <tr>
+                  <td
+                    colSpan={row.getVisibleCells().length}
+                    className="bg-gray-3 border-t-2 border-stroke"
+                  >
+                    {renderRowDetails?.(row)}
                   </td>
-                );
-              })}
-            </tr>
+                </tr>
+              )}
+            </Fragment>
           );
         })}
       </tbody>

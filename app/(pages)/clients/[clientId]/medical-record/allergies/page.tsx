@@ -2,7 +2,7 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import { useAllergiesList } from "@/utils/allergies/getAllergiesList";
-import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
+import { ColumnDef, createColumnHelper, Row } from "@tanstack/table-core";
 import { AllergiesResDto } from "@/types/allergies/allergies-res-dto";
 import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
@@ -19,10 +19,10 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { data, page, setPage, isError, isLoading, isFetching } =
     useAllergiesList(parseInt(clientId));
 
-  const columnHelper = createColumnHelper<AllergiesResDto>();
+  const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(() => {
+    const columnHelper = createColumnHelper<AllergiesResDto>();
 
-  const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(
-    () => [
+    return [
       {
         accessorKey: "allergy_type",
         header: "Allergy Type",
@@ -45,9 +45,8 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorKey: "notes",
         header: "Notes",
       },
-    ],
-    []
-  );
+    ];
+  }, []);
 
   const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
 
@@ -68,6 +67,14 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <></>
     );
 
+  const renderRowDetails = ({ original }: Row<AllergiesResDto>) => {
+    return (
+      <code>
+        <pre>{JSON.stringify(original, null, 2)}</pre>
+      </code>
+    );
+  };
+
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
@@ -79,7 +86,13 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         />
       </div>
       {isLoading && <Loader />}
-      {data && <Table data={data.results} columns={columnDef} />}
+      {data && (
+        <Table
+          data={data.results}
+          columns={columnDef}
+          renderRowDetails={renderRowDetails}
+        />
+      )}
       <div className="flex flex-wrap justify-between items-center p-4">
         {pagination}
       </div>
