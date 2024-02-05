@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Table from "@/components/Table";
 import Pagination from "@/components/Pagination";
@@ -8,28 +8,44 @@ import { PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
+import { useDeleteDocument } from "@/utils/document/deleteDocument";
 
 type Props = {
   params: { clientId: string };
 };
 
+function bytesToSize(bytes: number) {
+  const kilobyte = 1024;
+  const megabyte = kilobyte * 1024;
+  if (!bytes) return;
+  if (bytes < kilobyte) {
+    return bytes + " Bytes";
+  } else if (bytes < megabyte) {
+    return (bytes / kilobyte).toFixed(0) + " KB";
+  } else {
+    return (bytes / megabyte).toFixed(1) + " MB";
+  }
+}
+
 const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
     useDocumentList(clientId);
-  const columnDef = useMemo(() => {
-    function bytesToSize(bytes: number) {
-      const kilobyte = 1024; // 1 KB = 1024 bytes
-      const megabyte = kilobyte * 1024; // 1 MB = 1024 KB
-      if (!bytes) return;
-      if (bytes < kilobyte) {
-        return bytes + " Bytes";
-      } else if (bytes < megabyte) {
-        return (bytes / kilobyte).toFixed(0) + " KB";
-      } else {
-        return (bytes / megabyte).toFixed(0) + " MB";
-      }
-    }
 
+  const { mutate, isLoading: isDeleteLoading } = useDeleteDocument(
+    parseInt(clientId)
+  );
+  const onSubmit = useCallback(
+    (documentId: number) => {
+      mutate(documentId, {
+        onSuccess: () => {
+          console.log("frgrg");
+        },
+      });
+    },
+    [mutate]
+  );
+
+  const columnDef = useMemo(() => {
     return [
       {
         accessorKey: "none",
@@ -80,6 +96,20 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             className="w-[30%] min-w-[120px] p-2 px-6 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
           >
             Download
+          </a>
+        ),
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <a
+            onClick={() => {
+              onSubmit(info.getValue());
+            }}
+            className="w-[30%] min-w-[120px] p-2 px-6 text-white transition border rounded-lg cursor-pointer border-danger bg-danger hover:bg-opacity-90"
+          >
+            Delete
           </a>
         ),
       },

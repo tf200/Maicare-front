@@ -17,7 +17,7 @@ export const useDocumentList = (clientId: string) => {
   const [page, setPage] = useState(1);
 
   const query = useQuery({
-    queryKey: [clientId, "document", page],
+    queryKey: [parseInt(clientId), "documents", page],
     queryFn: fetchDocuments(clientId, page),
     keepPreviousData: true,
   });

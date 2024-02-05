@@ -48,7 +48,16 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           >
             <MedicalRecordSummary clientId={parseInt(clientId)} />
           </Panel>
-          <Panel title={"Reports & Documents"} containerClassName="px-7 py-4">
+          <Panel
+            title={"Reports & Documents"}
+            containerClassName="px-7 py-4"
+            sideActions={
+              <LinkButton
+                text={"Full Reports & Documents"}
+                href={`${clientId}/document`}
+              />
+            }
+          >
             <DocumentsSummary clientId={parseInt(clientId)} />
           </Panel>
         </div>
