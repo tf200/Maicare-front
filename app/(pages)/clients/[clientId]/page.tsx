@@ -6,6 +6,7 @@ import MedicalRecordSummary from "@/components/clientDetails/MedicalRecordSummar
 import EmergencyContactsSummary from "@/components/clientDetails/EmergyencyContactsSummary";
 import DocumentsSummary from "@/components/clientDetails/DocumentsSummary";
 import LinkButton from "@/components/buttons/LinkButton";
+import ReportsSummary from "@/components/clientDetails/ReportsSummary";
 
 type Props = {
   params: { clientId: string };
@@ -49,11 +50,20 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <MedicalRecordSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Reports & Documents"}
+            title={"Reports"}
+            containerClassName="px-7 py-4"
+            sideActions={
+              <LinkButton text={"Full Reports"} href={`${clientId}/document`} />
+            }
+          >
+            <ReportsSummary clientId={parseInt(clientId)} />
+          </Panel>
+          <Panel
+            title={"Documents"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Reports & Documents"}
+                text={"Full Documents"}
                 href={`${clientId}/document`}
               />
             }
