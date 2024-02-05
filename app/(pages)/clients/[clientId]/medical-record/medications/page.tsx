@@ -9,6 +9,7 @@ import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
 import LinkButton from "@/components/buttons/LinkButton";
+import DetailCell from "@/components/DetailCell";
 
 type Props = {
   params: { clientId: string };
@@ -73,7 +74,13 @@ const MedicationsPage: FunctionComponent<Props> = ({
         />
       </div>
       {isLoading && <Loader />}
-      {data && <Table data={data.results} columns={columnDef} />}
+      {data && (
+        <Table
+          data={data.results}
+          columns={columnDef}
+          renderRowDetails={({ original }) => <RowDetails data={original} />}
+        />
+      )}
       <div className="flex flex-wrap items-center p-4">{pagination}</div>
       {isError && (
         <p role="alert" className="text-red">
@@ -85,3 +92,20 @@ const MedicationsPage: FunctionComponent<Props> = ({
 };
 
 export default MedicationsPage;
+
+type RowDetailsProps = {
+  data: MedicationsResDto;
+};
+
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  return (
+    <div className={"grid grid-cols-3 gap-2"}>
+      <DetailCell label={"Name"} value={data.name} />
+      <DetailCell label={"Dosage"} value={data.dosage} />
+      <DetailCell label={"Frequency"} value={data.frequency} />
+      <DetailCell label={"Start Date"} value={data.start_date} />
+      <DetailCell label={"End Date"} value={data.end_date} />
+      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+    </div>
+  );
+};
