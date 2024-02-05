@@ -3,6 +3,7 @@
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useCreateDocument } from "@/utils/document/createDocument";
 import Button from "@/components/buttons/Button";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   clientId: string;
@@ -10,9 +11,11 @@ type PropsType = {
 
 export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateDocument(parseInt(clientId));
+  const router = useRouter();
 
   const [error, setError] = useState("");
   const [file, setFile] = useState(null);
+  const [alert, showAlert] = useState(false);
 
   function checkFileExtension(filename: string) {
     const extension = filename.slice(-4).toLowerCase();
@@ -42,6 +45,11 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
       mutate(formData, {
         onSuccess: () => {
           setFile(null);
+          showAlert(true);
+          setTimeout(() => {
+            router.push(`/clients/${clientId}/document`);
+            showAlert(false);
+          }, 3000);
         },
       });
     },
@@ -60,6 +68,25 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
   return (
     <form onSubmit={checkFileInput} className="p-6.5 pt-4.5">
+      {alert && (
+        <div
+          className="flex items-center border-2 border-black p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+          role="alert"
+        >
+          <svg
+            className="flex-shrink-0 inline w-4 h-4 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          </svg>
+          <span className="sr-only">Info</span>
+          <div>the document has been successfully uploaded.</div>
+        </div>
+      )}
+
       {file ? <div className=" pb-4.5"> {file.name} </div> : <></>}
       <div
         id="FileUpload"
