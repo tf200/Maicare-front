@@ -2,7 +2,12 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 export async function createDocument(data: {}) {
-  const response = await api.post("/client/document_upload/", data);
+  const response = await api.post("/client/document_upload/", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
   return response.data;
 }
 
