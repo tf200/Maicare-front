@@ -33,12 +33,12 @@ const EmergencyContactsSummary: FunctionComponent<Props> = ({ clientId }) => {
             />
             <DetailCell
               label={
-                <a href={"mailto:" + contact.email}>
+                <a href={"mailto:" + contact.email} className="block">
                   <span className="text-primary">{contact.email}</span>
                 </a>
               }
               value={
-                <a href={"tel:" + contact.phone_number}>
+                <a href={"tel:" + contact.phone_number} className="block">
                   <span className="text-primary">{contact.phone_number}</span>
                 </a>
               }

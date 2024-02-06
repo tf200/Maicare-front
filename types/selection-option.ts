@@ -1,5 +1,6 @@
 import { AllergyType } from "@/types/allergyType";
 import { DiagnosisSeverity } from "@/types/dagnosis-servity";
+import { RateType } from "@/types/rate-type";
 
 export type SelectionOption = {
   label: string;
@@ -12,4 +13,8 @@ export type AllergyOption = SelectionOption & {
 
 export type SeverityOption = SelectionOption & {
   value: DiagnosisSeverity | "";
+};
+
+export type RateTypeOption = SelectionOption & {
+  value: RateType | "";
 };

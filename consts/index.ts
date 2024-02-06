@@ -1,5 +1,6 @@
 import {
   AllergyOption,
+  RateTypeOption,
   SelectionOption,
   SeverityOption,
 } from "@/types/selection-option";
@@ -15,6 +16,11 @@ export const ALLERGY_TYPE_ARRAY = [
   "Pet",
   "Pollen",
   "Other",
+] as const;
+export const RATE_TYPE_ARRAY = [
+  "rate_per_day",
+  "rate_per_minute",
+  "rate_per_hour",
 ] as const;
 
 export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
@@ -41,6 +47,13 @@ export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
   { label: "Pet", value: "Pet" },
   { label: "Pollen", value: "Pollen" },
   { label: "Other", value: "Other" },
+];
+
+export const CARE_TYPE_OPTIONS: RateTypeOption[] = [
+  { label: "Select Care Type", value: "" },
+  { label: "Hourly", value: "rate_per_hour" },
+  { label: "Daily", value: "rate_per_day" },
+  { label: "Minute", value: "rate_per_minute" },
 ];
 
 // TODO: this is assumed to be 10, it should come from the backend
