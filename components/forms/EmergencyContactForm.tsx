@@ -56,7 +56,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       phone_number: Yup.string().required("Please provide phone number"),
       relationship: Yup.string().required("Please provide relation"),
       address: Yup.string().required("Please provide address physique"),
-      auto_reports: Yup.string(),
+      auto_reports: Yup.boolean(),
     }),
     onSubmit: submit,
   });
