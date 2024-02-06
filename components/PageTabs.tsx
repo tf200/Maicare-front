@@ -20,8 +20,8 @@ type Props = {
 const PageTabs: FunctionComponent<Props> = ({ tabs, title, backHref }) => {
   const pathname = usePathname();
   return (
-    <nav className="px-6 py-7 flex flex-wrap gap-2 items-baseline justify-between border-b border-stroke pb-5 dark:border-strokedark">
-      <h3 className="text-xl font-semibold text-black dark:text-white flex items-center gap-2">
+    <nav className="flex flex-wrap items-baseline justify-between gap-2 px-6 pb-5 border-b py-7 border-stroke dark:border-strokedark">
+      <h3 className="flex items-center gap-2 text-xl font-semibold text-black dark:text-white">
         <Link href={backHref}>
           <ArrowRight className="rotate-180" height={12} width={24} />
         </Link>

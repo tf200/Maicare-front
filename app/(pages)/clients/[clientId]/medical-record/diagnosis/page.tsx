@@ -67,7 +67,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           totalPages={pageCount}
         />
         {isFetching && (
-          <div className="text-sm ml-2">Fetching page {page}...</div>
+          <div className="ml-2 text-sm">Fetching page {page}...</div>
         )}
       </>
     ) : (
@@ -92,7 +92,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           renderRowDetails={({ original }) => <RowDetails data={original} />}
         />
       )}
-      <div className="flex flex-wrap justify-between items-center p-4">
+      <div className="flex flex-wrap items-center justify-between p-4">
         {pagination}
       </div>
       {isError && (

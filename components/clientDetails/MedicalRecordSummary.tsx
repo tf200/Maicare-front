@@ -36,13 +36,13 @@ const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({
   const router = useRouter();
   return (
     <li
-      className="grid grid-cols-3 cursor-pointer hover:bg-gray-3 px-4 py-2 rounded-2xl"
+      className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl"
       onClick={() =>
         router.push(`/clients/${diagnosis.client}/diagnosis/${diagnosis.id}`)
       }
     >
       <div>{diagnosis.title}</div>
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <Severity severity={diagnosis.severity} />
       </div>
       <div>{diagnosis.diagnosis_code}</div>

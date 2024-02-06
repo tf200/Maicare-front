@@ -11,7 +11,7 @@ const MedicalRecordLayout: FunctionComponent<PropsWithChildren<Props>> = ({
   params: { clientId },
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
       <MedicalHistoryTabs />
       {children}
     </div>

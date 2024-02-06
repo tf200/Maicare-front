@@ -151,7 +151,7 @@ function Table<T>({
                 <tr>
                   <td
                     colSpan={row.getVisibleCells().length}
-                    className="bg-gray-3 border-t-2 border-stroke"
+                    className="border-t-2 bg-gray-3 border-stroke"
                   >
                     {renderRowDetails?.(row)}
                   </td>

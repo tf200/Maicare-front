@@ -36,7 +36,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorKey: "none",
         header: () => "",
         cell: () => (
-          <div className="w-full flex justify-center">
+          <div className="flex justify-center w-full">
             <svg
               className="fill-current"
               width="32"
@@ -121,7 +121,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       sideActions={
         <Link
           href={`/clients/${clientId}/document/new`}
-          className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Upload a New Document
         </Link>
