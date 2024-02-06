@@ -8,6 +8,7 @@ import Select from "@/components/FormFields/Select";
 import { EMERGENCY_RELATION_OPTIONS } from "@/consts";
 import { useCreateEmergencyContact } from "@/utils/emergency/createEmergencyContact";
 import Button from "@/components/buttons/Button";
+import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 
 type PropsType = {
   clientId: string;
@@ -20,6 +21,7 @@ type FormTypes = {
   phone_number: string;
   relationship: string;
   address: string;
+  auto_reports: boolean;
 };
 
 const initialValues: FormTypes = {
@@ -29,6 +31,7 @@ const initialValues: FormTypes = {
   phone_number: "",
   relationship: "",
   address: "",
+  auto_reports: false,
 };
 
 export const EmergencyContactForm: FunctionComponent<PropsType> = ({
@@ -53,6 +56,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       phone_number: Yup.string().required("Please provide phone number"),
       relationship: Yup.string().required("Please provide relation"),
       address: Yup.string().required("Please provide address physique"),
+      auto_reports: Yup.string(),
     }),
     onSubmit: submit,
   });
@@ -151,6 +155,13 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
             ? formik.errors.address
             : null
         }
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      <CheckBoxInputFieldThin
+        className={"w-full mb-4.5"}
+        label={"Send reports automatically to this contact ?"}
+        name={"auto_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
