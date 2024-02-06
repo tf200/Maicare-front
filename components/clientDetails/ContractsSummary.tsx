@@ -6,6 +6,7 @@ import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { dateFormat, shortDateFormat } from "@/utils/timeFormatting";
+import { getRate, rateString } from "@/utils/contracts/rate-utils";
 
 type Props = {
   clientId: number;
@@ -28,7 +29,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
             label={"Care period"}
             value={`${shortDateFormat(item.start_date)} - ${shortDateFormat(item.end_date)}`}
           />
-          <DetailCell label={rateType(item)} value={getRate(item)} />
+          <DetailCell label={rateString(item)} value={getRate(item)} />
         </div>
       ))}
     </section>
@@ -36,18 +37,3 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
 };
 
 export default ContractsSummary;
-
-function rateType(item: ContractResDto) {
-  return item.rate_per_day
-    ? "Rate per day"
-    : item.rate_per_hour
-      ? "Rate per hour"
-      : "Rate per minute";
-}
-
-function getRate(item: ContractResDto) {
-  const rate = item.rate_per_day || item.rate_per_hour || item.rate_per_minute;
-
-  // rate in euro
-  return rate ? rate + " €" : "No rate set";
-}

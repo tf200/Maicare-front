@@ -3,6 +3,7 @@ import { ContractsListDto } from "@/types/contracts/contracts-list.dto";
 import { useQuery } from "react-query";
 import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
 import { PaginationParams } from "@/types/pagination-params";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
 
 async function getClientContractsList(
   clientId: number,
@@ -19,9 +20,17 @@ async function getClientContractsList(
 
 export const useClientContractsList = (
   clientId: number,
-  params: PaginationParams = DEFAULT_PAGINATION_PARAMS
+  params?: PaginationParams
 ) => {
-  return useQuery([clientId, "contracts", params], () =>
-    getClientContractsList(clientId, params)
-  );
+  const parsedParams = usePaginationParams();
+  const query = useQuery({
+    queryKey: [clientId, "contracts", params ?? parsedParams],
+    queryFn: () => getClientContractsList(clientId, params ?? parsedParams),
+    keepPreviousData: true,
+  });
+
+  return {
+    ...query,
+    pagination: parsedParams,
+  };
 };

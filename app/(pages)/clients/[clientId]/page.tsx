@@ -41,8 +41,8 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Add new contract"}
-                href={`${clientId}/contracts/new`}
+                text={"View Client Contracts"}
+                href={`${clientId}/contracts`}
               />
             }
           >
