@@ -49,6 +49,20 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
         header: () => "Address physique",
         cell: (info) => info.getValue() || "Not Available",
       },
+      {
+        accessorKey: "auto_reports",
+        header: () => "Automatic reports",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <input
+              className="w-[20px] h-[20px]"
+              type="checkbox"
+              checked={info.getValue()}
+              onChange={() => {}}
+            ></input>
+          </div>
+        ),
+      },
     ];
   }, []);
 
