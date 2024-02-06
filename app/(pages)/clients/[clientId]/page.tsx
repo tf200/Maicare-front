@@ -53,7 +53,10 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             title={"Reports"}
             containerClassName="px-7 py-4"
             sideActions={
-              <LinkButton text={"Full Reports"} href={`${clientId}/document`} />
+              <LinkButton
+                text={"Full Reports"}
+                href={`${clientId}/reports-record/reports`}
+              />
             }
           >
             <ReportsSummary clientId={parseInt(clientId)} />
