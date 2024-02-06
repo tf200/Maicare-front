@@ -1,5 +1,10 @@
 "use client";
-import React, { FunctionComponent, useCallback, useMemo } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import Link from "next/link";
 import Table from "@/components/Table";
 import Pagination from "@/components/Pagination";
@@ -10,13 +15,24 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import { useDeleteDocument } from "@/utils/document/deleteDocument";
 import bytesToSize from "@/hooks/useSizeConverter";
+import ConfirmationModal from "@/components/ComfirmationModal";
+
 type Props = {
   params: { clientId: string };
 };
 
 const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { page, setPage, isFetching, isLoading, isError, data } =
-    useDocumentList(clientId);
+  const {
+    page,
+    setPage,
+    isFetching,
+    isLoading: isListLoading,
+    isError,
+    data,
+  } = useDocumentList(clientId);
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [documentId, setDocumentId] = useState<number>(null);
 
   const { mutate, isLoading: isDeleteLoading } = useDeleteDocument(
     parseInt(clientId)
@@ -24,7 +40,9 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const onSubmit = useCallback(
     (documentId: number) => {
       mutate(documentId, {
-        onSuccess: () => {},
+        onSuccess: () => {
+          setModalOpen(false);
+        },
       });
     },
     [mutate]
@@ -90,7 +108,8 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => (
           <a
             onClick={() => {
-              onSubmit(info.getValue());
+              setDocumentId(info.getValue());
+              setModalOpen(true);
             }}
             className="w-[30%] min-w-[120px] p-2 px-6 text-white transition border rounded-lg cursor-pointer border-danger bg-danger hover:bg-opacity-90"
           >
@@ -116,27 +135,41 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   );
 
   return (
-    <Panel
-      title={"Documents list"}
-      sideActions={
-        <Link
-          href={`/clients/${clientId}/document/new`}
-          className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
-          Upload a New Document
-        </Link>
-      }
-    >
-      {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-      {pagination}
-      {data && <Table data={data.results} columns={columnDef} />}
-      {pagination}
-      {isError && (
-        <p role="alert" className="text-red">
-          An error has occurred
-        </p>
-      )}
-    </Panel>
+    <>
+      <ConfirmationModal
+        title="Delete Confirmation"
+        message="Are you sure you want to delete this document ?"
+        buttonMessage="Delete"
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        isLoading={isDeleteLoading}
+        action={() => {
+          onSubmit(documentId);
+        }}
+      />
+
+      <Panel
+        title={"Documents list"}
+        sideActions={
+          <Link
+            href={`/clients/${clientId}/document/new`}
+            className="inline-flex items-center justify-center bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Upload a New Document
+          </Link>
+        }
+      >
+        {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {pagination}
+        {data && <Table data={data.results} columns={columnDef} />}
+        {pagination}
+        {isError && (
+          <p role="alert" className="text-red">
+            An error has occurred
+          </p>
+        )}
+      </Panel>
+    </>
   );
 };
 
