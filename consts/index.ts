@@ -3,6 +3,7 @@ import {
   SelectionOption,
   SeverityOption,
 } from "@/types/selection-option";
+import { PaginationParams } from "@/types/pagination-params";
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
@@ -44,3 +45,8 @@ export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
 
 // TODO: this is assumed to be 10, it should come from the backend
 export const PAGE_SIZE = 10;
+
+export const DEFAULT_PAGINATION_PARAMS: PaginationParams = {
+  page: 1,
+  page_size: PAGE_SIZE,
+};
