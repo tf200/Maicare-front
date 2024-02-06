@@ -40,13 +40,12 @@ function PaginatedTable<TData>({
       >
         <div className="p-2">Loading page...</div>
       </div>
-      {pagination ||
-        (sideActions && (
-          <div className="flex flex-wrap items-center p-4">
-            {pagination}
-            {sideActions}
-          </div>
-        ))}
+      {(pagination || sideActions) && (
+        <div className="flex flex-wrap items-center p-4">
+          {pagination}
+          {sideActions}
+        </div>
+      )}
       <Table data={data.results} {...tableProps} />
       <div className="flex flex-wrap justify-between items-center p-4">
         {pagination}
