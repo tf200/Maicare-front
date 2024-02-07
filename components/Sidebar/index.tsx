@@ -106,73 +106,42 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
-
-      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
-        {/* <!-- Sidebar Menu --> */}
-        <nav className="px-4 py-4 mt-5 lg:mt-9 lg:px-6">
-          {/* <!-- Menu Group --> */}
-          <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              MENU
-            </h3>
-
-            <ul className="mb-6 flex flex-col gap-1.5">
-              {/* <!-- Menu Item Dashboard --> */}
-              <li>
-                <SidebarLink
-                  completeHref={"/dashboard/crm"}
-                  icon={<GridsIcon />}
-                >
-                  Dashboard
-                </SidebarLink>
-              </li>
-              {/* <!-- Menu Item Clients --> */}
-              <li>
-                <SidebarLink
-                  completeHref={"/clients"}
-                  icon={<IndividualIcons width={18} height={18} />}
-                >
-                  Clients
-                </SidebarLink>
-              </li>
-              {/* <!-- Menu Item Employee --> */}
-              <li>
-                <SidebarLink
-                  completeHref={"/employee"}
-                  icon={<GroupIcon width={18} height={18} />}
-                >
-                  Employee
-                </SidebarLink>
-              </li>
-              {/* <!-- Menu Item Finance --> */}
-              <li>
-                <SidebarLink
-                  completeHref={"/finance"}
-                  icon={<InvoiceIcon height={19} width={18} />}
-                >
-                  Finance
-                </SidebarLink>
-              </li>
-              {/* <!-- Menu Item Care Coordination --> */}
-              <li>
-                <SidebarLink
-                  completeHref={"/care"}
-                  icon={<HeartIcon width={18} height={18} />}
-                >
-                  Care Coordination
-                </SidebarLink>
-              </li>
-              {/* <!-- Menu Item Planning & Tasks --> */}
-              <li>
-                <SidebarLink completeHref={"/tasks"} icon={<CalendarIcon />}>
-                  Planning & Tasks
-                </SidebarLink>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        {/* <!-- Sidebar Menu --> */}
-      </div>
+      {/* Sidebar body */}
+      <SidebarMenu
+        items={[
+          {
+            completeHref: "/dashboard/crm",
+            icon: <GridsIcon />,
+            children: "Dashboard",
+          },
+          {
+            completeHref: "/clients",
+            icon: <IndividualIcons width={18} height={18} />,
+            children: "Clients",
+          },
+          {
+            completeHref: "/employee",
+            icon: <GroupIcon width={18} height={18} />,
+            children: "Employee",
+          },
+          {
+            completeHref: "/finance",
+            icon: <InvoiceIcon height={19} width={18} />,
+            children: "Finance",
+          },
+          {
+            completeHref: "/care",
+            icon: <HeartIcon width={18} height={18} />,
+            children: "Care Coordination",
+          },
+          {
+            completeHref: "/tasks",
+            icon: <CalendarIcon />,
+            children: "Planning & Tasks",
+          },
+        ]}
+        title={"MENU"}
+      />
     </aside>
   );
 };
@@ -184,6 +153,7 @@ type SidebarLinkProps = {
   children: React.ReactNode;
   icon: React.ReactNode;
 };
+
 const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
   completeHref,
   children,
@@ -204,5 +174,38 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
       {icon}
       {children}
     </Link>
+  );
+};
+
+type SidebarMenuProps = {
+  items: SidebarLinkProps[];
+  title: string | React.ReactNode;
+};
+
+const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
+  return (
+    <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+      {/* <!-- Sidebar Menu --> */}
+      <nav className="px-4 py-4 mt-5 lg:mt-9 lg:px-6">
+        {/* <!-- Menu Group --> */}
+        <div>
+          <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+            {title}
+          </h3>
+
+          <ul className="mb-6 flex flex-col gap-1.5">
+            {/* <!-- Menu Item Dashboard --> */}
+            {items.map((item) => (
+              <li key={item.completeHref}>
+                <SidebarLink completeHref={item.completeHref} icon={item.icon}>
+                  {item.children}
+                </SidebarLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+      {/* <!-- Sidebar Menu --> */}
+    </div>
   );
 };
