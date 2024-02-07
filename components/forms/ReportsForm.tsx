@@ -1,7 +1,12 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Formik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Textarea from "@/components/FormFields/Textarea";
@@ -9,6 +14,7 @@ import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
 import { NewReportsReqDto } from "@/types/reports/new-reports-req-dto";
 import { useCreateReports } from "@/utils/reports/createReports";
+import { useRouter } from "next/navigation";
 
 type FormType = NewReportsReqDto;
 
@@ -34,14 +40,29 @@ type PropsType = {
 
 export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateReports(parseInt(clientId));
+  const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter();
+
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
-        onSuccess: resetForm,
+        onSuccess: () => {
+          setIsSuccess(true);
+          resetForm();
+        },
       });
     },
     [mutate]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        router.push(`/clients/${clientId}/reports-record/reports`);
+      }, 5000);
+    }
+  }, [isSuccess, router]);
+
   return (
     <Formik
       initialValues={initialValues}
