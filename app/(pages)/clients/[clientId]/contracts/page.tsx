@@ -9,6 +9,7 @@ import { getRate, rateType } from "@/utils/contracts/rate-utils";
 import Panel from "@/components/Panel";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
+import { fullDateFormat } from "@/utils/timeFormatting";
 
 type Props = {
   params: { clientId: string };
@@ -23,10 +24,12 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "start_date",
         header: "Start Date",
+        cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
         accessorKey: "end_date",
         header: "End Date",
+        cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
         accessorKey: "care_type",
@@ -47,10 +50,7 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     <Panel
       title={"Clients List"}
       sideActions={
-        <LinkButton
-          text={"Add new contract"}
-          href={`${clientId}/contracts/new`}
-        />
+        <LinkButton text={"Add new contract"} href={`contracts/new`} />
       }
     >
       {isLoading && <Loader />}
