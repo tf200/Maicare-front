@@ -7,7 +7,8 @@ import { useQuery } from "react-query";
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathName = usePathname();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAllowed, setIsAllowed] = useState(false);
+
   const { refetch } = useQuery({
     queryFn: () => api.get("/employee/profile/"),
     queryKey: ["user"],
@@ -16,24 +17,28 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     staleTime: Infinity,
   });
 
-  const getUserData = async () => {
+  const verify = async () => {
+    console.log("cheked");
+
     await refetch();
-    setIsAuthenticated(true);
+    setIsAllowed(true);
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
         redirect("/dashboard/crm");
-      } else if (localStorage.getItem("a") || pathName.startsWith("/signin")) {
-        getUserData();
+      } else if (localStorage.getItem("a")) {
+        verify();
+      } else if (pathName.startsWith("/signin")) {
+        setIsAllowed(true);
       } else {
         redirect("/signin");
       }
     }
   }, [pathName]);
 
-  return isAuthenticated ? children : <></>;
+  return isAllowed ? children : <></>;
 };
 
 export default Guards;

@@ -21,9 +21,12 @@ const Profile = () => {
     email,
     profile_picture,
   } = userData.data;
+
   const role =
-    decode.group[0].charAt(0).toUpperCase() +
-    decode.group[0].slice(1).toLowerCase();
+    decode.groups.length > 0
+      ? decode.groups[0].charAt(0).toUpperCase() +
+        decode.groups[0].slice(1).toLowerCase()
+      : null;
 
   return (
     <>
@@ -64,28 +67,28 @@ const Profile = () => {
                     label={"First Name"}
                     type={"text"}
                     disabled
-                    value={first_name}
+                    defaultValue={first_name}
                   />
                   <InputFieldThin
                     className={"w-full"}
                     label={"Last Name"}
                     type={"text"}
                     disabled
-                    value={last_name}
+                    defaultValue={last_name}
                   />
                   <InputFieldThin
                     className={"w-full"}
                     label={"Email"}
                     type={"text"}
                     disabled
-                    value={email}
+                    defaultValue={email}
                   />
                   <InputFieldThin
                     className={"w-full"}
                     label={"Phone number"}
                     type={"text"}
                     disabled
-                    value={phone_number}
+                    defaultValue={phone_number}
                   />
                 </div>
               </div>

@@ -18,8 +18,10 @@ const DropdownUser = () => {
 
   const { username, profile_picture } = userData.data;
   const role =
-    decode.group[0].charAt(0).toUpperCase() +
-    decode.group[0].slice(1).toLowerCase();
+    decode.groups.length > 0
+      ? decode.groups[0].charAt(0).toUpperCase() +
+        decode.groups[0].slice(1).toLowerCase()
+      : null;
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
