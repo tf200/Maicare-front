@@ -40,7 +40,7 @@ const ContractDetails: FunctionComponent<Props> = ({
       {contract && <ContractData contractData={contract} />}
 
       {contract && <PaymentDetails item={contract} />}
-      {client && client && (
+      {client && contract && (
         <div className="mt-10 px-4 flex flex-col justify-end gap-4 sm:flex-row">
           <button
             onClick={() => {
