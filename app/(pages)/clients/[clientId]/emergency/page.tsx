@@ -85,7 +85,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
       title={"Emergency Contact List"}
       sideActions={
         <Link
-          href={`/clients/${clientId}/emergency/`}
+          href={`/clients/${clientId}/emergency/new`}
           className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
           Add new emergency contact

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import HeartIcon from "@/components/icons/HeartIcon";
@@ -11,6 +11,8 @@ import IndividualIcons from "@/components/icons/IndividualIcons";
 import GridsIcon from "@/components/icons/GridsIcon";
 import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
+import MailIcon from "@/components/icons/MailIcon";
+import ArrowRight from "@/components/icons/ArrowRight";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -18,6 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const pathname = usePathname();
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
@@ -106,42 +109,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
-      {/* Sidebar body */}
-      <SidebarMenu
-        items={[
-          {
-            completeHref: "/dashboard/crm",
-            icon: <GridsIcon />,
-            children: "Dashboard",
-          },
-          {
-            completeHref: "/clients",
-            icon: <IndividualIcons width={18} height={18} />,
-            children: "Clients",
-          },
-          {
-            completeHref: "/employee",
-            icon: <GroupIcon width={18} height={18} />,
-            children: "Employee",
-          },
-          {
-            completeHref: "/finance",
-            icon: <InvoiceIcon height={19} width={18} />,
-            children: "Finance",
-          },
-          {
-            completeHref: "/care",
-            icon: <HeartIcon width={18} height={18} />,
-            children: "Care Coordination",
-          },
-          {
-            completeHref: "/tasks",
-            icon: <CalendarIcon />,
-            children: "Planning & Tasks",
-          },
-        ]}
-        title={"MENU"}
-      />
+      {pathname.startsWith("/clients/") ? <ClientMenu /> : <GlobalMenu />}
     </aside>
   );
 };
@@ -152,12 +120,14 @@ type SidebarLinkProps = {
   completeHref: string;
   children: React.ReactNode;
   icon: React.ReactNode;
+  getIsActive?: (pathname: string, completeHref: string) => boolean;
 };
 
 const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
   completeHref,
   children,
   icon,
+  getIsActive,
 }) => {
   const pathname = usePathname();
 
@@ -167,7 +137,9 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
       className={clsx(
         "group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
         {
-          "bg-graydark dark:bg-meta-4": pathname.startsWith(completeHref),
+          "bg-graydark dark:bg-meta-4": getIsActive
+            ? getIsActive(pathname, completeHref)
+            : pathname.startsWith(completeHref),
         }
       )}
     >
@@ -197,9 +169,7 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
             {/* <!-- Menu Item Dashboard --> */}
             {items.map((item) => (
               <li key={item.completeHref}>
-                <SidebarLink completeHref={item.completeHref} icon={item.icon}>
-                  {item.children}
-                </SidebarLink>
+                <SidebarLink {...item}>{item.children}</SidebarLink>
               </li>
             ))}
           </ul>
@@ -207,5 +177,102 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
       </nav>
       {/* <!-- Sidebar Menu --> */}
     </div>
+  );
+};
+
+const GlobalMenu: FunctionComponent = () => {
+  return (
+    <SidebarMenu
+      items={[
+        {
+          completeHref: "/dashboard/crm",
+          icon: <GridsIcon />,
+          children: "Dashboard",
+        },
+        {
+          completeHref: "/clients",
+          icon: <IndividualIcons width={18} height={18} />,
+          children: "Clients",
+        },
+        {
+          completeHref: "/employee",
+          icon: <GroupIcon width={18} height={18} />,
+          children: "Employee",
+        },
+        {
+          completeHref: "/finance",
+          icon: <InvoiceIcon height={19} width={18} />,
+          children: "Finance",
+        },
+        {
+          completeHref: "/care",
+          icon: <HeartIcon width={18} height={18} />,
+          children: "Care Coordination",
+        },
+        {
+          completeHref: "/tasks",
+          icon: <CalendarIcon />,
+          children: "Planning & Tasks",
+        },
+      ]}
+      title={"MENU"}
+    />
+  );
+};
+
+const ClientMenu: FunctionComponent = () => {
+  const { clientId } = useParams();
+  return (
+    <SidebarMenu
+      items={[
+        {
+          completeHref: `/clients/${clientId}`,
+          icon: <IndividualIcons width={18} height={18} />,
+          children: "Overview",
+          getIsActive: (pathname) => {
+            return pathname === `/clients/${clientId}`;
+          },
+        },
+        {
+          completeHref: `/clients/${clientId}/medical-record/diagnosis`,
+          icon: <HeartIcon width={18} height={18} />,
+          children: "Medical Record",
+          getIsActive: (pathname) => {
+            return (
+              pathname.startsWith(`/clients/${clientId}/medical-record`) ||
+              pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
+              pathname.startsWith(`/clients/${clientId}/medications`) ||
+              pathname.startsWith(`/clients/${clientId}/allergies`)
+            );
+          },
+        },
+        {
+          completeHref: `/clients/${clientId}/emergency`,
+          icon: <GroupIcon />,
+          children: "Client Contacts",
+        },
+        {
+          completeHref: `/clients/${clientId}/contracts`,
+          icon: <InvoiceIcon height={19} width={18} />,
+          children: "Contracts",
+        },
+        {
+          completeHref: `/clients/${clientId}/reports`,
+          icon: <GridsIcon height={18} width={18} />,
+          children: "Reports",
+        },
+        {
+          completeHref: `/clients/${clientId}/document`,
+          icon: <GridsIcon height={18} width={18} />,
+          children: "Documents",
+        },
+      ]}
+      title={
+        <Link href={"/clients"} className="flex items-center">
+          <ArrowRight className="rotate-180" />
+          <span className="ml-2">Client List</span>
+        </Link>
+      }
+    />
   );
 };
