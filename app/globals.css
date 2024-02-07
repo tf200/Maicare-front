@@ -8,6 +8,11 @@
   body {
     @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body;
   }
+  input[type="number"][data-is-price="true"]::-webkit-inner-spin-button,
+  input[type="number"][data-is-price="true"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @layer components {

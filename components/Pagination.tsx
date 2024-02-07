@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 
 const DEFAULT_ADJACENT_PAGES_SHOWN = 1;
 
-type Props = {
+export type PaginationProps = {
   page: number;
   totalPages: number;
   adjacentPagesShown?: number;
@@ -10,7 +10,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const usePagination = (props: Props) => {
+const usePagination = (props: PaginationProps) => {
   const {
     page,
     totalPages,
@@ -35,7 +35,7 @@ const usePagination = (props: Props) => {
   };
 };
 
-const Pagination: FunctionComponent<Props> = (props) => {
+const Pagination: FunctionComponent<PaginationProps> = (props) => {
   const { adjacentPagesShown = DEFAULT_ADJACENT_PAGES_SHOWN } = props;
   const {
     isFirstPage,
@@ -57,31 +57,29 @@ const Pagination: FunctionComponent<Props> = (props) => {
             </li>
           ) : (
             <li>
-              <a
+              <button
                 onClick={() => onClick(props.page - 1)}
-                href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
                 Previous
-              </a>
+              </button>
             </li>
           )}
           {isShowFirstPage && (
             <li>
-              <a
+              <button
                 onClick={() => onClick(1)}
-                href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
                 1
-              </a>
+              </button>
             </li>
           )}
           {isShowFirstEllipsis && (
             <li>
-              <a className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black">
+              <button className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black">
                 ...
-              </a>
+              </button>
             </li>
           )}
           {pages.map((page) => {
@@ -91,9 +89,8 @@ const Pagination: FunctionComponent<Props> = (props) => {
             ) {
               return (
                 <li key={page}>
-                  <a
+                  <button
                     onClick={() => onClick(page)}
-                    href="#"
                     className={`inline-flex items-center px-3 py-1.5 rounded-md ${
                       page === props.page
                         ? "bg-primary text-white"
@@ -101,7 +98,7 @@ const Pagination: FunctionComponent<Props> = (props) => {
                     } text-xs font-medium`}
                   >
                     {page}
-                  </a>
+                  </button>
                 </li>
               );
             }
@@ -116,13 +113,12 @@ const Pagination: FunctionComponent<Props> = (props) => {
           )}
           {isShowLastPage && (
             <li>
-              <a
+              <button
                 onClick={() => onClick(pages.length)}
-                href="#"
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
                 {pages.length}
-              </a>
+              </button>
             </li>
           )}
           {isLastPage ? (
@@ -131,13 +127,12 @@ const Pagination: FunctionComponent<Props> = (props) => {
             </li>
           ) : (
             <li>
-              <a
-                href="#"
+              <button
                 onClick={() => onClick(props.page + 1)}
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
                 Next
-              </a>
+              </button>
             </li>
           )}
         </ul>

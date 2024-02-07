@@ -12,7 +12,7 @@ import clsx from "clsx";
 
 const debugTable = process.env.NODE_ENV === "development";
 
-type Props<InstanceType> = {
+export type TableProps<InstanceType> = {
   data: InstanceType[];
   columns: ColumnDef<InstanceType>[];
   onRowClick?: (instance: InstanceType) => void;
@@ -26,7 +26,7 @@ function Table<T>({
   onRowClick,
   className,
   renderRowDetails,
-}: Props<T>) {
+}: TableProps<T>) {
   const [showRowDetails, setShowRowDetails] = useState<Row<T>>();
 
   const columns = useMemo<ColumnDef<T>[]>(() => {

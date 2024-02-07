@@ -2,6 +2,7 @@
 
 import React, { FunctionComponent, PropsWithChildren, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -18,7 +19,10 @@ const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 };
 
