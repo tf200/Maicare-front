@@ -18,14 +18,12 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   });
 
   const verify = async () => {
-    console.log("cheked");
-
     await refetch();
     setIsAllowed(true);
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof localStorage !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
         redirect("/dashboard/crm");
       } else if (localStorage.getItem("a")) {
