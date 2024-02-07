@@ -1,11 +1,11 @@
 "use client";
 
 import { ReportsListItem } from "@/types/reports/reports-list-res-dto";
-import { useLatestReports } from "@/utils/ReportsSummary/getLatestReports";
 import { useRouter } from "next/navigation";
 
 import React, { FunctionComponent } from "react";
 import Loader from "@/components/common/Loader";
+import { useLatestReports } from "@/utils/reports/getLatestReports";
 
 type Props = {
   clientId: number;
