@@ -8,7 +8,7 @@ import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
 import LinkButton from "@/components/buttons/LinkButton";
 import { ReportsListItem } from "@/types/reports/reports-list-res-dto";
-import { useReportsList } from "@/utils/ReportsSummary/getReportsList";
+import { useReportsList } from "@/utils/reports/getReportsList";
 
 type Props = {
   params: { clientId: string };
