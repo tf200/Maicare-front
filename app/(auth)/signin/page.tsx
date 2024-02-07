@@ -28,7 +28,7 @@ const SignIn: React.FC = () => {
       password: Yup.string().required(requiredMessage),
     }),
     onSubmit: (values) => {
-      UseSignIn(values, setIsLoading, setAlertState, router);
+      UseSignIn(values, setIsLoading, setAlertState);
     },
   });
 

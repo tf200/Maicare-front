@@ -3,8 +3,7 @@ import axios from "axios";
 const UseSignIn = async (
   authData: {},
   setIsLoading: any,
-  setAlertState: any,
-  router: any
+  setAlertState: any
 ) => {
   setIsLoading(true);
   setAlertState(["", ""]);
