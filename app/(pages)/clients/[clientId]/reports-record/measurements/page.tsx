@@ -1,18 +1,14 @@
 "use client";
 
 import React, { FunctionComponent, useMemo } from "react";
-import { useAllergiesList } from "@/utils/allergies/getAllergiesList";
-import { ColumnDef, createColumnHelper, Row } from "@tanstack/table-core";
-import { AllergiesResDto } from "@/types/allergies/allergies-res-dto";
+import { ColumnDef } from "@tanstack/table-core";
 import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
-import Severity from "@/components/Severity";
-import DetailCell from "@/components/DetailCell";
-import ChevronDown from "@/components/icons/ChevronDown";
-import clsx from "clsx";
+import { MeasurmentResDto } from "@/types/measurment/measurment-res-dto";
+import { useMeasurementList } from "@/utils/measurement/getMeasuremenList";
 
 type Props = {
   params: { clientId: string };
@@ -22,30 +18,22 @@ const MeasurementsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
   const { data, page, setPage, isError, isLoading, isFetching } =
-    useAllergiesList(parseInt(clientId));
+    useMeasurementList(parseInt(clientId));
 
-  const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(() => {
-    const columnHelper = createColumnHelper<AllergiesResDto>();
-
+  const columnDef = useMemo<ColumnDef<MeasurmentResDto>[]>(() => {
     return [
       {
-        accessorKey: "allergy_type",
-        header: "Allergy Type",
+        accessorKey: "date",
+        header: "Date",
       },
       {
-        accessorKey: "reaction",
-        header: "Reaction",
+        accessorKey: "measurement_type",
+        header: "Measurement Type",
       },
-      columnHelper.accessor("severity", {
-        header: (Header) => (
-          <div className="flex justify-center w-full">Severity</div>
-        ),
-        cell: (info) => (
-          <div className="flex justify-center w-full">
-            <Severity severity={info.getValue()} />
-          </div>
-        ),
-      }),
+      {
+        accessorKey: "value",
+        header: "Value",
+      },
     ];
   }, []);
 
@@ -68,28 +56,18 @@ const MeasurementsPage: FunctionComponent<Props> = ({
       <></>
     );
 
-  const renderRowDetails = ({ original }: Row<AllergiesResDto>) => {
-    return <RowDetails data={original} />;
-  };
-
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Record New Allergy"}
-          href={"../allergies/new"}
+          text={"Add New Measurements"}
+          href={"../measurements/new"}
           className="ml-auto"
         />
       </div>
       {isLoading && <Loader />}
-      {data && (
-        <Table
-          data={data.results}
-          columns={columnDef}
-          renderRowDetails={renderRowDetails}
-        />
-      )}
+      {data && <Table data={data.results} columns={columnDef} />}
       <div className="flex flex-wrap items-center justify-between p-4">
         {pagination}
       </div>
@@ -103,25 +81,3 @@ const MeasurementsPage: FunctionComponent<Props> = ({
 };
 
 export default MeasurementsPage;
-
-type RowDetailsProps = {
-  data: AllergiesResDto;
-};
-
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
-  return (
-    <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Allergy Type"} value={data.allergy_type} />
-      <DetailCell label={"Reaction"} value={data.reaction} />
-      <DetailCell
-        label={"Severity"}
-        value={
-          <div className="mt-2">
-            <Severity severity={data.severity} />
-          </div>
-        }
-      />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
-    </div>
-  );
-};
