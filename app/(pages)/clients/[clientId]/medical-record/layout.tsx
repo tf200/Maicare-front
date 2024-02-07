@@ -1,5 +1,4 @@
 import React, { FunctionComponent, PropsWithChildren } from "react";
-import PageTabs from "@/components/PageTabs";
 import MedicalHistoryTabs from "@/components/MedicalHistoryTabs";
 
 type Props = {
