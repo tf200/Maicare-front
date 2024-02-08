@@ -13,6 +13,7 @@ import LinkButton from "@/components/buttons/LinkButton";
 import DetailCell from "@/components/DetailCell";
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
+import { fullDateFormat } from "@/utils/timeFormatting";
 
 type Props = {
   params: { clientId: string };
@@ -51,6 +52,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "date_of_diagnosis",
         header: () => "Date of diagnosis",
+        cell: (info) => fullDateFormat(info.getValue() as string),
       },
     ];
   }, []);
