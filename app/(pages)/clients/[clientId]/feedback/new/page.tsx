@@ -17,7 +17,7 @@ const NewFeedback: FunctionComponent = ({
           <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
-                New Feedback
+                Add New Feedback
               </h3>
             </div>
             <FeedbackForm clientId={params.clientId} />
