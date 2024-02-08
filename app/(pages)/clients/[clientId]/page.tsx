@@ -56,7 +56,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             sideActions={
               <LinkButton
                 text={"Full Medical Record"}
-                href={`${clientId}/medical-record/diagnosis`}
+                href={`${clientId}/medical-record`}
               />
             }
           >

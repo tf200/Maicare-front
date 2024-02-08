@@ -13,6 +13,7 @@ const Layout: FunctionComponent<PropsWithChildren<Props>> = ({
   return (
     <>
       <MedicalRecordLinkGroup />
+      <div className="mb-6" />
       {children}
     </>
   );

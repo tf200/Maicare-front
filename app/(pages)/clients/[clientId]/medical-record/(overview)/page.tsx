@@ -3,6 +3,7 @@ import Panel from "@/components/Panel";
 import LinkButton from "@/components/buttons/LinkButton";
 import DiagnosisSummary from "@/components/medicalRecordOverview/DiagnosisSummary";
 import AllergiesSummary from "@/components/medicalRecordOverview/AllergiesSummary";
+import MedicationsSummary from "@/components/medicalRecordOverview/MedicationsSummary";
 
 type Props = {
   params: { clientId: string };
@@ -34,7 +35,7 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
             />
           }
         >
-          <DiagnosisSummary clientId={parseInt(clientId)} />
+          <MedicationsSummary clientId={parseInt(clientId)} />
         </Panel>
       </div>
       <div className="flex flex-col gap-9">

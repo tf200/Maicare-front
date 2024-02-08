@@ -2,31 +2,45 @@ import api from "@/utils/api";
 import { MedicationsListResDto } from "@/types/medications/medications-list-res-dto";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { PaginationParams } from "@/types/pagination-params";
+import pagination from "@/components/Pagination";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
 
-async function fetchMedicationsList(clientId: number, page = 1) {
+async function fetchMedicationsList(
+  clientId: number,
+  params: PaginationParams
+) {
   const response = await api.get<MedicationsListResDto>(
     `client/medication_list/${clientId}/`,
     {
-      params: {
-        page,
-      },
+      params,
     }
   );
   return response.data;
 }
 
-export const useMedicationsList = (clientId: number) => {
-  const [page, setPage] = useState(1);
+export const useMedicationsList = (
+  clientId: number,
+  params?: PaginationParams
+) => {
+  const pagination = usePaginationParams();
+  const parsedParams = {
+    page: pagination.page,
+    page_size: pagination.page_size,
+  };
 
   const query = useQuery({
-    queryFn: () => fetchMedicationsList(clientId, page),
-    queryKey: [clientId, "medications", page],
+    queryFn: () => fetchMedicationsList(clientId, params ?? parsedParams),
+    queryKey: [clientId, "medications", params ?? parsedParams],
     keepPreviousData: true,
+    getPreviousPageParam: (data) => data.previous,
+    getNextPageParam: (data) => data.next,
   });
 
   return {
     ...query,
-    setPage,
-    page,
+    pagination,
+    page: pagination.page, // TODO: DEPRECATE
+    setPage: pagination.setPage, // TODO: DEPRECATE
   };
 };

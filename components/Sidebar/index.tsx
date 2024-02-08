@@ -233,7 +233,7 @@ const ClientMenu: FunctionComponent = () => {
           },
         },
         {
-          completeHref: `/clients/${clientId}/medical-record/diagnosis`,
+          completeHref: `/clients/${clientId}/medical-record`,
           icon: <HeartIcon width={18} height={18} />,
           children: "Medical Record",
           getIsActive: (pathname) => {

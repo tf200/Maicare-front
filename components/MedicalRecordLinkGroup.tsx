@@ -15,7 +15,7 @@ const MedicalRecordLinkGroup: FunctionComponent = () => {
           getIsActive: (pathname, href) => pathname === href,
         },
         {
-          label: "List",
+          label: "Lists",
           href: `/clients/${clientId}/medical-record/diagnosis`,
           getIsActive: (pathname) => {
             return (

@@ -1,51 +1,24 @@
-"use client";
-
 import React, { FunctionComponent } from "react";
-import { useLatestDiagnosis } from "@/utils/diagnosis/getLatestDiagnosis";
-import Loader from "@/components/common/Loader";
-import Severity from "@/components/Severity";
-import { useRouter } from "next/navigation";
-import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
-
+import DiagnosisSummary from "@/components/medicalRecordOverview/DiagnosisSummary";
+import MedicationsSummary from "@/components/medicalRecordOverview/MedicationsSummary";
+import AllergiesSummary from "@/components/medicalRecordOverview/AllergiesSummary";
 type Props = {
   clientId: number;
 };
 
 const MedicalRecordSummary: FunctionComponent<Props> = ({ clientId }) => {
-  const { data, isLoading } = useLatestDiagnosis(clientId, 5);
-  if (isLoading) return <Loader />;
-  if (data.results?.length === 0) return <div>No diagnosis found</div>;
   return (
-    <ul className="flex flex-col gap-2">
-      {data.results?.map((diagnosis) => {
-        return <DiagnosisItem key={diagnosis.id} diagnosis={diagnosis} />;
-      })}
-    </ul>
+    <div>
+      <h2 className="py-2 px-4 text-sm font-medium uppercase">allergies</h2>
+      <AllergiesSummary clientId={clientId} count={2} />
+      <div className="border-stroke w-full border-t my-4" />
+      <h2 className="py-2 px-4 text-sm font-medium uppercase">Diagnosis</h2>
+      <DiagnosisSummary clientId={clientId} />
+      <div className="border-stroke w-full border-t my-4" />
+      <h2 className="py-2 px-4 text-sm font-medium uppercase">Medications</h2>
+      <MedicationsSummary clientId={clientId} count={2} />
+    </div>
   );
 };
 
 export default MedicalRecordSummary;
-
-type DiagnosisItemProps = {
-  diagnosis: DiagnosisListItem;
-};
-
-const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({
-  diagnosis,
-}) => {
-  const router = useRouter();
-  return (
-    <li
-      className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl"
-      onClick={() =>
-        router.push(`/clients/${diagnosis.client}/diagnosis/${diagnosis.id}`)
-      }
-    >
-      <div>{diagnosis.title}</div>
-      <div className="flex items-center justify-center">
-        <Severity severity={diagnosis.severity} />
-      </div>
-      <div>{diagnosis.diagnosis_code}</div>
-    </li>
-  );
-};

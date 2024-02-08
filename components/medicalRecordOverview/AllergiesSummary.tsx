@@ -8,12 +8,13 @@ import { AllergiesResDto } from "@/types/allergies/allergies-res-dto";
 
 type Props = {
   clientId: number;
+  count?: number;
 };
 
-const AllergiesSummary: FunctionComponent<Props> = ({ clientId }) => {
+const AllergiesSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   const { data, isLoading } = useAllergiesList(clientId, {
     page: 1,
-    page_size: 5,
+    page_size: count || 5,
   });
   if (isLoading) return <Loader />;
   if (data.results?.length === 0)

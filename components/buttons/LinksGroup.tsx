@@ -19,7 +19,7 @@ const ButtonsGroup: FunctionComponent<Props> = ({ options }) => {
       : pathname.startsWith(href);
   }
   return (
-    <div className="flex items-center mb-4.5">
+    <div className="flex items-center">
       {options.map((option) => (
         <Link
           key={option.href}
