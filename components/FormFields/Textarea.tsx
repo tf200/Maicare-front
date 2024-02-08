@@ -26,7 +26,7 @@ const Textarea: FunctionComponent<Props> = ({
         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
       ></textarea>
       {error && (
-        <p role="alert" className="text-red pt-1">
+        <p role="alert" className="pt-1 text-red">
           {error}
         </p>
       )}
