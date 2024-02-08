@@ -11,7 +11,6 @@ import IndividualIcons from "@/components/icons/IndividualIcons";
 import GridsIcon from "@/components/icons/GridsIcon";
 import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
-import MailIcon from "@/components/icons/MailIcon";
 import ArrowRight from "@/components/icons/ArrowRight";
 
 interface SidebarProps {
@@ -248,12 +247,12 @@ const ClientMenu: FunctionComponent = () => {
         },
         {
           completeHref: `/clients/${clientId}/emergency`,
-          icon: <GroupIcon />,
+          icon: <GroupIcon width={18} height={18} />,
           children: "Client Contacts",
         },
         {
           completeHref: `/clients/${clientId}/contracts`,
-          icon: <InvoiceIcon height={19} width={18} />,
+          icon: <InvoiceIcon height={18} width={18} />,
           children: "Contracts",
         },
         {
@@ -270,7 +269,7 @@ const ClientMenu: FunctionComponent = () => {
       title={
         <Link href={"/clients"} className="flex items-center">
           <ArrowRight className="rotate-180" />
-          <span className="ml-2">Client List</span>
+          <span className="ml-2">BACK TO CLIENTS LIST</span>
         </Link>
       }
     />
