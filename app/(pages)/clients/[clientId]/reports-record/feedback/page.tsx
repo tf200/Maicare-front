@@ -2,15 +2,13 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import Table from "@/components/Table";
-import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
-import Severity from "@/components/Severity";
+import { ColumnDef } from "@tanstack/table-core";
 import Pagination from "@/components/Pagination";
-import { useDiagnosisList } from "@/utils/diagnosis/getDiagnosisList";
 import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
-import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
 import LinkButton from "@/components/buttons/LinkButton";
-import DetailCell from "@/components/DetailCell";
+import { useFeedbackList } from "@/utils/feedback/getFeedbackList";
+import { FeedbackListItem } from "@/types/feedback/feedback-list-res-dto";
 
 type Props = {
   params: { clientId: string };
@@ -18,37 +16,22 @@ type Props = {
 
 const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
-    useDiagnosisList(parseInt(clientId));
+    useFeedbackList(parseInt(clientId));
 
-  const columnDef = useMemo<ColumnDef<DiagnosisListItem>[]>(() => {
-    const columnHelper = createColumnHelper<DiagnosisListItem>();
-
+  const columnDef = useMemo<ColumnDef<FeedbackListItem>[]>(() => {
     return [
       {
-        accessorKey: "title",
-        header: () => "Summary",
+        accessorKey: "date",
+        header: () => "Date",
       },
       {
-        accessorKey: "description",
-        header: () => "Diagnosis",
+        accessorKey: "feedback_text",
+        header: () => "Feedback",
       },
+
       {
-        accessorKey: "diagnosis_code",
-        header: () => "Diagnosis code",
-      },
-      columnHelper.accessor("severity", {
-        header: (Header) => (
-          <div className="flex justify-center w-full">Severity</div>
-        ),
-        cell: (info) => (
-          <div className="flex justify-center w-full">
-            <Severity severity={info.getValue()} />
-          </div>
-        ),
-      }),
-      {
-        accessorKey: "date_of_diagnosis",
-        header: () => "Date of diagnosis",
+        accessorKey: "author",
+        header: "Written By",
       },
     ];
   }, []);
@@ -77,19 +60,13 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Diagnosis"}
-          href={"../diagnosis/new"}
+          text={"Add Feedback"}
+          href={"../feedback/new"}
           className="ml-auto"
         />
       </div>
       {isLoading && <Loader />}
-      {data && (
-        <Table
-          data={data.results}
-          columns={columnDef}
-          renderRowDetails={({ original }) => <RowDetails data={original} />}
-        />
-      )}
+      {data && <Table data={data.results} columns={columnDef} />}
       <div className="flex flex-wrap items-center justify-between p-4">
         {pagination}
       </div>
@@ -103,31 +80,3 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 };
 
 export default FeedbackPage;
-
-type RowDetailsProps = {
-  data: DiagnosisListItem;
-};
-
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
-  return (
-    <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Summary"} value={data.title} />
-      <DetailCell label={"Diagnosis Code"} value={data.diagnosis_code} />
-      <DetailCell label={"Diagnosis"} value={data.description} />
-      <DetailCell
-        label={"Severity"}
-        value={
-          <div className="mt-2">
-            <Severity severity={data.severity} />
-          </div>
-        }
-      />
-      <DetailCell label={"Status"} value={data.status} />
-      <DetailCell
-        label={"Diagnosing Clinician"}
-        value={data.diagnosing_clinician}
-      />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
-    </div>
-  );
-};
