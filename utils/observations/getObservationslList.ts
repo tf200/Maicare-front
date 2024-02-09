@@ -1,10 +1,10 @@
+import { ObservationsListResDto } from "@/types/observations/observations-list-res-dto";
 import api from "@/utils/api";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ObservationsResDto } from "../../types/observations/observations-res-dto";
 
 async function fetchObservationsList(clientId: number, page = 1) {
-  const response = await api.get<ObservationsResDto>(
+  const response = await api.get<ObservationsListResDto>(
     `employee/observations_list/${clientId}/`,
     {
       params: {

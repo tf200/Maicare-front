@@ -1,4 +1,3 @@
-import { NewObservationsReqDto } from "../observations/new-observations-req-dto";
+import { ObservationsResDto } from "./observations-res-dto";
 
-export type ObservationtItem = NewObservationsReqDto;
-export type ObservationsListResDto = Paginated<NewObservationsReqDto>;
+export type ObservationsListResDto = Paginated<ObservationsResDto>;

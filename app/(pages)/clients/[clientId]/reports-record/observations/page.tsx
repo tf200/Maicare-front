@@ -8,7 +8,7 @@ import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useObservationsList } from "@/utils/observations/getObservationslList";
-import { ObservationsListResDto } from "@/types/observations/observations-list-res-dto";
+import { ObservationsResDto } from "@/types/observations/observations-res-dto";
 
 type Props = {
   params: { clientId: string };
@@ -20,7 +20,7 @@ const ObservationsPage: FunctionComponent<Props> = ({
   const { data, page, setPage, isLoading, isFetching, isError } =
     useObservationsList(parseInt(clientId));
 
-  const columnDef = useMemo<ColumnDef<ObservationsListResDto>[]>(() => {
+  const columnDef = useMemo<ColumnDef<ObservationsResDto>[]>(() => {
     return [
       {
         accessorKey: "date",
