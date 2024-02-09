@@ -1,15 +1,15 @@
 import api from "@/utils/api";
 import { useQuery } from "react-query";
 
-const fetchEmployees = (clientId: number) => async () => {
+const fetchEmployees = () => async () => {
   const response = await api.get(`/employee/employees_list/`);
   return response.data;
 };
 
-export const useEmployees = (clientId: number) => {
+export const useEmployees = () => {
   const query = useQuery({
-    queryKey: [clientId, "employees"],
-    queryFn: fetchEmployees(clientId),
+    queryKey: ["employees"],
+    queryFn: fetchEmployees(),
     keepPreviousData: true,
   });
 

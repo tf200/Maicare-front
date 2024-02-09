@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 const fetchInvolvedEmployeesList =
-  (clientId: string, page = 1) =>
+  (clientId: number, page = 1) =>
   async () => {
     const response = await api.get(
       `employee/clientassignment_list/${clientId}/`,
@@ -16,7 +16,7 @@ const fetchInvolvedEmployeesList =
     return response.data;
   };
 
-export const useInvolvedEmployeesList = (clientId: string) => {
+export const useInvolvedEmployeesList = (clientId: number) => {
   const [page, setPage] = useState(1);
 
   const query = useQuery({

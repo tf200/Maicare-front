@@ -38,7 +38,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     [mutate]
   );
 
-  const { data, isLoading: isOptionsLoading } = useEmployees(clientId);
+  const { data, isLoading: isOptionsLoading } = useEmployees();
 
   const getEmployeesOptions = () => {
     return data

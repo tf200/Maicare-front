@@ -18,7 +18,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
   const { page, setPage, isFetching, isLoading, isError, data } =
-    useInvolvedEmployeesList(clientId);
+    useInvolvedEmployeesList(parseInt(clientId));
 
   const columnDef = useMemo(() => {
     return [
