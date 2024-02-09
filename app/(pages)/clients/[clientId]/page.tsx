@@ -2,6 +2,9 @@ import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
 import ClientInformation from "@/components/clientDetails/ClientInformation";
+import IdentityDetails from "@/components/clientDetails/IdentityDetails";
+import AddressDetails from "@/components/clientDetails/AddressDetails";
+import LocationDetails from "@/components/clientDetails/LocationDetails";
 import MedicalRecordSummary from "@/components/clientDetails/MedicalRecordSummary";
 import EmergencyContactsSummary from "@/components/clientDetails/EmergyencyContactsSummary";
 import DocumentsSummary from "@/components/clientDetails/DocumentsSummary";
@@ -21,8 +24,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
       <Breadcrumb pageName="Client details" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          <Panel title={"Client information"} containerClassName="px-7 py-4">
+          <Panel title={"Client Information"} containerClassName="px-7 py-4">
             <ClientInformation clientId={parseInt(clientId)} />
+          </Panel>
+          <Panel title={"Location Details"} containerClassName="px-7 py-4">
+            <LocationDetails clientId={parseInt(clientId)} />
           </Panel>
           <Panel
             title={"Emergency Contacts"}
@@ -50,6 +56,12 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
+          <Panel title={"Identity Details"} containerClassName="px-7 py-4">
+            <IdentityDetails clientId={parseInt(clientId)} />
+          </Panel>
+          <Panel title={"Address Details"} containerClassName="px-7 py-4">
+            <AddressDetails clientId={parseInt(clientId)} />
+          </Panel>
           <Panel
             title={"Medical Record"}
             containerClassName="px-7 py-4"
