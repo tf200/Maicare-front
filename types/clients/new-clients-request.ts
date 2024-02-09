@@ -5,12 +5,15 @@ export type NewClientsRequest = {
   email: string;
   organisation: string;
   location: string;
+  birthplace: string;
   departement: string;
   gender: string;
   filenumber: number;
   phone_number: string;
   profile_picture: string;
-
+  bsn: string;
+  source: string;
+  date_of_birth: string;
   city: string;
   Zipcode: string;
   infix: string;

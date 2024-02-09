@@ -30,6 +30,11 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
   { label: "Severe", value: "Severe" },
 ];
 
+export const SOURCE_OPTIONS = [
+  { label: "Select source", value: "" },
+  { label: "BRP", value: "BRP" },
+];
+
 export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
   { label: "Select Relation", value: "" },
   { label: "Father", value: "Father" },
