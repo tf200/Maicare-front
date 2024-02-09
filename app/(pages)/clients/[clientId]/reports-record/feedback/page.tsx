@@ -30,7 +30,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
 
       {
-        accessorKey: "author",
+        accessorKey: "author_name",
         header: "Written By",
       },
     ];
