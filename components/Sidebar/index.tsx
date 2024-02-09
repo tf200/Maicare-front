@@ -246,9 +246,17 @@ const ClientMenu: FunctionComponent = () => {
           },
         },
         {
-          completeHref: `/clients/${clientId}/emergency`,
+          completeHref: `/clients/${clientId}/client-network`,
           icon: <GroupIcon width={18} height={18} />,
-          children: "Client Contacts",
+          children: "Client Network",
+          getIsActive: (pathname) => {
+            return (
+              pathname.startsWith(`/clients/${clientId}/client-network`) ||
+              pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
+              pathname.startsWith(`/clients/${clientId}/medications`) ||
+              pathname.startsWith(`/clients/${clientId}/allergies`)
+            );
+          },
         },
         {
           completeHref: `/clients/${clientId}/contracts`,

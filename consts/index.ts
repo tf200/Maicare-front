@@ -32,9 +32,17 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
 
 export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
   { label: "Select Relation", value: "" },
-  { label: "Relation 1", value: "Relation 1" },
-  { label: "Relation 2", value: "Relation 2" },
-  { label: "Relation 3", value: "Relation 3" },
+  { label: "Father", value: "Father" },
+  { label: "Mother", value: "Mother" },
+  { label: "Sibling", value: "Sibling" },
+  { label: "Other family member", value: "Other family member" },
+  { label: "Unrelated", value: "Unrelated" },
+];
+
+export const EMERGENCY_DISTANCE_OPTIONS: SelectionOption[] = [
+  { label: "Select Distance", value: "" },
+  { label: "Primary Relationship", value: "Primary Relationship" },
+  { label: "Secondary Relationship", value: "Secondary Relationship" },
 ];
 
 export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
