@@ -296,6 +296,13 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                           name="gender"
                           value="Female"
                         />
+                        <RadioCustom
+                          id={3}
+                          type="radio"
+                          label={"Not-specified"}
+                          name="gender"
+                          value="Not-specified"
+                        />
                       </div>
                     </div>
                     <InputFieldThin
