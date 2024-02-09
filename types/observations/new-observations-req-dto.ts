@@ -1,6 +1,6 @@
 export type NewObservationsReqDto = {
-  date: string;
+  date?: string;
   observation_text: string;
-  client: number;
+  client?: number;
   category: string;
 };
