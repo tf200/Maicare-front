@@ -20,6 +20,8 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
   if (isError)
     return <div className="text-red">Sorry! we failed to load contracts</div>;
 
+  if (data.results?.length === 0)
+    return <div>No contracts found for current client!</div>;
   return (
     <section className="grid grid-cols-3 gap-2">
       {data.results?.map((item) => (
