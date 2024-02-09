@@ -14,6 +14,8 @@ import ProfilePicture from "@/components/ProfilePicture";
 import ClientFilters from "@/components/ClientFilters";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
 import { useDebounce } from "@/hooks/useDebounce";
+import { getAge } from "@/utils/getAge";
+import styles from "./styles.module.css";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -32,29 +34,32 @@ const ClientsPage: FunctionComponent = () => {
           <div className="flex items-center justify-center">
             <ProfilePicture
               profilePicture={info.row.original.profile_picture}
+              width={48}
+              height={48}
             />
           </div>
         ),
       },
       {
-        accessorKey: "first_name",
-        header: () => "First Name",
-        cell: (info) => info.getValue() || "Not Available",
+        id: "full_name",
+        header: () => "Full name",
+        accessorFn: (client) => `${client.first_name} ${client.last_name}`,
       },
       {
-        accessorKey: "last_name",
-        header: () => "Last Name",
-        cell: (info) => info.getValue() || "Not Available",
+        accessorKey: "date_of_birth",
+        header: () => "Age",
+        cell: (info) =>
+          info.getValue() ? getAge(info.getValue() as string) : "Not Available",
       },
       {
-        accessorKey: "email",
-        header: () => "Email",
-        cell: (info) => info.getValue() || "Not Available",
+        accessorKey: "gender",
+        header: () => "Gender",
+        cell: (info) => info.getValue() || "Not Specified",
       },
       {
-        accessorKey: "phone_number",
-        header: () => "Phone Number",
-        cell: (info) => info.getValue() || "Not Available",
+        accessorKey: "status",
+        header: () => "Status",
+        cell: (info) => info.getValue() || "N/A",
       },
     ];
   }, []);
@@ -101,6 +106,7 @@ const ClientsPage: FunctionComponent = () => {
             onRowClick={handleRowClick}
             data={data.results}
             columns={columnDef}
+            className={styles.table}
           />
         )}
 
