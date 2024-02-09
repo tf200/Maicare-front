@@ -24,7 +24,7 @@ const Panel: FunctionComponent<PropsWithChildren<Props>> = ({
           </>
         )}
       </div>
-      <div className={containerClassName}>{children}</div>;
+      <div className={containerClassName}>{children}</div>
     </div>
   );
 };
