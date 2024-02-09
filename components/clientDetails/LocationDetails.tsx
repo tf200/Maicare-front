@@ -17,9 +17,21 @@ const LocationDetails: FunctionComponent<Props> = ({ clientId }) => {
   if (data) {
     return (
       <div className="grid grid-cols-2 gap-4">
-        <DetailCell label={"Location"} value={data.location} />
-        <DetailCell label={"Organisation"} value={data.organisation} />
-        <DetailCell label={"Department"} value={data.departement} />
+        <DetailCell
+          ignoreIfEmpty={true}
+          label={"Location"}
+          value={data.location || "Not specified"}
+        />
+        <DetailCell
+          ignoreIfEmpty={true}
+          label={"Organisation"}
+          value={data.organisation || "Not specified"}
+        />
+        <DetailCell
+          ignoreIfEmpty={true}
+          label={"Department"}
+          value={data.departement || "Not specified"}
+        />
       </div>
     );
   }
