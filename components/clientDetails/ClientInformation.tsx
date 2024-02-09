@@ -5,6 +5,8 @@ import { useClientDetails } from "@/utils/clients/getClientDetails";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import ProfilePicture from "@/components/ProfilePicture";
+import dayjs from "dayjs";
+import "dayjs/locale/en";
 
 type Props = {
   clientId: number;
@@ -27,10 +29,12 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         />
         <DetailCell label={"Email"} type={"email"} value={data.email} />
         <DetailCell label={"Phone"} type={"phone"} value={data.phone_number} />
-        <DetailCell label={"Organisation"} value={data.organisation} />
-        <DetailCell label={"Location"} value={data.location} />
-        <DetailCell label={"Department"} value={data.departement} />
         <DetailCell label={"Gender"} value={data.gender} />
+        <DetailCell
+          label={"Date of birth"}
+          value={dayjs(data.date_of_birth).format("DD MMM, YYYY")}
+        />
+        <DetailCell label={"Birth Place"} value={data.birthplace} />
         <DetailCell label={"File Number"} value={data.filenumber} />
       </div>
     );
