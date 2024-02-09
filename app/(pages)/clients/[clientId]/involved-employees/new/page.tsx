@@ -5,7 +5,7 @@ import InvolvedEmployeesForm from "@/components/forms/InvolvedEmployeesForm";
 const NewEmergencyContact: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string };
+  params: { clientId: number };
 }) => {
   return (
     <>

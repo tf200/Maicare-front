@@ -252,9 +252,8 @@ const ClientMenu: FunctionComponent = () => {
           getIsActive: (pathname) => {
             return (
               pathname.startsWith(`/clients/${clientId}/client-network`) ||
-              pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
-              pathname.startsWith(`/clients/${clientId}/medications`) ||
-              pathname.startsWith(`/clients/${clientId}/allergies`)
+              pathname.startsWith(`/clients/${clientId}/emergency`) ||
+              pathname.startsWith(`/clients/${clientId}/involved-employees`)
             );
           },
         },

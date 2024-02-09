@@ -10,7 +10,7 @@ import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
 import Button from "@/components/buttons/Button";
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
 };
 
 type FormTypes = {
@@ -28,7 +28,7 @@ const initialValues: FormTypes = {
 export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   clientId,
 }) => {
-  const { mutate, isLoading } = useCreateInvolvedEmployee(parseInt(clientId));
+  const { mutate, isLoading } = useCreateInvolvedEmployee(clientId);
   const submit = useCallback(
     (values: FormTypes) => {
       mutate(values, {
@@ -38,7 +38,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     [mutate]
   );
 
-  const { data } = useEmployees(clientId);
+  const { data, isLoading: isOptionsLoading } = useEmployees(clientId);
 
   const getEmployeesOptions = () => {
     return data
@@ -68,7 +68,11 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         label={"Employee"}
         name={"employee"}
         required={true}
-        options={getEmployeesOptions()}
+        options={
+          isOptionsLoading
+            ? [{ label: "Loading ...", value: "" }]
+            : getEmployeesOptions()
+        }
         className="w-full mb-4.5"
         value={formik.values.employee}
         error={

@@ -16,12 +16,7 @@ export const useCreateInvolvedEmployee = (client: number) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        "involved-employee",
-        {
-          client,
-        },
-      ]);
+      queryClient.invalidateQueries([client, "employees"]);
     },
   });
 };

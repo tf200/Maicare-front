@@ -23,7 +23,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
   const columnDef = useMemo(() => {
     return [
       {
-        accessorKey: "employee",
+        accessorKey: "employee_name",
         header: () => "Employee",
         cell: (info) => info.getValue() || "Not Available",
       },
