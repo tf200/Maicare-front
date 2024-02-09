@@ -17,7 +17,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
-  const [debouncedParams] = useDebounce([filters], 1000);
+  const [debouncedParams] = useDebounce([filters], 500);
   const { page, setPage, data, isError, isFetching, isLoading } =
     useClientsList(debouncedParams);
 
