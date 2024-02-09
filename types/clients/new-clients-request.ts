@@ -8,7 +8,6 @@ export type NewClientsRequest = {
   birthplace: string;
   departement: string;
   gender: string;
-  identity: boolean;
   filenumber: number;
   phone_number: string;
   profile_picture: string;
