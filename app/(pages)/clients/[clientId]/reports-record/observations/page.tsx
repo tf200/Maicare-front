@@ -1,15 +1,14 @@
 "use client";
 
 import React, { FunctionComponent, useMemo } from "react";
-import { useMedicationsList } from "@/utils/medications/getMedicationsList";
 import { ColumnDef } from "@tanstack/table-core";
-import { MedicationsResDto } from "@/types/medications/medications-res-dto";
 import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
 import LinkButton from "@/components/buttons/LinkButton";
-import DetailCell from "@/components/DetailCell";
+import { useObservationsList } from "@/utils/observations/getObservationslList";
+import { ObservationsListResDto } from "@/types/observations/observations-list-res-dto";
 
 type Props = {
   params: { clientId: string };
@@ -19,29 +18,25 @@ const ObservationsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
   const { data, page, setPage, isLoading, isFetching, isError } =
-    useMedicationsList(parseInt(clientId));
+    useObservationsList(parseInt(clientId));
 
-  const columnDef = useMemo<ColumnDef<MedicationsResDto>[]>(() => {
+  const columnDef = useMemo<ColumnDef<ObservationsListResDto>[]>(() => {
     return [
       {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: "date",
+        header: "Date",
+        cell: (info) => info.getValue() || "Not Available",
       },
       {
-        accessorKey: "dosage",
-        header: "Dosage",
+        accessorKey: "observation_text",
+        header: "Observation",
+        cell: (info) => info.getValue() || "Not Available",
       },
+
       {
-        accessorKey: "frequency",
-        header: "Frequency",
-      },
-      {
-        accessorKey: "start_date",
-        header: "Start Date",
-      },
-      {
-        accessorKey: "end_date",
-        header: "End Date",
+        accessorKey: "category",
+        header: "Category",
+        cell: (info) => info.getValue() || "Not Available",
       },
     ];
   }, []);
@@ -68,19 +63,13 @@ const ObservationsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Medication"}
-          href={"../medications/new"}
+          text={"Add Observations"}
+          href={"../observations/new"}
           className="ml-auto"
         />
       </div>
       {isLoading && <Loader />}
-      {data && (
-        <Table
-          data={data.results}
-          columns={columnDef}
-          renderRowDetails={({ original }) => <RowDetails data={original} />}
-        />
-      )}
+      {data && <Table data={data.results} columns={columnDef} />}
       <div className="flex flex-wrap items-center p-4">{pagination}</div>
       {isError && (
         <p role="alert" className="text-red">
@@ -92,20 +81,3 @@ const ObservationsPage: FunctionComponent<Props> = ({
 };
 
 export default ObservationsPage;
-
-type RowDetailsProps = {
-  data: MedicationsResDto;
-};
-
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
-  return (
-    <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Name"} value={data.name} />
-      <DetailCell label={"Dosage"} value={data.dosage} />
-      <DetailCell label={"Frequency"} value={data.frequency} />
-      <DetailCell label={"Start Date"} value={data.start_date} />
-      <DetailCell label={"End Date"} value={data.end_date} />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
-    </div>
-  );
-};
