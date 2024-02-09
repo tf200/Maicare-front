@@ -1,12 +1,12 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import { useFormik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
-import { EMERGENCY_RELATION_OPTIONS } from "@/consts";
 import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvolvedEmployee";
+import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
 import Button from "@/components/buttons/Button";
 
 type PropsType = {
@@ -38,6 +38,20 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     [mutate]
   );
 
+  const { data } = useEmployees(clientId);
+
+  const getEmployeesOptions = () => {
+    return data
+      ? [
+          { label: "Select Employee", value: "" },
+          ...data.results.map((entry: any) => ({
+            label: entry.user_name,
+            value: entry.user,
+          })),
+        ]
+      : [];
+  };
+
   const formik = useFormik<FormTypes>({
     initialValues: initialValues,
     validationSchema: Yup.object({
@@ -54,7 +68,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         label={"Employee"}
         name={"employee"}
         required={true}
-        options={EMERGENCY_RELATION_OPTIONS}
+        options={getEmployeesOptions()}
         className="w-full mb-4.5"
         value={formik.values.employee}
         error={
@@ -74,9 +88,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         value={formik.values.role}
         placeholder={"Enter relation"}
         error={
-          formik.touched.role && formik.errors.role
-            ? formik.errors.role
-            : null
+          formik.touched.role && formik.errors.role ? formik.errors.role : null
         }
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
