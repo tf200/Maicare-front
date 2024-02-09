@@ -2,7 +2,7 @@ import React, { FunctionComponent, InputHTMLAttributes } from "react";
 import clsx from "clsx";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
+  label?: string;
   error?: string;
   isPrice?: boolean;
 };
@@ -18,9 +18,11 @@ const InputFieldThin: FunctionComponent<InputFieldType> = ({
 }) => {
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-2.5 block text-black dark:text-white">
-        {label} {required && <span className="text-meta-1">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={id} className="mb-2.5 block text-black dark:text-white">
+          {label} {required && <span className="text-meta-1">*</span>}
+        </label>
+      )}
       <div className="relative">
         {isPrice && (
           <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
@@ -34,6 +36,7 @@ const InputFieldThin: FunctionComponent<InputFieldType> = ({
           id={id}
           data-is-price={isPrice}
           required={required}
+          aria-label={label || props.placeholder}
           className={clsx(
             "w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           )}
