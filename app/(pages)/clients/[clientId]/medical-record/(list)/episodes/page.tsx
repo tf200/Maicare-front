@@ -101,7 +101,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the allergy list.
+          Sorry an error has prevented us from loading the episodes list.
         </p>
       )}
     </>

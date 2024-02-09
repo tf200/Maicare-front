@@ -6,7 +6,7 @@ type Props = {
 };
 
 const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  redirect(`/clients/${clientId}/medical-record/allergies`);
+  redirect(`/clients/${clientId}/medical-record/episodes`);
 };
 
 export default AllergiesPage;
