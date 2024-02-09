@@ -27,6 +27,9 @@ const MedicalRecordLinkGroup: FunctionComponent = () => {
               ) ||
               pathname.startsWith(
                 `/clients/${clientId}/medical-record/allergies`
+              ) ||
+              pathname.startsWith(
+                `/clients/${clientId}/medical-record/episodes`
               )
             );
           },

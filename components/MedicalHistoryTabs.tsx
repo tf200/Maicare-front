@@ -32,6 +32,10 @@ const MedicalHistoryTabs: FunctionComponent = () => {
           label: "Allergies",
           href: `/clients/${clientId}/medical-record/allergies`,
         },
+        {
+          label: "Episodes",
+          href: `/clients/${clientId}/medical-record/episodes`,
+        },
       ]}
       title={
         `Medical History` +

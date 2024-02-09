@@ -4,6 +4,7 @@ import LinkButton from "@/components/buttons/LinkButton";
 import DiagnosisSummary from "@/components/medicalRecordOverview/DiagnosisSummary";
 import AllergiesSummary from "@/components/medicalRecordOverview/AllergiesSummary";
 import MedicationsSummary from "@/components/medicalRecordOverview/MedicationsSummary";
+import EpisodesSummary from "@/components/medicalRecordOverview/EpisodesSummary";
 
 type Props = {
   params: { clientId: string };
@@ -50,6 +51,18 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           }
         >
           <AllergiesSummary clientId={parseInt(clientId)} />
+        </Panel>
+        <Panel
+          title={"Episodes"}
+          containerClassName="px-7 py-4"
+          sideActions={
+            <LinkButton
+              text={"Emotional State History"}
+              href={`medical-record/episodes`}
+            />
+          }
+        >
+          <EpisodesSummary clientId={parseInt(clientId)} />
         </Panel>
       </div>
     </div>

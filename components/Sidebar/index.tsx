@@ -241,7 +241,8 @@ const ClientMenu: FunctionComponent = () => {
               pathname.startsWith(`/clients/${clientId}/medical-record`) ||
               pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
               pathname.startsWith(`/clients/${clientId}/medications`) ||
-              pathname.startsWith(`/clients/${clientId}/allergies`)
+              pathname.startsWith(`/clients/${clientId}/allergies`) ||
+              pathname.startsWith(`/clients/${clientId}/episodes`)
             );
           },
         },

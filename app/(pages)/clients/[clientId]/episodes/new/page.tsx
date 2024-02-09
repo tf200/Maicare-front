@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
-import AllergyForm from "@/components/forms/AllergyForm";
+import EpisodeForm from "@/components/forms/EpisodeForm";
 
 type Props = {
   params: {
@@ -14,10 +14,10 @@ const NewMedicationPage: FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="New Allergy" />
+      <Breadcrumb pageName="Record New Episode" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <Panel title={"Record a New Allergy"}>
-          <AllergyForm clientId={parseInt(clientId)} />
+          <EpisodeForm clientId={parseInt(clientId)} />
         </Panel>
       </div>
     </>

@@ -51,7 +51,6 @@ const ClientsPage: FunctionComponent = () => {
         header: () => "Email",
         cell: (info) => info.getValue() || "Not Available",
       },
-
       {
         accessorKey: "phone_number",
         header: () => "Phone Number",
