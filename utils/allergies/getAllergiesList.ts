@@ -1,32 +1,52 @@
 import api from "@/utils/api";
 import { AllergiesListResDto } from "@/types/allergies/allergies-list-res-dto";
 import { useQuery } from "react-query";
-import { useState } from "react";
+import { PaginationParams } from "@/types/pagination-params";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
 
-async function getAllergiesList(clientId: number, page = 1) {
+async function getAllergiesList(clientId: number, params: PaginationParams) {
   const response = await api.get<AllergiesListResDto>(
     `client/allergy_list/${clientId}`,
     {
-      params: {
-        page,
-      },
+      params,
     }
   );
   return response.data;
 }
 
-export const useAllergiesList = (clientId: number) => {
-  const [page, setPage] = useState(1);
+/**
+ *
+ * @param clientId
+ * @param params Override pagination params
+ */
+export const useAllergiesList = (
+  clientId: number,
+  params?: PaginationParams
+) => {
+  const parsedParams = usePaginationParams();
 
   const query = useQuery<AllergiesListResDto>({
-    queryKey: [clientId, "allergies", page],
-    queryFn: () => getAllergiesList(clientId, page),
+    queryKey: [
+      clientId,
+      "allergies",
+      params ?? {
+        page: parsedParams.page,
+        page_size: parsedParams.page_size,
+      },
+    ],
+    queryFn: () =>
+      getAllergiesList(
+        clientId,
+        params ?? {
+          page: parsedParams.page,
+          page_size: parsedParams.page_size,
+        }
+      ),
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    setPage,
-    page,
+    pagination: parsedParams,
   };
 };

@@ -233,7 +233,7 @@ const ClientMenu: FunctionComponent = () => {
           },
         },
         {
-          completeHref: `/clients/${clientId}/medical-record/diagnosis`,
+          completeHref: `/clients/${clientId}/medical-record`,
           icon: <HeartIcon width={18} height={18} />,
           children: "Medical Record",
           getIsActive: (pathname) => {
@@ -241,14 +241,22 @@ const ClientMenu: FunctionComponent = () => {
               pathname.startsWith(`/clients/${clientId}/medical-record`) ||
               pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
               pathname.startsWith(`/clients/${clientId}/medications`) ||
-              pathname.startsWith(`/clients/${clientId}/allergies`)
+              pathname.startsWith(`/clients/${clientId}/allergies`) ||
+              pathname.startsWith(`/clients/${clientId}/episodes`)
             );
           },
         },
         {
-          completeHref: `/clients/${clientId}/emergency`,
+          completeHref: `/clients/${clientId}/client-network`,
           icon: <GroupIcon width={18} height={18} />,
-          children: "Client Contacts",
+          children: "Client Network",
+          getIsActive: (pathname) => {
+            return (
+              pathname.startsWith(`/clients/${clientId}/client-network`) ||
+              pathname.startsWith(`/clients/${clientId}/emergency`) ||
+              pathname.startsWith(`/clients/${clientId}/involved-employees`)
+            );
+          },
         },
         {
           completeHref: `/clients/${clientId}/contracts`,

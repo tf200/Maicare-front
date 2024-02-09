@@ -5,7 +5,10 @@ import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
-import { EMERGENCY_RELATION_OPTIONS } from "@/consts";
+import {
+  EMERGENCY_DISTANCE_OPTIONS,
+  EMERGENCY_RELATION_OPTIONS,
+} from "@/consts";
 import { useCreateEmergencyContact } from "@/utils/emergency/createEmergencyContact";
 import Button from "@/components/buttons/Button";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
@@ -20,6 +23,7 @@ type FormTypes = {
   email: string;
   phone_number: string;
   relationship: string;
+  relation_status: string;
   address: string;
   auto_reports: boolean;
 };
@@ -30,6 +34,7 @@ const initialValues: FormTypes = {
   email: "",
   phone_number: "",
   relationship: "",
+  relation_status: "",
   address: "",
   auto_reports: false,
 };
@@ -55,6 +60,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       email: Yup.string().required("Please provide email address"),
       phone_number: Yup.string().required("Please provide phone number"),
       relationship: Yup.string().required("Please provide relation"),
+      relation_status: Yup.string().required("Please provide distance"),
       address: Yup.string().required("Please provide address physique"),
       auto_reports: Yup.boolean(),
     }),
@@ -65,6 +71,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
     <form onSubmit={formik.handleSubmit} className="p-6.5">
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
         <InputFieldThin
+          required={true}
           label={"First Name"}
           name={"first_name"}
           placeholder={"Enter First Name"}
@@ -80,6 +87,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           onBlur={formik.handleBlur}
         />
         <InputFieldThin
+          required={true}
           className={"w-full xl:w-1/2"}
           label={"Last Name"}
           name={"last_name"}
@@ -96,6 +104,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         />
       </div>
       <InputFieldThin
+        required={true}
         className={"w-full mb-4.5"}
         label={"Email address"}
         name={"email"}
@@ -109,25 +118,26 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         }
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+      />{" "}
+      <InputFieldThin
+        required={true}
+        label={"Phone number"}
+        name={"phone_number"}
+        placeholder={"Enter phone number"}
+        type={"text"}
+        value={formik.values.phone_number}
+        className={"w-full mb-4.5"}
+        error={
+          formik.touched.phone_number && formik.errors.phone_number
+            ? formik.errors.phone_number
+            : null
+        }
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
       />
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
-          label={"Phone number"}
-          name={"phone_number"}
-          placeholder={"Enter phone number"}
-          type={"text"}
-          value={formik.values.phone_number}
-          className="w-full xl:w-1/2"
-          error={
-            formik.touched.phone_number && formik.errors.phone_number
-              ? formik.errors.phone_number
-              : null
-          }
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-
         <Select
+          required={true}
           label={"Relation"}
           name={"relationship"}
           options={EMERGENCY_RELATION_OPTIONS}
@@ -141,9 +151,24 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
+        <Select
+          required={true}
+          label={"Distance"}
+          name={"relation_status"}
+          options={EMERGENCY_DISTANCE_OPTIONS}
+          className="w-full xl:w-1/2"
+          value={formik.values.relation_status}
+          error={
+            formik.touched.relation_status && formik.errors.relation_status
+              ? formik.errors.relation_status
+              : null
+          }
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
       </div>
-
       <InputFieldThin
+        required={true}
         className={"w-full mb-4.5"}
         label={"Address physique"}
         name={"address"}

@@ -18,8 +18,13 @@ type Props = {
 const MedicationsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
-  const { data, page, setPage, isLoading, isFetching, isError } =
-    useMedicationsList(parseInt(clientId));
+  const {
+    data,
+    pagination: { page, setPage },
+    isLoading,
+    isFetching,
+    isError,
+  } = useMedicationsList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<MedicationsResDto>[]>(() => {
     return [
@@ -46,7 +51,9 @@ const MedicationsPage: FunctionComponent<Props> = ({
     ];
   }, []);
 
-  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
+  const pageCount = data
+    ? Math.ceil(data.count / (data.page_size ?? PAGE_SIZE))
+    : 0;
 
   const pagination =
     data && pageCount > 1 ? (

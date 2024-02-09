@@ -1,20 +1,14 @@
 import React, { FunctionComponent, PropsWithChildren } from "react";
-import MedicalHistoryTabs from "@/components/MedicalHistoryTabs";
+import MedicalRecordLinkGroup from "@/components/MedicalRecordLinkGroup";
 
-type Props = {
-  params: { clientId: string };
-};
-
-const MedicalRecordLayout: FunctionComponent<PropsWithChildren<Props>> = ({
-  children,
-  params: { clientId },
-}) => {
+const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
-      <MedicalHistoryTabs />
+    <>
+      <MedicalRecordLinkGroup />
+      <div className="mb-6" />
       {children}
-    </div>
+    </>
   );
 };
 
-export default MedicalRecordLayout;
+export default Layout;

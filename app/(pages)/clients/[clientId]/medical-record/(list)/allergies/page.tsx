@@ -19,8 +19,13 @@ type Props = {
 };
 
 const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { data, page, setPage, isError, isLoading, isFetching } =
-    useAllergiesList(parseInt(clientId));
+  const {
+    data,
+    pagination: { page, setPage },
+    isError,
+    isLoading,
+    isFetching,
+  } = useAllergiesList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(() => {
     const columnHelper = createColumnHelper<AllergiesResDto>();
@@ -47,7 +52,9 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
+  const pageCount = data
+    ? Math.ceil(data.count / (data.page_size ?? PAGE_SIZE))
+    : 0;
 
   const pagination =
     data && pageCount > 1 ? (

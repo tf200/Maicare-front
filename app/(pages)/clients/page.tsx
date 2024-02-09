@@ -1,9 +1,9 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import Link from "next/link";
 import Panel from "@/components/Panel";
-import { useClientsList } from "../../../utils/clients/getClientsList";
+import { useClientsList } from "@/utils/clients/getClientsList";
 import Table from "@/components/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { ClientsResDto } from "@/types/clients/clients-res-dto";
@@ -11,10 +11,15 @@ import Pagination from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/components/ProfilePicture";
+import ClientFilters from "@/components/ClientFilters";
+import { ClientsSearchParams } from "@/types/clients/clients-search-params";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const ClientsPage: FunctionComponent = () => {
+  const [filters, setFilters] = useState<ClientsSearchParams>();
+  const [debouncedParams] = useDebounce([filters], 500);
   const { page, setPage, data, isError, isFetching, isLoading } =
-    useClientsList();
+    useClientsList(debouncedParams);
 
   const router = useRouter();
 
@@ -46,7 +51,6 @@ const ClientsPage: FunctionComponent = () => {
         header: () => "Email",
         cell: (info) => info.getValue() || "Not Available",
       },
-
       {
         accessorKey: "phone_number",
         header: () => "Phone Number",
@@ -74,36 +78,41 @@ const ClientsPage: FunctionComponent = () => {
   };
 
   return (
-    <Panel
-      title={"Clients List"}
-      sideActions={
-        <Link
-          href={`/clients/new`}
-          className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
-          Add new Clients
-        </Link>
-      }
-    >
-      {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-      {pagination}
+    <>
+      <Panel
+        title={"Clients List"}
+        header={
+          <div className="flex grow justify-between flex-wrap gap-4">
+            <ClientFilters onFiltersChange={setFilters} />
+            <Link
+              href={`/clients/new`}
+              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Add new Clients
+            </Link>
+          </div>
+        }
+      >
+        {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {pagination}
 
-      {data && (
-        <Table
-          onRowClick={handleRowClick}
-          data={data.results}
-          columns={columnDef}
-        />
-      )}
+        {data && (
+          <Table
+            onRowClick={handleRowClick}
+            data={data.results}
+            columns={columnDef}
+          />
+        )}
 
-      {pagination}
+        {pagination}
 
-      {isError && (
-        <p role="alert" className="text-red">
-          An error has occurred
-        </p>
-      )}
-    </Panel>
+        {isError && (
+          <p role="alert" className="text-red">
+            An error has occurred
+          </p>
+        )}
+      </Panel>
+    </>
   );
 };
 
