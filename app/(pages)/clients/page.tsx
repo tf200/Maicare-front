@@ -16,6 +16,7 @@ import { ClientsSearchParams } from "@/types/clients/clients-search-params";
 import { useDebounce } from "@/hooks/useDebounce";
 import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
+import LargeAlertMessage from "@/components/LargeErrorMessage";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -110,12 +111,24 @@ const ClientsPage: FunctionComponent = () => {
           />
         )}
 
+        {data && data.results.length === 0 && (
+          <LargeAlertMessage
+            firstLine={"Oops!"}
+            secondLine={
+              "It seems that there are no clients that match your search criteria."
+            }
+          />
+        )}
+
         {pagination}
 
         {isError && (
-          <p role="alert" className="text-red">
-            An error has occurred
-          </p>
+          <LargeAlertMessage
+            firstLine={"Oops!"}
+            secondLine={
+              "An error has prevented us from fetching the clients list."
+            }
+          />
         )}
       </Panel>
     </>
