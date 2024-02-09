@@ -250,7 +250,7 @@ span.flatpickr-weekday,
   @apply after:hidden before:hidden;
 }
 .datatable-table > thead > tr:first-child > th {
-  @apply font-medium border-transparent pr-2.5 pt-9 pb-2.5;
+  @apply font-medium pr-2.5 pt-7.5 pb-5;
 }
 .data-table-common .datatable-table > tbody > tr > td:first-child,
 .data-table-common .datatable-table > thead > tr > th:first-child {

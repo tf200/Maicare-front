@@ -3,19 +3,25 @@ import ProfilePicturePlaceholder from "@/components/icons/ProfilePicturePlacehol
 
 type Props = {
   profilePicture?: string;
+  width?: number;
+  height?: number;
 };
 
-const ProfilePicture: FunctionComponent<Props> = ({ profilePicture }) => {
+const ProfilePicture: FunctionComponent<Props> = ({
+  profilePicture,
+  width = 64,
+  height = 64,
+}) => {
   return profilePicture ? (
     <img
-      width={64}
-      height={64}
+      width={width}
+      height={height}
       src={profilePicture}
-      className="object-cover rounded-full w-16 h-16"
+      className={`object-cover rounded-full w-${width / 4} h-${height / 4}`}
       alt={"Profile picture"}
     />
   ) : (
-    <ProfilePicturePlaceholder width={64} height={64} />
+    <ProfilePicturePlaceholder width={width} height={height} />
   );
 };
 
