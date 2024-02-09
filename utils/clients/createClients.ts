@@ -15,7 +15,6 @@ export async function createClients(data: NewClientsRequest) {
     }
   });
 
-  // Append other client data fields to formData
   Object.keys(data).forEach((key) => {
     formData.append(key, data[key].toString());
   });
@@ -37,10 +36,9 @@ export const useCreateClients = (onSuccess?: () => void) => {
     mutationFn: async (data: NewClientsRequest) => createClients(data),
 
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries(["clients"]);
       if (onSuccess) {
-        onSuccess(); // Call the provided onSuccess callback
+        onSuccess();
       }
     },
   });
