@@ -14,6 +14,7 @@ const InputFieldThin: FunctionComponent<InputFieldType> = ({
   required,
   error,
   isPrice,
+  form,
   ...props
 }) => {
   return (

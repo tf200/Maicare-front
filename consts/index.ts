@@ -69,6 +69,21 @@ export const CARE_TYPE_OPTIONS: RateTypeOption[] = [
   { label: "Minute", value: "rate_per_minute" },
 ];
 
+export const GENDER_OPTIONS: SelectionOption[] = [
+  {
+    label: "Male",
+    value: "male",
+  },
+  {
+    label: "Female",
+    value: "female",
+  },
+  {
+    label: "Not specified",
+    value: "not_specified",
+  },
+];
+
 // TODO: this is assumed to be 10, it should come from the backend
 export const PAGE_SIZE = 10;
 
