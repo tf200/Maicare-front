@@ -1,4 +1,4 @@
-import React, { FunctionComponent, InputHTMLAttributes } from "react";
+import React, { FunctionComponent } from "react";
 import CheckIcon from "@/components/icons/CheckIcon";
 import clsx from "clsx";
 import { Field } from "formik";

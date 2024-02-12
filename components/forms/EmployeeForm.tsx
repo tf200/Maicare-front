@@ -129,11 +129,6 @@ const EmployeeForm: FunctionComponent = (props) => {
                 error={touched.last_name && errors.last_name}
               />
             </Panel>
-            <Button type="submit" formNoValidate={true}>
-              Save Employee
-            </Button>
-          </div>
-          <div className="flex flex-col gap-9">
             <Panel title={"Birth details"} containerClassName="px-7 py-4">
               <InputFieldThin
                 label={"Date of Birth"}
@@ -159,6 +154,11 @@ const EmployeeForm: FunctionComponent = (props) => {
                 name={"gender"}
               />
             </Panel>
+            <Button type="submit" formNoValidate={true}>
+              Save Employee
+            </Button>
+          </div>
+          <div className="flex flex-col gap-9">
             <Panel title={"Contact"} containerClassName="px-7 py-4">
               <InputFieldThin
                 label={"Email Address"}
