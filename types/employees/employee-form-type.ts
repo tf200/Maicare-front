@@ -1,4 +1,4 @@
-export type NewEmployeeFormType = {
+export type EmployeeFormType = {
   employee_number: string;
   employment_number: string;
   is_subcontractor: boolean;

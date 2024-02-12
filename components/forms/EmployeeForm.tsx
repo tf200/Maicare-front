@@ -3,15 +3,17 @@
 import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
-import { NewEmployeeFormType } from "@/types/employees/new-employee-form-type";
+import { EmployeeFormType } from "@/types/employees/employee-form-type";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Button from "@/components/buttons/Button";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import FormikRadioGroup from "@/components/FormFields/FormikRadioGroup";
 import { GENDER_OPTIONS } from "@/consts";
 import * as Yup from "yup";
+import { useCreateEmployee } from "@/utils/employees/createEmployee";
+import { useRouter } from "next/navigation";
 
-const initialValue: NewEmployeeFormType = {
+const initialValue: EmployeeFormType = {
   employee_number: undefined,
   employment_number: undefined,
   is_subcontractor: false,
@@ -30,7 +32,7 @@ const initialValue: NewEmployeeFormType = {
   home_telephone_number: "",
 };
 
-const employeeSchema: Yup.ObjectSchema<NewEmployeeFormType> = Yup.object({
+const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
   employee_number: Yup.string().required("Employee Number Required"),
   employment_number: Yup.string().required("Employment Number Required"),
   is_subcontractor: Yup.boolean(),
@@ -49,11 +51,19 @@ const employeeSchema: Yup.ObjectSchema<NewEmployeeFormType> = Yup.object({
   home_telephone_number: Yup.string(),
 });
 
-const EmployeeForm: FunctionComponent = (props) => {
+const EmployeeForm: FunctionComponent = () => {
+  const { mutate, isLoading } = useCreateEmployee();
+  const router = useRouter();
   return (
     <Formik
       initialValues={initialValue}
-      onSubmit={(value) => {}}
+      onSubmit={(values, { resetForm }) => {
+        mutate(values, {
+          onSuccess: () => {
+            router.push("/employees");
+          },
+        });
+      }}
       validationSchema={employeeSchema}
     >
       {({
@@ -154,7 +164,13 @@ const EmployeeForm: FunctionComponent = (props) => {
                 name={"gender"}
               />
             </Panel>
-            <Button type="submit" formNoValidate={true}>
+            <Button
+              type="submit"
+              formNoValidate={true}
+              isLoading={isLoading}
+              disabled={isLoading}
+              loadingText={"Creating Employee"}
+            >
               Save Employee
             </Button>
           </div>
@@ -187,7 +203,7 @@ const EmployeeForm: FunctionComponent = (props) => {
               />
               <InputFieldThin
                 label={"Auth Phone Number"}
-                id={"auth_phone_number"}
+                id={"authentication_phone_number"}
                 type={"tel"}
                 className="w-full mb-4.5"
                 value={values.authentication_phone_number}
