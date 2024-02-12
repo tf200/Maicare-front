@@ -42,13 +42,18 @@ const employeeSchema: Yup.ObjectSchema<NewEmployeeFormType> = Yup.object({
   gender: Yup.string().required("Please provide the gender"),
 
   email_address: Yup.string().required("Please provide the email address"),
+  private_email_address: Yup.string(),
+  authentication_phone_number: Yup.string(),
+  work_phone_number: Yup.string(),
+  private_phone_number: Yup.string(),
+  home_telephone_number: Yup.string(),
 });
 
 const EmployeeForm: FunctionComponent = (props) => {
   return (
     <Formik
       initialValues={initialValue}
-      onSubmit={() => {}}
+      onSubmit={(value) => {}}
       validationSchema={employeeSchema}
     >
       {({
