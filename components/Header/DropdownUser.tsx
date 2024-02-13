@@ -16,6 +16,7 @@ const DropdownUser = () => {
     queryKey: ["user"],
   });
 
+  if (!userData) return null;
   const { username, profile_picture } = userData.data;
   const role =
     decode.groups.length > 0
