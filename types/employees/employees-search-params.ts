@@ -1,4 +1,4 @@
 export type EmployeesSearchParams = {
   search: string;
-  status__in: string;
+  out_of_service: boolean;
 };

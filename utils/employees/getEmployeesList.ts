@@ -2,10 +2,10 @@ import { EmployeesListResDto } from "@/types/employees/employees-list-res-dto";
 import api from "@/utils/api";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ClientsSearchParams } from "@/types/clients/clients-search-params";
+import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
 
 const fetchEmployees =
-  (params?: ClientsSearchParams, page = 1) =>
+  (params?: EmployeesSearchParams, page = 1) =>
   async () => {
     const res = await api.get<EmployeesListResDto>(`employee/employees_list/`, {
       params: {
@@ -16,7 +16,7 @@ const fetchEmployees =
     return res.data;
   };
 
-export const useEmployeesList = (params?: ClientsSearchParams) => {
+export const useEmployeesList = (params?: EmployeesSearchParams) => {
   const [page, setPage] = useState(1);
 
   const query = useQuery({

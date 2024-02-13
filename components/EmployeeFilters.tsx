@@ -5,9 +5,7 @@ import { SelectionOption } from "@/types/selection-option";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
 
 const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "On Waiting List", label: "Waiting List" },
-  { value: "In Care", label: "In Care" },
-  { value: "Out Of Concern", label: "Out of Care" },
+  { value: "out of service", label: "Out Of Service" },
 ];
 
 type Props = {
@@ -27,23 +25,22 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           setSearch(e.target.value);
           onFiltersChange({
             search: e.target.value,
-            status__in: selected.join(", "),
+            out_of_service: selected.length === 1,
           });
         }}
       />
       <div className="flex items-center gap-2">
-        <h2 className="uppercase text-sm font-bold mr-4">Employee Status:</h2>
-        {/* <ControlledCheckboxGroup
+        <ControlledCheckboxGroup
           options={STATUS_OPTIONS}
           selected={selected}
           onChange={(selected) => {
             setSelected(selected);
             onFiltersChange({
               search,
-              status__in: selected.join(", "),
+              out_of_service: selected.length === 1,
             });
           }}
-        /> */}
+        />
       </div>
     </div>
   );
