@@ -33,7 +33,7 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
       />
       <div className="flex items-center gap-2">
         <h2 className="uppercase text-sm font-bold mr-4">Employee Status:</h2>
-        <ControlledCheckboxGroup
+        {/* <ControlledCheckboxGroup
           options={STATUS_OPTIONS}
           selected={selected}
           onChange={(selected) => {
@@ -43,7 +43,7 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
               status__in: selected.join(", "),
             });
           }}
-        />
+        /> */}
       </div>
     </div>
   );
