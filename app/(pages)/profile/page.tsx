@@ -13,6 +13,7 @@ const Profile = () => {
     queryKey: ["user"],
   });
 
+  if (!userData) return null;
   const {
     first_name,
     last_name,

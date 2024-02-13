@@ -194,9 +194,9 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Clients",
         },
         {
-          completeHref: "/employee",
+          completeHref: "/employees",
           icon: <GroupIcon width={18} height={18} />,
-          children: "Employee",
+          children: "Employees",
         },
         {
           completeHref: "/finance",

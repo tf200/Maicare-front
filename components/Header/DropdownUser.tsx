@@ -16,17 +16,9 @@ const DropdownUser = () => {
     queryKey: ["user"],
   });
 
-  const { username, profile_picture } = userData.data;
-  const role =
-    decode.groups.length > 0
-      ? decode.groups[0].charAt(0).toUpperCase() +
-        decode.groups[0].slice(1).toLowerCase()
-      : null;
-
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
@@ -42,7 +34,6 @@ const DropdownUser = () => {
     return () => document.removeEventListener("click", clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -51,6 +42,14 @@ const DropdownUser = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+
+  if (!userData) return null;
+  const { username, profile_picture } = userData.data;
+  const role =
+    decode.groups.length > 0
+      ? decode.groups[0].charAt(0).toUpperCase() +
+        decode.groups[0].slice(1).toLowerCase()
+      : null;
 
   return (
     <div className="relative">
