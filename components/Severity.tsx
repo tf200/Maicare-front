@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { DiagnosisSeverity } from "@/types/dagnosis-servity";
-import StatusBadge, { BadgeType } from "@/components/StatusBadge";
+import StatusBadge from "@/components/StatusBadge";
+import { BadgeType } from "@/types/badge-type";
 
 type Props = {
   severity: DiagnosisSeverity;
