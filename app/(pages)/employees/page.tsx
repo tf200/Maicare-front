@@ -34,8 +34,7 @@ const EmployeesPage: FunctionComponent = () => {
         cell: (info) => (
           <div className="flex items-center justify-center">
             <ProfilePicture
-              // profilePicture={info.row.original.profile_picture}
-              profilePicture="https://images.unsplash.com/photo-1457449940276-e8deed18bfff?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
+              profilePicture={info.row.original.profile_picture}
               width={48}
               height={48}
             />

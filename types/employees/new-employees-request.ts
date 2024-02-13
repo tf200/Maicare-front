@@ -1,5 +1,6 @@
 export type NewEmployeesRequest = {
   id: number;
+  profile_picture: string;
   first_name: string;
   last_name: string;
   position: string;
