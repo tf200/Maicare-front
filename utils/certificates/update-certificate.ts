@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 async function updateCertificate(data: UpdateCertifDto) {
   const response = await api.patch<CertifResDto>(
-    `employee/certificationsRUD/${data.employee}/`,
+    `employee/certificationsRUD/${data.id}/`,
     data
   );
   return response.data;

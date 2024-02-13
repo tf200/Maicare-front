@@ -1,20 +1,13 @@
-import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
+import { ButtonProps } from "@/components/buttons/Button";
 import LoadingCircle from "@/components/icons/LoadingCircle";
-import { ButtonType } from "@/types/button-type";
 import clsx from "clsx";
 import { BUTTON_CLASS_NAMES } from "@/consts";
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  isLoading?: boolean;
-  loadingText?: string;
-  buttonType?: ButtonType;
-};
-
-const Button: FunctionComponent<ButtonProps> = ({
+const IconButton: FunctionComponent<ButtonProps> = ({
   isLoading = false,
   children,
   type = "button",
-  loadingText,
   buttonType,
   ...props
 }) => {
@@ -23,7 +16,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       type={type}
       {...props}
       className={clsx(
-        "flex justify-center px-10 py-3 font-medium rounded bg-primary text-gray",
+        "flex justify-center p-2 font-medium rounded-full",
         BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
           BUTTON_CLASS_NAMES.Primary
       )}
@@ -31,9 +24,8 @@ const Button: FunctionComponent<ButtonProps> = ({
       {isLoading ? (
         <>
           <span className="animate-spin">
-            <LoadingCircle />
+            <LoadingCircle className={"w-5 h-5"} />
           </span>
-          <span className="ml-2">{loadingText ?? "Loading..."}</span>
         </>
       ) : (
         children
@@ -42,4 +34,4 @@ const Button: FunctionComponent<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default IconButton;

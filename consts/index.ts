@@ -91,3 +91,10 @@ export const DEFAULT_PAGINATION_PARAMS: PaginationParams = {
   page: 1,
   page_size: PAGE_SIZE,
 };
+
+export const BUTTON_CLASS_NAMES = {
+  Primary: "bg-primary text-white",
+  Secondary: "bg-secondary text-white",
+  Danger: "bg-danger text-white",
+  Success: "bg-success text-white",
+};

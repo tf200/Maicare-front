@@ -1,19 +1,9 @@
 import React, { FunctionComponent, useMemo } from "react";
+import { BadgeType } from "@/types/badge-type";
 
 type BadgeProps = {
   text: string;
 };
-
-export type BadgeType =
-  | "Primary"
-  | "Secondary"
-  | "Success"
-  | "Dark"
-  | "Light"
-  | "Gray"
-  | "Danger"
-  | "Warning"
-  | "Info";
 
 type Props = BadgeProps & {
   type: BadgeType;

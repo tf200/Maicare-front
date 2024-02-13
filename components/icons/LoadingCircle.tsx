@@ -1,16 +1,18 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
+import clsx from "clsx";
 
 const LoadingCircle: FunctionComponent<IconProps> = ({
   width = 24,
   height = 24,
+  className,
 }) => {
   return (
     <svg
-      className="fill-current"
+      className={clsx("fill-current", className)}
       width={width}
       height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 24 24`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

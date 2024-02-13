@@ -75,8 +75,9 @@ const CertificationForm: FunctionComponent<Props> = ({
     });
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
         <InputFieldThin
+          className="w-full xl:w-1/2"
           name="name"
           id="name"
           label="Title"
@@ -89,6 +90,7 @@ const CertificationForm: FunctionComponent<Props> = ({
           error={touched.name && errors.name}
         />
         <InputFieldThin
+          className="w-full xl:w-1/2"
           name="issued_by"
           id="issued_by"
           label="Issued By"
@@ -101,8 +103,9 @@ const CertificationForm: FunctionComponent<Props> = ({
           error={touched.issued_by && errors.issued_by}
         />
       </div>
-      <div>
+      <div className="mb-6 flex flex-col gap-6 xl:flex-row">
         <InputFieldThin
+          className="w-full xl:w-1/2"
           name="date_issued"
           id="date_issued"
           label="Date Issued"
@@ -114,6 +117,7 @@ const CertificationForm: FunctionComponent<Props> = ({
           type="date"
           error={touched.date_issued && errors.date_issued}
         />
+        <div className="w-full xl:w-1/2" />
       </div>
       <Button
         type="submit"
@@ -121,7 +125,7 @@ const CertificationForm: FunctionComponent<Props> = ({
         isLoading={isCreating || isUpdating}
         loadingText={mode === "add" ? "Adding..." : "Updating..."}
       >
-        {mode === "add" ? "Add Certificate" : "Update Certificate"}
+        {mode === "add" ? "Submit Certificate" : "Update Certificate"}
       </Button>
     </form>
   );

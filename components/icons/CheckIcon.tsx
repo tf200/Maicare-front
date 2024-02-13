@@ -1,13 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
+import clsx from "clsx";
+import { className } from "postcss-selector-parser";
 
 const CheckIcon: FunctionComponent<IconProps> = ({
   width = 10,
   height = 7,
+  className,
 }) => {
   return (
     <svg
-      className="fill-current"
+      className={clsx("fill-current", className)}
       width={width}
       height={height}
       viewBox="0 0 10 7"

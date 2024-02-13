@@ -6,6 +6,8 @@ import Button from "@/components/buttons/Button";
 import CertificationForm from "@/components/forms/CertificationForm";
 import Loader from "@/components/common/Loader";
 import LargeErrorMessage from "@/components/LargeErrorMessage";
+import Panel from "@/components/Panel";
+import CertificatesList from "@/components/employeeBackground/CertificatesList";
 
 type Props = {
   params: {
@@ -19,15 +21,22 @@ const CertificatesPage: FunctionComponent<Props> = ({
   const { data, error, isLoading } = useListCertificates(+employeeId);
   const [isAdding, setIsAdding] = useState(false);
   return (
-    <div>
-      <Button onClick={() => setIsAdding(true)}>Add Certificate</Button>
+    <Panel title={"Certificates"} containerClassName="py-4 px-7">
+      <div className="mb-4.5">
+        <Button
+          className="w-72 block ml-auto"
+          onClick={() => setIsAdding(true)}
+        >
+          + Add Certificate
+        </Button>
+      </div>
       {isAdding && (
         <CertificationForm
           employeeId={+employeeId}
           onSuccess={() => setIsAdding(false)}
         />
       )}
-      {data?.results.map((cert) => <div>{cert.name}</div>)}
+      {data && <CertificatesList data={data} />}
       {isLoading && <Loader />}
       {error && (
         <LargeErrorMessage
@@ -35,7 +44,7 @@ const CertificatesPage: FunctionComponent<Props> = ({
           secondLine="An error occurred while fetching certificates"
         />
       )}
-    </div>
+    </Panel>
   );
 };
 
