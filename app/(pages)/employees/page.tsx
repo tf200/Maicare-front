@@ -17,6 +17,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
+import OrganisationFilter from "@/components/OrganisationFilter";
 
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
@@ -25,6 +26,13 @@ const EmployeesPage: FunctionComponent = () => {
     useEmployeesList(debouncedParams);
 
   const router = useRouter();
+
+  const folders = [
+    "Management",
+    "Office Employees",
+    "Pedagogical Employees",
+    "Ambulatory Medelterkers",
+  ];
 
   const columnDef = useMemo<ColumnDef<EmployeesResDto>[]>(() => {
     return [
@@ -105,6 +113,12 @@ const EmployeesPage: FunctionComponent = () => {
           </div>
         }
       >
+        <div className="px-[60px] pt-6">
+          <div className="flex flex-col items-start justify-start">
+            <OrganisationFilter folders={folders} />
+          </div>
+        </div>
+
         {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
         {pagination}
 
