@@ -13,8 +13,8 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
   return (
     <div>
       <LinkButton text={"Certificates"} href={`${employeeId}/certificates`} />
-      <LinkButton text={"Education"} href={`${employeeId}/education`} />
-      <LinkButton text={"Experience"} href={`${employeeId}/experience`} />
+      <LinkButton text={"Educations"} href={`${employeeId}/educations`} />
+      <LinkButton text={"Experiences"} href={`${employeeId}/experiences`} />
     </div>
   );
 };
