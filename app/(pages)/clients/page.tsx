@@ -50,7 +50,7 @@ const ClientsPage: FunctionComponent = () => {
         accessorKey: "date_of_birth",
         header: () => "Age",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Not Available",
+          info.getValue() ? getAge(info.getValue() as string) : "Not Specified",
       },
       {
         accessorKey: "gender",
