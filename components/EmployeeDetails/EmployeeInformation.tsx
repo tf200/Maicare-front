@@ -47,19 +47,19 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Work Email"}
-          type={"email"}
+          type={data.email_address ? "email" : "text"}
           value={data.email_address || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Private Email"}
-          type={"email"}
+          type={data.private_email_address ? "email" : "text"}
           value={data.private_email_address || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Work Phone Number"}
-          type={"phone"}
+          type={data.work_phone_number ? "phone" : "text"}
           value={data.work_phone_number || "Not specified"}
         />
         <DetailCell
@@ -70,19 +70,19 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Private Phone Number"}
-          type={"phone"}
+          type={data.private_phone_number ? "phone" : "text"}
           value={data.private_phone_number || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Home Phone Number"}
-          type={"phone"}
+          type={data.home_telephone_number ? "phone" : "text"}
           value={data.home_telephone_number || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Auth Phone Number"}
-          type={"phone"}
+          type={data.authentication_phone_number ? "phone" : "text"}
           value={data.authentication_phone_number || "Not specified"}
         />
         <DetailCell

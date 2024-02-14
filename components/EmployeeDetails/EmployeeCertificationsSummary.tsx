@@ -5,6 +5,7 @@ import { useListCertificates } from "@/utils/certificates/listCertificates";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import { useRouter } from "next/navigation";
+import { dateFormat } from "@/utils/timeFormatting";
 
 type Props = {
   employeeId: number;
@@ -36,7 +37,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
             <DetailCell
               ignoreIfEmpty={true}
               label={"Date Issued"}
-              value={certificate.date_issued}
+              value={dateFormat(certificate.date_issued)}
             />
             <DetailCell
               ignoreIfEmpty={true}

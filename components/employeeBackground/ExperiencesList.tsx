@@ -49,7 +49,7 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
     <>
       <tr>
         <td>
-          <DetailCell label={"Bob Title"} value={experience.job_title} />
+          <DetailCell label={"Job Title"} value={experience.job_title} />
         </td>
         <td>
           <DetailCell label={"Company Name"} value={experience.company_name} />
