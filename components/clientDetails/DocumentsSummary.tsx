@@ -4,7 +4,6 @@ import React, { FunctionComponent } from "react";
 import { useDocumentList } from "@/utils/document/getDocumentList";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
-import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import bytesToSize from "@/hooks/useSizeConverter";
@@ -15,7 +14,6 @@ type Props = {
 
 const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useDocumentList(clientId.toString());
-  const router = useRouter();
   if (isLoading) return <Loader />;
   if (isError)
     return (
