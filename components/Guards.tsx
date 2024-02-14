@@ -18,7 +18,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   });
 
   const verify = async () => {
-    // await refetch();
+    await refetch();
     setIsAllowed(true);
   };
 
