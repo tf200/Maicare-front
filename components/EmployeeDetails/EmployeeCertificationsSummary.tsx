@@ -17,8 +17,6 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
   const router = useRouter();
   if (isLoading) return <Loader />;
 
-  console.log(data);
-
   if (data.results?.length === 0) return <div>No certifications found</div>;
   return (
     <ul className="flex flex-col gap-2">
