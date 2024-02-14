@@ -7,6 +7,7 @@ import { useUpdateCertificate } from "@/utils/certificates/update-certificate";
 import { CertifResDto } from "@/types/certificates/certif-res.dto";
 import Button from "@/components/buttons/Button";
 import * as Yup from "yup";
+import { FormProps } from "@/types/form-props";
 
 const initialValues: CertificateFormType = {
   name: "",
@@ -14,19 +15,9 @@ const initialValues: CertificateFormType = {
   date_issued: "",
 };
 
-type Props =
-  | {
-      mode?: "add";
-      onSuccess: () => void;
-      employeeId: number;
-      initialData?: undefined;
-    }
-  | {
-      mode: "update";
-      onSuccess: () => void;
-      employeeId: number;
-      initialData: CertifResDto;
-    };
+type Props = FormProps<CertifResDto> & {
+  employeeId: number;
+};
 
 const certificateSchema: Yup.ObjectSchema<CertificateFormType> = Yup.object({
   name: Yup.string().required("Title is required"),

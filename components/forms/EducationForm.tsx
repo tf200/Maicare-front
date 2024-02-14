@@ -1,45 +1,44 @@
 import React, { FunctionComponent } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ExperienceFormType } from "@/types/experiences/experience-form-type";
-import { ExpResDto } from "@/types/experiences/exp-res.dto";
-import { useCreateExperience } from "@/utils/experiences/create-experience";
-import { useUpdateExperience } from "@/utils/experiences/update-experience";
+import { EducationFormType } from "@/types/educations";
+import { EducationResDto } from "@/types/educations";
+import { useCreateEducation } from "@/utils/educations/create-education";
+import { useUpdateEducation } from "@/utils/educations/update-education";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Button from "@/components/buttons/Button";
-import Textarea from "@/components/FormFields/Textarea";
 import { FormProps } from "@/types/form-props";
 
-const initialValues: ExperienceFormType = {
-  job_title: "",
-  company_name: "",
+const initialValues: EducationFormType = {
+  institution_name: "",
+  degree: "",
+  field_of_study: "",
   start_date: "",
   end_date: "",
-  description: "",
 };
 
-type Props = FormProps<ExpResDto> & {
+type Props = FormProps<EducationResDto> & {
   employeeId: number;
 };
 
-const experienceSchema: Yup.ObjectSchema<ExperienceFormType> = Yup.object({
-  job_title: Yup.string().required("Job title is required"),
-  company_name: Yup.string().required("Company name is required"),
+const educationSchema: Yup.ObjectSchema<EducationFormType> = Yup.object({
+  institution_name: Yup.string().required("Institution name is required"),
+  degree: Yup.string().required("Degree is required"),
+  field_of_study: Yup.string().required("Field of study is required"),
   start_date: Yup.string().required("Start date is required"),
   end_date: Yup.string().required("End date is required"),
-  description: Yup.string().required("Description is required"),
 });
 
-const ExperienceForm: FunctionComponent<Props> = ({
+const EducationForm: FunctionComponent<Props> = ({
   mode = "add",
   onSuccess,
   employeeId,
   initialData,
 }) => {
-  const { mutate: create, isLoading: isCreating } = useCreateExperience();
-  const { mutate: update, isLoading: isUpdating } = useUpdateExperience();
+  const { mutate: create, isLoading: isCreating } = useCreateEducation();
+  const { mutate: update, isLoading: isUpdating } = useUpdateEducation();
 
-  function onSubmit(value: ExperienceFormType) {
+  function onSubmit(value: EducationFormType) {
     if (mode === "add") {
       create(
         {
@@ -64,40 +63,56 @@ const ExperienceForm: FunctionComponent<Props> = ({
     }
   }
   const { handleSubmit, values, handleChange, errors, touched, handleBlur } =
-    useFormik<ExperienceFormType>({
+    useFormik<EducationFormType>({
       initialValues: mode === "update" ? initialData : initialValues,
       onSubmit: onSubmit,
-      validationSchema: experienceSchema,
+      validationSchema: educationSchema,
     });
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
         <InputFieldThin
           className="w-full xl:w-1/2"
-          name="job_title"
-          id="job_title"
-          label="Job Title"
-          placeholder="Please enter the job title"
+          name="institution_name"
+          id="institution_name"
+          label="Institution Name"
+          placeholder="Please enter the institution name"
           type="text"
-          value={values.job_title}
+          value={values.institution_name}
           required={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.job_title && errors.job_title}
+          error={touched.institution_name && errors.institution_name}
         />
         <InputFieldThin
           className="w-full xl:w-1/2"
-          name="company_name"
-          id="company_name"
-          label="Company Name"
-          placeholder="Please enter the company name"
+          name="degree"
+          id="degree"
+          label="Degree"
+          placeholder="Please enter the degree"
           type="text"
-          value={values.company_name}
+          value={values.degree}
           required={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.company_name && errors.company_name}
+          error={touched.degree && errors.degree}
         />
+      </div>
+      <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+        <InputFieldThin
+          className="w-full xl:w-1/2"
+          name="field_of_study"
+          id="field_of_study"
+          label="Field of Study"
+          placeholder="Please enter the field of study"
+          type="text"
+          value={values.field_of_study}
+          required={true}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.field_of_study && errors.field_of_study}
+        />
+        <div className="w-full xl:w-1/2" />
       </div>
       <div className="mb-6 flex flex-col gap-6 xl:flex-row">
         <InputFieldThin
@@ -128,29 +143,16 @@ const ExperienceForm: FunctionComponent<Props> = ({
         />
       </div>
 
-      <Textarea
-        rows={6}
-        id={"description"}
-        required={true}
-        className={"mb-6"}
-        label={"Description"}
-        placeholder={"Please enter the description of the experience"}
-        value={values.description}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.description && errors.description}
-      />
-
       <Button
         type="submit"
         formNoValidate={true}
         isLoading={isCreating || isUpdating}
         loadingText={mode === "add" ? "Adding..." : "Updating..."}
       >
-        {mode === "add" ? "Submit Experience" : "Update Experience"}
+        {mode === "add" ? "Submit Education" : "Update Education"}
       </Button>
     </form>
   );
 };
 
-export default ExperienceForm;
+export default EducationForm;
