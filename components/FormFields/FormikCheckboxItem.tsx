@@ -6,7 +6,7 @@ import { Field } from "formik";
 interface Props {
   label: string;
   id: string;
-  value: boolean;
+  value?: boolean;
   name?: string;
 }
 
