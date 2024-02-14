@@ -82,6 +82,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
           placeholder={"Select Range"}
           className="w-full xl:w-1/2"
           options={RANGE_OPTIONS}
+          disabled={true}
         />
       </div>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -91,6 +92,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
           label={"Start Date"}
           type={"date"}
           placeholder={"Enter Start Date"}
+          disabled={true}
         />
         <InputFieldThin
           className={"w-full xl:w-1/2"}
@@ -98,6 +100,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
           label={"End Date"}
           type={"date"}
           placeholder={"Enter End Date"}
+          disabled={true}
         />
       </div>
       <Button

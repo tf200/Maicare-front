@@ -2,9 +2,11 @@
 
 import React, { FunctionComponent, useState } from "react";
 import Panel from "@/components/Panel";
-import { dateFormat } from "@/utils/timeFormatting";
 import Button from "@/components/buttons/Button";
 import RoleAssignmentForm from "@/components/forms/RoleAssignmentForm";
+import { useListRoleAssignments } from "@/utils/role-assignements/list-role-assignments";
+import { RoleListResDto } from "@/types/roles/role-list-res.dto";
+import Loader from "@/components/common/Loader";
 
 type Props = {
   params: { employeeId: string };
@@ -12,6 +14,8 @@ type Props = {
 
 const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
   const [isAssigning, setIsAssigning] = useState(false);
+  const { data: roleAssignments, isLoading: roleAssignmentsLoading } =
+    useListRoleAssignments(+employeeId);
   return (
     <div>
       <Panel
@@ -23,6 +27,11 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
         }
         containerClassName="px-7 py-4"
       >
+        {roleAssignmentsLoading && (
+          <span>
+            <Loader />
+          </span>
+        )}
         {isAssigning && (
           <RoleAssignmentForm
             employeeId={+employeeId}
@@ -31,38 +40,9 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
             }}
           />
         )}
-        <RolesList
-          title={"Manual Roles"}
-          roles={[
-            {
-              id: 1,
-              name: "Backoffice",
-              from_date: "2021-01-01",
-              to_date: "2021-12-31",
-              range: "Standard Access",
-            },
-            {
-              id: 2,
-              name: "Ambulatory Care",
-              from_date: "2021-01-01",
-              to_date: "2021-12-31",
-              range: "Standard Access",
-            },
-          ]}
-        />
-        <div className="border-stroke w-full border-t my-4" />
-        <RolesList
-          title={"Automatic Roles"}
-          roles={[
-            {
-              id: 3,
-              name: "Standard Role",
-              from_date: "All time",
-              to_date: "All time",
-              range: "Standard Access",
-            },
-          ]}
-        />
+        {roleAssignments && (
+          <RolesList title={"Manual Roles"} roles={roleAssignments} />
+        )}
       </Panel>
     </div>
   );
@@ -72,7 +52,7 @@ export default Page;
 
 type RolesListProps = {
   title: string;
-  roles: RoleAssignment[];
+  roles: RoleListResDto;
 };
 
 const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
@@ -91,22 +71,12 @@ const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
           {roles.map((role) => (
             <tr key={role.id}>
               <td>{role.name}</td>
-              <td>
-                {dateFormat(role.from_date)} - {dateFormat(role.to_date)}
-              </td>
-              <td>{role.range}</td>
+              <td>From Always - To Always</td>
+              <td>Standard Range</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-};
-
-type RoleAssignment = {
-  id: number;
-  name: string;
-  from_date: string;
-  to_date: string;
-  range: "Standard Access" | "Limited Access" | "Full Access";
 };
