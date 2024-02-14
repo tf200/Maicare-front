@@ -19,7 +19,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
   if (isLoading) return <Loader />;
   if (isError)
     return <div className="text-red">Sorry! we failed to load contracts</div>;
-
+  if (!data) return <div>No data retrieved</div>;
   if (data.results?.length === 0)
     return <div>No contracts found for current client!</div>;
   return (

@@ -14,9 +14,14 @@ type Props = {
 };
 
 const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
-  const { data, isLoading } = useDocumentList(clientId.toString());
+  const { data, isLoading, isError } = useDocumentList(clientId.toString());
   const router = useRouter();
   if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="text-red">An error prevented us from loading data.</div>
+    );
+  if (!data) return <div>No data retrieved</div>;
   if (data.results?.length === 0) return <div>No documents found</div>;
   return (
     <ul className="flex flex-col gap-2">

@@ -12,8 +12,13 @@ type Props = {
 };
 
 const DiagnosisSummary: FunctionComponent<Props> = ({ clientId, count }) => {
-  const { data, isLoading } = useLatestDiagnosis(clientId, count || 5);
+  const { data, isLoading, isError } = useLatestDiagnosis(clientId, count || 5);
   if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="text-red">An error prevented us from loading data.</div>
+    );
+  if (!data) return <div>No data retrieved</div>;
   if (data.results?.length === 0) return <div>No diagnosis found</div>;
   return (
     <ul className="flex flex-col gap-2">

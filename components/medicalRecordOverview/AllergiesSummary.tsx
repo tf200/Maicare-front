@@ -12,11 +12,16 @@ type Props = {
 };
 
 const AllergiesSummary: FunctionComponent<Props> = ({ clientId, count }) => {
-  const { data, isLoading } = useAllergiesList(clientId, {
+  const { data, isLoading, isError } = useAllergiesList(clientId, {
     page: 1,
     page_size: count || 5,
   });
   if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="text-red">An error prevented us from loading data.</div>
+    );
+  if (!data) return <div>No data retrieved</div>;
   if (data.results?.length === 0)
     return <div>No recorded allergy for client</div>;
   return (

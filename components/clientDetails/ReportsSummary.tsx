@@ -12,9 +12,14 @@ type Props = {
 };
 
 const ReportsSummary: FunctionComponent<Props> = ({ clientId }) => {
-  const { data, isLoading } = useLatestReports(clientId, 5);
+  const { data, isLoading, isError } = useLatestReports(clientId, 5);
 
   if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="text-red">An error prevented us from loading data.</div>
+    );
+  if (!data) return <div>No data retrieved</div>;
 
   if (data?.length === 0) return <div>No reports yet</div>;
 
