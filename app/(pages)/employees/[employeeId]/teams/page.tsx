@@ -5,8 +5,9 @@ import Panel from "@/components/Panel";
 import Button from "@/components/buttons/Button";
 import RoleAssignmentForm from "@/components/forms/RoleAssignmentForm";
 import { useListRoleAssignments } from "@/utils/role-assignements/list-role-assignments";
-import { RoleListResDto } from "@/types/roles/role-list-res.dto";
 import Loader from "@/components/common/Loader";
+import { AssignedRolesListItem } from "@/types/role-assignments/assigned-roles-list.dto";
+import { dateFormat } from "@/utils/timeFormatting";
 
 type Props = {
   params: { employeeId: string };
@@ -19,30 +20,47 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
   return (
     <div>
       <Panel
-        title={"Teams Management"}
+        title={"Teambeheer"}
         sideActions={
           <Button onClick={() => setIsAssigning((is) => !is)}>
-            {isAssigning ? "Cancel" : "+ Assign Role"}
+            {/*Cancel | Assign a new team*/}
+            {isAssigning ? "Annuleren" : "+ Toevoegen Team"}
           </Button>
         }
         containerClassName="px-7 py-4"
       >
-        {roleAssignmentsLoading && (
-          <span>
-            <Loader />
-          </span>
-        )}
         {isAssigning && (
-          <RoleAssignmentForm
-            employeeId={+employeeId}
-            onSuccess={() => {
-              setIsAssigning(false);
-            }}
-          />
+          <>
+            <RoleAssignmentForm
+              employeeId={+employeeId}
+              onSuccess={() => {
+                setIsAssigning(false);
+              }}
+            />
+            <div className="border-stroke w-full border-t my-4" />
+          </>
         )}
+        {roleAssignmentsLoading && <Loader />}
         {roleAssignments && (
-          <RolesList title={"Manual Roles"} roles={roleAssignments} />
+          <>
+            {/*Manual Roles*/}
+            <RolesList
+              title={"HANDMATIGE ROLLEN"}
+              roles={roleAssignments.groups}
+            />
+            <div className="border-stroke w-full border-t my-4" />
+          </>
         )}
+        <RolesList
+          title={"ROLLEN DIE AUTOMATISCH TOEGEWEZEN ZIJN"}
+          roles={[
+            {
+              group_name: "Automatisch toegewezen rol",
+              start_date: null,
+              end_date: null,
+            },
+          ]}
+        />
       </Panel>
     </div>
   );
@@ -52,31 +70,60 @@ export default Page;
 
 type RolesListProps = {
   title: string;
-  roles: RoleListResDto;
+  roles: AssignedRolesListItem[];
 };
 
 const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
   return (
     <div>
       <h2 className="py-2 px-4 text-sm font-medium uppercase">{title}</h2>
-      <table className="datatable-table">
-        <thead>
-          <tr>
-            <th>Role</th>
-            <th>Period</th>
-            <th>Range</th>
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role.id}>
-              <td>{role.name}</td>
-              <td>From Always - To Always</td>
-              <td>Standard Range</td>
+      {roles.length === 0 && (
+        <div className="px-5 py-4">
+          {/*No manual roles assigned*/}
+          Geen handmatige rollen toegewezen
+        </div>
+      )}
+      {roles.length > 0 && (
+        <table className="datatable-table">
+          <thead>
+            <tr>
+              {/* Role */}
+              <th>Rol</th>
+              {/* Period */}
+              <th>Periode</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {roles.map((role) => (
+              <tr key={role.group_name}>
+                <td>{role.group_name}</td>
+                {/* From Always - indefinitely */}
+                <td>
+                  {role.start_date ? (
+                    <>
+                      Van <strong>{dateFormat(role.start_date)}</strong>
+                    </>
+                  ) : (
+                    <>
+                      <strong>Altijd</strong> vanaf
+                    </>
+                  )}
+                  {" - "}
+                  {role.end_date ? (
+                    <>
+                      Tot <strong>{dateFormat(role.end_date)}</strong>
+                    </>
+                  ) : (
+                    <>
+                      voor <strong>onbepaalde</strong> tijd
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

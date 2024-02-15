@@ -1,3 +1,13 @@
-import { AssignedRoleResDto } from "@/types/role-assignments/assigned-role-res.dto";
+import { NewAssignReqDto } from "@/types/role-assignments/new-assign-req.dto";
 
-export type AssignedRolesListDto = AssignedRoleResDto[];
+export type AssignedRolesListItem = Omit<
+  NewAssignReqDto,
+  "group_id" | "employee_id"
+> & {
+  group_name: string;
+};
+
+export type AssignedRolesListDto = {
+  employee_id: number;
+  groups: AssignedRolesListItem[];
+};

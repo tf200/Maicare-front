@@ -8,13 +8,13 @@ async function createRoleAssignment(data: NewAssignReqDto) {
   return response.data;
 }
 
-export const useCreateRoleAssignment = () => {
+export const useCreateRoleAssignment = (employeeId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createRoleAssignment,
     onSuccess: (res) => {
       console.log(res);
-      queryClient.invalidateQueries(["employees", res.user_id, "teams"]);
+      queryClient.invalidateQueries(["employees", employeeId, "teams"]);
     },
   });
 };

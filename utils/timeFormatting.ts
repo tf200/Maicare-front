@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import "dayjs/locale/nl";
+dayjs.locale("nl");
 
 export const DATE_FORMAT = "DD MMM YYYY";
 
