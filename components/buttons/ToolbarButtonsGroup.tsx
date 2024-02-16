@@ -5,8 +5,8 @@ import clsx from "clsx";
 
 type Props = {
   options: ButtonOption[];
-  selectedOption: ButtonOption;
-  onOptionChange: (option: ButtonOption) => void;
+  selectedOption?: ButtonOption["value"];
+  onOptionClicked: (option: ButtonOption) => void;
 };
 
 /**
@@ -16,31 +16,31 @@ type Props = {
  * @param onOptionChange
  * @constructor
  */
-const ButtonsGroup: FunctionComponent<Props> = ({
+const ToolbarButtonsGroup: FunctionComponent<Props> = ({
   options,
   selectedOption,
-  onOptionChange,
+  onOptionClicked,
 }) => {
   return (
     <div className="flex items-center">
       {options.map((option) => (
-        <Button
+        <button
           key={option.value}
-          onClick={() => onOptionChange(option)}
+          onClick={() => onOptionClicked(option)}
           className={clsx(
-            "inline-flex border py-1 px-2 font-medium text-white hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary sm:py-3 sm:px-6",
+            "inline-flex border py-2 px-4 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary first:rounded-l-md last:rounded-r-md",
             {
-              "border-primary bg-primary":
-                option.value === selectedOption.value,
-              "border-stroke": option.value !== selectedOption.value,
+              "border-primary bg-primary text-white":
+                option.value === selectedOption,
+              "border-primary text-primary": option.value !== selectedOption,
             }
           )}
         >
           {option.label}
-        </Button>
+        </button>
       ))}
     </div>
   );
 };
 
-export default ButtonsGroup;
+export default ToolbarButtonsGroup;
