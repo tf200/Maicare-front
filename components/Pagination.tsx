@@ -53,7 +53,8 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
         <ul className="flex flex-wrap items-center gap-2">
           {isFirstPage ? (
             <li className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black">
-              Previous
+              Vorige
+              {/* Previous */}
             </li>
           ) : (
             <li>
@@ -61,7 +62,8 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
                 onClick={() => onClick(props.page - 1)}
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
-                Previous
+                Vorige
+                {/* Previous */}
               </button>
             </li>
           )}
@@ -123,7 +125,8 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
           )}
           {isLastPage ? (
             <li className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black">
-              Next
+              Volgende
+              {/* Next */}
             </li>
           ) : (
             <li>
@@ -131,7 +134,8 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
                 onClick={() => onClick(props.page + 1)}
                 className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
               >
-                Next
+                Volgende
+                {/* Next */}
               </button>
             </li>
           )}

@@ -191,27 +191,27 @@ const GlobalMenu: FunctionComponent = () => {
         {
           completeHref: "/clients",
           icon: <IndividualIcons width={18} height={18} />,
-          children: "Clients",
+          children: "Cliënten",
         },
         {
           completeHref: "/employees",
           icon: <GroupIcon width={18} height={18} />,
-          children: "Employees",
+          children: "Medewerkers",
         },
         {
           completeHref: "/finance",
           icon: <InvoiceIcon height={19} width={18} />,
-          children: "Finance",
+          children: "Financiën",
         },
         {
           completeHref: "/care",
           icon: <HeartIcon width={18} height={18} />,
-          children: "Care Coordination",
+          children: "Zorgcoördinatie",
         },
         {
           completeHref: "/tasks",
           icon: <CalendarIcon />,
-          children: "Planning & Tasks",
+          children: "Planning & Taken",
         },
       ]}
       title={"MENU"}
@@ -227,7 +227,7 @@ const ClientMenu: FunctionComponent = () => {
         {
           completeHref: `/clients/${clientId}`,
           icon: <IndividualIcons width={18} height={18} />,
-          children: "Overview",
+          children: "Overzicht",
           getIsActive: (pathname) => {
             return pathname === `/clients/${clientId}`;
           },
@@ -235,7 +235,7 @@ const ClientMenu: FunctionComponent = () => {
         {
           completeHref: `/clients/${clientId}/medical-record`,
           icon: <HeartIcon width={18} height={18} />,
-          children: "Medical Record",
+          children: "Medisch Dossier",
           getIsActive: (pathname) => {
             return (
               pathname.startsWith(`/clients/${clientId}/medical-record`) ||
@@ -249,7 +249,7 @@ const ClientMenu: FunctionComponent = () => {
         {
           completeHref: `/clients/${clientId}/client-network`,
           icon: <GroupIcon width={18} height={18} />,
-          children: "Client Network",
+          children: "Cliëntennetwerk",
           getIsActive: (pathname) => {
             return (
               pathname.startsWith(`/clients/${clientId}/client-network`) ||
@@ -261,23 +261,24 @@ const ClientMenu: FunctionComponent = () => {
         {
           completeHref: `/clients/${clientId}/contracts`,
           icon: <InvoiceIcon height={18} width={18} />,
-          children: "Contracts",
+          children: "Contracten",
         },
         {
           completeHref: `/clients/${clientId}/reports`,
           icon: <GridsIcon height={18} width={18} />,
-          children: "Reports",
+          children: "Rapporten",
         },
         {
           completeHref: `/clients/${clientId}/document`,
           icon: <GridsIcon height={18} width={18} />,
-          children: "Documents",
+          children: "Documenten",
         },
       ]}
       title={
         <Link href={"/clients"} className="flex items-center">
           <ArrowRight className="rotate-180" />
-          <span className="ml-2">BACK TO CLIENTS LIST</span>
+          <span className="ml-2">TERUG NAAR CLIËNTENLIJST</span>
+          {/* BACK TO CLIENTS LIST */}
         </Link>
       }
     />

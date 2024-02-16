@@ -370,12 +370,13 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                 <div className="flex flex-col gap-9">
                   <Panel
                     containerClassName="p-6.5 pb-5"
-                    title={"Location Details"}
+                    title={"Locatiegegevens"}
+                    // title={"Location Details"}
                   >
                     <InputFieldThin
-                      label={"Location"}
+                      label={"Locatie"}
                       id={"location"}
-                      placeholder={"Location"}
+                      placeholder={"Locatie"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.location}
@@ -385,9 +386,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputFieldThin
-                      label={"Birth Place"}
+                      label={"Geboorteplaats"}
                       id={"birthplace"}
-                      placeholder={"Birth Place"}
+                      placeholder={"Geboorteplaats"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.birthplace}
@@ -397,9 +398,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputFieldThin
-                      label={"Departement"}
+                      label={"Afdeling"}
                       id={"departement"}
-                      placeholder={"Departement"}
+                      placeholder={"Afdeling"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.departement}
@@ -408,9 +409,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.departement && errors.departement}
                     />
                     <InputFieldThin
-                      label={"Organisation"}
+                      label={"Organisatie"}
                       id={"organisation"}
-                      placeholder={"Organisation"}
+                      placeholder={"Organisatie"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.organisation}

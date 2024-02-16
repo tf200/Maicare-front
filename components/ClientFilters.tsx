@@ -5,9 +5,9 @@ import { SelectionOption } from "@/types/selection-option";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
 
 const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "On Waiting List", label: "Waiting List" },
-  { value: "In Care", label: "In Care" },
-  { value: "Out Of Concern", label: "Out of Care" },
+  { value: "On Waiting List", label: "Wachtlijst" },
+  { value: "In Care", label: "In Zorg" },
+  { value: "Out Of Concern", label: "Uit Zorg" },
 ];
 
 type Props = {
@@ -32,7 +32,8 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
         }}
       />
       <div className="flex items-center gap-2">
-        <h2 className="uppercase text-sm font-bold mr-4">Client Status:</h2>
+        <h2 className="uppercase text-sm font-bold mr-4">CLIËNTSTATUS:</h2>
+        {/* Client Status: */}
         <ControlledCheckboxGroup
           options={STATUS_OPTIONS}
           selected={selected}
