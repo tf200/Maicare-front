@@ -26,7 +26,7 @@ function authErrorInterceptor(error: any) {
     if (error?.response?.status === 401 || error?.response?.status === 403) {
       localStorage.removeItem("a");
       localStorage.removeItem("r");
-      window.location.href = "/login";
+      window.location.href = "/signin";
     }
     return Promise.reject<any>(error);
 }
