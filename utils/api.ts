@@ -1,4 +1,4 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   // TODO: remove this when auth is implemented and use the real token
@@ -21,6 +21,17 @@ axiosInstance.interceptors.request.use(authRequestInterceptor, (error) => {
   // add error handling here
   return Promise.reject(error);
 });
+
+function authErrorInterceptor(error: any) {
+    if (error?.response?.status === 401) {
+      localStorage.removeItem("a");
+      localStorage.removeItem("r");
+      window.location.href = "/login";
+    }
+    return Promise.reject<any>(error);
+}
+
+axiosInstance.interceptors.response.use((response) => response, authErrorInterceptor)
 
 export default axiosInstance;
 

@@ -45,6 +45,7 @@ const DropdownUser = () => {
 
   if (!userData) return null;
   const { username, profile_picture } = userData.data;
+  if (!decode) return null;
   const role =
     decode.groups.length > 0
       ? decode.groups[0].charAt(0).toUpperCase() +
