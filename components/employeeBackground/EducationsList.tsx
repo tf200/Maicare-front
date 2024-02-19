@@ -13,6 +13,8 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { useDeleteEducation } from "@/utils/educations/delete-education";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   data: EducationListDto;
@@ -45,6 +47,12 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteEducation(education.employee);
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Are you sure you want to delete this education?",
+      title: "Delete Education",
+    })
+  );
   return (
     <>
       <tr>
@@ -83,7 +91,11 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
             <IconButton
               buttonType="Danger"
               onClick={() => {
-                deleteEduction(education.id);
+                open({
+                  onConfirm: () => {
+                    deleteEduction(education.id);
+                  },
+                });
               }}
               disabled={isDeleted}
               isLoading={isDeleting}

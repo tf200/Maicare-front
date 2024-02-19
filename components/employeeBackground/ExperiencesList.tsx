@@ -13,6 +13,8 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { useDeleteExperience } from "@/utils/experiences/delete-experience";
 import CheckIcon from "@/components/icons/CheckIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   data: ExpListDto;
@@ -45,6 +47,12 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteExperience(experience.employee);
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Are you sure you want to delete this experience?",
+      title: "Delete Experience",
+    })
+  );
   return (
     <>
       <tr>
@@ -72,7 +80,11 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
             <IconButton
               buttonType="Danger"
               onClick={() => {
-                deleteExp(experience.id);
+                open({
+                  onConfirm: () => {
+                    deleteExp(experience.id);
+                  },
+                });
               }}
               disabled={isDeleted}
               isLoading={isDeleting}

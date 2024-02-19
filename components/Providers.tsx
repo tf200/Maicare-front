@@ -3,6 +3,7 @@
 import React, { FunctionComponent, PropsWithChildren, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import ModalProvider from "@/components/providers/ModalProvider";
 
 const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -20,7 +21,7 @@ const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <ModalProvider>{children}</ModalProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
