@@ -13,6 +13,8 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { useDeleteCertificate } from "@/utils/certificates/delete-certificate";
 import CheckIcon from "@/components/icons/CheckIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   data: CertifListDto;
@@ -45,6 +47,12 @@ const CertificationItem: FunctionComponent<CertificationItemProps> = ({
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteCertificate(certificate.employee);
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Are you sure you want to delete this certificate?",
+      title: "Delete Certificate",
+    })
+  );
   return (
     <>
       <tr>
@@ -68,7 +76,11 @@ const CertificationItem: FunctionComponent<CertificationItemProps> = ({
             <IconButton
               buttonType="Danger"
               onClick={() => {
-                deleteCert(certificate.id);
+                open({
+                  onConfirm: () => {
+                    deleteCert(certificate.id);
+                  },
+                });
               }}
               disabled={isDeleted}
               isLoading={isDeleting}
