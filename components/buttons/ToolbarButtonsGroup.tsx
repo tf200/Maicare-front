@@ -28,7 +28,7 @@ const ToolbarButtonsGroup: FunctionComponent<Props> = ({
           key={option.value}
           onClick={() => onOptionClicked(option)}
           className={clsx(
-            "inline-flex border py-2 px-4 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary first:rounded-l-md last:rounded-r-md",
+            "inline-flex border py-2 px-4 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary first:rounded-l-full first:pl-6 last:rounded-r-full last:pr-6",
             {
               "border-primary bg-primary text-white":
                 option.value === selectedOption,

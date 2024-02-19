@@ -1,0 +1,27 @@
+$event-bg: #FFFFFF;
+$event-color: #1C2434;
+$today-highlight-bg: #EFF4FB;
+$cell-border: #E2E8F0;
+$event-border-radius: 0;
+$current-time-color: #FB5454;
+$calendar-border: #E2E8F0;
+$out-of-range-bg-color: #F7F9FC;
+$out-of-range-color: #64748B;
+
+@import 'react-big-calendar/lib/sass/styles';
+
+.rbc-month-header {
+  .rbc-header {
+    @apply py-2.5;
+  }
+}
+
+.rbc-event,
+.rbc-day-slot .rbc-event {
+  border: 0 solid;
+  @apply border-l-8 border-primary text-primary;
+}
+
+.rbc-current-time-indicator {
+  height: 2px;
+}

@@ -8,12 +8,13 @@ import {
   View,
   Views,
 } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+
+import "./styles.scss";
+import Panel from "@/components/Panel";
+import Toolbar from "@/components/calendarComponents/Toolbar";
 
 import dayjs from "dayjs";
 import "dayjs/locale/nl";
-import Panel from "@/components/Panel";
-import Toolbar from "@/components/calendarComponents/Toolbar";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
 

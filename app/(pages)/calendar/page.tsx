@@ -1,4 +1,4 @@
-import Calendar from "@/components/Calender";
+import Calendar from "../../../components/MockCalender";
 
 const CalendarPage = () => {
   return (
