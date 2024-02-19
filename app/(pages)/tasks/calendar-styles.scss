@@ -25,3 +25,11 @@ $out-of-range-color: #64748B;
 .rbc-current-time-indicator {
   height: 2px;
 }
+
+.rbc-show-more {
+  color: $event-color;
+  &:hover,
+  &:focus {
+    color: lighten($event-color, 30%);
+  }
+}

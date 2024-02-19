@@ -1,6 +1,11 @@
 "use client";
 
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import {
   Calendar,
   dayjsLocalizer,
@@ -9,7 +14,7 @@ import {
   Views,
 } from "react-big-calendar";
 
-import "./styles.scss";
+import "./calendar-styles.scss";
 import Panel from "@/components/Panel";
 import Toolbar from "@/components/calendarComponents/Toolbar";
 
@@ -19,11 +24,14 @@ dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
 
 const Page: FunctionComponent = (props) => {
-  const formats: Formats = {
-    dayFormat: "D",
-    weekdayFormat: (date, culture, dateLocalizer) =>
-      dateLocalizer.format(date, "dddd", culture),
-  };
+  const formats: Formats = useMemo(
+    () => ({
+      dayFormat: "D",
+      weekdayFormat: (date, culture, dateLocalizer) =>
+        dateLocalizer.format(date, "dddd", culture),
+    }),
+    []
+  );
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>(Views.MONTH);
 
@@ -40,6 +48,16 @@ const Page: FunctionComponent = (props) => {
         events={[
           {
             title: "Important meeting",
+            start: new Date(),
+            end: new Date(new Date().setHours(new Date().getHours() + 1)),
+          },
+          {
+            title: "Parallel Important meeting",
+            start: new Date(),
+            end: new Date(new Date().setHours(new Date().getHours() + 1)),
+          },
+          {
+            title: "Parallel Important meeting #2",
             start: new Date(),
             end: new Date(new Date().setHours(new Date().getHours() + 1)),
           },

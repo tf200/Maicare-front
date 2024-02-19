@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
 import { ButtonOption } from "@/types/selection-option";
-import Button from "@/components/buttons/Button";
 import clsx from "clsx";
 
 type Props = {
