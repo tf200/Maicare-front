@@ -26,10 +26,11 @@ type Props = {
 const AppointmentForm: FunctionComponent<Props> = ({
   onSuccessfulSubmit,
   onCancel,
+  initialData,
 }) => {
   const { mutate: createAppointment } = useCreateAppointment();
   const formik = useFormik({
-    initialValues,
+    initialValues: { ...initialValues, ...initialData },
     onSubmit: (data) => {
       createAppointment(data, {
         onSuccess: onSuccessfulSubmit,
@@ -50,22 +51,12 @@ const AppointmentForm: FunctionComponent<Props> = ({
           onBlur={handleBlur}
           required
           placeholder={"Geef het onderwerp op"}
+          value={values.title}
         />
         <div className="flex gap-4 mb-5">
           {/* From date time */}
           <InputField
             label={"Van datum tijd"}
-            id={"end_time"}
-            name={"end_time"}
-            type={"datetime-local"}
-            className="grow"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-          />
-          {/* To date time */}
-          <InputField
-            label={"Tot datum tijd"}
             id={"start_time"}
             name={"start_time"}
             type={"datetime-local"}
@@ -73,6 +64,19 @@ const AppointmentForm: FunctionComponent<Props> = ({
             onChange={handleChange}
             onBlur={handleBlur}
             required
+            value={values.start_time}
+          />
+          {/* To date time */}
+          <InputField
+            label={"Tot datum tijd"}
+            id={"end_time"}
+            name={"end_time"}
+            type={"datetime-local"}
+            className="grow"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            required
+            defaultValue={values.end_time}
           />
         </div>
         {/* Description */}
@@ -86,6 +90,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
           required
           placeholder={"Geef een beschrijving op"}
           rows={6}
+          defaultValue={values.description}
         />
         {/* Attachments */}
         <FileInput

@@ -5,10 +5,16 @@ import AppointmentForm from "@/components/forms/AppointmentForm";
 
 const AppointmentFormModal: FunctionComponent<
   PropsWithChildren<ModalProps>
-> = ({ callbacks, ...props }) => {
+> = ({ additionalProps, ...props }) => {
   return (
     <FormModal title="Maak een nieuwe afspraak" {...props}>
-      <AppointmentForm onSuccessfulSubmit={callbacks.onSuccess} />
+      <AppointmentForm
+        initialData={{
+          start_time: additionalProps.start,
+          end_time: additionalProps.end,
+        }}
+        onSuccessfulSubmit={additionalProps.onSuccess}
+      />
     </FormModal>
   );
 };

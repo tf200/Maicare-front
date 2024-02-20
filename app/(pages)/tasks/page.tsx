@@ -39,7 +39,7 @@ const Page: FunctionComponent = (props) => {
     []
   );
   const [date, setDate] = useState(new Date());
-  const [view, setView] = useState<View>(Views.MONTH);
+  const [view, setView] = useState<View>(Views.WEEK);
 
   const onNavigate = useCallback(
     (newDate: Date) => setDate(newDate),
@@ -47,12 +47,6 @@ const Page: FunctionComponent = (props) => {
   );
   const onView = useCallback((newView: View) => setView(newView), [setView]);
   const { open, close } = useModal(AppointmentFormModal);
-  useEffect(() => {
-    open({
-      onConfirm: () => {},
-    });
-    return close;
-  }, []);
   return (
     <Panel title={"Kalender"} containerClassName="px-7 py-4">
       <DnDCalendar
@@ -86,6 +80,15 @@ const Page: FunctionComponent = (props) => {
         components={{
           toolbar: Toolbar,
         }}
+        onSelectSlot={(slotInfo) => {
+          open({
+            onConfirm: () => {},
+            start: dayjs(slotInfo.start).format("YYYY-MM-DDThh:mm"),
+            end: dayjs(slotInfo.end).format("YYYY-MM-DDThh:mm"),
+          });
+        }}
+        selectable
+        resizable
       />
     </Panel>
   );

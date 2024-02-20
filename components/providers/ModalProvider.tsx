@@ -73,8 +73,8 @@ export default ModalProvider;
 export function useModal(Modal: FunctionComponent<ModalProps>) {
   const { push, removeModal } = useContext(ModalContext);
   return {
-    open: (callbacks: { [key: string]: () => void }) => {
-      push((props) => <Modal {...props} callbacks={callbacks} />);
+    open: (additionalProps: { [key: string]: any }) => {
+      push((props) => <Modal {...props} additionalProps={additionalProps} />);
     },
     close: () => removeModal(Modal),
   };
