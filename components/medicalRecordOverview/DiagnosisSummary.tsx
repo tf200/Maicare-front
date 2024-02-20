@@ -16,10 +16,10 @@ const DiagnosisSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   if (isLoading) return <Loader />;
   if (isError)
     return (
-      <div className="text-red">An error prevented us from loading data.</div>
+      <div className="text-red">Een fout heeft ons verhinderd gegevens te laden.</div>
     );
-  if (!data) return <div>No data retrieved</div>;
-  if (data.results?.length === 0) return <div>No diagnosis found</div>;
+  if (!data) return <div>Geen gegevens opgehaald.</div>;
+  if (data.results?.length === 0) return <div>Geen diagnose gevonden</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((diagnosis) => {

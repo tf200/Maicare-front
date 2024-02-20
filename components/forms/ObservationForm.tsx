@@ -29,8 +29,8 @@ export const feedbackSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   date: Yup.string(),
   client: Yup.number(),
-  category: Yup.string().required("Please provide your Category"),
-  observation_text: Yup.string().required("Please provide your Observation"),
+  category: Yup.string().required("Geef alstublieft uw categorie"),
+  observation_text: Yup.string().required("Geef alstublieft uw observatie"),
 });
 
 type PropsType = {
@@ -83,8 +83,8 @@ export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
               id={"observation_text"}
               name={"observation_text"}
               rows={6}
-              label={"Observation"}
-              placeholder={"Provide Observation please!"}
+              label={"Observatie"}
+              placeholder={"Geef alstublieft een observatie!"}
               value={values.observation_text}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -96,7 +96,7 @@ export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
               type={"text"}
               label={"Categorie"}
               id={"category"}
-              placeholder={"Enter Categorie please"}
+              placeholder={"Voer alstublieft een categorie in"}
               className="w-full mb-4.5"
               value={values.category}
               onChange={handleChange}
@@ -110,9 +110,9 @@ export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Observation..."}
+              loadingText={"Observatie Wordt Ingediend..."}
             >
-              Submit Observation
+              Observatie Indienen
             </Button>
           </div>
         </form>

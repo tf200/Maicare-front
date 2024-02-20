@@ -25,20 +25,20 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
         </div>
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Full Name"}
-          value={`${data.first_name} ${data.last_name}` || "Not specified"}
+          label={"Volledige Naam"}
+          value={`${data.first_name} ${data.last_name}` || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Position"}
-          value={data.position || "Not specified"}
+          label={"Positie"}
+          value={data.position || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Is a subcontractor"}
+          label={"Is een onderaannemer"}
           value={
             data.is_subcontractor === null
-              ? "Not specified"
+              ? "Niet gespecificeerd"
               : data.is_subcontractor === true
                 ? "Yes"
                 : "No"
@@ -46,64 +46,64 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Work Email"}
+          label={"Werk E-mail"}
           type={data.email_address ? "email" : "text"}
-          value={data.email_address || "Not specified"}
+          value={data.email_address || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Private Email"}
+          label={"Privé E-mail"}
           type={data.private_email_address ? "email" : "text"}
-          value={data.private_email_address || "Not specified"}
+          value={data.private_email_address || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Work Phone Number"}
+          label={"Werk Telefoonnummer"}
           type={data.work_phone_number ? "phone" : "text"}
-          value={data.work_phone_number || "Not specified"}
+          value={data.work_phone_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Department"}
-          value={data.department || "Not specified"}
+          label={"Afdeling"}
+          value={data.department || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Private Phone Number"}
+          label={"Privé Telefoonnummer"}
           type={data.private_phone_number ? "phone" : "text"}
-          value={data.private_phone_number || "Not specified"}
+          value={data.private_phone_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Home Phone Number"}
+          label={"Huis Telefoonnummer"}
           type={data.home_telephone_number ? "phone" : "text"}
-          value={data.home_telephone_number || "Not specified"}
+          value={data.home_telephone_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Auth Phone Number"}
+          label={"Authenticatie Telefoonnummer"}
           type={data.authentication_phone_number ? "phone" : "text"}
-          value={data.authentication_phone_number || "Not specified"}
+          value={data.authentication_phone_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Gender"}
-          value={data.gender || "Not specified"}
+          label={"Geslacht"}
+          value={data.gender || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Date of birth"}
+          label={"Geboortedatum"}
           value={dayjs(data.date_of_birth).format("DD MMM, YYYY")}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Employee Number"}
-          value={data.employee_number || "Not specified"}
+          label={"Medewerkernummer"}
+          value={data.employee_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Employment Number"}
-          value={data.employment_number || "Not specified"}
+          label={"Dienstnummer"}
+          value={data.employment_number || "Niet gespecificeerd"}
         />
       </div>
     );

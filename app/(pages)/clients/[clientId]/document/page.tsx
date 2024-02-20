@@ -62,18 +62,18 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
       {
         accessorKey: "original_filename",
-        header: () => "File name",
+        header: () => "Bestandsnaam",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "file_size",
-        header: () => "File size",
+        header: () => "Bestandsgrootte",
         cell: (info) =>
           bytesToSize(parseInt(info.getValue())) || "Not Available",
       },
       {
         accessorKey: "uploaded_at",
-        header: () => "Uploaded on",
+        header: () => "Geüpload Op",
         cell: (info) =>
           dayjs(info.getValue()).format("DD MMM, YYYY") || "Not Available",
       },
@@ -83,9 +83,9 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => (
           <a
             href={info.getValue()}
-            className="w-[30%] min-w-[120px] p-2 px-6 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
+            className="w-[30%] text-sm min-w-[120px] p-2 px-3 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
           >
-            Download
+            Downloaden
           </a>
         ),
       },
@@ -98,9 +98,9 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               setDocumentId(info.getValue());
               setModalOpen(true);
             }}
-            className="w-[30%] min-w-[120px] p-2 px-6 text-white transition border rounded-lg cursor-pointer border-danger bg-danger hover:bg-opacity-90"
+            className="w-[30%] text-sm min-w-[120px] p-2 px-3 text-white transition border rounded-lg cursor-pointer border-danger bg-danger hover:bg-opacity-90"
           >
-            Delete
+            Verwijderen
           </a>
         ),
       },
@@ -124,9 +124,9 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <ConfirmationModal
-        title="Delete Confirmation"
-        message="Are you sure you want to delete this document ?"
-        buttonMessage="Delete"
+        title="Bevestiging Verwijderen"
+        message="Weet u zeker dat u dit document wilt verwijderen?"
+        buttonMessage="Verwijderen"
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         isLoading={isDeleteLoading}
@@ -136,13 +136,13 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       />
 
       <Panel
-        title={"Documents list"}
+        title={"Documentenlijst"}
         sideActions={
           <Link
             href={`/clients/${clientId}/document/new`}
             className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
-            Upload a New Document
+            Upload een Nieuw Document
           </Link>
         }
       >
@@ -152,7 +152,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         {pagination}
         {isError && (
           <p role="alert" className="text-red">
-            An error has occurred
+            Er is een fout opgetreden.
           </p>
         )}
       </Panel>

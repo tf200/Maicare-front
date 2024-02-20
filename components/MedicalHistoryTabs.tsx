@@ -21,15 +21,15 @@ const MedicalHistoryTabs: FunctionComponent = () => {
       backHref={`/clients/${clientId}`}
       tabs={[
         {
-          label: "Diagnosis",
+          label: "Diagnose",
           href: `/clients/${clientId}/medical-record/diagnosis`,
         },
         {
-          label: "Medications",
+          label: "Medicatie",
           href: `/clients/${clientId}/medical-record/medications`,
         },
         {
-          label: "Allergies",
+          label: "Allergieën",
           href: `/clients/${clientId}/medical-record/allergies`,
         },
         {
@@ -38,8 +38,8 @@ const MedicalHistoryTabs: FunctionComponent = () => {
         },
       ]}
       title={
-        `Medical History` +
-        (data ? ` for ${data.first_name} ${data.last_name}` : "")
+        `Medische Geschiedenis` +
+        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
       }
     />
   );

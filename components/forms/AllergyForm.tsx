@@ -29,13 +29,13 @@ const initialValues: AllergyFormType = {
 
 const allergySchema: Yup.ObjectSchema<AllergyFormType> = Yup.object().shape({
   allergy_type: Yup.string()
-    .oneOf(ALLERGY_TYPE_ARRAY, "Please select a valid allergy type")
-    .required("Please provide an allergy type"),
+    .oneOf(ALLERGY_TYPE_ARRAY, "Selecteer een geldig allergietype")
+    .required("Geef alstublieft een allergietype op"),
   severity: Yup.string()
-    .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Please select a valid severity")
-    .required("Please provide severity of the allergy"),
-  reaction: Yup.string().required("Please provide reaction to the allergy"),
-  notes: Yup.string().required("Please provide notes for the allergy"),
+    .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Selecteer een geldige ernst")
+    .required("Geef alstublieft de ernst van de allergie op"),
+  reaction: Yup.string().required("Geef alstublieft de reactie op de allergie op"),
+  notes: Yup.string().required("Geef alstublieft notities voor de allergie op"),
 });
 
 type Props = {
@@ -82,7 +82,7 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
         <form onSubmit={handleSubmit} className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select
-              label={"Allergy Type"}
+              label={"Type Allergie"}
               id={"allergy_type"}
               required={true}
               options={ALLERGY_TYPE_OPTIONS}
@@ -93,7 +93,7 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
               error={touched.allergy_type && errors.allergy_type}
             />
             <Select
-              label={"Severity"}
+              label={"Ernst"}
               id={"severity"}
               required={true}
               options={DIAGNOSIS_SEVERITY_OPTIONS}
@@ -110,9 +110,9 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full xl:w-1/2"}
               id={"reaction"}
               required={true}
-              label={"Reaction"}
+              label={"Reactie"}
               type={"text"}
-              placeholder={"Enter reaction to the allergy"}
+              placeholder={"Voer reactie op de allergie in"}
               value={values.reaction}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -124,8 +124,8 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
             id={"notes"}
             required={true}
             className={"mb-6"}
-            label={"Diagnosis Notes"}
-            placeholder={"Provide notes for the diagnosis"}
+            label={"Notities Diagnose"}
+            placeholder={"Verschaf notities voor de diagnose"}
             value={values.notes}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -137,9 +137,9 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
             disabled={isLoading}
             isLoading={isLoading}
             formNoValidate={true}
-            loadingText={"Submitting Recorded Allergy..."}
+            loadingText={"Geregistreerde Allergie wordt ingediend..."}
           >
-            Record Allergy
+            Allergie Registreren
           </Button>
         </form>
       )}

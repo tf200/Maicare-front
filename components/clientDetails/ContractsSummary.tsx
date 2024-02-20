@@ -18,17 +18,17 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
   });
   if (isLoading) return <Loader />;
   if (isError)
-    return <div className="text-red">Sorry! we failed to load contracts</div>;
-  if (!data) return <div>No data retrieved</div>;
+    return <div className="text-red">Sorry! Het is ons niet gelukt om contracten te laden</div>;
+  if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0)
-    return <div>No contracts found for current client!</div>;
+    return <div>Geen contracten gevonden voor huidige cliënt!</div>;
   return (
     <section className="grid grid-cols-3 gap-2">
       {data.results?.map((item) => (
         <div className="contents cursor-pointer" key={item.id}>
-          <DetailCell label={"Care type"} value={item.care_type} />
+          <DetailCell label={"Zorgtype"} value={item.care_type} />
           <DetailCell
-            label={"Care period"}
+            label={"Zorgperiode"}
             value={`${shortDateFormat(item.start_date)} - ${shortDateFormat(item.end_date)}`}
           />
           <DetailCell label={rateString(item)} value={getRate(item)} />

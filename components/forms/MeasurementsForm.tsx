@@ -28,8 +28,8 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   date: Yup.string(),
   client: Yup.number(),
-  value: Yup.number().required("Please provide value"),
-  measurement_type: Yup.string().required("Please provide type"),
+  value: Yup.number().required("Geef alstublieft een waarde"),
+  measurement_type: Yup.string().required("Geef alstublieft een type"),
 });
 
 type PropsType = {
@@ -83,9 +83,9 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
               className={"w-full mb-4.5"}
               required={true}
               id={"value"}
-              label={"Value"}
+              label={"Waarde"}
               type={"number"}
-              placeholder={"Enter Value"}
+              placeholder={"Voer Waarde in"}
               value={values.value}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -97,8 +97,8 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
               required={true}
               type={"text"}
               className={"mb-6"}
-              label={"Measurement Type"}
-              placeholder={"Enter Measurement Type"}
+              label={"Type Meting"}
+              placeholder={"Voer Type Meting in"}
               value={values.measurement_type}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -110,9 +110,9 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Measurements..."}
+              loadingText={"Meting Wordt Ingediend..."}
             >
-              Submit Measurements
+              Meting Indienen
             </Button>
           </div>
         </form>

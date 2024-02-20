@@ -8,14 +8,14 @@ import { PaginationParams } from "@/types/pagination-params";
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
-  "Food",
-  "Drug",
+  "Voedsel",
+  "Medicijn",
   "Insect",
   "Latex",
-  "Mold",
-  "Pet",
+  "Schimmel",
+  "Huisdier",
   "Pollen",
-  "Other",
+  "Overig",
 ] as const;
 export const RATE_TYPE_ARRAY = [
   "rate_per_day",
@@ -24,62 +24,62 @@ export const RATE_TYPE_ARRAY = [
 ] as const;
 
 export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
-  { label: "Select Severity", value: "" },
+  { label: "Selecteer Ernst", value: "" },
   { label: "Mild", value: "Mild" },
-  { label: "Moderate", value: "Moderate" },
-  { label: "Severe", value: "Severe" },
+  { label: "Matig", value: "Moderate" },
+  { label: "Ernstig", value: "Severe" },
 ];
 
 export const SOURCE_OPTIONS = [
-  { label: "Select source", value: "" },
+  { label: "Selecteer Bron", value: "" },
   { label: "BRP", value: "BRP" },
 ];
 
 export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
-  { label: "Select Relation", value: "" },
-  { label: "Father", value: "Father" },
-  { label: "Mother", value: "Mother" },
-  { label: "Sibling", value: "Sibling" },
-  { label: "Other family member", value: "Other family member" },
-  { label: "Unrelated", value: "Unrelated" },
+  { label: "Selecteer Relatie", value: "" },
+  { label: "Vader", value: "Vader" },
+  { label: "Moeder", value: "Moeder" },
+  { label: "Broer/Zus", value: "Broer/Zus" },
+  { label: "Ander familielid", value: "Ander familielid" },
+  { label: "Niet verwant", value: "Niet verwant" },
 ];
 
 export const EMERGENCY_DISTANCE_OPTIONS: SelectionOption[] = [
-  { label: "Select Distance", value: "" },
-  { label: "Primary Relationship", value: "Primary Relationship" },
-  { label: "Secondary Relationship", value: "Secondary Relationship" },
+  { label: "Selecteer Afstand", value: "" },
+  { label: "Primaire Relatie", value: "Primaire Relatie" },
+  { label: "Secundaire Relatie", value: "Secundaire Relatie" },
 ];
 
 export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
-  { label: "Select Allergy Type", value: "" },
-  { label: "Food", value: "Food" },
-  { label: "Drug", value: "Drug" },
+  { label: "Selecteer Allergietype", value: "" },
+  { label: "Voedsel", value: "Voedsel" },
+  { label: "Medicijn", value: "Medicijn" },
   { label: "Insect", value: "Insect" },
   { label: "Latex", value: "Latex" },
-  { label: "Mold", value: "Mold" },
-  { label: "Pet", value: "Pet" },
+  { label: "Schimmel", value: "Schimmel" },
+  { label: "Huisdier", value: "Huisdier" },
   { label: "Pollen", value: "Pollen" },
-  { label: "Other", value: "Other" },
+  { label: "Overig", value: "Overig" },
 ];
 
 export const CARE_TYPE_OPTIONS: RateTypeOption[] = [
-  { label: "Select Care Type", value: "" },
-  { label: "Hourly", value: "rate_per_hour" },
-  { label: "Daily", value: "rate_per_day" },
-  { label: "Minute", value: "rate_per_minute" },
+  { label: "Selecteer Zorgtype", value: "" },
+  { label: "Per uur", value: "rate_per_hour" },
+  { label: "Dagelijks", value: "rate_per_day" },
+  { label: "Per minuut", value: "rate_per_minute" },
 ];
 
 export const GENDER_OPTIONS: SelectionOption[] = [
   {
-    label: "Male",
+    label: "Man",
     value: "male",
   },
   {
-    label: "Female",
+    label: "Vrouw",
     value: "female",
   },
   {
-    label: "Not specified",
+    label: "Niet gespecificeerd",
     value: "not_specified",
   },
 ];

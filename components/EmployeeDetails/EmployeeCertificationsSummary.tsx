@@ -18,7 +18,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
   const router = useRouter();
   if (isLoading) return <Loader />;
 
-  if (data.results?.length === 0) return <div>No certifications found</div>;
+  if (data.results?.length === 0) return <div>Geen certificaten gevonden</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((certificate) => {
@@ -30,18 +30,18 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
           >
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Title"}
+              label={"Titel"}
               value={certificate.name}
             />
 
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Date Issued"}
+              label={"Datum Uitgegeven"}
               value={dateFormat(certificate.date_issued)}
             />
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Issued By"}
+              label={"Uitgegeven Door"}
               value={certificate.issued_by}
             />
           </li>

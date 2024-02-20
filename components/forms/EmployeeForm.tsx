@@ -33,17 +33,19 @@ const initialValue: EmployeeFormType = {
 };
 
 const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
-  employee_number: Yup.string().required("Employee Number Required"),
-  employment_number: Yup.string().required("Employment Number Required"),
+  employee_number: Yup.string().required("Medewerkernummer Vereist"),
+  employment_number: Yup.string().required("Dienstnummer Vereist"),
   is_subcontractor: Yup.boolean(),
 
-  first_name: Yup.string().required().required("Please provide the first name"),
-  last_name: Yup.string().required("Please provide the last name"),
+  first_name: Yup.string()
+    .required()
+    .required("Geef alstublieft de voornaam op"),
+  last_name: Yup.string().required("Geef alstublieft de achternaam op"),
 
-  date_of_birth: Yup.string().required("Please provide the date of birth"),
-  gender: Yup.string().required("Please provide the gender"),
+  date_of_birth: Yup.string().required("Geef alstublieft de geboortedatum op"),
+  gender: Yup.string().required("Geef alstublieft het geslacht op"),
 
-  email_address: Yup.string().required("Please provide the email address"),
+  email_address: Yup.string().required("Geef alstublieft het e-mailadres op"),
   private_email_address: Yup.string(),
   authentication_phone_number: Yup.string(),
   work_phone_number: Yup.string(),
@@ -79,15 +81,15 @@ const EmployeeForm: FunctionComponent = () => {
           className="grid grid-cols-1 gap-9 sm:grid-cols-2"
         >
           <div className="flex flex-col gap-9">
-            <Panel title={"Identification"} containerClassName="px-7 py-4">
+            <Panel title={"Identificatie"} containerClassName="px-7 py-4">
               <InputField
                 className={"w-full mb-4.5"}
                 id={"employee_number"}
                 required={true}
-                label={"Employee Number"}
+                label={"Medewerkernummer"}
                 maxLength={10}
                 type="number"
-                placeholder={"Enter employee number"}
+                placeholder={"Voer medewerkernummer in"}
                 value={values.employee_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -96,31 +98,31 @@ const EmployeeForm: FunctionComponent = () => {
               <InputField
                 className={"w-full mb-4.5"}
                 id="employment_number"
-                label="Employment Number"
+                label="Dienstnummer"
                 required={true}
                 maxLength={12}
                 type="number"
-                placeholder="Enter employment number"
+                placeholder="Voer dienstnummer in"
                 value={values.employment_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.employment_number && errors.employment_number}
               />
               <FormikCheckboxItem
-                label={"Is a subcontractor"}
+                label={"Is een onderaannemer"}
                 id="is_subcontractor"
                 name="is_subcontractor"
                 value={values.is_subcontractor}
               />
             </Panel>
-            <Panel title={"Name"} containerClassName="px-7 py-4">
+            <Panel title={"Naam"} containerClassName="px-7 py-4">
               <InputField
                 className={"w-full mb-4.5"}
                 id={"first_name"}
                 required={true}
-                label={"First Name"}
+                label={"Voornaam"}
                 type="string"
-                placeholder={"Please Provide First Name"}
+                placeholder={"Geef alstublieft een voornaam"}
                 value={values.first_name}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -129,19 +131,19 @@ const EmployeeForm: FunctionComponent = () => {
               <InputField
                 className={"w-full mb-4.5"}
                 id="last_name"
-                label="Last Name"
+                label="Achternaam"
                 required={true}
                 type="text"
-                placeholder="Please provide the last name"
+                placeholder="Geef alstublieft een achternaam"
                 value={values.last_name}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.last_name && errors.last_name}
               />
             </Panel>
-            <Panel title={"Birth details"} containerClassName="px-7 py-4">
+            <Panel title={"Geboortedetails"} containerClassName="px-7 py-4">
               <InputField
-                label={"Date of Birth"}
+                label={"Geboortedatum"}
                 required={true}
                 id={"date_of_birth"}
                 type={"date"}
@@ -160,7 +162,7 @@ const EmployeeForm: FunctionComponent = () => {
                 picked={values.gender}
                 options={GENDER_OPTIONS}
                 id={"gender"}
-                label={"Gender"}
+                label={"Geslacht"}
                 name={"gender"}
               />
             </Panel>
@@ -169,19 +171,19 @@ const EmployeeForm: FunctionComponent = () => {
               formNoValidate={true}
               isLoading={isLoading}
               disabled={isLoading}
-              loadingText={"Creating Employee"}
+              loadingText={"Werknemer aanmaken..."}
             >
-              Save Employee
+              Medewerker Opslaan
             </Button>
           </div>
           <div className="flex flex-col gap-9">
             <Panel title={"Contact"} containerClassName="px-7 py-4">
               <InputField
-                label={"Email Address"}
+                label={"E-mailadres"}
                 required={true}
                 id={"email_address"}
                 type={"email"}
-                placeholder={"Email Address"}
+                placeholder={"E-mailadres"}
                 className="w-full mb-4.5"
                 value={values.email_address}
                 onChange={handleChange}
@@ -189,10 +191,10 @@ const EmployeeForm: FunctionComponent = () => {
                 error={touched.email_address && errors.email_address}
               />
               <InputField
-                label={"Private Email Address"}
+                label={"Privé E-mailadres"}
                 id={"private_email_address"}
                 type={"email"}
-                placeholder={"Private Email Address"}
+                placeholder={"Privé E-mailadres"}
                 className="w-full mb-4.5"
                 value={values.private_email_address}
                 onChange={handleChange}
@@ -202,36 +204,36 @@ const EmployeeForm: FunctionComponent = () => {
                 }
               />
               <InputField
-                label={"Auth Phone Number"}
+                label={"Authenticatie Telefoonnummer"}
                 id={"authentication_phone_number"}
                 type={"tel"}
                 className="w-full mb-4.5"
                 value={values.authentication_phone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder={"Authentication Phone Number"}
+                placeholder={"Authenticatie Telefoonnummer"}
                 error={
                   touched.authentication_phone_number &&
                   errors.authentication_phone_number
                 }
               />
               <InputField
-                label={"Work Phone Number"}
+                label={"Werk Telefoonnummer"}
                 id={"work_phone_number"}
                 type={"tel"}
                 className="w-full mb-4.5"
-                placeholder={"Work Phone Number"}
+                placeholder={"Werk Telefoonnummer"}
                 value={values.work_phone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.work_phone_number && errors.work_phone_number}
               />
               <InputField
-                label={"Private Phone Number"}
+                label={"Privé Telefoonnummer"}
                 id={"private_phone_number"}
                 type={"tel"}
                 className="w-full mb-4.5"
-                placeholder={"Private Phone Number"}
+                placeholder={"Privé Telefoonnummer"}
                 value={values.private_phone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -240,11 +242,11 @@ const EmployeeForm: FunctionComponent = () => {
                 }
               />
               <InputField
-                label={"Home Telephone Number"}
+                label={"Huis Telefoonnummer"}
                 id={"home_telephone_number"}
                 type={"tel"}
                 className="w-full mb-4.5"
-                placeholder={"Home Telephone Number"}
+                placeholder={"Huis Telefoonnummer"}
                 value={values.home_telephone_number}
                 onChange={handleChange}
                 onBlur={handleBlur}

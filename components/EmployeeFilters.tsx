@@ -5,7 +5,7 @@ import { SelectionOption } from "@/types/selection-option";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
 
 const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "out of service", label: "Out Of Service" },
+  { value: "out of service", label: "Uit Dienst" },
 ];
 
 type Props = {
@@ -18,7 +18,7 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   return (
     <div className="flex items-center gap-8">
       <InputField
-        placeholder="Search Employees ..."
+        placeholder="Zoek Medewerkers ..."
         type="search"
         className="lg:min-w-75"
         onChange={(e) => {

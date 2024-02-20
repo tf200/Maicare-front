@@ -21,42 +21,42 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
     return [
       {
         accessorKey: "first_name",
-        header: () => "First name",
+        header: () => "Voornaam",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "last_name",
-        header: () => "Last name",
+        header: () => "Achternaam",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "email",
-        header: () => "Email address",
+        header: () => "E-mailadres",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "phone_number",
-        header: () => "Phone number",
+        header: () => "Telefoonnummer",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "relationship",
-        header: () => "Relation",
+        header: () => "Relatie",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "relation_status",
-        header: () => "Distance",
+        header: () => "Afstand",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "address",
-        header: () => "Address physique",
+        header: () => "Adres",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "auto_reports",
-        header: () => "Automatic reports",
+        header: () => "Automatische rapporten",
         cell: (info) => (
           <div className="flex justify-center">
             <input
@@ -87,13 +87,13 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
 
   return (
     <Panel
-      title={"Emergency Contacts List"}
+      title={"Lijst met Noodcontacten"}
       sideActions={
         <Link
           href={`/clients/${clientId}/emergency/new`}
           className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
-          Add new emergency contact
+          Nieuw noodcontact toevoegen
         </Link>
       }
     >
@@ -103,7 +103,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
       {pagination}
       {isError && (
         <p role="alert" className="text-red">
-          An error has occurred
+          Er is een fout opgetreden.
         </p>
       )}
     </Panel>

@@ -18,18 +18,18 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Employee details" />
+      <Breadcrumb pageName="Medewerkerdetails" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          <Panel title={"Employee Information"} containerClassName="px-7 py-4">
+          <Panel title={"Medewerkerinformatie"} containerClassName="px-7 py-4">
             <EmployeeInformation employeeId={parseInt(employeeId)} />
           </Panel>
           <Panel
-            title={"Certificates"}
+            title={"Certificaten"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Certificates List"}
+                text={"Volledige Certificatenlijst"}
                 href={`/employees/${employeeId}/certificates`}
               />
             }
@@ -39,11 +39,11 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
         </div>
         <div className="flex flex-col gap-9">
           <Panel
-            title={"Educations"}
+            title={"Opleidingen"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Educations List"}
+                text={"Volledige Opleidingenlijst"}
                 href={`/employees/${employeeId}/educations`}
               />
             }
@@ -51,11 +51,11 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
             <EmployeeEducationsSummary employeeId={parseInt(employeeId)} />
           </Panel>
           <Panel
-            title={"Experiences"}
+            title={"Ervaringen"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Experiences List"}
+                text={"Volledige Ervaringenlijst"}
                 href={`/employees/${employeeId}/experiences`}
               />
             }

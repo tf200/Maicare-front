@@ -1,7 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
@@ -43,7 +43,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   const getEmployeesOptions = () => {
     return data
       ? [
-          { label: "Select Employee", value: "" },
+          { label: "Selecteer Medewerker", value: "" },
           ...data.results.map((entry: any) => ({
             label: entry.user_name,
             value: entry.user,
@@ -55,9 +55,9 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   const formik = useFormik<FormTypes>({
     initialValues: initialValues,
     validationSchema: Yup.object({
-      role: Yup.string().required("Please provide relation"),
-      employee: Yup.string().required("Please provide an employee"),
-      start_date: Yup.string().required("Please provide a date"),
+      employee: Yup.string().required("Geef alstublieft een medewerker op"),
+      role: Yup.string().required("Geef alstublieft een relatie op"),
+      start_date: Yup.string().required("Geef alstublieft een datum op"),
     }),
     onSubmit: submit,
   });
@@ -65,7 +65,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   return (
     <form onSubmit={formik.handleSubmit} className="p-6.5">
       <Select
-        label={"Employee"}
+        label={"Medewerker"}
         name={"employee"}
         required={true}
         options={
@@ -85,12 +85,12 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
       />
       <InputField
         className={"w-full mb-4.5"}
-        label={"Relation"}
+        label={"Relatie"}
         name={"role"}
         required={true}
         type={"text"}
         value={formik.values.role}
-        placeholder={"Enter relation"}
+        placeholder={"Voer relatie in"}
         error={
           formik.touched.role && formik.errors.role ? formik.errors.role : null
         }
@@ -98,7 +98,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         onBlur={formik.handleBlur}
       />
       <InputField
-        label={"Start Date"}
+        label={"Startdatum"}
         required={true}
         name={"start_date"}
         type={"date"}
@@ -118,7 +118,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         isLoading={isLoading}
         formNoValidate={true}
       >
-        Submit
+        Medewerker Indienen
       </Button>
     </form>
   );

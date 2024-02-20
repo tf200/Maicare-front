@@ -55,13 +55,13 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   const formik = useFormik<FormTypes>({
     initialValues: initialValues,
     validationSchema: Yup.object({
-      first_name: Yup.string().required("Please provide first name"),
-      last_name: Yup.string().required("Please provide last name"),
-      email: Yup.string().required("Please provide email address"),
-      phone_number: Yup.string().required("Please provide phone number"),
-      relationship: Yup.string().required("Please provide relation"),
-      relation_status: Yup.string().required("Please provide distance"),
-      address: Yup.string().required("Please provide address physique"),
+      first_name: Yup.string().required("Geef alstublieft een voornaam op"),
+      last_name: Yup.string().required("Geef alstublieft een achternaam op"),
+      email: Yup.string().required("Geef alstublieft een e-mailadres op"),
+      phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
+      relationship: Yup.string().required("Geef alstublieft een relatie op"),
+      relation_status: Yup.string().required("Geef alstublieft een afstand op"),
+      address: Yup.string().required("Geef alstublieft een adres op"),
       auto_reports: Yup.boolean(),
     }),
     onSubmit: submit,
@@ -72,9 +72,9 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
         <InputField
           required={true}
-          label={"First Name"}
+          label={"Voornaam"}
           name={"first_name"}
-          placeholder={"Enter First Name"}
+          placeholder={"Voer Voornaam in"}
           type={"text"}
           value={formik.values.first_name}
           className="w-full xl:w-1/2"
@@ -89,11 +89,11 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         <InputField
           required={true}
           className={"w-full xl:w-1/2"}
-          label={"Last Name"}
+          label={"Achternaam"}
           name={"last_name"}
           type={"text"}
           value={formik.values.last_name}
-          placeholder={"Enter Last Name"}
+          placeholder={"Voer Achternaam in"}
           error={
             formik.touched.last_name && formik.errors.last_name
               ? formik.errors.last_name
@@ -106,11 +106,11 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       <InputField
         required={true}
         className={"w-full mb-4.5"}
-        label={"Email address"}
+        label={"E-mailadres"}
         name={"email"}
         type={"text"}
         value={formik.values.email}
-        placeholder={"Enter email address"}
+        placeholder={"Voer e-mailadres in"}
         error={
           formik.touched.email && formik.errors.email
             ? formik.errors.email
@@ -121,9 +121,9 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />{" "}
       <InputField
         required={true}
-        label={"Phone number"}
+        label={"Telefoonnummer"}
         name={"phone_number"}
-        placeholder={"Enter phone number"}
+        placeholder={"Voer telefoonnummer in"}
         type={"text"}
         value={formik.values.phone_number}
         className={"w-full mb-4.5"}
@@ -138,7 +138,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
         <Select
           required={true}
-          label={"Relation"}
+          label={"Relatie"}
           name={"relationship"}
           options={EMERGENCY_RELATION_OPTIONS}
           className="w-full xl:w-1/2"
@@ -153,7 +153,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         />
         <Select
           required={true}
-          label={"Distance"}
+          label={"Afstand"}
           name={"relation_status"}
           options={EMERGENCY_DISTANCE_OPTIONS}
           className="w-full xl:w-1/2"
@@ -170,11 +170,11 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       <InputField
         required={true}
         className={"w-full mb-4.5"}
-        label={"Address physique"}
+        label={"Adres"}
         name={"address"}
         type={"text"}
         value={formik.values.address}
-        placeholder={"Enter address physique"}
+        placeholder={"Voer adres in"}
         error={
           formik.touched.address && formik.errors.address
             ? formik.errors.address
@@ -185,7 +185,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />
       <CheckBoxInputFieldThin
         className={"w-full mb-4.5"}
-        label={"Send reports automatically to this contact ?"}
+        label={"Rapporten automatisch naar dit contact versturen ?"}
         name={"auto_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -196,7 +196,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         isLoading={isLoading}
         formNoValidate={true}
       >
-        Submit Contact
+        Contact Indienen
       </Button>
     </form>
   );

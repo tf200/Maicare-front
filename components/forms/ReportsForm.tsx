@@ -26,8 +26,8 @@ const initialValues: FormType = {
 };
 
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  title: Yup.string().required("Please provide title "),
-  report_text: Yup.string().required("Please provide report"),
+  title: Yup.string().required("Geef alstublieft een titel"),
+  report_text: Yup.string().required("Geef alstublieft een rapport"),
   date: Yup.string(),
   client: Yup.number(),
   author: Yup.string(),
@@ -83,9 +83,9 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
               className={"w-full mb-4.5"}
               required={true}
               id={"title"}
-              label={"Title"}
+              label={"Titel"}
               type={"text"}
-              placeholder={"Enter title of the reports"}
+              placeholder={"Voer de titel van de rapporten in"}
               value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -97,8 +97,8 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
               id={"report_text"}
               required={true}
               className={"mb-6"}
-              label={"Reports"}
-              placeholder={"Provide reports please"}
+              label={"Rapporten"}
+              placeholder={"Geef alstublieft rapporten"}
               value={values.report_text}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -110,9 +110,9 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Reports..."}
+              loadingText={"Rapporten Worden Ingediend..."}
             >
-              Submit Diagnosis
+               Rapport Indienen
             </Button>
           </div>
         </form>

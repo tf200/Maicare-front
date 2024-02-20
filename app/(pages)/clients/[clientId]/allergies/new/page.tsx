@@ -14,9 +14,9 @@ const NewMedicationPage: FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="New Allergy" />
+      <Breadcrumb pageName="Nieuwe Allergie" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel title={"Record a New Allergy"}>
+        <Panel title={"Registreer een Nieuwe Allergie"}>
           <AllergyForm clientId={parseInt(clientId)} />
         </Panel>
       </div>

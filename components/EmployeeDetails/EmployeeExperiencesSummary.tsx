@@ -18,7 +18,7 @@ const EmployeeExperiencesSummary: FunctionComponent<Props> = ({
   const router = useRouter();
   if (isLoading) return <Loader />;
 
-  if (data.results?.length === 0) return <div>No experiences found</div>;
+  if (data.results?.length === 0) return <div>Geen ervaringen gevonden</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((education) => {
@@ -30,23 +30,23 @@ const EmployeeExperiencesSummary: FunctionComponent<Props> = ({
           >
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Job Title"}
-              value={education.job_title || "Not specified"}
+              label={"Functietitel"}
+              value={education.job_title || "Niet gespecificeerd"}
             />
 
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Company Name"}
-              value={education.company_name || "Not specified"}
+              label={"Bedrijfsnaam"}
+              value={education.company_name || "Niet gespecificeerd"}
             />
 
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Period"}
+              label={"Periode"}
               value={
                 education?.start_date || education?.end_date
                   ? education?.start_date + " - " + education?.end_date
-                  : "Not specified"
+                  : "Niet gespecificeerd"
               }
             />
           </li>

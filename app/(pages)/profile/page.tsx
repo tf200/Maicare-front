@@ -31,7 +31,7 @@ const Profile = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Profile" />
+      <Breadcrumb pageName="Profiel" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="relative z-20 h-35">
@@ -65,28 +65,28 @@ const Profile = () => {
                 <div className="flex flex-col w-full gap-2">
                   <InputField
                     className={"w-full"}
-                    label={"First Name"}
+                    label={"Voornaam"}
                     type={"text"}
                     disabled
                     defaultValue={first_name}
                   />
                   <InputField
                     className={"w-full"}
-                    label={"Last Name"}
+                    label={"Achternaam"}
                     type={"text"}
                     disabled
                     defaultValue={last_name}
                   />
                   <InputField
                     className={"w-full"}
-                    label={"Email"}
+                    label={"E-mail"}
                     type={"text"}
                     disabled
                     defaultValue={email}
                   />
                   <InputField
                     className={"w-full"}
-                    label={"Phone number"}
+                    label={"Telefoonnummer"}
                     type={"text"}
                     disabled
                     defaultValue={phone_number}

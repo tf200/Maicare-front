@@ -21,7 +21,7 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ folders }) => {
           onClick={() => setIsOpen(!isOpen)}
           className="text-md font-bold my-1 hover:text-blue-600 focus:outline-none"
         >
-          My Care
+          Mijn Zorg
         </button>
       </div>
       <FolderList folders={folders} isOpen={isOpen} />

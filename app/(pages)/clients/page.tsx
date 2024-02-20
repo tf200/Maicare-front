@@ -30,7 +30,8 @@ const ClientsPage: FunctionComponent = () => {
     return [
       {
         id: "profilePicture",
-        header: () => <div className="text-center">Profile</div>,
+        // Profile
+        header: () => <div className="text-center">Profiel</div>,
         cell: (info) => (
           <div className="flex items-center justify-center">
             <ProfilePicture
@@ -43,19 +44,19 @@ const ClientsPage: FunctionComponent = () => {
       },
       {
         id: "full_name",
-        header: () => "Full name",
+        header: () => "Volledige Naam",
         accessorFn: (client) => `${client.first_name} ${client.last_name}`,
       },
       {
         accessorKey: "date_of_birth",
-        header: () => "Age",
+        header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Not Specified",
+          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
-        header: () => "Gender",
-        cell: (info) => info.getValue() || "Not Specified",
+        header: () => "Geslacht",
+        cell: (info) => info.getValue() || "Niet gespecificeerd",
       },
       {
         accessorKey: "status",
@@ -94,7 +95,8 @@ const ClientsPage: FunctionComponent = () => {
               href={`/clients/new`}
               className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
-              Add new Clients
+              Nieuwe Cliënten Toevoegen
+              {/* Add new Clients  */}
             </Link>
           </div>
         }
@@ -126,7 +128,7 @@ const ClientsPage: FunctionComponent = () => {
           <LargeAlertMessage
             firstLine={"Oops!"}
             secondLine={
-              "An error has prevented us from fetching the clients list."
+              "Een fout heeft ons verhinderd de cliëntenlijst op te halen."
             }
           />
         )}
