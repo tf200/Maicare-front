@@ -29,19 +29,19 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "title",
-        header: () => "Summary",
+        header: () => "Samenvatting",
       },
       {
         accessorKey: "description",
-        header: () => "Diagnosis",
+        header: () => "Diagnose",
       },
       {
         accessorKey: "diagnosis_code",
-        header: () => "Diagnosis code",
+        header: () => "Diagnosecode",
       },
       columnHelper.accessor("severity", {
         header: (Header) => (
-          <div className="flex justify-center w-full">Severity</div>
+          <div className="flex justify-center w-full">Ernst</div>
         ),
         cell: (info) => (
           <div className="flex justify-center w-full">
@@ -51,7 +51,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       }),
       {
         accessorKey: "date_of_diagnosis",
-        header: () => "Date of diagnosis",
+        header: () => "Datum van diagnose",
         cell: (info) => fullDateFormat(info.getValue() as string),
       },
     ];
@@ -64,7 +64,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <>
         <Pagination
           page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+          disabled={isFetching}
           onClick={setPage}
           totalPages={pageCount}
         />
@@ -81,7 +81,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Diagnosis"}
+          text={"Diagnose Toevoegen"}
           href={"../diagnosis/new"}
           className="ml-auto"
         />

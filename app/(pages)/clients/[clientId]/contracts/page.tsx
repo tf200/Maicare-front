@@ -25,24 +25,24 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "start_date",
-        header: "Start Date",
+        header: "Startdatum",
         cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
         accessorKey: "end_date",
-        header: "End Date",
+        header: "Einddatum",
         cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
         accessorKey: "care_type",
-        header: "Care Type",
+        header: "Zorgtype",
       },
       {
-        id: "Rate Type",
+        id: "Tarieftype",
         accessorFn: rateType,
       },
       {
-        id: "Rate",
+        id: "Tarief",
         accessorFn: getRate,
       },
     ];
@@ -50,9 +50,9 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 
   return (
     <Panel
-      title={"Contracts List"}
+      title={"Contractenlijst"}
       sideActions={
-        <LinkButton text={"Add new contract"} href={`contracts/new`} />
+        <LinkButton text={"Nieuw contract toevoegen"} href={`contracts/new`} />
       }
     >
       {isLoading && <Loader />}

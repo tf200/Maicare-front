@@ -22,13 +22,13 @@ const initialValues: ContractFormType = {
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
   Yup.object().shape({
-    start_date: Yup.string().required("Please provide the start date"),
-    end_date: Yup.string().required("Please provide the end date"),
-    care_type: Yup.string().required("Please provide the care type"),
+    start_date: Yup.string().required("Geef alstublieft de startdatum op"),
+    end_date: Yup.string().required("Geef alstublieft de einddatum op"),
+    care_type: Yup.string().required("Geef alstublieft het zorgtype op"),
     rateType: Yup.string()
       .oneOf(RATE_TYPE_ARRAY)
-      .required("Please provide the rate type"),
-    rate: Yup.string().required("Please provide the rate"),
+      .required("Geef alstublieft het tarieftype op"),
+    rate: Yup.string().required("Geef alstublieft het tarief op"),
   });
 
 type PropsType = {
@@ -74,7 +74,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <InputFieldThin
-              label={"Start Date"}
+              label={"Startdatum"}
               required={true}
               id={"start_date"}
               type={"date"}
@@ -93,7 +93,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
               id={"end_date"}
               required={true}
               type={"date"}
-              label={"End Date"}
+              label={"Einddatum"}
               value={(values.end_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -107,8 +107,8 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
             id={"care_type"}
             required={true}
             type={"text"}
-            label={"Care Type"}
-            placeholder={"Enter care type"}
+            label={"Zorgtype"}
+            placeholder={"Voer Zorgtype in"}
             value={values.care_type}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -118,7 +118,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
           />
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
             <Select
-              label={"Rate Type"}
+              label={"Tarieftype"}
               required={true}
               id={"rateType"}
               className="w-full xl:w-1/2"
@@ -137,9 +137,9 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
               type={"number"}
               min={0}
               step="0.01"
-              label={"Rate"}
+              label={"Tarief"}
               isPrice={true}
-              placeholder={"Enter rate"}
+              placeholder={"Voer Tarief in"}
               value={values.rate}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -153,7 +153,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
             formNoValidate={true}
             loadingText={"Submitting Contract..."}
           >
-            Submit Contract
+            Contract Indienen
           </Button>
         </form>
       )}

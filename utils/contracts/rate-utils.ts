@@ -23,10 +23,10 @@ export function getRateUnit(item: ContractResDto): QUnitType {
 
 export function rateString(item: ContractResDto) {
   return item.rate_per_day
-    ? "Rate per day"
+    ? "Tarief per dag"
     : item.rate_per_hour
-      ? "Rate per hour"
-      : "Rate per minute";
+      ? "Tarief per uur"
+      : "Tarief per minuut";
 }
 
 export function calculateTotalRate(item: ContractResDto) {

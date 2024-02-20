@@ -285,23 +285,23 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                         <RadioCustom
                           id={1}
                           type="radio"
-                          label="Male"
+                          label="Man"
                           name="gender"
-                          value="Male"
+                          value="Man"
                         />
                         <RadioCustom
                           id={2}
                           type="radio"
-                          label={"Female"}
+                          label={"Vrouw"}
                           name="gender"
-                          value="Female"
+                          value="Vrouw"
                         />
                         <RadioCustom
                           id={3}
                           type="radio"
-                          label={"Not-specified"}
+                          label={"Niet gespecificeerd"}
                           name="gender"
-                          value="Not-specified"
+                          value="Niet gespecificeerd"
                         />
                       </div>
                     </div>

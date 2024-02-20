@@ -10,12 +10,12 @@ const MedicalRecordLinkGroup: FunctionComponent = () => {
     <LinksGroup
       options={[
         {
-          label: "Overview",
+          label: "Overzicht",
           href: `/clients/${clientId}/medical-record`,
           getIsActive: (pathname, href) => pathname === href,
         },
         {
-          label: "Lists",
+          label: "Lijsten",
           href: `/clients/${clientId}/medical-record/diagnosis`,
           getIsActive: (pathname) => {
             return (

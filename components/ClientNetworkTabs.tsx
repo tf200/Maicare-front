@@ -21,17 +21,17 @@ const ClientNetworkTabs: FunctionComponent = () => {
       backHref={`/clients/${clientId}`}
       tabs={[
         {
-          label: "Emergency Contacts",
+          label: "Noodcontacten",
           href: `/clients/${clientId}/client-network/emergency`,
         },
         {
-          label: "Involved employees",
+          label: "Betrokken medewerkers",
           href: `/clients/${clientId}/client-network/involved-employees`,
         }
       ]}
       title={
-        `Client Network` +
-        (data ? ` for ${data.first_name} ${data.last_name}` : "")
+        `Cliëntennetwerk` +
+        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
       }
     />
   );

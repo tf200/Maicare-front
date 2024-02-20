@@ -21,22 +21,22 @@ const AddressDetails: FunctionComponent<Props> = ({ clientId }) => {
       <div className="grid grid-cols-2 gap-4">
         <DetailCell
           ignoreIfEmpty={true}
-          label={"City"}
+          label={"Stad"}
           value={data.city || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Zip code"}
+          label={"Postcode"}
           value={data.Zipcode || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Street Name"}
+          label={"Straatnaam"}
           value={data.streetname || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Street Number"}
+          label={"Huisnummer"}
           value={data.street_number || "Not specified"}
         />
       </div>

@@ -20,7 +20,8 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   return (
     <div className="flex items-center gap-8">
       <InputFieldThin
-        placeholder="Search Clients ..."
+        placeholder="Zoek Cliënten..."
+        // placeholder="Search Clients ..."
         type="search"
         className="lg:min-w-75"
         onChange={(e) => {

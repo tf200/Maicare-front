@@ -19,17 +19,17 @@ const LocationDetails: FunctionComponent<Props> = ({ clientId }) => {
       <div className="grid grid-cols-2 gap-4">
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Location"}
+          label={"Locatie"}
           value={data.location || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Organisation"}
+          label={"Organisatie"}
           value={data.organisation || "Not specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Department"}
+          label={"Afdeling"}
           value={data.departement || "Not specified"}
         />
       </div>

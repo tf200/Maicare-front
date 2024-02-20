@@ -25,29 +25,29 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         </div>
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Full Name"}
+          label={"Volledige Naam"}
           value={`${data.first_name} ${data.last_name}` || "Not Specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Email"}
+          label={"E-mail"}
           type={"email"}
           value={data.email || "Not Specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Phone"}
+          label={"Telefoon"}
           type={"phone"}
           value={data.phone_number || "Not Specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Gender"}
+          label={"Geslacht"}
           value={data.gender || "Not Specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Date of birth"}
+          label={"Geboortedatum"}
           value={
             data.date_of_birth
               ? dayjs(data.date_of_birth).format("DD MMM, YYYY")
@@ -56,12 +56,12 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Birth Place"}
+          label={"Geboorteplaats"}
           value={data.birthplace || "Not Specified"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"File Number"}
+          label={"Dossiernummer"}
           value={data.filenumber || "Not Specified"}
         />
       </div>
