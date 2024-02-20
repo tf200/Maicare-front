@@ -3,6 +3,7 @@
 import React, {
   FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -20,6 +21,10 @@ import Toolbar from "@/components/calendarComponents/Toolbar";
 
 import dayjs from "dayjs";
 import "dayjs/locale/nl";
+import FormModal from "@/components/Modals/FormModal";
+import InputField from "@/components/FormFields/InputField";
+import AppointmentFormModal from "@/components/Modals/AppointmentFormModal";
+import { useModal } from "@/components/providers/ModalProvider";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
 
@@ -40,7 +45,13 @@ const Page: FunctionComponent = (props) => {
     [setDate]
   );
   const onView = useCallback((newView: View) => setView(newView), [setView]);
-
+  const { open, close } = useModal(AppointmentFormModal);
+  useEffect(() => {
+    open({
+      onConfirm: () => {},
+    });
+    return close;
+  }, []);
   return (
     <Panel title={"Kalender"} containerClassName="px-7 py-4">
       <Calendar
@@ -54,12 +65,12 @@ const Page: FunctionComponent = (props) => {
           {
             title: "Parallel Important meeting",
             start: new Date(),
-            end: new Date(new Date().setHours(new Date().getHours() + 1)),
+            end: new Date(new Date().setHours(new Date().getHours() + 2)),
           },
           {
             title: "Parallel Important meeting #2",
             start: new Date(),
-            end: new Date(new Date().setHours(new Date().getHours() + 1)),
+            end: new Date(new Date().setHours(new Date().getHours() + 3)),
           },
         ]}
         formats={formats}

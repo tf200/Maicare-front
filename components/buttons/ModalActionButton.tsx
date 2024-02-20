@@ -1,16 +1,18 @@
 import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
 import clsx from "clsx";
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  actionType?: "ACKNOWLEDGE" | "CANCEL" | "CONFIRM" | "DANGER";
+  actionType?: "ACKNOWLEDGE" | "CANCEL" | "CANCEL-2" | "CONFIRM" | "DANGER";
 };
 const ModalActionButton: FunctionComponent<Props> = ({
   actionType,
   className,
+  type = "button",
   ...props
 }) => {
   return (
     <button
       {...props}
+      type={type}
       className={clsx(
         "block rounded px-12.5 py-3  text-center font-medium transition",
         {
@@ -22,6 +24,8 @@ const ModalActionButton: FunctionComponent<Props> = ({
             actionType === "CONFIRM",
           "bg-gray text-black hover:bg-meta-1 hover:text-white":
             actionType === "CANCEL",
+          "bg-gray-2 text-black hover:bg-meta-1 hover:text-white":
+            actionType === "CANCEL-2",
         },
         className
       )}
