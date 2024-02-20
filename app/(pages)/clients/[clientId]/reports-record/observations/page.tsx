@@ -24,18 +24,18 @@ const ObservationsPage: FunctionComponent<Props> = ({
     return [
       {
         accessorKey: "date",
-        header: "Date",
+        header: "Datum",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "observation_text",
-        header: "Observation",
+        header: "Observatie",
         cell: (info) => info.getValue() || "Not Available",
       },
 
       {
         accessorKey: "category",
-        header: "Category",
+        header: "Categorie",
         cell: (info) => info.getValue() || "Not Available",
       },
     ];
@@ -63,7 +63,7 @@ const ObservationsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add Observations"}
+          text={"Observaties Toevoegen"}
           href={"../observations/new"}
           className="ml-auto"
         />

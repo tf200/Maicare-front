@@ -22,7 +22,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "date",
-        header: () => "Date",
+        header: () => "Datum",
       },
       {
         accessorKey: "feedback_text",
@@ -31,7 +31,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 
       {
         accessorKey: "author_name",
-        header: "Written By",
+        header: "Geschreven Door",
       },
     ];
   }, []);
@@ -60,7 +60,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add Feedback"}
+          text={"Feedback Toevoegen"}
           href={"../feedback/new"}
           className="ml-auto"
         />

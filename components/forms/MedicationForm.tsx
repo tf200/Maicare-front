@@ -22,12 +22,12 @@ const initialValues: MedicationFormType = {
 
 const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
   Yup.object().shape({
-    name: Yup.string().required("Please provide medication name"),
-    dosage: Yup.string().required("Please provide dosage"),
-    frequency: Yup.string().required("Please provide frequency"),
-    start_date: Yup.string().required("Please provide start date"),
-    end_date: Yup.string().required("Please provide end date"),
-    notes: Yup.string().required("Please provide notes"),
+    name: Yup.string().required("Geef alstublieft de medicatienaam op"),
+    dosage: Yup.string().required("Geef alstublieft de dosering op"),
+    frequency: Yup.string().required("Geef alstublieft de frequentie op"),
+    start_date: Yup.string().required("Geef alstublieft de startdatum op"),
+    end_date: Yup.string().required("Geef alstublieft de einddatum op"),
+    notes: Yup.string().required("Geef alstublieft notities op"),
   });
 
 type Props = {
@@ -74,7 +74,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full mb-4.5"}
               required={true}
               id={"name"}
-              label={"Medication Name"}
+              label={"Naam van Medicatie"}
               type={"text"}
               placeholder={"Enter medication name"}
               value={values.name}
@@ -86,7 +86,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full mb-4.5"}
               required={true}
               id={"dosage"}
-              label={"Dosage"}
+              label={"Dosering"}
               type={"text"}
               placeholder={"Enter dosage"}
               value={values.dosage}
@@ -98,7 +98,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full mb-4.5"}
               required={true}
               id={"frequency"}
-              label={"Frequency"}
+              label={"Frequentie"}
               type={"text"}
               placeholder={"Enter frequency"}
               value={values.frequency}
@@ -108,7 +108,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
             />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputFieldThin
-                label={"Start Date"}
+                label={"Startdatum"}
                 required={true}
                 id={"start_date"}
                 type={"date"}
@@ -127,7 +127,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
                 id={"end_date"}
                 required={true}
                 type={"date"}
-                label={"End Date"}
+                label={"Einddatum"}
                 value={(values.end_date ?? "") + ""}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -141,7 +141,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               id={"notes"}
               required={true}
               className={"mb-6"}
-              label={"Medication Notes"}
+              label={"Notities bij Medicatie"}
               placeholder={"Please provide notes for this medication"}
               value={values.notes}
               onChange={handleChange}
@@ -153,9 +153,9 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Medication..."}
+              loadingText={"Medicatie indienen..."}
             >
-              Submit Medication
+              Dien Medicatie in
             </Button>
           </div>
         </form>

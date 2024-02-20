@@ -115,11 +115,11 @@ type RowDetailsProps = {
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
   return (
     <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Summary"} value={data.title} />
-      <DetailCell label={"Diagnosis Code"} value={data.diagnosis_code} />
-      <DetailCell label={"Diagnosis"} value={data.description} />
+      <DetailCell label={"Samenvatting"} value={data.title} />
+      <DetailCell label={"Diagnosecode"} value={data.diagnosis_code} />
+      <DetailCell label={"Diagnose"} value={data.description} />
       <DetailCell
-        label={"Severity"}
+        label={"Ernst"}
         value={
           <div className="mt-2">
             <Severity severity={data.severity} />
@@ -128,10 +128,10 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
       />
       <DetailCell label={"Status"} value={data.status} />
       <DetailCell
-        label={"Diagnosing Clinician"}
+        label={"Diagnose van een arts"}
         value={data.diagnosing_clinician}
       />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
     </div>
   );
 };

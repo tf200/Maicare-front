@@ -33,15 +33,15 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "allergy_type",
-        header: "Allergy Type",
+        header: "Type Allergie",
       },
       {
         accessorKey: "reaction",
-        header: "Reaction",
+        header: "Reactie",
       },
       columnHelper.accessor("severity", {
         header: (Header) => (
-          <div className="flex justify-center w-full">Severity</div>
+          <div className="flex justify-center w-full">Ernst</div>
         ),
         cell: (info) => (
           <div className="flex justify-center w-full">
@@ -82,7 +82,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Record New Allergy"}
+          text={"Registreer Nieuwe Allergie"}
           href={"../allergies/new"}
           className="ml-auto"
         />
@@ -116,17 +116,17 @@ type RowDetailsProps = {
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
   return (
     <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Allergy Type"} value={data.allergy_type} />
-      <DetailCell label={"Reaction"} value={data.reaction} />
+      <DetailCell label={"Type Allergie"} value={data.allergy_type} />
+      <DetailCell label={"Reactie"} value={data.reaction} />
       <DetailCell
-        label={"Severity"}
+        label={"Ernst"}
         value={
           <div className="mt-2">
             <Severity severity={data.severity} />
           </div>
         }
       />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
     </div>
   );
 };

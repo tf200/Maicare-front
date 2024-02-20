@@ -22,22 +22,22 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "date",
-        header: () => "Date",
+        header: () => "Datum",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "report_text",
-        header: () => "Report Description",
+        header: () => "Beschrijving van het Rapport",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "title",
-        header: () => "Title",
+        header: () => "Titel",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "author",
-        header: () => "Written By",
+        header: () => "Geschreven Door",
         cell: (info) => info.getValue() || "Not Available",
       },
     ];
@@ -50,7 +50,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <>
         <Pagination
           page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+          disabled={isFetching}
           onClick={setPage}
           totalPages={pageCount}
         />
@@ -67,7 +67,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add Reports"}
+          text={"Rapporten Toevoegen"}
           href={"../reports/new"}
           className="ml-auto"
         />

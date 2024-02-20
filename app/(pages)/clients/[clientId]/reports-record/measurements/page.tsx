@@ -24,15 +24,15 @@ const MeasurementsPage: FunctionComponent<Props> = ({
     return [
       {
         accessorKey: "date",
-        header: "Date",
+        header: "Datum",
       },
       {
         accessorKey: "measurement_type",
-        header: "Measurement Type",
+        header: "Type Meting",
       },
       {
         accessorKey: "value",
-        header: "Value",
+        header: "Waarde",
       },
     ];
   }, []);
@@ -61,7 +61,7 @@ const MeasurementsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add New Measurements"}
+          text={"Nieuwe Metingen Toevoegen"}
           href={"../measurements/new"}
           className="ml-auto"
         />
