@@ -1,7 +1,8 @@
 export type AppointmentFormType = {
-  subject: string;
-  from: string;
-  to: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+  appointment_type: "meeting";
   description: string;
   attachments: File[];
 };

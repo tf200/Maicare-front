@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 async function createAppointment(appointment: NewAppointmentReqDto) {
   const response = await api.post<AppointmentResDto>(
-    "appointments/create",
+    "appointments/create/",
     appointment
   );
   return response.data;

@@ -9,10 +9,11 @@ import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useCreateAppointment } from "@/utils/appointments/createAppointment";
 
 const initialValues: AppointmentFormType = {
-  subject: "",
-  from: "",
-  to: "",
+  title: "",
+  start_time: "",
+  end_time: "",
   description: "",
+  appointment_type: "meeting",
   attachments: [],
 };
 
@@ -42,8 +43,8 @@ const AppointmentForm: FunctionComponent<Props> = ({
         {/* Subject */}
         <InputField
           label={"Onderwerp"}
-          id={"subject"}
-          name={"subject"}
+          id={"title"}
+          name={"title"}
           className="mb-5"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -54,8 +55,8 @@ const AppointmentForm: FunctionComponent<Props> = ({
           {/* From date time */}
           <InputField
             label={"Van datum tijd"}
-            id={"from"}
-            name={"from"}
+            id={"end_time"}
+            name={"end_time"}
             type={"datetime-local"}
             className="grow"
             onChange={handleChange}
@@ -65,8 +66,8 @@ const AppointmentForm: FunctionComponent<Props> = ({
           {/* To date time */}
           <InputField
             label={"Tot datum tijd"}
-            id={"to"}
-            name={"to"}
+            id={"start_time"}
+            name={"start_time"}
             type={"datetime-local"}
             className="grow"
             onChange={handleChange}

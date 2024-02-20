@@ -47,7 +47,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
               actionType="CANCEL"
               className="w-full"
             >
-              {cancelButtonText ?? "Cancel"}
+              {cancelButtonText ?? "Annuleren"}
             </ModalActionButton>
           </div>
           <div className="w-full px-3 2xsm:w-1/2">
@@ -59,7 +59,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
               actionType="DANGER"
               className="w-full"
             >
-              {confirmButtonText ?? "Confirm"}
+              {confirmButtonText ?? "Bevestigen"}
             </ModalActionButton>
           </div>
         </div>

@@ -21,12 +21,13 @@ import Toolbar from "@/components/calendarComponents/Toolbar";
 
 import dayjs from "dayjs";
 import "dayjs/locale/nl";
-import FormModal from "@/components/Modals/FormModal";
-import InputField from "@/components/FormFields/InputField";
 import AppointmentFormModal from "@/components/Modals/AppointmentFormModal";
 import { useModal } from "@/components/providers/ModalProvider";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
+
+const DnDCalendar = withDragAndDrop(Calendar);
 
 const Page: FunctionComponent = (props) => {
   const formats: Formats = useMemo(
@@ -54,7 +55,7 @@ const Page: FunctionComponent = (props) => {
   }, []);
   return (
     <Panel title={"Kalender"} containerClassName="px-7 py-4">
-      <Calendar
+      <DnDCalendar
         localizer={localizer}
         events={[
           {
