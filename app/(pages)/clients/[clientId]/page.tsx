@@ -21,21 +21,22 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Client details" />
+      <Breadcrumb pageName="Cliëntgegevens" />
+      {/* <Breadcrumb pageName="Client details" /> */}
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          <Panel title={"Client Information"} containerClassName="px-7 py-4">
+          <Panel title={"Cliëntinformatie"} containerClassName="px-7 py-4">
             <ClientInformation clientId={parseInt(clientId)} />
           </Panel>
-          <Panel title={"Location Details"} containerClassName="px-7 py-4">
+          <Panel title={"Locatiegegevens"} containerClassName="px-7 py-4">
             <LocationDetails clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Emergency Contacts"}
+            title={"Noodcontacten"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Contacts List"}
+                text={"Volledige Contactenlijst"}
                 href={`/clients/${clientId}/emergency`}
               />
             }
@@ -43,11 +44,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <EmergencyContactsSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Contracts"}
+            title={"Contracten"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"View Client Contracts"}
+                text={"Bekijk Cliëntcontracten"}
                 href={`${clientId}/contracts`}
               />
             }
@@ -56,18 +57,18 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
-          <Panel title={"Identity Details"} containerClassName="px-7 py-4">
+          <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
             <IdentityDetails clientId={parseInt(clientId)} />
           </Panel>
-          <Panel title={"Address Details"} containerClassName="px-7 py-4">
+          <Panel title={"Adresgegevens"} containerClassName="px-7 py-4">
             <AddressDetails clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Medical Record"}
+            title={"Medisch Dossier"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Medical Record"}
+                text={"Volledig Medisch Dossier"}
                 href={`${clientId}/medical-record`}
               />
             }
@@ -75,11 +76,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <MedicalRecordSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Reports"}
+            title={"Rapporten"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Reports"}
+                text={"Volledige Rapporten"}
                 href={`${clientId}/reports-record/reports`}
               />
             }
@@ -87,11 +88,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <ReportsSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Documents"}
+            title={"Documenten"}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Full Documents"}
+                text={"Volledige Documenten"}
                 href={`${clientId}/document`}
               />
             }

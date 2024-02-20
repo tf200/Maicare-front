@@ -16,11 +16,11 @@ const ReportsHistoryTabs: FunctionComponent = () => {
       backHref={`/clients/${clientId}`}
       tabs={[
         {
-          label: "Reports",
+          label: "Rapporten",
           href: `/clients/${clientId}/reports-record/reports`,
         },
         {
-          label: "Measurements",
+          label: "Metingen",
           href: `/clients/${clientId}/reports-record/measurements`,
         },
         {
@@ -28,13 +28,13 @@ const ReportsHistoryTabs: FunctionComponent = () => {
           href: `/clients/${clientId}/reports-record/feedback`,
         },
         {
-          label: "Observations",
+          label: "Observaties",
           href: `/clients/${clientId}/reports-record/observations`,
         },
       ]}
       title={
-        `Reports History` +
-        (data ? ` for ${data.first_name} ${data.last_name}` : "")
+        `Rapportagegeschiedenis` +
+        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
       }
     />
   );

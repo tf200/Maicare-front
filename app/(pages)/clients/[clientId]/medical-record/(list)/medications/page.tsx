@@ -30,23 +30,23 @@ const MedicationsPage: FunctionComponent<Props> = ({
     return [
       {
         accessorKey: "name",
-        header: "Name",
+        header: "Naam",
       },
       {
         accessorKey: "dosage",
-        header: "Dosage",
+        header: "Dosering",
       },
       {
         accessorKey: "frequency",
-        header: "Frequency",
+        header: "Frequentie",
       },
       {
         accessorKey: "start_date",
-        header: "Start Date",
+        header: "Startdatum",
       },
       {
         accessorKey: "end_date",
-        header: "End Date",
+        header: "Einddatum",
       },
     ];
   }, []);
@@ -75,7 +75,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Medication"}
+          text={"Voeg een Medicatie toe"}
           href={"../medications/new"}
           className="ml-auto"
         />
@@ -91,7 +91,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">{pagination}</div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the medications list.
+          Sorry, een fout heeft ons verhinderd de medicatielijst te laden.
         </p>
       )}
     </>
@@ -107,12 +107,12 @@ type RowDetailsProps = {
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
   return (
     <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Name"} value={data.name} />
-      <DetailCell label={"Dosage"} value={data.dosage} />
-      <DetailCell label={"Frequency"} value={data.frequency} />
-      <DetailCell label={"Start Date"} value={data.start_date} />
-      <DetailCell label={"End Date"} value={data.end_date} />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+      <DetailCell label={"Naam"} value={data.name} />
+      <DetailCell label={"Dosering"} value={data.dosage} />
+      <DetailCell label={"Frequentie"} value={data.frequency} />
+      <DetailCell label={"Startdatum"} value={data.start_date} />
+      <DetailCell label={"Einddatum"} value={data.end_date} />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
     </div>
   );
 };

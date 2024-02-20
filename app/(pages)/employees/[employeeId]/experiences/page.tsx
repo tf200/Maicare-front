@@ -18,10 +18,10 @@ const ExperiencesPage: FunctionComponent<Props> = ({
   const query = useListExperiences(+employeeId);
   return (
     <EmployeeBackground
-      title={"Experiences"}
-      addButtonText={"+ Add Experience"}
-      cancelText={"Cancel Adding Experience"}
-      errorText={"An Error occurred while fetching experiences"}
+      title={"Ervaringen"}
+      addButtonText={"+ Ervaring Toevoegen"}
+      cancelText={"Toevoegen Ervaring Annuleren"}
+      errorText={"Een fout trad op tijdens het ophalen van ervaringen."}
       employeeId={+employeeId}
       query={query}
       ListComponent={ExperiencesList}

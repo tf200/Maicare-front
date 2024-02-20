@@ -14,8 +14,8 @@ const EmergencyContactsSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading } = useEmergencyContacts(clientId);
   const router = useRouter();
   if (isLoading) return <Loader />;
-  if (!data) return <div>No data retrieved</div>;
-  if (data.results?.length === 0) return <div>No emergency contacts found</div>;
+  if (!data) return <div>Geen gegevens opgehaald.</div>;
+  if (data.results?.length === 0) return <div>Geen noodcontacten gevonden</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((contact) => {

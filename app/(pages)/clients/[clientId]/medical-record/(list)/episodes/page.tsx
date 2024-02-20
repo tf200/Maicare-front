@@ -33,12 +33,12 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "date",
-        header: "Recorded Date",
+        header: "Geregistreerde Datum",
         cell: (info) => fullDateTimeFormat(info.getValue() as string),
       },
       columnHelper.accessor("intensity", {
         header: (Header) => (
-          <div className="flex justify-center w-full">Intensity</div>
+          <div className="flex justify-center w-full">Intensiteit</div>
         ),
         cell: (info) => (
           <div className="flex justify-center w-full">
@@ -48,7 +48,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       }),
       {
         accessorKey: "state_description",
-        header: "State description",
+        header: "Beschrijving van de Toestand",
       },
     ];
   }, []);
@@ -83,7 +83,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Record New Episode"}
+          text={"Registreer Nieuwe Episode"}
           href={"../episodes/new"}
           className="ml-auto"
         />
@@ -101,7 +101,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the episodes list.
+          Sorry, een fout heeft ons verhinderd de episodelijst te laden.
         </p>
       )}
     </>
@@ -118,11 +118,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
   return (
     <div className={"grid grid-cols-2 gap-2"}>
       <DetailCell
-        label={"Recorded Date"}
+        label={"Geregistreerde Datum"}
         value={fullDateTimeFormat(data.date)}
       />
       <DetailCell
-        label={"Intensity"}
+        label={"Intensiteit"}
         value={
           <div className="mt-2">
             <Severity severity={convertIntensityToSeverity(data.intensity)} />
@@ -131,7 +131,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
       />
       <DetailCell
         className={"col-span-2"}
-        label={"State description"}
+        label={"Beschrijving van de Toestand"}
         value={data.state_description}
       />
     </div>

@@ -25,44 +25,44 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         </div>
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Full Name"}
-          value={`${data.first_name} ${data.last_name}` || "Not Specified"}
+          label={"Volledige Naam"}
+          value={`${data.first_name} ${data.last_name}` || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Email"}
+          label={"E-mail"}
           type={"email"}
-          value={data.email || "Not Specified"}
+          value={data.email || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Phone"}
+          label={"Telefoon"}
           type={"phone"}
-          value={data.phone_number || "Not Specified"}
+          value={data.phone_number || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Gender"}
-          value={data.gender || "Not Specified"}
+          label={"Geslacht"}
+          value={data.gender || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Date of birth"}
+          label={"Geboortedatum"}
           value={
             data.date_of_birth
               ? dayjs(data.date_of_birth).format("DD MMM, YYYY")
-              : "Not Specified"
+              : "Niet gespecificeerd"
           }
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"Birth Place"}
-          value={data.birthplace || "Not Specified"}
+          label={"Geboorteplaats"}
+          value={data.birthplace || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
-          label={"File Number"}
-          value={data.filenumber || "Not Specified"}
+          label={"Dossiernummer"}
+          value={data.filenumber || "Niet gespecificeerd"}
         />
       </div>
     );

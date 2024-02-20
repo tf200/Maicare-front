@@ -29,16 +29,16 @@ const EmployeesPage: FunctionComponent = () => {
 
   const folders = [
     "Management",
-    "Office Employees",
-    "Pedagogical Employees",
-    "Ambulatory Medelterkers",
+    "Kantoormedewerkers",
+    "Pedagogische Medewerkers",
+    "Ambulante Medewerkers",
   ];
 
   const columnDef = useMemo<ColumnDef<EmployeesResDto>[]>(() => {
     return [
       {
         id: "profilePicture",
-        header: () => <div className="text-center">Profile</div>,
+        header: () => <div className="text-center">Profiel</div>,
         cell: (info) => (
           <div className="flex items-center justify-center">
             <ProfilePicture
@@ -51,30 +51,30 @@ const EmployeesPage: FunctionComponent = () => {
       },
       {
         id: "full_name",
-        header: () => "Full name",
+        header: () => "Volledige naam",
         accessorFn: (employee) =>
           `${employee.first_name} ${employee.last_name}`,
       },
       {
         accessorKey: "date_of_birth",
-        header: () => "Age",
+        header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Not Available",
+          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
-        header: () => "Gender",
-        cell: (info) => info.getValue() || "Not Specified",
+        header: () => "Geslacht",
+        cell: (info) => info.getValue() || "Niet gespecificeerd",
       },
       {
         accessorKey: "work_phone_number",
-        header: () => "Phone number",
-        cell: (info) => info.getValue() || "Not Available",
+        header: () => "Telefoonnummer",
+        cell: (info) => info.getValue() || "Niet gespecificeerd",
       },
       {
         accessorKey: "email_address",
-        header: () => "Email address",
-        cell: (info) => info.getValue() || "Not Available",
+        header: () => "E-mailadres",
+        cell: (info) => info.getValue() || "Niet gespecificeerd",
       },
     ];
   }, []);
@@ -108,7 +108,7 @@ const EmployeesPage: FunctionComponent = () => {
               href={`/employees/new`}
               className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
-              Add new Employee
+              Nieuwe Medewerker Toevoegen
             </Link>
           </div>
         }
@@ -146,7 +146,7 @@ const EmployeesPage: FunctionComponent = () => {
           <LargeAlertMessage
             firstLine={"Oops!"}
             secondLine={
-              "An error has prevented us from fetching the employees list."
+              "Een fout heeft ons verhinderd de medewerkerslijst op te halen."
             }
           />
         )}

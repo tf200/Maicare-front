@@ -5,7 +5,7 @@ import EmployeeForm from "@/components/forms/EmployeeForm";
 const NewEmployeePage: FunctionComponent = () => {
   return (
     <>
-      <Breadcrumb pageName="Create Employee" />
+      <Breadcrumb pageName="Medewerker Aanmaken" />
       <EmployeeForm />
     </>
   );

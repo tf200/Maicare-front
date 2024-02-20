@@ -19,11 +19,11 @@ const AllergiesSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   if (isLoading) return <Loader />;
   if (isError)
     return (
-      <div className="text-red">An error prevented us from loading data.</div>
+      <div className="text-red">Een fout heeft ons verhinderd gegevens te laden.</div>
     );
-  if (!data) return <div>No data retrieved</div>;
+  if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0)
-    return <div>No recorded allergy for client</div>;
+    return <div>Geen geregistreerde allergie voor cliënt</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((allergy) => {

@@ -24,17 +24,17 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
     return [
       {
         accessorKey: "employee_name",
-        header: () => "Employee",
+        header: () => "Medewerker",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "role",
-        header: () => "Relation",
+        header: () => "Relatie",
         cell: (info) => info.getValue() || "Not Available",
       },
       {
         accessorKey: "start_date",
-        header: () => "Start date",
+        header: () => "Startdatum",
         cell: (info) =>
           dayjs(info.getValue()).format("DD MMM, YYYY") || "Not Available",
       },
@@ -63,7 +63,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
           href={`/clients/${clientId}/involved-employees/new`}
           className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
-          Add employee
+          Medewerker toevoegen
         </Link>
       }
     >
@@ -73,7 +73,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
       {pagination}
       {isError && (
         <p role="alert" className="text-red">
-          An error has occurred
+          Er is een fout opgetreden.
         </p>
       )}
     </Panel>

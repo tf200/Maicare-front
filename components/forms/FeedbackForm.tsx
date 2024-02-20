@@ -27,7 +27,7 @@ export const feedbackSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   date: Yup.string(),
   client: Yup.number(),
-  feedback_text: Yup.string().required("Please provide your feedback"),
+  feedback_text: Yup.string().required("Geef alstublieft uw feedback"),
 });
 
 type PropsType = {
@@ -81,7 +81,7 @@ export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId }) => {
               name={"feedback_text"}
               rows={6}
               label={"Feedback"}
-              placeholder={"Provide feedback please!"}
+              placeholder={"Geef alstublieft feedback!"}
               value={values.feedback_text}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -94,9 +94,9 @@ export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Feedback..."}
+              loadingText={"Feedback Wordt Ingediend..."}
             >
-              Submit Feedback
+              Feedback Indienen
             </Button>
           </div>
         </form>

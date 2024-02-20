@@ -120,7 +120,8 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Profile
+              Mijn Profiel
+              {/* My Profile */}
             </Link>
           </li>
           <li>
@@ -141,7 +142,8 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Contacts
+              Mijn Contacten
+              {/* My Contacts */}
             </Link>
           </li>
           <li>
@@ -166,7 +168,8 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Account Settings
+              Accountinstellingen
+              {/* Account Settings */}
             </Link>
           </li>
         </ul>
@@ -194,7 +197,8 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          Log Out
+          Uitloggen
+          {/* Log Out */}
         </button>
       </div>
       {/* <!-- Dropdown End --> */}

@@ -18,10 +18,10 @@ const CertificatesPage: FunctionComponent<Props> = ({
   const query = useListCertificates(+employeeId);
   return (
     <EmployeeBackground
-      title={"Certificates"}
-      addButtonText={"+ Add Certificate"}
-      cancelText={"Cancel Adding Certificate"}
-      errorText={"An Error occurred while fetching certificates"}
+      title={"Certificaten"}
+      addButtonText={"+ Certificaat Toevoegen"}
+      cancelText={"Toevoegen Certificaat Annuleren"}
+      errorText={"Een fout trad op tijdens het ophalen van certificaten."}
       employeeId={+employeeId}
       query={query}
       ListComponent={CertificatesList}

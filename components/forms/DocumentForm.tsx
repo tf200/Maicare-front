@@ -83,7 +83,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
           </svg>
           <span className="sr-only">Info</span>
-          <div>the document has been successfully uploaded.</div>
+          <div>het document is succesvol geüpload.</div>
         </div>
       )}
 
@@ -128,11 +128,10 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
             </svg>
           </span>
           <p className="text-center">
-            <span className="text-primary">Click to upload</span> or drag and
-            drop
+            <span className="text-primary">Klik om te uploaden</span> of sleep het bestand hierheen
           </p>
           <p className="mt-1.5">PDF, DOCX or TXT</p>
-          <p>(max, 20mb)</p>
+          <p>(maximaal, 20mb)</p>
         </div>
       </div>
       {error != "" && (
@@ -148,7 +147,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
           isLoading={isLoading}
           formNoValidate={true}
         >
-          Submit Document
+          Document Indienen
         </Button>
       </div>
     </form>

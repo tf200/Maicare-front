@@ -13,8 +13,16 @@ const mappingRecord: Record<DiagnosisSeverity, BadgeType> = {
   Severe: "Danger",
 };
 
+const labelsRacord: Record<DiagnosisSeverity, string> = {
+  Mild: "Mild",
+  Moderate: "Matig",
+  Severe: "Ernstig",
+};
+
 const Severity: FunctionComponent<Props> = ({ severity }) => {
-  return <StatusBadge text={severity} type={mappingRecord[severity]} />;
+  return (
+    <StatusBadge text={labelsRacord[severity]} type={mappingRecord[severity]} />
+  );
 };
 
 export default Severity;

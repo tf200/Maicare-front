@@ -18,12 +18,12 @@ const initialValues: EpisodeFormType = {
 };
 
 const episodeSchema: Yup.ObjectSchema<EpisodeFormType> = Yup.object().shape({
-  date: Yup.string().required("Please provide a date for the episode"),
+  date: Yup.string().required("Geef alstublieft een datum voor de episode"),
   state_description: Yup.string().required(
-    "Please provide a description for the episode"
+    "Geef alstublieft een beschrijving voor de episode"
   ),
   intensity: Yup.number().required(
-    "Please provide the intensity of the episode from 1 to 10"
+    "Geef alstublieft de intensiteit van de episode van 1 tot 10"
   ),
 });
 
@@ -72,12 +72,12 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full xl:w-1/2"}
               id={"intensity"}
               required={true}
-              label={"Intensity"}
+              label={"Intensiteit"}
               type={"number"}
               min={1}
               max={10}
               step={1}
-              placeholder={"Provide the intensity of the episode from 1 to 10"}
+              placeholder={"Geef de intensiteit van de episode van 1 tot 10"}
               value={values.intensity}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -87,7 +87,7 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
               className={"w-full xl:w-1/2"}
               id={"date"}
               required={true}
-              label={"Date"}
+              label={"Datum"}
               type={"date"}
               value={values.date}
               onChange={handleChange}
@@ -100,8 +100,8 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
             id={"state_description"}
             required={true}
             className={"mb-6"}
-            label={"Description of the Episode"}
-            placeholder={"Enter a description of the episode here..."}
+            label={"Beschrijving van de Episode"}
+            placeholder={"Voer hier een beschrijving van de episode in..."}
             value={values.state_description}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -113,9 +113,9 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
             disabled={isLoading}
             isLoading={isLoading}
             formNoValidate={true}
-            loadingText={"Submitting Recorded Episode..."}
+            loadingText={"Bezig met Indienen van Geregistreerde Episode..."}
           >
-            Record Episode
+            Episode Registreren
           </Button>
         </form>
       )}

@@ -18,7 +18,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
   const router = useRouter();
   if (isLoading) return <Loader />;
 
-  if (data.results?.length === 0) return <div>No educations found</div>;
+  if (data.results?.length === 0) return <div>Geen opleidingen gevonden</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((education) => {
@@ -30,29 +30,29 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
           >
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Period"}
+              label={"Periode"}
               value={
                 education?.start_date || education?.end_date
                   ? dateFormat(education?.start_date) +
                     " - " +
                     dateFormat(education?.end_date)
-                  : "Not specified"
+                  : "Niet gespecificeerd"
               }
             />
 
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Institute Name"}
-              value={education.institution_name || "Not specified"}
+              label={"Naam Instituut"}
+              value={education.institution_name || "Niet gespecificeerd"}
             />
 
             <DetailCell
               ignoreIfEmpty={true}
-              label={"Degree"}
+              label={"Diploma"}
               value={
                 education?.degree || education?.field_of_study
                   ? education?.degree + " | " + education?.field_of_study
-                  : "Not specified"
+                  : "Niet gespecificeerd"
               }
             />
           </li>

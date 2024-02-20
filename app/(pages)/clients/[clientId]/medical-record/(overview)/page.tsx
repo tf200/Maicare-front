@@ -15,11 +15,11 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
     <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       <div className="flex flex-col gap-9">
         <Panel
-          title={"Diagnosis"}
+          title={"Diagnose"}
           containerClassName="px-7 py-4"
           sideActions={
             <LinkButton
-              text={"Full Diagnosis History"}
+              text={"Volledige Diagnosegeschiedenis"}
               href={`medical-record/diagnosis`}
             />
           }
@@ -27,11 +27,11 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           <DiagnosisSummary clientId={parseInt(clientId)} />
         </Panel>
         <Panel
-          title={"Medications"}
+          title={"Medicatie"}
           containerClassName="px-7 py-4"
           sideActions={
             <LinkButton
-              text={"Full Medications List"}
+              text={"Volledige Medicatielijst"}
               href={`medical-record/medications`}
             />
           }
@@ -41,11 +41,11 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       <div className="flex flex-col gap-9">
         <Panel
-          title={"Allergies"}
+          title={"Allergieën"}
           containerClassName="px-7 py-4"
           sideActions={
             <LinkButton
-              text={"Full Allergies List"}
+              text={"Volledige Allergielijst"}
               href={`medical-record/allergies`}
             />
           }
@@ -57,7 +57,7 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           containerClassName="px-7 py-4"
           sideActions={
             <LinkButton
-              text={"Emotional State History"}
+              text={"Geschiedenis Emotionele Toestand"}
               href={`medical-record/episodes`}
             />
           }

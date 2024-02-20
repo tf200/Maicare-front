@@ -29,19 +29,19 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "title",
-        header: () => "Summary",
+        header: () => "Samenvatting",
       },
       {
         accessorKey: "description",
-        header: () => "Diagnosis",
+        header: () => "Diagnose",
       },
       {
         accessorKey: "diagnosis_code",
-        header: () => "Diagnosis code",
+        header: () => "Diagnosecode",
       },
       columnHelper.accessor("severity", {
         header: (Header) => (
-          <div className="flex justify-center w-full">Severity</div>
+          <div className="flex justify-center w-full">Ernst</div>
         ),
         cell: (info) => (
           <div className="flex justify-center w-full">
@@ -51,7 +51,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       }),
       {
         accessorKey: "date_of_diagnosis",
-        header: () => "Date of diagnosis",
+        header: () => "Datum van diagnose",
         cell: (info) => fullDateFormat(info.getValue() as string),
       },
     ];
@@ -64,7 +64,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <>
         <Pagination
           page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
+          disabled={isFetching}
           onClick={setPage}
           totalPages={pageCount}
         />
@@ -81,7 +81,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <div className="flex flex-wrap items-center p-4">
         {pagination}
         <LinkButton
-          text={"Add a Diagnosis"}
+          text={"Diagnose Toevoegen"}
           href={"../diagnosis/new"}
           className="ml-auto"
         />
@@ -99,7 +99,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the diagnosis list.
+          Sorry, een fout heeft ons verhinderd de diagnoselijst te laden.
         </p>
       )}
     </>
@@ -115,11 +115,11 @@ type RowDetailsProps = {
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
   return (
     <div className={"grid grid-cols-3 gap-2"}>
-      <DetailCell label={"Summary"} value={data.title} />
-      <DetailCell label={"Diagnosis Code"} value={data.diagnosis_code} />
-      <DetailCell label={"Diagnosis"} value={data.description} />
+      <DetailCell label={"Samenvatting"} value={data.title} />
+      <DetailCell label={"Diagnosecode"} value={data.diagnosis_code} />
+      <DetailCell label={"Diagnose"} value={data.description} />
       <DetailCell
-        label={"Severity"}
+        label={"Ernst"}
         value={
           <div className="mt-2">
             <Severity severity={data.severity} />
@@ -128,10 +128,10 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
       />
       <DetailCell label={"Status"} value={data.status} />
       <DetailCell
-        label={"Diagnosing Clinician"}
+        label={"Diagnose van een arts"}
         value={data.diagnosing_clinician}
       />
-      <DetailCell className={"col-span-3"} label={"Notes"} value={data.notes} />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
     </div>
   );
 };

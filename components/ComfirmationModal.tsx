@@ -47,7 +47,7 @@ const ConfirmationModal: React.FC<
                 onClick={() => setModalOpen(false)}
                 className="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-black hover:bg-black hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-black dark:hover:bg-black"
               >
-                Cancel
+                Annuleren
               </button>
             </div>
             <div className="w-full px-3 2xsm:w-1/2">

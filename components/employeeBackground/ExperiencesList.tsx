@@ -49,22 +49,22 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
   } = useDeleteExperience(experience.employee);
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this experience?",
-      title: "Delete Experience",
+      msg: "Weet u zeker dat u deze ervaring wilt verwijderen?",
+      title: "Ervaring Verwijderen",
     })
   );
   return (
     <>
       <tr>
         <td>
-          <DetailCell label={"Job Title"} value={experience.job_title} />
+          <DetailCell label={"Functietitel"} value={experience.job_title} />
         </td>
         <td>
-          <DetailCell label={"Company Name"} value={experience.company_name} />
+          <DetailCell label={"Bedrijfsnaam"} value={experience.company_name} />
         </td>
         <td>
           <DetailCell
-            label={"Period"}
+            label={"Periode"}
             value={
               dateFormat(experience.start_date) +
               " - " +
