@@ -32,16 +32,20 @@ const initialValues: FormType = {
 };
 
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  title: Yup.string().required("Please provide diagnosis summary"),
-  description: Yup.string().required("Please provide condition of the patient"),
+  title: Yup.string().required(
+    "Geef alstublieft een samenvatting van de diagnose"
+  ),
+  description: Yup.string().required(
+    "Geef alstublieft de conditie van de patiënt"
+  ),
   diagnosis_code: Yup.string()
-    .max(10, "Diagnosis code can't be more than 10 in length")
-    .required("Please provide diagnosis code"),
+    .max(10, "Diagnosecode mag niet langer zijn dan 10 tekens")
+    .required("Geef alstublieft de diagnosecode"),
   severity: Yup.string()
-    .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Please select a valid severity")
-    .required("Please provide severity of the diagnosis"),
-  status: Yup.string().required("Please provide status of the diagnosis"),
-  notes: Yup.string().required("Please provide notes for the diagnosis"),
+    .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Selecteer een geldige ernst")
+    .required("Geef alstublieft de ernst van de diagnose"),
+  status: Yup.string().required("Geef alstublieft de status van de diagnose"),
+  notes: Yup.string().required("Geef alstublieft opmerkingen voor de diagnose"),
 });
 
 type PropsType = {
@@ -81,9 +85,9 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               className={"w-full mb-4.5"}
               required={true}
               id={"title"}
-              label={"Diagnosis summary"}
+              label={"Samenvatting diagnose"}
               type={"text"}
-              placeholder={"Enter summary of the diagnosis"}
+              placeholder={"Voer samenvatting van de diagnose in"}
               value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -91,10 +95,10 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
             />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputFieldThin
-                label={"Condition"}
+                label={"Aandoening"}
                 required={true}
                 id={"description"}
-                placeholder={"Enter Condition of the patient"}
+                placeholder={"Voer conditie van de patiënt in"}
                 type={"text"}
                 className="w-full xl:w-1/2"
                 value={values.description}
@@ -109,7 +113,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 maxLength={10}
                 label={"ICD Code"}
                 type={"text"}
-                placeholder={"Enter ICD Code of the diagnosis"}
+                placeholder={"Voer ICD-code van de diagnose in"}
                 value={values.diagnosis_code}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -119,7 +123,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <Select
-                label={"Severity"}
+                label={"Ernst"}
                 id={"severity"}
                 required={true}
                 options={DIAGNOSIS_SEVERITY_OPTIONS}
@@ -135,7 +139,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 required={true}
                 label={"Status"}
                 type={"text"}
-                placeholder={"Enter current status of the patient"}
+                placeholder={"Voer huidige status van de patiënt in"}
                 value={values.status}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -148,8 +152,8 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               id={"notes"}
               required={true}
               className={"mb-6"}
-              label={"Diagnosis Notes"}
-              placeholder={"Provide notes for the diagnosis"}
+              label={"Diagnose notities"}
+              placeholder={"Geef notities voor de diagnose"}
               value={values.notes}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -161,9 +165,9 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               disabled={isLoading}
               isLoading={isLoading}
               formNoValidate={true}
-              loadingText={"Submitting Diagnosis..."}
+              loadingText={"Diagnose wordt ingediend..."}
             >
-              Submit Diagnosis
+              Diagnose indienen
             </Button>
           </div>
         </form>
