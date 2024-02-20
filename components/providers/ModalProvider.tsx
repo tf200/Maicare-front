@@ -30,21 +30,22 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
   );
   const pop = useCallback(() => {
     setModals((modals) => {
-      modals.pop();
-      if (modals.length === 0) {
-        setOpenedModal(() => modals[modals.length - 1]);
+      const newModals = modals.slice(0, modals.length - 1);
+      if (newModals.length === 0) {
+        setOpenedModal(() => newModals[newModals.length - 1]);
       }
-      return modals;
+      return newModals;
     });
   }, [setModals, setOpenedModal]);
   const removeModal = useCallback(
     (modal: FunctionComponent) => {
       setModals((modals) => {
         const index = modals.indexOf(modal);
+        let newModals = [];
         if (index !== -1) {
-          modals.splice(index, 1);
+          newModals = modals.slice(0, index).concat(modals.slice(index + 1));
         }
-        return modals;
+        return newModals;
       });
     },
     [setModals]
@@ -75,6 +76,6 @@ export function useModal(Modal: FunctionComponent<ModalProps>) {
     open: (callbacks: { [key: string]: () => void }) => {
       push((props) => <Modal {...props} callbacks={callbacks} />);
     },
-    close: removeModal,
+    close: () => removeModal(Modal),
   };
 }
