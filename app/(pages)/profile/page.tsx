@@ -4,7 +4,7 @@ import api from "@/utils/api";
 import Image from "next/image";
 import { useQuery } from "react-query";
 import jwt from "jsonwebtoken";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 
 const Profile = () => {
   const decode = jwt.decode(localStorage.getItem("a"));
@@ -63,28 +63,28 @@ const Profile = () => {
             <div className="w-full flex justify-center">
               <div className="flex justify-center w-full max-w-[500px]">
                 <div className="flex flex-col w-full gap-2">
-                  <InputFieldThin
+                  <InputField
                     className={"w-full"}
                     label={"First Name"}
                     type={"text"}
                     disabled
                     defaultValue={first_name}
                   />
-                  <InputFieldThin
+                  <InputField
                     className={"w-full"}
                     label={"Last Name"}
                     type={"text"}
                     disabled
                     defaultValue={last_name}
                   />
-                  <InputFieldThin
+                  <InputField
                     className={"w-full"}
                     label={"Email"}
                     type={"text"}
                     disabled
                     defaultValue={email}
                   />
-                  <InputFieldThin
+                  <InputField
                     className={"w-full"}
                     label={"Phone number"}
                     type={"text"}

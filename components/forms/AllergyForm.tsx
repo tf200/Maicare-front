@@ -10,7 +10,7 @@ import {
   DIAGNOSIS_SEVERITY_OPTIONS,
 } from "@/consts";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import Textarea from "@/components/FormFields/Textarea";
 import Button from "@/components/buttons/Button";
@@ -106,7 +106,7 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
           </div>
 
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-            <InputFieldThin
+            <InputField
               className={"w-full xl:w-1/2"}
               id={"reaction"}
               required={true}

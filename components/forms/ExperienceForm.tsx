@@ -5,7 +5,7 @@ import { ExperienceFormType } from "@/types/experiences/experience-form-type";
 import { ExpResDto } from "@/types/experiences/exp-res.dto";
 import { useCreateExperience } from "@/utils/experiences/create-experience";
 import { useUpdateExperience } from "@/utils/experiences/update-experience";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormProps } from "@/types/form-props";
@@ -72,7 +72,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="job_title"
           id="job_title"
@@ -85,7 +85,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
           onBlur={handleBlur}
           error={touched.job_title && errors.job_title}
         />
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="company_name"
           id="company_name"
@@ -100,7 +100,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
         />
       </div>
       <div className="mb-6 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="start_date"
           id="start_date"
@@ -113,7 +113,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
           type="date"
           error={touched.start_date && errors.start_date}
         />
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="end_date"
           id="end_date"

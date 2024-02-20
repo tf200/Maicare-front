@@ -4,7 +4,7 @@ import { NewDiagnosisReqDto } from "@/types/diagnosis/new-diagnosis-req-dto";
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import { DIAGNOSIS_SEVERITY_ARRAY, DIAGNOSIS_SEVERITY_OPTIONS } from "@/consts";
 import Textarea from "@/components/FormFields/Textarea";
@@ -77,7 +77,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
-            <InputFieldThin
+            <InputField
               className={"w-full mb-4.5"}
               required={true}
               id={"title"}
@@ -90,7 +90,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
               error={touched.title && errors.title}
             />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-              <InputFieldThin
+              <InputField
                 label={"Condition"}
                 required={true}
                 id={"description"}
@@ -102,7 +102,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 onBlur={handleBlur}
                 error={touched.description && errors.description}
               />
-              <InputFieldThin
+              <InputField
                 className={"w-full xl:w-1/2"}
                 id={"diagnosis_code"}
                 required={true}
@@ -129,7 +129,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 onBlur={handleBlur}
                 error={touched.severity && errors.severity}
               />
-              <InputFieldThin
+              <InputField
                 className={"w-full xl:w-1/2"}
                 id={"status"}
                 required={true}

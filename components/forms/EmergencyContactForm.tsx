@@ -3,7 +3,7 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import {
   EMERGENCY_DISTANCE_OPTIONS,
@@ -70,7 +70,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   return (
     <form onSubmit={formik.handleSubmit} className="p-6.5">
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           required={true}
           label={"First Name"}
           name={"first_name"}
@@ -86,7 +86,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        <InputFieldThin
+        <InputField
           required={true}
           className={"w-full xl:w-1/2"}
           label={"Last Name"}
@@ -103,7 +103,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           onBlur={formik.handleBlur}
         />
       </div>
-      <InputFieldThin
+      <InputField
         required={true}
         className={"w-full mb-4.5"}
         label={"Email address"}
@@ -119,7 +119,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />{" "}
-      <InputFieldThin
+      <InputField
         required={true}
         label={"Phone number"}
         name={"phone_number"}
@@ -167,7 +167,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           onBlur={formik.handleBlur}
         />
       </div>
-      <InputFieldThin
+      <InputField
         required={true}
         className={"w-full mb-4.5"}
         label={"Address physique"}

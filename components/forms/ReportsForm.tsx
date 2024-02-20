@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
@@ -79,7 +79,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
-            <InputFieldThin
+            <InputField
               className={"w-full mb-4.5"}
               required={true}
               id={"title"}

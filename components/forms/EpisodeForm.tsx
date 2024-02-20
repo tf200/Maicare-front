@@ -3,7 +3,7 @@
 import React, { FunctionComponent } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Textarea from "@/components/FormFields/Textarea";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
@@ -68,7 +68,7 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
       }) => (
         <form onSubmit={handleSubmit} className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-            <InputFieldThin
+            <InputField
               className={"w-full xl:w-1/2"}
               id={"intensity"}
               required={true}
@@ -83,7 +83,7 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
               onBlur={handleBlur}
               error={touched.intensity && errors.intensity}
             />
-            <InputFieldThin
+            <InputField
               className={"w-full xl:w-1/2"}
               id={"date"}
               required={true}

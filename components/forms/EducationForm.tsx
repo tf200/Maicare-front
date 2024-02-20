@@ -5,7 +5,7 @@ import { EducationFormType } from "@/types/educations";
 import { EducationResDto } from "@/types/educations";
 import { useCreateEducation } from "@/utils/educations/create-education";
 import { useUpdateEducation } from "@/utils/educations/update-education";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import { FormProps } from "@/types/form-props";
 
@@ -71,7 +71,7 @@ const EducationForm: FunctionComponent<Props> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="institution_name"
           id="institution_name"
@@ -84,7 +84,7 @@ const EducationForm: FunctionComponent<Props> = ({
           onBlur={handleBlur}
           error={touched.institution_name && errors.institution_name}
         />
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="degree"
           id="degree"
@@ -99,7 +99,7 @@ const EducationForm: FunctionComponent<Props> = ({
         />
       </div>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="field_of_study"
           id="field_of_study"
@@ -115,7 +115,7 @@ const EducationForm: FunctionComponent<Props> = ({
         <div className="w-full xl:w-1/2" />
       </div>
       <div className="mb-6 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="start_date"
           id="start_date"
@@ -128,7 +128,7 @@ const EducationForm: FunctionComponent<Props> = ({
           type="date"
           error={touched.start_date && errors.start_date}
         />
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="end_date"
           id="end_date"

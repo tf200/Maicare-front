@@ -4,7 +4,7 @@ import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
 import { EmployeeFormType } from "@/types/employees/employee-form-type";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import FormikRadioGroup from "@/components/FormFields/FormikRadioGroup";
@@ -80,7 +80,7 @@ const EmployeeForm: FunctionComponent = () => {
         >
           <div className="flex flex-col gap-9">
             <Panel title={"Identification"} containerClassName="px-7 py-4">
-              <InputFieldThin
+              <InputField
                 className={"w-full mb-4.5"}
                 id={"employee_number"}
                 required={true}
@@ -93,7 +93,7 @@ const EmployeeForm: FunctionComponent = () => {
                 onBlur={handleBlur}
                 error={touched.employee_number && errors.employee_number}
               />
-              <InputFieldThin
+              <InputField
                 className={"w-full mb-4.5"}
                 id="employment_number"
                 label="Employment Number"
@@ -114,7 +114,7 @@ const EmployeeForm: FunctionComponent = () => {
               />
             </Panel>
             <Panel title={"Name"} containerClassName="px-7 py-4">
-              <InputFieldThin
+              <InputField
                 className={"w-full mb-4.5"}
                 id={"first_name"}
                 required={true}
@@ -126,7 +126,7 @@ const EmployeeForm: FunctionComponent = () => {
                 onBlur={handleBlur}
                 error={touched.first_name && errors.first_name}
               />
-              <InputFieldThin
+              <InputField
                 className={"w-full mb-4.5"}
                 id="last_name"
                 label="Last Name"
@@ -140,7 +140,7 @@ const EmployeeForm: FunctionComponent = () => {
               />
             </Panel>
             <Panel title={"Birth details"} containerClassName="px-7 py-4">
-              <InputFieldThin
+              <InputField
                 label={"Date of Birth"}
                 required={true}
                 id={"date_of_birth"}
@@ -176,7 +176,7 @@ const EmployeeForm: FunctionComponent = () => {
           </div>
           <div className="flex flex-col gap-9">
             <Panel title={"Contact"} containerClassName="px-7 py-4">
-              <InputFieldThin
+              <InputField
                 label={"Email Address"}
                 required={true}
                 id={"email_address"}
@@ -188,7 +188,7 @@ const EmployeeForm: FunctionComponent = () => {
                 onBlur={handleBlur}
                 error={touched.email_address && errors.email_address}
               />
-              <InputFieldThin
+              <InputField
                 label={"Private Email Address"}
                 id={"private_email_address"}
                 type={"email"}
@@ -201,7 +201,7 @@ const EmployeeForm: FunctionComponent = () => {
                   touched.private_email_address && errors.private_email_address
                 }
               />
-              <InputFieldThin
+              <InputField
                 label={"Auth Phone Number"}
                 id={"authentication_phone_number"}
                 type={"tel"}
@@ -215,7 +215,7 @@ const EmployeeForm: FunctionComponent = () => {
                   errors.authentication_phone_number
                 }
               />
-              <InputFieldThin
+              <InputField
                 label={"Work Phone Number"}
                 id={"work_phone_number"}
                 type={"tel"}
@@ -226,7 +226,7 @@ const EmployeeForm: FunctionComponent = () => {
                 onBlur={handleBlur}
                 error={touched.work_phone_number && errors.work_phone_number}
               />
-              <InputFieldThin
+              <InputField
                 label={"Private Phone Number"}
                 id={"private_phone_number"}
                 type={"tel"}
@@ -239,7 +239,7 @@ const EmployeeForm: FunctionComponent = () => {
                   touched.private_phone_number && errors.private_phone_number
                 }
               />
-              <InputFieldThin
+              <InputField
                 label={"Home Telephone Number"}
                 id={"home_telephone_number"}
                 type={"tel"}

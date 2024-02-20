@@ -6,7 +6,7 @@ import { useCreateContract } from "@/utils/contracts/createContract";
 import { ContractFormType } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
 import { CARE_TYPE_OPTIONS, RATE_TYPE_ARRAY } from "@/consts";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
 import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
@@ -73,7 +73,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-            <InputFieldThin
+            <InputField
               label={"Start Date"}
               required={true}
               id={"start_date"}
@@ -88,7 +88,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 errors.start_date + ""
               }
             />
-            <InputFieldThin
+            <InputField
               className={"w-full xl:w-1/2"}
               id={"end_date"}
               required={true}
@@ -102,7 +102,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
               }
             />
           </div>
-          <InputFieldThin
+          <InputField
             className={"w-full mb-4.5"}
             id={"care_type"}
             required={true}
@@ -130,7 +130,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 touched.rateType && errors.rateType && errors.rateType + ""
               }
             />
-            <InputFieldThin
+            <InputField
               className={"w-full xl:w-1/2"}
               id={"rate"}
               required={true}
