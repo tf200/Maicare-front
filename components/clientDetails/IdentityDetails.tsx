@@ -18,8 +18,8 @@ const IdentityDetails: FunctionComponent<Props> = ({ clientId }) => {
     return (
       <div className="grid grid-cols-2 gap-4">
         <DetailCell ignoreIfEmpty={true} label={"Identiteit"} value={data.identity ? "Geverifieerd" : "Niet geverifieerd"} />
-        <DetailCell ignoreIfEmpty={true} label={"Bsn"} value={data.bsn || "Not Specified"} />
-        <DetailCell ignoreIfEmpty={true} label={"Bron"} value={data.source || "Not Specified"} />
+        <DetailCell ignoreIfEmpty={true} label={"Bsn"} value={data.bsn || "Niet gespecificeerd"} />
+        <DetailCell ignoreIfEmpty={true} label={"Bron"} value={data.source || "Niet gespecificeerd"} />
       </div>
     );
   }

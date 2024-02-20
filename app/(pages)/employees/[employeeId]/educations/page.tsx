@@ -18,10 +18,10 @@ const EducationsPage: FunctionComponent<Props> = ({
   const query = useListEducations(+employeeId);
   return (
     <EmployeeBackground
-      title={"Educations"}
-      addButtonText={"+ Add Education"}
-      cancelText={"Cancel Adding Education"}
-      errorText={"An Error occurred while fetching educations"}
+      title={"Opleidingen"}
+      addButtonText={"+ Opleiding Toevoegen"}
+      cancelText={"Toevoegen Opleiding Annuleren"}
+      errorText={"Een fout trad op tijdens het ophalen van opleidingen."}
       employeeId={+employeeId}
       query={query}
       ListComponent={EducationsList}

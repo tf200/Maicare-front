@@ -20,9 +20,9 @@ type Props = FormProps<CertifResDto> & {
 };
 
 const certificateSchema: Yup.ObjectSchema<CertificateFormType> = Yup.object({
-  name: Yup.string().required("Title is required"),
-  issued_by: Yup.string().required("Issued by is required"),
-  date_issued: Yup.string().required("Date issued is required"),
+  name: Yup.string().required("Titel is vereist"),
+  issued_by: Yup.string().required("Uitgever is vereist"),
+  date_issued: Yup.string().required("Datum van uitgifte is vereist"),
 });
 
 const CertificationForm: FunctionComponent<Props> = ({
@@ -71,8 +71,8 @@ const CertificationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="name"
           id="name"
-          label="Title"
-          placeholder="Please enter the title of the certificate"
+          label="Titel"
+          placeholder="Voer alstublieft de titel van het certificaat in"
           type="text"
           value={values.name}
           required={true}
@@ -84,8 +84,8 @@ const CertificationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="issued_by"
           id="issued_by"
-          label="Issued By"
-          placeholder="Please enter the name of the issuer"
+          label="Uitgegeven Door"
+          placeholder="Voer alstublieft de naam van de uitgever in"
           type="text"
           value={values.issued_by}
           required={true}
@@ -99,7 +99,7 @@ const CertificationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="date_issued"
           id="date_issued"
-          label="Date Issued"
+          label="Datum Uitgegeven"
           placeholder="Please enter the date the certificate was issued"
           value={values.date_issued}
           required={true}
@@ -114,9 +114,9 @@ const CertificationForm: FunctionComponent<Props> = ({
         type="submit"
         formNoValidate={true}
         isLoading={isCreating || isUpdating}
-        loadingText={mode === "add" ? "Adding..." : "Updating..."}
+        loadingText={mode === "add" ? "Toevoegen..." : "Bijwerken..."}
       >
-        {mode === "add" ? "Submit Certificate" : "Update Certificate"}
+        {mode === "add" ? "Certificaat Indienen" : "Certificaat Bijwerken"}
       </Button>
     </form>
   );

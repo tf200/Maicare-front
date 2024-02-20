@@ -79,7 +79,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Reports Sorry an error has prevented us from loading the list.
+          Sorry, een fout heeft ons verhinderd de lijst te laden.
         </p>
       )}
     </>

@@ -22,11 +22,11 @@ type Props = FormProps<EducationResDto> & {
 };
 
 const educationSchema: Yup.ObjectSchema<EducationFormType> = Yup.object({
-  institution_name: Yup.string().required("Institution name is required"),
-  degree: Yup.string().required("Degree is required"),
-  field_of_study: Yup.string().required("Field of study is required"),
-  start_date: Yup.string().required("Start date is required"),
-  end_date: Yup.string().required("End date is required"),
+  institution_name: Yup.string().required("Naam van het instituut is vereist"),
+  degree: Yup.string().required("Diploma is vereist"),
+  field_of_study: Yup.string().required("Studierichting is vereist"),
+  start_date: Yup.string().required("Startdatum is vereist"),
+  end_date: Yup.string().required("Einddatum is vereist"),
 });
 
 const EducationForm: FunctionComponent<Props> = ({
@@ -75,8 +75,8 @@ const EducationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="institution_name"
           id="institution_name"
-          label="Institution Name"
-          placeholder="Please enter the institution name"
+          label="Naam Instituut"
+          placeholder="Voer de naam van de instelling in"
           type="text"
           value={values.institution_name}
           required={true}
@@ -88,8 +88,8 @@ const EducationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="degree"
           id="degree"
-          label="Degree"
-          placeholder="Please enter the degree"
+          label="Diploma"
+          placeholder="Voer het diploma in"
           type="text"
           value={values.degree}
           required={true}
@@ -103,8 +103,8 @@ const EducationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="field_of_study"
           id="field_of_study"
-          label="Field of Study"
-          placeholder="Please enter the field of study"
+          label="Studierichting"
+          placeholder="Voer de studierichting in"
           type="text"
           value={values.field_of_study}
           required={true}
@@ -119,8 +119,8 @@ const EducationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="start_date"
           id="start_date"
-          label="Start Date"
-          placeholder="Please enter the start date"
+          label="Startdatum"
+          placeholder="Voer de startdatum in"
           value={values.start_date}
           required={true}
           onChange={handleChange}
@@ -132,8 +132,8 @@ const EducationForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="end_date"
           id="end_date"
-          label="End Date"
-          placeholder="Please enter the end date"
+          label="Einddatum"
+          placeholder="Voer de einddatum in"
           value={values.end_date}
           required={true}
           onChange={handleChange}
@@ -147,9 +147,9 @@ const EducationForm: FunctionComponent<Props> = ({
         type="submit"
         formNoValidate={true}
         isLoading={isCreating || isUpdating}
-        loadingText={mode === "add" ? "Adding..." : "Updating..."}
+        loadingText={mode === "add" ? "Toevoegen..." : "Bijwerken..."}
       >
-        {mode === "add" ? "Submit Education" : "Update Education"}
+        {mode === "add" ? "Opleiding Indienen" : "Opleiding Bijwerken"}
       </Button>
     </form>
   );

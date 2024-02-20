@@ -49,8 +49,8 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
   } = useDeleteEducation(education.employee);
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this education?",
-      title: "Delete Education",
+      msg: "Weet u zeker dat u deze opleiding wilt verwijderen?",
+      title: "Opleiding Verwijderen",
     })
   );
   return (
@@ -58,7 +58,7 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
       <tr>
         <td>
           <DetailCell
-            label={"Period"}
+            label={"Periode"}
             value={
               dateFormat(education.start_date) +
               " - " +
@@ -68,13 +68,13 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
         </td>
         <td>
           <DetailCell
-            label={"Institute Name"}
+            label={"Naam Instituut"}
             value={education.institution_name}
           />
         </td>
         <td>
           <DetailCell
-            label={"Degree"}
+            label={"Diploma"}
             value={
               <div>
                 <strong>{education.degree}</strong> |{" "}

@@ -20,17 +20,17 @@ const LocationDetails: FunctionComponent<Props> = ({ clientId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Locatie"}
-          value={data.location || "Not specified"}
+          value={data.location || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Organisatie"}
-          value={data.organisation || "Not specified"}
+          value={data.organisation || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Afdeling"}
-          value={data.departement || "Not specified"}
+          value={data.departement || "Niet gespecificeerd"}
         />
       </div>
     );

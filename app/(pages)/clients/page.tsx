@@ -51,12 +51,12 @@ const ClientsPage: FunctionComponent = () => {
         accessorKey: "date_of_birth",
         header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Not Specified",
+          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) => info.getValue() || "Not Specified",
+        cell: (info) => info.getValue() || "Niet gespecificeerd",
       },
       {
         accessorKey: "status",
@@ -128,7 +128,7 @@ const ClientsPage: FunctionComponent = () => {
           <LargeAlertMessage
             firstLine={"Oops!"}
             secondLine={
-              "An error has prevented us from fetching the clients list."
+              "Een fout heeft ons verhinderd de cliëntenlijst op te halen."
             }
           />
         )}

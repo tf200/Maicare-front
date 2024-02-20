@@ -49,22 +49,22 @@ const CertificationItem: FunctionComponent<CertificationItemProps> = ({
   } = useDeleteCertificate(certificate.employee);
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this certificate?",
-      title: "Delete Certificate",
+      msg: "Weet u zeker dat u dit certificaat wilt verwijderen?",
+      title: "Certificaat Verwijderen",
     })
   );
   return (
     <>
       <tr>
         <td>
-          <DetailCell label={"Title"} value={certificate.name} />
+          <DetailCell label={"Titel"} value={certificate.name} />
         </td>
         <td>
-          <DetailCell label={"Issued By"} value={certificate.issued_by} />
+          <DetailCell label={"Uitgegeven Door"} value={certificate.issued_by} />
         </td>
         <td>
           <DetailCell
-            label={"Date Issued"}
+            label={"Datum Uitgegeven"}
             value={fullDateFormat(certificate.date_issued)}
           />
         </td>

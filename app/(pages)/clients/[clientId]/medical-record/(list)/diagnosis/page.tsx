@@ -99,7 +99,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the diagnosis list.
+          Sorry, een fout heeft ons verhinderd de diagnoselijst te laden.
         </p>
       )}
     </>

@@ -152,7 +152,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         {pagination}
         {isError && (
           <p role="alert" className="text-red">
-            An error has occurred
+            Er is een fout opgetreden.
           </p>
         )}
       </Panel>

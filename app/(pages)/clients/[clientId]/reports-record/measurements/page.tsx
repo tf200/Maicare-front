@@ -73,7 +73,7 @@ const MeasurementsPage: FunctionComponent<Props> = ({
       </div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the allergy list.
+          Sorry, een fout heeft ons verhinderd de allergielijst te laden.
         </p>
       )}
     </>

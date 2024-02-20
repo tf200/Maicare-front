@@ -73,7 +73,7 @@ const ObservationsPage: FunctionComponent<Props> = ({
       <div className="flex flex-wrap items-center p-4">{pagination}</div>
       {isError && (
         <p role="alert" className="text-red">
-          Sorry an error has prevented us from loading the medications list.
+          Sorry, een fout heeft ons verhinderd de medicatielijst te laden.
         </p>
       )}
     </>

@@ -23,11 +23,11 @@ type Props = FormProps<ExpResDto> & {
 };
 
 const experienceSchema: Yup.ObjectSchema<ExperienceFormType> = Yup.object({
-  job_title: Yup.string().required("Job title is required"),
-  company_name: Yup.string().required("Company name is required"),
-  start_date: Yup.string().required("Start date is required"),
-  end_date: Yup.string().required("End date is required"),
-  description: Yup.string().required("Description is required"),
+  job_title: Yup.string().required("Functietitel is vereist"),
+  company_name: Yup.string().required("Bedrijfsnaam is vereist"),
+  start_date: Yup.string().required("Startdatum is vereist"),
+  end_date: Yup.string().required("Einddatum is vereist"),
+  description: Yup.string().required("Beschrijving is vereist"),
 });
 
 const ExperienceForm: FunctionComponent<Props> = ({
@@ -76,8 +76,8 @@ const ExperienceForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="job_title"
           id="job_title"
-          label="Job Title"
-          placeholder="Please enter the job title"
+          label="Functietitel"
+          placeholder="Voer de functietitel in"
           type="text"
           value={values.job_title}
           required={true}
@@ -89,8 +89,8 @@ const ExperienceForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="company_name"
           id="company_name"
-          label="Company Name"
-          placeholder="Please enter the company name"
+          label="Bedrijfsnaam"
+          placeholder="Voer de bedrijfsnaam in"
           type="text"
           value={values.company_name}
           required={true}
@@ -104,7 +104,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="start_date"
           id="start_date"
-          label="Start Date"
+          label="Startdatum"
           placeholder="Please enter the start date"
           value={values.start_date}
           required={true}
@@ -117,7 +117,7 @@ const ExperienceForm: FunctionComponent<Props> = ({
           className="w-full xl:w-1/2"
           name="end_date"
           id="end_date"
-          label="End Date"
+          label="Einddatum"
           placeholder="Please enter the end date"
           value={values.end_date}
           required={true}
@@ -133,8 +133,8 @@ const ExperienceForm: FunctionComponent<Props> = ({
         id={"description"}
         required={true}
         className={"mb-6"}
-        label={"Description"}
-        placeholder={"Please enter the description of the experience"}
+        label={"Beschrijving"}
+        placeholder={"Voer de beschrijving van de ervaring in"}
         value={values.description}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -145,9 +145,9 @@ const ExperienceForm: FunctionComponent<Props> = ({
         type="submit"
         formNoValidate={true}
         isLoading={isCreating || isUpdating}
-        loadingText={mode === "add" ? "Adding..." : "Updating..."}
+        loadingText={mode === "add" ? "Toevoegen..." : "Bijwerken..."}
       >
-        {mode === "add" ? "Submit Experience" : "Update Experience"}
+        {mode === "add" ? "Ervaring Indienen" : "Ervaring Bijwerken"}
       </Button>
     </form>
   );

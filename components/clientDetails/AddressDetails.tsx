@@ -22,22 +22,22 @@ const AddressDetails: FunctionComponent<Props> = ({ clientId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Stad"}
-          value={data.city || "Not specified"}
+          value={data.city || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Postcode"}
-          value={data.Zipcode || "Not specified"}
+          value={data.Zipcode || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Straatnaam"}
-          value={data.streetname || "Not specified"}
+          value={data.streetname || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Huisnummer"}
-          value={data.street_number || "Not specified"}
+          value={data.street_number || "Niet gespecificeerd"}
         />
       </div>
     );
