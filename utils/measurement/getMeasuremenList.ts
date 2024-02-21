@@ -23,7 +23,8 @@ export const useMeasurementList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery<MeasurmentListResDto>({
     queryKey: [clientId, "measurment", params ?? parsedParams],
@@ -33,6 +34,6 @@ export const useMeasurementList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

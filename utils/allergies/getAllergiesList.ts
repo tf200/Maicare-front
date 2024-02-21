@@ -23,30 +23,17 @@ export const useAllergiesList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery<AllergiesListResDto>({
-    queryKey: [
-      clientId,
-      "allergies",
-      params ?? {
-        page: parsedParams.page,
-        page_size: parsedParams.page_size,
-      },
-    ],
-    queryFn: () =>
-      getAllergiesList(
-        clientId,
-        params ?? {
-          page: parsedParams.page,
-          page_size: parsedParams.page_size,
-        }
-      ),
+    queryKey: [clientId, "allergies", params ?? parsedParams],
+    queryFn: () => getAllergiesList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

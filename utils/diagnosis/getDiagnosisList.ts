@@ -22,8 +22,8 @@ export const useDiagnosisList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const [page, setPage] = useState(1);
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryKey: [clientId, "diagnosis", params ?? parsedParams],
@@ -33,6 +33,6 @@ export const useDiagnosisList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

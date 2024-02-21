@@ -8,6 +8,8 @@ import { useEmergencyContactList } from "@/utils/emergency/getEmergencyContactLi
 import { PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import PaginatedTable from "@/components/PaginatedTable";
+import { ColumnDef } from "@tanstack/react-table";
+import { EmergencyContactsResDto } from "@/types/emergencyContacts/emergency-contacts-res-dto";
 type Props = {
   params: { clientId: string };
 };

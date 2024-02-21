@@ -22,7 +22,8 @@ export const useObservationsList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryFn: () => fetchObservationsList(clientId, params ?? parsedParams),
@@ -32,6 +33,6 @@ export const useObservationsList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

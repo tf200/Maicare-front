@@ -18,7 +18,8 @@ const fetchReportsList =
   };
 
 export const useReportsList = (clientId: number, params?: PaginationParams) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryKey: [clientId, "reports", params ?? parsedParams],
@@ -28,6 +29,6 @@ export const useReportsList = (clientId: number, params?: PaginationParams) => {
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

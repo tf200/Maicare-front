@@ -24,10 +24,7 @@ export const useMedicationsList = (
   params?: PaginationParams
 ) => {
   const pagination = usePaginationParams();
-  const parsedParams = {
-    page: pagination.page,
-    page_size: pagination.page_size,
-  };
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryFn: () => fetchMedicationsList(clientId, params ?? parsedParams),
@@ -40,7 +37,5 @@ export const useMedicationsList = (
   return {
     ...query,
     pagination,
-    page: pagination.page, // TODO: DEPRECATE
-    setPage: pagination.setPage, // TODO: DEPRECATE
   };
 };
