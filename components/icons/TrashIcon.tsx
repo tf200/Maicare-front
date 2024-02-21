@@ -9,7 +9,7 @@ const TrashIcon: FunctionComponent<IconProps> = ({ className }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={className}
+      className={className ?? "w-5 h-5"}
     >
       <path
         strokeLinecap="round"

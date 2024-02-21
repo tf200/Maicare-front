@@ -20,7 +20,7 @@ $out-of-range-color: #64748B;
 .rbc-event,
 .rbc-day-slot .rbc-event {
   border: 0 solid;
-  @apply border-l-8 border-primary text-primary;
+  @apply border-l-8 border-primary text-primary font-bold bg-opacity-20 bg-primary;
 }
 
 .rbc-current-time-indicator {

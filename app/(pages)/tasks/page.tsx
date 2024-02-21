@@ -30,6 +30,7 @@ import "dayjs/locale/nl";
 import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useQueryClient } from "react-query";
 import { AppointmentListResDto } from "@/types/appointments/appointments-res.dto";
+import { useUpdateAppointment } from "@/utils/appointments/updateAppointment";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
 
@@ -59,6 +60,7 @@ const Page: FunctionComponent = (props) => {
   );
   const onView = useCallback((newView: View) => setView(newView), [setView]);
   const { open } = useModal(AppointmentFormModal);
+  const { mutate: updateAppointment } = useUpdateAppointment();
   const { data, isLoading } = useAppointmentsList();
   const events = useMemo<CalendarEvent[]>(() => {
     if (!data) return [];
@@ -70,12 +72,12 @@ const Page: FunctionComponent = (props) => {
       };
     });
   }, [data]);
-  const updateEvent = useCallback(
+  const showUpdateModal = useCallback(
     (event: CalendarEvent) => {
       const initialData = { ...event };
       delete initialData.start;
       delete initialData.end;
-      open({
+      const close = open({
         onSuccess: () => {
           close();
         },
@@ -86,7 +88,7 @@ const Page: FunctionComponent = (props) => {
     [open]
   );
 
-  const createEventFromSlot = useCallback(
+  const showCreateModal = useCallback(
     (slot: SlotInfo) => {
       const close = open({
         onSuccess: () => {
@@ -101,6 +103,35 @@ const Page: FunctionComponent = (props) => {
     [open]
   );
 
+  const updateEventTime = useCallback(
+    (interaction: EventInteractionArgs<CalendarEvent>) => {
+      queryClient.setQueryData<AppointmentListResDto>(
+        ["appointments"],
+        (data) => {
+          return data.map((appointment) => {
+            if (appointment.id === interaction.event.id) {
+              const newAppointment = {
+                ...appointment,
+                start_time: dayjs(interaction.start).format("YYYY-MM-DDTHH:mm"),
+                end_time: dayjs(interaction.end).format("YYYY-MM-DDTHH:mm"),
+              };
+              updateAppointment(newAppointment);
+              return newAppointment;
+            }
+            return appointment;
+          });
+        }
+      );
+      queryClient.setQueryDefaults(["appointments"], { enabled: true });
+    },
+    [queryClient]
+  );
+
+  const deactivateQuery = useCallback(() => {
+    console.log("deactivate");
+    queryClient.setQueryDefaults(["appointments"], { enabled: false });
+  }, [queryClient]);
+
   return (
     <Panel title={"Kalender"} containerClassName="px-7 py-4">
       <DnDCalendar
@@ -112,8 +143,8 @@ const Page: FunctionComponent = (props) => {
         onNavigate={onNavigate}
         date={date}
         views={[Views.DAY, Views.WEEK, Views.MONTH]}
-        onSelectSlot={createEventFromSlot}
-        onSelectEvent={updateEvent}
+        onSelectSlot={showCreateModal}
+        onSelectEvent={showUpdateModal}
         selectable
         resizable
         style={{
@@ -122,25 +153,9 @@ const Page: FunctionComponent = (props) => {
         components={{
           toolbar: Toolbar,
         }}
-        onEventDrop={(interaction: EventInteractionArgs<CalendarEvent>) => {
-          queryClient.setQueryData(
-            ["appointments"],
-            (data: AppointmentListResDto) => {
-              return data.map((appointment) => {
-                if (appointment.id === interaction.event.id) {
-                  return {
-                    ...appointment,
-                    start_time: dayjs(interaction.start).format(
-                      "YYYY-MM-DDTHH:mm"
-                    ),
-                    end_time: dayjs(interaction.end).format("YYYY-MM-DDTHH:mm"),
-                  };
-                }
-                return appointment;
-              });
-            }
-          );
-        }}
+        handleDragStart={deactivateQuery}
+        onEventDrop={updateEventTime}
+        onEventResize={updateEventTime}
       />
     </Panel>
   );

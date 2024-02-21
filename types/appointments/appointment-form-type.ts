@@ -5,4 +5,5 @@ export type AppointmentFormType = {
   appointment_type: "meeting";
   description: string;
   attachments: File[];
+  employees: number[];
 };

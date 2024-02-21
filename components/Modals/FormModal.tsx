@@ -1,10 +1,10 @@
-import React, { FunctionComponent, PropsWithChildren } from "react";
+import React, { FunctionComponent, PropsWithChildren, ReactNode } from "react";
 import { Dialog } from "@headlessui/react";
 import { ModalProps } from "@/types/modal-props";
 import XMarkIcon from "@/components/icons/XMarkIcon";
 
 type Props = PropsWithChildren<ModalProps> & {
-  title: string;
+  title: ReactNode;
 };
 
 const FormModal: FunctionComponent<Props> = ({

@@ -7,6 +7,9 @@ import FileInput from "@/components/FormFields/FileInput";
 import { AppointmentFormType } from "@/types/appointments/appointment-form-type";
 import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useCreateAppointment } from "@/utils/appointments/createAppointment";
+import { useUpdateAppointment } from "@/utils/appointments/updateAppointment";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteAppointment } from "@/utils/appointments/deleteAppointment";
 
 const initialValues: AppointmentFormType = {
   title: "",
@@ -15,6 +18,7 @@ const initialValues: AppointmentFormType = {
   description: "",
   appointment_type: "meeting",
   attachments: [],
+  employees: [1],
 };
 
 type Props = {
@@ -31,22 +35,19 @@ const AppointmentForm: FunctionComponent<Props> = ({
   mode = "create",
 }) => {
   const { mutate: createAppointment } = useCreateAppointment();
+  const { mutate: updateAppointment } = useUpdateAppointment();
+  const { mutate: deleteAppointment } = useDeleteAppointment();
   const formik = useFormik({
-    initialValues: { ...initialValues, ...initialData },
+    initialValues: { ...initialValues, ...initialData, employees: [1] },
     onSubmit: (data) => {
       if (mode === "create") {
-        createAppointment(
-          {
-            ...data,
-            start_time: data.start_time,
-            end_time: data.end_time,
-          },
-          {
-            onSuccess: onSuccessfulSubmit,
-          }
-        );
+        createAppointment(data, {
+          onSuccess: onSuccessfulSubmit,
+        });
       } else if (mode === "edit") {
-        console.log("edit", data);
+        updateAppointment(data, {
+          onSuccess: onSuccessfulSubmit,
+        });
       }
     },
   });
@@ -118,14 +119,30 @@ const AppointmentForm: FunctionComponent<Props> = ({
         />
         {/* Call to actions */}
         <div className="flex justify-center gap-4">
-          {/* Cancel */}
-          <ModalActionButton
-            actionType="CANCEL-2"
-            className="grow"
-            onClick={onCancel}
-          >
-            Annuleren
-          </ModalActionButton>
+          {mode === "edit" && (
+            <ModalActionButton
+              actionType="DANGER"
+              className="grow flex items-center gap-2 justify-center"
+              onClick={() => {
+                deleteAppointment(initialData?.id, {
+                  onSuccess: onSuccessfulSubmit,
+                });
+              }}
+            >
+              {/*Delete appointment*/}
+              <TrashIcon />
+              <span>Afspraak verwijderen</span>
+            </ModalActionButton>
+          )}
+          {mode === "create" && (
+            <ModalActionButton
+              actionType="CANCEL-2"
+              className="grow"
+              onClick={onCancel}
+            >
+              Annuleren
+            </ModalActionButton>
+          )}
           {/*Submit */}
           <ModalActionButton
             type="submit"
