@@ -16,7 +16,7 @@ export const useCreateAppointment = () => {
   return useMutation({
     mutationFn: createAppointment,
     onSuccess: () => {
-      queryClient.invalidateQueries("appointments");
+      queryClient.invalidateQueries(["appointments"]);
     },
   });
 };

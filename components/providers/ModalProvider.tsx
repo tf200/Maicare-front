@@ -40,10 +40,9 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
   const removeModal = useCallback(
     (modal: FunctionComponent) => {
       setModals((modals) => {
-        const index = modals.indexOf(modal);
-        let newModals = [];
-        if (index !== -1) {
-          newModals = modals.slice(0, index).concat(modals.slice(index + 1));
+        const newModals = modals.filter((m) => m !== modal);
+        if (newModals.length === 0) {
+          setOpenedModal(() => newModals[newModals.length - 1]);
         }
         return newModals;
       });
@@ -74,8 +73,11 @@ export function useModal(Modal: FunctionComponent<ModalProps>) {
   const { push, removeModal } = useContext(ModalContext);
   return {
     open: (additionalProps: { [key: string]: any }) => {
-      push((props) => <Modal {...props} additionalProps={additionalProps} />);
+      const Component: FunctionComponent<ModalProps> = (props) => (
+        <Modal {...props} additionalProps={additionalProps} />
+      );
+      push(Component);
+      return () => removeModal(Component);
     },
-    close: () => removeModal(Modal),
   };
 }

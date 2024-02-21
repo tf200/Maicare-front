@@ -32,9 +32,16 @@ const AppointmentForm: FunctionComponent<Props> = ({
   const formik = useFormik({
     initialValues: { ...initialValues, ...initialData },
     onSubmit: (data) => {
-      createAppointment(data, {
-        onSuccess: onSuccessfulSubmit,
-      });
+      createAppointment(
+        {
+          ...data,
+          start_time: data.start_time,
+          end_time: data.end_time,
+        },
+        {
+          onSuccess: onSuccessfulSubmit,
+        }
+      );
     },
   });
   const { handleChange, values, handleBlur, handleSubmit } = formik;
