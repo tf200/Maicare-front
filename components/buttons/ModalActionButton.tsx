@@ -14,7 +14,7 @@ const ModalActionButton: FunctionComponent<Props> = ({
       {...props}
       type={type}
       className={clsx(
-        "block rounded px-12.5 py-3  text-center font-medium transition",
+        "block rounded px-12.5 py-3  text-center font-medium transition disabled:bg-graydark disabled:dark:bg-whiter disabled:dark:text-black disabled:cursor-not-allowed",
         {
           "border-meta-1 text-white bg-meta-1 hover:bg-opacity-90":
             actionType === "DANGER",

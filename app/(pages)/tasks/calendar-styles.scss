@@ -9,6 +9,7 @@ $out-of-range-bg-color: #F7F9FC;
 $out-of-range-color: #64748B;
 
 @import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 
 .rbc-month-header {
   .rbc-header {

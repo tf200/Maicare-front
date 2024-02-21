@@ -7,13 +7,17 @@ const AppointmentFormModal: FunctionComponent<
   PropsWithChildren<ModalProps>
 > = ({ additionalProps, ...props }) => {
   return (
-    <FormModal title="Maak een nieuwe afspraak" {...props}>
+    <FormModal
+      title={
+        additionalProps?.mode === "edit"
+          ? "Afspraak bewerken"
+          : "Maak een nieuwe afspraak"
+      }
+      {...props}
+    >
       <AppointmentForm
-        initialData={{
-          start_time: additionalProps.start,
-          end_time: additionalProps.end,
-        }}
         onSuccessfulSubmit={additionalProps.onSuccess}
+        {...additionalProps}
       />
     </FormModal>
   );

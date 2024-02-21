@@ -21,30 +21,36 @@ type Props = {
   initialData?: Partial<AppointmentResDto>;
   onSuccessfulSubmit?: () => void;
   onCancel?: () => void;
+  mode?: "create" | "edit";
 };
 
 const AppointmentForm: FunctionComponent<Props> = ({
   onSuccessfulSubmit,
   onCancel,
   initialData,
+  mode = "create",
 }) => {
   const { mutate: createAppointment } = useCreateAppointment();
   const formik = useFormik({
     initialValues: { ...initialValues, ...initialData },
     onSubmit: (data) => {
-      createAppointment(
-        {
-          ...data,
-          start_time: data.start_time,
-          end_time: data.end_time,
-        },
-        {
-          onSuccess: onSuccessfulSubmit,
-        }
-      );
+      if (mode === "create") {
+        createAppointment(
+          {
+            ...data,
+            start_time: data.start_time,
+            end_time: data.end_time,
+          },
+          {
+            onSuccess: onSuccessfulSubmit,
+          }
+        );
+      } else if (mode === "edit") {
+        console.log("edit", data);
+      }
     },
   });
-  const { handleChange, values, handleBlur, handleSubmit } = formik;
+  const { handleChange, values, handleBlur, handleSubmit, dirty } = formik;
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -125,8 +131,9 @@ const AppointmentForm: FunctionComponent<Props> = ({
             type="submit"
             actionType="CONFIRM"
             className="grow"
+            disabled={!dirty && mode === "edit"}
           >
-            + Afspraak maken
+            {mode === "create" ? "+ Afspraak maken" : "Afspraak wijzigen"}
           </ModalActionButton>
         </div>
       </form>
