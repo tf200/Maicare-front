@@ -2,31 +2,37 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { MeasurmentListResDto } from "@/types/measurment/measurment-list-res-dto";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
+import { PaginationParams } from "@/types/pagination-params";
+import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
 
-async function getMeasurementList(clientId: number, page = 1) {
+async function getMeasurementList(
+  clientId: number,
+  params: PaginationParams = DEFAULT_PAGINATION_PARAMS
+) {
   const res = await api.get<MeasurmentListResDto>(
     `employee/measurment_list/${clientId}`,
     {
-      params: {
-        page,
-      },
+      params,
     }
   );
   return res.data;
 }
 
-export const useMeasurementList = (clientId: number) => {
-  const [page, setPage] = useState(1);
+export const useMeasurementList = (
+  clientId: number,
+  params?: PaginationParams
+) => {
+  const parsedParams = usePaginationParams();
 
   const query = useQuery<MeasurmentListResDto>({
-    queryKey: [clientId, "measurment", page],
-    queryFn: () => getMeasurementList(clientId, page),
+    queryKey: [clientId, "measurment", params ?? parsedParams],
+    queryFn: () => getMeasurementList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    setPage,
-    page,
+    pagination: parsedParams,
   };
 };

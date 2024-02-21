@@ -9,6 +9,7 @@ import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
 import { MeasurmentResDto } from "@/types/measurment/measurment-res-dto";
 import { useMeasurementList } from "@/utils/measurement/getMeasuremenList";
+import PaginatedTable from "@/components/PaginatedTable";
 
 type Props = {
   params: { clientId: string };
@@ -17,7 +18,7 @@ type Props = {
 const MeasurementsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
-  const { data, page, setPage, isError, isLoading, isFetching } =
+  const { pagination, data, isError, isLoading, isFetching } =
     useMeasurementList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<MeasurmentResDto>[]>(() => {
@@ -37,29 +38,9 @@ const MeasurementsPage: FunctionComponent<Props> = ({
     ];
   }, []);
 
-  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
-
-  const pagination =
-    data && pageCount > 1 ? (
-      <>
-        <Pagination
-          page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
-          onClick={setPage}
-          totalPages={pageCount}
-        />
-        {isFetching && (
-          <div className="ml-2 text-sm">Fetching page {page}...</div>
-        )}
-      </>
-    ) : (
-      <></>
-    );
-
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        {pagination}
         <LinkButton
           text={"Nieuwe Metingen Toevoegen"}
           href={"../measurements/new"}
@@ -67,10 +48,15 @@ const MeasurementsPage: FunctionComponent<Props> = ({
         />
       </div>
       {isLoading && <Loader />}
-      {data && <Table data={data.results} columns={columnDef} />}
-      <div className="flex flex-wrap items-center justify-between p-4">
-        {pagination}
-      </div>
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
+        />
+      )}{" "}
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de allergielijst te laden.

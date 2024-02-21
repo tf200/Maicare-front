@@ -46,8 +46,8 @@ export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
 
 export const EMERGENCY_DISTANCE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Afstand", value: "" },
-  { label: "Primaire Relatie", value: "Primaire Relatie" },
-  { label: "Secundaire Relatie", value: "Secundaire Relatie" },
+  { label: "Primaire Relatie", value: "Primary Relationship" },
+  { label: "Secundaire Relatie", value: "Secondary Relationship" },
 ];
 
 export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
