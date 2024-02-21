@@ -14,14 +14,17 @@ import DetailCell from "@/components/DetailCell";
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 import { fullDateFormat } from "@/utils/timeFormatting";
+import router from "next/router";
+import PaginatedTable from "@/components/PaginatedTable";
 
 type Props = {
   params: { clientId: string };
 };
 
 const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { page, setPage, isFetching, isLoading, isError, data } =
-    useDiagnosisList(parseInt(clientId));
+  const { pagination, isFetching, isLoading, isError, data } = useDiagnosisList(
+    parseInt(clientId)
+  );
 
   const columnDef = useMemo<ColumnDef<DiagnosisListItem>[]>(() => {
     const columnHelper = createColumnHelper<DiagnosisListItem>();
@@ -57,29 +60,9 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
-
-  const pagination =
-    data && pageCount > 0 ? (
-      <>
-        <Pagination
-          page={page}
-          disabled={isFetching}
-          onClick={setPage}
-          totalPages={pageCount}
-        />
-        {isFetching && (
-          <div className="ml-2 text-sm">Fetching page {page}...</div>
-        )}
-      </>
-    ) : (
-      <></>
-    );
-
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        {pagination}
         <LinkButton
           text={"Diagnose Toevoegen"}
           href={"../diagnosis/new"}
@@ -88,15 +71,16 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isLoading && <Loader />}
       {data && (
-        <Table
-          data={data.results}
+        <PaginatedTable
+          data={data}
           columns={columnDef}
           renderRowDetails={({ original }) => <RowDetails data={original} />}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
         />
       )}
-      <div className="flex flex-wrap items-center justify-between p-4">
-        {pagination}
-      </div>
+      <div className="flex flex-wrap items-center justify-between p-4"></div>
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de diagnoselijst te laden.
@@ -131,7 +115,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Diagnose van een arts"}
         value={data.diagnosing_clinician}
       />
-      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
+      <DetailCell
+        className={"col-span-3"}
+        label={"Notities"}
+        value={data.notes}
+      />
     </div>
   );
 };

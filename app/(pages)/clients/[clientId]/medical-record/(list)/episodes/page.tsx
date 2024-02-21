@@ -13,19 +13,16 @@ import Severity from "@/components/Severity";
 import DetailCell from "@/components/DetailCell";
 import { fullDateFormat, fullDateTimeFormat } from "@/utils/timeFormatting";
 import { convertIntensityToSeverity } from "@/utils/episodes/convertIntensityToSeverity";
+import PaginatedTable from "@/components/PaginatedTable";
 
 type Props = {
   params: { clientId: string };
 };
 
 const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const {
-    data,
-    pagination: { page, setPage },
-    isError,
-    isLoading,
-    isFetching,
-  } = useEpisodesList(parseInt(clientId));
+  const { data, pagination, isError, isLoading, isFetching } = useEpisodesList(
+    parseInt(clientId)
+  );
 
   const columnDef = useMemo<ColumnDef<EpisodesResDto>[]>(() => {
     const columnHelper = createColumnHelper<EpisodesResDto>();
@@ -53,27 +50,6 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const pageCount = data
-    ? Math.ceil(data.count / (data.page_size ?? PAGE_SIZE))
-    : 0;
-
-  const pagination =
-    data && pageCount > 1 ? (
-      <>
-        <Pagination
-          page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
-          onClick={setPage}
-          totalPages={pageCount}
-        />
-        {isFetching && (
-          <div className="text-sm ml-2">Fetching page {page}...</div>
-        )}
-      </>
-    ) : (
-      <></>
-    );
-
   const renderRowDetails = ({ original }: Row<EpisodesResDto>) => {
     return <RowDetails data={original} />;
   };
@@ -81,7 +57,6 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        {pagination}
         <LinkButton
           text={"Registreer Nieuwe Episode"}
           href={"../episodes/new"}
@@ -90,15 +65,15 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </div>
       {isLoading && <Loader />}
       {data && (
-        <Table
-          data={data.results}
+        <PaginatedTable
+          data={data}
           columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
           renderRowDetails={renderRowDetails}
         />
       )}
-      <div className="flex flex-wrap justify-between items-center p-4">
-        {pagination}
-      </div>
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de episodelijst te laden.
