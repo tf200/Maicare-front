@@ -51,8 +51,6 @@ const Page: FunctionComponent = (props) => {
   const events = useMemo(() => {
     if (!data) return [];
     return data.map((appointment) => {
-      console.log(appointment.start_time.slice(0, -4));
-      console.log(appointment.end_time.slice(0, -4));
       return {
         id: appointment.id,
         title: appointment.title,
