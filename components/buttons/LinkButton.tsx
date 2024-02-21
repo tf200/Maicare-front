@@ -13,7 +13,7 @@ const LinkButton: FunctionComponent<Props> = ({ text, href, className }) => {
     <Link
       href={href}
       className={clsx(
-        "inline-flex items-center justify-center px-5 py-2 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10",
+        "inline-flex rounded-sm items-center justify-center px-5 py-2 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10",
         className
       )}
     >

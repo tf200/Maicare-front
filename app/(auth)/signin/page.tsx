@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { InputField } from "@/components/FormFields/InputField";
+import { InputFieldBig } from "@/components/FormFields/InputFieldBig";
 import UseSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
       </h2>
 
       <form onSubmit={formik.handleSubmit}>
-        <InputField
+        <InputFieldBig
           label="User Name"
           type="text"
           name="username"
@@ -66,7 +66,7 @@ const SignIn: React.FC = () => {
           icon={<MailIcon />}
         />
 
-        <InputField
+        <InputFieldBig
           label="Type Password"
           type="password"
           name="password"

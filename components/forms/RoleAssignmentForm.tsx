@@ -4,7 +4,7 @@ import { useListRoles } from "@/utils/roles/list-roles";
 import { SelectionOption } from "@/types/selection-option";
 import Select from "@/components/FormFields/Select";
 import { RoleAssignmentFormType } from "@/types/role-assignments/role-assignment-form-type";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import { useCreateRoleAssignment } from "@/utils/role-assignements/create-role-assignment";
 import * as yup from "yup";
@@ -108,7 +108,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
         </div>
         <div className="mb-8 flex flex-col gap-6 xl:flex-row">
           <div className={"w-full xl:w-1/2"}>
-            <InputFieldThin
+            <InputField
               id={"start_date"}
               label={"Startdatum"}
               className="mb-3.5"
@@ -128,7 +128,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
             />
           </div>
           <div className={"w-full xl:w-1/2"}>
-            <InputFieldThin
+            <InputField
               id={"end_date"}
               label={"Einddatum"}
               className="mb-3.5"

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import Textarea from "../FormFields/Textarea";
 import { useCreateObservation } from "@/utils/observations/createObservation";
 import { NewObservationsReqDto } from "@/types/observations/new-observations-req-dto";
-import InputFieldThin from "../FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 
 type FormType = NewObservationsReqDto;
 
@@ -92,7 +92,7 @@ export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
               required={true}
             />
 
-            <InputFieldThin
+            <InputField
               type={"text"}
               label={"Categorie"}
               id={"category"}
