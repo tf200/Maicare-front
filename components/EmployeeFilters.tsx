@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import ControlledCheckboxGroup from "@/components/icons/ControlledCheckboxGroup";
 import { SelectionOption } from "@/types/selection-option";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
@@ -17,7 +17,7 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [search, setSearch] = useState("");
   return (
     <div className="flex items-center gap-8">
-      <InputFieldThin
+      <InputField
         placeholder="Zoek Medewerkers ..."
         type="search"
         className="lg:min-w-75"

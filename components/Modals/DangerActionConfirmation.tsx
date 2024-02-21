@@ -14,15 +14,15 @@ const DangerActionConfirmation: FunctionComponent<AllProps> = ({
   onClose,
   msg,
   title,
-  callbacks,
+  additionalProps,
 }) => {
   return (
     <WarningModal
       open={open}
       onClose={onClose}
       modalTitle={title}
-      onCancel={callbacks?.onCancel}
-      onConfirm={callbacks?.onConfirm}
+      onCancel={additionalProps?.onCancel}
+      onConfirm={additionalProps?.onConfirm}
     >
       <p>{msg}</p>
     </WarningModal>

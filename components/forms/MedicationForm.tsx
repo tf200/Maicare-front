@@ -5,7 +5,7 @@ import { useCreateMedication } from "@/utils/medications/createMedication";
 import { MedicationFormType } from "@/types/medications/medication-form-type";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormikHelpers } from "formik/dist/types";
@@ -70,7 +70,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
-            <InputFieldThin
+            <InputField
               className={"w-full mb-4.5"}
               required={true}
               id={"name"}
@@ -82,7 +82,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               onBlur={handleBlur}
               error={touched.name && errors.name}
             />
-            <InputFieldThin
+            <InputField
               className={"w-full mb-4.5"}
               required={true}
               id={"dosage"}
@@ -94,7 +94,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               onBlur={handleBlur}
               error={touched.dosage && errors.dosage}
             />
-            <InputFieldThin
+            <InputField
               className={"w-full mb-4.5"}
               required={true}
               id={"frequency"}
@@ -107,7 +107,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               error={touched.frequency && errors.frequency}
             />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-              <InputFieldThin
+              <InputField
                 label={"Startdatum"}
                 required={true}
                 id={"start_date"}
@@ -122,7 +122,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
                   errors.start_date + ""
                 }
               />
-              <InputFieldThin
+              <InputField
                 className={"w-full xl:w-1/2"}
                 id={"end_date"}
                 required={true}

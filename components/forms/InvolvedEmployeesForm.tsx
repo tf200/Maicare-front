@@ -3,7 +3,7 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useFormik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvolvedEmployee";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
@@ -91,26 +91,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         error={errorOptionMessage}
         setError={setErrorOptionMessage}
       />
-      {/* <Select
-        label={"Medewerker"}
-        name={"employee"}
-        required={true}
-        options={
-          isOptionsLoading
-            ? [{ label: "Loading ...", value: "" }]
-            : getEmployeesOptions()
-        }
-        className="w-full mb-4.5"
-        value={formik.values.employee}
-        error={
-          formik.touched.employee && formik.errors.employee
-            ? formik.errors.employee
-            : null
-        }
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      /> */}
-      <InputFieldThin
+      <InputField
         className={"w-full mb-4.5"}
         label={"Relatie"}
         name={"role"}
@@ -124,7 +105,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
-      <InputFieldThin
+      <InputField
         label={"Startdatum"}
         required={true}
         name={"start_date"}
