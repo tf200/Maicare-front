@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { useFormik } from "formik";
 import { CertificateFormType } from "@/types/certificates/certificate-form-type";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import { useCreateCertificate } from "@/utils/certificates/create-certificate";
 import { useUpdateCertificate } from "@/utils/certificates/update-certificate";
 import { CertifResDto } from "@/types/certificates/certif-res.dto";
@@ -67,7 +67,7 @@ const CertificationForm: FunctionComponent<Props> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="name"
           id="name"
@@ -80,7 +80,7 @@ const CertificationForm: FunctionComponent<Props> = ({
           onBlur={handleBlur}
           error={touched.name && errors.name}
         />
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="issued_by"
           id="issued_by"
@@ -95,7 +95,7 @@ const CertificationForm: FunctionComponent<Props> = ({
         />
       </div>
       <div className="mb-6 flex flex-col gap-6 xl:flex-row">
-        <InputFieldThin
+        <InputField
           className="w-full xl:w-1/2"
           name="date_issued"
           id="date_issued"

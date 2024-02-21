@@ -3,7 +3,7 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback } from "react";
 import { useFormik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvolvedEmployee";
 import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
@@ -83,7 +83,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
-      <InputFieldThin
+      <InputField
         className={"w-full mb-4.5"}
         label={"Relatie"}
         name={"role"}
@@ -97,7 +97,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
-      <InputFieldThin
+      <InputField
         label={"Startdatum"}
         required={true}
         name={"start_date"}

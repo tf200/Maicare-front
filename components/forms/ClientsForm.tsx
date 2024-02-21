@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import { FormikHelpers } from "formik/dist/types";
 import Image from "next/image";
 import CameraIcon from "@/components/svg/CameraIcon";
@@ -210,7 +210,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     </div>
 
                     <div className="mb-4.5 py-4 flex flex-col gap-6 xl:flex-row">
-                      <InputFieldThin
+                      <InputField
                         type={"text"}
                         label={"First name"}
                         id={"first_name"}
@@ -223,7 +223,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                         required={true}
                       />
 
-                      <InputFieldThin
+                      <InputField
                         type={"text"}
                         label={"Last name"}
                         id={"last_name"}
@@ -237,7 +237,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       />
                     </div>
 
-                    <InputFieldThin
+                    <InputField
                       type={"text"}
                       label={"Email"}
                       id={"email"}
@@ -250,7 +250,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       required={true}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Phone Number"}
                       id={"phone_number"}
                       placeholder={"Phone Number"}
@@ -263,7 +263,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       required={true}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Infix"}
                       id={"infix"}
                       placeholder={"Enter infix"}
@@ -305,7 +305,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                         />
                       </div>
                     </div>
-                    <InputFieldThin
+                    <InputField
                       label={"Date of birth"}
                       required={true}
                       id={"date_of_birth"}
@@ -341,7 +341,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     containerClassName="p-6.5 pb-5"
                     title={"Identity Details"}
                   >
-                    <InputFieldThin
+                    <InputField
                       label={"Bsn"}
                       id={"bsn"}
                       placeholder={"Enter bsn"}
@@ -373,7 +373,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     title={"Locatiegegevens"}
                     // title={"Location Details"}
                   >
-                    <InputFieldThin
+                    <InputField
                       label={"Locatie"}
                       id={"location"}
                       placeholder={"Locatie"}
@@ -385,7 +385,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.location && errors.location}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Geboorteplaats"}
                       id={"birthplace"}
                       placeholder={"Geboorteplaats"}
@@ -397,7 +397,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.birthplace && errors.birthplace}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Afdeling"}
                       id={"departement"}
                       placeholder={"Afdeling"}
@@ -408,7 +408,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       onBlur={handleBlur}
                       error={touched.departement && errors.departement}
                     />
-                    <InputFieldThin
+                    <InputField
                       label={"Organisatie"}
                       id={"organisation"}
                       placeholder={"Organisatie"}
@@ -425,7 +425,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     containerClassName="p-6.5 pb-5"
                     title={"Address Details"}
                   >
-                    <InputFieldThin
+                    <InputField
                       label={"Street Name"}
                       id={"streetname"}
                       placeholder={"Street Name"}
@@ -437,7 +437,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.streetname && errors.streetname}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Street Number"}
                       id={"street_number"}
                       placeholder={"Street Number"}
@@ -449,7 +449,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.street_number && errors.street_number}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"City"}
                       id={"city"}
                       placeholder={"City"}
@@ -461,7 +461,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       error={touched.city && errors.city}
                     />
 
-                    <InputFieldThin
+                    <InputField
                       label={"Zip code"}
                       id={"Zipcode"}
                       placeholder={"Zip code"}

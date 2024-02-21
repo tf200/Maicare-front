@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import InputFieldThin from "@/components/FormFields/InputFieldThin";
+import InputField from "@/components/FormFields/InputField";
 import ControlledCheckboxGroup from "@/components/icons/ControlledCheckboxGroup";
 import { SelectionOption } from "@/types/selection-option";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
@@ -19,7 +19,7 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [search, setSearch] = useState("");
   return (
     <div className="flex items-center gap-8">
-      <InputFieldThin
+      <InputField
         placeholder="Zoek Cliënten..."
         // placeholder="Search Clients ..."
         type="search"
