@@ -2,6 +2,7 @@ import React from "react";
 import Table, { TableProps } from "@/components/Table";
 import Pagination, { PaginationProps } from "@/components/Pagination";
 import { PAGE_SIZE } from "@/consts";
+import LargeAlertMessage from "@/components/LargeErrorMessage";
 import clsx from "clsx";
 
 type Props<TData> = Omit<TableProps<TData>, "data"> &
@@ -10,6 +11,7 @@ type Props<TData> = Omit<TableProps<TData>, "data"> &
     sideActions?: React.ReactNode;
     onPageChange: (page: number) => void;
     isFetching?: boolean;
+    alertMessage?: string;
   };
 
 function PaginatedTable<TData>({
@@ -20,6 +22,7 @@ function PaginatedTable<TData>({
   data,
   sideActions,
   isFetching,
+  alertMessage,
   ...tableProps
 }: Props<TData>) {
   const pageCount = Math.ceil(data.count / (data.page_size ?? PAGE_SIZE));
@@ -47,6 +50,17 @@ function PaginatedTable<TData>({
         </div>
       )}
       <Table data={data.results} {...tableProps} />
+
+      {data.results?.length == 0 && (
+        <LargeAlertMessage
+          firstLine={"Oops!"}
+          secondLine={
+            alertMessage
+              ? alertMessage
+              : "Sorry, geen resultaten gevonden!"
+          }
+        />
+      )}
       <div className="flex flex-wrap justify-between items-center p-4">
         {pagination}
       </div>

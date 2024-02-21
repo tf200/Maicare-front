@@ -9,6 +9,7 @@ import Table from "@/components/Table";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useObservationsList } from "@/utils/observations/getObservationslList";
 import { ObservationsResDto } from "@/types/observations/observations-res-dto";
+import PaginatedTable from "@/components/PaginatedTable";
 
 type Props = {
   params: { clientId: string };
@@ -17,7 +18,7 @@ type Props = {
 const ObservationsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
-  const { data, page, setPage, isLoading, isFetching, isError } =
+  const { data, pagination, isLoading, isFetching, isError } =
     useObservationsList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<ObservationsResDto>[]>(() => {
@@ -41,27 +42,9 @@ const ObservationsPage: FunctionComponent<Props> = ({
     ];
   }, []);
 
-  const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
-
-  const pagination =
-    data && pageCount > 1 ? (
-      <>
-        <Pagination
-          page={page}
-          disabled={isFetching} /* TODO: WE NEED TO IMPROVE UX HERE */
-          onClick={setPage}
-          totalPages={pageCount}
-        />
-        {isFetching && <div className="text-sm">Fetching page {page}...</div>}
-      </>
-    ) : (
-      <></>
-    );
-
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        {pagination}
         <LinkButton
           text={"Observaties Toevoegen"}
           href={"../observations/new"}
@@ -69,8 +52,15 @@ const ObservationsPage: FunctionComponent<Props> = ({
         />
       </div>
       {isLoading && <Loader />}
-      {data && <Table data={data.results} columns={columnDef} />}
-      <div className="flex flex-wrap items-center p-4">{pagination}</div>
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
+        />
+      )}
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de medicatielijst te laden.

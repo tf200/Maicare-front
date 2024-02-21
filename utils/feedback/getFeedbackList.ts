@@ -1,32 +1,38 @@
 import api from "@/utils/api";
 import { useQuery } from "react-query";
-import { useState } from "react";
 import { FeedbackListResDto } from "@/types/feedback/feedback-list-res-dto";
+import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
+import { PaginationParams } from "@/types/pagination-params";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
 
-async function getFeedbackList(clientId: number, page = 1) {
+async function getFeedbackList(
+  clientId: number,
+  params: PaginationParams = DEFAULT_PAGINATION_PARAMS
+) {
   const res = await api.get<FeedbackListResDto>(
     `employee/feedback_list/${clientId}`,
     {
-      params: {
-        page,
-      },
+      params,
     }
   );
   return res.data;
 }
 
-export const useFeedbackList = (clientId: number) => {
-  const [page, setPage] = useState(1);
+export const useFeedbackList = (
+  clientId: number,
+  params?: PaginationParams
+) => {
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery<FeedbackListResDto>({
-    queryKey: [clientId, "feedback", page],
-    queryFn: () => getFeedbackList(clientId, page),
+    queryKey: [clientId, "feedback", params ?? parsedParams],
+    queryFn: () => getFeedbackList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    setPage,
-    page,
+    pagination,
   };
 };

@@ -11,5 +11,9 @@ export function usePaginationParams() {
     setPage: (page: number) => searchParams.setItem("page", page.toString()),
     setPageSize: (pageSize: number) =>
       searchParams.setItem("page_size", pageSize.toString()),
+    params: {
+      page,
+      page_size,
+    },
   };
 }

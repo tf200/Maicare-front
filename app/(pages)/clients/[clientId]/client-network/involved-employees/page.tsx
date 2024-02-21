@@ -9,6 +9,7 @@ import { PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
+import PaginatedTable from "@/components/PaginatedTable";
 
 type Props = {
   params: { clientId: string };
@@ -17,7 +18,7 @@ type Props = {
 const InvolvedEmployeesPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
-  const { page, setPage, isFetching, isLoading, isError, data } =
+  const { pagination, isFetching, isLoading, isError, data } =
     useInvolvedEmployeesList(parseInt(clientId));
 
   const columnDef = useMemo(() => {
@@ -41,20 +42,6 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
     ];
   }, []);
 
-  const pagination = data ? (
-    <div className="p-4 sm:p-6 xl:p-7.5 flex items-center justify-between">
-      <Pagination
-        page={page}
-        disabled={isFetching}
-        onClick={setPage}
-        totalPages={Math.ceil(data.count / PAGE_SIZE)}
-      />
-      {isFetching && <div className="text-sm">Fetching page {page}...</div>}
-    </div>
-  ) : (
-    <></>
-  );
-
   return (
     <Panel
       title={"Involved Employees List"}
@@ -68,9 +55,15 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
       }
     >
       {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-      {pagination}
-      {data && <Table data={data.results} columns={columnDef} />}
-      {pagination}
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
+        />
+      )}
       {isError && (
         <p role="alert" className="text-red">
           Er is een fout opgetreden.

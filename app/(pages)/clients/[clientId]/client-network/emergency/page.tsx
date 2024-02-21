@@ -7,6 +7,9 @@ import Pagination from "@/components/Pagination";
 import { useEmergencyContactList } from "@/utils/emergency/getEmergencyContactList";
 import { PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
+import PaginatedTable from "@/components/PaginatedTable";
+import { ColumnDef } from "@tanstack/react-table";
+import { EmergencyContactsResDto } from "@/types/emergencyContacts/emergency-contacts-res-dto";
 type Props = {
   params: { clientId: string };
 };
@@ -14,7 +17,7 @@ type Props = {
 const EmergencyContactPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
-  const { page, setPage, isFetching, isLoading, isError, data } =
+  const { pagination, isFetching, isLoading, isError, data } =
     useEmergencyContactList(clientId);
 
   const columnDef = useMemo(() => {
@@ -71,20 +74,6 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
     ];
   }, []);
 
-  const pagination = data ? (
-    <div className="p-4 sm:p-6 xl:p-7.5 flex items-center justify-between">
-      <Pagination
-        page={page}
-        disabled={isFetching}
-        onClick={setPage}
-        totalPages={Math.ceil(data.count / PAGE_SIZE)}
-      />
-      {isFetching && <div className="text-sm">Fetching page {page}...</div>}
-    </div>
-  ) : (
-    <></>
-  );
-
   return (
     <Panel
       title={"Lijst met Noodcontacten"}
@@ -98,9 +87,15 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
       }
     >
       {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-      {pagination}
-      {data && <Table data={data.results} columns={columnDef} />}
-      {pagination}
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onPageChange={(page) => pagination.setPage(page)}
+        />
+      )}
       {isError && (
         <p role="alert" className="text-red">
           Er is een fout opgetreden.

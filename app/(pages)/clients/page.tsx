@@ -117,7 +117,7 @@ const ClientsPage: FunctionComponent = () => {
           <LargeAlertMessage
             firstLine={"Oops!"}
             secondLine={
-              "It seems that there are no clients that match your search criteria."
+              "Het lijkt erop dat er geen cliënten zijn die aan uw zoekcriteria voldoen."
             }
           />
         )}

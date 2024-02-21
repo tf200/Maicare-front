@@ -59,7 +59,9 @@ const EmployeesPage: FunctionComponent = () => {
         accessorKey: "date_of_birth",
         header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
+          info.getValue()
+            ? getAge(info.getValue() as string)
+            : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
@@ -135,7 +137,7 @@ const EmployeesPage: FunctionComponent = () => {
           <LargeAlertMessage
             firstLine={"Oops!"}
             secondLine={
-              "It seems that there are no employees that match your search criteria."
+              "Het lijkt erop dat er geen medewerkers zijn die aan uw zoekcriteria voldoen."
             }
           />
         )}

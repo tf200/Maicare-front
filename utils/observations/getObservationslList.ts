@@ -1,32 +1,38 @@
+import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { ObservationsListResDto } from "@/types/observations/observations-list-res-dto";
+import { PaginationParams } from "@/types/pagination-params";
 import api from "@/utils/api";
-import { useState } from "react";
 import { useQuery } from "react-query";
 
-async function fetchObservationsList(clientId: number, page = 1) {
+async function fetchObservationsList(
+  clientId: number,
+  params: PaginationParams = DEFAULT_PAGINATION_PARAMS
+) {
   const response = await api.get<ObservationsListResDto>(
     `employee/observations_list/${clientId}/`,
     {
-      params: {
-        page,
-      },
+      params,
     }
   );
   return response.data;
 }
 
-export const useObservationsList = (clientId: number) => {
-  const [page, setPage] = useState(1);
+export const useObservationsList = (
+  clientId: number,
+  params?: PaginationParams
+) => {
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
-    queryFn: () => fetchObservationsList(clientId, page),
-    queryKey: [clientId, "observations", page],
+    queryFn: () => fetchObservationsList(clientId, params ?? parsedParams),
+    queryKey: [clientId, "observations", params ?? parsedParams],
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    setPage,
-    page,
+    pagination,
   };
 };
