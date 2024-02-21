@@ -48,20 +48,6 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     out_of_service: false,
   });
 
-  console.log(selectedOption);
-
-  // const getEmployeesOptions = () => {
-  //   return data
-  //     ? [
-  //         { label: "Selecteer Medewerker", value: "" },
-  //         ...data.results.map((entry: any) => ({
-  //           label: entry.user_name,
-  //           value: entry.user,
-  //         })),
-  //       ]
-  //     : [];
-  // };
-
   const formik = useFormik<FormTypes>({
     initialValues: initialValues,
     validationSchema: Yup.object({

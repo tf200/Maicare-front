@@ -51,7 +51,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
         onBlur={() => {
           setTimeout(() => {
             setShowAlert(false);
-          }, 200);
+          }, 600);
         }}
       />
       {canShowData &&
