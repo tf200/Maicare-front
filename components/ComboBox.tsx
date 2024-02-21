@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputFieldThin from "./FormFields/InputFieldThin";
+import InputField from "./FormFields/InputField";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 
 interface ComboBoxProps {
@@ -30,7 +30,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
 
   return (
     <div>
-      <InputFieldThin
+      <InputField
         className={"w-full mb-4.5"}
         label={"Select imployee"}
         name={"role"}
