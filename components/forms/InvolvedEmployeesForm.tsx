@@ -1,13 +1,14 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import { useFormik } from "formik";
 import InputFieldThin from "@/components/FormFields/InputFieldThin";
 import Select from "@/components/FormFields/Select";
 import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvolvedEmployee";
-import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
+import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import Button from "@/components/buttons/Button";
+import ComboBox from "../ComboBox";
 
 type PropsType = {
   clientId: number;
@@ -28,6 +29,10 @@ const initialValues: FormTypes = {
 export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   clientId,
 }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [searchedKey, setSearchedKey] = useState(null);
+  const [errorOptionMessage, setErrorOptionMessage] = useState(null);
+
   const { mutate, isLoading } = useCreateInvolvedEmployee(clientId);
   const submit = useCallback(
     (values: FormTypes) => {
@@ -38,33 +43,55 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     [mutate]
   );
 
-  const { data, isLoading: isOptionsLoading } = useEmployees();
+  const { data, isLoading: isSearching } = useEmployeesList({
+    search: searchedKey,
+    out_of_service: false,
+  });
 
-  const getEmployeesOptions = () => {
-    return data
-      ? [
-          { label: "Selecteer Medewerker", value: "" },
-          ...data.results.map((entry: any) => ({
-            label: entry.user_name,
-            value: entry.user,
-          })),
-        ]
-      : [];
-  };
+  console.log(selectedOption);
+
+  // const getEmployeesOptions = () => {
+  //   return data
+  //     ? [
+  //         { label: "Selecteer Medewerker", value: "" },
+  //         ...data.results.map((entry: any) => ({
+  //           label: entry.user_name,
+  //           value: entry.user,
+  //         })),
+  //       ]
+  //     : [];
+  // };
 
   const formik = useFormik<FormTypes>({
     initialValues: initialValues,
     validationSchema: Yup.object({
-      employee: Yup.string().required("Geef alstublieft een medewerker op"),
       role: Yup.string().required("Geef alstublieft een relatie op"),
       start_date: Yup.string().required("Geef alstublieft een datum op"),
     }),
-    onSubmit: submit,
+    onSubmit: (values: FormTypes) => {
+      if (!selectedOption) {
+        setErrorOptionMessage("Geef alstublieft een medewerker op");
+        return;
+      } else {
+        setErrorOptionMessage("");
+        let data = values;
+        data.employee = selectedOption?.id;
+        submit(values);
+      }
+    },
   });
 
   return (
     <form onSubmit={formik.handleSubmit} className="p-6.5">
-      <Select
+      <ComboBox
+        data={data}
+        isLoading={isSearching}
+        setSelected={setSelectedOption}
+        setSearchedKey={setSearchedKey}
+        error={errorOptionMessage}
+        setError={setErrorOptionMessage}
+      />
+      {/* <Select
         label={"Medewerker"}
         name={"employee"}
         required={true}
@@ -82,7 +109,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         }
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-      />
+      /> */}
       <InputFieldThin
         className={"w-full mb-4.5"}
         label={"Relatie"}
@@ -114,6 +141,13 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
       />
       <Button
         type={"submit"}
+        onClick={() => {
+          if (!selectedOption) {
+            setErrorOptionMessage("Geef alstublieft een medewerker op");
+          } else {
+            setErrorOptionMessage("");
+          }
+        }}
         disabled={isLoading}
         isLoading={isLoading}
         formNoValidate={true}
