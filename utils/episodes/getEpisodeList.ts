@@ -23,30 +23,17 @@ export const useEpisodesList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery<EpisodesListResDto>({
-    queryKey: [
-      clientId,
-      "episodes",
-      params ?? {
-        page: parsedParams.page,
-        page_size: parsedParams.page_size,
-      },
-    ],
-    queryFn: () =>
-      getEpisodeList(
-        clientId,
-        params ?? {
-          page: parsedParams.page,
-          page_size: parsedParams.page_size,
-        }
-      ),
+    queryKey: [clientId, "episodes", params ?? parsedParams],
+    queryFn: () => getEpisodeList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

@@ -17,7 +17,8 @@ export const useEmergencyContactList = (
   clientId: string,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryKey: [clientId, "emergency", params ?? parsedParams],
@@ -27,6 +28,6 @@ export const useEmergencyContactList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

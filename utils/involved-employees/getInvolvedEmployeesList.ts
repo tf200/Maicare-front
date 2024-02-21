@@ -20,7 +20,8 @@ export const useInvolvedEmployeesList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryKey: [clientId, "employees", params ?? parsedParams],
@@ -30,6 +31,6 @@ export const useInvolvedEmployeesList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

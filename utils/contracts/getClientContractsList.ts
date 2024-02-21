@@ -22,7 +22,9 @@ export const useClientContractsList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
+
   const query = useQuery({
     queryKey: [clientId, "contracts", params ?? parsedParams],
     queryFn: () => getClientContractsList(clientId, params ?? parsedParams),
@@ -31,6 +33,6 @@ export const useClientContractsList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

@@ -18,7 +18,8 @@ export const useDocumentList = (
   clientId: string,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery({
     queryKey: [parseInt(clientId), "documents", params ?? parsedParams],
@@ -28,6 +29,6 @@ export const useDocumentList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };

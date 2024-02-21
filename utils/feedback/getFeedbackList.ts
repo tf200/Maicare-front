@@ -22,7 +22,8 @@ export const useFeedbackList = (
   clientId: number,
   params?: PaginationParams
 ) => {
-  const parsedParams = usePaginationParams();
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
 
   const query = useQuery<FeedbackListResDto>({
     queryKey: [clientId, "feedback", params ?? parsedParams],
@@ -32,6 +33,6 @@ export const useFeedbackList = (
 
   return {
     ...query,
-    pagination: parsedParams,
+    pagination,
   };
 };
