@@ -1,6 +1,12 @@
 "use client";
 
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -64,6 +70,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
+  const Sidebar = useMemo(() => {
+    if (
+      pathname.startsWith("/clients/") &&
+      !pathname.startsWith("/clients/new")
+    ) {
+      return <ClientMenu />;
+    } else {
+      return <GlobalMenu />;
+    }
+  }, [pathname]);
+
   return (
     <aside
       ref={sidebar}
@@ -108,7 +125,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
-      {pathname.startsWith("/clients/") ? <ClientMenu /> : <GlobalMenu />}
+      {Sidebar}
     </aside>
   );
 };
