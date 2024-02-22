@@ -3,10 +3,12 @@ import { DiagnosisSeverity } from "@/types/dagnosis-servity";
 import { RateType } from "@/types/rate-type";
 import { ReactNode } from "react";
 
-export type SelectionOption = {
-  label: string;
-  value: string;
+export type GenericSelectionOption<L extends ReactNode, V> = {
+  label: L;
+  value: V;
 };
+
+export type SelectionOption = GenericSelectionOption<string, string>;
 
 export type AllergyOption = SelectionOption & {
   value: AllergyType | "";
@@ -30,3 +32,5 @@ export type LinkOption = {
   href: string;
   getIsActive?: (pathname: string, href: string) => boolean;
 };
+
+export type ComboboxOption<TData> = GenericSelectionOption<ReactNode, TData>;

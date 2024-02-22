@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, ReactNode, useMemo } from "react";
 import { BadgeType } from "@/types/badge-type";
 
 type BadgeProps = {
-  text: string;
+  text: ReactNode;
 };
 
 type Props = BadgeProps & {

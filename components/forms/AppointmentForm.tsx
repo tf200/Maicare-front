@@ -10,6 +10,9 @@ import { useCreateAppointment } from "@/utils/appointments/createAppointment";
 import { useUpdateAppointment } from "@/utils/appointments/updateAppointment";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { useDeleteAppointment } from "@/utils/appointments/deleteAppointment";
+import EmployeesTagInput from "@/components/FormFields/EmployeesTagInput";
+import ClientsTagInput from "@/components/FormFields/ClientsTagInput";
+import * as Yup from "yup";
 
 const initialValues: AppointmentFormType = {
   title: "",
@@ -18,8 +21,18 @@ const initialValues: AppointmentFormType = {
   description: "",
   appointment_type: "meeting",
   attachments: [],
-  employees: [1],
+  employees: [],
+  clients: [],
 };
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required("Onderwerp is verplicht"),
+  start_time: Yup.string().required("Van datum tijd is verplicht"),
+  end_time: Yup.string().required("Tot datum tijd is verplicht"),
+  description: Yup.string().required("Beschrijving is verplicht"),
+  employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
+  clients: Yup.array().min(1, "Minimaal 1 klant is verplicht"),
+});
 
 type Props = {
   initialData?: Partial<AppointmentResDto>;
@@ -38,7 +51,8 @@ const AppointmentForm: FunctionComponent<Props> = ({
   const { mutate: updateAppointment } = useUpdateAppointment();
   const { mutate: deleteAppointment } = useDeleteAppointment();
   const formik = useFormik({
-    initialValues: { ...initialValues, ...initialData, employees: [1] },
+    initialValues: { ...initialValues, ...initialData },
+    validationSchema,
     onSubmit: (data) => {
       if (mode === "create") {
         createAppointment(data, {
@@ -51,7 +65,8 @@ const AppointmentForm: FunctionComponent<Props> = ({
       }
     },
   });
-  const { handleChange, values, handleBlur, handleSubmit, dirty } = formik;
+  const { handleChange, values, handleBlur, handleSubmit, dirty, touched } =
+    formik;
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -66,6 +81,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
           required
           placeholder={"Geef het onderwerp op"}
           value={values.title}
+          error={touched.title && formik.errors.title}
         />
         <div className="flex gap-4 mb-5">
           {/* From date time */}
@@ -79,6 +95,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
             onBlur={handleBlur}
             required
             value={values.start_time}
+            error={touched.start_time && formik.errors.start_time}
           />
           {/* To date time */}
           <InputField
@@ -91,8 +108,25 @@ const AppointmentForm: FunctionComponent<Props> = ({
             onBlur={handleBlur}
             required
             defaultValue={values.end_time}
+            error={touched.end_time && formik.errors.end_time}
           />
         </div>
+        <EmployeesTagInput
+          name={"employees"}
+          label={"Employees"}
+          id={"employees"}
+          placeholder={"add employee..."}
+          required={true}
+          className="mb-5"
+        />
+        <ClientsTagInput
+          label={"Clients"}
+          id={"clients"}
+          name={"clients"}
+          placeholder={"add client..."}
+          required={true}
+          className="mb-5"
+        />
         {/* Description */}
         <Textarea
           label={"Beschrijving"}
@@ -105,6 +139,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
           placeholder={"Geef een beschrijving op"}
           rows={6}
           defaultValue={values.description}
+          error={touched.description && formik.errors.description}
         />
         {/* Attachments */}
         <FileInput
@@ -149,6 +184,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
             actionType="CONFIRM"
             className="grow"
             disabled={!dirty && mode === "edit"}
+            formNoValidate
           >
             {mode === "create" ? "+ Afspraak maken" : "Afspraak wijzigen"}
           </ModalActionButton>

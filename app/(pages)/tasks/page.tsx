@@ -128,7 +128,6 @@ const Page: FunctionComponent = (props) => {
   );
 
   const deactivateQuery = useCallback(() => {
-    console.log("deactivate");
     queryClient.setQueryDefaults(["appointments"], { enabled: false });
   }, [queryClient]);
 
