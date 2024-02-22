@@ -3,7 +3,7 @@ import InputField from "@/components/FormFields/InputField";
 import { FormikProvider, useFormik } from "formik";
 import Textarea from "@/components/FormFields/Textarea";
 import ModalActionButton from "@/components/buttons/ModalActionButton";
-import FileInput from "@/components/FormFields/FileInput";
+import FileUploader from "@/components/FormFields/FileUploader";
 import { AppointmentFormType } from "@/types/appointments/appointment-form-type";
 import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useCreateAppointment } from "@/utils/appointments/createAppointment";
@@ -142,7 +142,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
           error={touched.description && formik.errors.description}
         />
         {/* Attachments */}
-        <FileInput
+        <FileUploader
           accept={".pdf,.docx,.txt"}
           label={"Bijlagen"}
           id={"attachments"}
