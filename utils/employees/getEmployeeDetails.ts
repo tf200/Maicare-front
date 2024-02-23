@@ -12,7 +12,7 @@ export const getClientDetails = async (employeeId: number) => {
 export const useEmployeeDetails = (employeeId: number) => {
   return useQuery<NewEmployeesRequest>({
     queryFn: () => getClientDetails(employeeId),
-    queryKey: [employeeId],
+    queryKey: ["employees", employeeId],
     enabled: !!employeeId,
   });
 };

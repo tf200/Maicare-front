@@ -3,6 +3,7 @@ import { CertifResDto } from "@/types/certificates/certif-res.dto";
 import { useMutation, useQueryClient } from "react-query";
 import { UpdateExpDto } from "@/types/experiences/update-exp.dto";
 import { ExpResDto } from "@/types/experiences/exp-res.dto";
+import { AxiosResponse } from "axios";
 
 async function updateExperience(data: UpdateExpDto) {
   const response = await api.patch<ExpResDto>(

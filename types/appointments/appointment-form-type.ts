@@ -5,9 +5,9 @@ export type AppointmentFormType = {
   title: string;
   start_time: string;
   end_time: string;
-  appointment_type: "meeting";
+  appointment_type: "meeting" | "dentist" | "consultation" | "other";
   description: string;
-  attachments: File[];
+  temporary_file_ids: string[];
   employees: number[];
   clients: number[];
 };

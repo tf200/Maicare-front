@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import InputField from "@/components/FormFields/InputField";
 import { FormikProvider, useFormik } from "formik";
 import Textarea from "@/components/FormFields/Textarea";
 import ModalActionButton from "@/components/buttons/ModalActionButton";
-import FileUploader from "@/components/FormFields/FileUploader";
+import FilesUploader from "@/components/FormFields/FilesUploader";
 import { AppointmentFormType } from "@/types/appointments/appointment-form-type";
 import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useCreateAppointment } from "@/utils/appointments/createAppointment";
@@ -13,6 +13,7 @@ import { useDeleteAppointment } from "@/utils/appointments/deleteAppointment";
 import EmployeesTagInput from "@/components/FormFields/EmployeesTagInput";
 import ClientsTagInput from "@/components/FormFields/ClientsTagInput";
 import * as Yup from "yup";
+import FilesDeleter from "@/components/FormFields/FilesDeleter";
 
 const initialValues: AppointmentFormType = {
   title: "",
@@ -20,19 +21,30 @@ const initialValues: AppointmentFormType = {
   end_time: "",
   description: "",
   appointment_type: "meeting",
-  attachments: [],
+  temporary_file_ids: [],
   employees: [],
   clients: [],
 };
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Onderwerp is verplicht"),
-  start_time: Yup.string().required("Van datum tijd is verplicht"),
-  end_time: Yup.string().required("Tot datum tijd is verplicht"),
-  description: Yup.string().required("Beschrijving is verplicht"),
-  employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
-  clients: Yup.array().min(1, "Minimaal 1 klant is verplicht"),
-});
+const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
+  Yup.object().shape({
+    title: Yup.string().required("Onderwerp is verplicht"),
+    appointment_type: Yup.string()
+      .oneOf(
+        ["meeting", "dentist", "consultation", "other"],
+        "Afspraak type is verplicht"
+      )
+      .required("Afspraak type is verplicht"),
+    start_time: Yup.string().required("Van datum tijd is verplicht"),
+    end_time: Yup.string().required("Tot datum tijd is verplicht"),
+    description: Yup.string().required("Beschrijving is verplicht"),
+    employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
+    clients: Yup.array().min(1, "Minimaal 1 klant is verplicht"),
+    temporary_file_ids: Yup.array().max(
+      5,
+      "Maximaal 5 bijlagen zijn toegestaan"
+    ),
+  });
 
 type Props = {
   initialData?: Partial<AppointmentResDto>;
@@ -50,8 +62,16 @@ const AppointmentForm: FunctionComponent<Props> = ({
   const { mutate: createAppointment } = useCreateAppointment();
   const { mutate: updateAppointment } = useUpdateAppointment();
   const { mutate: deleteAppointment } = useDeleteAppointment();
+  const parsedInitialData = useMemo(() => {
+    if (!initialData) return {};
+    return {
+      ...initialData,
+      attachments: initialData?.attachments?.map((attachment) => attachment.id),
+      attachment_ids_to_delete: [],
+    };
+  }, [initialData]);
   const formik = useFormik({
-    initialValues: { ...initialValues, ...initialData },
+    initialValues: { ...initialValues, ...parsedInitialData },
     validationSchema,
     onSubmit: (data) => {
       if (mode === "create") {
@@ -59,9 +79,15 @@ const AppointmentForm: FunctionComponent<Props> = ({
           onSuccess: onSuccessfulSubmit,
         });
       } else if (mode === "edit") {
-        updateAppointment(data, {
-          onSuccess: onSuccessfulSubmit,
-        });
+        updateAppointment(
+          {
+            ...data,
+            id: initialData?.id,
+          },
+          {
+            onSuccess: onSuccessfulSubmit,
+          }
+        );
       }
     },
   });
@@ -142,18 +168,25 @@ const AppointmentForm: FunctionComponent<Props> = ({
           error={touched.description && formik.errors.description}
         />
         {/* Attachments */}
-        <FileUploader
+        <FilesUploader
           accept={".pdf,.docx,.txt"}
           label={"Bijlagen"}
-          id={"attachments"}
-          name={"attachments"}
+          id={"temporary_file_ids"}
+          name={"temporary_file_ids"}
           className="mb-6"
           onChange={handleChange}
           onBlur={handleBlur}
           multiple={true}
         />
+        {mode === "edit" && initialData?.attachments && (
+          <FilesDeleter
+            alreadyUploadedFiles={initialData.attachments}
+            name={"attachment_ids_to_delete"}
+            id={"attachment_ids_to_delete"}
+          />
+        )}
         {/* Call to actions */}
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 mt-5">
           {mode === "edit" && (
             <ModalActionButton
               actionType="DANGER"

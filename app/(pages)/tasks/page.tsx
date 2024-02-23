@@ -81,7 +81,8 @@ const Page: FunctionComponent = (props) => {
         onSuccess: () => {
           close();
         },
-        initialData,
+        id: event.id,
+        initialData, // TODO: DEPRECATE
         mode: "edit",
       });
     },

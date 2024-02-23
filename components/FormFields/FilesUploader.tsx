@@ -1,13 +1,15 @@
 import React, {
   FunctionComponent,
   InputHTMLAttributes,
+  useCallback,
   useEffect,
 } from "react";
 import { useField } from "formik";
 import XMarkIcon from "@/components/icons/XMarkIcon";
 import UploadIcon from "@/components/svg/UploadIcon";
-import api from "@/utils/api";
-import { useMutation, useQueryClient } from "react-query";
+import LoadingCircle from "@/components/icons/LoadingCircle";
+import { useUploadFile } from "@/utils/attachments/uploadFile";
+import Button from "@/components/buttons/Button";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -15,70 +17,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
 };
 
-type FileUploadResponse = {
-  file: string;
-  id: string;
-};
-
-async function uploadFile(file: File) {
-  const formData = new FormData();
-  formData.append("file", file);
-  const response = await api.post<FileUploadResponse>(
-    "appointments/temporary-files/",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
-}
-
-const useUploadFile = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: uploadFile,
-    onSuccess: (data) => {
-      queryClient.setQueryData(["attachments", data.id], data);
-    },
-  });
-};
-
-const UploadingFile: FunctionComponent<{
-  file: File;
-  onRemove: () => void;
-}> = ({ file, onRemove }) => {
-  const { mutate: upload, isLoading, isSuccess } = useUploadFile();
-  const [fileId, setFileId] = React.useState<string | null>(null);
-  useEffect(() => {
-    if (fileId) {
-      return;
-    }
-    upload(file, {
-      onSuccess: (data) => {
-        setFileId(data.id);
-      },
-    });
-  }, []);
-  return (
-    <div className="mt-4.5 border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
-      <div className="flex items-center justify-between">
-        <span>{file.name}</span>
-        {isSuccess && <span className="text-primary">Uploaded</span>}
-        {isLoading ? (
-          "Uploading..."
-        ) : (
-          <button onClick={onRemove}>
-            <XMarkIcon className="w-5 h-5 stroke-1.5" />
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const FileUploader: FunctionComponent<Props> = ({ label, ...props }) => {
+const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
   const [inputProps, _, helpers] = useField({
     name: props.name,
     id: props.id,
@@ -86,7 +25,7 @@ const FileUploader: FunctionComponent<Props> = ({ label, ...props }) => {
   });
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   return (
-    <div className="mb-5">
+    <div>
       <label
         htmlFor={props.id}
         className="mb-2.5 block text-black dark:text-white"
@@ -119,9 +58,12 @@ const FileUploader: FunctionComponent<Props> = ({ label, ...props }) => {
         </div>
 
         {selectedFiles.map((file) => (
-          <UploadingFile
+          <FileUploader
             key={file.name}
             file={file}
+            onUploaded={(id) => {
+              helpers.setValue([...inputProps.value, id]);
+            }}
             onRemove={() => {
               const files = selectedFiles.filter((f) => f !== file);
               setSelectedFiles(files);
@@ -133,4 +75,59 @@ const FileUploader: FunctionComponent<Props> = ({ label, ...props }) => {
   );
 };
 
-export default FileUploader;
+export default FilesUploader;
+
+const FileUploader: FunctionComponent<{
+  file: File;
+  onUploaded: (id: string) => void;
+  onRemove: (id?: string) => void;
+}> = ({ file, onRemove, onUploaded }) => {
+  const { mutate: upload, isLoading, isSuccess, isError } = useUploadFile();
+  const [fileId, setFileId] = React.useState<string | null>(null);
+  const uploadFile = useCallback(() => {
+    upload(file, {
+      onSuccess: (data) => {
+        setFileId(data.id);
+        onUploaded(data.id);
+      },
+    });
+  }, [upload, file, setFileId, onUploaded]);
+  useEffect(() => {
+    if (fileId) {
+      return;
+    }
+    uploadFile();
+  }, []);
+  return (
+    <div className="mt-4.5 border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
+      <div className="flex items-center">
+        <div>{file.name}</div>
+        {isLoading && (
+          <div className="animate-spin ml-auto">
+            <LoadingCircle />
+          </div>
+        )}
+        {isSuccess && (
+          <div className="ml-auto mr-4">
+            <span className="text-primary">Gelukt!</span>
+          </div>
+        )}
+        {isError && (
+          <div className="ml-auto">
+            <span className="text-danger">Mislukt</span>
+            <Button onClick={uploadFile}>Opnieuw proberen</Button>
+          </div>
+        )}
+        {!isLoading && (
+          <button
+            onClick={() => {
+              onRemove?.(fileId);
+            }}
+          >
+            <XMarkIcon className="w-5 h-5 stroke-1.5" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
