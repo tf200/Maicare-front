@@ -1,13 +1,12 @@
-import { EmployeeResDto } from "@/types/employees/employee-res.dto";
-import { ClientsResDto } from "@/types/clients/clients-res-dto";
+import { AppointmentType } from "@/types/appointments/appointment-type";
 
 export type AppointmentFormType = {
   title: string;
   start_time: string;
   end_time: string;
-  appointment_type: "meeting";
+  appointment_type: AppointmentType;
   description: string;
-  attachments: File[];
+  temporary_file_ids: string[];
   employees: number[];
   clients: number[];
 };

@@ -1,11 +1,37 @@
-import React, { FunctionComponent, PropsWithChildren } from "react";
+import React, { FunctionComponent, PropsWithChildren, useMemo } from "react";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import AppointmentForm from "@/components/forms/AppointmentForm";
+import AppointmentForm, {
+  AppointmentFormProps,
+} from "@/components/forms/AppointmentForm";
+import { useAppointmentDetails } from "@/utils/appointments/getAppointmentDetails";
 
-const AppointmentFormModal: FunctionComponent<
-  PropsWithChildren<ModalProps>
-> = ({ additionalProps, ...props }) => {
+type Props = ModalProps & {
+  additionalProps?: AppointmentFormProps;
+};
+
+const AppointmentFormModal: FunctionComponent<PropsWithChildren<Props>> = ({
+  additionalProps,
+  ...props
+}) => {
+  const { data, isLoading } = useAppointmentDetails(additionalProps?.id);
+
+  const canUpdate = data && additionalProps?.mode === "edit";
+  const formProps: AppointmentFormProps = useMemo(() => {
+    return additionalProps.mode === "edit"
+      ? {
+          initialData: data,
+          mode: "edit",
+          onSuccessfulSubmit: additionalProps.onSuccess,
+          onCancel: props.onClose,
+        }
+      : {
+          initialSlot: additionalProps.initialSlot,
+          mode: "create",
+          onSuccessfulSubmit: additionalProps.onSuccess,
+          onCancel: props.onClose,
+        };
+  }, [data]);
   return (
     <FormModal
       title={
@@ -15,11 +41,9 @@ const AppointmentFormModal: FunctionComponent<
       }
       {...props}
     >
-      <AppointmentForm
-        onSuccessfulSubmit={additionalProps.onSuccess}
-        onCancel={props.onClose}
-        {...additionalProps}
-      />
+      {(additionalProps?.mode === "create" || canUpdate) && (
+        <AppointmentForm {...formProps} />
+      )}
     </FormModal>
   );
 };
