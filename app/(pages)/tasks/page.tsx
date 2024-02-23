@@ -29,12 +29,15 @@ import dayjs from "dayjs";
 import "dayjs/locale/nl";
 import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useQueryClient } from "react-query";
-import { AppointmentListResDto } from "@/types/appointments/appointments-res.dto";
+import {
+  AppointmentListItem,
+  AppointmentListResDto,
+} from "@/types/appointments/appointments-res.dto";
 import { useUpdateAppointment } from "@/utils/appointments/updateAppointment";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
 
-type CalendarEvent = AppointmentResDto & {
+type CalendarEvent = AppointmentListItem & {
   start: Date;
   end: Date;
 };

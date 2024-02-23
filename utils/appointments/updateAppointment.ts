@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 async function updateAppointment(data: UpdateAppointmentReqDto) {
   const response = await api.patch<AppointmentResDto>(
-    `appointments/rud/${data.id}/`,
+    `appointments/patch/${data.id}/`,
     data
   );
   return response.data;

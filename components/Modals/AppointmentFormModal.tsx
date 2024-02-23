@@ -4,22 +4,7 @@ import FormModal from "@/components/Modals/FormModal";
 import AppointmentForm, {
   AppointmentFormProps,
 } from "@/components/forms/AppointmentForm";
-import api from "@/utils/api";
-import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
-import { useQuery } from "react-query";
-
-async function getAppointmentDetails(id: number) {
-  const response = await api.get<AppointmentResDto>(`/appointments/rud/${id}/`);
-  return response.data;
-}
-
-const useAppointmentDetails = (id: number) => {
-  return useQuery({
-    queryKey: ["appointment", id],
-    queryFn: () => getAppointmentDetails(id),
-    enabled: !!id,
-  });
-};
+import { useAppointmentDetails } from "@/utils/appointments/getAppointmentDetails";
 
 type Props = ModalProps & {
   additionalProps?: AppointmentFormProps;
