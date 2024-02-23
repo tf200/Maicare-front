@@ -1,12 +1,14 @@
 import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
 import clsx from "clsx";
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  isLoading?: boolean;
   actionType?: "ACKNOWLEDGE" | "CANCEL" | "CANCEL-2" | "CONFIRM" | "DANGER";
 };
 const ModalActionButton: FunctionComponent<Props> = ({
   actionType,
   className,
   type = "button",
+  isLoading,
   ...props
 }) => {
   return (
@@ -30,7 +32,7 @@ const ModalActionButton: FunctionComponent<Props> = ({
         className
       )}
     >
-      {props.children}
+      {isLoading ? "Updating ..." : props.children}
     </button>
   );
 };

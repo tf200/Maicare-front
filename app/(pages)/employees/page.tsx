@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FunctionComponent, useMemo, useState } from "react";
-import Link from "next/link";
 import Panel from "@/components/Panel";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import Table from "@/components/Table";
@@ -18,6 +17,7 @@ import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
 import OrganisationFilter from "@/components/OrganisationFilter";
+import LinkButton from "@/components/buttons/LinkButton";
 
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
@@ -106,12 +106,10 @@ const EmployeesPage: FunctionComponent = () => {
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
             <EmployeeFilters onFiltersChange={setFilters} />
-            <Link
+            <LinkButton
+              text={"Nieuwe Medewerker Toevoegen"}
               href={`/employees/new`}
-              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Nieuwe Medewerker Toevoegen
-            </Link>
+            />
           </div>
         }
       >

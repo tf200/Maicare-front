@@ -18,6 +18,7 @@ import bytesToSize from "@/hooks/useSizeConverter";
 import ConfirmationModal from "@/components/ComfirmationModal";
 import FileIcon from "@/components/svg/FileIcon";
 import PaginatedTable from "@/components/PaginatedTable";
+import LinkButton from "@/components/buttons/LinkButton";
 
 type Props = {
   params: { clientId: string };
@@ -124,12 +125,10 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       <Panel
         title={"Documentenlijst"}
         sideActions={
-          <Link
+          <LinkButton
+            text={"Upload een Nieuw Document"}
             href={`/clients/${clientId}/document/new`}
-            className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >
-            Upload een Nieuw Document
-          </Link>
+          />
         }
       >
         {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
