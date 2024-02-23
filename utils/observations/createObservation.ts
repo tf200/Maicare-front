@@ -27,7 +27,7 @@ export const useCreateObservation = (client: number) => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries([client, "observation"]);
+      queryClient.invalidateQueries([client, "observations"]);
     },
   });
 };

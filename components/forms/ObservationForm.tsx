@@ -39,28 +39,19 @@ type PropsType = {
 
 export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateObservation(parseInt(clientId));
-  const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
         onSuccess: () => {
-          setIsSuccess(true);
           resetForm();
+          router.push(`/clients/${clientId}/reports-record/observations`);
         },
       });
     },
     [mutate]
   );
-
-  useEffect(() => {
-    if (isSuccess) {
-      setTimeout(() => {
-        router.push(`/clients/${clientId}/reports-record/observations`);
-      }, 3000);
-    }
-  }, [isSuccess, router]);
 
   return (
     <Formik

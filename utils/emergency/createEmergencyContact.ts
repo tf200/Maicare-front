@@ -16,12 +16,7 @@ export const useCreateEmergencyContact = (client: number) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        "emergency",
-        {
-          client,
-        },
-      ]);
+      queryClient.invalidateQueries([client, "emergency"]);
     },
   });
 };

@@ -15,7 +15,6 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
   const [error, setError] = useState("");
   const [file, setFile] = useState(null);
-  const [alert, showAlert] = useState(false);
 
   function checkFileExtension(filename: string) {
     const extension = filename.slice(-4).toLowerCase();
@@ -45,11 +44,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
       mutate(formData, {
         onSuccess: () => {
           setFile(null);
-          showAlert(true);
-          setTimeout(() => {
-            router.push(`/clients/${clientId}/document`);
-            showAlert(false);
-          }, 3000);
+          router.push(`/clients/${clientId}/document`);
         },
       });
     },
@@ -60,7 +55,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
     e.preventDefault();
     setError("");
     if (!file) {
-      setError("Please provide a document file");
+      setError("Gelieve een documentbestand te verstrekken");
       return;
     }
     onSubmit(file);
@@ -68,25 +63,6 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
   return (
     <form onSubmit={checkFileInput} className="p-6.5 pt-4.5">
-      {alert && (
-        <div
-          className="flex items-center border-2 border-black p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-          role="alert"
-        >
-          <svg
-            className="flex-shrink-0 inline w-4 h-4 me-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-          </svg>
-          <span className="sr-only">Info</span>
-          <div>het document is succesvol geüpload.</div>
-        </div>
-      )}
-
       {file ? <div className=" pb-4.5"> {file.name} </div> : <></>}
       <div
         id="FileUpload"
@@ -128,7 +104,8 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
             </svg>
           </span>
           <p className="text-center">
-            <span className="text-primary">Klik om te uploaden</span> of sleep het bestand hierheen
+            <span className="text-primary">Klik om te uploaden</span> of sleep
+            het bestand hierheen
           </p>
           <p className="mt-1.5">PDF, DOCX or TXT</p>
           <p>(maximaal, 20mb)</p>

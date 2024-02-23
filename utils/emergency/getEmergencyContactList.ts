@@ -5,7 +5,7 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 
 const fetchEmergencyContacts =
-  (clientId: string, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
+  (clientId: number, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
     const response = await api.get(`client/emergency_list/${clientId}/`, {
       params,
@@ -14,7 +14,7 @@ const fetchEmergencyContacts =
   };
 
 export const useEmergencyContactList = (
-  clientId: string,
+  clientId: number,
   params?: PaginationParams
 ) => {
   const pagination = usePaginationParams();

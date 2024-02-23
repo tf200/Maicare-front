@@ -53,7 +53,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const onSubmit = (value: ContractFormType) => {
     mutate(mapData(value, clientId), {
       onSuccess: () => {
-        router.back();
+        router.push(`/clients/${clientId}/contracts`);
       },
     });
   };
