@@ -42,10 +42,8 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     (values: FormTypes) => {
       mutate(values, {
         onSuccess: () => {
-          formik.resetForm,
-            router.push(
-              `/clients/${clientId}/client-network/involved-employees`
-            );
+          formik.resetForm();
+          router.push(`/clients/${clientId}/client-network/involved-employees`);
         },
       });
     },

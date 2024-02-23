@@ -51,8 +51,8 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
     (values: FormTypes) => {
       mutate(values, {
         onSuccess: () => {
-          formik.resetForm,
-            router.push(`/clients/${clientId}/client-network/emergency`);
+          formik.resetForm();
+          router.push(`/clients/${clientId}/client-network/emergency`);
         },
       });
     },

@@ -43,8 +43,8 @@ export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId }) => {
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
         onSuccess: () => {
-          resetForm(),
-            router.push(`/clients/${clientId}/reports-record/feedback`);
+          resetForm();
+          router.push(`/clients/${clientId}/reports-record/feedback`);
         },
       });
     },
