@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import ProfilePicturePlaceholder from "@/components/icons/ProfilePicturePlaceholder";
+import Image from "next/image";
 
 type Props = {
   profilePicture?: string;
@@ -10,10 +11,10 @@ type Props = {
 const ProfilePicture: FunctionComponent<Props> = ({
   profilePicture,
   width = 64,
-  height = 64,
+  height = 64,  
 }) => {
   return profilePicture ? (
-    <img
+    <Image
       width={width}
       height={height}
       src={profilePicture}

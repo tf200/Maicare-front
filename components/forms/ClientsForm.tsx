@@ -49,19 +49,19 @@ const initialValues: FormType = {
   bsn: "",
   source: "",
 };
-// date_of_birth , identity , status ,
+
 export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
-  first_name: Yup.string().required("Please provide first name"),
-  last_name: Yup.string().required("Please provide last Name"),
-  email: Yup.string().required("Please provide your email Address"),
-  phone_number: Yup.string().required("Please provide phon number"),
-  profile_picture: Yup.string().required("Please provide profile picture"),
+  first_name: Yup.string().required("Geef alstublieft een voornaam op"),
+  last_name: Yup.string().required("Geef alstublieft een achternaam op"),
+  email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
+  phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
+  profile_picture: Yup.string().required("Geef alstublieft een profielfoto op"),
   departement: Yup.string(),
   filenumber: Yup.number(),
   location: Yup.string(),
   birthplace: Yup.string(),
-  date_of_birth: Yup.string().required("Please provide date of birth"),
+  date_of_birth: Yup.string().required("Geef alstublieft een geboortedatum op"),
   organisation: Yup.string(),
   gender: Yup.string(),
   city: Yup.string(),
@@ -69,8 +69,8 @@ export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   infix: Yup.string(),
   streetname: Yup.string(),
   street_number: Yup.string(),
-  bsn: Yup.string().required("Please provide bsn"),
-  source: Yup.string().required("Please provide source"),
+  bsn: Yup.string().required("Geef alstublieft een BSN op"),
+  source: Yup.string().required("Geef alstublieft een bron op"),
 });
 
 type PropsType = {};
@@ -171,9 +171,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                 <div className="flex flex-col gap-9">
                   <Panel
                     containerClassName="p-6.5 pb-5"
-                    title={"Personal Details"}
+                    title={"Persoonlijke Gegevens"}
                   >
-                    <div className="px-4 mt-[70px] text-center">
+                    <div className="px-4 mt-[70px] pb-5 text-center">
                       <div className="relative z-30 w-full p-1 mx-auto rounded-full -mt-22 h-30 max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                         <div className="relative drop-shadow-2">
                           {uploading ? (
@@ -206,15 +206,18 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                             />
                           </label>
                         </div>
+                        <p className="text-center text-red">
+                          {touched.profile_picture && errors.profile_picture}
+                        </p>
                       </div>
                     </div>
 
                     <div className="mb-4.5 py-4 flex flex-col gap-6 xl:flex-row">
                       <InputField
                         type={"text"}
-                        label={"First name"}
+                        label={"Voornaam"}
                         id={"first_name"}
-                        placeholder={"Enter your first name"}
+                        placeholder={"Voer uw voornaam in"}
                         className="w-full xl:w-1/2"
                         value={values.first_name}
                         onChange={handleChange}
@@ -225,9 +228,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
 
                       <InputField
                         type={"text"}
-                        label={"Last name"}
+                        label={"Achternaam"}
                         id={"last_name"}
-                        placeholder={"Enter your last name"}
+                        placeholder={"Voer uw achternaam in"}
                         className="w-full xl:w-1/2"
                         value={values.last_name}
                         onChange={handleChange}
@@ -239,9 +242,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
 
                     <InputField
                       type={"text"}
-                      label={"Email"}
+                      label={"E-mail"}
                       id={"email"}
-                      placeholder={"Enter your email address"}
+                      placeholder={"Voer uw e-mailadres in"}
                       className="w-full mb-4.5"
                       value={values.email}
                       onChange={handleChange}
@@ -251,9 +254,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputField
-                      label={"Phone Number"}
+                      label={"Telefoonnummer"}
                       id={"phone_number"}
-                      placeholder={"Phone Number"}
+                      placeholder={"Voer uw telefoonnummer in"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.phone_number}
@@ -264,9 +267,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputField
-                      label={"Infix"}
+                      label={"Tussenvoegsel"}
                       id={"infix"}
-                      placeholder={"Enter infix"}
+                      placeholder={"Voer tussenvoegsel in"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.infix}
@@ -278,7 +281,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     <div className="mb-4.5 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-6  px-6.5 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
-                          Gender
+                          Geslacht
                         </h3>
                       </div>
                       <div className="flex flex-row gap-5.5 p-6.5">
@@ -306,7 +309,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       </div>
                     </div>
                     <InputField
-                      label={"Date of birth"}
+                      label={"Geboortedatum"}
                       required={true}
                       id={"date_of_birth"}
                       type={"date"}
@@ -322,13 +325,13 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
                     <div className="mb-4.5">
                       <label className="mb-2.5 block text-black dark:text-white">
-                        File Number
+                        Dossiernummer
                       </label>
 
                       <input
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         id={"filenumber"}
-                        placeholder={"File Number"}
+                        placeholder={"Dossiernummer"}
                         type={"number"}
                         value={values.filenumber}
                         onChange={handleChange}
@@ -339,12 +342,12 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
 
                   <Panel
                     containerClassName="p-6.5 pb-5"
-                    title={"Identity Details"}
+                    title={"Identiteitsgegevens"}
                   >
                     <InputField
-                      label={"Bsn"}
+                      label={"BSN"}
                       id={"bsn"}
-                      placeholder={"Enter bsn"}
+                      placeholder={"Voer BSN in"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.bsn}
@@ -354,9 +357,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                       required={true}
                     />
                     <Select
-                      label={"Source"}
+                      label={"Bron"}
                       id={"source"}
-                      placeholder={"Source"}
+                      placeholder={"Voer bron in"}
                       options={SOURCE_OPTIONS}
                       className="w-full mb-4.5"
                       value={values.source}
@@ -371,7 +374,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                   <Panel
                     containerClassName="p-6.5 pb-5"
                     title={"Locatiegegevens"}
-                    // title={"Location Details"}
                   >
                     <InputField
                       label={"Locatie"}
@@ -423,12 +425,12 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
 
                   <Panel
                     containerClassName="p-6.5 pb-5"
-                    title={"Address Details"}
+                    title={"Adresgegevens"}
                   >
                     <InputField
-                      label={"Street Name"}
+                      label={"Straatnaam"}
                       id={"streetname"}
-                      placeholder={"Street Name"}
+                      placeholder={"Straatnaam"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.streetname}
@@ -438,9 +440,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputField
-                      label={"Street Number"}
+                      label={"Huisnummer"}
                       id={"street_number"}
-                      placeholder={"Street Number"}
+                      placeholder={"Huisnummer"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.street_number}
@@ -450,9 +452,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputField
-                      label={"City"}
+                      label={"Stad"}
                       id={"city"}
-                      placeholder={"City"}
+                      placeholder={"Stad"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.city}
@@ -462,9 +464,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                     />
 
                     <InputField
-                      label={"Zip code"}
+                      label={"Postcode"}
                       id={"Zipcode"}
-                      placeholder={"Zip code"}
+                      placeholder={"Postcode"}
                       type={"text"}
                       className="w-full mb-4.5"
                       value={values.Zipcode}
@@ -480,7 +482,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
                   isLoading={isLoading}
                   formNoValidate={true}
                 >
-                  Submit Clients
+                  Cliënten Indienen
                 </Button>
               </div>
             </form>

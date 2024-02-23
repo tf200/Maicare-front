@@ -16,9 +16,10 @@ const IconButton: FunctionComponent<ButtonProps> = ({
       type={type}
       {...props}
       className={clsx(
+        props.className,
         "flex justify-center p-2 font-medium rounded-full",
         BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
-          BUTTON_CLASS_NAMES.Primary
+          BUTTON_CLASS_NAMES.Primary,
       )}
     >
       {isLoading ? (
