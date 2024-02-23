@@ -5,6 +5,7 @@ import EmployeeInformation from "@/components/EmployeeDetails/EmployeeInformatio
 import EmployeeCertificationsSummary from "@/components/EmployeeDetails/EmployeeCertificationsSummary";
 import EmployeeEducationsSummary from "@/components/EmployeeDetails/EmployeeEducationsSummary";
 import EmployeeExperiencesSummary from "@/components/EmployeeDetails/EmployeeExperiencesSummary";
+import EmployeeRolesSummary from "@/components/EmployeeDetails/EmployeeRolesSummary";
 import LinkButton from "@/components/buttons/LinkButton";
 
 type Props = {
@@ -61,6 +62,18 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
             }
           >
             <EmployeeExperiencesSummary employeeId={parseInt(employeeId)} />
+          </Panel>
+          <Panel
+            title={"Rollen"}
+            containerClassName="px-7 py-4"
+            sideActions={
+              <LinkButton
+                text={"Volledige Rollijst"}
+                href={`/employees/${employeeId}/teams`}
+              />
+            }
+          >
+            <EmployeeRolesSummary employeeId={parseInt(employeeId)} />
           </Panel>
         </div>
       </div>
