@@ -46,32 +46,53 @@ const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
     ),
   });
 
-type Props = {
-  initialData?: Partial<AppointmentResDto>;
-  onSuccessfulSubmit?: () => void;
-  onCancel?: () => void;
-  mode?: "create" | "edit";
-};
+export type AppointmentFormProps =
+  | {
+      initialSlot?: Pick<AppointmentResDto, "start_time" | "end_time">;
+      onSuccessfulSubmit?: () => void;
+      onCancel?: () => void;
+      initialData?: undefined;
+      mode?: "create";
+    }
+  | {
+      onSuccessfulSubmit?: () => void;
+      onCancel?: () => void;
+      initialData: Partial<AppointmentResDto>;
+      initialSlot?: undefined;
+      mode: "edit";
+    };
 
-const AppointmentForm: FunctionComponent<Props> = ({
+const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
   onSuccessfulSubmit,
   onCancel,
   initialData,
+  initialSlot,
   mode = "create",
 }) => {
   const { mutate: createAppointment } = useCreateAppointment();
   const { mutate: updateAppointment } = useUpdateAppointment();
   const { mutate: deleteAppointment } = useDeleteAppointment();
   const parsedInitialData = useMemo(() => {
-    if (!initialData) return {};
-    return {
-      ...initialData,
-      attachments: initialData?.attachments?.map((attachment) => attachment.id),
-      attachment_ids_to_delete: [],
-    };
-  }, [initialData]);
+    if (mode === "create" && initialSlot) {
+      return {
+        ...initialValues,
+        ...initialSlot,
+      };
+    } else if (mode === "edit" && initialData) {
+      return {
+        ...initialValues,
+        ...initialData,
+        attachments: initialData?.attachments?.map(
+          (attachment) => attachment.id
+        ),
+        attachment_ids_to_delete: [],
+      };
+    } else {
+      return initialValues;
+    }
+  }, [initialData, initialSlot]);
   const formik = useFormik({
-    initialValues: { ...initialValues, ...parsedInitialData },
+    initialValues: parsedInitialData,
     validationSchema,
     onSubmit: (data) => {
       if (mode === "create") {
@@ -169,7 +190,7 @@ const AppointmentForm: FunctionComponent<Props> = ({
         />
         {/* Attachments */}
         <FilesUploader
-          accept={".pdf,.docx,.txt"}
+          accept={".pdf,.docx,.txt,.png"}
           label={"Bijlagen"}
           id={"temporary_file_ids"}
           name={"temporary_file_ids"}

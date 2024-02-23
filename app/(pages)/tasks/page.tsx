@@ -95,7 +95,8 @@ const Page: FunctionComponent = (props) => {
         onSuccess: () => {
           close();
         },
-        initialData: {
+        mode: "create",
+        initialSlot: {
           start_time: dayjs(slot.start).format("YYYY-MM-DDTHH:mm"),
           end_time: dayjs(slot.end).format("YYYY-MM-DDTHH:mm"),
         },

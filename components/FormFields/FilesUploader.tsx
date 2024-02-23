@@ -1,8 +1,10 @@
 import React, {
+  ChangeEvent,
   FunctionComponent,
   InputHTMLAttributes,
   useCallback,
   useEffect,
+  useRef,
 } from "react";
 import { useField } from "formik";
 import XMarkIcon from "@/components/icons/XMarkIcon";
@@ -18,12 +20,23 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
-  const [inputProps, _, helpers] = useField({
+  const [_i, _m, helpers] = useField<string[]>({
     name: props.name,
     id: props.id,
     type: "file",
   });
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [uploadedFiles, setUploadedFiles] = React.useState<string[]>([]);
+  useEffect(() => {
+    helpers.setValue(uploadedFiles);
+  }, [uploadedFiles]);
+  const selectFiles = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const files = event.currentTarget.files;
+      setSelectedFiles((selected) => [...selected, ...Array.from(files)]);
+    },
+    [setSelectedFiles]
+  );
   return (
     <div>
       <label
@@ -39,10 +52,7 @@ const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
         >
           <input
             {...props}
-            onChange={(event) => {
-              const files = event.currentTarget.files;
-              setSelectedFiles([...selectedFiles, ...Array.from(files)]);
-            }}
+            onChange={selectFiles}
             type="file"
             className="absolute inset-0 z-50 m-0 h-full w-full p-0 opacity-0 outline-none"
           />
@@ -57,12 +67,12 @@ const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
           </div>
         </div>
 
-        {selectedFiles.map((file) => (
+        {selectedFiles.map((file, index) => (
           <FileUploader
-            key={file.name}
+            key={index}
             file={file}
             onUploaded={(id) => {
-              helpers.setValue([...inputProps.value, id]);
+              setUploadedFiles((files) => [...files, id]);
             }}
             onRemove={() => {
               const files = selectedFiles.filter((f) => f !== file);
@@ -93,11 +103,9 @@ const FileUploader: FunctionComponent<{
     });
   }, [upload, file, setFileId, onUploaded]);
   useEffect(() => {
-    if (fileId) {
-      return;
-    }
     uploadFile();
   }, []);
+
   return (
     <div className="mt-4.5 border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
       <div className="flex items-center">
