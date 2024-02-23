@@ -17,6 +17,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
+import LinkButton from "@/components/buttons/LinkButton";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -51,7 +52,9 @@ const ClientsPage: FunctionComponent = () => {
         accessorKey: "date_of_birth",
         header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
+          info.getValue()
+            ? getAge(info.getValue() as string)
+            : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
@@ -91,12 +94,11 @@ const ClientsPage: FunctionComponent = () => {
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters onFiltersChange={setFilters} />
-            <Link
-              href={`/clients/new`}
-              className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-            >
-              Nieuwe Cliënten Toevoegen
-              {/* Add new Clients  */}
+            <Link href={`/clients/new`}>
+              <LinkButton
+                text={"Nieuwe Cliënten Toevoegen"}
+                href={`/clients/new`}
+              />
             </Link>
           </div>
         }

@@ -7,13 +7,19 @@ import DetailCell from "@/components/DetailCell";
 import ProfilePicture from "@/components/ProfilePicture";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
+import CameraIcon from "../svg/CameraIcon";
+import IconButton from "../buttons/IconButton";
+import { useModal } from "../providers/ModalProvider";
+import ProfilePictureModal from "../Modals/ProfilePictureModal";
 
 type Props = {
   employeeId: number;
 };
 
 const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
+  const { open } = useModal(ProfilePictureModal);
   const { data, isLoading, isError } = useEmployeeDetails(employeeId);
+
   if (isLoading) return <Loader />;
   if (isError)
     return <div className="text-red">We failed to load employee data</div>;
@@ -21,12 +27,26 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2">
-          <ProfilePicture profilePicture={data.profile_picture} />
+          <div
+            onClick={() => {
+              open({
+                id: employeeId,
+              });
+            }}
+            className="relative w-fit cursor-pointer"
+          >
+            <ProfilePicture profilePicture={data.profile_picture} />
+            <IconButton className="p-[5px] absolute right-1 bottom-1">
+              <CameraIcon className="w-3 h-3" />
+            </IconButton>
+          </div>
         </div>
         <DetailCell
           ignoreIfEmpty={true}
           label={"Volledige Naam"}
-          value={`${data.first_name} ${data.last_name}` || "Niet gespecificeerd"}
+          value={
+            `${data.first_name} ${data.last_name}` || "Niet gespecificeerd"
+          }
         />
         <DetailCell
           ignoreIfEmpty={true}

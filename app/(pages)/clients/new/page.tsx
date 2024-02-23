@@ -5,7 +5,7 @@ import React, { FunctionComponent } from "react";
 const NewClients: FunctionComponent = () => {
   return (
     <>
-      <Breadcrumb pageName="Add New Client" />
+      <Breadcrumb pageName="Nieuwe Cliënt Toevoegen" />
       <ClientsForm />
     </>
   );
