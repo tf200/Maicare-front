@@ -40,28 +40,19 @@ type PropsType = {
 
 export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateReports(parseInt(clientId));
-  const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
         onSuccess: () => {
-          setIsSuccess(true);
-          resetForm();
+          resetForm(),
+            router.push(`/clients/${clientId}/reports-record/reports`);
         },
       });
     },
     [mutate]
   );
-
-  useEffect(() => {
-    if (isSuccess) {
-      setTimeout(() => {
-        router.push(`/clients/${clientId}/reports-record/reports`);
-      }, 5000);
-    }
-  }, [isSuccess, router]);
 
   return (
     <Formik
@@ -112,7 +103,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
               formNoValidate={true}
               loadingText={"Rapporten Worden Ingediend..."}
             >
-               Rapport Indienen
+              Rapport Indienen
             </Button>
           </div>
         </form>

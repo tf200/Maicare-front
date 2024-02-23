@@ -40,28 +40,19 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
   clientId,
 }) => {
   const { mutate, isLoading } = useCreateMeasurement(parseInt(clientId));
-  const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
         onSuccess: () => {
-          setIsSuccess(true);
-          resetForm();
+          resetForm(),
+            router.push(`/clients/${clientId}/reports-record/measurements`);
         },
       });
     },
     [mutate]
   );
-
-  useEffect(() => {
-    if (isSuccess) {
-      setTimeout(() => {
-        router.push(`/clients/${clientId}/reports-record/measurements`);
-      }, 5000);
-    }
-  }, [isSuccess, router]);
 
   return (
     <Formik

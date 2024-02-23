@@ -19,7 +19,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
   const { pagination, isFetching, isLoading, isError, data } =
-    useEmergencyContactList(clientId);
+    useEmergencyContactList(+clientId);
 
   const columnDef = useMemo(() => {
     return [

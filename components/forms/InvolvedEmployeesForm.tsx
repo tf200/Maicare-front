@@ -9,6 +9,7 @@ import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvo
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import Button from "@/components/buttons/Button";
 import ComboBox from "../ComboBox";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   clientId: number;
@@ -34,10 +35,18 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
 
   const { mutate, isLoading } = useCreateInvolvedEmployee(clientId);
+
+  const router = useRouter();
+
   const submit = useCallback(
     (values: FormTypes) => {
       mutate(values, {
-        onSuccess: formik.resetForm,
+        onSuccess: () => {
+          formik.resetForm,
+            router.push(
+              `/clients/${clientId}/client-network/involved-employees`
+            );
+        },
       });
     },
     [mutate]

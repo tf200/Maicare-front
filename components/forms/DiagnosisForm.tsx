@@ -12,6 +12,7 @@ import { DiagnosisSeverity } from "@/types/dagnosis-servity";
 import { useCreateDiagnosis } from "@/utils/diagnosis/createDiagnosis";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
+import { useRouter } from "next/navigation";
 
 type FormType = Omit<
   NewDiagnosisReqDto,
@@ -57,10 +58,16 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
     parseInt(clientId),
     "mock-clinician"
   );
+
+  const router = useRouter();
+
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
       mutate(values, {
-        onSuccess: resetForm,
+        onSuccess: () => {
+          resetForm;
+          router.push(`/clients/${clientId}/medical-record/diagnosis`);
+        },
       });
     },
     [mutate]

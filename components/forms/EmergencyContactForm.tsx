@@ -12,6 +12,7 @@ import {
 import { useCreateEmergencyContact } from "@/utils/emergency/createEmergencyContact";
 import Button from "@/components/buttons/Button";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   clientId: string;
@@ -43,10 +44,16 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   clientId,
 }) => {
   const { mutate, isLoading } = useCreateEmergencyContact(parseInt(clientId));
+
+  const router = useRouter();
+
   const submit = useCallback(
     (values: FormTypes) => {
       mutate(values, {
-        onSuccess: formik.resetForm,
+        onSuccess: () => {
+          formik.resetForm,
+            router.push(`/clients/${clientId}/client-network/emergency`);
+        },
       });
     },
     [mutate]
@@ -58,7 +65,9 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       first_name: Yup.string().required("Geef alstublieft een voornaam op"),
       last_name: Yup.string().required("Geef alstublieft een achternaam op"),
       email: Yup.string().required("Geef alstublieft een e-mailadres op"),
-      phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
+      phone_number: Yup.string().required(
+        "Geef alstublieft een telefoonnummer op"
+      ),
       relationship: Yup.string().required("Geef alstublieft een relatie op"),
       relation_status: Yup.string().required("Geef alstublieft een afstand op"),
       address: Yup.string().required("Geef alstublieft een adres op"),
