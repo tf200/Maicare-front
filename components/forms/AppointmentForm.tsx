@@ -130,7 +130,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           value={values.title}
           error={touched.title && formik.errors.title}
         />
-        <div className="flex gap-4 mb-5">
+        <div className="flex gap-4 mb-5 flex-col lg:flex-row">
           {/* From date time */}
           <InputField
             label={"Van datum tijd"}

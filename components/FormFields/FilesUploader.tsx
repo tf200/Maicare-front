@@ -4,7 +4,6 @@ import React, {
   InputHTMLAttributes,
   useCallback,
   useEffect,
-  useRef,
 } from "react";
 import { useField } from "formik";
 import XMarkIcon from "@/components/icons/XMarkIcon";
