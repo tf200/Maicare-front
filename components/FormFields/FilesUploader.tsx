@@ -73,9 +73,9 @@ const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
             onUploaded={(id) => {
               setUploadedFiles((files) => [...files, id]);
             }}
-            onRemove={() => {
-              const files = selectedFiles.filter((f) => f !== file);
-              setSelectedFiles(files);
+            onRemove={(id) => {
+              setUploadedFiles((files) => files.filter((fId) => fId !== id));
+              setSelectedFiles((files) => files.filter((f) => f !== file));
             }}
           />
         ))}

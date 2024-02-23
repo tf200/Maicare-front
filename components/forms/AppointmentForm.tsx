@@ -79,14 +79,13 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
         ...initialSlot,
       };
     } else if (mode === "edit" && initialData) {
-      return {
+      const temp = {
         ...initialValues,
         ...initialData,
-        attachments: initialData?.attachments?.map(
-          (attachment) => attachment.id
-        ),
         attachment_ids_to_delete: [],
       };
+      delete temp.attachments;
+      return temp;
     } else {
       return initialValues;
     }
