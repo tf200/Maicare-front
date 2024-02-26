@@ -23,7 +23,7 @@ export const usePatchEmployeePic = (employeeId: number) => {
   return useMutation({
     mutationFn: PatchEmployeePic,
     onSuccess: () => {
-      queryClient.invalidateQueries([employeeId]);
+      queryClient.invalidateQueries(["employees", employeeId]);
     },
   });
 };
