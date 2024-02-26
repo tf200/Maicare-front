@@ -1,0 +1,10 @@
+:global(.rbc-event),
+:global(.rbc-day-slot) :global(.rbc-event) {
+  &.meeting {
+    @apply border-primary;
+  }
+
+  &.other {
+    @apply border-meta-6;
+  }
+}

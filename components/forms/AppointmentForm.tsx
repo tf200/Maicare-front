@@ -35,7 +35,19 @@ const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
       .oneOf(APPOINTMENT_TYPE_ARRAY, "Afspraak type is verplicht")
       .required("Afspraak type is verplicht"),
     start_time: Yup.string().required("Van datum tijd is verplicht"),
-    end_time: Yup.string().required("Tot datum tijd is verplicht"),
+    end_time: Yup.string()
+      .required("Tot datum tijd is verplicht")
+      .test(
+        "is-greater",
+        "Tot datum tijd moet groter zijn dan van datum tijd",
+        function (value, context) {
+          const { start_time } = context.parent;
+          if (start_time && value) {
+            return new Date(start_time) < new Date(value);
+          }
+          return true;
+        }
+      ),
     description: Yup.string().required("Beschrijving is verplicht"),
     employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
     clients: Yup.array().min(1, "Minimaal 1 klant is verplicht"),
@@ -68,9 +80,12 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
   initialSlot,
   mode = "create",
 }) => {
-  const { mutate: createAppointment } = useCreateAppointment();
-  const { mutate: updateAppointment } = useUpdateAppointment();
-  const { mutate: deleteAppointment } = useDeleteAppointment();
+  const { mutate: createAppointment, isLoading: isCreating } =
+    useCreateAppointment();
+  const { mutate: updateAppointment, isLoading: isUpdating } =
+    useUpdateAppointment();
+  const { mutate: deleteAppointment, isLoading: isDeleting } =
+    useDeleteAppointment();
   const parsedInitialData = useMemo(() => {
     if (mode === "create" && initialSlot) {
       return {
@@ -221,7 +236,10 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           {mode === "edit" && (
             <ModalActionButton
               actionType="DANGER"
+              type={"button"}
+              isLoading={isDeleting}
               className="grow flex items-center gap-2 justify-center"
+              loadingText={"Verwijderen..."}
               onClick={() => {
                 deleteAppointment(initialData?.id, {
                   onSuccess: onSuccessfulSubmit,
@@ -249,6 +267,8 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
             className="grow"
             disabled={!dirty && mode === "edit"}
             formNoValidate
+            isLoading={isCreating || isUpdating}
+            loadingText={"Bezig met opslaan..."}
           >
             {mode === "create" ? "+ Afspraak maken" : "Afspraak wijzigen"}
           </ModalActionButton>

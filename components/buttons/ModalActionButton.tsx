@@ -1,7 +1,9 @@
 import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
 import clsx from "clsx";
+import LoadingCircle from "@/components/icons/LoadingCircle";
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
+  loadingText?: string;
   actionType?: "ACKNOWLEDGE" | "CANCEL" | "CANCEL-2" | "CONFIRM" | "DANGER";
 };
 const ModalActionButton: FunctionComponent<Props> = ({
@@ -9,6 +11,7 @@ const ModalActionButton: FunctionComponent<Props> = ({
   className,
   type = "button",
   isLoading,
+  loadingText,
   ...props
 }) => {
   return (
@@ -16,7 +19,7 @@ const ModalActionButton: FunctionComponent<Props> = ({
       {...props}
       type={type}
       className={clsx(
-        "block rounded px-12.5 py-3  text-center font-medium transition disabled:bg-graydark disabled:dark:bg-whiter disabled:dark:text-black disabled:cursor-not-allowed",
+        "flex justify-center rounded px-12.5 py-3  text-center font-medium transition disabled:bg-graydark disabled:dark:bg-whiter disabled:dark:text-black disabled:cursor-not-allowed",
         {
           "border-meta-1 text-white bg-meta-1 hover:bg-opacity-90":
             actionType === "DANGER",
@@ -32,7 +35,16 @@ const ModalActionButton: FunctionComponent<Props> = ({
         className
       )}
     >
-      {isLoading ? "Updating ..." : props.children}
+      {isLoading ? (
+        <>
+          <span className="animate-spin">
+            <LoadingCircle />
+          </span>
+          <span className="ml-2">{loadingText ?? "Loading..."}</span>
+        </>
+      ) : (
+        props.children
+      )}
     </button>
   );
 };

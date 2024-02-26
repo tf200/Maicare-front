@@ -239,6 +239,7 @@ module.exports = {
         "max-height": "max-height",
       },
       borderWidth: {
+        1: "1px",
         6: "6px",
         10: "10px",
         12: "12px",
