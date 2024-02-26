@@ -15,7 +15,6 @@ import {
   Views,
 } from "react-big-calendar";
 
-import "./calendar-styles.scss";
 import Panel from "@/components/Panel";
 import Toolbar from "@/components/calendarComponents/Toolbar";
 import AppointmentFormModal from "@/components/Modals/AppointmentFormModal";
@@ -27,7 +26,6 @@ import { useAppointmentsList } from "@/utils/appointments/listAppointments";
 
 import dayjs from "dayjs";
 import "dayjs/locale/nl";
-import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useQueryClient } from "react-query";
 import {
   AppointmentListItem,
@@ -36,6 +34,10 @@ import {
 import { useUpdateAppointment } from "@/utils/appointments/updateAppointment";
 dayjs.locale("nl");
 const localizer = dayjsLocalizer(dayjs);
+
+import styles from "./calendar.module.scss";
+import "./calendar.styles.scss";
+import clsx from "clsx";
 
 type CalendarEvent = AppointmentListItem & {
   start: Date;
@@ -136,6 +138,15 @@ const Page: FunctionComponent = (props) => {
     queryClient.setQueryDefaults(["appointments"], { enabled: false });
   }, [queryClient]);
 
+  const classNameByAppointmentType = useCallback((event: CalendarEvent) => {
+    return {
+      className: clsx({
+        [styles.meeting]: event.appointment_type === "meeting",
+        [styles.other]: event.appointment_type === "other",
+      }),
+    };
+  }, []);
+
   return (
     <Panel title={"Kalender"} containerClassName="px-7 py-4">
       <DnDCalendar
@@ -157,6 +168,7 @@ const Page: FunctionComponent = (props) => {
         components={{
           toolbar: Toolbar,
         }}
+        eventPropGetter={classNameByAppointmentType}
         handleDragStart={deactivateQuery}
         onEventDrop={updateEventTime}
         onEventResize={updateEventTime}
