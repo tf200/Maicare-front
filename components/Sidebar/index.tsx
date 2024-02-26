@@ -15,6 +15,12 @@ import InvoiceIcon from "@/components/icons/InvoiceIcon";
 import GroupIcon from "@/components/icons/GroupIcon";
 import IndividualIcons from "@/components/icons/IndividualIcons";
 import GridsIcon from "@/components/icons/GridsIcon";
+import DocumentIcon from "@/components/svg/DocumentIcon";
+import ReportIcon from "@/components/svg/ReportIcon";
+import EducationIcon from "@/components/svg/EducationIcon";
+import CertifIcon from "@/components/svg/CertifIcon";
+import ExperienceIcon from "@/components/svg/ExperienceIcon";
+import RoleIcon from "@/components/svg/RoleIcon";
 import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
@@ -76,6 +82,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       !pathname.startsWith("/clients/new")
     ) {
       return <ClientMenu />;
+    } else if (
+      pathname.startsWith("/employees/") &&
+      !pathname.startsWith("/employees/new")
+    ) {
+      return <EmployeeMenu />;
     } else {
       return <GlobalMenu />;
     }
@@ -282,12 +293,12 @@ const ClientMenu: FunctionComponent = () => {
         },
         {
           completeHref: `/clients/${clientId}/reports`,
-          icon: <GridsIcon height={18} width={18} />,
+          icon: <ReportIcon height={18} width={18} />,
           children: "Rapporten",
         },
         {
           completeHref: `/clients/${clientId}/document`,
-          icon: <GridsIcon height={18} width={18} />,
+          icon: <DocumentIcon height={18} width={18} />,
           children: "Documenten",
         },
       ]}
@@ -296,6 +307,63 @@ const ClientMenu: FunctionComponent = () => {
           <ArrowRight className="rotate-180" />
           <span className="ml-2">TERUG NAAR CLIËNTENLIJST</span>
           {/* BACK TO CLIENTS LIST */}
+        </Link>
+      }
+    />
+  );
+};
+
+const EmployeeMenu: FunctionComponent = () => {
+  const { employeeId } = useParams();
+  return (
+    <SidebarMenu
+      items={[
+        {
+          completeHref: `/employees/${employeeId}`,
+          icon: <IndividualIcons width={18} height={18} />,
+          children: "Overzicht",
+          getIsActive: (pathname) => {
+            return pathname === `/employees/${employeeId}`;
+          },
+        },
+        {
+          completeHref: `/employees/${employeeId}/certificates`,
+          icon: <CertifIcon width={18} height={18} />,
+          children: "Certificaten",
+          getIsActive: (pathname) => {
+            return pathname.startsWith(`/employees/${employeeId}/certificates`);
+          },
+        },
+        {
+          completeHref: `/employees/${employeeId}/educations`,
+          icon: <EducationIcon width={18} height={18} />,
+          children: "Opleidingen",
+          getIsActive: (pathname) => {
+            return pathname.startsWith(`/employees/${employeeId}/educations`);
+          },
+        },
+        {
+          completeHref: `/employees/${employeeId}/experiences`,
+          icon: <ExperienceIcon width={18} height={18} />,
+          children: "Ervaringen",
+          getIsActive: (pathname) => {
+            return pathname.startsWith(`/employees/${employeeId}/experiences`);
+          },
+        },
+        {
+          completeHref: `/employees/${employeeId}/teams`,
+          icon: <RoleIcon width={18} height={18} />,
+          children: "Rollen",
+          getIsActive: (pathname) => {
+            return pathname.startsWith(`/employees/${employeeId}/teams`);
+          },
+        },
+      ]}
+      title={
+        <Link href={"/employees"} className="flex items-center">
+          <ArrowRight className="rotate-180" />
+          <span className="ml-2">TERUG NAAR MEDEWERKERSLIJST</span>
+          {/* BACK TO EMPLOYEES LIST */}
         </Link>
       }
     />
