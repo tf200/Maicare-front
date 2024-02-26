@@ -1,6 +1,7 @@
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 import { useState } from "react";
+import { useGroupsList } from "@/utils/groups/getGroupsList";
 
 interface OrganisationFilterProps {
   folders: string[];
@@ -8,6 +9,9 @@ interface OrganisationFilterProps {
 
 const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ folders }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { data, isError, isFetching, isLoading } = useGroupsList();
+  console.log(data);
 
   return (
     <>
@@ -24,7 +28,7 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ folders }) => {
           Mijn Zorg
         </button>
       </div>
-      <FolderList folders={folders} isOpen={isOpen} />
+      <FolderList folders={data ? data : []} isOpen={isOpen} />
     </>
   );
 };
@@ -39,7 +43,7 @@ const FolderList = ({ folders, isOpen }) => {
           key={index}
           className="px-4 rounded hover:bg-gray-200 cursor-pointer"
         >
-          {folder}
+          {folder.name}
         </li>
       ))}
     </ul>

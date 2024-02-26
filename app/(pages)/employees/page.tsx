@@ -21,7 +21,7 @@ import LinkButton from "@/components/buttons/LinkButton";
 
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
-  const [debouncedParams] = useDebounce([filters], 500);
+  const debouncedParams = useDebounce(filters, 500);
   const { page, setPage, data, isError, isFetching, isLoading } =
     useEmployeesList(debouncedParams);
 
