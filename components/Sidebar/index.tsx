@@ -227,7 +227,7 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Medewerkers",
         },
         {
-          completeHref: "/finance",
+          completeHref: "/finances",
           icon: <InvoiceIcon height={19} width={18} />,
           children: "Financiën",
         },
