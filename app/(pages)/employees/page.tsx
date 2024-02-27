@@ -109,6 +109,7 @@ const EmployeesPage: FunctionComponent = () => {
         <div className="px-[60px] pt-6">
           <div className="flex flex-col items-start justify-start">
             <OrganisationFilter
+              data={data}
               filters={filters}
               onFiltersChange={setFilters}
             />
