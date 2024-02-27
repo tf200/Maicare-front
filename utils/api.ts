@@ -23,15 +23,18 @@ axiosInstance.interceptors.request.use(authRequestInterceptor, (error) => {
 });
 
 function authErrorInterceptor(error: any) {
-    if (error?.response?.status === 401 || error?.response?.status === 403) {
-      localStorage.removeItem("a");
-      localStorage.removeItem("r");
-      window.location.href = "/signin";
-    }
-    return Promise.reject<any>(error);
+  if (error?.response?.status === 401 || error?.response?.status === 403) {
+    localStorage.removeItem("a");
+    localStorage.removeItem("r");
+    window.location.href = "/signin";
+  }
+  return Promise.reject<any>(error);
 }
 
-axiosInstance.interceptors.response.use((response) => response, authErrorInterceptor)
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  authErrorInterceptor
+);
 
 export default axiosInstance;
 
@@ -42,3 +45,13 @@ export const setAuthToken = (token: string) => {
     delete axiosInstance.defaults.headers.common["Authorization"];
   }
 };
+
+const mockApi = axios.create({
+  baseURL: "/api",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+
+export { mockApi };

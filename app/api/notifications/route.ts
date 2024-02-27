@@ -4,7 +4,7 @@ import {
   NotificationTypes,
 } from "@/types/notifications/notifications-list.dto";
 
-const MOCK_NOTIFICATIONS: NotificationsListDto = fetchNotifications();
+export const MOCK_NOTIFICATIONS: NotificationsListDto = fetchNotifications(5);
 
 function fetchNotifications(items = 10): NotificationsListDto {
   let notifications: NotificationsListDto = [];
