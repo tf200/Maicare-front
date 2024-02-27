@@ -68,7 +68,9 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 overflow-hidden rounded-full">
-          <Image width={112} height={112} src={profile_picture} alt="User" />
+          {profile_picture && (
+            <Image width={112} height={112} src={profile_picture} alt="User" />
+          )}
         </span>
 
         <svg
