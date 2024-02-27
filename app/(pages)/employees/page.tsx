@@ -27,13 +27,6 @@ const EmployeesPage: FunctionComponent = () => {
 
   const router = useRouter();
 
-  const folders = [
-    "Management",
-    "Kantoormedewerkers",
-    "Pedagogische Medewerkers",
-    "Ambulante Medewerkers",
-  ];
-
   const columnDef = useMemo<ColumnDef<EmployeesResDto>[]>(() => {
     return [
       {
@@ -115,7 +108,10 @@ const EmployeesPage: FunctionComponent = () => {
       >
         <div className="px-[60px] pt-6">
           <div className="flex flex-col items-start justify-start">
-            <OrganisationFilter folders={folders} />
+            <OrganisationFilter
+              filters={filters}
+              onFiltersChange={setFilters}
+            />
           </div>
         </div>
 
