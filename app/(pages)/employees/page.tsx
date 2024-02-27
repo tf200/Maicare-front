@@ -22,8 +22,15 @@ import LinkButton from "@/components/buttons/LinkButton";
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
   const debouncedParams = useDebounce(filters, 500);
-  const { page, setPage, data, isError, isFetching, isLoading } =
-    useEmployeesList(debouncedParams);
+  const {
+    page,
+    setPage,
+    isPreviousData,
+    data,
+    isError,
+    isFetching,
+    isLoading,
+  } = useEmployeesList(debouncedParams);
 
   const router = useRouter();
 
@@ -109,7 +116,6 @@ const EmployeesPage: FunctionComponent = () => {
         <div className="px-[60px] pt-6">
           <div className="flex flex-col items-start justify-start">
             <OrganisationFilter
-              data={data}
               filters={filters}
               onFiltersChange={setFilters}
             />

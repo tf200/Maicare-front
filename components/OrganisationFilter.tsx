@@ -3,22 +3,22 @@ import clsx from "clsx";
 import { useState } from "react";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
 import { useListRoles } from "@/utils/roles/list-roles";
+import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 
 interface OrganisationFilterProps {
   onFiltersChange: Function;
   filters: EmployeesSearchParams;
-  data: any;
 }
 
 const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   onFiltersChange,
   filters,
-  data: resultData,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
-
-  const { data, isError, isFetching, isLoading } = useListRoles();
+  const { data, isLoading } = useListRoles();
+  const { data: employeesData, isFetching: isFetchingEmployees } =
+    useEmployeesList(filters);
   if (isLoading) return;
   return !selectedGroup ? (
     <>
@@ -46,7 +46,8 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   ) : (
     <div className="w-full flex flex-col items-end">
       <div>
-        Team: {selectedGroup?.name} (in dienst: {resultData?.count})
+        Team: {selectedGroup?.name} (in dienst:{" "}
+        {isLoading || isFetchingEmployees ? "" : employeesData?.count})
       </div>
       <p
         onClick={() => {
