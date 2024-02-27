@@ -1,15 +1,26 @@
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 import { useState } from "react";
+import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
+import { useListRoles } from "@/utils/roles/list-roles";
+import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 
 interface OrganisationFilterProps {
-  folders: string[];
+  onFiltersChange: Function;
+  filters: EmployeesSearchParams;
 }
 
-const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ folders }) => {
+const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
+  onFiltersChange,
+  filters,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  return (
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const { data, isLoading } = useListRoles();
+  const { data: employeesData, isFetching: isFetchingEmployees } =
+    useEmployeesList(filters);
+  if (isLoading) return;
+  return !selectedGroup ? (
     <>
       <div className="flex items-center">
         <ChevronDown
@@ -24,23 +35,65 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ folders }) => {
           Mijn Zorg
         </button>
       </div>
-      <FolderList folders={folders} isOpen={isOpen} />
+      <FolderList
+        setSelectedGroup={setSelectedGroup}
+        filters={filters}
+        onFiltersChange={onFiltersChange}
+        folders={data ? data : []}
+        isOpen={isOpen}
+      />
     </>
+  ) : (
+    <div className="w-full flex flex-col items-end">
+      <div>
+        Team: {selectedGroup?.name} (in dienst:{" "}
+        {isLoading || isFetchingEmployees ? "" : employeesData?.count})
+      </div>
+      <p
+        onClick={() => {
+          onFiltersChange({
+            groups: "",
+            search: filters?.search,
+            out_of_service: filters?.out_of_service,
+          });
+          setSelectedGroup(null);
+        }}
+        className="text-[#0000FF] cursor-pointer"
+      >
+        (organigram)
+      </p>
+    </div>
   );
 };
 
-const FolderList = ({ folders, isOpen }) => {
+const FolderList = ({
+  folders,
+  isOpen,
+  setSelectedGroup,
+  onFiltersChange,
+  filters,
+}) => {
   if (!isOpen) return null;
   if (!folders) return null;
   return (
     <ul className="bg-gray-100 p-4 pt-0 rounded-md w-64">
-      {folders.map((folder, index) => (
-        <li
-          key={index}
-          className="px-4 rounded hover:bg-gray-200 cursor-pointer"
-        >
-          {folder}
-        </li>
+      {folders.map((group, index) => (
+        <div className="flex">
+          <li
+            key={index}
+            onClick={() => {
+              onFiltersChange({
+                groups: group.name,
+                search: filters?.search,
+                out_of_service: filters?.out_of_service,
+              });
+              setSelectedGroup(group);
+            }}
+            className="px-4 rounded hover:text-[#0000FF] cursor-pointer"
+          >
+            {group.name}
+          </li>
+        </div>
       ))}
     </ul>
   );
