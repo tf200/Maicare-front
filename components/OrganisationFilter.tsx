@@ -7,11 +7,13 @@ import { EmployeesSearchParams } from "@/types/employees/employees-search-params
 interface OrganisationFilterProps {
   onFiltersChange: Function;
   filters: EmployeesSearchParams;
+  data: any
 }
 
 const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   onFiltersChange,
   filters,
+  data: resultData
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -44,7 +46,7 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   ) : (
     <div className="w-full flex flex-col items-end">
       <div>
-        Team: {selectedGroup?.name} (in dienst: {selectedGroup?.id})
+        Team: {selectedGroup?.name} (in dienst: {resultData?.count})
       </div>
       <p
         onClick={() => {
