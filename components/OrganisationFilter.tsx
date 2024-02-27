@@ -1,24 +1,24 @@
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 import { useState } from "react";
-import { useGroupsList } from "@/utils/groups/getGroupsList";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
+import { useListRoles } from "@/utils/roles/list-roles";
 
 interface OrganisationFilterProps {
   onFiltersChange: Function;
   filters: EmployeesSearchParams;
-  data: any
+  data: any;
 }
 
 const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   onFiltersChange,
   filters,
-  data: resultData
+  data: resultData,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
 
-  const { data, isError, isFetching, isLoading } = useGroupsList();
+  const { data, isError, isFetching, isLoading } = useListRoles();
   if (isLoading) return;
   return !selectedGroup ? (
     <>
