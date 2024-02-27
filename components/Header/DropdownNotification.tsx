@@ -19,7 +19,6 @@ const DropdownNotification = () => {
         trigger.current.contains(target)
       )
         return;
-      console.log("closing dropdown...");
       setDropdownOpen(false);
     };
     document.addEventListener("click", clickHandler);
@@ -47,7 +46,6 @@ const DropdownNotification = () => {
       <Link
         ref={trigger}
         onClick={() => {
-          console.log("clicking...");
           setDropdownOpen((isOpen) => !isOpen);
         }}
         href="#"
