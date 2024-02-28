@@ -6,7 +6,7 @@ const NewClients: FunctionComponent = () => {
   return (
     <>
       <Breadcrumb pageName="Nieuwe Cliënt Toevoegen" />
-      <ClientsForm />
+      <ClientsForm mode={"new"} />
     </>
   );
 };

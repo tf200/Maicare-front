@@ -7,7 +7,7 @@ type Props = {
   picked: SelectionOption["value"];
   options: SelectionOption[];
   id: string;
-  label: string;
+  label?: string;
   name: string;
 };
 
@@ -25,7 +25,7 @@ const FormikRadioGroup: FunctionComponent<Props> = ({
       </div>
       <div
         role="group"
-        className="flex items-center gap-4"
+        className="flex items-center gap-5.5"
         aria-labelledby={id}
       >
         {options.map((option) => {

@@ -4,23 +4,23 @@ import * as Yup from "yup";
 import React, {
   FunctionComponent,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { FormikHelpers } from "formik/dist/types";
+import Image from "next/image";
 import CameraIcon from "@/components/svg/CameraIcon";
 import { useCreateClients } from "@/utils/clients/createClients";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
+import RadioCustom from "../Checkboxes/RadioCustom";
 import Button from "../buttons/Button";
 import { useRouter } from "next/navigation";
+import LoadingCircle from "../icons/LoadingCircle";
 import Select from "@/components/FormFields/Select";
-import { GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
-import { useClientDetails } from "@/utils/clients/getClientDetails";
-import FormikRadioGroup from "../FormFields/FormikRadioGroup";
-import ProfilePicture from "../ProfilePicture";
-import { usePatchClients } from "@/utils/clients/patchClients";
+import { SOURCE_OPTIONS } from "@/consts";
 
 type FormType = NewClientsRequest;
 
@@ -72,70 +72,37 @@ export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   source: Yup.string().required("Geef alstublieft een bron op"),
 });
 
-type PropsType = {
-  clientId?: number;
-  mode: string;
-};
+type PropsType = {};
 
-export const ClientsForm: FunctionComponent<PropsType> = ({
-  clientId,
-  mode,
-}) => {
-  const [isProfilePic, setIsProfilePic] = useState(false);
-  const { mutate: create, isLoading: isCreating } = useCreateClients();
-  const { mutate: update, isLoading: isPatching } = usePatchClients();
+export const ClientsForm: FunctionComponent<PropsType> = ({}) => {
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useClientDetails(clientId);
+  const [uploading, setUploading] = useState(false);
+
+  const router = useRouter();
+
+  const { mutate, isLoading } = useCreateClients();
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState(
     "/images/user/user-default.png"
   );
 
-  const router = useRouter();
-
-  if (data && !isProfilePic && mode === "edit") {
-    setImagePreviewUrl(data.profile_picture);
-    setIsProfilePic(true);
-  }
-
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      if (mode === "edit") {
-        update(
-          {
-            ...values,
-            id: clientId,
-          },
-          {
-            onSuccess: () => {
-              resetForm;
-              router.push(`/clients/${clientId}`);
-            },
-          }
-        );
-      } else if (mode === "new") {
-        create(values, {
-          onSuccess: () => {
-            resetForm;
-            router.push("/clients");
-          },
-        });
-      }
+      setUploading(true);
+      mutate(values, {
+        onSuccess: () => {
+          resetForm
+          router.push("/clients");
+        },
+      });
     },
-    [create, update]
+    [mutate]
   );
 
   return (
     <>
       <Formik
-        enableReinitialize={true}
-        initialValues={
-          mode == "edit" ? (data ? data : initialValues) : initialValues
-        }
+        initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={clientsSchema}
       >
@@ -153,12 +120,16 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
           ) => {
             const file = event.target.files ? event.target.files[0] : null;
             if (file) {
+              setUploading(true);
+
               try {
                 const fileUrl = URL.createObjectURL(file);
                 setImagePreviewUrl(fileUrl);
                 setFieldValue("profile_picture", file);
+                setUploading(false);
               } catch (error) {
                 console.error("Error uploading file:", error);
+                setUploading(false);
               }
             }
           };
@@ -174,13 +145,20 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     <div className="px-4 mt-[70px] pb-5 text-center">
                       <div className="relative z-30 w-full p-1 mx-auto rounded-full -mt-22 h-30 max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                         <div className="relative drop-shadow-2">
-                          <div className="w-40 h-40">
-                            <ProfilePicture
+                          {uploading ? (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="animate-spin">
+                                <LoadingCircle />
+                              </span>
+                            </div>
+                          ) : (
+                            <Image
+                              alt="profile"
                               width={160}
                               height={160}
-                              profilePicture={imagePreviewUrl}
+                              src={imagePreviewUrl}
                             />
-                          </div>
+                          )}
                           <label
                             htmlFor="profile"
                             className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -275,12 +253,27 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                           Geslacht
                         </h3>
                       </div>
-                      <div className="flex flex-row p-6.5">
-                        <FormikRadioGroup
-                          picked={values.gender}
-                          options={GENDER_OPTIONS}
-                          id={"gender"}
-                          name={"gender"}
+                      <div className="flex flex-row gap-5.5 p-6.5">
+                        <RadioCustom
+                          id={1}
+                          type="radio"
+                          label="Man"
+                          name="gender"
+                          value="Man"
+                        />
+                        <RadioCustom
+                          id={2}
+                          type="radio"
+                          label={"Vrouw"}
+                          name="gender"
+                          value="Vrouw"
+                        />
+                        <RadioCustom
+                          id={3}
+                          type="radio"
+                          label={"Niet gespecificeerd"}
+                          name="gender"
+                          value="Niet gespecificeerd"
                         />
                       </div>
                     </div>
@@ -454,14 +447,11 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                 </div>
                 <Button
                   type={"submit"}
-                  disabled={isCreating || isPatching}
-                  isLoading={isCreating || isPatching}
+                  disabled={isLoading}
+                  isLoading={isLoading}
                   formNoValidate={true}
-                  loadingText={
-                    mode === "edit" ? "Bijwerken..." : "Toevoegen..."
-                  }
                 >
-                  {mode === "edit" ? "Klant Bijwerken" : "Cliënten Indienen"}
+                  Cliënten Indienen
                 </Button>
               </div>
             </form>

@@ -1,3 +1,4 @@
+"use client";
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
@@ -9,8 +10,12 @@ import MedicalRecordSummary from "@/components/clientDetails/MedicalRecordSummar
 import EmergencyContactsSummary from "@/components/clientDetails/EmergyencyContactsSummary";
 import DocumentsSummary from "@/components/clientDetails/DocumentsSummary";
 import LinkButton from "@/components/buttons/LinkButton";
+import Link from "next/link";
 import ReportsSummary from "@/components/clientDetails/ReportsSummary";
 import ContractsSummary from "@/components/clientDetails/ContractsSummary";
+import IconButton from "@/components/buttons/IconButton";
+import PencilSquare from "@/components/icons/PencilSquare";
+import TrashIcon from "@/components/icons/TrashIcon";
 
 type Props = {
   params: { clientId: string };
@@ -25,7 +30,23 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
       {/* <Breadcrumb pageName="Client details" /> */}
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          <Panel title={"Cliëntinformatie"} containerClassName="px-7 py-4">
+          <Panel
+            title={"Cliëntinformatie"}
+            containerClassName="px-7 py-4"
+            sideActions={
+              <div className="flex gap-4">
+                <Link href={`/clients/${clientId}/edit`}>
+                  <IconButton>
+                    <PencilSquare className="w-5 h-5" />
+                  </IconButton>
+                </Link>
+
+                <IconButton buttonType="Danger">
+                  <TrashIcon className="w-5 h-5" />
+                </IconButton>
+              </div>
+            }
+          >
             <ClientInformation clientId={parseInt(clientId)} />
           </Panel>
           <Panel title={"Locatiegegevens"} containerClassName="px-7 py-4">

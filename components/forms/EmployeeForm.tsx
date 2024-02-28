@@ -17,13 +17,10 @@ const initialValue: EmployeeFormType = {
   employee_number: undefined,
   employment_number: undefined,
   is_subcontractor: false,
-
   first_name: "",
   last_name: "",
-
   date_of_birth: "",
   gender: "not_specified",
-
   email_address: "",
   private_email_address: "",
   authentication_phone_number: "",

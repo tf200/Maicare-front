@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { usePatchEmployeePic } from "@/utils/employees/patchEmployeePicture";
 
 import { Formik, FormikHelpers } from "formik";
+import ProfilePicture from "../ProfilePicture";
 type Props = ModalProps & {
   additionalProps: {
     id: number;
@@ -99,13 +100,13 @@ const UpdatePicModalForm = ({ employeeId, onUpdated }) => {
                   </span>
                 </div>
               ) : (
-                <Image
-                  className="bg-yellow"
-                  alt="profile"
-                  width={160}
-                  height={160}
-                  src={imagePreviewUrl}
-                />
+                <div className="w-40 h-40">
+                  <ProfilePicture
+                    width={160}
+                    height={160}
+                    profilePicture={imagePreviewUrl}
+                  />
+                </div>
               )}
               <label
                 htmlFor="profile_picture"
