@@ -1,11 +1,17 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import ProfilePicture from "@/components/ProfilePicture";
 import { useUserInfo } from "@/utils/user-info/getUserInfo";
 import { cn } from "@/utils/cn";
 import { getTime } from "@/utils/message-time";
 import { UserProfile } from "@/types/UserProfile";
+import { WSContext } from "@/components/providers/WSProvider";
 
 const MOCK_USER_1: UserProfile = {
   id: 1,
@@ -88,6 +94,14 @@ const MOCK_CONVERSATION: Conversation = {
 
 const ChatBox: FunctionComponent = (props) => {
   const { data: userInfo } = useUserInfo();
+  const ws = useContext(WSContext);
+  // useEffect(() => {
+  //   ws?.send({
+  //     message: "recipient_id",
+  //     recipient_id: 2,
+  //     conversation_id: 2,
+  //   });
+  // }, []);
   const isEitherUser = useMemo(() => {
     return 1 === MOCK_USER_1.id || 1 === MOCK_USER_2.id;
   }, [MOCK_CONVERSATION]);

@@ -24,6 +24,7 @@ import RoleIcon from "@/components/svg/RoleIcon";
 import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
+import ChatBubblesIcon from "@/components/icons/ChatBubblesIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -240,6 +241,11 @@ const GlobalMenu: FunctionComponent = () => {
           completeHref: "/tasks",
           icon: <CalendarIcon />,
           children: "Planning & Taken",
+        },
+        {
+          completeHref: "/conversations",
+          icon: <ChatBubblesIcon className={"w-4.5 h-4.5"} />,
+          children: "Conversaties",
         },
       ]}
       title={"MENU"}
