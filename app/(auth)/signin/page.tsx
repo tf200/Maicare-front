@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { InputFieldBig } from "@/components/FormFields/InputFieldBig";
 import UseSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { InputFieldBig } from "@/components/FormFields/InputFieldBig";
 
 const SignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,7 +37,7 @@ const SignIn: React.FC = () => {
       <div className="flex flex-col items-center justify-center mb-6 xl:hidden">
         <Image
           className="pb-2 dark:hidden"
-          src={"/images/logo/logo.ico"}
+          src={"/images/logo/logo.png"}
           alt="Logo"
           width={80}
           height={12}
@@ -78,6 +78,7 @@ const SignIn: React.FC = () => {
               : null
           }
           placeholder="6+ Characters, 1 Capital letter"
+          className="mb-8"
           icon={<LockIcon />}
         />
         <div className="mb-5">

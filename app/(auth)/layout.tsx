@@ -18,7 +18,7 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
               <Link className="mb-5.5 inline-block" href="/public">
                 <Image
                   className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
+                  src={"/images/logo/logo.png"}
                   alt="Logo"
                   width={176}
                   height={32}
