@@ -4,7 +4,6 @@ import { InputFieldBig } from "@/components/FormFields/InputFieldBig";
 import UseSignIn from "@/hooks/useSignIn";
 import MailIcon from "@/components/icons/MailIcon";
 import LockIcon from "@/components/icons/LockIcon";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,8 +13,6 @@ const SignIn: React.FC = () => {
   const initialAlertState: [string, string] = ["", ""];
   const [alertState, setAlertState] =
     useState<[string, string]>(initialAlertState);
-
-  const router = useRouter();
 
   const requiredMessage = "This field is required.";
   const formik = useFormik({

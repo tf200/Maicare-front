@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
 import ClientInformation from "@/components/clientDetails/ClientInformation";
@@ -16,6 +16,11 @@ import ContractsSummary from "@/components/clientDetails/ContractsSummary";
 import IconButton from "@/components/buttons/IconButton";
 import PencilSquare from "@/components/icons/PencilSquare";
 import TrashIcon from "@/components/icons/TrashIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useDeleteClient } from "@/utils/clients/deleteClient";
+import CheckIcon from "@/components/icons/CheckIcon";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: { clientId: string };
@@ -24,6 +29,27 @@ type Props = {
 const ClientDetailsPage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
+  const router = useRouter();
+
+  const {
+    mutate: deleteClient,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteClient();
+
+  useEffect(() => {
+    if (isDeleted) {
+      router.push(`/clients`);
+    }
+  }, [isDeleted]);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Are you sure you want to delete this client ?",
+      title: "Delete Client",
+    })
+  );
+
   return (
     <>
       <Breadcrumb pageName="Cliëntgegevens" />
@@ -41,8 +67,23 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
                   </IconButton>
                 </Link>
 
-                <IconButton buttonType="Danger">
-                  <TrashIcon className="w-5 h-5" />
+                <IconButton
+                  buttonType="Danger"
+                  onClick={() => {
+                    open({
+                      onConfirm: () => {
+                        deleteClient(parseInt(clientId));
+                      },
+                    });
+                  }}
+                  disabled={isDeleted}
+                  isLoading={isDeleting}
+                >
+                  {isDeleted ? (
+                    <CheckIcon className="w-5 h-5" />
+                  ) : (
+                    <TrashIcon className="w-5 h-5" />
+                  )}
                 </IconButton>
               </div>
             }

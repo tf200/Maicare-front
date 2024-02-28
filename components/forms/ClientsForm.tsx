@@ -1,11 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";

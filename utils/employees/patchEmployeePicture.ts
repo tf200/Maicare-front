@@ -7,7 +7,7 @@ const PatchEmployeePic = async (data: any) => {
   formData.append("profile_picture", data.profile_picture);
   const response = await api.patch<NewEmployeesRequest>(
     `employee/employee_pic/${data.employeeId}/`,
-    formData,   
+    formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",
