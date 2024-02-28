@@ -10,7 +10,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const [isAllowed, setIsAllowed] = useState(false);
 
-  const { refetch } = useUserInfo();
+  const { refetch } = useUserInfo(false);
 
   const verify = async () => {
     await refetch();

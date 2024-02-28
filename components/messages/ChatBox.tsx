@@ -94,14 +94,17 @@ const MOCK_CONVERSATION: Conversation = {
 
 const ChatBox: FunctionComponent = (props) => {
   const { data: userInfo } = useUserInfo();
-  const ws = useContext(WSContext);
-  // useEffect(() => {
-  //   ws?.send({
-  //     message: "recipient_id",
-  //     recipient_id: 2,
-  //     conversation_id: 2,
-  //   });
-  // }, []);
+  const { ws, isConnected } = useContext(WSContext);
+  useEffect(() => {
+    console.log("isConnected", isConnected);
+    if (isConnected) {
+      ws?.send({
+        message: "Hello world!",
+        recipient_id: 2,
+        conversation_id: 2,
+      });
+    }
+  }, [isConnected]);
   const isEitherUser = useMemo(() => {
     return 1 === MOCK_USER_1.id || 1 === MOCK_USER_2.id;
   }, [MOCK_CONVERSATION]);

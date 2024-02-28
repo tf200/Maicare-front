@@ -22,9 +22,9 @@ const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/*<WSProvider>*/}
-      <ModalProvider>{children}</ModalProvider>
-      {/*</WSProvider>*/}
+      <WSProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </WSProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
