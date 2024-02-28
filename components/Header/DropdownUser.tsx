@@ -1,20 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useQuery } from "react-query";
-import api from "@/utils/api";
 import jwt from "jsonwebtoken";
+import ProfilePicture from "@/components/ProfilePicture";
+import { useUserInfo } from "@/utils/user-info/getUserInfo";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
   const decode = jwt.decode(localStorage.getItem("a"));
 
-  const { data: userData }: any = useQuery({
-    queryFn: () => api.get("/employee/profile/"),
-    queryKey: ["user"],
-  });
+  const { data: userData } = useUserInfo();
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -44,7 +40,7 @@ const DropdownUser = () => {
   });
 
   if (!userData) return null;
-  const { username, profile_picture } = userData.data;
+  const { username, profile_picture } = userData;
   if (!decode) return null;
   const role =
     decode.groups.length > 0
@@ -68,9 +64,12 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 overflow-hidden rounded-full">
-          {profile_picture && (
-            <Image width={112} height={112} src={profile_picture} alt="User" />
-          )}
+          <ProfilePicture
+            profilePicture={profile_picture}
+            width={48}
+            height={48}
+            className={"h-12 w-12"}
+          />
         </span>
 
         <svg
