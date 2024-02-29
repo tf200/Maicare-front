@@ -21,15 +21,15 @@ export class WebSocketService {
     this.ws.send(JSON.stringify(data));
   }
   onMessage(callback: (data: any) => void) {
-    this.ws.onmessage = (event) => {
+    this.ws.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
       callback(data);
-    };
+    });
   }
   onError(callback: (event: Event) => void) {
-    this.ws.onerror = (event) => {
+    this.ws.addEventListener("error", (event) => {
       callback(event);
-    };
+    });
   }
   close() {
     this.ws.close();
@@ -43,6 +43,15 @@ export class WebSocketService {
     this.ws.onclose = (event) => {
       callback(event);
     };
+  }
+  reconnect() {
+    const prevWs = this.ws;
+    this.ws = createWebSocket();
+    this.ws.onopen = prevWs.onopen;
+    this.ws.onclose = prevWs.onclose;
+    this.ws.onmessage = prevWs.onmessage;
+    this.ws.onerror = prevWs.onerror;
+    prevWs.close();
   }
 }
 
@@ -58,6 +67,7 @@ export const useWs = () => {
       });
       wsService.onClose(() => {
         setIsConnected(false);
+        wsService.reconnect();
       });
       return () => {
         wsService.close();

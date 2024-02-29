@@ -2,6 +2,9 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 
 export type UserInfoResDto = {
+  user: number;
+  employee_id?: number;
+  client_id?: number;
   username: string;
   email: string;
   first_name: string;

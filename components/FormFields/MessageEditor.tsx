@@ -22,6 +22,7 @@ const MessageEditor: FunctionComponent<Props> = ({
   const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const message = messageEditorRef.current?.value;
+    onSubmitCallback(message);
   }, []);
   return (
     <form
@@ -31,6 +32,7 @@ const MessageEditor: FunctionComponent<Props> = ({
       <div className="relative w-full">
         <input
           ref={messageEditorRef}
+          autoComplete={"off"}
           disabled={disabled}
           type="text"
           id="message-editor"

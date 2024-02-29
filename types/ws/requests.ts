@@ -1,5 +1,5 @@
 type MessageRequest = {
-  type: "message";
+  // type: "message";
   message: string;
   recipient_id: number;
   conversation_id: number;

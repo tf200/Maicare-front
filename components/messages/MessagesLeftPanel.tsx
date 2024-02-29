@@ -1,23 +1,45 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { UserProfile } from "@/types/UserProfile";
 import { getTime } from "@/utils/message-time";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import ProfilePicture from "@/components/ProfilePicture";
-import MagnifierIcon from "@/components/icons/MagnifierIcon";
-import SearchDropdown from "@/components/searchDropdown/SearchDropdown";
 import EmployeesSearch from "@/components/searchDropdown/EmployeesSearch";
+import api from "@/utils/api";
+import { useQuery } from "react-query";
+import { useUserInfo } from "@/utils/user-info/getUserInfo";
+import Link from "next/link";
+
+type ConversationItem = {
+  id: number;
+  involved_details: UserProfile[];
+};
+
+type ConversationsResDto = Paginated<ConversationItem>;
+
+async function getConversations() {
+  const response = await api.get<ConversationsResDto>("/chat/conversations/");
+  return response.data;
+}
+
+export function useConversations(employeeId: number) {
+  return useQuery(["conversations", employeeId], getConversations, {
+    // enabled: !!employeeId,
+  });
+}
 
 const MessagesLeftPanel: FunctionComponent = (props) => {
   const { data: chatProfiles } = useEmployeesList();
+  const { data: user } = useUserInfo();
+  const { data: conversations } = useConversations(user.user);
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
       <div className="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">
         <h3 className="text-lg font-medium text-black dark:text-white 2xl:text-xl">
           Active Conversations
           <span className="rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-black dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4">
-            7
+            {conversations?.results.length}
           </span>
         </h3>
       </div>
@@ -26,8 +48,13 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
           <EmployeesSearch />
         </form>
         <div className="no-scrollbar max-h-full space-y-2.5 overflow-auto">
-          {chatProfiles?.results.map((employee, item) => {
-            return <ChatProfile profile={employee} isOnline={true} />;
+          {conversations?.results.map((conversation, item) => {
+            return (
+              <ConversationItem
+                key={conversation.id}
+                conversation={conversation}
+              />
+            );
           })}
         </div>
       </div>
@@ -37,24 +64,44 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
 
 export default MessagesLeftPanel;
 
-type ChatProfileProps = {
-  profile: UserProfile;
-  isOnline: boolean;
-  lastSeen?: string;
-  lastSentMessage?: string;
+type ConversationItemProps = {
+  conversation: ConversationItem;
 };
 
-const ChatProfile: FunctionComponent<ChatProfileProps> = ({
-  profile,
-  isOnline,
-  lastSeen,
-  lastSentMessage,
+const ConversationItem: FunctionComponent<ConversationItemProps> = ({
+  conversation,
 }) => {
+  const { data: user } = useUserInfo();
+  const otherParticipant = useMemo(
+    () =>
+      conversation.involved_details?.find(
+        (profile) => profile.id !== user.user
+      ),
+    []
+  );
+  return <ChatProfile conversationId={1} participant={otherParticipant} />;
+};
+
+type Props = {
+  participant: UserProfile;
+  conversationId: number;
+};
+
+const ChatProfile: FunctionComponent<Props> = ({
+  participant,
+  conversationId,
+}) => {
+  const isOnline = true;
+  const lastSeen = "2021-10-10T10:10:10";
+  const lastSentMessage = "Hello, how are you?";
   return (
-    <div className="flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark">
+    <Link
+      href={`/conversations/${conversationId}`}
+      className="flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark"
+    >
       <div className="relative mr-3.5 h-11 w-full max-w-11 rounded-full">
         <ProfilePicture
-          profilePicture={profile.profile_picture}
+          profilePicture={participant.profile_picture}
           className="h-full w-full object-cover object-center"
           width={44}
           height={44}
@@ -63,13 +110,13 @@ const ChatProfile: FunctionComponent<ChatProfileProps> = ({
       </div>
       <div className="w-full">
         <h5 className="text-sm font-medium text-black dark:text-white">
-          {profile.first_name} {profile.last_name}
+          {participant.first_name} {participant.last_name}
         </h5>
         {lastSeen && !isOnline && (
           <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>
         )}
         {lastSentMessage && <p className="text-sm">{lastSentMessage}</p>}
       </div>
-    </div>
+    </Link>
   );
 };

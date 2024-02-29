@@ -40,7 +40,7 @@ const DropdownUser = () => {
   });
 
   if (!userData) return null;
-  const { username, profile_picture } = userData;
+  const { profile_picture, first_name, last_name } = userData;
   if (!decode) return null;
   const role =
     decode.groups.length > 0
@@ -58,7 +58,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {username}
+            {first_name} {last_name}
           </span>
           <span className="block text-xs">{role}</span>
         </span>
