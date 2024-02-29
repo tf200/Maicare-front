@@ -12,6 +12,12 @@ import LinkButton from "@/components/buttons/LinkButton";
 import DetailCell from "@/components/DetailCell";
 import PaginatedTable from "@/components/PaginatedTable";
 import router from "next/router";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteMedication } from "@/utils/medications/deleteMedication";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   params: { clientId: string };
@@ -84,6 +90,19 @@ type RowDetailsProps = {
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  const {
+    mutate: deleteMedication,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteMedication(data.client);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Are you sure you want to delete this medication ?",
+      title: "Delete Medication",
+    })
+  );
+
   return (
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Naam"} value={data.name} />
@@ -96,6 +115,26 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Notities"}
         value={data.notes}
       />
+      <div>
+        <IconButton
+          buttonType="Danger"
+          onClick={() => {
+            open({
+              onConfirm: () => {
+                deleteMedication(data.id);
+              },
+            });
+          }}
+          disabled={isDeleted}
+          isLoading={isDeleting}
+        >
+          {isDeleted ? (
+            <CheckIcon className="w-5 h-5" />
+          ) : (
+            <TrashIcon className="w-5 h-5" />
+          )}
+        </IconButton>
+      </div>
     </div>
   );
 };
