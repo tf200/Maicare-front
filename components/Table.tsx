@@ -58,6 +58,9 @@ function Table<T>({
   const table = useReactTable({
     columns,
     data,
+    // TODO: PASS THIS AS A FUNCTION FROM PROPS
+    //@ts-ignore
+    getRowId: (row) => row.id,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable,
