@@ -10,6 +10,7 @@ import LinkButton from "@/components/buttons/LinkButton";
 import { ReportsListItem } from "@/types/reports/reports-list-res-dto";
 import { useReportsList } from "@/utils/reports/getReportsList";
 import PaginatedTable from "@/components/PaginatedTable";
+import { fullDateTimeFormat } from "@/utils/timeFormatting";
 
 type Props = {
   params: { clientId: string };
@@ -24,8 +25,8 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     return [
       {
         accessorKey: "date",
-        header: () => "Datum",
-        cell: (info) => info.getValue() || "Not Available",
+        header: () => "Datum & Tijd",
+        cell: (info) => fullDateTimeFormat(info.getValue() as Date) || "Not Available",
       },
       {
         accessorKey: "report_text",
@@ -38,7 +39,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => info.getValue() || "Not Available",
       },
       {
-        accessorKey: "author",
+        accessorKey: "full_name",
         header: () => "Geschreven Door",
         cell: (info) => info.getValue() || "Not Available",
       },
