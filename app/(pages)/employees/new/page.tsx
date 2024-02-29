@@ -6,7 +6,7 @@ const NewEmployeePage: FunctionComponent = () => {
   return (
     <>
       <Breadcrumb pageName="Medewerker Aanmaken" />
-      <EmployeeForm />
+      <EmployeeForm mode="new" />
     </>
   );
 };

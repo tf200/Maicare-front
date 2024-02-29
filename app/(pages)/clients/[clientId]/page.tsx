@@ -39,14 +39,16 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (isDeleted) {
-      router.push(`/clients`);
+      setTimeout(() => {
+        router.push(`/clients`);
+      }, 700);
     }
   }, [isDeleted]);
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this client ?",
-      title: "Delete Client",
+      msg: "Weet u zeker dat u deze cliënt wilt verwijderen?",
+      title: "Cliënt Verwijderen",
     })
   );
 

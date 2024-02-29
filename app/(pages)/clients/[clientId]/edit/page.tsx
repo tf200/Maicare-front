@@ -11,7 +11,7 @@ const UpdateClients: FunctionComponent<PropsType> = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Update Client" />
+      <Breadcrumb pageName="Cliënt Bijwerken" />
       <ClientsForm clientId={parseInt(clientId)} mode={"edit"} />
     </>
   );
