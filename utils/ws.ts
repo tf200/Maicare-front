@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import WSRequest from "@/types/ws/requests";
 const endpoint = process.env.NEXT_PUBLIC_WS_URL;
 
 function createWebSocket() {
@@ -16,7 +17,7 @@ export class WebSocketService {
   constructor() {
     this.ws = createWebSocket();
   }
-  send(data: any) {
+  send(data: WSRequest) {
     this.ws.send(JSON.stringify(data));
   }
   onMessage(callback: (data: any) => void) {

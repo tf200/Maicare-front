@@ -1,8 +1,8 @@
 import React, { ButtonHTMLAttributes, FunctionComponent } from "react";
 import LoadingCircle from "@/components/icons/LoadingCircle";
 import { ButtonType } from "@/types/button-type";
-import clsx from "clsx";
 import { BUTTON_CLASS_NAMES } from "@/consts";
+import { cn } from "@/utils/cn";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
@@ -22,10 +22,11 @@ const Button: FunctionComponent<ButtonProps> = ({
     <button
       type={type}
       {...props}
-      className={clsx(
+      className={cn(
         "flex justify-center px-10 py-3 font-medium rounded bg-primary text-gray",
         BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
-          BUTTON_CLASS_NAMES.Primary
+          BUTTON_CLASS_NAMES.Primary,
+        props.className
       )}
     >
       {isLoading ? (
