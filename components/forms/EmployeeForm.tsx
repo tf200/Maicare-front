@@ -1,8 +1,8 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import Panel from "@/components/Panel";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import { EmployeeFormType } from "@/types/employees/employee-form-type";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
@@ -11,19 +11,21 @@ import FormikRadioGroup from "@/components/FormFields/FormikRadioGroup";
 import { GENDER_OPTIONS } from "@/consts";
 import * as Yup from "yup";
 import { useCreateEmployee } from "@/utils/employees/createEmployee";
+import { usePatchEmployee } from "@/utils/employees/patchEmployee";
 import { useRouter } from "next/navigation";
+import { useEmployeeDetails } from "@/utils/employees/getEmployeeDetails";
 
-const initialValue: EmployeeFormType = {
+type FormType = EmployeeFormType;
+
+const initialValues: FormType = {
+  id: 0,
   employee_number: undefined,
   employment_number: undefined,
   is_subcontractor: false,
-
   first_name: "",
   last_name: "",
-
   date_of_birth: "",
   gender: "not_specified",
-
   email_address: "",
   private_email_address: "",
   authentication_phone_number: "",
@@ -33,18 +35,14 @@ const initialValue: EmployeeFormType = {
 };
 
 const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
+  id: Yup.number(),
   employee_number: Yup.string().required("Medewerkernummer Vereist"),
   employment_number: Yup.string().required("Dienstnummer Vereist"),
   is_subcontractor: Yup.boolean(),
-
-  first_name: Yup.string()
-    .required()
-    .required("Geef alstublieft de voornaam op"),
+  first_name: Yup.string().required("Geef alstublieft de voornaam op"),
   last_name: Yup.string().required("Geef alstublieft de achternaam op"),
-
   date_of_birth: Yup.string().required("Geef alstublieft de geboortedatum op"),
   gender: Yup.string().required("Geef alstublieft het geslacht op"),
-
   email_address: Yup.string().required("Geef alstublieft het e-mailadres op"),
   private_email_address: Yup.string(),
   authentication_phone_number: Yup.string(),
@@ -53,19 +51,56 @@ const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
   home_telephone_number: Yup.string(),
 });
 
-const EmployeeForm: FunctionComponent = () => {
-  const { mutate, isLoading } = useCreateEmployee();
+type PropsType = {
+  employeeId?: number;
+  mode: string;
+};
+
+const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
+  const { mutate: create, isLoading: isCreating } = useCreateEmployee();
+  const { mutate: update, isLoading: isPatching } = usePatchEmployee();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useEmployeeDetails(employeeId);
+  
   const router = useRouter();
-  return (
-    <Formik
-      initialValues={initialValue}
-      onSubmit={(values, { resetForm }) => {
-        mutate(values, {
+
+  const onSubmit = useCallback(
+    (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: employeeId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/employees/${employeeId}`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        delete values.id;
+        create(values, {
           onSuccess: () => {
+            resetForm;
             router.push("/employees");
           },
         });
-      }}
+      }
+    },
+    [create, update]
+  );
+
+  return (
+    <Formik
+      enableReinitialize={true}
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
+      onSubmit={onSubmit}
       validationSchema={employeeSchema}
     >
       {({
@@ -168,12 +203,12 @@ const EmployeeForm: FunctionComponent = () => {
             </Panel>
             <Button
               type="submit"
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              isLoading={isLoading}
-              disabled={isLoading}
-              loadingText={"Werknemer aanmaken..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Medewerker Opslaan
+              {mode === "edit" ? "Werknemer bijwerken" : "Medewerker Opslaan"}
             </Button>
           </div>
           <div className="flex flex-col gap-9">

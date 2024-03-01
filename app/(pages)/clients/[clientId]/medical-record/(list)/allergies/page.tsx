@@ -14,19 +14,21 @@ import DetailCell from "@/components/DetailCell";
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
 import PaginatedTable from "@/components/PaginatedTable";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useDeleteAllergy } from "@/utils/allergies/deleteAllergy";
 
 type Props = {
   params: { clientId: string };
 };
 
 const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const {
-    data,
-    pagination,
-    isError,
-    isLoading,
-    isFetching,
-  } = useAllergiesList(parseInt(clientId));
+  const { data, pagination, isError, isLoading, isFetching } = useAllergiesList(
+    parseInt(clientId)
+  );
 
   const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(() => {
     const columnHelper = createColumnHelper<AllergiesResDto>();
@@ -77,8 +79,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           renderRowDetails={renderRowDetails}
         />
       )}
-      <div className="flex flex-wrap justify-between items-center p-4">
-      </div>
+      <div className="flex flex-wrap justify-between items-center p-4"></div>
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de allergielijst te laden.
@@ -95,6 +96,19 @@ type RowDetailsProps = {
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  const {
+    mutate: deleteAllergy,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteAllergy(data.client);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze allergie wilt verwijderen?",
+      title: "Allergie Verwijderen",
+    })
+  );
+
   return (
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Type Allergie"} value={data.allergy_type} />
@@ -107,7 +121,31 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
           </div>
         }
       />
-      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
+      <DetailCell
+        className={"col-span-3"}
+        label={"Notities"}
+        value={data.notes}
+      />
+      <div>
+        <IconButton
+          buttonType="Danger"
+          onClick={() => {
+            open({
+              onConfirm: () => {
+                deleteAllergy(data.id);
+              },
+            });
+          }}
+          disabled={isDeleted}
+          isLoading={isDeleting}
+        >
+          {isDeleted ? (
+            <CheckIcon className="w-5 h-5" />
+          ) : (
+            <TrashIcon className="w-5 h-5" />
+          )}
+        </IconButton>
+      </div>
     </div>
   );
 };

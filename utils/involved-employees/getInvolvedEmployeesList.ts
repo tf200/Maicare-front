@@ -24,7 +24,7 @@ export const useInvolvedEmployeesList = (
   const parsedParams = pagination.params;
 
   const query = useQuery({
-    queryKey: [clientId, "employees", params ?? parsedParams],
+    queryKey: [clientId, "involved", params ?? parsedParams],
     queryFn: fetchInvolvedEmployeesList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });

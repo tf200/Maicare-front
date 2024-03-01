@@ -64,19 +64,19 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "original_filename",
         header: () => "Bestandsnaam",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
         accessorKey: "file_size",
         header: () => "Bestandsgrootte",
         cell: (info) =>
-          bytesToSize(parseInt(info.getValue())) || "Not Available",
+          bytesToSize(parseInt(info.getValue())) || "Niet Beschikbaar",
       },
       {
         accessorKey: "uploaded_at",
         header: () => "Geüpload Op",
         cell: (info) =>
-          dayjs(info.getValue()).format("DD MMM, YYYY") || "Not Available",
+          dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
       },
       {
         accessorKey: "documents",

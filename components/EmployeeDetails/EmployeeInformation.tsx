@@ -11,6 +11,7 @@ import CameraIcon from "../svg/CameraIcon";
 import IconButton from "../buttons/IconButton";
 import { useModal } from "../providers/ModalProvider";
 import ProfilePictureModal from "../Modals/ProfilePictureModal";
+import { mappingGender } from "@/utils/gender";
 
 type Props = {
   employeeId: number;
@@ -108,7 +109,7 @@ const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Geslacht"}
-          value={data.gender || "Niet gespecificeerd"}
+          value={mappingGender[data.gender] || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}

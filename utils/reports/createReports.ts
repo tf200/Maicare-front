@@ -20,6 +20,7 @@ export const useCreateReports = (client: number) => {
     },
     onSuccess: (data: ReportsResDto) => {
       queryClient.invalidateQueries([client, "reports"]);
+      queryClient.invalidateQueries([client, "infinite-reports"]);
     },
   });
 };

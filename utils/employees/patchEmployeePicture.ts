@@ -7,7 +7,7 @@ const PatchEmployeePic = async (data: any) => {
   formData.append("profile_picture", data.profile_picture);
   const response = await api.patch<NewEmployeesRequest>(
     `employee/employee_pic/${data.employeeId}/`,
-    formData,   
+    formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -18,12 +18,12 @@ const PatchEmployeePic = async (data: any) => {
   return response.data;
 };
 
-export const usePatchEmployeePic = (employeeId: number) => {
+export const usePatchEmployeePic = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: PatchEmployeePic,
     onSuccess: () => {
-      queryClient.invalidateQueries(["employees", employeeId]);
+      queryClient.invalidateQueries(["employees"]);
     },
   });
 };
