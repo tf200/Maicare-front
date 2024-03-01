@@ -5,11 +5,11 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import jwt from "jsonwebtoken";
 import InputField from "@/components/FormFields/InputField";
-import { useUserInfo } from "@/utils/user-info/getUserInfo";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 
 const Profile = () => {
   const decode = jwt.decode(localStorage.getItem("a"));
-  const { data: userData } = useUserInfo();
+  const { data: userData } = useMyInfo();
 
   if (!userData) return null;
   const {

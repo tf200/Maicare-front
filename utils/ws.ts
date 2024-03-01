@@ -12,6 +12,14 @@ function createWebSocket() {
   return new WebSocket(`${endpoint}?${params.toString()}`);
 }
 
+type MessageDeliveryType = {
+  type: "message_delivery";
+  message_id: string;
+  status: "success" | "failed";
+  info: string;
+  conversation: number;
+};
+
 export class WebSocketService {
   private ws: WebSocket;
   constructor() {
@@ -22,6 +30,24 @@ export class WebSocketService {
   }
   onMessage(callback: (data: any) => void) {
     this.ws.addEventListener("message", (event) => {
+      const data = JSON.parse(event.data);
+      callback(data);
+    });
+  }
+  onMessageDelivery(callback: (data: MessageDeliveryType) => void) {
+    const onMessageDelivery = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "message_delivery") {
+        callback(data);
+      }
+    };
+    this.ws.addEventListener("message", onMessageDelivery);
+    return () => {
+      this.ws.removeEventListener("message", onMessageDelivery);
+    };
+  }
+  deleteOnMessage(callback: (data: any) => void) {
+    this.ws.removeEventListener("message", (event) => {
       const data = JSON.parse(event.data);
       callback(data);
     });

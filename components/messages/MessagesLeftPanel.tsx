@@ -8,7 +8,7 @@ import ProfilePicture from "@/components/ProfilePicture";
 import EmployeesSearch from "@/components/searchDropdown/EmployeesSearch";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
-import { useUserInfo } from "@/utils/user-info/getUserInfo";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import Link from "next/link";
 
 type ConversationItem = {
@@ -31,7 +31,7 @@ export function useConversations(employeeId: number) {
 
 const MessagesLeftPanel: FunctionComponent = (props) => {
   const { data: chatProfiles } = useEmployeesList();
-  const { data: user } = useUserInfo();
+  const { data: user } = useMyInfo();
   const { data: conversations } = useConversations(user.user);
   console.log(conversations?.results, "conversations");
   return (
@@ -74,15 +74,20 @@ type ConversationItemProps = {
 const ConversationItem: FunctionComponent<ConversationItemProps> = ({
   conversation,
 }) => {
-  const { data: user } = useUserInfo();
+  const { data: user } = useMyInfo();
   const otherParticipant = useMemo(
     () =>
       conversation.involved_details?.find(
-        (profile) => profile.id !== user.user
+        (profile) => profile.id !== user?.user
       ),
-    []
+    [user, conversation]
   );
-  return <ChatProfile conversationId={1} participant={otherParticipant} />;
+  return (
+    <ChatProfile
+      conversationId={conversation.id}
+      participant={otherParticipant}
+    />
+  );
 };
 
 type Props = {

@@ -17,16 +17,33 @@ export type UserInfoResDto = {
   };
 };
 
-async function getUserInfo() {
+async function getMyInfo() {
   const response = await api.get<UserInfoResDto>("/employee/profile/");
 
   return response.data;
 }
 
-export const useUserInfo = (enabled = true) => {
-  return useQuery(["user"], getUserInfo, {
+async function getUserInfo(userId: number) {
+  const response = await api.get<UserInfoResDto>(
+    `/employee/profile/${userId}/`
+  );
+
+  return response.data;
+}
+
+export const useMyInfo = (enabled = true) => {
+  return useQuery(["user"], () => getMyInfo(), {
     refetchOnWindowFocus: false,
     enabled,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+  });
+};
+
+export const useUserInfo = (userId?: number) => {
+  return useQuery(["user", userId], () => getUserInfo(userId), {
+    refetchOnWindowFocus: false,
+    enabled: !!userId,
     cacheTime: Infinity,
     staleTime: Infinity,
   });

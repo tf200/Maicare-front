@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import ProfilePicture from "@/components/ProfilePicture";
-import { useUserInfo } from "@/utils/user-info/getUserInfo";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
   const decode = jwt.decode(localStorage.getItem("a"));
 
-  const { data: userData } = useUserInfo();
+  const { data: userData } = useMyInfo();
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);

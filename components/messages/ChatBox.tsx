@@ -1,29 +1,35 @@
 "use client";
 
-import React, { FunctionComponent, useCallback, useMemo } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import ProfilePicture from "@/components/ProfilePicture";
-import { useUserInfo } from "@/utils/user-info/getUserInfo";
+import { useMyInfo, useUserInfo } from "@/utils/user-info/getUserInfo";
 import { cn } from "@/utils/cn";
 import { getTime } from "@/utils/message-time";
-import { UserProfile } from "@/types/UserProfile";
 import { useWSContext } from "@/hooks/useWSContext";
 import MessageEditor from "@/components/FormFields/MessageEditor";
 import api from "@/utils/api";
-import { useQuery } from "react-query";
-import { useConversations } from "@/components/messages/MessagesLeftPanel";
+import { useQuery, useQueryClient } from "react-query";
+import SendMessage from "@/components/SendMessage";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
-type Conversation = {
-  id: number;
-  employee_1: UserProfile;
-  employee_2: UserProfile;
-  messages: MessageItem[];
+type ChatBoxProps =
+  | {
+      conversationId: number;
+    }
+  | {
+      recipientId: number;
+    };
+
+type ConversationResDto = Paginated<MessageItem> & {
+  involved: { id: number; name: string }[];
 };
-
-type ChatBoxProps = {
-  conversationId: number;
-};
-
-type ConversationResDto = Paginated<any>;
 async function getConversation(conversationId: number) {
   const response = await api.get<ConversationResDto>(
     `/chat/messages/${conversationId}/`
@@ -31,74 +37,127 @@ async function getConversation(conversationId: number) {
   return response.data;
 }
 
-const useConversation = (conversationId: number) => {
-  return useQuery(["conversation-details", conversationId], () =>
-    getConversation(conversationId)
+const useConversation = (conversationId?: number) => {
+  return useQuery(
+    ["conversation-details", conversationId],
+    () => getConversation(conversationId),
+    {
+      enabled: !!conversationId,
+    }
   );
 };
 
-const ChatBox: FunctionComponent<ChatBoxProps> = ({ conversationId }) => {
+const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
+  const conversationId = "conversationId" in props && props.conversationId;
+  const recipientId = "recipientId" in props && props.recipientId;
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { ws, isConnected } = useWSContext();
-  const { data: userInfo } = useUserInfo();
+  const { data: myInfo } = useMyInfo();
   const { data: conversation } = useConversation(conversationId);
-  const { data: conversationsList } = useConversations(userInfo.user);
-  const conversationItem = useMemo(() => {
-    if (!conversation) {
-      return undefined;
-    }
-    return conversationsList?.results.find(
-      (item) => item.id === conversationId
-    );
-  }, [conversationsList, conversation, conversationId]);
+  console.log("conversation", conversation, conversation?.involved[0].id);
   const otherParticipant = useMemo(
     () =>
-      conversationItem?.involved_details?.find(
-        (profile) => profile.id !== userInfo?.user
-      ),
-    [conversationItem, userInfo]
+      conversation?.involved?.find((profile) => profile.id !== myInfo?.user),
+    [myInfo, conversation]
   );
+  const { data: recipientInfo } = useUserInfo(
+    recipientId || otherParticipant?.id
+  );
+  const recipientFullName = useMemo(() => {
+    if (!recipientInfo) {
+      return "";
+    }
+    return recipientInfo?.first_name + " " + recipientInfo?.last_name;
+  }, [recipientInfo]);
 
-  // TODO: use the recipientId to retrieve their information
-  const { data: recipientInfo } = useUserInfo();
+  const messagesContainer = useRef<HTMLDivElement>(null);
 
   const sendMessage = useCallback(
     (message: string) => {
-      console.log(
-        "sending message",
+      const newMessage = {
+        type: "message",
         message,
-        otherParticipant.id,
-        userInfo.user
-      );
-      ws?.send({
-        // type: "message",
-        message,
-        recipient_id: otherParticipant.id,
-        conversation_id: userInfo.user,
-      });
+        recipient_id: recipientInfo.user,
+        message_id: uuidv4(),
+      };
+      let unsubscribe: () => void;
+      if (recipientId) {
+        unsubscribe = ws?.onMessageDelivery((data) => {
+          router.push("/conversations/" + data.conversation);
+          unsubscribe();
+        });
+      } else if (conversationId) {
+        unsubscribe = ws?.onMessageDelivery((data) => {
+          queryClient.invalidateQueries([
+            "conversation-details",
+            conversationId,
+          ]);
+        });
+      }
+      ws?.send(newMessage);
+      return () => {
+        unsubscribe?.();
+      };
     },
-    [isConnected, ws, otherParticipant, userInfo]
+    [
+      isConnected,
+      ws,
+      recipientInfo,
+      recipientId,
+      myInfo,
+      router,
+      queryClient,
+      conversationId,
+    ]
   );
+
+  useEffect(() => {
+    if (messagesContainer.current) {
+      console.log("scrolling to bottom");
+      messagesContainer.current.scrollTop =
+        messagesContainer.current.scrollHeight;
+    }
+  }, [conversation]);
   return (
     <>
       {/* <!-- ====== Chat Box Start --> */}
-      <div className="sticky flex items-center justify-between border-b border-stroke px-6 py-4.5 dark:border-strokedark">
-        <div className="flex items-center">
-          <div className="mr-4.5 h-13 w-full max-w-13 overflow-hidden rounded-full">
-            <ProfilePicture
-              profilePicture={recipientInfo.profile_picture}
-              width={52}
-              height={52}
-            />
+      <div
+        ref={messagesContainer}
+        className="sticky flex items-center justify-between border-b border-stroke px-6 py-4.5 dark:border-strokedark"
+      >
+        {recipientInfo && (
+          <div className="flex items-center">
+            <div className="mr-4.5 h-13 w-full max-w-13 overflow-hidden rounded-full">
+              <ProfilePicture
+                profilePicture={recipientInfo.profile_picture}
+                width={52}
+                height={52}
+              />
+            </div>
+            <div>
+              <h5 className="font-medium text-black dark:text-white">
+                {recipientFullName}
+              </h5>
+              <p className="text-sm">Reply to message</p>
+            </div>
           </div>
-          <div>
-            <h5 className="font-medium text-black dark:text-white">
-              {recipientInfo.first_name} {recipientInfo.last_name}
-            </h5>
-            <p className="text-sm">Reply to message</p>
-          </div>
-        </div>
+        )}
       </div>
-      <div className="no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5">
+      {conversation?.results.length === 0 ||
+        (recipientId && !conversationId && (
+          <SendMessage
+            firstLine={"Start a conversation with " + recipientFullName}
+            secondLine={
+              "Send your first message to start a conversation with " +
+              recipientFullName
+            }
+          />
+        ))}
+      <div
+        ref={messagesContainer}
+        className="flex-1 no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
+      >
         {conversation?.results.map((message) => (
           <Message key={message.id} message={message} />
         ))}
@@ -113,7 +172,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = ({ conversationId }) => {
 export default ChatBox;
 
 type MessageItem = {
-  id: number;
+  id: string;
   content: string;
   timestamp: string;
   sender: number;
@@ -126,19 +185,22 @@ type MessageProps = {
 };
 
 const Message: FunctionComponent<MessageProps> = ({ message }) => {
-  const { data: userInfo } = useUserInfo();
+  const { data: userInfo } = useMyInfo();
   const isCurrentUser = useMemo(
     () => message.sender === userInfo.user,
     [message, userInfo]
   );
 
-  // TODO: USE THE SENDER ID TO RETRIEVE THEIR INFORMATION
-  const { data: senderInfo } = useUserInfo();
+  const { data: senderInfo } = useUserInfo(message.sender);
+  const recipientFullName = useMemo(() => {
+    if (!senderInfo) {
+      return "";
+    }
+    return senderInfo?.first_name + " " + senderInfo?.last_name;
+  }, [senderInfo]);
   return (
     <div className={cn("max-w-125", { "ml-auto": isCurrentUser })}>
-      <p className="mb-2.5 text-sm font-medium">
-        {senderInfo?.first_name} {senderInfo?.last_name}
-      </p>
+      <p className="mb-2.5 text-sm font-medium">{recipientFullName}</p>
       <div
         className={cn("mb-2.5 rounded-2xl py-3 px-5", {
           "rounded-tl-none bg-gray dark:bg-boxdark-2": !isCurrentUser,

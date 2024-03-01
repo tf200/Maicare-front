@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
+import { EmployeesResDto } from "@/types/employees/employees-res-dto";
 
 export function useSearchEmployeeOptions() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +13,12 @@ export function useSearchEmployeeOptions() {
   }, [searchQuery]);
   const debouncedParams = useDebounce(searchParams, 300);
   const { data, isLoading } = useEmployeesList(debouncedParams);
-  const options = useMemo(() => {
+  const options = useMemo<
+    {
+      label: string;
+      value: EmployeesResDto;
+    }[]
+  >(() => {
     if (!data?.results) return [];
     return data.results.map((employee) => ({
       label: employee.first_name + " " + employee.last_name,

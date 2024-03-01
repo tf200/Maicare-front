@@ -5,7 +5,6 @@ import React, {
   useRef,
 } from "react";
 import ClipIcon from "@/components/icons/ClipIcon";
-import SmileyFaceIcon from "@/components/icons/SmileyFaceIcon";
 import SendIcon from "@/components/icons/SendIcon";
 import Button from "@/components/buttons/Button";
 
@@ -19,11 +18,14 @@ const MessageEditor: FunctionComponent<Props> = ({
   disabled,
 }) => {
   const messageEditorRef = useRef<HTMLInputElement>(null);
-  const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const message = messageEditorRef.current?.value;
-    onSubmitCallback(message);
-  }, []);
+  const onSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const message = messageEditorRef.current?.value;
+      onSubmitCallback(message);
+    },
+    [onSubmitCallback]
+  );
   return (
     <form
       onSubmit={onSubmit}
@@ -42,9 +44,6 @@ const MessageEditor: FunctionComponent<Props> = ({
         <div className="absolute right-5 top-1/2 inline-flex -translate-y-1/2 items-center justify-end space-x-4">
           <button className="hover:text-primary">
             <ClipIcon />
-          </button>
-          <button className="hover:text-primary">
-            <SmileyFaceIcon />
           </button>
         </div>
       </div>

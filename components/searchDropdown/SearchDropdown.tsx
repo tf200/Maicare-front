@@ -10,7 +10,7 @@ type Props<TData extends BaseObject> =
     handleQueryChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     renderOption?: (option: ComboboxOption<TData>) => React.ReactNode;
     className?: string;
-    onChange?: (value: TData) => void;
+    onSelectItem?: (value: TData) => void;
     label?: string;
     onBlur?: () => void;
     selectedIDs?: TData["id"][];
@@ -21,7 +21,7 @@ function SearchDropdown<TData extends BaseObject>({
   handleQueryChange,
   renderOption,
   className,
-  onChange,
+  onSelectItem,
   label,
   onBlur,
   selectedIDs,
@@ -31,7 +31,7 @@ function SearchDropdown<TData extends BaseObject>({
     <Combobox
       as="section"
       className={className}
-      onChange={onChange}
+      onChange={onSelectItem}
       onBlur={onBlur}
     >
       {label && (
