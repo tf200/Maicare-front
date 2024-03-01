@@ -50,7 +50,7 @@ const UpdatePicModalForm = ({ employeeId, onUpdated }) => {
     profile_picture: "",
   };
 
-  const { mutate, isLoading } = usePatchEmployeePic(employeeId);
+  const { mutate, isLoading } = usePatchEmployeePic();
 
   const onSubmit = useCallback(
     (data, { resetForm }) => {
