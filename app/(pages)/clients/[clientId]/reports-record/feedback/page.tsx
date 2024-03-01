@@ -10,6 +10,12 @@ import LinkButton from "@/components/buttons/LinkButton";
 import { useFeedbackList } from "@/utils/feedback/getFeedbackList";
 import { FeedbackListItem } from "@/types/feedback/feedback-list-res-dto";
 import PaginatedTable from "@/components/PaginatedTable";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteFeedback } from "@/utils/feedback/deleteFeedback";
 
 type Props = {
   params: { clientId: string };
@@ -18,6 +24,19 @@ type Props = {
 const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { pagination, isFetching, isLoading, isError, data } = useFeedbackList(
     parseInt(clientId)
+  );
+
+  const {
+    mutate: deleteFeedback,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteFeedback(+clientId);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze feedback wilt verwijderen?",
+      title: "Feedback Verwijderen",
+    })
   );
 
   const columnDef = useMemo<ColumnDef<FeedbackListItem>[]>(() => {
@@ -33,6 +52,32 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "author_name",
         header: "Geschreven Door",
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <IconButton
+              buttonType="Danger"
+              onClick={() => {
+                open({
+                  onConfirm: () => {
+                    deleteFeedback(info.getValue() as number);
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? (
+                <CheckIcon className="w-5 h-5" />
+              ) : (
+                <TrashIcon className="w-5 h-5" />
+              )}
+            </IconButton>
+          </div>
+        ),
       },
     ];
   }, []);

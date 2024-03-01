@@ -104,8 +104,8 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this allergie ?",
-      title: "Delete Allergie",
+      msg: "Weet je zeker dat je deze allergie wilt verwijderen?",
+      title: "Allergie Verwijderen",
     })
   );
 

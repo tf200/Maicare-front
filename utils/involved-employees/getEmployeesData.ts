@@ -8,7 +8,7 @@ const fetchEmployees = () => async () => {
 
 export const useEmployees = () => {
   const query = useQuery({
-    queryKey: ["employees"],
+    queryKey: ["involved"],
     queryFn: fetchEmployees(),
     keepPreviousData: true,
   });

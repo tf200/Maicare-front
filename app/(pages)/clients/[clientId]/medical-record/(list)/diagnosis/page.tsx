@@ -105,8 +105,8 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this diagnosis ?",
-      title: "Delete Diagnosis",
+      msg: "Weet je zeker dat je deze diagnose wilt verwijderen?",
+      title: "Diagnose Verwijderen",
     })
   );
 
