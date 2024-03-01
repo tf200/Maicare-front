@@ -49,7 +49,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = ({ conversationId }) => {
     return conversationsList?.results.find(
       (item) => item.id === conversationId
     );
-  }, [conversationsList]);
+  }, [conversationsList, conversation, conversationId]);
   const otherParticipant = useMemo(
     () =>
       conversationItem?.involved_details?.find(
@@ -63,6 +63,12 @@ const ChatBox: FunctionComponent<ChatBoxProps> = ({ conversationId }) => {
 
   const sendMessage = useCallback(
     (message: string) => {
+      console.log(
+        "sending message",
+        message,
+        otherParticipant.id,
+        userInfo.user
+      );
       ws?.send({
         // type: "message",
         message,
@@ -70,7 +76,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = ({ conversationId }) => {
         conversation_id: userInfo.user,
       });
     },
-    [isConnected, ws]
+    [isConnected, ws, otherParticipant, userInfo]
   );
   return (
     <>
