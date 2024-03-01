@@ -20,7 +20,7 @@ const NewReports: FunctionComponent = ({
                 Creëer Nieuwe Rapporten
               </h3>
             </div>
-            <ReportsForm clientId={params.clientId} />
+            <ReportsForm clientId={+params.clientId} />
           </div>
         </div>
       </div>

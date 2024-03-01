@@ -1,98 +1,26 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
-import Table from "@/components/Table";
-import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
-import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
-import Loader from "@/components/common/Loader";
-import LinkButton from "@/components/buttons/LinkButton";
-import { ReportsListItem } from "@/types/reports/reports-list-res-dto";
+import React, { Fragment, FunctionComponent } from "react";
 import { useReportsList } from "@/utils/reports/getReportsList";
-import PaginatedTable from "@/components/PaginatedTable";
-import { fullDateTimeFormat } from "@/utils/timeFormatting";
-import IconButton from "@/components/buttons/IconButton";
-import CheckIcon from "@/components/icons/CheckIcon";
-import TrashIcon from "@/components/icons/TrashIcon";
-import { useDeleteReport } from "@/utils/reports/deleteReport";
-import { useModal } from "@/components/providers/ModalProvider";
-import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import ProfilePicture from "@/components/ProfilePicture";
+import { getTime } from "@/utils/message-time";
+import LargeErrorMessage from "@/components/LargeErrorMessage";
+import styles from "./reports.module.css";
+import clsx from "clsx";
+import LinkButton from "@/components/buttons/LinkButton";
+import Button from "@/components/buttons/Button";
+import { useReportsInfiniteList } from "@/utils/reports/getReportsInfiniteList";
 
 type Props = {
   params: { clientId: string };
 };
 
 const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { pagination, isFetching, isLoading, isError, data } = useReportsList(
+  const { data, isError, hasNextPage, fetchNextPage } = useReportsInfiniteList(
     parseInt(clientId)
   );
-
-  const {
-    mutate: deleteReport,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteReport(+clientId);
-
-  const { open } = useModal(
-    getDangerActionConfirmationModal({
-      msg: "Weet je zeker dat je dit rapport wilt verwijderen?",
-      title: "Rapport Verwijderen",
-    })
-  );
-
-  const columnDef = useMemo<ColumnDef<ReportsListItem>[]>(() => {
-    return [
-      {
-        accessorKey: "date",
-        header: () => "Datum & Tijd",
-        cell: (info) => fullDateTimeFormat(info.getValue() as Date) || "Not Available",
-      },
-      {
-        accessorKey: "report_text",
-        header: () => "Beschrijving van het Rapport",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "title",
-        header: () => "Titel",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "full_name",
-        header: () => "Geschreven Door",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "id",
-        header: () => "",
-        cell: (info) => (
-          <div className="flex justify-center">
-            <IconButton
-              buttonType="Danger"
-              onClick={() => {
-                open({
-                  onConfirm: () => {
-                    deleteReport(info.getValue() as number);
-                  },
-                });
-              }}
-              disabled={isDeleted}
-              isLoading={isDeleting}
-            >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
-            </IconButton>
-          </div>
-        ),
-      },
-    ];
-  }, []);
-
   return (
-    <>
+    <div>
       <div className="flex flex-wrap items-center p-4">
         <LinkButton
           text={"Rapporten Toevoegen"}
@@ -100,22 +28,69 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           className="ml-auto"
         />
       </div>
-      {isLoading && <Loader />}
-      {data && (
-        <PaginatedTable
-          data={data}
-          columns={columnDef}
-          page={pagination.page ?? 1}
-          isFetching={isFetching}
-          onPageChange={(page) => pagination.setPage(page)}
-        />
-      )}
       {isError && (
         <p role="alert" className="text-red">
           Sorry, een fout heeft ons verhinderd de lijst te laden.
         </p>
       )}
-    </>
+      {data?.pages.length === 0 ||
+        (data?.pages[0]?.results.length === 0 && (
+          <LargeErrorMessage
+            firstLine={"Oops!"}
+            secondLine={"Er zijn geen rapporten beschikbaar"}
+          />
+        ))}
+      <div className="p-6 lg:max-w-[50%]">
+        <div className="flex flex-col gap-7">
+          {data?.pages.map((page, i) => (
+            <Fragment key={i}>
+              {page?.results.map((post, key) => (
+                <div
+                  className={clsx(
+                    "relative z-1 flex gap-5.5",
+                    styles.withTrail
+                  )}
+                  key={key}
+                >
+                  <div className="h-16 w-full max-w-16 rounded-full border-[2px] border-stroke dark:border-strokedark">
+                    <ProfilePicture
+                      width={60}
+                      height={60}
+                      profilePicture={post.profile_picture}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="text-black dark:text-white">
+                      <span className="font-medium">{post.title}</span>
+                      <span className="px-1">Geschreven door</span>
+                      <span className="font-medium">{post.full_name}</span>
+                    </p>
+                    <span className="mt-1 block text-sm">
+                      {getTime(post.date)}
+                    </span>
+                    <p className="mt-2.5 text-black dark:text-white">
+                      {post.report_text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </Fragment>
+          ))}
+        </div>
+        <div className="ml-4 mt-8">
+          {hasNextPage && (
+            <Button
+              onClick={() => {
+                fetchNextPage();
+              }}
+            >
+              Laad meer
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
