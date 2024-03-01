@@ -10,6 +10,12 @@ import LinkButton from "@/components/buttons/LinkButton";
 import { useObservationsList } from "@/utils/observations/getObservationslList";
 import { ObservationsResDto } from "@/types/observations/observations-res-dto";
 import PaginatedTable from "@/components/PaginatedTable";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteObservations } from "@/utils/observations/deleteObservation";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   params: { clientId: string };
@@ -21,23 +27,61 @@ const ObservationsPage: FunctionComponent<Props> = ({
   const { data, pagination, isLoading, isFetching, isError } =
     useObservationsList(parseInt(clientId));
 
+  const {
+    mutate: deleteObservation,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteObservations(+clientId);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze observatie wilt verwijderen?",
+      title: "Observatie Verwijderen",
+    })
+  );
+
   const columnDef = useMemo<ColumnDef<ObservationsResDto>[]>(() => {
     return [
       {
         accessorKey: "date",
         header: "Datum",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
         accessorKey: "observation_text",
         header: "Observatie",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
-
       {
         accessorKey: "category",
         header: "Categorie",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <IconButton
+              buttonType="Danger"
+              onClick={() => {
+                open({
+                  onConfirm: () => {
+                    deleteObservation(info.getValue() as number);
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? (
+                <CheckIcon className="w-5 h-5" />
+              ) : (
+                <TrashIcon className="w-5 h-5" />
+              )}
+            </IconButton>
+          </div>
+        ),
       },
     ];
   }, []);

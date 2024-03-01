@@ -11,6 +11,12 @@ import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
 import { fullDateFormat } from "@/utils/timeFormatting";
 import { useRouter } from "next/navigation";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteContract } from "@/utils/contracts/deleteContract";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useModal } from "@/components/providers/ModalProvider";
 
 type Props = {
   params: { clientId: string };
@@ -21,6 +27,20 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     parseInt(clientId)
   );
   const router = useRouter();
+
+  const {
+    mutate: deleteContract,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteContract(+clientId);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je dit contract wilt verwijderen?",
+      title: "Contract Verwijderen",
+    })
+  );
+
   const columnDef = useMemo<ColumnDef<ContractResDto>[]>(() => {
     return [
       {
@@ -44,6 +64,33 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         id: "Tarief",
         accessorFn: getRate,
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <div className="flex justify-start">
+            <IconButton
+              buttonType="Danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                open({
+                  onConfirm: () => {
+                    deleteContract(info.getValue() as number);
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? (
+                <CheckIcon className="w-5 h-5" />
+              ) : (
+                <TrashIcon className="w-5 h-5" />
+              )}
+            </IconButton>
+          </div>
+        ),
       },
     ];
   }, []);

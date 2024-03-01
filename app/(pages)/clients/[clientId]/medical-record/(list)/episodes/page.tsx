@@ -104,8 +104,8 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Are you sure you want to delete this episode ?",
-      title: "Delete Episode",
+      msg: "Weet je zeker dat je deze episode wilt verwijderen?",
+      title: "Episode Verwijderen",
     })
   );
 
