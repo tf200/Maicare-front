@@ -11,7 +11,7 @@ const ProfilePicturePlaceholder: FunctionComponent<IconProps> = ({
       fill="none"
       width={width}
       height={height}
-      viewBox={`0 0 24 24`}
+      viewBox={`2.2 2.2 19.5 19.5`}
       strokeWidth={1.5}
       stroke="currentColor"
     >

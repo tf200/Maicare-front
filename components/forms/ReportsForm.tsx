@@ -35,11 +35,15 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 });
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  className?: string;
 };
 
-export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateReports(parseInt(clientId));
+export const ReportsForm: FunctionComponent<PropsType> = ({
+  clientId,
+  className,
+}) => {
+  const { mutate, isLoading } = useCreateReports(clientId);
   const router = useRouter();
 
   const onSubmit = useCallback(
@@ -68,7 +72,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({ clientId }) => {
         handleSubmit,
         errors,
       }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={className}>
           <div className="p-6.5">
             <InputField
               className={"w-full mb-4.5"}
