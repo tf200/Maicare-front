@@ -14,6 +14,12 @@ import DetailCell from "@/components/DetailCell";
 import { fullDateFormat, fullDateTimeFormat } from "@/utils/timeFormatting";
 import { convertIntensityToSeverity } from "@/utils/episodes/convertIntensityToSeverity";
 import PaginatedTable from "@/components/PaginatedTable";
+import { useDeleteEpisode } from "@/utils/episodes/deleteEpisode";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
 
 type Props = {
   params: { clientId: string };
@@ -90,6 +96,19 @@ type RowDetailsProps = {
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  const {
+    mutate: deleteEpisode,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteEpisode(data.client);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze episode wilt verwijderen?",
+      title: "Episode Verwijderen",
+    })
+  );
+
   return (
     <div className={"grid grid-cols-2 gap-2"}>
       <DetailCell
@@ -109,6 +128,26 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Beschrijving van de Toestand"}
         value={data.state_description}
       />
+      <div>
+        <IconButton
+          buttonType="Danger"
+          onClick={() => {
+            open({
+              onConfirm: () => {
+                deleteEpisode(data.id);
+              },
+            });
+          }}
+          disabled={isDeleted}
+          isLoading={isDeleting}
+        >
+          {isDeleted ? (
+            <CheckIcon className="w-5 h-5" />
+          ) : (
+            <TrashIcon className="w-5 h-5" />
+          )}
+        </IconButton>
+      </div>
     </div>
   );
 };

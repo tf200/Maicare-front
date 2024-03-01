@@ -10,6 +10,12 @@ import Table from "@/components/Table";
 import { MeasurmentResDto } from "@/types/measurment/measurment-res-dto";
 import { useMeasurementList } from "@/utils/measurement/getMeasuremenList";
 import PaginatedTable from "@/components/PaginatedTable";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useDeleteMeasurement } from "@/utils/measurement/deleteMeasurment";
 
 type Props = {
   params: { clientId: string };
@@ -21,6 +27,19 @@ const MeasurementsPage: FunctionComponent<Props> = ({
   const { pagination, data, isError, isLoading, isFetching } =
     useMeasurementList(parseInt(clientId));
 
+    const {
+      mutate: deleteMeasurement,
+      isLoading: isDeleting,
+      isSuccess: isDeleted,
+    } = useDeleteMeasurement(+clientId);
+  
+    const { open } = useModal(
+      getDangerActionConfirmationModal({
+        msg: "Weet je zeker dat je deze meting wilt verwijderen?",
+        title: "Meting Verwijderen",
+      })
+    );
+    
   const columnDef = useMemo<ColumnDef<MeasurmentResDto>[]>(() => {
     return [
       {
@@ -34,6 +53,32 @@ const MeasurementsPage: FunctionComponent<Props> = ({
       {
         accessorKey: "value",
         header: "Waarde",
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <IconButton
+              buttonType="Danger"
+              onClick={() => {
+                open({
+                  onConfirm: () => {
+                    deleteMeasurement(info.getValue() as number);
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? (
+                <CheckIcon className="w-5 h-5" />
+              ) : (
+                <TrashIcon className="w-5 h-5" />
+              )}
+            </IconButton>
+          </div>
+        ),
       },
     ];
   }, []);
