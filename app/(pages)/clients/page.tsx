@@ -18,6 +18,7 @@ import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
 import LinkButton from "@/components/buttons/LinkButton";
+import { mappingGender } from "@/utils/gender";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -59,7 +60,8 @@ const ClientsPage: FunctionComponent = () => {
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) => info.getValue() || "Niet gespecificeerd",
+        cell: (info) =>
+          mappingGender[info.getValue() as string] || "Niet gespecificeerd",
       },
       {
         accessorKey: "status",

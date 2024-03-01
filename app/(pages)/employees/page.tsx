@@ -18,6 +18,7 @@ import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
 import OrganisationFilter from "@/components/OrganisationFilter";
 import LinkButton from "@/components/buttons/LinkButton";
+import { mappingGender } from "@/utils/gender";
 
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
@@ -66,7 +67,7 @@ const EmployeesPage: FunctionComponent = () => {
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) => info.getValue() || "Niet gespecificeerd",
+        cell: (info) => mappingGender[info.getValue() as string] || "Niet gespecificeerd",
       },
       {
         accessorKey: "work_phone_number",

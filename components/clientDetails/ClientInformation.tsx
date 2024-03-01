@@ -5,6 +5,7 @@ import { useClientDetails } from "@/utils/clients/getClientDetails";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import ProfilePicture from "@/components/ProfilePicture";
+import { mappingGender } from "@/utils/gender";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 
@@ -26,7 +27,9 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Volledige Naam"}
-          value={`${data.first_name} ${data.last_name}` || "Niet gespecificeerd"}
+          value={
+            `${data.first_name} ${data.last_name}` || "Niet gespecificeerd"
+          }
         />
         <DetailCell
           ignoreIfEmpty={true}
@@ -43,7 +46,7 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Geslacht"}
-          value={data.gender || "Niet gespecificeerd"}
+          value={mappingGender[data.gender] || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}
