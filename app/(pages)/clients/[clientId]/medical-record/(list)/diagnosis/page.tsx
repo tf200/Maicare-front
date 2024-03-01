@@ -1,21 +1,21 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
-import Table from "@/components/Table";
+import React, { FunctionComponent, useEffect, useMemo } from "react";
 import { ColumnDef, createColumnHelper } from "@tanstack/table-core";
 import Severity from "@/components/Severity";
-import Pagination from "@/components/Pagination";
 import { useDiagnosisList } from "@/utils/diagnosis/getDiagnosisList";
-import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
 import { DiagnosisListItem } from "@/types/diagnosis/diagnosis-list-res-dto";
 import LinkButton from "@/components/buttons/LinkButton";
 import DetailCell from "@/components/DetailCell";
-import ChevronDown from "@/components/icons/ChevronDown";
-import clsx from "clsx";
 import { fullDateFormat } from "@/utils/timeFormatting";
-import router from "next/router";
 import PaginatedTable from "@/components/PaginatedTable";
+import IconButton from "@/components/buttons/IconButton";
+import TrashIcon from "@/components/icons/TrashIcon";
+import CheckIcon from "@/components/icons/CheckIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useDeleteDiagnosis } from "@/utils/diagnosis/deleteDiagnosis";
 
 type Props = {
   params: { clientId: string };
@@ -97,6 +97,19 @@ type RowDetailsProps = {
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+  const {
+    mutate: deleteDiagnosis,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteDiagnosis(data.client);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze diagnose wilt verwijderen?",
+      title: "Diagnose Verwijderen",
+    })
+  );
+
   return (
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Samenvatting"} value={data.title} />
@@ -120,6 +133,26 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Notities"}
         value={data.notes}
       />
+      <div>
+        <IconButton
+          buttonType="Danger"
+          onClick={() => {
+            open({
+              onConfirm: () => {
+                deleteDiagnosis(data.id);
+              },
+            });
+          }}
+          disabled={isDeleted}
+          isLoading={isDeleting}
+        >
+          {isDeleted ? (
+            <CheckIcon className="w-5 h-5" />
+          ) : (
+            <TrashIcon className="w-5 h-5" />
+          )}
+        </IconButton>
+      </div>
     </div>
   );
 };

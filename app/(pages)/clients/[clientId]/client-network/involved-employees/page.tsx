@@ -10,6 +10,12 @@ import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import PaginatedTable from "@/components/PaginatedTable";
+import IconButton from "@/components/buttons/IconButton";
+import CheckIcon from "@/components/icons/CheckIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useDeleteInvolvedEmployee } from "@/utils/involved-employees/deleteInvolvedEmployee";
 
 type Props = {
   params: { clientId: string };
@@ -21,23 +27,62 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
   const { pagination, isFetching, isLoading, isError, data } =
     useInvolvedEmployeesList(parseInt(clientId));
 
+  const {
+    mutate: deleteInvolved,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteInvolvedEmployee(+clientId);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze betrokken medewerker wilt verwijderen?",
+      title: "Betrokkenheid Verwijderen",
+    })
+  );
+
   const columnDef = useMemo(() => {
     return [
       {
         accessorKey: "employee_name",
         header: () => "Medewerker",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
         accessorKey: "role",
         header: () => "Relatie",
-        cell: (info) => info.getValue() || "Not Available",
+        cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
         accessorKey: "start_date",
         header: () => "Startdatum",
         cell: (info) =>
-          dayjs(info.getValue()).format("DD MMM, YYYY") || "Not Available",
+          dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
+      },
+      {
+        accessorKey: "id",
+        header: () => "",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <IconButton
+              buttonType="Danger"
+              onClick={() => {
+                open({
+                  onConfirm: () => {
+                    deleteInvolved(info.getValue());
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? (
+                <CheckIcon className="w-5 h-5" />
+              ) : (
+                <TrashIcon className="w-5 h-5" />
+              )}
+            </IconButton>
+          </div>
+        ),
       },
     ];
   }, []);
