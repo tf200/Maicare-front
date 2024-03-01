@@ -49,9 +49,9 @@ function SearchDropdown<TData extends BaseObject>({
           {...inputProps}
           onChange={handleQueryChange}
         />
-        <button className="absolute top-1/2 right-4 -translate-y-1/2">
+        <div className="absolute top-1/2 right-4 -translate-y-1/2 pointer-events-none">
           <MagnifierIcon />
-        </button>
+        </div>
       </div>
       <Combobox.Options className="shadow bg-white dark:bg-form-input z-40 left-0 rounded max-h-select overflow-y-auto flex flex-col w-full">
         {options.map((option) => (
