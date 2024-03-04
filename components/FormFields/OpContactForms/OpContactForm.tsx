@@ -203,11 +203,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onRemove={removeItem(index)}
           />
         ))}
-        <Button
-          className={"mb-5 px-6"}
-          buttonType={"Secondary"}
-          onClick={addItem}
-        >
+        <Button className={"mb-5 px-6"} onClick={addItem}>
           + Voeg contact toe
         </Button>
         <InputField
@@ -287,7 +283,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
         </div>
         <InputField
           label={"Clientnummer"}
-          className={"mb-4"}
+          className={"mb-10"}
           name={"client_number"}
           required={true}
           onChange={handleChange}
@@ -302,7 +298,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           type={"submit"}
           formNoValidate={true}
         >
-          Opslaan
+          Een nieuwe opdrachtgever toevoegen
         </Button>
       </form>
     </FormikProvider>

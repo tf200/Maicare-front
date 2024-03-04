@@ -7,20 +7,31 @@ import { ContactResDto } from "@/components/FormFields/OpContactForms/OpContactF
 import PaginatedTable from "@/components/PaginatedTable";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { ColumnDef } from "@tanstack/react-table";
+import { PaginationParams } from "@/types/pagination-params";
 
 type ContactItem = ContactResDto;
 type ContactsListResDto = Paginated<ContactItem>;
 
-async function getContacts() {
-  const response = await api.get<ContactsListResDto>("client/senders/");
+type GetContactsParams = PaginationParams & {
+  search?: string;
+};
+
+async function getContacts(params: GetContactsParams) {
+  const response = await api.get<ContactsListResDto>("client/senders/", {
+    params,
+  });
   return response.data;
 }
 
-const useContacts = () => {
+export const useContacts = (search?: string) => {
   const paginationParams = usePaginationParams();
+  const params = {
+    ...paginationParams,
+    search,
+  };
   const query = useQuery({
-    queryKey: ["contacts"],
-    queryFn: getContacts,
+    queryKey: ["contacts", params],
+    queryFn: () => getContacts(params),
   });
 
   return {
@@ -75,7 +86,7 @@ const ContactsList: FunctionComponent = (props) => {
           data={data}
           page={pagination.page}
           onPageChange={pagination.setPage}
-        ></PaginatedTable>
+        />
       )}
     </div>
   );

@@ -8,7 +8,6 @@ type Props<T extends BaseObject> = InputHTMLAttributes<HTMLInputElement> & {
   options: ComboboxOption<T>[];
   handleQueryChange: (event: ChangeEvent<HTMLInputElement>) => void;
   renderOption?: (option: ComboboxOption<T>) => React.ReactNode;
-  selectedOptions: T[];
   label: string;
 };
 
@@ -18,10 +17,10 @@ function FormikCombobox<T extends BaseObject>({
   handleQueryChange,
   options,
   renderOption,
-  selectedOptions,
+  multiple,
   ...inputProps
 }: Props<T>) {
-  const [fieldProps, metaProps, helpers] = useField<T[]>({
+  const [fieldProps, metaProps, helpers] = useField<T["id"]>({
     name: inputProps.name,
     id: inputProps.id,
   });
@@ -30,14 +29,13 @@ function FormikCombobox<T extends BaseObject>({
     <Combobox
       as="section"
       className={className}
-      onChange={(values: T[]) => {
-        helpers.setValue(values);
+      onChange={(value: T["id"]) => {
+        helpers.setValue(value);
       }}
       onBlur={() => {
         helpers.setTouched(true);
       }}
-      value={selectedOptions}
-      multiple={true}
+      value={fieldProps.value}
     >
       <Combobox.Label
         className="mb-2.5 block text-black dark:text-white"
@@ -56,7 +54,7 @@ function FormikCombobox<T extends BaseObject>({
             className="cursor-pointer border-stroke border-b last:border-b-0 dark:border-form-strokedark leading-6 p-3 pl-3 flex items-center ui-disabled:bg-whiter ui-disabled:text-graydark dark:ui-disabled:form-strokedark ui-active:bg-primary ui-active:text-white"
             key={option.value.id}
             value={option.value}
-            disabled={fieldProps.value?.some((t) => t === option.value)}
+            disabled={fieldProps.value === option.value["id"]}
           >
             {renderOption ? renderOption(option) : option.label}
           </Combobox.Option>

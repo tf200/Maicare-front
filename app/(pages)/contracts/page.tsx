@@ -9,9 +9,7 @@ const Finances = () => {
       <Breadcrumb pageName="Contracten" />
       <Panel
         title={"Contracten"}
-        sideActions={
-          <LinkButton href={"/contracts/new"} text="Nieuw contract" />
-        }
+        sideActions={<LinkButton href={"/clients"} text="Nieuw contract" />}
       ></Panel>
     </>
   );
