@@ -24,6 +24,7 @@ import RoleIcon from "@/components/svg/RoleIcon";
 import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
+import BuildingIcon from "@/components/icons/BuildingIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -227,9 +228,14 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Medewerkers",
         },
         {
-          completeHref: "/finances",
+          completeHref: "/contacts",
+          icon: <BuildingIcon className={"w-4.5 h-5"} />,
+          children: "Opdrachtgevers",
+        },
+        {
+          completeHref: "/contracts",
           icon: <InvoiceIcon height={19} width={18} />,
-          children: "Financiën",
+          children: "Contracten",
         },
         {
           completeHref: "/care",
