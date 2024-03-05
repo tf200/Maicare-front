@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { useCreateMedication } from "@/utils/medications/createMedication";
 import { MedicationFormType } from "@/types/medications/medication-form-type";
 import * as Yup from "yup";
@@ -10,6 +10,8 @@ import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormikHelpers } from "formik/dist/types";
 import { useRouter } from "next/navigation";
+import { useGetMedication } from "@/utils/medications/getMedication";
+import { usePatchMedication } from "@/utils/medications/patchMedication";
 
 const initialValues: MedicationFormType = {
   name: "",
@@ -32,31 +34,65 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
 
 type Props = {
   clientId: number;
+  mode: string;
+  medicationId?: number;
 };
 
-const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateMedication(clientId);
+const MedicationForm: FunctionComponent<Props> = ({
+  clientId,
+  medicationId,
+  mode,
+}) => {
   const router = useRouter();
-  const onSubmit = (
-    values: MedicationFormType,
-    { resetForm }: FormikHelpers<MedicationFormType>
-  ) => {
-    mutate(
-      {
-        ...values,
-        client: clientId,
-      },
-      {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/medical-record/medications`);
-        },
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetMedication(medicationId, clientId);
+
+  const { mutate: create, isLoading: isCreating } =
+    useCreateMedication(clientId);
+
+  const { mutate: update, isLoading: isPatching } =
+    usePatchMedication(clientId);
+
+  const onSubmit = useCallback(
+    (values, { resetForm }) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: medicationId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/medications`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(
+          { ...values, client: clientId },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/medications`);
+            },
+          }
+        );
       }
-    );
-  };
+    },
+    [create, update]
+  );
+
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={medicationSchema}
     >
@@ -148,14 +184,15 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId }) => {
               onBlur={handleBlur}
               error={touched.notes && errors.notes}
             />
+
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Medicatie indienen..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Dien Medicatie in
+              {mode === "edit" ? "Medicatie bijwerken" : "Medicatie indienen"}
             </Button>
           </div>
         </form>

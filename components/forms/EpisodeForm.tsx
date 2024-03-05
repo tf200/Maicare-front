@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { FormikHelpers } from "formik/dist/types";
 import { EpisodeFormType } from "@/types/episodes/episode-form-type";
 import { useCreateEpisode } from "@/utils/episodes/createEpisode";
+import { usePatchEpisode } from "@/utils/episodes/patchEpisode";
+import { useGetEpisode } from "@/utils/episodes/getEpisode";
 
 const initialValues: EpisodeFormType = {
   date: "",
@@ -29,33 +31,69 @@ const episodeSchema: Yup.ObjectSchema<EpisodeFormType> = Yup.object().shape({
 
 type Props = {
   clientId: number;
+  episodeId?: number;
+  mode: string;
 };
 
-const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateEpisode(clientId);
+const EpisodeForm: FunctionComponent<Props> = ({
+  clientId,
+  episodeId,
+  mode,
+}) => {
   const router = useRouter();
-  const onSubmit = (
-    values: EpisodeFormType,
-    { resetForm }: FormikHelpers<EpisodeFormType>
-  ) => {
-    mutate(
-      {
-        ...values,
-        client: clientId,
-      },
-      {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/medical-record/episodes`);
-        },
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetEpisode(episodeId, clientId);
+
+  const { mutate: create, isLoading: isCreating } = useCreateEpisode(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchEpisode(clientId);
+
+  const onSubmit = useCallback(
+    (
+      values: EpisodeFormType,
+      { resetForm }: FormikHelpers<EpisodeFormType>
+    ) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: episodeId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/episodes`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(
+          {
+            ...values,
+            client: clientId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/episodes`);
+            },
+          }
+        );
       }
-    );
-  };
+    },
+    [create, update]
+  );
 
   return (
     <Formik
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
-      initialValues={initialValues}
       validationSchema={episodeSchema}
     >
       {({
@@ -110,12 +148,12 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId }) => {
 
           <Button
             type={"submit"}
-            disabled={isLoading}
-            isLoading={isLoading}
+            disabled={isCreating || isPatching}
+            isLoading={isCreating || isPatching}
             formNoValidate={true}
-            loadingText={"Bezig met Indienen van Geregistreerde Episode..."}
+            loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
           >
-            Episode Registreren
+            {mode === "edit" ? "Episode bijwerken" : "Episode indienen"}
           </Button>
         </form>
       )}

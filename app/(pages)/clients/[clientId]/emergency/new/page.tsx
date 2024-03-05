@@ -19,7 +19,10 @@ const NewEmergencyContact: FunctionComponent = ({
                 Creëer een Nieuw Noodcontact
               </h3>
             </div>
-            <EmergencyContactForm clientId={params.clientId} />
+            <EmergencyContactForm
+              mode="new"
+              clientId={parseInt(params.clientId)}
+            />
           </div>
         </div>
       </div>

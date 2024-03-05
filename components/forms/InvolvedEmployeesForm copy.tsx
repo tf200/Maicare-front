@@ -4,14 +4,13 @@ import * as Yup from "yup";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
-import Select from "@/components/FormFields/Select";
 import { useCreateInvolvedEmployee } from "@/utils/involved-employees/createInvolvedEmployee";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import Button from "@/components/buttons/Button";
 import ComboBox from "../ComboBox";
 import { useRouter } from "next/navigation";
-import { useGetInvolved } from "@/utils/involved-employees/getInvolved";
 import { usePatchInvolvedEmployee } from "@/utils/involved-employees/patchInvolvedEmployees";
+import { useGetInvolved } from "@/utils/involved-employees/getInvolved";
 
 type PropsType = {
   clientId: number;
@@ -42,19 +41,30 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   const [searchedKey, setSearchedKey] = useState(null);
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
 
-  const {
-    data: involvedData,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetInvolved(involvedId, clientId);
+  // const {
+  //   data: involvedData,
+  //   isLoading: isDataLoading,
+  //   isError,
+  // } = useGetInvolved(involvedId, clientId);
 
   const { mutate: create, isLoading: isCreating } =
     useCreateInvolvedEmployee(clientId);
   const { mutate: update, isLoading: isPatching } =
     usePatchInvolvedEmployee(clientId);
-
+  
   const onSubmit = useCallback(
     (values, { resetForm }) => {
+      console.log(selectedOption);
+      if (!selectedOption) {        
+        
+        setErrorOptionMessage("Geef alstublieft een medewerker op");
+        return;
+      } else {
+        setErrorOptionMessage("");
+        let data = values;
+        data.employee = selectedOption?.id;
+      }
+
       if (mode === "edit") {
         update(
           {
@@ -64,9 +74,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           {
             onSuccess: () => {
               resetForm;
-              router.push(
-                `/clients/${clientId}/client-network/involved-employees`
-              );
+              router.push(`/clients/${clientId}/client-network/involved-employees`);
             },
           }
         );
@@ -79,9 +87,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           {
             onSuccess: () => {
               resetForm;
-              router.push(
-                `/clients/${clientId}/client-network/involved-employees`
-              );
+              router.push(`/clients/${clientId}/client-network/involved-employees`);
             },
           }
         );
@@ -95,29 +101,19 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     out_of_service: false,
   });
 
-  const formik = useFormik<FormTypes>({
+  const formik = useFormik({
     enableReinitialize: true,
-    initialValues:
-      mode == "edit"
-        ? involvedData
-          ? involvedData
-          : initialValues
-        : initialValues,
+    initialValues: initialValues,
+      // mode == "edit"
+      //   ? involvedData
+      //     ? involvedData
+      //     : initialValues
+      //   : initialValues,
     validationSchema: Yup.object({
       role: Yup.string().required("Geef alstublieft een relatie op"),
       start_date: Yup.string().required("Geef alstublieft een datum op"),
     }),
-    onSubmit: (values: FormTypes, { resetForm }) => {
-      if (!selectedOption) {
-        setErrorOptionMessage("Geef alstublieft een medewerker op");
-        return;
-      } else {
-        setErrorOptionMessage("");
-        let data = values;
-        data.employee = selectedOption?.id;
-        onSubmit(values, { resetForm });
-      }
-    },
+    onSubmit: onSubmit,
   });
 
   return (

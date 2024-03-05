@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  error?: string;
+  error?: any;
   isPrice?: boolean;
 };
 

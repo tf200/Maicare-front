@@ -1,23 +1,18 @@
 "use client";
 
 import React, { FunctionComponent, useMemo } from "react";
-import Table from "@/components/Table";
 import Link from "next/link";
-import Pagination from "@/components/Pagination";
 import { useEmergencyContactList } from "@/utils/emergency/getEmergencyContactList";
 import { useDeleteEmergency } from "@/utils/emergency/deleteEmergencyContact";
-import { usePatchEmergency } from "@/utils/emergency/patchEmergencyContact";
-import { PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import PaginatedTable from "@/components/PaginatedTable";
-import { ColumnDef } from "@tanstack/react-table";
-import { EmergencyContactsResDto } from "@/types/emergencyContacts/emergency-contacts-res-dto";
 import LinkButton from "@/components/buttons/LinkButton";
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import PencilSquare from "@/components/icons/PencilSquare";
 type Props = {
   params: { clientId: string };
 };
@@ -28,14 +23,13 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
   const { pagination, isFetching, isLoading, isError, data } =
     useEmergencyContactList(+clientId);
 
+  console.log(data);
+
   const {
     mutate: deleteEmergency,
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteEmergency(+clientId);
-
-  const { mutate: updateEmergency, isLoading: isDataUpdating } =
-    usePatchEmergency(+clientId);
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
@@ -89,15 +83,8 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
             <input
               className="w-[20px] h-[20px] cursor-pointer"
               type="checkbox"
-              defaultChecked={info.getValue()}
-              disabled={isDataUpdating}
-              onChange={() => {
-                updateEmergency({
-                  auto_reports: !info.getValue(),
-                  id: info?.cell?.row?.id,
-                });
-              }}
-            ></input>
+              checked={info.getValue()}
+            />
           </div>
         ),
       },
@@ -105,7 +92,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
         accessorKey: "id",
         header: () => "",
         cell: (info) => (
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <IconButton
               buttonType="Danger"
               onClick={() => {
@@ -124,6 +111,13 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
                 <TrashIcon className="w-5 h-5" />
               )}
             </IconButton>
+            <Link
+              href={`/clients/${clientId}/emergency/${info.getValue() as number}/edit`}
+            >
+              <IconButton>
+                <PencilSquare className="w-5 h-5" />
+              </IconButton>
+            </Link>
           </div>
         ),
       },
