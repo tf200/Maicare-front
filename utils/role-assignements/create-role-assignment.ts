@@ -13,7 +13,6 @@ export const useCreateRoleAssignment = (employeeId: number) => {
   return useMutation({
     mutationFn: createRoleAssignment,
     onSuccess: (res) => {
-      console.log(res);
       queryClient.invalidateQueries(["employees", employeeId, "teams"]);
     },
   });

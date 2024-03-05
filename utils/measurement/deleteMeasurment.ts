@@ -11,7 +11,7 @@ export const useDeleteMeasurement = (clientId: number) => {
   return useMutation({
     mutationFn: deleteMeasurement,
     onSuccess: () => {
-      queryClient.invalidateQueries([clientId, "measurment"]);
+      queryClient.invalidateQueries([clientId, "measurement"]);
     },
   });
 };

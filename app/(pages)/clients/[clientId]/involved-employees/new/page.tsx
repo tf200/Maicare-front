@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import InvolvedEmployeesForm from "@/components/forms/InvolvedEmployeesForm";
 
-const NewEmergencyContact: FunctionComponent = ({
+const NewInvolved: FunctionComponent = ({
   params,
 }: {
   params: { clientId: string };
@@ -19,7 +19,10 @@ const NewEmergencyContact: FunctionComponent = ({
                 Voeg medewerker toe aan cliënt
               </h3>
             </div>
-            <InvolvedEmployeesForm clientId={parseInt(params.clientId)} />
+            <InvolvedEmployeesForm
+              mode={"new"}
+              clientId={parseInt(params.clientId)}
+            />
           </div>
         </div>
       </div>
@@ -27,4 +30,4 @@ const NewEmergencyContact: FunctionComponent = ({
   );
 };
 
-export default NewEmergencyContact;
+export default NewInvolved;

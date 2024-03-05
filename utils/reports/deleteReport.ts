@@ -12,6 +12,7 @@ export const useDeleteReport = (clientId: number) => {
     mutationFn: deleteReport,
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "reports"]);
+      queryClient.invalidateQueries([clientId, "infinite-reports"]);
     },
   });
 };

@@ -4,15 +4,10 @@ import React, { FunctionComponent, useMemo } from "react";
 import { useAllergiesList } from "@/utils/allergies/getAllergiesList";
 import { ColumnDef, createColumnHelper, Row } from "@tanstack/table-core";
 import { AllergiesResDto } from "@/types/allergies/allergies-res-dto";
-import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
-import Table from "@/components/Table";
 import Severity from "@/components/Severity";
 import DetailCell from "@/components/DetailCell";
-import ChevronDown from "@/components/icons/ChevronDown";
-import clsx from "clsx";
 import PaginatedTable from "@/components/PaginatedTable";
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
@@ -20,6 +15,8 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useDeleteAllergy } from "@/utils/allergies/deleteAllergy";
+import Link from "next/link";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 type Props = {
   params: { clientId: string };
@@ -56,7 +53,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   }, []);
 
   const renderRowDetails = ({ original }: Row<AllergiesResDto>) => {
-    return <RowDetails data={original} />;
+    return <RowDetails clientId={parseInt(clientId)} data={original} />;
   };
 
   return (
@@ -93,9 +90,10 @@ export default AllergiesPage;
 
 type RowDetailsProps = {
   data: AllergiesResDto;
+  clientId: number;
 };
 
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
   const {
     mutate: deleteAllergy,
     isLoading: isDeleting,
@@ -126,7 +124,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div>
+      <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
           onClick={() => {
@@ -145,6 +143,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
             <TrashIcon className="w-5 h-5" />
           )}
         </IconButton>
+        <Link href={`/clients/${clientId}/allergies/${data.id}/edit`}>
+          <IconButton>
+            <PencilSquare className="w-5 h-5" />
+          </IconButton>
+        </Link>
       </div>
     </div>
   );

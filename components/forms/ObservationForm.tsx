@@ -15,6 +15,8 @@ import Textarea from "../FormFields/Textarea";
 import { useCreateObservation } from "@/utils/observations/createObservation";
 import { NewObservationsReqDto } from "@/types/observations/new-observations-req-dto";
 import InputField from "@/components/FormFields/InputField";
+import { usePatchObservation } from "@/utils/observations/patchObservation";
+import { useGetObservation } from "@/utils/observations/getObservation";
 
 type FormType = NewObservationsReqDto;
 
@@ -34,28 +36,62 @@ export const feedbackSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 });
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  observationId?: number;
+  mode: string;
 };
 
-export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateObservation(parseInt(clientId));
+export const ObservationForm: FunctionComponent<PropsType> = ({
+  clientId,
+  observationId,
+  mode,
+}) => {
   const router = useRouter();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetObservation(observationId, clientId);
+
+  const { mutate: create, isLoading: isCreating } =
+    useCreateObservation(clientId);
+  const { mutate: update, isLoading: isPatching } =
+    usePatchObservation(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      mutate(values, {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/reports-record/observations`);
-        },
-      });
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: observationId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/reports-record/observations`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/reports-record/observations`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={feedbackSchema}
     >
@@ -98,12 +134,12 @@ export const ObservationForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Observatie Wordt Ingediend..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Observatie Indienen
+              {mode === "edit" ? "Observatie bijwerken" : "Observatie indienen"}
             </Button>
           </div>
         </form>

@@ -16,7 +16,7 @@ const NewMedicationPage: FunctionComponent<Props> = ({
       <Breadcrumb pageName="Nieuwe Medicatie" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <Panel title={"Creëer een Nieuwe Medicatie"}>
-          <MedicationForm clientId={parseInt(clientId)} />
+          <MedicationForm mode={"new"} clientId={parseInt(clientId)} />
         </Panel>
       </div>
     </>

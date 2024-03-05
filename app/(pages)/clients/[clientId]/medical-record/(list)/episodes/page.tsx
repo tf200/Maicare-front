@@ -20,6 +20,8 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
+import Link from "next/link";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 type Props = {
   params: { clientId: string };
@@ -57,7 +59,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   }, []);
 
   const renderRowDetails = ({ original }: Row<EpisodesResDto>) => {
-    return <RowDetails data={original} />;
+    return <RowDetails data={original} clientId={parseInt(clientId)} />;
   };
 
   return (
@@ -93,9 +95,10 @@ export default EpisodesPage;
 
 type RowDetailsProps = {
   data: EpisodesResDto;
+  clientId: number;
 };
 
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
   const {
     mutate: deleteEpisode,
     isLoading: isDeleting,
@@ -128,7 +131,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Beschrijving van de Toestand"}
         value={data.state_description}
       />
-      <div>
+      <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
           onClick={() => {
@@ -147,6 +150,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
             <TrashIcon className="w-5 h-5" />
           )}
         </IconButton>
+        <Link href={`/clients/${clientId}/episodes/${data.id}/edit`}>
+          <IconButton>
+            <PencilSquare className="w-5 h-5" />
+          </IconButton>
+        </Link>
       </div>
     </div>
   );

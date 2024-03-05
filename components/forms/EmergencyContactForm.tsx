@@ -13,9 +13,13 @@ import { useCreateEmergencyContact } from "@/utils/emergency/createEmergencyCont
 import Button from "@/components/buttons/Button";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import { useRouter } from "next/navigation";
+import { usePatchEmergencyContact } from "@/utils/emergency/patchEmergencyContact";
+import { useGetEmergency } from "@/utils/emergency/getEmergency";
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  emergencyId?: number;
+  mode: string;
 };
 
 type FormTypes = {
@@ -42,25 +46,53 @@ const initialValues: FormTypes = {
 
 export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   clientId,
+  emergencyId,
+  mode,
 }) => {
-  const { mutate, isLoading } = useCreateEmergencyContact(parseInt(clientId));
-
   const router = useRouter();
 
-  const submit = useCallback(
-    (values: FormTypes) => {
-      mutate(values, {
-        onSuccess: () => {
-          formik.resetForm();
-          router.push(`/clients/${clientId}/client-network/emergency`);
-        },
-      });
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetEmergency(emergencyId, clientId);
+
+  const { mutate: create, isLoading: isCreating } =
+    useCreateEmergencyContact(clientId);
+  const { mutate: update, isLoading: isPatching } =
+    usePatchEmergencyContact(clientId);
+
+  const onSubmit = useCallback(
+    (values: FormTypes, { resetForm }) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: emergencyId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/client-network/emergency`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/client-network/emergency`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   const formik = useFormik<FormTypes>({
-    initialValues: initialValues,
+    enableReinitialize: true,
+    initialValues:
+      mode == "edit" ? (data ? data : initialValues) : initialValues,
     validationSchema: Yup.object({
       first_name: Yup.string().required("Geef alstublieft een voornaam op"),
       last_name: Yup.string().required("Geef alstublieft een achternaam op"),
@@ -73,7 +105,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       address: Yup.string().required("Geef alstublieft een adres op"),
       auto_reports: Yup.boolean(),
     }),
-    onSubmit: submit,
+    onSubmit: onSubmit,
   });
 
   return (
@@ -198,14 +230,16 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         name={"auto_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        defaultChecked={formik.values.auto_reports}
       />
       <Button
         type={"submit"}
-        disabled={isLoading}
-        isLoading={isLoading}
+        disabled={isCreating || isPatching}
+        isLoading={isCreating || isPatching}
         formNoValidate={true}
+        loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
       >
-        Contact Indienen
+        {mode === "edit" ? "Contact bijwerken" : "Contact indienen"}
       </Button>
     </form>
   );

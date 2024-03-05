@@ -9,7 +9,7 @@ type Props = {
   };
 };
 
-const NewMedicationPage: FunctionComponent<Props> = ({
+const NewEpisodePage: FunctionComponent<Props> = ({
   params: { clientId },
 }) => {
   return (
@@ -17,11 +17,11 @@ const NewMedicationPage: FunctionComponent<Props> = ({
       <Breadcrumb pageName="Registreer Nieuwe Episode" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <Panel title={"Registreer een Nieuwe Allergie"}>
-          <EpisodeForm clientId={parseInt(clientId)} />
+          <EpisodeForm mode={"new"} clientId={parseInt(clientId)} />
         </Panel>
       </div>
     </>
   );
 };
 
-export default NewMedicationPage;
+export default NewEpisodePage;

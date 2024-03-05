@@ -18,6 +18,8 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import { useDeleteMedication } from "@/utils/medications/deleteMedication";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import Link from "next/link";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 type Props = {
   params: { clientId: string };
@@ -71,7 +73,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
           page={pagination.page ?? 1}
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
-          renderRowDetails={({ original }) => <RowDetails data={original} />}
+          renderRowDetails={({ original }) => <RowDetails clientId={parseInt(clientId)} data={original} />}
         />
       )}
       {isError && (
@@ -87,9 +89,10 @@ export default MedicationsPage;
 
 type RowDetailsProps = {
   data: MedicationsResDto;
+  clientId: number
 };
 
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
   const {
     mutate: deleteMedication,
     isLoading: isDeleting,
@@ -115,7 +118,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div>
+      <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
           onClick={() => {
@@ -134,6 +137,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
             <TrashIcon className="w-5 h-5" />
           )}
         </IconButton>
+        <Link href={`/clients/${clientId}/medications/${data.id}/edit`}>
+          <IconButton>
+            <PencilSquare className="w-5 h-5" />
+          </IconButton>
+        </Link>
       </div>
     </div>
   );
