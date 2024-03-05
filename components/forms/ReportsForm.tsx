@@ -15,6 +15,8 @@ import Button from "@/components/buttons/Button";
 import { NewReportsReqDto } from "@/types/reports/new-reports-req-dto";
 import { useCreateReports } from "@/utils/reports/createReports";
 import { useRouter } from "next/navigation";
+import { usePatchReport } from "@/utils/reports/patchReport";
+import { useGetReport } from "@/utils/reports/getReport";
 
 type FormType = NewReportsReqDto;
 
@@ -37,31 +39,60 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 type PropsType = {
   clientId: number;
   className?: string;
+  mode: string,
+  reportsId?: number,
 };
 
 export const ReportsForm: FunctionComponent<PropsType> = ({
   clientId,
   className,
+  mode,
+  reportsId
 }) => {
-  const { mutate, isLoading } = useCreateReports(clientId);
   const router = useRouter();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetReport(reportsId, clientId);
+  
+  const { mutate: create, isLoading: isCreating } = useCreateReports(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchReport(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      mutate(values, {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/reports-record/reports`);
-        },
-      });
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: reportsId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/reports-record/reports`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/reports-record/reports`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   return (
     <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
+    enableReinitialize={true}
+    initialValues={
+      mode == "edit" ? (data ? data : initialValues) : initialValues
+    }      onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
       {({
@@ -102,13 +133,14 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
 
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Rapporten Worden Ingediend..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Rapport Indienen
+              {mode === "edit" ? "Rapport bijwerken" : "Rapport indienen"}
             </Button>
+
           </div>
         </form>
       )}

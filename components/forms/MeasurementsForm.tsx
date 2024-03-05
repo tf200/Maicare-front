@@ -1,12 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { FormikHelpers } from "formik/dist/types";
@@ -14,6 +9,8 @@ import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
 import { useCreateMeasurement } from "@/utils/measurement/createMeasurement";
 import { MeasurmentResDto } from "@/types/measurment/measurment-res-dto";
+import { usePatchMeasurement } from "@/utils/measurement/patchMeasurement";
+import { useGetMeasurement } from "@/utils/measurement/getMeasurement";
 
 type FormType = MeasurmentResDto;
 
@@ -33,30 +30,62 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 });
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  measurementsId?: number;
+  mode: string;
 };
 
 export const MeasurementsForm: FunctionComponent<PropsType> = ({
   clientId,
+  measurementsId,
+  mode,
 }) => {
-  const { mutate, isLoading } = useCreateMeasurement(parseInt(clientId));
   const router = useRouter();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetMeasurement(measurementsId, clientId);
+
+  const { mutate: create, isLoading: isCreating } =
+    useCreateMeasurement(clientId);
+  const { mutate: update, isLoading: isPatching } =
+    usePatchMeasurement(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      mutate(values, {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/reports-record/measurements`);
-        },
-      });
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: measurementsId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/reports-record/measurements`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/reports-record/measurements`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
@@ -95,15 +124,15 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
               onBlur={handleBlur}
               error={touched.measurement_type && errors.measurement_type}
             />
-
+            
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Meting Wordt Ingediend..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Meting Indienen
+              {mode === "edit" ? "Meting bijwerken" : "Meting indienen"}
             </Button>
           </div>
         </form>

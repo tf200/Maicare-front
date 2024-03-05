@@ -10,9 +10,13 @@ import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import Button from "@/components/buttons/Button";
 import ComboBox from "../ComboBox";
 import { useRouter } from "next/navigation";
+import { useGetInvolved } from "@/utils/involved-employees/getInvolved";
+import { usePatchInvolvedEmployee } from "@/utils/involved-employees/patchInvolvedEmployees";
 
 type PropsType = {
   clientId: number;
+  involvedId?: number;
+  mode: string;
 };
 
 type FormTypes = {
@@ -29,25 +33,61 @@ const initialValues: FormTypes = {
 
 export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   clientId,
+  involvedId,
+  mode,
 }) => {
+  const router = useRouter();
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchedKey, setSearchedKey] = useState(null);
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
 
-  const { mutate, isLoading } = useCreateInvolvedEmployee(clientId);
+  const {
+    data: involvedData,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetInvolved(involvedId, clientId);
 
-  const router = useRouter();
+  const { mutate: create, isLoading: isCreating } =
+    useCreateInvolvedEmployee(clientId);
+  const { mutate: update, isLoading: isPatching } =
+    usePatchInvolvedEmployee(clientId);
 
-  const submit = useCallback(
-    (values: FormTypes) => {
-      mutate(values, {
-        onSuccess: () => {
-          formik.resetForm();
-          router.push(`/clients/${clientId}/client-network/involved-employees`);
-        },
-      });
+  const onSubmit = useCallback(
+    (values, { resetForm }) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: involvedId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(
+                `/clients/${clientId}/client-network/involved-employees`
+              );
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(
+          {
+            ...values,
+            client: clientId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(
+                `/clients/${clientId}/client-network/involved-employees`
+              );
+            },
+          }
+        );
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   const { data, isLoading: isSearching } = useEmployeesList({
@@ -56,12 +96,18 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   });
 
   const formik = useFormik<FormTypes>({
-    initialValues: initialValues,
+    enableReinitialize: true,
+    initialValues:
+      mode == "edit"
+        ? involvedData
+          ? involvedData
+          : initialValues
+        : initialValues,
     validationSchema: Yup.object({
       role: Yup.string().required("Geef alstublieft een relatie op"),
       start_date: Yup.string().required("Geef alstublieft een datum op"),
     }),
-    onSubmit: (values: FormTypes) => {
+    onSubmit: (values: FormTypes, { resetForm }) => {
       if (!selectedOption) {
         setErrorOptionMessage("Geef alstublieft een medewerker op");
         return;
@@ -69,7 +115,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         setErrorOptionMessage("");
         let data = values;
         data.employee = selectedOption?.id;
-        submit(values);
+        onSubmit(values, { resetForm });
       }
     },
   });
@@ -113,20 +159,15 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
+
       <Button
         type={"submit"}
-        onClick={() => {
-          if (!selectedOption) {
-            setErrorOptionMessage("Geef alstublieft een medewerker op");
-          } else {
-            setErrorOptionMessage("");
-          }
-        }}
-        disabled={isLoading}
-        isLoading={isLoading}
+        disabled={isCreating || isPatching}
+        isLoading={isCreating || isPatching}
         formNoValidate={true}
+        loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
       >
-        Medewerker Indienen
+        {mode === "edit" ? "Medewerker bijwerken" : "Medewerker indienen"}
       </Button>
     </form>
   );

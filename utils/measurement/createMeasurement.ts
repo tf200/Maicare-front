@@ -23,7 +23,7 @@ export const useCreateMeasurement = (client: number) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([client, "measurment"]);
+      queryClient.invalidateQueries([client, "measurement"]);
     },
   });
 };

@@ -16,6 +16,8 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useDeleteDiagnosis } from "@/utils/diagnosis/deleteDiagnosis";
+import Link from "next/link";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 type Props = {
   params: { clientId: string };
@@ -74,7 +76,9 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         <PaginatedTable
           data={data}
           columns={columnDef}
-          renderRowDetails={({ original }) => <RowDetails data={original} />}
+          renderRowDetails={({ original }) => (
+            <RowDetails data={original} clientId={parseInt(clientId)} />
+          )}
           page={pagination.page ?? 1}
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
@@ -94,9 +98,10 @@ export default DiagnosisPage;
 
 type RowDetailsProps = {
   data: DiagnosisListItem;
+  clientId: number;
 };
 
-const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
+const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
   const {
     mutate: deleteDiagnosis,
     isLoading: isDeleting,
@@ -133,7 +138,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div>
+      <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
           onClick={() => {
@@ -152,6 +157,11 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data }) => {
             <TrashIcon className="w-5 h-5" />
           )}
         </IconButton>
+        <Link href={`/clients/${clientId}/diagnosis/${data.id}/edit`}>
+          <IconButton>
+            <PencilSquare className="w-5 h-5" />
+          </IconButton>
+        </Link>
       </div>
     </div>
   );

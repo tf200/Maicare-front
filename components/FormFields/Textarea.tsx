@@ -3,7 +3,7 @@ import React, { FunctionComponent, TextareaHTMLAttributes } from "react";
 type Props = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   placeholder?: string;
-  error?: string;
+  error?: any;
 };
 
 const Textarea: FunctionComponent<Props> = ({

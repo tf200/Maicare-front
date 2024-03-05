@@ -27,7 +27,7 @@ export const useMeasurementList = (
   const parsedParams = pagination.params;
 
   const query = useQuery<MeasurmentListResDto>({
-    queryKey: [clientId, "measurment", params ?? parsedParams],
+    queryKey: [clientId, "measurement", params ?? parsedParams],
     queryFn: () => getMeasurementList(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });
