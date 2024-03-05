@@ -1,6 +1,7 @@
 export type ReportsListItem = {
   id: number;
   date: string;
+  created: string;
   report_text: string;
   client: number;
   title: string;
