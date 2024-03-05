@@ -22,7 +22,7 @@ import { mappingGender } from "@/utils/gender";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
-  const [debouncedParams] = useDebounce([filters], 500);
+  const debouncedParams = useDebounce(filters, 500);
   const { page, setPage, data, isError, isFetching, isLoading } =
     useClientsList(debouncedParams);
 
@@ -95,7 +95,12 @@ const ClientsPage: FunctionComponent = () => {
         title={"Clients List"}
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
-            <ClientFilters onFiltersChange={setFilters} />
+            <ClientFilters
+              onFiltersChange={(filters) => {
+                setFilters(filters);
+                setPage(1);
+              }}
+            />
             <Link href={`/clients/new`}>
               <LinkButton
                 text={"Nieuwe Cliënten Toevoegen"}
