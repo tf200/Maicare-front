@@ -21,6 +21,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { useDeleteClient } from "@/utils/clients/deleteClient";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { useRouter } from "next/navigation";
+import ContactSummary from "@/components/clientDetails/ContactSummary";
 
 type Props = {
   params: { clientId: string };
@@ -107,17 +108,20 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           >
             <EmergencyContactsSummary clientId={parseInt(clientId)} />
           </Panel>
-          <Panel
-            title={"Contracten"}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton
-                text={"Bekijk Cliëntcontracten"}
-                href={`${clientId}/contracts`}
-              />
-            }
-          >
-            <ContractsSummary clientId={parseInt(clientId)} />
+          {/*<Panel*/}
+          {/*  title={"Contracten"}*/}
+          {/*  containerClassName="px-7 py-4"*/}
+          {/*  sideActions={*/}
+          {/*    <LinkButton*/}
+          {/*      text={"Bekijk Cliëntcontracten"}*/}
+          {/*      href={`${clientId}/contracts`}*/}
+          {/*    />*/}
+          {/*  }*/}
+          {/*>*/}
+          {/*  <ContractsSummary clientId={parseInt(clientId)} />*/}
+          {/*</Panel>*/}
+          <Panel title={"Opdrachtgever"} containerClassName="px-7 py-4">
+            <ContactSummary clientId={parseInt(clientId)} />
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
