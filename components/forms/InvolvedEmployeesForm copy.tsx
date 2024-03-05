@@ -54,7 +54,6 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   
   const onSubmit = useCallback(
     (values, { resetForm }) => {
-      console.log(selectedOption);
       if (!selectedOption) {        
         
         setErrorOptionMessage("Geef alstublieft een medewerker op");

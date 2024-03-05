@@ -8,7 +8,6 @@ const NewMedicationPage: FunctionComponent = ({
 }: {
   params: { clientId: string; medicationId: number };
 }) => {
-  console.log(params);
   
   return (
     <>
