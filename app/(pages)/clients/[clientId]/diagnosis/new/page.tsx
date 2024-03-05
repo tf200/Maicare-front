@@ -1,3 +1,4 @@
+"use client";
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DiagnosisForm from "@/components/forms/DiagnosisForm";
@@ -20,7 +21,7 @@ const NewDiagnostic: FunctionComponent = ({
                 Creëer een Nieuwe Diagnose
               </h3>
             </div>
-            <DiagnosisForm clientId={params.clientId} />
+            <DiagnosisForm mode={"new"} clientId={parseInt(params.clientId)} />
           </div>
         </div>
       </div>

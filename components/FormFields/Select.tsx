@@ -5,7 +5,7 @@ import ChevronDown from "@/components/icons/ChevronDown";
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   options: SelectionOption[];
-  error?: string;
+  error?: any;
 };
 
 const Select: FunctionComponent<SelectProps> = ({

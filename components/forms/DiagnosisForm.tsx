@@ -10,9 +10,11 @@ import { DIAGNOSIS_SEVERITY_ARRAY, DIAGNOSIS_SEVERITY_OPTIONS } from "@/consts";
 import Textarea from "@/components/FormFields/Textarea";
 import { DiagnosisSeverity } from "@/types/dagnosis-servity";
 import { useCreateDiagnosis } from "@/utils/diagnosis/createDiagnosis";
+import { usePatchDiagnosis } from "@/utils/diagnosis/patchDiagnosis";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
+import { useGetDiagnosis } from "@/utils/diagnosis/getDiagnosis";
 
 type FormType = Omit<
   NewDiagnosisReqDto,
@@ -24,6 +26,7 @@ type FormType = Omit<
 export type DiagnosisFormType = FormType;
 
 const initialValues: FormType = {
+  id: 0,
   title: "",
   description: "",
   diagnosis_code: "",
@@ -33,6 +36,7 @@ const initialValues: FormType = {
 };
 
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
+  id: Yup.number(),
   title: Yup.string().required(
     "Geef alstublieft een samenvatting van de diagnose"
   ),
@@ -50,31 +54,66 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 });
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  diagnosisId?: number;
+  mode: string;
 };
 
-export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateDiagnosis(
-    parseInt(clientId),
+export const DiagnosisForm: FunctionComponent<PropsType> = ({
+  clientId,
+  mode,
+  diagnosisId,
+}) => {
+  const router = useRouter();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetDiagnosis(diagnosisId, clientId);
+
+  const { mutate: create, isLoading: isCreating } = useCreateDiagnosis(
+    clientId,
     "mock-clinician"
   );
 
-  const router = useRouter();
+  const { mutate: update, isLoading: isPatching } = usePatchDiagnosis(
+    clientId
+  );
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      mutate(values, {
-        onSuccess: () => {
-          resetForm;
-          router.push(`/clients/${clientId}/medical-record/diagnosis`);
-        },
-      });
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: diagnosisId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/diagnosis`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/medical-record/diagnosis`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
+  
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
@@ -169,12 +208,12 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Diagnose wordt ingediend..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Diagnose indienen
+              {mode === "edit" ? "Diagnose bijwerken" : "Diagnose indienen"}
             </Button>
           </div>
         </form>

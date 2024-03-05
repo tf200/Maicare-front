@@ -16,6 +16,8 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useDeleteInvolvedEmployee } from "@/utils/involved-employees/deleteInvolvedEmployee";
+import PencilSquare from "@/components/icons/PencilSquare";
+import LinkButton from "@/components/buttons/LinkButton";
 
 type Props = {
   params: { clientId: string };
@@ -62,7 +64,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
         accessorKey: "id",
         header: () => "",
         cell: (info) => (
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <IconButton
               buttonType="Danger"
               onClick={() => {
@@ -81,6 +83,13 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
                 <TrashIcon className="w-5 h-5" />
               )}
             </IconButton>
+            <Link
+              href={`/clients/${clientId}/involved-employees/${info.getValue() as number}/edit`}
+            >
+              <IconButton>
+                <PencilSquare className="w-5 h-5" />
+              </IconButton>
+            </Link>
           </div>
         ),
       },
@@ -91,12 +100,10 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
     <Panel
       title={"Involved Employees List"}
       sideActions={
-        <Link
+        <LinkButton
+          text="Medewerker toevoegen"
           href={`/clients/${clientId}/involved-employees/new`}
-          className="inline-flex items-center justify-center px-10 py-4 font-medium text-center text-white bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
-          Medewerker toevoegen
-        </Link>
+        />
       }
     >
       {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}

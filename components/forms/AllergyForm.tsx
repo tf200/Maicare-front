@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { AllergyFormType } from "@/types/allergies/allergy-form-type";
 import * as Yup from "yup";
 import {
@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { DiagnosisSeverity } from "@/types/dagnosis-servity";
 import { AllergyType } from "@/types/allergyType";
 import { FormikHelpers } from "formik/dist/types";
+import { usePatchAllergie } from "@/utils/allergies/patchAllergie";
+import { useGetAllergie } from "@/utils/allergies/getAllergie";
 
 const initialValues: AllergyFormType = {
   allergy_type: "",
@@ -34,41 +36,79 @@ const allergySchema: Yup.ObjectSchema<AllergyFormType> = Yup.object().shape({
   severity: Yup.string()
     .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Selecteer een geldige ernst")
     .required("Geef alstublieft de ernst van de allergie op"),
-  reaction: Yup.string().required("Geef alstublieft de reactie op de allergie op"),
+  reaction: Yup.string().required(
+    "Geef alstublieft de reactie op de allergie op"
+  ),
   notes: Yup.string().required("Geef alstublieft notities voor de allergie op"),
 });
 
 type Props = {
   clientId: number;
+  allergieId?: number;
+  mode: string;
 };
 
-const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateAllergy(clientId);
+const AllergyForm: FunctionComponent<Props> = ({
+  clientId,
+  allergieId,
+  mode,
+}) => {
   const router = useRouter();
-  const onSubmit = (
-    values: AllergyFormType,
-    { resetForm }: FormikHelpers<AllergyFormType>
-  ) => {
-    mutate(
-      {
-        ...values,
-        severity: values.severity as DiagnosisSeverity,
-        allergy_type: values.allergy_type as AllergyType,
-        client: clientId,
-      },
-      {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/medical-record/allergies`);
-        },
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetAllergie(allergieId, clientId);
+
+  const { mutate: create, isLoading: isCreating } = useCreateAllergy(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchAllergie(clientId);
+
+  const onSubmit = useCallback(
+    (
+      values: AllergyFormType,
+      { resetForm }: FormikHelpers<AllergyFormType>
+    ) => {
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: allergieId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/medical-record/allergies`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(
+          {
+            ...values,
+            severity: values.severity as DiagnosisSeverity,
+            allergy_type: values.allergy_type as AllergyType,
+            client: clientId,
+          },
+          {
+            onSuccess: () => {
+              resetForm();
+              router.push(`/clients/${clientId}/medical-record/allergies`);
+            },
+          }
+        );
       }
-    );
-  };
+    },
+    [create, update]
+  );
 
   return (
     <Formik
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
-      initialValues={initialValues}
       validationSchema={allergySchema}
     >
       {({
@@ -134,12 +174,12 @@ const AllergyForm: FunctionComponent<Props> = ({ clientId }) => {
 
           <Button
             type={"submit"}
-            disabled={isLoading}
-            isLoading={isLoading}
+            disabled={isCreating || isPatching}
+            isLoading={isCreating || isPatching}
             formNoValidate={true}
-            loadingText={"Geregistreerde Allergie wordt ingediend..."}
+            loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
           >
-            Allergie Registreren
+            {mode === "edit" ? "Allergie bijwerken" : "Allergie indienen"}
           </Button>
         </form>
       )}

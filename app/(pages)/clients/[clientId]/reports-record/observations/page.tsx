@@ -16,6 +16,8 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import { useDeleteObservations } from "@/utils/observations/deleteObservation";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import Link from "next/link";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 type Props = {
   params: { clientId: string };
@@ -61,7 +63,7 @@ const ObservationsPage: FunctionComponent<Props> = ({
         accessorKey: "id",
         header: () => "",
         cell: (info) => (
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <IconButton
               buttonType="Danger"
               onClick={() => {
@@ -80,6 +82,13 @@ const ObservationsPage: FunctionComponent<Props> = ({
                 <TrashIcon className="w-5 h-5" />
               )}
             </IconButton>
+            <Link
+              href={`/clients/${clientId}/observations/${info.getValue() as number}/edit`}
+            >
+              <IconButton>
+                <PencilSquare className="w-5 h-5" />
+              </IconButton>
+            </Link>
           </div>
         ),
       },

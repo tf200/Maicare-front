@@ -1,4 +1,4 @@
-import React, { FunctionComponent, InputHTMLAttributes } from "react";
+import React, { FunctionComponent, InputHTMLAttributes, useState } from "react";
 
 type CheckBoxInputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -22,7 +22,7 @@ const CheckBoxInputFieldThin: FunctionComponent<CheckBoxInputFieldType> = ({
           id={id}
           required={required}
           className="w-[19px] h-[19px] mx-2 cursor-pointer"
-        />{" "}
+        />
         {label}
       </label>
     </div>
