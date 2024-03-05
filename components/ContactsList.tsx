@@ -3,7 +3,7 @@
 import React, { FunctionComponent, useMemo } from "react";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
-import { ContactResDto } from "@/components/FormFields/OpContactForms/OpContactForm";
+import { ContactResDto } from "@/components/forms/OpContactForms/OpContactForm";
 import PaginatedTable from "@/components/PaginatedTable";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { ColumnDef } from "@tanstack/react-table";

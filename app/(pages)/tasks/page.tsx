@@ -87,7 +87,7 @@ const Page: FunctionComponent = (props) => {
           close();
         },
         id: event.id,
-        initialData, // TODO: DEPRECATE
+        initialData,
         mode: "edit",
       });
     },
@@ -143,6 +143,7 @@ const Page: FunctionComponent = (props) => {
       className: clsx({
         [styles.meeting]: event.appointment_type === "meeting",
         [styles.other]: event.appointment_type === "other",
+        [styles.work]: event.appointment_type === "work",
       }),
     };
   }, []);

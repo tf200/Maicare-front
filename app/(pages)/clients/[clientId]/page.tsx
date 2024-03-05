@@ -120,9 +120,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           {/*>*/}
           {/*  <ContractsSummary clientId={parseInt(clientId)} />*/}
           {/*</Panel>*/}
-          <Panel title={"Opdrachtgever"} containerClassName="px-7 py-4">
-            <ContactSummary clientId={parseInt(clientId)} />
-          </Panel>
+          <ContactSummary clientId={parseInt(clientId)} />
         </div>
         <div className="flex flex-col gap-9">
           <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">

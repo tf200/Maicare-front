@@ -235,7 +235,7 @@ const GlobalMenu: FunctionComponent = () => {
         },
         {
           completeHref: "/contracts",
-          icon: <InvoiceIcon height={19} width={18} />,
+          icon: <InvoiceIcon className={"w-4.5 h-5"} />,
           children: "Contracten",
         },
         {
@@ -297,16 +297,6 @@ const ClientMenu: FunctionComponent = () => {
               pathname.startsWith(`/clients/${clientId}/involved-employees`)
             );
           },
-        },
-        {
-          completeHref: `/clients/${clientId}/contact`,
-          icon: <BuildingIcon className={"w-4.5 h-5"} />,
-          children: "Opdrachtgever",
-        },
-        {
-          completeHref: `/clients/${clientId}/contracts`,
-          icon: <InvoiceIcon height={18} width={18} />,
-          children: "Contracten",
         },
         {
           completeHref: `/clients/${clientId}/reports`,
