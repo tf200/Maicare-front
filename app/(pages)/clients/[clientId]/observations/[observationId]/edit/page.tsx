@@ -1,26 +1,30 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import ReportsForm from "@/components/forms/ReportsForm";
+import ObservationForm from "@/components/forms/ObservationForm";
 
-const NewReports: FunctionComponent = ({
+const EditObservation: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string };
+  params: { clientId: string; observationId: number };
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Nieuwe Rapporten" />
+      <Breadcrumb pageName="Update Observation" />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
-          {/* <!-- Reports Form --> */}
+          {/* <!-- Observation Form --> */}
           <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
-                Creëer Nieuwe Rapporten
+                Update Observation
               </h3>
             </div>
-            <ReportsForm mode={"new"} clientId={+params.clientId} />
+            <ObservationForm
+              mode={"edit"}
+              observationId={params.observationId}
+              clientId={parseInt(params.clientId)}
+            />
           </div>
         </div>
       </div>
@@ -28,4 +32,4 @@ const NewReports: FunctionComponent = ({
   );
 };
 
-export default NewReports;
+export default EditObservation;

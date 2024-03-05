@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import ReportsForm from "@/components/forms/ReportsForm";
 
-const NewReports: FunctionComponent = ({
+const EditReports: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string };
+  params: { clientId: string, reportsId: number };
 }) => {
   return (
     <>
@@ -20,7 +20,7 @@ const NewReports: FunctionComponent = ({
                 Creëer Nieuwe Rapporten
               </h3>
             </div>
-            <ReportsForm mode={"new"} clientId={+params.clientId} />
+            <ReportsForm mode={"edit"} reportsId={params.reportsId} clientId={+params.clientId} />
           </div>
         </div>
       </div>
@@ -28,4 +28,4 @@ const NewReports: FunctionComponent = ({
   );
 };
 
-export default NewReports;
+export default EditReports;

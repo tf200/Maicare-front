@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import MeasurementsForm from "@/components/forms/MeasurementsForm";
 
-const NewReports: FunctionComponent = ({
+const NewMeasurement: FunctionComponent = ({
   params,
 }: {
   params: { clientId: string };
@@ -20,7 +20,7 @@ const NewReports: FunctionComponent = ({
                 Creëer Nieuwe Metingen
               </h3>
             </div>
-            <MeasurementsForm clientId={params.clientId} />
+            <MeasurementsForm mode="new" clientId={parseInt(params.clientId)} />
           </div>
         </div>
       </div>
@@ -28,4 +28,4 @@ const NewReports: FunctionComponent = ({
   );
 };
 
-export default NewReports;
+export default NewMeasurement;

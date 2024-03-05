@@ -1,15 +1,15 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-async function deleteMeasurement(clientId: number) {
-  const response = await api.delete(`employee/measurment_rud/${clientId}/`);
+const PatchMeasurement = async (data: any) => {
+  const response = await api.patch(`employee/measurment_rud/${data.id}/`, data);
   return response.data;
-}
+};
 
-export const useDeleteMeasurement = (clientId: number) => {
+export const usePatchMeasurement = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteMeasurement,
+    mutationFn: PatchMeasurement,
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "measurement"]);
     },

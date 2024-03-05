@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { NewFeedbackReqDto } from "@/types/feedback/new-feedback-req-dto";
 import { useCreateFeedback } from "@/utils/feedback/createFeedback";
 import Textarea from "../FormFields/Textarea";
+import { useGetFeedback } from "@/utils/feedback/getFeedback";
+import { usePatchFeedback } from "@/utils/feedback/patchFeedback";
 
 type FormType = NewFeedbackReqDto;
 
@@ -31,29 +33,60 @@ export const feedbackSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
 });
 
 type PropsType = {
-  clientId: string;
+  clientId: number;
+  feedbackId?: number;
+  mode: string;
 };
 
-export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateFeedback(parseInt(clientId));
-  const [isSuccess, setIsSuccess] = useState(false);
+export const FeedbackForm: FunctionComponent<PropsType> = ({
+  clientId,
+  feedbackId,
+  mode,
+}) => {
   const router = useRouter();
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isError,
+  } = useGetFeedback(feedbackId, clientId);
+
+  const { mutate: create, isLoading: isCreating } = useCreateFeedback(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchFeedback(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      mutate(values, {
-        onSuccess: () => {
-          resetForm();
-          router.push(`/clients/${clientId}/reports-record/feedback`);
-        },
-      });
+      if (mode === "edit") {
+        update(
+          {
+            ...values,
+            id: feedbackId,
+          },
+          {
+            onSuccess: () => {
+              resetForm;
+              router.push(`/clients/${clientId}/reports-record/feedback`);
+            },
+          }
+        );
+      } else if (mode === "new") {
+        create(values, {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/reports-record/feedback`);
+          },
+        });
+      }
     },
-    [mutate]
+    [create, update]
   );
 
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={feedbackSchema}
     >
@@ -83,12 +116,12 @@ export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
             <Button
               type={"submit"}
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={isCreating || isPatching}
+              isLoading={isCreating || isPatching}
               formNoValidate={true}
-              loadingText={"Feedback Wordt Ingediend..."}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              Feedback Indienen
+              {mode === "edit" ? "Feedback bijwerken" : "Feedback indienen"}
             </Button>
           </div>
         </form>
