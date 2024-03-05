@@ -3,7 +3,7 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
-import OpContactForm from "@/components/FormFields/OpContactForms/OpContactForm";
+import OpContactForm from "@/components/forms/OpContactForms/OpContactForm";
 import { useRouter } from "next/navigation";
 
 const Page: FunctionComponent = () => {

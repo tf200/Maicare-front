@@ -293,16 +293,6 @@ const ClientMenu: FunctionComponent = () => {
           },
         },
         {
-          completeHref: `/clients/${clientId}/contact`,
-          icon: <BuildingIcon className={"w-4.5 h-5"} />,
-          children: "Opdrachtgever",
-        },
-        {
-          completeHref: `/clients/${clientId}/contracts`,
-          icon: <InvoiceIcon height={18} width={18} />,
-          children: "Contracten",
-        },
-        {
           completeHref: `/clients/${clientId}/reports`,
           icon: <ReportIcon height={18} width={18} />,
           children: "Rapporten",
