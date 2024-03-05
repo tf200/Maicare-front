@@ -10,9 +10,9 @@ const UpdateEpisodePage: FunctionComponent = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Update Episode" />
+      <Breadcrumb pageName="Bijwerken aflevering" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel title={"Update Episode"}>
+        <Panel title={"Bijwerken aflevering"}>
           <EpisodeForm
             mode={"edit"}
             episodeId={params.episodeId}
