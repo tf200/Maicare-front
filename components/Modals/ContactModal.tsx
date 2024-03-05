@@ -104,7 +104,7 @@ const ContactModal: FunctionComponent<ModalProps> = ({
               Wil je een nieuwe opdrachtgever aanmaken?
             </div>
           </button>
-          <Button isLoading={isLoading} type="submit">
+          <Button isLoading={isLoading} type="submit" className="mt-auto">
             Voeg toe
           </Button>
         </form>

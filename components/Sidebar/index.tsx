@@ -234,7 +234,7 @@ const GlobalMenu: FunctionComponent = () => {
         },
         {
           completeHref: "/contracts",
-          icon: <InvoiceIcon height={19} width={18} />,
+          icon: <InvoiceIcon className={"w-4.5 h-5"} />,
           children: "Contracten",
         },
         {
