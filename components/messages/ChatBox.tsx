@@ -114,9 +114,12 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
 
   useEffect(() => {
     if (conversationId && ws) {
-      ws.onSentMessage((data) => {
+      const unsubscribe = ws.onSentMessage((data) => {
         queryClient.invalidateQueries(["conversation-details", conversationId]);
       });
+      return () => {
+        unsubscribe();
+      };
     }
   }, [ws, conversationId]);
 
