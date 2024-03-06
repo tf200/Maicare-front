@@ -113,7 +113,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   );
 
   useEffect(() => {
-    if (conversationId) {
+    if (conversationId && ws) {
       ws.onSentMessage((data) => {
         console.log("message sent", data);
         queryClient.invalidateQueries(["conversation-details", conversationId]);
