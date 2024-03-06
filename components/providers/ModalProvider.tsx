@@ -31,8 +31,10 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
   const pop = useCallback(() => {
     setModals((modals) => {
       const newModals = modals.slice(0, modals.length - 1);
-      if (newModals.length === 0) {
+      if (newModals.length > 0) {
         setOpenedModal(() => newModals[newModals.length - 1]);
+      } else {
+        setOpenedModal(null);
       }
       return newModals;
     });
@@ -41,8 +43,10 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
     (modal: FunctionComponent) => {
       setModals((modals) => {
         const newModals = modals.filter((m) => m !== modal);
-        if (newModals.length === 0) {
+        if (newModals.length > 0) {
           setOpenedModal(() => newModals[newModals.length - 1]);
+        } else {
+          setOpenedModal(null);
         }
         return newModals;
       });

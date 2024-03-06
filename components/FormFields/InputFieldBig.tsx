@@ -3,6 +3,7 @@ import React, {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
+import { cn } from "@/utils/cn";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -19,7 +20,7 @@ export const InputFieldBig: FunctionComponent<InputFieldType> = ({
   ...props
 }) => {
   return (
-    <div className={"mb-4"}>
+    <div className={cn("mb-4", className)}>
       <label
         htmlFor={id}
         className="mb-2.5 block font-medium text-black dark:text-white"

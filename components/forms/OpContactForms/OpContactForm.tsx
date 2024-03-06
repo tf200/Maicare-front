@@ -7,7 +7,7 @@ import InputField from "@/components/FormFields/InputField";
 import { GenericSelectionOption } from "@/types/selection-option";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
-import ContactItemFields from "@/components/FormFields/OpContactForms/ContactItemFields";
+import ContactItemFields from "./ContactItemFields";
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 import { FormProps } from "@/types/form-props";
@@ -90,7 +90,7 @@ const OPTIONS: GenericSelectionOption<string, OpClientType | "">[] = [
   { label: "Zorginstelling", value: "healthcare_institution" },
 ];
 
-const OcClientTypeRecord: Record<OpClientType, string> = {
+export const OpClientTypeRecord: Record<OpClientType, string> = {
   main_provider: "Hoofdaanbieder",
   local_authority: "Gemeente",
   particular_party: "Particuliere partij",
@@ -186,7 +186,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           error={touched.types && errors.types}
         />
         <InputField
-          label={`${OcClientTypeRecord[values.types] ? OcClientTypeRecord[values.types] + " naam" : "Naam"}`}
+          label={`${OpClientTypeRecord[values.types] ? OpClientTypeRecord[values.types] + " naam" : "Naam"}`}
           className={"mb-4"}
           name={"name"}
           required={true}
@@ -216,7 +216,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           placeholder={"Adres"}
           error={touched.address && errors.address}
         />
-        <h3 className="text-lg font-semibold mb-6">Bedrijfsgegevens</h3>
+        <h3 className="text-lg font-semibold mb-6">Coördinaten</h3>
         <div className="flex flex-col lg:flex-row gap-3">
           <InputField
             label={"Postcode"}

@@ -5,13 +5,11 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import jwt from "jsonwebtoken";
 import InputField from "@/components/FormFields/InputField";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 
 const Profile = () => {
   const decode = jwt.decode(localStorage.getItem("a"));
-  const { data: userData }: any = useQuery({
-    queryFn: () => api.get("/employee/profile/"),
-    queryKey: ["user"],
-  });
+  const { data: userData } = useMyInfo();
 
   if (!userData) return null;
   const {
@@ -21,7 +19,7 @@ const Profile = () => {
     phone_number,
     email,
     profile_picture,
-  } = userData.data;
+  } = userData;
 
   const role =
     decode.groups.length > 0

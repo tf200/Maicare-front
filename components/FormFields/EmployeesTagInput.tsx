@@ -8,28 +8,14 @@ import FormikTagInput from "@/components/FormFields/FormikTagInput";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEmployeeDetails } from "@/utils/employees/getEmployeeDetails";
+import { useSearchEmployeeOptions } from "@/hooks/useSearchEmployeeOptions";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
 };
 
 const EmployeesTagInput: FunctionComponent<Props> = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const searchParams = useMemo(() => {
-    return {
-      search: searchQuery,
-      out_of_service: false,
-    };
-  }, [searchQuery]);
-  const debouncedParams = useDebounce(searchParams, 300);
-  const { data, isLoading } = useEmployeesList(debouncedParams);
-  const options = useMemo(() => {
-    if (!data?.results) return [];
-    return data.results.map((employee) => ({
-      label: employee.first_name + " " + employee.last_name,
-      value: employee,
-    }));
-  }, [data]);
+  const { setSearchQuery, options, searchQuery } = useSearchEmployeeOptions();
   return (
     <FormikTagInput
       {...props}

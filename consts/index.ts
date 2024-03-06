@@ -23,10 +23,11 @@ export const RATE_TYPE_ARRAY = [
   "rate_per_hour",
 ] as const;
 
-export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other"] as const;
+export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work"] as const;
 
 export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Type", value: "" },
+  { label: "Werk", value: "work" },
   { label: "Afspraak", value: "meeting" },
   { label: "Anders", value: "other" },
 ];

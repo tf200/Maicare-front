@@ -1,32 +1,37 @@
-import api from "@/utils/api";
-import { ModalProps } from "@/types/modal-props";
-import Button from "@/components/buttons/Button";
-import { FormikProvider, useFormik } from "formik";
-import FormModal from "@/components/Modals/FormModal";
-import { useContacts } from "@/components/ContactsList";
-import FormikCombobox from "@/components/FormFields/Combobox";
-import { ClientsResDto } from "@/types/clients/clients-res-dto";
 import React, { FunctionComponent, useMemo, useState } from "react";
-import { ContactResDto } from "@/components/FormFields/OpContactForms/OpContactForm";
+import api from "@/utils/api";
+import Button from "@/components/buttons/Button";
+import InfoIcon from "@/components/icons/InfoIcon";
+import FormModal from "@/components/Modals/FormModal";
+import FormikCombobox from "@/components/FormFields/Combobox";
+import CreateOpContactModal from "@/components/Modals/CreateOpContactModal";
+import { FormikProvider, useFormik } from "formik";
+import { useContacts } from "@/components/ContactsList";
+import { ModalProps } from "@/types/modal-props";
+import { ContactResDto } from "@/components/forms/OpContactForms/OpContactForm";
 import { useMutation, useQueryClient } from "react-query";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useModal } from "@/components/providers/ModalProvider";
 
 type AssignClientContactReqDto = {
-  client: ClientsResDto["id"];
-  contact: ContactResDto["id"];
+  sender: ContactResDto["id"];
 };
 
-const assignClientContact = async (data: AssignClientContactReqDto) => {
-  const response = await api.post("client/client-senders/", data);
+const patchClientContact = async (
+  clientId: number,
+  data: AssignClientContactReqDto
+) => {
+  const response = await api.patch(`/client/client_update/${clientId}/`, data);
   return response.data;
 };
 
-const useAssignClientContact = () => {
+const usePatchClientContact = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: assignClientContact,
-    onSuccess: (res: AssignClientContactReqDto) => {
-      queryClient.invalidateQueries([res.client, "contact"]);
+    mutationFn: (req: AssignClientContactReqDto) =>
+      patchClientContact(clientId, req),
+    onSuccess: () => {
+      queryClient.invalidateQueries([clientId]);
     },
   });
 };
@@ -47,14 +52,22 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   const [query, setQuery] = useState<string>("");
   const debounceQuery = useDebounce(query, 300);
   const { data } = useContacts(debounceQuery);
-  const { mutate: assign } = useAssignClientContact();
+  const { mutate: assign, isLoading } = usePatchClientContact(
+    additionalProps.client
+  );
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {
-      assign({
-        client: additionalProps.client,
-        contact: values.selected,
-      });
+    onSubmit: (value) => {
+      assign(
+        {
+          sender: value.selected,
+        },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        }
+      );
     },
   });
   const options = useMemo(() => {
@@ -64,21 +77,36 @@ const ContactModal: FunctionComponent<ModalProps> = ({
       label: item.name,
     }));
   }, [data]);
+  const { open: openCreateModal } = useModal(CreateOpContactModal);
   return (
     <FormModal open={open} onClose={onClose} title={"Opdrachtgever Toevoegen"}>
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <FormikCombobox
             name="selected"
-            className="mb-10"
+            className="mb-0"
             options={options}
+            displayValue={(value) => value.name}
             handleQueryChange={(e) => {
               setQuery(e.target.value);
             }}
             label={"Opdrachtgever"}
             placeholder={"Selecteer een opdrachtgever"}
           />
-          <Button type="submit">Voeg toe</Button>
+          <button
+            onClick={() => {
+              openCreateModal({});
+            }}
+            className="flex items-baseline gap-1 font-bold mb-10"
+          >
+            <InfoIcon className="w-5 h-5 relative bottom-[-0.3rem]" />
+            <div className="text-sm text-gray-400">
+              Wil je een nieuwe opdrachtgever aanmaken?
+            </div>
+          </button>
+          <Button isLoading={isLoading} type="submit" className="mt-auto">
+            Voeg toe
+          </Button>
         </form>
       </FormikProvider>
     </FormModal>
