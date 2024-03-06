@@ -25,6 +25,7 @@ import CalendarIcon from "@/components/icons/CalendarIcon";
 import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
 import BuildingIcon from "@/components/icons/BuildingIcon";
+import ChatBubblesIcon from "@/components/icons/ChatBubblesIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -102,14 +103,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="px-4 flex items-center">
           <Image
             width={56}
             height={56}
-            src={"/images/logo/logo.ico"}
+            src={"/images/logo/logo.png"}
             alt="Logo"
           />
-          <p className="px-4 text-[24px] text-white">
+          <p className="pl-2 text-[24px] text-white">
             MAI<span className="font-bold">Care</span>
           </p>
         </Link>
@@ -246,6 +247,11 @@ const GlobalMenu: FunctionComponent = () => {
           completeHref: "/tasks",
           icon: <CalendarIcon />,
           children: "Planning & Taken",
+        },
+        {
+          completeHref: "/conversations",
+          icon: <ChatBubblesIcon className={"w-4.5 h-4.5"} />,
+          children: "Conversaties",
         },
       ]}
       title={"MENU"}
