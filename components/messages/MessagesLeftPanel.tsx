@@ -33,7 +33,6 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
   const { data: chatProfiles } = useEmployeesList();
   const { data: user } = useMyInfo();
   const { data: conversations } = useConversations(user?.user);
-  console.log(conversations?.results, "conversations");
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
       <div className="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">

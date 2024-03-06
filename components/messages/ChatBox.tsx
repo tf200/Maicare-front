@@ -55,7 +55,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   const { ws, isConnected } = useWSContext();
   const { data: myInfo } = useMyInfo();
   const { data: conversation } = useConversation(conversationId);
-  console.log("conversation", conversation, conversation?.involved[0].id);
+
   const otherParticipant = useMemo(
     () =>
       conversation?.involved?.find((profile) => profile.id !== myInfo?.user),
@@ -115,7 +115,6 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   useEffect(() => {
     if (conversationId && ws) {
       ws.onSentMessage((data) => {
-        console.log("message sent", data);
         queryClient.invalidateQueries(["conversation-details", conversationId]);
       });
     }
@@ -123,7 +122,6 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
 
   useEffect(() => {
     if (messagesContainer.current) {
-      console.log("scrolling to bottom");
       messagesContainer.current.scrollTop =
         messagesContainer.current.scrollHeight;
     }
