@@ -20,6 +20,13 @@ type MessageDeliveryType = {
   conversation: number;
 };
 
+type MessageSentType = {
+  type: "message_sent";
+  message_id: string;
+  conversation: number;
+  message: string;
+};
+
 export class WebSocketService {
   private ws: WebSocket;
   constructor() {
@@ -44,6 +51,18 @@ export class WebSocketService {
     this.ws.addEventListener("message", onMessageDelivery);
     return () => {
       this.ws.removeEventListener("message", onMessageDelivery);
+    };
+  }
+  onSentMessage(callback: (data: MessageSentType) => void) {
+    const onSentMessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "sent_message") {
+        callback(data);
+      }
+    };
+    this.ws.addEventListener("message", onSentMessage);
+    return () => {
+      this.ws.removeEventListener("message", onSentMessage);
     };
   }
   deleteOnMessage(callback: (data: any) => void) {

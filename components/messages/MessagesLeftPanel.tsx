@@ -25,14 +25,14 @@ async function getConversations() {
 
 export function useConversations(employeeId: number) {
   return useQuery(["conversations", employeeId], getConversations, {
-    // enabled: !!employeeId,
+    enabled: !!employeeId,
   });
 }
 
 const MessagesLeftPanel: FunctionComponent = (props) => {
   const { data: chatProfiles } = useEmployeesList();
   const { data: user } = useMyInfo();
-  const { data: conversations } = useConversations(user.user);
+  const { data: conversations } = useConversations(user?.user);
   console.log(conversations?.results, "conversations");
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">

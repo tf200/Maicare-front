@@ -17,17 +17,20 @@ const MessageEditor: FunctionComponent<Props> = ({
   onSubmit: onSubmitCallback,
   disabled,
 }) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const messageEditorRef = useRef<HTMLInputElement>(null);
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const message = messageEditorRef.current?.value;
+      formRef.current.reset();
       onSubmitCallback(message);
     },
     [onSubmitCallback]
   );
   return (
     <form
+      ref={formRef}
       onSubmit={onSubmit}
       className="flex items-center justify-between space-x-4.5"
     >

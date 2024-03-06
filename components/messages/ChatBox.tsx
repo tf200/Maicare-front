@@ -113,6 +113,15 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   );
 
   useEffect(() => {
+    if (conversationId) {
+      ws.onSentMessage((data) => {
+        console.log("message sent", data);
+        queryClient.invalidateQueries(["conversation-details", conversationId]);
+      });
+    }
+  }, [ws, conversationId]);
+
+  useEffect(() => {
     if (messagesContainer.current) {
       console.log("scrolling to bottom");
       messagesContainer.current.scrollTop =
@@ -156,7 +165,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
         ))}
       <div
         ref={messagesContainer}
-        className="flex-1 no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
+        className="flex flex-col-reverse no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
       >
         {conversation?.results.map((message) => (
           <Message key={message.id} message={message} />
