@@ -19,7 +19,10 @@ import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
 import { useRouter } from "next/navigation";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import DetailCell from "@/components/DetailCell";
-import { OpClientTypeRecord } from "@/components/forms/OpContactForms/OpContactForm";
+import {
+  ContactResDto,
+  OpClientTypeRecord,
+} from "@/components/forms/OpContactForms/OpContactForm";
 import InfoIcon from "@/components/icons/InfoIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import ContactModal from "@/components/Modals/ContactModal";
@@ -27,12 +30,13 @@ import { GenericSelectionOption } from "@/types/selection-option";
 import dayjs from "dayjs";
 import { dateFormat } from "@/utils/timeFormatting";
 import FilesUploader from "@/components/FormFields/FilesUploader";
+import { RateType } from "@/types/rate-type";
 
 const initialValues: ContractFormType = {
   start_date: "",
   care_type: "",
   rate_type: "",
-  rate: "",
+  rate_value: "",
   company_contract_period: "",
   client_contract_period: "",
   temporary_file_ids: [],
@@ -45,7 +49,7 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
     rate_type: Yup.string()
       .oneOf(RATE_TYPE_ARRAY)
       .required("Geef alstublieft het tarieftype op"),
-    rate: Yup.string().required("Geef alstublieft het tarief op"),
+    rate_value: Yup.string().required("Geef alstublieft het tarief op"),
     company_contract_period: Yup.string()
       .oneOf(COMPANY_CONTRACT_OPTIONS)
       .required("Geef alstublieft het bedrijfs contractperiode op"),
@@ -62,15 +66,19 @@ type PropsType = {
   clientId: number;
 };
 
-function mapData(form: ContractFormType, client: number): NewContractReqDto {
+function mapData(
+  form: ContractFormType,
+  client: number,
+  contact: number
+): NewContractReqDto {
   return {
     client: client,
+    sender: contact,
     start_date: form.start_date,
     end_date: "form.end_date",
     care_type: form.care_type,
-    rate_per_minute: form.rate_type === "rate_per_minute" ? form.rate : null,
-    rate_per_hour: form.rate_type === "rate_per_hour" ? form.rate : null,
-    rate_per_day: form.rate_type === "rate_per_day" ? form.rate : null,
+    rate_type: form.rate_type as RateType,
+    rate_value: parseFloat(form.rate_value),
   };
 }
 
@@ -96,8 +104,9 @@ const CompanyContractOptions: GenericSelectionOption<
 const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateContract(clientId);
   const router = useRouter();
+  const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
-    mutate(mapData(value, clientId), {
+    mutate(mapData(value, clientId, contactData.id), {
       onSuccess: () => {
         router.push(`/clients/${clientId}/contracts`);
       },
@@ -118,7 +127,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
         className="grid gap-10 grid-cols-1 lg:grid-cols-2"
       >
         <div>
-          <ContactAssignment clientId={clientId} />
+          <ContactAssignment clientId={clientId} data={contactData} />
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select
               label={"Raamovereenkomst"}
@@ -162,7 +171,6 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
               value={(values.start_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              min={dayjs().format("YYYY-MM-DD")}
               error={
                 touched.start_date &&
                 errors.start_date &&
@@ -191,7 +199,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
             <Select
               label={"Tarieftype"}
               required={true}
-              id={"rateType"}
+              id={"rate_type"}
               className="w-full xl:w-1/2"
               value={values.rate_type}
               onChange={handleChange}
@@ -203,7 +211,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
             />
             <InputField
               className={"w-full xl:w-1/2"}
-              id={"rate"}
+              id={"rate_value"}
               required={true}
               type={"number"}
               min={0}
@@ -211,10 +219,14 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
               label={"Tarief"}
               isPrice={true}
               placeholder={"Voer Tarief in"}
-              value={values.rate}
+              value={values.rate_value}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.rate && errors.rate && errors.rate + ""}
+              error={
+                touched.rate_value &&
+                errors.rate_value &&
+                errors.rate_value + ""
+              }
             />
           </div>
         </div>
@@ -242,9 +254,9 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
 export default ContractForm;
 
 const ContactAssignment: FunctionComponent<{
+  data: ContactResDto;
   clientId: number;
-}> = ({ clientId }) => {
-  const { data } = useClientContact(clientId);
+}> = ({ data, clientId }) => {
   const { open } = useModal(ContactModal);
   return (
     <>

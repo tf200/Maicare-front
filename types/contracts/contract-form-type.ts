@@ -10,7 +10,7 @@ export type ContractFormType = {
   start_date: string;
   care_type: string;
   rate_type: RateType | "";
-  rate: string;
+  rate_value: string;
   company_contract_period: CompanyContractType | "";
   client_contract_period: ContractDurationType | "";
   temporary_file_ids: string[];

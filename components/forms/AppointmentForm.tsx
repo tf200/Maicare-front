@@ -51,10 +51,7 @@ const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
     description: Yup.string().required("Beschrijving is verplicht"),
     employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
     clients: Yup.array().min(1, "Minimaal 1 klant is verplicht"),
-    temporary_file_ids: Yup.array().max(
-      5,
-      "Maximaal 5 bijlagen zijn toegestaan"
-    ),
+    temporary_file_ids: Yup.array(),
   });
 
 export type AppointmentFormProps =
