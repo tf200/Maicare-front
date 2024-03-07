@@ -79,6 +79,7 @@ function mapData(
     care_type: form.care_type,
     rate_type: form.rate_type as RateType,
     rate_value: parseFloat(form.rate_value),
+    temporary_file_ids: form.temporary_file_ids,
   };
 }
 
