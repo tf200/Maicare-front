@@ -16,6 +16,7 @@ import GroupIcon from "@/components/icons/GroupIcon";
 import IndividualIcons from "@/components/icons/IndividualIcons";
 import GridsIcon from "@/components/icons/GridsIcon";
 import DocumentIcon from "@/components/svg/DocumentIcon";
+import GoalIcon from "@/components/svg/GoalIcon";
 import ReportIcon from "@/components/svg/ReportIcon";
 import EducationIcon from "@/components/svg/EducationIcon";
 import CertifIcon from "@/components/svg/CertifIcon";
@@ -26,6 +27,10 @@ import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
 import BuildingIcon from "@/components/icons/BuildingIcon";
 import ChatBubblesIcon from "@/components/icons/ChatBubblesIcon";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
+import ProfilePicture from "../ProfilePicture";
+import dayjs from "dayjs";
+import { getAge } from "@/utils/getAge";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -261,62 +266,86 @@ const GlobalMenu: FunctionComponent = () => {
 
 const ClientMenu: FunctionComponent = () => {
   const { clientId } = useParams();
+  const { data, isLoading, isError } = useClientDetails(
+    parseInt(clientId.toString())
+  );
+
   return (
-    <SidebarMenu
-      items={[
-        {
-          completeHref: `/clients/${clientId}`,
-          icon: <IndividualIcons width={18} height={18} />,
-          children: "Overzicht",
-          getIsActive: (pathname) => {
-            return pathname === `/clients/${clientId}`;
+    <>
+      <div className="w-full flex flex-col font-bold items-center">
+        <ProfilePicture profilePicture={data?.profile_picture} />
+        <p className="pt-5 text-white">
+          {data?.first_name + " " + data?.last_name}
+        </p>
+        <p>
+          {data?.date_of_birth
+            ? dayjs(data?.date_of_birth).format("DD MMM, YYYY") +
+              ` (${getAge(data?.date_of_birth)} jaar oud)`
+            : null}
+        </p>
+        <p>{"Dossiernummer : " + data?.filenumber}</p>
+      </div>
+      <SidebarMenu
+        items={[
+          {
+            completeHref: `/clients/${clientId}`,
+            icon: <IndividualIcons width={18} height={18} />,
+            children: "Overzicht",
+            getIsActive: (pathname) => {
+              return pathname === `/clients/${clientId}`;
+            },
           },
-        },
-        {
-          completeHref: `/clients/${clientId}/medical-record`,
-          icon: <HeartIcon width={18} height={18} />,
-          children: "Medisch Dossier",
-          getIsActive: (pathname) => {
-            return (
-              pathname.startsWith(`/clients/${clientId}/medical-record`) ||
-              pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
-              pathname.startsWith(`/clients/${clientId}/medications`) ||
-              pathname.startsWith(`/clients/${clientId}/allergies`) ||
-              pathname.startsWith(`/clients/${clientId}/episodes`)
-            );
+          {
+            completeHref: `/clients/${clientId}/medical-record`,
+            icon: <HeartIcon width={18} height={18} />,
+            children: "Medisch Dossier",
+            getIsActive: (pathname) => {
+              return (
+                pathname.startsWith(`/clients/${clientId}/medical-record`) ||
+                pathname.startsWith(`/clients/${clientId}/diagnosis`) ||
+                pathname.startsWith(`/clients/${clientId}/medications`) ||
+                pathname.startsWith(`/clients/${clientId}/allergies`) ||
+                pathname.startsWith(`/clients/${clientId}/episodes`)
+              );
+            },
           },
-        },
-        {
-          completeHref: `/clients/${clientId}/client-network`,
-          icon: <GroupIcon width={18} height={18} />,
-          children: "Cliëntennetwerk",
-          getIsActive: (pathname) => {
-            return (
-              pathname.startsWith(`/clients/${clientId}/client-network`) ||
-              pathname.startsWith(`/clients/${clientId}/emergency`) ||
-              pathname.startsWith(`/clients/${clientId}/involved-employees`)
-            );
+          {
+            completeHref: `/clients/${clientId}/client-network`,
+            icon: <GroupIcon width={18} height={18} />,
+            children: "Cliëntennetwerk",
+            getIsActive: (pathname) => {
+              return (
+                pathname.startsWith(`/clients/${clientId}/client-network`) ||
+                pathname.startsWith(`/clients/${clientId}/emergency`) ||
+                pathname.startsWith(`/clients/${clientId}/involved-employees`)
+              );
+            },
           },
-        },
-        {
-          completeHref: `/clients/${clientId}/reports`,
-          icon: <ReportIcon height={18} width={18} />,
-          children: "Rapporten",
-        },
-        {
-          completeHref: `/clients/${clientId}/document`,
-          icon: <DocumentIcon height={18} width={18} />,
-          children: "Documenten",
-        },
-      ]}
-      title={
-        <Link href={"/clients"} className="flex items-center">
-          <ArrowRight className="rotate-180" />
-          <span className="ml-2">TERUG NAAR CLIËNTENLIJST</span>
-          {/* BACK TO CLIENTS LIST */}
-        </Link>
-      }
-    />
+          {
+            completeHref: `/clients/${clientId}/reports`,
+            icon: <ReportIcon height={18} width={18} />,
+            children: "Rapporten",
+          },
+          {
+            completeHref: `/clients/${clientId}/document`,
+            icon: <DocumentIcon height={18} width={18} />,
+            children: "Documenten",
+          },
+          {
+            completeHref: `/clients/${clientId}/goals`,
+            icon: <GoalIcon height={18} width={18} />,
+            children: "Doelen",
+          },
+        ]}
+        title={
+          <Link href={"/clients"} className="flex items-center">
+            <ArrowRight className="rotate-180" />
+            <span className="ml-2">TERUG NAAR CLIËNTENLIJST</span>
+            {/* BACK TO CLIENTS LIST */}
+          </Link>
+        }
+      />
+    </>
   );
 };
 
