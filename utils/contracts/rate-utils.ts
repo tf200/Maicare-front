@@ -1,38 +1,45 @@
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
-import dayjs, { QUnitType } from "dayjs";
+import dayjs, { OpUnitType, QUnitType } from "dayjs";
 import { RateType } from "@/types/rate-type";
 import { formatPrice } from "@/utils/priceFormatting";
 
-export function getRate(item: ContractResDto) {
-  const rate = item.rate_per_day || item.rate_per_hour || item.rate_per_minute;
+const rateDict: Record<RateType, string> = {
+  day: "Dagelijks",
+  hour: "Per uur",
+  minute: "Per minuut",
+  week: "Per week",
+};
 
-  return rate ? formatPrice(parseFloat(rate)) : "No rate set";
+export function getRate(item: ContractResDto) {
+  const rate = item.rate_value;
+
+  return rate ? formatPrice(rate) : "No rate set";
 }
 
 export function rateType(item: ContractResDto) {
-  return item.rate_per_day
-    ? "Dagelijks"
-    : item.rate_per_hour
-      ? "Per uur"
-      : "Per minuut";
+  return rateDict[item.rate_type];
 }
 
-export function getRateUnit(item: ContractResDto): QUnitType {
-  return item.rate_per_day ? "day" : item.rate_per_hour ? "hour" : "minute";
+export function getRateUnit(item: ContractResDto): QUnitType | OpUnitType {
+  return item.rate_type;
 }
+
+export const tarifDict: Record<RateType, string> = {
+  day: "Tarief per dag",
+  hour: "Tarief per uur",
+  minute: "Tarief per minuut",
+  week: "Tarief per week",
+};
 
 export function rateString(item: ContractResDto) {
-  return item.rate_per_day
-    ? "Tarief per dag"
-    : item.rate_per_hour
-      ? "Tarief per uur"
-      : "Tarief per minuut";
+  return tarifDict[item.rate_type];
 }
 
 export function calculateTotalRate(item: ContractResDto) {
   const from = dayjs(item.start_date);
   const to = dayjs(item.end_date);
   const duration = to.diff(from, getRateUnit(item));
-  const rate = item.rate_per_day || item.rate_per_hour || item.rate_per_minute;
-  return rate ? formatPrice(parseFloat(rate) * duration) : "No rate set";
+  return item.rate_value
+    ? formatPrice(item.rate_value * duration)
+    : "No rate set";
 }
