@@ -24,7 +24,7 @@ async function getClientContact(clientId: number) {
   return response.data;
 }
 
-const useClientContact = (clientId: number) => {
+export const useClientContact = (clientId: number) => {
   return useQuery([clientId, "contact"], () => getClientContact(clientId));
 };
 
@@ -42,7 +42,13 @@ const ContactSummaryPanel: FunctionComponent<Props> = ({ clientId }) => {
     return (
       <div className="flex flex-col gap-4 items-center">
         <div>Geen contactgegevens gevonden voor huidige cliënt!</div>
-        <Button>Voeg contactgegevens toe</Button>
+        <Button
+          onClick={() => {
+            open({ clientId });
+          }}
+        >
+          Voeg contactgegevens toe
+        </Button>
       </div>
     );
   return (
@@ -67,22 +73,12 @@ const ContactSummaryPanel: FunctionComponent<Props> = ({ clientId }) => {
         </>
       }
     >
-      {data && (
-        <ContractsSummary
-          data={data}
-          onAddContact={() => {
-            open({
-              client: clientId,
-            });
-          }}
-        />
-      )}
+      {data && <ContractsSummary data={data} />}
     </Panel>
   );
 };
 
 type ContractsSummaryProps = {
-  onAddContact: () => void;
   data: ContactResDto;
 };
 
