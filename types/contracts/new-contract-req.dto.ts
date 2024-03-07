@@ -8,4 +8,5 @@ export type NewContractReqDto = {
   care_type: string;
   rate_type: RateType;
   rate_value: number;
+  temporary_file_ids: string[];
 };
