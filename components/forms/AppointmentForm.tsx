@@ -223,6 +223,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           onChange={handleChange}
           onBlur={handleBlur}
           multiple={true}
+          endpoint={"appointment"}
         />
         {mode === "edit" && initialData?.attachments && (
           <FilesDeleter

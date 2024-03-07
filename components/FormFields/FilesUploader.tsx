@@ -9,16 +9,24 @@ import { useField } from "formik";
 import XMarkIcon from "@/components/icons/XMarkIcon";
 import UploadIcon from "@/components/svg/UploadIcon";
 import LoadingCircle from "@/components/icons/LoadingCircle";
-import { useUploadFile } from "@/utils/attachments/uploadFile";
+import {
+  UploadEndpointType,
+  useUploadFile,
+} from "@/utils/attachments/uploadFile";
 import Button from "@/components/buttons/Button";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   placeholder?: string;
   error?: string;
+  endpoint?: UploadEndpointType;
 };
 
-const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
+const FilesUploader: FunctionComponent<Props> = ({
+  label,
+  endpoint,
+  ...props
+}) => {
   const [_i, _m, helpers] = useField<string[]>({
     name: props.name,
     id: props.id,
@@ -70,6 +78,7 @@ const FilesUploader: FunctionComponent<Props> = ({ label, ...props }) => {
           <FileUploader
             key={index}
             file={file}
+            endpoint={endpoint}
             onUploaded={(id) => {
               setUploadedFiles((files) => [...files, id]);
             }}
@@ -90,8 +99,14 @@ const FileUploader: FunctionComponent<{
   file: File;
   onUploaded: (id: string) => void;
   onRemove: (id?: string) => void;
-}> = ({ file, onRemove, onUploaded }) => {
-  const { mutate: upload, isLoading, isSuccess, isError } = useUploadFile();
+  endpoint?: UploadEndpointType;
+}> = ({ file, onRemove, onUploaded, endpoint }) => {
+  const {
+    mutate: upload,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useUploadFile(endpoint);
   const [fileId, setFileId] = React.useState<string | null>(null);
   const uploadFile = useCallback(() => {
     upload(file, {
@@ -120,9 +135,11 @@ const FileUploader: FunctionComponent<{
           </div>
         )}
         {isError && (
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center">
             <span className="text-danger">Mislukt</span>
-            <Button onClick={uploadFile}>Opnieuw proberen</Button>
+            <Button className="py-2 px-5 mx-3" onClick={uploadFile}>
+              Opnieuw proberen
+            </Button>
           </div>
         )}
         {!isLoading && (

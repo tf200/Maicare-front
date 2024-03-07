@@ -21,6 +21,7 @@ export const RATE_TYPE_ARRAY = [
   "rate_per_day",
   "rate_per_minute",
   "rate_per_hour",
+  "rate_per_week",
 ] as const;
 
 export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work"] as const;
