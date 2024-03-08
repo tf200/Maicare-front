@@ -106,7 +106,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       </span>
                     </p>
                     <span className="mt-1 block text-sm">
-                      {getTime(post.date)}
+                      {getTime(post.created)}
                     </span>
                     <p className="mt-2.5 text-black dark:text-white">
                       {post.report_text}

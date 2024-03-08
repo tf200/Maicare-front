@@ -1,54 +1,51 @@
 "use client";
 
 import * as Yup from "yup";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
+import RatingStars from "@/components/FormFields/RatingStars";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
-import { NewReportsReqDto } from "@/types/reports/new-reports-req-dto";
-import { useCreateReports } from "@/utils/reports/createReports";
+import { NewGoalsReqDto } from "@/types/goals/new-goals-req-dto";
+import { useCreateGoal } from "@/utils/goal/createGoal";
 import { useRouter } from "next/navigation";
-import { usePatchReport } from "@/utils/reports/patchReport";
-import { useGetReport } from "@/utils/reports/getReport";
+import { useGetGoal } from "@/utils/goal/getGoal";
+import { usePatchGoal } from "@/utils/goal/patchGoal";
 
-type FormType = NewReportsReqDto;
+type FormType = NewGoalsReqDto;
 
-export type ReportsFormType = FormType;
+export type GoalsFormType = FormType;
 
 const initialValues: FormType = {
-  title: "",
-  report_text: "",
+  goal_name: "",
+  goal_details: "",
+  report: "",
+  rating: 0,
 };
 
-export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  title: Yup.string().required("Geef alstublieft een titel"),
-  report_text: Yup.string().required("Geef alstublieft een rapport"),
-  date: Yup.string(),
-  client: Yup.number(),
-  author: Yup.string(),
+export const goalsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
-  created: Yup.string().required("Gelieve de datum en tijd op te geven."),
+  client: Yup.number(),
+  goal_name: Yup.string().required("Geef alstublieft een titel"),
+  goal_details: Yup.string().required("Geef alstublieft een omschrijving"),
+  rating: Yup.number(),
+  report: Yup.string(),
 });
 
 type PropsType = {
   clientId: number;
   className?: string;
   mode: string;
-  reportsId?: number;
+  goalId?: number;
 };
 
-export const ReportsForm: FunctionComponent<PropsType> = ({
+export const GoalsForm: FunctionComponent<PropsType> = ({
   clientId,
   className,
   mode,
-  reportsId,
+  goalId,
 }) => {
   const router = useRouter();
 
@@ -56,23 +53,24 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
     data,
     isLoading: isDataLoading,
     isError,
-  } = useGetReport(reportsId, clientId);
+  } = useGetGoal(goalId, clientId);
 
-  const { mutate: create, isLoading: isCreating } = useCreateReports(clientId);
-  const { mutate: update, isLoading: isPatching } = usePatchReport(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
+      values.report = "";
       if (mode === "edit") {
         update(
           {
             ...values,
-            id: reportsId,
+            id: goalId,
           },
           {
             onSuccess: () => {
               resetForm;
-              router.push(`/clients/${clientId}/reports-record/reports`);
+              router.push(`/clients/${clientId}/goals`);
             },
           }
         );
@@ -80,7 +78,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
         create(values, {
           onSuccess: () => {
             resetForm;
-            router.push(`/clients/${clientId}/reports-record/reports`);
+            router.push(`/clients/${clientId}/goals`);
           },
         });
       }
@@ -95,12 +93,13 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
         mode == "edit" ? (data ? data : initialValues) : initialValues
       }
       onSubmit={onSubmit}
-      validationSchema={diagnosisSchema}
+      validationSchema={goalsSchema}
     >
       {({
         values,
         handleChange,
         handleBlur,
+        setFieldValue,
         touched,
         handleSubmit,
         errors,
@@ -110,40 +109,36 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             <InputField
               className={"w-full mb-4.5"}
               required={true}
-              id={"title"}
+              id={"goal_name"}
               label={"Titel"}
               type={"text"}
-              placeholder={"Voer de titel van de rapporten in"}
-              value={values.title}
+              placeholder={"Enter title of the goal"}
+              value={values.goal_name}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.title && errors.title}
+              error={touched.goal_name && errors.goal_name}
             />
 
-            <InputField
-              className={"w-full mb-4.5"}
-              required={true}
-              id={"created"}
-              label={"Datum en tijd"}
-              type={"datetime-local"}
-              placeholder={"Voer de titel van de rapporten in"}
-              value={values.created}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.created && errors.created}
+            <RatingStars
+              label={"Beoordelen"}
+              required={false}
+              value={values.rating}
+              onChange={(rate) => {
+                setFieldValue("rating", rate);
+              }}
             />
 
             <Textarea
               rows={10}
-              id={"report_text"}
+              id={"goal_details"}
               required={true}
               className={"mb-6"}
-              label={"Rapporten"}
-              placeholder={"Geef alstublieft rapporten"}
-              value={values.report_text}
+              label={"Omschrijving"}
+              placeholder={"Geef alstublieft omschrijving"}
+              value={values.goal_details}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.report_text && errors.report_text}
+              error={touched.goal_details && errors.goal_details}
             />
 
             <Button
@@ -153,7 +148,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
               formNoValidate={true}
               loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              {mode === "edit" ? "Rapport bijwerken" : "Rapport indienen"}
+              {mode === "edit" ? "Doel bijwerken" : "Doel indienen"}
             </Button>
           </div>
         </form>
@@ -162,4 +157,4 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
   );
 };
 
-export default ReportsForm;
+export default GoalsForm;

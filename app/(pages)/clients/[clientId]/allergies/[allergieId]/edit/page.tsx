@@ -10,9 +10,9 @@ const UpdateMedicationPage: FunctionComponent = ({
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Update allergie" />
+      <Breadcrumb pageName="Bijwerken allergie" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel title={"Update allergie"}>
+        <Panel title={"Bijwerken allergie"}>
           <AllergyForm mode={"edit"} allergieId={params.allergieId} clientId={parseInt(params.clientId)} />
         </Panel>
       </div>
