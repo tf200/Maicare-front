@@ -6,12 +6,12 @@ import FormModal from "@/components/Modals/FormModal";
 import FormikCombobox from "@/components/FormFields/Combobox";
 import CreateOpContactModal from "@/components/Modals/CreateOpContactModal";
 import { FormikProvider, useFormik } from "formik";
-import { useContacts } from "@/components/ContactsList";
 import { ModalProps } from "@/types/modal-props";
-import { ContactResDto } from "@/components/forms/OpContactForms/OpContactForm";
 import { useMutation, useQueryClient } from "react-query";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useModal } from "@/components/providers/ModalProvider";
+import { useContacts } from "@/utils/contacts/getContactList";
+import { ContactResDto } from "@/types/op-contact/contact-res.dto";
 
 type AssignClientContactReqDto = {
   sender: ContactResDto["id"];

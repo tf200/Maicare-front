@@ -19,10 +19,7 @@ import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
 import { useRouter } from "next/navigation";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import DetailCell from "@/components/DetailCell";
-import {
-  ContactResDto,
-  OpClientTypeRecord,
-} from "@/components/forms/OpContactForms/OpContactForm";
+import { OpClientTypeRecord } from "@/components/forms/OpContactForms/OpContactForm";
 import InfoIcon from "@/components/icons/InfoIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import ContactModal from "@/components/Modals/ContactModal";
@@ -31,6 +28,7 @@ import dayjs from "dayjs";
 import { dateFormat } from "@/utils/timeFormatting";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import { RateType } from "@/types/rate-type";
+import { ContactResDto } from "@/types/op-contact/contact-res.dto";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -75,7 +73,8 @@ function mapData(
     client: client,
     sender: contact,
     start_date: form.start_date,
-    end_date: "form.end_date",
+    client_contract_period: +form.client_contract_period,
+    company_contract_period: +form.company_contract_period,
     care_type: form.care_type,
     rate_type: form.rate_type as RateType,
     rate_value: parseFloat(form.rate_value),

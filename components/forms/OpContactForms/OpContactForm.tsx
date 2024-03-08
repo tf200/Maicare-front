@@ -8,34 +8,14 @@ import { GenericSelectionOption } from "@/types/selection-option";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
 import ContactItemFields from "./ContactItemFields";
-import api from "@/utils/api";
-import { useMutation, useQueryClient } from "react-query";
 import { FormProps } from "@/types/form-props";
-
-const OP_CLIENT_TYPE = [
-  "main_provider", // hoofdaanbieder
-  "local_authority", // Gemeente
-  "particular_party", // particuliere partij
-  "healthcare_institution", // Zorginstelling
-] as const;
-
-type OpClientType = (typeof OP_CLIENT_TYPE)[number];
-
-type ContactType = { name?: string; email?: string; phone_number?: string };
-
-export type OpOrgContactFormType = {
-  types: OpClientType | "";
-  name: string;
-  address: string;
-  postal_code: string;
-  place: string;
-  land: string;
-  contacts: ContactType[];
-  KVKnumber: string;
-  BTWnumber: string;
-  phone_number: string;
-  client_number: string;
-};
+import {
+  ContactType,
+  OP_CLIENT_TYPE,
+  OpClientType,
+  OpOrgContactFormType,
+} from "@/types/op-contact/contact-form-type";
+import { useCreateOpOrgContact } from "@/utils/contacts/createContact";
 
 const OpOrgContactFormSchema: Yup.ObjectSchema<OpOrgContactFormType> =
   Yup.object().shape({
@@ -56,7 +36,7 @@ const OpOrgContactFormSchema: Yup.ObjectSchema<OpOrgContactFormType> =
         })
       )
       .required("Contacten zijn verplicht"),
-    KVKnumber: Yup.string().required("KVK nummer is verplicht"),
+    KVKnumber: Yup.string().required("KvK nummer is verplicht"),
     BTWnumber: Yup.string().required("BTW nummer is verplicht"),
     phone_number: Yup.string().required("Telefoonnummer is verplicht"),
     client_number: Yup.string().required("Clientnummer is verplicht"),
@@ -95,27 +75,6 @@ export const OpClientTypeRecord: Record<OpClientType, string> = {
   local_authority: "Gemeente",
   particular_party: "Particuliere partij",
   healthcare_institution: "Zorginstelling",
-};
-
-export type NewContactReqDto = OpOrgContactFormType;
-export type ContactResDto = NewContactReqDto & { id: number };
-
-async function createOpOrgContact(values: NewContactReqDto) {
-  const response = await api.post<ContactResDto>(
-    "client/sender_create/",
-    values
-  );
-  return response.data;
-}
-
-const useCreateOpOrgContact = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: createOpOrgContact,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["contacts"]);
-    },
-  });
 };
 
 type Props = FormProps<OpOrgContactFormType>;
@@ -251,13 +210,13 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
         </div>
         <div className="flex flex-col lg:flex-row gap-3">
           <InputField
-            label={"KVK nummer"}
+            label={"KvK nummer"}
             className={"mb-4"}
             name={"KVKnumber"}
             required={true}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder={"KVK nummer"}
+            placeholder={"KvK nummer"}
             error={touched.KVKnumber && errors.KVKnumber}
           />
           <InputField

@@ -1,75 +1,45 @@
 "use client";
 
 import React, { FunctionComponent, useMemo } from "react";
-import api from "@/utils/api";
-import { useQuery } from "react-query";
-import { ContactResDto } from "@/components/forms/OpContactForms/OpContactForm";
 import PaginatedTable from "@/components/PaginatedTable";
-import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { ColumnDef } from "@tanstack/react-table";
-import { PaginationParams } from "@/types/pagination-params";
-
-type ContactItem = ContactResDto;
-type ContactsListResDto = Paginated<ContactItem>;
-
-type GetContactsParams = PaginationParams & {
-  search?: string;
-};
-
-async function getContacts(params: GetContactsParams) {
-  const response = await api.get<ContactsListResDto>("client/senders/", {
-    params,
-  });
-  return response.data;
-}
-
-export const useContacts = (search?: string) => {
-  const paginationParams = usePaginationParams();
-  const params = {
-    ...paginationParams,
-    search,
-  };
-  const query = useQuery({
-    queryKey: ["contacts", params],
-    queryFn: () => getContacts(params),
-  });
-
-  return {
-    ...query,
-    pagination: paginationParams,
-  };
-};
+import styles from "./styles/contacts-list.module.css";
+import { ContactItem } from "@/types/op-contact/contact-list-res.dto";
+import { useContacts } from "@/utils/contacts/getContactList";
 
 const ContactsList: FunctionComponent = (props) => {
   const { data, pagination } = useContacts();
   const columns = useMemo<ColumnDef<ContactItem>[]>(() => {
     return [
       {
-        header: "Naam",
+        header: "Opdrachtgever",
         accessorKey: "name",
       },
       {
+        id: "full_address",
         header: "Adres",
-        accessorKey: "address",
-      },
-      {
-        header: "Postcode",
-        accessorKey: "postal_code",
-      },
-      {
-        header: "Plaats",
-        accessorKey: "place",
-      },
-      {
-        header: "Land",
-        accessorKey: "land",
+        cell: (info) => {
+          const { address, postal_code, place, land } = info.row.original;
+          return (
+            <div>
+              <div>
+                {address}, {postal_code}
+              </div>
+              <div>{place}</div>
+              <div>{land}</div>
+            </div>
+          );
+        },
       },
       {
         header: "Telefoonnummer",
         accessorKey: "phone_number",
+        cell: (info) => (
+          <a href={`tel:${info.getValue()}`}>{info.getValue() as string}</a>
+        ),
       },
       {
-        header: "KVK Nummer",
+        header: "KvK Nummer",
         accessorKey: "KVKnumber",
       },
       {
@@ -82,6 +52,7 @@ const ContactsList: FunctionComponent = (props) => {
     <div>
       {data && (
         <PaginatedTable
+          className={styles.table}
           columns={columns}
           data={data}
           page={pagination.page}
