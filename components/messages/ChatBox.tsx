@@ -166,7 +166,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
         ))}
       <div
         ref={messagesContainer}
-        className="flex flex-col-reverse no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
+        className="flex flex-1 flex-col-reverse no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
       >
         {conversation?.results.map((message) => (
           <Message key={message.id} message={message} />
