@@ -4,6 +4,10 @@
     @apply border-primary;
   }
 
+  &.work {
+    @apply border-danger;
+  }
+
   &.other {
     @apply border-meta-6;
   }
