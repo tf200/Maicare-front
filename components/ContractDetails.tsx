@@ -104,7 +104,9 @@ function ContractData(props: { contractData: ContractResDto }) {
               </span>
               <span className="mr-5">
                 {" "}
-                To: {fullDateFormat(props.contractData.end_date)}{" "}
+                Zorgperiode: {
+                  props.contractData.client_contract_period
+                } maanden{" "}
               </span>
             </p>
           </div>
