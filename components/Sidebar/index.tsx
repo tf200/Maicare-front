@@ -31,6 +31,7 @@ import { useClientDetails } from "@/utils/clients/getClientDetails";
 import ProfilePicture from "../ProfilePicture";
 import dayjs from "dayjs";
 import { getAge } from "@/utils/getAge";
+import ClientSidebarBriefing from "../ClientSidebarBriefing";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -266,25 +267,10 @@ const GlobalMenu: FunctionComponent = () => {
 
 const ClientMenu: FunctionComponent = () => {
   const { clientId } = useParams();
-  const { data, isLoading, isError } = useClientDetails(
-    parseInt(clientId.toString())
-  );
 
   return (
     <>
-      <div className="w-full flex flex-col font-bold items-center">
-        <ProfilePicture profilePicture={data?.profile_picture} />
-        <p className="pt-5 text-white">
-          {data?.first_name + " " + data?.last_name}
-        </p>
-        <p>
-          {data?.date_of_birth
-            ? dayjs(data?.date_of_birth).format("DD MMM, YYYY") +
-              ` (${getAge(data?.date_of_birth)} jaar oud)`
-            : null}
-        </p>
-        <p>{"Dossiernummer : " + data?.filenumber}</p>
-      </div>
+      <ClientSidebarBriefing clientId={parseInt(clientId as string)} />
       <SidebarMenu
         items={[
           {
