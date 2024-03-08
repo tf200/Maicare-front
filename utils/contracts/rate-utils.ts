@@ -37,7 +37,7 @@ export function rateString(item: ContractResDto) {
 
 export function calculateTotalRate(item: ContractResDto) {
   const from = dayjs(item.start_date);
-  const to = dayjs(item.end_date);
+  const to = dayjs(item.start_date).add(item.client_contract_period, "month");
   const duration = to.diff(from, getRateUnit(item));
   return item.rate_value
     ? formatPrice(item.rate_value * duration)

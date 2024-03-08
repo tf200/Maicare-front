@@ -18,7 +18,11 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
   });
   if (isLoading) return <Loader />;
   if (isError)
-    return <div className="text-red">Sorry! Het is ons niet gelukt om contracten te laden</div>;
+    return (
+      <div className="text-red">
+        Sorry! Het is ons niet gelukt om contracten te laden
+      </div>
+    );
   if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0)
     return <div>Geen contracten gevonden voor huidige cliënt!</div>;
@@ -29,7 +33,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
           <DetailCell label={"Zorgtype"} value={item.care_type} />
           <DetailCell
             label={"Zorgperiode"}
-            value={`${shortDateFormat(item.start_date)} - ${shortDateFormat(item.end_date)}`}
+            value={`${item.client_contract_period} maanden`}
           />
           <DetailCell label={rateString(item)} value={getRate(item)} />
         </div>
