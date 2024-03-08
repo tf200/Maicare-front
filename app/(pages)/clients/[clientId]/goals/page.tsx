@@ -50,7 +50,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
       {
         accessorKey: "rating",
-        header: () => "Doelen",
+        header: () => "Beoordeling",
         cell: (info) => <RatingStars value={info.getValue()} /> || "Niet Beschikbaar",
       },
       {
