@@ -11,9 +11,9 @@ const NewMedicationPage: FunctionComponent = ({
   
   return (
     <>
-      <Breadcrumb pageName="Update Medication" />
+      <Breadcrumb pageName="Bijwerken medicatie" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel title={"Update Medication"}>
+        <Panel title={"Bijwerken medicatie"}>
           <MedicationForm
             medicationId={params.medicationId}
             mode={"edit"}
