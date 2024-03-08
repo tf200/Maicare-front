@@ -47,7 +47,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Frequentie",
       },
       {
-        accessorKey: "administered_by",
+        accessorKey: "administer_name",
         header: "Beheerd door",
       },
       {
