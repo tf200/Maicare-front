@@ -34,20 +34,21 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   client: Yup.number(),
   author: Yup.string(),
   id: Yup.number(),
+  created: Yup.string().required("Gelieve de datum en tijd op te geven."),
 });
 
 type PropsType = {
   clientId: number;
   className?: string;
-  mode: string,
-  reportsId?: number,
+  mode: string;
+  reportsId?: number;
 };
 
 export const ReportsForm: FunctionComponent<PropsType> = ({
   clientId,
   className,
   mode,
-  reportsId
+  reportsId,
 }) => {
   const router = useRouter();
 
@@ -56,7 +57,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
     isLoading: isDataLoading,
     isError,
   } = useGetReport(reportsId, clientId);
-  
+
   const { mutate: create, isLoading: isCreating } = useCreateReports(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchReport(clientId);
 
@@ -89,10 +90,11 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
 
   return (
     <Formik
-    enableReinitialize={true}
-    initialValues={
-      mode == "edit" ? (data ? data : initialValues) : initialValues
-    }      onSubmit={onSubmit}
+      enableReinitialize={true}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
+      onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
       {({
@@ -118,6 +120,19 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
               error={touched.title && errors.title}
             />
 
+            <InputField
+              className={"w-full mb-4.5"}
+              required={true}
+              id={"created"}
+              label={"Datum en tijd"}
+              type={"datetime-local"}
+              placeholder={"Voer de titel van de rapporten in"}
+              value={values.created}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.created && errors.created}
+            />
+
             <Textarea
               rows={10}
               id={"report_text"}
@@ -140,7 +155,6 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             >
               {mode === "edit" ? "Rapport bijwerken" : "Rapport indienen"}
             </Button>
-
           </div>
         </form>
       )}
