@@ -4,16 +4,14 @@ import React, { FunctionComponent } from "react";
 import Loader from "@/components/common/Loader";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
-import {
-  ContactResDto,
-  OpClientTypeRecord,
-} from "@/components/forms/OpContactForms/OpContactForm";
+import { OpClientTypeRecord } from "@/components/forms/OpContactForms/OpContactForm";
 import Button from "@/components/buttons/Button";
 import { useModal } from "@/components/providers/ModalProvider";
 import ContactModal from "@/components/Modals/ContactModal";
 import DetailCell from "@/components/DetailCell";
 import Panel from "@/components/Panel";
 import PencilSquare from "@/components/icons/PencilSquare";
+import { ContactResDto } from "@/types/op-contact/contact-res.dto";
 
 type Props = {
   clientId: number;
