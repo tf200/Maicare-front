@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import { useCreateMedication } from "@/utils/medications/createMedication";
 import { MedicationFormType } from "@/types/medications/medication-form-type";
 import * as Yup from "yup";
@@ -12,6 +12,9 @@ import { FormikHelpers } from "formik/dist/types";
 import { useRouter } from "next/navigation";
 import { useGetMedication } from "@/utils/medications/getMedication";
 import { usePatchMedication } from "@/utils/medications/patchMedication";
+import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
+import ComboBox from "../ComboBox";
+import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 
 const initialValues: MedicationFormType = {
   name: "",
@@ -20,6 +23,7 @@ const initialValues: MedicationFormType = {
   start_date: "",
   end_date: "",
   notes: "",
+  self_administered: false,
 };
 
 const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
@@ -30,6 +34,7 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
     start_date: Yup.string().required("Geef alstublieft de startdatum op"),
     end_date: Yup.string().required("Geef alstublieft de einddatum op"),
     notes: Yup.string().required("Geef alstublieft notities op"),
+    self_administered: Yup.boolean(),
   });
 
 type Props = {
@@ -44,6 +49,15 @@ const MedicationForm: FunctionComponent<Props> = ({
   mode,
 }) => {
   const router = useRouter();
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [searchedKey, setSearchedKey] = useState(null);
+  const [errorOptionMessage, setErrorOptionMessage] = useState(null);
+
+  const { data: SearchData, isLoading: isSearching } = useEmployeesList({
+    search: searchedKey,
+    out_of_service: false,
+  });
 
   const {
     data,
@@ -93,8 +107,18 @@ const MedicationForm: FunctionComponent<Props> = ({
       initialValues={
         mode == "edit" ? (data ? data : initialValues) : initialValues
       }
-      onSubmit={onSubmit}
       validationSchema={medicationSchema}
+      onSubmit={(values, { resetForm }) => {
+        if (!selectedOption) {
+          setErrorOptionMessage("Geef alstublieft een medewerker op");
+          return;
+        } else {
+          setErrorOptionMessage("");
+          let data = values;
+          data.administered_by = selectedOption?.id;
+          onSubmit(data, { resetForm });
+        }
+      }}
     >
       {({
         values,
@@ -142,6 +166,16 @@ const MedicationForm: FunctionComponent<Props> = ({
               onBlur={handleBlur}
               error={touched.frequency && errors.frequency}
             />
+            <ComboBox
+              label="Beheerd door"
+              placeholder="Zoek naar werknemers"
+              data={SearchData}
+              isLoading={isSearching}
+              setSelected={setSelectedOption}
+              setSearchedKey={setSearchedKey}
+              error={errorOptionMessage}
+              setError={setErrorOptionMessage}
+            />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputField
                 label={"Startdatum"}
@@ -183,6 +217,15 @@ const MedicationForm: FunctionComponent<Props> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               error={touched.notes && errors.notes}
+            />
+
+            <CheckBoxInputFieldThin
+              className={"w-full mb-4.5"}
+              label={"Zelf toegediend ?"}
+              name={"self_administered"}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              defaultChecked={values.self_administered}
             />
 
             <Button

@@ -6,4 +6,5 @@ export type NewMedicationReqDto = {
   end_date: string;
   notes: string;
   client: number;
+  self_administered: boolean
 };

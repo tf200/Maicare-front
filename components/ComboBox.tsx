@@ -9,6 +9,8 @@ interface ComboBoxProps {
   error?: string;
   setError?: Function;
   setSearchedKey: Function;
+  label: string;
+  placeholder: string;
 }
 
 const ComboBox: React.FC<ComboBoxProps> = ({
@@ -18,6 +20,8 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   setError,
   setSelected,
   setSearchedKey,
+  label,
+  placeholder
 }) => {
   let defaultValue = "A2b#4Cp$9q";
   const [value, setValue] = useState<string>();
@@ -32,11 +36,11 @@ const ComboBox: React.FC<ComboBoxProps> = ({
     <div>
       <InputField
         className={"w-full mb-4.5"}
-        label={"Select imployee"}
+        label={label}
         name={"role"}
         required={true}
         type={"text"}
-        placeholder={"Search for employees"}
+        placeholder={placeholder}
         onChange={(event) => {
           setCanSHowData(true);
           setSearchedKey(event.target.value);

@@ -20,6 +20,7 @@ import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
+import { fullDateFormat } from "@/utils/timeFormatting";
 
 type Props = {
   params: { clientId: string };
@@ -46,12 +47,31 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Frequentie",
       },
       {
+        accessorKey: "administered_by",
+        header: "Beheerd door",
+      },
+      {
         accessorKey: "start_date",
         header: "Startdatum",
+        cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
         accessorKey: "end_date",
         header: "Einddatum",
+        cell: (info) => fullDateFormat(info.getValue() as string),
+      },
+      {
+        accessorKey: "self_administered",
+        header: "Zelf toegediend ?",
+        cell: (info) => (
+          <div className="flex justify-center">
+            <input
+              className="w-[20px] h-[20px] cursor-pointer"
+              type="checkbox"
+              checked={info.getValue() as boolean}
+            />
+          </div>
+        ),
       },
     ];
   }, []);
