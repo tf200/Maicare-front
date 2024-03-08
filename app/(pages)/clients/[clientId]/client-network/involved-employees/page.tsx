@@ -98,7 +98,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
 
   return (
     <Panel
-      title={"Involved Employees List"}
+      title={"Betrokken Medewerkerslijst"}
       sideActions={
         <LinkButton
           text="Medewerker toevoegen"

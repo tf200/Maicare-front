@@ -1,7 +1,7 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 import { ReportsFormType } from "@/components/forms/ReportsForm";
-import { ReportsResDto } from "@/types/reports/reports-res-dto";
+import { ReportsResDto } from "@/types/reports-res-dto";
 import { NewReportsReqDto } from "@/types/reports/new-reports-req-dto";
 
 export async function createReports(data: NewReportsReqDto) {
