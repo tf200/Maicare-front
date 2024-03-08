@@ -90,7 +90,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     [create, update]
   );
 
-  const { data, isLoading: isSearching } = useEmployeesList({
+  const { data: EmployeeData, isLoading: isSearching } = useEmployeesList({
     search: searchedKey,
     out_of_service: false,
   });
@@ -123,7 +123,9 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
   return (
     <form onSubmit={formik.handleSubmit} className="p-6.5">
       <ComboBox
-        data={data}
+        label="Selecteer werknemer"
+        placeholder="Zoek naar werknemers"
+        data={EmployeeData}
         isLoading={isSearching}
         setSelected={setSelectedOption}
         setSearchedKey={setSearchedKey}
