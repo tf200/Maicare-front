@@ -1,11 +1,22 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type Props = {
-onEdit?: Function,
-onDelete?: Function
+  onEdit?: MouseEventHandler<HTMLButtonElement>;
+  onDelete?: MouseEventHandler<HTMLButtonElement>;
+  onTriggerClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const DropdownDefault: FunctionComponent<Props> = ({onEdit, onDelete}) => {
+const DropdownDefault: FunctionComponent<Props> = ({
+  onEdit,
+  onDelete,
+  onTriggerClick,
+}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -39,7 +50,13 @@ const DropdownDefault: FunctionComponent<Props> = ({onEdit, onDelete}) => {
 
   return (
     <div className="relative">
-      <button ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)}>
+      <button
+        ref={trigger}
+        onClick={(event) => {
+          onTriggerClick?.(event);
+          setDropdownOpen(!dropdownOpen);
+        }}
+      >
         <svg
           width="18"
           height="18"
@@ -69,7 +86,12 @@ const DropdownDefault: FunctionComponent<Props> = ({onEdit, onDelete}) => {
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
-        <button onClick={() => {onEdit()}} className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
+        <button
+          onClick={(e) => {
+            onEdit?.(e);
+          }}
+          className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+        >
           <svg
             className="fill-current"
             width="16"
@@ -90,9 +112,14 @@ const DropdownDefault: FunctionComponent<Props> = ({onEdit, onDelete}) => {
               </clipPath>
             </defs>
           </svg>
-          Edit
+          Bewerking
         </button>
-        <button onClick={() => {onDelete()}} className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
+        <button
+          onClick={(e) => {
+            onDelete?.(e);
+          }}
+          className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+        >
           <svg
             className="fill-current"
             width="16"
@@ -118,7 +145,7 @@ const DropdownDefault: FunctionComponent<Props> = ({onEdit, onDelete}) => {
               fill=""
             />
           </svg>
-          Delete
+          Verwijderen
         </button>
       </div>
     </div>

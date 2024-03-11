@@ -13,11 +13,12 @@ import { cn } from "@/utils/cn";
 import { getTime } from "@/utils/message-time";
 import { useWSContext } from "@/hooks/useWSContext";
 import MessageEditor from "@/components/FormFields/MessageEditor";
-import api from "@/utils/api";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import SendMessage from "@/components/SendMessage";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
+import { MessageItem } from "@/types/conversations/conversation-res-dto";
+import { useConversation } from "@/utils/conversations/getConversation";
 
 type ChatBoxProps =
   | {
@@ -26,26 +27,6 @@ type ChatBoxProps =
   | {
       recipientId: number;
     };
-
-type ConversationResDto = Paginated<MessageItem> & {
-  involved: { id: number; name: string }[];
-};
-async function getConversation(conversationId: number) {
-  const response = await api.get<ConversationResDto>(
-    `/chat/messages/${conversationId}/`
-  );
-  return response.data;
-}
-
-const useConversation = (conversationId?: number) => {
-  return useQuery(
-    ["conversation-details", conversationId],
-    () => getConversation(conversationId),
-    {
-      enabled: !!conversationId,
-    }
-  );
-};
 
 const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   const conversationId = "conversationId" in props && props.conversationId;
@@ -180,15 +161,6 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
 };
 
 export default ChatBox;
-
-type MessageItem = {
-  id: string;
-  content: string;
-  timestamp: string;
-  sender: number;
-  read_status: boolean;
-  conversation: number;
-};
 
 type MessageProps = {
   message: MessageItem;
