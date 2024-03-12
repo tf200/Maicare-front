@@ -17,6 +17,7 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import { useDeleteContract } from "@/utils/contracts/deleteContract";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useModal } from "@/components/providers/ModalProvider";
+import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 
 type Props = {
   params: { clientId: string };
@@ -66,29 +67,25 @@ const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorFn: getRate,
       },
       {
-        accessorKey: "id",
+        id: "actions",
         header: () => "",
         cell: (info) => (
-          <div className="flex justify-start">
-            <IconButton
-              buttonType="Danger"
-              onClick={(e) => {
+          <div className="flex justify-end">
+            <DropdownDefault
+              onTriggerClick={(e) => e.stopPropagation()}
+              onDelete={(e) => {
                 e.stopPropagation();
                 open({
                   onConfirm: () => {
-                    deleteContract(info.getValue() as number);
+                    deleteContract(info.row.original.id);
                   },
                 });
               }}
-              disabled={isDeleted}
-              isLoading={isDeleting}
-            >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
-            </IconButton>
+              onEdit={(e) => {
+                e.stopPropagation();
+                router.push(`contracts/${info.row.original.id}/edit`);
+              }}
+            />
           </div>
         ),
       },

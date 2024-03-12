@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
@@ -20,7 +22,13 @@ const NewContractPage: FunctionComponent<Props> = ({
         containerClassName="px-7 py-4"
         className="col-span-2"
       >
-        <ContractForm clientId={parseInt(clientId)} />
+        <ContractForm
+          mode={"add"}
+          clientId={parseInt(clientId)}
+          onSuccess={() => {
+            window.location.href = `/clients/${clientId}/contracts`;
+          }}
+        />
       </Panel>
     </>
   );

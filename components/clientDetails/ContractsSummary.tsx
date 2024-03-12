@@ -33,7 +33,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
           <DetailCell label={"Zorgtype"} value={item.care_type} />
           <DetailCell
             label={"Zorgperiode"}
-            value={`${item.client_contract_period} maanden`}
+            value={`${item.duration_client} maanden`}
           />
           <DetailCell label={rateString(item)} value={getRate(item)} />
         </div>
