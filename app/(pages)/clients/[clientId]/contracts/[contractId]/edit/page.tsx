@@ -9,7 +9,10 @@ import { useParams } from "next/navigation";
 
 const EditContract: FunctionComponent = () => {
   const { clientId, contractId } = useParams();
-  const { data } = useContractDetails(parseInt(clientId), parseInt(contractId));
+  const { data } = useContractDetails(
+    parseInt(clientId as string),
+    parseInt(contractId as string)
+  );
   return (
     <>
       <Breadcrumb pageName="Contract Bewerken" />
@@ -23,7 +26,7 @@ const EditContract: FunctionComponent = () => {
             mode="update"
             initialData={data}
             onSuccess={() => {}}
-            clientId={parseInt(clientId)}
+            clientId={parseInt(clientId as string)}
           />
         )}
       </Panel>
