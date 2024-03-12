@@ -41,7 +41,7 @@ function PaginatedTable<TData>({
           }
         )}
       >
-        <div className="p-2">Loading page...</div>
+        <div className="p-2">Pagina wordt geladen...</div>
       </div>
       {(pagination || sideActions) && (
         <div className="flex flex-wrap items-center p-4">
