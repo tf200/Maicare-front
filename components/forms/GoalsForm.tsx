@@ -54,7 +54,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
     isLoading: isDataLoading,
     isError,
   } = useGetGoal(goalId, clientId);
-
+  
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
 
@@ -112,7 +112,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
               id={"goal_name"}
               label={"Titel"}
               type={"text"}
-              placeholder={"Enter title of the goal"}
+              placeholder={"Voer titel van het doel in"}
               value={values.goal_name}
               onChange={handleChange}
               onBlur={handleBlur}
