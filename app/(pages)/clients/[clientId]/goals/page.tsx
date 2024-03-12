@@ -167,6 +167,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <div className="flex gap-12 w-full">
       <Panel
+        className="w-full"
         title={"Doelenlijst"}
         sideActions={
           <LinkButton
@@ -196,6 +197,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       </Panel>
 
       <Panel
+        className="w-full"
         title={"Rapporten van het doel"}
         sideActions={
           goalId && (
