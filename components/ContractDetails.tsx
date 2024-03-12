@@ -32,7 +32,7 @@ const ContractDetails: FunctionComponent<Props> = ({
   return (
     <div
       id="contract"
-      className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"
+      className="rounded-sm bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"
     >
       {isClientLoading && isContractLoading && <Loader />}
       {client && <ClientData clientData={client} contractId={contractId} />}
@@ -104,7 +104,9 @@ function ContractData(props: { contractData: ContractResDto }) {
               </span>
               <span className="mr-5">
                 {" "}
-                To: {fullDateFormat(props.contractData.end_date)}{" "}
+                Zorgperiode: {
+                  props.contractData.client_contract_period
+                } maanden{" "}
               </span>
             </p>
           </div>

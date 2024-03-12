@@ -15,15 +15,13 @@ const NewContractPage: FunctionComponent<Props> = ({
   return (
     <>
       <Breadcrumb pageName="Nieuw Contract" />
-
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel
-          title={"Creëer een Nieuw Contract"}
-          containerClassName="px-7 py-4"
-        >
-          <ContractForm clientId={parseInt(clientId)} />
-        </Panel>
-      </div>
+      <Panel
+        title={"Creëer een Nieuw Contract"}
+        containerClassName="px-7 py-4"
+        className="col-span-2"
+      >
+        <ContractForm clientId={parseInt(clientId)} />
+      </Panel>
     </>
   );
 };

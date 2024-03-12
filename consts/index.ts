@@ -17,11 +17,7 @@ export const ALLERGY_TYPE_ARRAY = [
   "Pollen",
   "Overig",
 ] as const;
-export const RATE_TYPE_ARRAY = [
-  "rate_per_day",
-  "rate_per_minute",
-  "rate_per_hour",
-] as const;
+export const RATE_TYPE_ARRAY = ["day", "minute", "hour", "week"] as const;
 
 export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work"] as const;
 
@@ -73,9 +69,10 @@ export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
 
 export const CARE_TYPE_OPTIONS: RateTypeOption[] = [
   { label: "Selecteer Zorgtype", value: "" },
-  { label: "Per uur", value: "rate_per_hour" },
-  { label: "Dagelijks", value: "rate_per_day" },
-  { label: "Per minuut", value: "rate_per_minute" },
+  { label: "Per uur", value: "hour" },
+  { label: "Dagelijks", value: "day" },
+  { label: "Per minuut", value: "minute" },
+  { label: "Per week", value: "week" },
 ];
 
 export const GENDER_OPTIONS: SelectionOption[] = [

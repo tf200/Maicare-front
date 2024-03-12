@@ -1,10 +1,12 @@
 import React, { FunctionComponent, PropsWithChildren } from "react";
+import { cn } from "@/utils/cn";
 
 type Props = {
   title: string;
   header?: React.ReactNode;
   sideActions?: React.ReactNode;
   containerClassName?: string;
+  className?: string;
 };
 
 const Panel: FunctionComponent<PropsWithChildren<Props>> = ({
@@ -13,9 +15,15 @@ const Panel: FunctionComponent<PropsWithChildren<Props>> = ({
   sideActions,
   containerClassName,
   header,
+  className,
 }) => {
   return (
-    <div className="rounded-sm w-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div
+      className={cn(
+        "rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark",
+        className
+      )}
+    >
       <div className="border-b border-stroke px-7 py-4 dark:border-strokedark flex justify-between items-center">
         {header || (
           <>
