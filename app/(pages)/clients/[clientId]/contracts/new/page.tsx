@@ -20,7 +20,13 @@ const NewContractPage: FunctionComponent<Props> = ({
         containerClassName="px-7 py-4"
         className="col-span-2"
       >
-        <ContractForm clientId={parseInt(clientId)} />
+        <ContractForm
+          mode={"add"}
+          clientId={parseInt(clientId)}
+          onSuccess={() => {
+            window.location.href = `/clients/${clientId}/contracts`;
+          }}
+        />
       </Panel>
     </>
   );

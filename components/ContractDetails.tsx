@@ -13,6 +13,17 @@ import React, { FunctionComponent } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import { useContractDetails } from "@/utils/contracts/getContractDetails";
 import Loader from "@/components/common/Loader";
+import {
+  ContactAssignment,
+  WhenNotification,
+} from "@/components/forms/ContractForm";
+import { useClientContact } from "@/components/clientDetails/ContactSummary";
+import { mapToForm } from "@/utils/contracts/mapToForm";
+import InputField from "@/components/FormFields/InputField";
+import Button from "@/components/buttons/Button";
+import api from "@/utils/api";
+import { useMutation } from "react-query";
+import DownloadIcon from "@/components/icons/DownloadIcon";
 
 type Props = {
   clientId: number;
@@ -29,6 +40,7 @@ const ContractDetails: FunctionComponent<Props> = ({
     clientId,
     contractId
   );
+  const { data: contactData } = useClientContact(clientId);
   return (
     <div
       id="contract"
@@ -36,10 +48,14 @@ const ContractDetails: FunctionComponent<Props> = ({
     >
       {isClientLoading && isContractLoading && <Loader />}
       {client && <ClientData clientData={client} contractId={contractId} />}
-
+      <div className="flex items-start justify-between mt-5">
+        {contactData && (
+          <ContactAssignment clientId={clientId} data={contactData} />
+        )}
+        {contract && <WhenNotification values={mapToForm(contract)} />}
+      </div>
       {contract && <ContractData contractData={contract} />}
-
-      {contract && <PaymentDetails item={contract} />}
+      <GenerateInvoice contractData={contract} />
       {client && contract && (
         <div className="mt-10 px-4 flex flex-col justify-end gap-4 sm:flex-row">
           <button
@@ -88,6 +104,91 @@ function ClientData(props: {
   );
 }
 
+type GenerateInvoiceReqDto = {
+  start_date: string;
+  end_date: string;
+  contract_id: number;
+};
+
+type GenerateInvoiceResDto = {
+  due_date: string;
+  id: number;
+  invoice_number: string;
+  issue_date: number;
+  pdf_url: string;
+  pre_vat_total: string;
+  status: string;
+  total_amount: string;
+  vat_amount: string;
+  vat_rate: string;
+};
+
+async function generateInvoice(req: GenerateInvoiceReqDto) {
+  const response = await api.post<GenerateInvoiceResDto>(
+    "/client/generate-invoice/",
+    req
+  );
+  return response.data;
+}
+
+const useGenerateInvoice = () => {
+  return useMutation(generateInvoice);
+};
+
+function GenerateInvoice(props: { contractData: ContractResDto }) {
+  const { mutate: generate, isLoading } = useGenerateInvoice();
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
+  const [invoiceURL, setInvoiceURL] = React.useState("");
+  return (
+    <div className="flex gap-4 items-end">
+      <InputField
+        label={"From"}
+        type="date"
+        value={from}
+        onChange={(e) => setFrom(e.target.value)}
+      />
+      <InputField
+        label={"To"}
+        type="date"
+        value={to}
+        onChange={(e) => setTo(e.target.value)}
+      />
+      <Button
+        isLoading={isLoading}
+        disabled={!from || !to}
+        onClick={() => {
+          setInvoiceURL("");
+          generate(
+            {
+              start_date: from,
+              end_date: to,
+              contract_id: props.contractData.id,
+            },
+            {
+              onSuccess: (data) => {
+                console.log(data.pdf_url);
+                setInvoiceURL(data.pdf_url);
+              },
+            }
+          );
+        }}
+      >
+        Generate Invoice
+      </Button>
+      {invoiceURL && (
+        <a
+          href={invoiceURL}
+          target="_blank"
+          className="text-primary hover:underline px-10 py-3"
+        >
+          <DownloadIcon className="inline-block mr-5" /> Download Invoice
+        </a>
+      )}
+    </div>
+  );
+}
+
 function ContractData(props: { contractData: ContractResDto }) {
   return (
     <div className="my-10 rounded-sm border border-stroke p-5 dark:border-strokedark">
@@ -104,9 +205,7 @@ function ContractData(props: { contractData: ContractResDto }) {
               </span>
               <span className="mr-5">
                 {" "}
-                Zorgperiode: {
-                  props.contractData.client_contract_period
-                } maanden{" "}
+                Zorgperiode: {props.contractData.duration_client} maanden{" "}
               </span>
             </p>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { useFormik, FormikProvider } from "formik";
 import { useCreateContract } from "@/utils/contracts/createContract";
 import {
@@ -29,6 +29,10 @@ import { dateFormat } from "@/utils/timeFormatting";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import { RateType } from "@/types/rate-type";
 import { ContactResDto } from "@/types/op-contact/contact-res.dto";
+import { FormProps } from "@/types/form-props";
+import { ContractResDto } from "@/types/contracts/contract-res.dto";
+import { useUpdateContract } from "@/utils/contracts/updateContract";
+import { mapToForm } from "@/utils/contracts/mapToForm";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -62,7 +66,7 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
 
 type PropsType = {
   clientId: number;
-};
+} & FormProps<ContractResDto>;
 
 function mapData(
   form: ContractFormType,
@@ -73,8 +77,8 @@ function mapData(
     client: client,
     sender: contact,
     start_date: form.start_date,
-    client_contract_period: +form.client_contract_period,
-    company_contract_period: +form.company_contract_period,
+    duration_client: +form.client_contract_period,
+    duration_sender: +form.company_contract_period,
     care_type: form.care_type,
     rate_type: form.rate_type as RateType,
     rate_value: parseFloat(form.rate_value),
@@ -101,25 +105,48 @@ const CompanyContractOptions: GenericSelectionOption<
   { label: "1 per jaar", value: "1" },
 ];
 
-const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
-  const { mutate, isLoading } = useCreateContract(clientId);
+const ContractForm: FunctionComponent<PropsType> = ({
+  clientId,
+  mode = "add",
+  initialData,
+}) => {
+  const parsedInitialValues = useMemo(() => {
+    return initialData ? mapToForm(initialData) : initialValues;
+  }, [initialData]);
+  const { mutate: create, isLoading: isCreating } = useCreateContract(clientId);
+  const { mutate: update, isLoading: isUpdating } = useUpdateContract();
   const router = useRouter();
   const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
-    mutate(mapData(value, clientId, contactData.id), {
-      onSuccess: () => {
-        router.push(`/clients/${clientId}/contracts`);
-      },
-    });
+    if (mode === "add") {
+      create(mapData(value, clientId, contactData.id), {
+        onSuccess: () => {
+          router.push(`/clients/${clientId}/contracts`);
+        },
+      });
+    } else {
+      update(
+        {
+          ...mapData(value, clientId, contactData.id),
+          id: initialData.id,
+        },
+        {
+          onSuccess: () => {
+            router.push(`/clients/${clientId}/contracts`);
+          },
+        }
+      );
+    }
   };
   const formik = useFormik<ContractFormType>({
-    initialValues,
+    initialValues: parsedInitialValues,
     validationSchema: contractSchema,
     onSubmit,
   });
 
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
+
   return (
     <FormikProvider value={formik}>
       <form
@@ -177,7 +204,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
                 errors.start_date + ""
               }
             />
-            <div className={"w-full xl:w-1/2"}>
+            <div className={"w-full xl:w-1/2 mt-3.5"}>
               <WhenNotification values={values} />
             </div>
           </div>
@@ -239,12 +266,12 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
         </div>
         <Button
           type={"submit"}
-          disabled={isLoading}
-          isLoading={isLoading}
+          disabled={isCreating || isUpdating}
+          isLoading={isCreating || isUpdating}
           formNoValidate={true}
           loadingText={"Submitting Contract..."}
         >
-          Contract Indienen
+          {mode === "add" ? "Contract Indienen" : "Contract Bijwerken"}
         </Button>
       </form>
     </FormikProvider>
@@ -253,7 +280,7 @@ const ContractForm: FunctionComponent<PropsType> = ({ clientId }) => {
 
 export default ContractForm;
 
-const ContactAssignment: FunctionComponent<{
+export const ContactAssignment: FunctionComponent<{
   data: ContactResDto;
   clientId: number;
 }> = ({ data, clientId }) => {
@@ -303,16 +330,16 @@ const ContactAssignment: FunctionComponent<{
   );
 };
 
-const WhenNotification: FunctionComponent<{ values: ContractFormType }> = ({
-  values,
-}) => {
+export const WhenNotification: FunctionComponent<{
+  values: ContractFormType;
+}> = ({ values }) => {
   if (+values.client_contract_period > 3 && values.start_date) {
     const period = +values.client_contract_period;
     const reminderDate = dayjs(values.start_date)
       .add(period - 3, "month")
       .toDate();
     return (
-      <div className="flex flex-col gap-2  pl-4 py-3 mt-3.5 info-box">
+      <div className="flex flex-col gap-2 px-4 py-3 info-box">
         <p>
           <InfoIcon className="inline-block relative -top-0.5" />{" "}
           <strong>Herinnering:</strong> U ontvangt een herinnering op{" "}

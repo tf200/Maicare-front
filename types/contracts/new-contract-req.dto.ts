@@ -4,8 +4,8 @@ export type NewContractReqDto = {
   client: number;
   sender: number;
   start_date: string;
-  client_contract_period: number;
-  company_contract_period: number;
+  duration_client: number;
+  duration_sender: number;
   care_type: string;
   rate_type: RateType;
   rate_value: number;
