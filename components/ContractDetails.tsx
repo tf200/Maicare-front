@@ -2,14 +2,14 @@
 
 import { ClientDetailsResDto } from "@/types/clients/client-details-res-dto";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
-import { fullDateFormat } from "@/utils/timeFormatting";
+import { dateFormat, fullDateFormat } from "@/utils/timeFormatting";
 import {
   calculateTotalRate,
   getRate,
   rateType,
 } from "@/utils/contracts/rate-utils";
 import { formatPrice } from "@/utils/priceFormatting";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import { useContractDetails } from "@/utils/contracts/getContractDetails";
 import Loader from "@/components/common/Loader";
@@ -22,8 +22,12 @@ import { mapToForm } from "@/utils/contracts/mapToForm";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import api from "@/utils/api";
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import DownloadIcon from "@/components/icons/DownloadIcon";
+import { ColumnDef } from "@tanstack/react-table";
+import PaginatedTable from "@/components/PaginatedTable";
+import { usePaginationParams } from "@/hooks/usePaginationParams";
+import { PaginationParams } from "@/types/pagination-params";
 
 type Props = {
   clientId: number;
@@ -55,7 +59,15 @@ const ContractDetails: FunctionComponent<Props> = ({
         {contract && <WhenNotification values={mapToForm(contract)} />}
       </div>
       {contract && <ContractData contractData={contract} />}
-      <GenerateInvoice contractData={contract} />
+      {contract && <GenerateInvoice contractData={contract} />}
+      {contract && (
+        <div className="mt-10 -ml-9 -mr-9">
+          <h3 className="mb-5 ml-8 text-2xl font-semibold text-black dark:text-white">
+            Invoices
+          </h3>
+          <InvoiceList contractData={contract} />
+        </div>
+      )}
       {client && contract && (
         <div className="mt-10 px-4 flex flex-col justify-end gap-4 sm:flex-row">
           <button
@@ -131,12 +143,20 @@ async function generateInvoice(req: GenerateInvoiceReqDto) {
   return response.data;
 }
 
-const useGenerateInvoice = () => {
-  return useMutation(generateInvoice);
+const useGenerateInvoice = (contractId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: generateInvoice,
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["contracts", contractId, "invoices"]);
+    },
+  });
 };
 
 function GenerateInvoice(props: { contractData: ContractResDto }) {
-  const { mutate: generate, isLoading } = useGenerateInvoice();
+  const { mutate: generate, isLoading } = useGenerateInvoice(
+    props.contractData.id
+  );
   const [from, setFrom] = React.useState("");
   const [to, setTo] = React.useState("");
   const [invoiceURL, setInvoiceURL] = React.useState("");
@@ -187,6 +207,100 @@ function GenerateInvoice(props: { contractData: ContractResDto }) {
       )}
     </div>
   );
+}
+
+type InvoiceItem = GenerateInvoiceResDto;
+
+type InvoicesResDto = Paginated<InvoiceItem>;
+
+async function getInvoice(
+  contractId: number,
+  paginationParams?: PaginationParams
+) {
+  const response = await api.get<InvoicesResDto>(
+    `/client/invoices/${contractId}`,
+    {
+      params: paginationParams,
+    }
+  );
+  return response.data;
+}
+
+const useInvoices = (contractId: number) => {
+  const paginationParams = usePaginationParams();
+  const query = useQuery({
+    queryKey: ["contracts", contractId, "invoices"],
+    queryFn: () => getInvoice(contractId, paginationParams),
+  });
+
+  return {
+    ...query,
+    pagination: paginationParams,
+  };
+};
+
+function InvoiceList(props: { contractData: ContractResDto }) {
+  const { data, isLoading, pagination } = useInvoices(props.contractData.id);
+  const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
+    return [
+      {
+        accessorKey: "invoice_number",
+        header: "Invoice Number",
+        cell: (data) => data.getValue() as string,
+      },
+      {
+        accessorKey: "issue_date",
+        header: "Issue Date",
+        cell: (data) => dateFormat(data.getValue() as string),
+      },
+      {
+        accessorKey: "due_date",
+        header: "Due Date",
+        cell: (data) => dateFormat(data.getValue() as string),
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: (data) => data.getValue() as string,
+      },
+      {
+        accessorKey: "total_amount",
+        header: "Total Amount",
+        cell: (data) => formatPrice(parseFloat(data.getValue() as string)),
+      },
+      {
+        id: "download",
+        header: "Download",
+        cell: (data) => (
+          <a
+            href={data.row.original.pdf_url}
+            target="_blank"
+            className="text-primary hover:underline"
+          >
+            <DownloadIcon />
+          </a>
+        ),
+      },
+    ];
+  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (!data) {
+    return <div>No data found</div>;
+  }
+  if (data) {
+    return (
+      <div>
+        <PaginatedTable
+          data={data}
+          columns={columns}
+          onPageChange={pagination.setPage}
+          page={pagination.page}
+        />
+      </div>
+    );
+  }
 }
 
 function ContractData(props: { contractData: ContractResDto }) {
