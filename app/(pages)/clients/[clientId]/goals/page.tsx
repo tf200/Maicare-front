@@ -202,7 +202,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         sideActions={
           goalId && (
             <LinkButton
-              text={"Add Report To This Goal"}
+              text={"Voeg rapport toe aan dit doel"}
               href={`/clients/${clientId}/goals/${GoalReportsData?.id}/reports/new`}
             />
           )
