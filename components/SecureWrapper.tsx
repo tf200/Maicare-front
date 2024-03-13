@@ -7,10 +7,10 @@ import {
   useCallback,
 } from "react";
 import { Permission, Role } from "@/types/permissions";
-import { CAREGIVER, PERMISSION_CONFIGURATIONS } from "@/consts";
+import { BEHAVIORAL_SPECIALIST, PERMISSION_CONFIGURATIONS } from "@/consts";
 
 const useIsActive = () => {
-  const mockUserRole: Role = CAREGIVER;
+  const mockUserRole: Role = BEHAVIORAL_SPECIALIST;
   return useCallback(
     (permission: Permission) => {
       return PERMISSION_CONFIGURATIONS[mockUserRole].includes(permission);
