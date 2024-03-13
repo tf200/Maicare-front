@@ -1,21 +1,15 @@
 import { ModalProps } from "@/types/modal-props";
-import {
-  FunctionComponent,
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from "react";
+import { FunctionComponent, useCallback, useState } from "react";
 import FormModal from "./FormModal";
 import CameraIcon from "@/components/svg/CameraIcon";
 import LoadingCircle from "../icons/LoadingCircle";
-import Image from "next/image";
 import ModalActionButton from "../buttons/ModalActionButton";
 import * as Yup from "yup";
 import { usePatchEmployeePic } from "@/utils/employees/patchEmployeePicture";
-
-import { Formik, FormikHelpers } from "formik";
+import { Formik } from "formik";
 import ProfilePicture from "../ProfilePicture";
 import { UseMutationResult } from "react-query";
+
 type Props = ModalProps & {
   additionalProps: {
     id: number;
