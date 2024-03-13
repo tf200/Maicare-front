@@ -9,7 +9,7 @@ export type NewClientsRequest = {
   gender: string;
   filenumber: number;
   phone_number: string;
-  profile_picture: string;
+  // profile_picture: string;
   bsn: string;
   source: string;
   date_of_birth: string;

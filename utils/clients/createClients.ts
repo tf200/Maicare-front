@@ -3,23 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
 
 export async function createClients(data: NewClientsRequest) {
-  const formData = new FormData();
-
-  formData.append("profile_picture", data.profile_picture);
-
-  delete data.profile_picture;
-
-  Object.keys(data).forEach((key) => {
-    formData.append(key, data[key] + "");
-  });
-
-  const response = await api.post("/client/client_create/", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Accept: "application/json",
-    },
-  });
-
+  const response = await api.post("/client/client_create/", data);
   return response.data;
 }
 
