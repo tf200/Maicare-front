@@ -12,6 +12,7 @@ import DetailCell from "@/components/DetailCell";
 import Panel from "@/components/Panel";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { ContactResDto } from "@/types/op-contact/contact-res.dto";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
 
 type Props = {
   clientId: number;
@@ -29,6 +30,7 @@ export const useClientContact = (clientId: number) => {
 const ContactSummaryPanel: FunctionComponent<Props> = ({ clientId }) => {
   const { open } = useModal(ContactModal);
   const { data, isLoading, isError } = useClientContact(clientId);
+  const { data: clientData } = useClientDetails(clientId);
   if (isLoading) return <Loader />;
   if (isError)
     return (
@@ -36,19 +38,22 @@ const ContactSummaryPanel: FunctionComponent<Props> = ({ clientId }) => {
         Sorry! Het is ons niet gelukt om contactgegevens te laden
       </div>
     );
-  if (!data)
+  if (clientData && !clientData.sender) {
     return (
-      <div className="flex flex-col gap-4 items-center">
-        <div>Geen contactgegevens gevonden voor huidige cliënt!</div>
-        <Button
-          onClick={() => {
-            open({ clientId });
-          }}
-        >
-          Voeg contactgegevens toe
-        </Button>
-      </div>
+      <Panel title={"Opdrachtgever"} containerClassName="px-7 py-4">
+        <div className="flex flex-col gap-4 items-center">
+          <div>Geen contactgegevens gevonden voor huidige cliënt!</div>
+          <Button
+            onClick={() => {
+              open({ client: clientId });
+            }}
+          >
+            Voeg contactgegevens toe
+          </Button>
+        </div>
+      </Panel>
     );
+  }
   return (
     <Panel
       title={"Opdrachtgever"}

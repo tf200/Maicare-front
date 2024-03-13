@@ -10,13 +10,7 @@ export async function createClients(data: NewClientsRequest) {
   delete data.profile_picture;
 
   Object.keys(data).forEach((key) => {
-    if (key !== "profile_picture") {
-      formData.append(key, String(data[key]));
-    }
-  });
-
-  Object.keys(data).forEach((key) => {
-    formData.append(key, data[key].toString());
+    formData.append(key, data[key] + "");
   });
 
   const response = await api.post("/client/client_create/", formData, {
