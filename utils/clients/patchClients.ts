@@ -2,7 +2,7 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
 
-export async function patchClients(data: NewClientsRequest) {
+export async function patchClients(data: NewClientsRequest, clientId: number) {
   const formData = new FormData();
 
   if (typeof data.profile_picture == "string") {
@@ -14,7 +14,7 @@ export async function patchClients(data: NewClientsRequest) {
   });
 
   const response = await api.patch(
-    `/client/client_update/${data.id}/`,
+    `/client/client_update/${clientId}/`,
     formData,
     {
       headers: {
@@ -27,11 +27,11 @@ export async function patchClients(data: NewClientsRequest) {
   return response.data;
 }
 
-export const usePatchClients = (onSuccess?: () => void) => {
+export const usePatchClients = (clientId: number, onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: NewClientsRequest) => patchClients(data),
+    mutationFn: async (data: NewClientsRequest) => patchClients(data, clientId),
 
     onSuccess: () => {
       queryClient.invalidateQueries(["clients"]);

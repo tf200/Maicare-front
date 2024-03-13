@@ -5,4 +5,5 @@ export type ClientDetailsResDto = NewClientsRequest & {
   first_name: string;
   profile_picture: string;
   identity: boolean;
+  sender: number;
 };

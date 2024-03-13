@@ -104,3 +104,5 @@ export const BUTTON_CLASS_NAMES = {
   Danger: "bg-danger text-white",
   Success: "bg-success text-white",
 };
+
+export * from "./permissions";

@@ -23,7 +23,6 @@ type FormType = NewClientsRequest;
 export type ClientsFormType = FormType;
 
 const initialValues: FormType = {
-  id: 0,
   first_name: "",
   last_name: "",
   email: "",
@@ -79,7 +78,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
 }) => {
   const [isProfilePic, setIsProfilePic] = useState(false);
   const { mutate: create, isLoading: isCreating } = useCreateClients();
-  const { mutate: update, isLoading: isPatching } = usePatchClients();
+  const { mutate: update, isLoading: isPatching } = usePatchClients(clientId);
 
   const {
     data,
@@ -104,7 +103,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
         update(
           {
             ...values,
-            id: clientId,
           },
           {
             onSuccess: () => {
@@ -286,7 +284,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                       id={"date_of_birth"}
                       type={"date"}
                       className="w-full mb-4.5"
-                      value={(values.date_of_birth ?? "") + ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
