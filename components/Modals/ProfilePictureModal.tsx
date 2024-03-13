@@ -15,6 +15,7 @@ import { usePatchEmployeePic } from "@/utils/employees/patchEmployeePicture";
 
 import { Formik, FormikHelpers } from "formik";
 import ProfilePicture from "../ProfilePicture";
+import { UseMutationResult } from "react-query";
 type Props = ModalProps & {
   additionalProps: {
     id: number;
@@ -25,12 +26,11 @@ const ProfilePictureModal: FunctionComponent<Props> = ({
   additionalProps,
   ...props
 }) => {
+  const mutation = usePatchEmployeePic(additionalProps.id);
+
   return (
     <FormModal {...props} open={true} title="Profielfoto Toevoegen">
-      <UpdatePicModalForm
-        onUpdated={props.onClose}
-        employeeId={additionalProps.id}
-      />
+      <UpdatePicModalForm onUpdated={props.onClose} mutation={mutation} />
     </FormModal>
   );
 };
@@ -41,7 +41,11 @@ const pictureSchema: Yup.ObjectSchema<{ profile_picture: string }> =
     profile_picture: Yup.string(),
   });
 
-const UpdatePicModalForm = ({ employeeId, onUpdated }) => {
+const UpdatePicModalForm: FunctionComponent<{
+  onUpdated: () => void;
+  mutation: UseMutationResult;
+}> = ({ onUpdated, mutation }) => {
+  const { mutate, isLoading } = mutation;
   const [errorMessage, setErrorMessage] = useState("");
   const defaultImageUrl = "/images/user/user-default.png";
   const [imagePreviewUrl, setImagePreviewUrl] = useState(defaultImageUrl);
@@ -50,8 +54,6 @@ const UpdatePicModalForm = ({ employeeId, onUpdated }) => {
     profile_picture: "",
   };
 
-  const { mutate, isLoading } = usePatchEmployeePic();
-
   const onSubmit = useCallback(
     (data, { resetForm }) => {
       setErrorMessage(null);
@@ -59,7 +61,6 @@ const UpdatePicModalForm = ({ employeeId, onUpdated }) => {
         setErrorMessage("Geef alstublieft een profielfoto op");
         return;
       }
-      data.employeeId = employeeId;
       mutate(data, {
         onSuccess: () => {
           resetForm();
