@@ -106,7 +106,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
           },
           {
             onSuccess: () => {
-              resetForm;
+              resetForm();
               router.push(`/clients/${clientId}`);
             },
           }
@@ -114,7 +114,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
       } else if (mode === "new") {
         create(values, {
           onSuccess: () => {
-            resetForm;
+            resetForm();
             router.push("/clients");
           },
         });
