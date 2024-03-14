@@ -8,6 +8,10 @@ import ProfilePicture from "@/components/ProfilePicture";
 import { mappingGender } from "@/utils/gender";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
+import IconButton from "@/components/buttons/IconButton";
+import CameraIcon from "@/components/svg/CameraIcon";
+import ProfilePictureModal from "@/components/Modals/ProfilePictureModal";
+import { useModal } from "@/components/providers/ModalProvider";
 
 type Props = {
   clientId: number;
@@ -15,6 +19,7 @@ type Props = {
 
 const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useClientDetails(clientId);
+  const { open } = useModal(ProfilePictureModal);
   if (isLoading) return <Loader />;
   if (isError)
     return <div className="text-red">We failed to load client data</div>;
@@ -22,7 +27,19 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
     return (
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2">
-          <ProfilePicture profilePicture={data.profile_picture} />
+          <div
+            onClick={() => {
+              open({
+                id: clientId,
+              });
+            }}
+            className="relative w-fit cursor-pointer"
+          >
+            <ProfilePicture profilePicture={data.profile_picture} />
+            <IconButton className="p-[5px] absolute right-1 bottom-1">
+              <CameraIcon className="w-3 h-3" />
+            </IconButton>
+          </div>
         </div>
         <DetailCell
           ignoreIfEmpty={true}

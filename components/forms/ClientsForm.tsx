@@ -1,12 +1,11 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { FormikHelpers } from "formik/dist/types";
-import CameraIcon from "@/components/svg/CameraIcon";
 import { useCreateClients } from "@/utils/clients/createClients";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
 import Button from "../buttons/Button";
@@ -15,12 +14,9 @@ import Select from "@/components/FormFields/Select";
 import { GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import FormikRadioGroup from "../FormFields/FormikRadioGroup";
-import ProfilePicture from "../ProfilePicture";
 import { usePatchClients } from "@/utils/clients/patchClients";
 
 type FormType = NewClientsRequest;
-
-export type ClientsFormType = FormType;
 
 const initialValues: FormType = {
   first_name: "",
@@ -34,7 +30,7 @@ const initialValues: FormType = {
   filenumber: 0,
   date_of_birth: "",
   phone_number: "",
-  profile_picture: "",
+  // profile_picture: "",
   city: "",
   Zipcode: "",
   infix: "",
@@ -50,7 +46,7 @@ export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   last_name: Yup.string().required("Geef alstublieft een achternaam op"),
   email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
   phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
-  profile_picture: Yup.string().required("Geef alstublieft een profielfoto op"),
+  // profile_picture: Yup.string().required("Geef alstublieft een profielfoto op"),
   departement: Yup.string(),
   filenumber: Yup.number(),
   location: Yup.string(),
@@ -76,7 +72,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
   clientId,
   mode,
 }) => {
-  const [isProfilePic, setIsProfilePic] = useState(false);
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClients(clientId);
 
@@ -86,16 +81,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
     isError,
   } = useClientDetails(clientId);
 
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(
-    "/images/user/user-default.png"
-  );
-
   const router = useRouter();
-
-  if (data && !isProfilePic && mode === "edit") {
-    setImagePreviewUrl(data.profile_picture);
-    setIsProfilePic(true);
-  }
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
@@ -127,9 +113,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
     <>
       <Formik
         enableReinitialize={true}
-        initialValues={
-          mode == "edit" ? (data ? data : initialValues) : initialValues
-        }
+        initialValues={mode === "edit" && data ? data : initialValues}
         onSubmit={onSubmit}
         validationSchema={clientsSchema}
       >
@@ -142,21 +126,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
           handleSubmit,
           errors,
         }) => {
-          const handleFileChange = async (
-            event: React.ChangeEvent<HTMLInputElement>
-          ) => {
-            const file = event.target.files ? event.target.files[0] : null;
-            if (file) {
-              try {
-                const fileUrl = URL.createObjectURL(file);
-                setImagePreviewUrl(fileUrl);
-                setFieldValue("profile_picture", file);
-              } catch (error) {
-                console.error("Error uploading file:", error);
-              }
-            }
-          };
-
           return (
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -165,38 +134,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     containerClassName="p-6.5 pb-5"
                     title={"Persoonlijke Gegevens"}
                   >
-                    <div className="px-4 mt-[70px] pb-5 text-center">
-                      <div className="relative z-30 w-full p-1 mx-auto rounded-full -mt-22 h-30 max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-                        <div className="relative drop-shadow-2">
-                          <div className="w-40 h-40">
-                            <ProfilePicture
-                              width={160}
-                              height={160}
-                              profilePicture={imagePreviewUrl}
-                            />
-                          </div>
-                          <label
-                            htmlFor="profile"
-                            className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
-                          >
-                            <CameraIcon />
-                            <input
-                              type="file"
-                              name="profile"
-                              id="profile"
-                              accept="image/jpeg,image/png,image/gif"
-                              className="sr-only"
-                              onChange={handleFileChange}
-                              onBlur={handleBlur}
-                            />
-                          </label>
-                        </div>
-                        <p className="text-center text-red">
-                          {touched.profile_picture && errors.profile_picture}
-                        </p>
-                      </div>
-                    </div>
-
                     <div className="mb-4.5 py-4 flex flex-col gap-6 xl:flex-row">
                       <InputField
                         type={"text"}

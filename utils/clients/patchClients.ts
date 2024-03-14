@@ -3,26 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { NewClientsRequest } from "@/types/clients/new-clients-request";
 
 export async function patchClients(data: NewClientsRequest, clientId: number) {
-  const formData = new FormData();
-
-  if (typeof data.profile_picture == "string") {
-    delete data.profile_picture;
-  }
-
-  Object.keys(data).forEach((key) => {
-    formData.append(key, data[key]);
-  });
-
-  const response = await api.patch(
-    `/client/client_update/${clientId}/`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
-      },
-    }
-  );
+  const response = await api.patch(`/client/client_update/${clientId}/`, data);
 
   return response.data;
 }
