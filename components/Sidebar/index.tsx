@@ -232,7 +232,7 @@ const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
         {icon}
         {children}
         <ChevronDown
-          className={cn("ml-auto", {
+          className={cn("ml-auto text-white", {
             "transform rotate-180": isOpen,
           })}
         />
