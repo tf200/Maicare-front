@@ -30,7 +30,6 @@ const initialValues: FormType = {
   filenumber: 0,
   date_of_birth: "",
   phone_number: "",
-  // profile_picture: "",
   city: "",
   Zipcode: "",
   infix: "",
@@ -219,6 +218,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                       label={"Geboortedatum"}
                       required={true}
                       id={"date_of_birth"}
+                      value={values.date_of_birth}
                       type={"date"}
                       className="w-full mb-4.5"
                       onChange={handleChange}
