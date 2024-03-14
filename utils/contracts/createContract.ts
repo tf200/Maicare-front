@@ -17,6 +17,7 @@ export const useCreateContract = (clientId: number) => {
     mutationFn: createContract,
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "contracts"]);
+      queryClient.invalidateQueries(["contracts"]);
     },
   });
 };

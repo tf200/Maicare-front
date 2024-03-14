@@ -18,6 +18,7 @@ export const useUpdateContract = () => {
     mutationFn: updateContract,
     onSuccess: (res) => {
       queryClient.invalidateQueries([res.client, "contracts"]);
+      queryClient.invalidateQueries(["contracts"]);
     },
   });
 };
