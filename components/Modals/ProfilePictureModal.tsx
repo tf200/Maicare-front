@@ -6,9 +6,10 @@ import LoadingCircle from "../icons/LoadingCircle";
 import ModalActionButton from "../buttons/ModalActionButton";
 import * as Yup from "yup";
 import { usePatchEmployeePic } from "@/utils/employees/patchEmployeePicture";
-import { Formik } from "formik";
+import { Formik, FormikConfig } from "formik";
 import ProfilePicture from "../ProfilePicture";
 import { UseMutationResult } from "react-query";
+import { usePatchClientProfilePicture } from "@/utils/clients/patchClient";
 
 type Props = ModalProps & {
   additionalProps: {
@@ -16,7 +17,7 @@ type Props = ModalProps & {
   };
 };
 
-const ProfilePictureModal: FunctionComponent<Props> = ({
+export const EmployeeProfilePictureModal: FunctionComponent<Props> = ({
   additionalProps,
   ...props
 }) => {
@@ -29,33 +30,54 @@ const ProfilePictureModal: FunctionComponent<Props> = ({
   );
 };
 
-export default ProfilePictureModal;
+export const ClientProfilePictureModal: FunctionComponent<Props> = ({
+  additionalProps,
+  ...props
+}) => {
+  const mutation = usePatchClientProfilePicture(additionalProps.id);
+
+  return (
+    <FormModal {...props} open={true} title="Profielfoto Toevoegen">
+      <UpdatePicModalForm onUpdated={props.onClose} mutation={mutation} />
+    </FormModal>
+  );
+};
+
 const pictureSchema: Yup.ObjectSchema<{ profile_picture: string }> =
   Yup.object().shape({
     profile_picture: Yup.string(),
   });
 
-const UpdatePicModalForm: FunctionComponent<{
+type UpdatePicModalFormProps = {
   onUpdated: () => void;
-  mutation: UseMutationResult;
-}> = ({ onUpdated, mutation }) => {
+  mutation: UseMutationResult<any, unknown, string, unknown>;
+};
+
+type FormType = {
+  profile_picture: string;
+};
+
+const initialValues: FormType = {
+  profile_picture: "",
+};
+
+const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
+  onUpdated,
+  mutation,
+}) => {
   const { mutate, isLoading } = mutation;
   const [errorMessage, setErrorMessage] = useState("");
   const defaultImageUrl = "/images/user/user-default.png";
   const [imagePreviewUrl, setImagePreviewUrl] = useState(defaultImageUrl);
 
-  const initialValues = {
-    profile_picture: "",
-  };
-
-  const onSubmit = useCallback(
+  const onSubmit: FormikConfig<FormType>["onSubmit"] = useCallback(
     (data, { resetForm }) => {
       setErrorMessage(null);
       if (!data.profile_picture) {
         setErrorMessage("Geef alstublieft een profielfoto op");
         return;
       }
-      mutate(data, {
+      mutate(data.profile_picture, {
         onSuccess: () => {
           resetForm();
           onUpdated();

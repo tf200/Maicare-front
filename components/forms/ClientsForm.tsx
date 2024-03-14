@@ -14,7 +14,7 @@ import Select from "@/components/FormFields/Select";
 import { GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import FormikRadioGroup from "../FormFields/FormikRadioGroup";
-import { usePatchClients } from "@/utils/clients/patchClients";
+import { usePatchClient } from "@/utils/clients/patchClient";
 
 type FormType = NewClientsRequest;
 
@@ -73,7 +73,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
   mode,
 }) => {
   const { mutate: create, isLoading: isCreating } = useCreateClients();
-  const { mutate: update, isLoading: isPatching } = usePatchClients(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
 
   const {
     data,
