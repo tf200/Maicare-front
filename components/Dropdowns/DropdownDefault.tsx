@@ -59,8 +59,10 @@ const DropdownDefault: FunctionComponent<Props> = ({
           onTriggerClick?.(event);
           setDropdownOpen(!dropdownOpen);
         }}
+        className={"relative"}
       >
         <DotsIcon />
+        <div className="absolute inset-0 z-0 w-12 h-12 -top-4 -left-4" />
       </button>
       <div
         ref={dropdown}
