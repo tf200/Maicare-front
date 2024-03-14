@@ -103,7 +103,7 @@ const ContractsSummary: FunctionComponent<ContractsSummaryProps> = ({
         type={"phone"}
         value={data.phone_number}
       />
-      <DetailCell label={"KVK nummer"} value={data.KVKnumber} />
+      <DetailCell label={"KvK nummer"} value={data.KVKnumber} />
       <DetailCell label={"BTW nummer"} value={data.BTWnumber} />
       <DetailCell label={"Cliëntnummer"} value={data.client_number} />
     </section>

@@ -1,7 +1,8 @@
 import { useControlledSearchParams } from "@/hooks/useControlledSearchParams";
 import { PAGE_SIZE } from "@/consts";
+import { PaginationResult } from "@/types/pagination-result";
 
-export function usePaginationParams() {
+export function usePaginationParams(): PaginationResult {
   const searchParams = useControlledSearchParams();
   const page = parseInt(searchParams.getItem("page")) || 1;
   const page_size = parseInt(searchParams.getItem("page_size")) || PAGE_SIZE;
