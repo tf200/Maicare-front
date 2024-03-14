@@ -1,13 +1,9 @@
 "use client";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+
+import Panel from "@/components/Panel";
 
 const Care = () => {
-
-  return (
-    <>
-      <Breadcrumb pageName="Binnenkort beschikbaar ..." />
-    </>
-  );
+  return <Panel title={"Zorgcoördinatie"}></Panel>;
 };
 
 export default Care;

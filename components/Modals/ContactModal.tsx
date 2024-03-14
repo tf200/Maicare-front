@@ -32,6 +32,7 @@ const usePatchClientContact = (clientId: number) => {
       patchClientContact(clientId, req),
     onSuccess: () => {
       queryClient.invalidateQueries([clientId]);
+      queryClient.invalidateQueries(["clients", clientId]);
     },
   });
 };
