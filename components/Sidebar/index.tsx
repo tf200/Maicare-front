@@ -2,6 +2,7 @@
 
 import React, {
   FunctionComponent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -32,6 +33,8 @@ import ProfilePicture from "../ProfilePicture";
 import dayjs from "dayjs";
 import { getAge } from "@/utils/getAge";
 import ClientSidebarBriefing from "../ClientSidebarBriefing";
+import { cn } from "@/utils/cn";
+import ChevronDown from "@/components/icons/ChevronDown";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -151,12 +154,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
 export default Sidebar;
 
-type SidebarLinkProps = {
-  completeHref: string;
+type SidebarDropdownProps = {
+  isDropdown: true;
+  completeHref?: undefined;
   children: React.ReactNode;
   icon: React.ReactNode;
-  getIsActive?: (pathname: string, completeHref: string) => boolean;
+  getIsActive?: undefined;
+  subItems: SidebarLinkProps[];
 };
+
+type SidebarLinkProps =
+  | {
+      isDropdown?: false;
+      completeHref: string;
+      children: React.ReactNode;
+      icon: React.ReactNode;
+      getIsActive?: (pathname: string, completeHref: string) => boolean;
+    }
+  | SidebarDropdownProps;
 
 const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
   completeHref,
@@ -184,6 +199,69 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
   );
 };
 
+const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
+  completeHref,
+  getIsActive,
+  icon,
+  children,
+  subItems,
+}) => {
+  const pathname = usePathname();
+  const inferOpen = useMemo(() => {
+    return subItems.some((item) => {
+      if (item.getIsActive) {
+        return item.getIsActive(pathname, completeHref);
+      } else {
+        return pathname.startsWith(item.completeHref);
+      }
+    });
+  }, [subItems, pathname]);
+  const [isOpen, setIsOpen] = useState(inferOpen);
+
+  return (
+    <>
+      <button
+        className={clsx(
+          "group relative w-full flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
+          {
+            "bg-graydark dark:bg-meta-4": inferOpen || isOpen,
+          }
+        )}
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        {icon}
+        {children}
+        <ChevronDown
+          className={cn("ml-auto", {
+            "transform rotate-180": isOpen,
+          })}
+        />
+      </button>
+      {isOpen && (
+        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+          {subItems.map((item) => (
+            <li key={item.completeHref}>
+              <Link
+                href={item.completeHref}
+                className={cn(
+                  "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white",
+                  {
+                    "text-white":
+                      item.getIsActive?.(pathname, item.completeHref) ??
+                      pathname.startsWith(item.completeHref),
+                  }
+                )}
+              >
+                {item.children}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
+
 type SidebarMenuProps = {
   items: SidebarLinkProps[];
   title: string | React.ReactNode;
@@ -204,7 +282,11 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
             {/* <!-- Menu Item Dashboard --> */}
             {items.map((item) => (
               <li key={item.completeHref}>
-                <SidebarLink {...item}>{item.children}</SidebarLink>
+                {item.isDropdown ? (
+                  <SidebarDropdown {...item}>{item.children}</SidebarDropdown>
+                ) : (
+                  <SidebarLink {...item}>{item.children}</SidebarLink>
+                )}
               </li>
             ))}
           </ul>
@@ -235,19 +317,26 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Medewerkers",
         },
         {
-          completeHref: "/contacts",
-          icon: <BuildingIcon className={"w-4.5 h-5"} />,
-          children: "Opdrachtgevers",
-        },
-        {
-          completeHref: "/contracts",
+          completeHref: "/finances",
           icon: <InvoiceIcon className={"w-4.5 h-5"} />,
-          children: "Contracten",
+          children: "Financiën",
         },
         {
-          completeHref: "/care",
+          isDropdown: true,
           icon: <HeartIcon width={18} height={18} />,
           children: "Zorgcoördinatie",
+          subItems: [
+            {
+              completeHref: "/contacts",
+              icon: <BuildingIcon className={"w-4.5 h-5"} />,
+              children: "Opdrachtgevers",
+            },
+            {
+              completeHref: "/contracts",
+              icon: <InvoiceIcon className={"w-4.5 h-5"} />,
+              children: "Contracten",
+            },
+          ],
         },
         {
           completeHref: "/tasks",
