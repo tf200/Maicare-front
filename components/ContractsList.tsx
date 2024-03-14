@@ -98,7 +98,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
           onRowClick={(row) =>
-            router.push(`/clients/${row.client}/contracts/${row.id}/edit`)
+            router.push(`/clients/${row.client}/contracts/${row.id}`)
           }
         />
       )}

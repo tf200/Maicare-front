@@ -68,18 +68,6 @@ const ContractDetails: FunctionComponent<Props> = ({
           <InvoiceList contractData={contract} />
         </div>
       )}
-      {client && contract && (
-        <div className="mt-10 px-4 flex flex-col justify-end gap-4 sm:flex-row">
-          <button
-            onClick={() => {
-              window.print();
-            }}
-            className="flex items-center justify-center rounded border border-primary py-2.5 px-8 text-center font-medium text-primary hover:bg-opacity-90"
-          >
-            Print Contract
-          </button>
-        </div>
-      )}
     </div>
   );
 };
