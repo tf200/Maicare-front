@@ -16,7 +16,7 @@ export const usePatchClient = (clientId: number, onSuccess?: () => void) => {
     mutationFn: async (data: UpdateClientDto) => patchClient(data, clientId),
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["clients", clientId]);
+      queryClient.invalidateQueries(["clients"]);
       if (onSuccess) {
         onSuccess();
       }
@@ -55,7 +55,7 @@ export const usePatchClientProfilePicture = (
       patchClientProfilePicture(profile_picture, clientId),
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["clients", clientId]);
+      queryClient.invalidateQueries(["clients"]);
       if (onSuccess) {
         onSuccess();
       }
