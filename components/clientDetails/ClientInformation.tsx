@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import IconButton from "@/components/buttons/IconButton";
 import CameraIcon from "@/components/svg/CameraIcon";
-import ProfilePictureModal from "@/components/Modals/ProfilePictureModal";
+import { ClientProfilePictureModal } from "@/components/Modals/ProfilePictureModal";
 import { useModal } from "@/components/providers/ModalProvider";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 
 const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useClientDetails(clientId);
-  const { open } = useModal(ProfilePictureModal);
+  const { open } = useModal(ClientProfilePictureModal);
   if (isLoading) return <Loader />;
   if (isError)
     return <div className="text-red">We failed to load client data</div>;

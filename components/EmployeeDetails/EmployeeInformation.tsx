@@ -10,7 +10,7 @@ import "dayjs/locale/en";
 import CameraIcon from "../svg/CameraIcon";
 import IconButton from "../buttons/IconButton";
 import { useModal } from "../providers/ModalProvider";
-import ProfilePictureModal from "../Modals/ProfilePictureModal";
+import { EmployeeProfilePictureModal } from "../Modals/ProfilePictureModal";
 import { mappingGender } from "@/utils/gender";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const EmployeeInformation: FunctionComponent<Props> = ({ employeeId }) => {
-  const { open } = useModal(ProfilePictureModal);
+  const { open } = useModal(EmployeeProfilePictureModal);
   const { data, isLoading, isError } = useEmployeeDetails(employeeId);
 
   if (isLoading) return <Loader />;
