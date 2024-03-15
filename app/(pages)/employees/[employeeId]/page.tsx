@@ -17,6 +17,8 @@ import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useDeleteEmployee } from "@/utils/employees/deleteEmployee";
 import { useRouter } from "next/navigation";
+import { SecureFragment } from "@/components/SecureWrapper";
+import * as consts from "@/consts/permissions";
 
 type Props = {
   params: {
@@ -60,30 +62,34 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
             containerClassName="px-7 py-4"
             sideActions={
               <div className="flex gap-4">
-                <Link href={`/employees/${employeeId}/edit`}>
-                  <IconButton>
-                    <PencilSquare className="w-5 h-5" />
-                  </IconButton>
-                </Link>
+                <SecureFragment permission={consts.EMPLOYEE_EDIT}>
+                  <Link href={`/employees/${employeeId}/edit`}>
+                    <IconButton>
+                      <PencilSquare className="w-5 h-5" />
+                    </IconButton>
+                  </Link>
+                </SecureFragment>
 
-                <IconButton
-                  buttonType="Danger"
-                  onClick={() => {
-                    open({
-                      onConfirm: () => {
-                        deleteEmployee(parseInt(employeeId));
-                      },
-                    });
-                  }}
-                  disabled={isDeleted}
-                  isLoading={isDeleting}
-                >
-                  {isDeleted ? (
-                    <CheckIcon className="w-5 h-5" />
-                  ) : (
-                    <TrashIcon className="w-5 h-5" />
-                  )}
-                </IconButton>
+                <SecureFragment permission={consts.EMPLOYEE_DELETE}>
+                  <IconButton
+                    buttonType="Danger"
+                    onClick={() => {
+                      open({
+                        onConfirm: () => {
+                          deleteEmployee(parseInt(employeeId));
+                        },
+                      });
+                    }}
+                    disabled={isDeleted}
+                    isLoading={isDeleting}
+                  >
+                    {isDeleted ? (
+                      <CheckIcon className="w-5 h-5" />
+                    ) : (
+                      <TrashIcon className="w-5 h-5" />
+                    )}
+                  </IconButton>
+                </SecureFragment>
               </div>
             }
           >

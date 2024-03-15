@@ -19,6 +19,8 @@ import LargeAlertMessage from "@/components/LargeErrorMessage";
 import OrganisationFilter from "@/components/OrganisationFilter";
 import LinkButton from "@/components/buttons/LinkButton";
 import { mappingGender } from "@/utils/gender";
+import { SecureFragment } from "@/components/SecureWrapper";
+import * as consts from "@/consts/permissions";
 
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
@@ -67,7 +69,8 @@ const EmployeesPage: FunctionComponent = () => {
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) => mappingGender[info.getValue() as string] || "Niet gespecificeerd",
+        cell: (info) =>
+          mappingGender[info.getValue() as string] || "Niet gespecificeerd",
       },
       {
         accessorKey: "work_phone_number",
@@ -107,10 +110,12 @@ const EmployeesPage: FunctionComponent = () => {
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
             <EmployeeFilters onFiltersChange={setFilters} />
-            <LinkButton
-              text={"Nieuwe Medewerker Toevoegen"}
-              href={`/employees/new`}
-            />
+            <SecureFragment permission={consts.EMPLOYEE_CREATE}>
+              <LinkButton
+                text={"Nieuwe Medewerker Toevoegen"}
+                href={`/employees/new`}
+              />
+            </SecureFragment>
           </div>
         }
       >
