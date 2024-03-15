@@ -32,7 +32,7 @@ import { cn } from "@/utils/cn";
 import ChevronDown from "@/components/icons/ChevronDown";
 import { Permission } from "@/types/permissions";
 import { SecureFragment } from "@/components/SecureWrapper";
-import { CLIENT_VIEW, EMPLOYEE_VIEW } from "@/consts";
+import * as consts from "@/consts";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -310,24 +310,24 @@ const GlobalMenu: FunctionComponent = () => {
           completeHref: "/dashboard/crm",
           icon: <GridsIcon />,
           children: "Dashboard",
-          permission: CLIENT_VIEW,
         },
         {
           completeHref: "/clients",
           icon: <IndividualIcons width={18} height={18} />,
           children: "Cliënten",
-          permission: CLIENT_VIEW,
+          permission: consts.CLIENT_VIEW,
         },
         {
           completeHref: "/employees",
           icon: <GroupIcon width={18} height={18} />,
           children: "Medewerkers",
-          permission: EMPLOYEE_VIEW,
+          permission: consts.EMPLOYEE_VIEW,
         },
         {
           completeHref: "/finances",
           icon: <InvoiceIcon className={"w-4.5 h-5"} />,
           children: "Financiën",
+          permission: consts.FINANCE_VIEW,
         },
         {
           isDropdown: true,
@@ -345,16 +345,19 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Contracten",
             },
           ],
+          permission: consts.CARE_COORDINATION_VIEW,
         },
         {
           completeHref: "/tasks",
           icon: <CalendarIcon />,
           children: "Planning & Taken",
+          permission: consts.TASKS_VIEW,
         },
         {
           completeHref: "/conversations",
           icon: <ChatBubblesIcon className={"w-4.5 h-4.5"} />,
           children: "Conversaties",
+          permission: consts.CONVERSATION_VIEW,
         },
       ]}
       title={"MENU"}

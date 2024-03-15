@@ -8,10 +8,13 @@ export const EMPLOYEE_EDIT = "employee.edit";
 export const EMPLOYEE_DELETE = "employee.delete";
 export const EMPLOYEE_CREATE = "employee.create";
 
-// export const CLIENT_CONTRACT_CRUD = "client_contract";
-// export const EMPLOYEE_CONTRACT_CRUD = "employee_contract";
-// export const CARE_COORDINATION_CRUD = "care_coordination";
-// export const FINANCE_CRUD = "finance";
+export const FINANCE_VIEW = "finance.view";
+
+export const CARE_COORDINATION_VIEW = "care_coordination.view";
+
+export const TASKS_VIEW = "tasks.view";
+
+export const CONVERSATION_VIEW = "conversation.view";
 
 export const PERMISSIONS = [
   CLIENT_VIEW,
@@ -24,10 +27,14 @@ export const PERMISSIONS = [
   EMPLOYEE_DELETE,
   EMPLOYEE_CREATE,
 
-  // CLIENT_CONTRACT_CRUD,
-  // EMPLOYEE_CONTRACT_CRUD,
-  // CARE_COORDINATION_CRUD,
-  // FINANCE_CRUD,
+  FINANCE_VIEW,
+
+  CARE_COORDINATION_VIEW,
+
+  TASKS_VIEW,
+
+  CONVERSATION_VIEW,
+
 ] as const;
 
 export const ADMIN = "ADMIN";
