@@ -39,14 +39,8 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
-  if (!userData) return null;
-  const { profile_picture, first_name, last_name } = userData;
   if (!decode) return null;
-  const role =
-    decode.groups.length > 0
-      ? decode.groups[0].charAt(0).toUpperCase() +
-        decode.groups[0].slice(1).toLowerCase()
-      : null;
+  const role = decode.groups.length > 0 ? decode.groups[0] : null;
 
   return (
     <div className="relative">
@@ -56,21 +50,25 @@ const DropdownUser = () => {
         className="flex items-center gap-4"
         href="#"
       >
-        <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            {first_name} {last_name}
-          </span>
-          <span className="block text-xs">{role}</span>
-        </span>
+        {userData && (
+          <>
+            <span className="hidden text-right lg:block">
+              <span className="block text-sm font-medium text-black dark:text-white">
+                {userData.first_name} {userData.last_name}
+              </span>
+              <span className="block text-xs capitalize">{role}</span>
+            </span>
 
-        <span className="h-12 w-12 overflow-hidden rounded-full">
-          <ProfilePicture
-            profilePicture={profile_picture}
-            width={48}
-            height={48}
-            className={"h-12 w-12"}
-          />
-        </span>
+            <span className="h-12 w-12 overflow-hidden rounded-full">
+              <ProfilePicture
+                profilePicture={userData.profile_picture}
+                width={48}
+                height={48}
+                className={"h-12 w-12"}
+              />
+            </span>
+          </>
+        )}
 
         <svg
           className="hidden fill-current sm:block"
