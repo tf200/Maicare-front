@@ -2,7 +2,6 @@
 
 import React, {
   FunctionComponent,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -28,13 +27,12 @@ import clsx from "clsx";
 import ArrowRight from "@/components/icons/ArrowRight";
 import BuildingIcon from "@/components/icons/BuildingIcon";
 import ChatBubblesIcon from "@/components/icons/ChatBubblesIcon";
-import { useClientDetails } from "@/utils/clients/getClientDetails";
-import ProfilePicture from "../ProfilePicture";
-import dayjs from "dayjs";
-import { getAge } from "@/utils/getAge";
 import ClientSidebarBriefing from "../ClientSidebarBriefing";
 import { cn } from "@/utils/cn";
 import ChevronDown from "@/components/icons/ChevronDown";
+import { Permission } from "@/types/permissions";
+import { SecureFragment } from "@/components/SecureWrapper";
+import { CLIENT_VIEW, EMPLOYEE_VIEW } from "@/consts";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -161,6 +159,7 @@ type SidebarDropdownProps = {
   icon: React.ReactNode;
   getIsActive?: undefined;
   subItems: SidebarLinkProps[];
+  permission?: Permission;
 };
 
 type SidebarLinkProps =
@@ -170,6 +169,7 @@ type SidebarLinkProps =
       children: React.ReactNode;
       icon: React.ReactNode;
       getIsActive?: (pathname: string, completeHref: string) => boolean;
+      permission?: Permission;
     }
   | SidebarDropdownProps;
 
@@ -281,13 +281,18 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
           <ul className="mb-6 flex flex-col gap-1.5">
             {/* <!-- Menu Item Dashboard --> */}
             {items.map((item) => (
-              <li key={item.completeHref}>
-                {item.isDropdown ? (
-                  <SidebarDropdown {...item}>{item.children}</SidebarDropdown>
-                ) : (
-                  <SidebarLink {...item}>{item.children}</SidebarLink>
-                )}
-              </li>
+              <SecureFragment
+                permission={item.permission}
+                key={item.completeHref}
+              >
+                <li>
+                  {item.isDropdown ? (
+                    <SidebarDropdown {...item}>{item.children}</SidebarDropdown>
+                  ) : (
+                    <SidebarLink {...item}>{item.children}</SidebarLink>
+                  )}
+                </li>
+              </SecureFragment>
             ))}
           </ul>
         </div>
@@ -305,16 +310,19 @@ const GlobalMenu: FunctionComponent = () => {
           completeHref: "/dashboard/crm",
           icon: <GridsIcon />,
           children: "Dashboard",
+          permission: CLIENT_VIEW,
         },
         {
           completeHref: "/clients",
           icon: <IndividualIcons width={18} height={18} />,
           children: "Cliënten",
+          permission: CLIENT_VIEW,
         },
         {
           completeHref: "/employees",
           icon: <GroupIcon width={18} height={18} />,
           children: "Medewerkers",
+          permission: EMPLOYEE_VIEW,
         },
         {
           completeHref: "/finances",
