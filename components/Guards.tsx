@@ -4,17 +4,49 @@ import { usePathname, redirect } from "next/navigation";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
+import { useIsActive } from "@/components/SecureWrapper";
+import * as consts from "@/consts";
+import { Permission } from "@/types/permissions";
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathName = usePathname();
-
+  const isActive = useIsActive();
   const [isAllowed, setIsAllowed] = useState(false);
 
   const { refetch } = useMyInfo(false);
 
+  const getPermissionByPathname = (pathname: string): Permission => {
+    if (pathname.startsWith("/dashboard")) {
+      return consts.DASHBOARD_VIEW;
+    }
+    if (pathname.startsWith("/clients")) {
+      return consts.CLIENT_VIEW;
+    }
+    if (pathname.startsWith("/employees")) {
+      return consts.EMPLOYEE_VIEW;
+    }
+    if (pathname.startsWith("/finances")) {
+      return consts.FINANCE_VIEW;
+    }
+    if (pathname.startsWith("/contacts")) {
+      return consts.CONTACTS_VIEW;
+    }
+    if (pathname.startsWith("/contracts")) {
+      return consts.CONTRACTS_VIEW;
+    }
+    if (pathname.startsWith("/tasks")) {
+      return consts.TASKS_VIEW;
+    }
+    if (pathname.startsWith("/conversations")) {
+      return consts.CONVERSATION_VIEW;
+    }
+  };
   const verify = async () => {
     await refetch();
-    setIsAllowed(true);
+
+    if (isActive(getPermissionByPathname(pathName))) {
+      setIsAllowed(true);
+    }
   };
 
   useEffect(() => {
@@ -29,7 +61,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         redirect("/signin");
       }
     }
-  }, [pathName]);
+  }, [pathName, isActive]);
 
   return isAllowed ? children : <></>;
 };

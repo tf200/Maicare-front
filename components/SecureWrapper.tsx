@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ComponentProps,
   createElement,
@@ -6,16 +8,32 @@ import {
   PropsWithChildren,
   useCallback,
 } from "react";
+import jwt from "jsonwebtoken";
 import { Permission, Role } from "@/types/permissions";
-import { BEHAVIORAL_SPECIALIST, PERMISSION_CONFIGURATIONS } from "@/consts";
+import { PERMISSION_CONFIGURATIONS } from "@/consts";
+import { useQuery } from "react-query";
 
-const useIsActive = () => {
-  const mockUserRole: Role = BEHAVIORAL_SPECIALIST;
+const useRoles = () => {
+  return useQuery({
+    queryKey: "my-roles",
+    queryFn: async (): Promise<Role[]> => {
+      return new Promise((resolve) => {
+        const decoded = jwt.decode(localStorage.getItem("a"))?.groups;
+        resolve([...decoded]);
+      });
+    },
+  });
+};
+
+export const useIsActive = () => {
+  const { data: roles } = useRoles();
   return useCallback(
     (permission: Permission) => {
-      return PERMISSION_CONFIGURATIONS[mockUserRole].includes(permission);
+      return roles?.some((role) =>
+        PERMISSION_CONFIGURATIONS[role].includes(permission)
+      );
     },
-    [mockUserRole]
+    [roles]
   );
 };
 

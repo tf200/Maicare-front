@@ -19,6 +19,8 @@ import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
 import LinkButton from "@/components/buttons/LinkButton";
 import { mappingGender } from "@/utils/gender";
+import { SecureFragment } from "@/components/SecureWrapper";
+import * as consts from "@/consts/permissions"
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -101,12 +103,14 @@ const ClientsPage: FunctionComponent = () => {
                 setPage(1);
               }}
             />
-            <Link href={`/clients/new`}>
-              <LinkButton
-                text={"Nieuwe Cliënten Toevoegen"}
-                href={`/clients/new`}
-              />
-            </Link>
+            <SecureFragment permission={consts.CLIENT_CREATE}>
+              <Link href={`/clients/new`}>
+                <LinkButton
+                  text={"Nieuwe Cliënten Toevoegen"}
+                  href={`/clients/new`}
+                />
+              </Link>
+            </SecureFragment>
           </div>
         }
       >
