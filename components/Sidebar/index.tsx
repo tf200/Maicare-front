@@ -310,6 +310,7 @@ const GlobalMenu: FunctionComponent = () => {
           completeHref: "/dashboard/crm",
           icon: <GridsIcon />,
           children: "Dashboard",
+          permission: consts.DASHBOARD_VIEW,
         },
         {
           completeHref: "/clients",

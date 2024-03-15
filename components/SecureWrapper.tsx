@@ -6,16 +6,20 @@ import {
   PropsWithChildren,
   useCallback,
 } from "react";
+
+import jwt from "jsonwebtoken";
 import { Permission, Role } from "@/types/permissions";
 import { BEHAVIORAL_SPECIALIST, PERMISSION_CONFIGURATIONS } from "@/consts";
 
-const useIsActive = () => {
-  const mockUserRole: Role = BEHAVIORAL_SPECIALIST;
+export const useIsActive = () => {
+  
+  const mockUserRoles: Role[] =  jwt.decode(localStorage.getItem("a"))?.groups
+
   return useCallback(
     (permission: Permission) => {
-      return PERMISSION_CONFIGURATIONS[mockUserRole].includes(permission);
+      return mockUserRoles.some((role) => PERMISSION_CONFIGURATIONS[role].includes(permission))
     },
-    [mockUserRole]
+    [mockUserRoles]
   );
 };
 
