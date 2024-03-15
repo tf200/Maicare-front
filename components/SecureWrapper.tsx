@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ComponentProps,
   createElement,
@@ -12,14 +14,13 @@ import { Permission, Role } from "@/types/permissions";
 import { BEHAVIORAL_SPECIALIST, PERMISSION_CONFIGURATIONS } from "@/consts";
 
 export const useIsActive = () => {
-  
-  const mockUserRoles: Role[] =  jwt.decode(localStorage.getItem("a"))?.groups
+  const roles: Role[] = localStorage ? jwt.decode(localStorage.getItem("a"))?.groups : []
 
   return useCallback(
     (permission: Permission) => {
-      return mockUserRoles.some((role) => PERMISSION_CONFIGURATIONS[role].includes(permission))
+      return roles.some((role) => PERMISSION_CONFIGURATIONS[role].includes(permission))
     },
-    [mockUserRoles]
+    [roles]
   );
 };
 
