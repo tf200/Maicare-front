@@ -61,7 +61,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         redirect("/signin");
       }
     }
-  }, [pathName]);
+  }, [pathName, isActive]);
 
   return isAllowed ? children : <></>;
 };
