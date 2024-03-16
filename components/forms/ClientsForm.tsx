@@ -23,7 +23,7 @@ const initialValues: FormType = {
   last_name: "",
   email: "",
   organisation: "",
-  location: "",
+  location: 1,
   birthplace: "",
   departement: "",
   gender: "",
@@ -48,7 +48,7 @@ export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   // profile_picture: Yup.string().required("Geef alstublieft een profielfoto op"),
   departement: Yup.string(),
   filenumber: Yup.number(),
-  location: Yup.string(),
+  location: Yup.number(),
   birthplace: Yup.string(),
   date_of_birth: Yup.string().required("Geef alstublieft een geboortedatum op"),
   organisation: Yup.string(),
@@ -281,17 +281,17 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     containerClassName="p-6.5 pb-5"
                     title={"Locatiegegevens"}
                   >
-                    <InputField
-                      label={"Locatie"}
-                      id={"location"}
-                      placeholder={"Locatie"}
-                      type={"text"}
-                      className="w-full mb-4.5"
-                      value={values.location}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={touched.location && errors.location}
-                    />
+                    {/*<InputField*/}
+                    {/*  label={"Locatie"}*/}
+                    {/*  id={"location"}*/}
+                    {/*  placeholder={"Locatie"}*/}
+                    {/*  type={"text"}*/}
+                    {/*  className="w-full mb-4.5"*/}
+                    {/*  value={values.location}*/}
+                    {/*  onChange={handleChange}*/}
+                    {/*  onBlur={handleBlur}*/}
+                    {/*  error={touched.location && errors.location}*/}
+                    {/*/>*/}
 
                     <InputField
                       label={"Geboorteplaats"}

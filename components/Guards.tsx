@@ -16,6 +16,9 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { refetch } = useMyInfo(false);
 
   const getPermissionByPathname = (pathname: string): Permission => {
+    if (pathname === "" || pathname === "/") {
+      return consts.DASHBOARD_VIEW;
+    }
     if (pathname.startsWith("/dashboard")) {
       return consts.DASHBOARD_VIEW;
     }
