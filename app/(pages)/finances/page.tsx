@@ -4,7 +4,7 @@ import { AllInvoicesList } from "@/components/InvoicesList";
 
 const Page: FunctionComponent = () => {
   return (
-    <Panel title={"Financiën"} containerClassName="px-7 py-4">
+    <Panel title={"Financiën"}>
       <AllInvoicesList />
     </Panel>
   );

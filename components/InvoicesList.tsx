@@ -1,3 +1,5 @@
+"use client";
+
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import React, { useMemo } from "react";
 import InputField from "@/components/FormFields/InputField";
