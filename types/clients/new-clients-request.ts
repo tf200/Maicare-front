@@ -3,7 +3,7 @@ export type NewClientsRequest = {
   last_name: string;
   email: string;
   organisation: string;
-  location: string;
+  location: number;
   birthplace: string;
   departement: string;
   gender: string;
