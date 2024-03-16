@@ -10,30 +10,23 @@ import { dateFormat } from "@/utils/timeFormatting";
 import { formatPrice } from "@/utils/priceFormatting";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "react-query";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
-
-type GenerateInvoiceReqDto = {
-  start_date: string;
-  end_date: string;
-  contract_id: number;
-};
-
-type GenerateInvoiceResDto = {
-  due_date: string;
-  id: number;
-  invoice_number: string;
-  issue_date: number;
-  pdf_url: string;
-  pre_vat_total: string;
-  status: string;
-  total_amount: string;
-  vat_amount: string;
-  vat_rate: string;
-};
+import {
+  InvoiceResDto,
+  InvoiceItem,
+  InvoicesResDto,
+} from "@/types/invoices/invoices-res.dto";
+import { GenerateInvoiceReqDto } from "@/types/invoices/generate-invoice.req.dto";
+import { WithPaginationResult } from "@/types/pagination-result";
 
 async function generateInvoice(req: GenerateInvoiceReqDto) {
-  const response = await api.post<GenerateInvoiceResDto>(
+  const response = await api.post<InvoiceResDto>(
     "/client/generate-invoice/",
     req
   );
@@ -106,10 +99,7 @@ export function GenerateInvoice(props: { contractData: ContractResDto }) {
   );
 }
 
-type InvoiceItem = GenerateInvoiceResDto;
-type InvoicesResDto = Paginated<InvoiceItem>;
-
-async function getInvoice(
+async function getContractInvoices(
   contractId: number,
   paginationParams?: PaginationParams
 ) {
@@ -122,11 +112,11 @@ async function getInvoice(
   return response.data;
 }
 
-const useInvoices = (contractId: number) => {
+const useContractInvoices = (contractId: number) => {
   const paginationParams = usePaginationParams();
   const query = useQuery({
     queryKey: ["contracts", contractId, "invoices"],
-    queryFn: () => getInvoice(contractId, paginationParams),
+    queryFn: () => getContractInvoices(contractId, paginationParams),
   });
 
   return {
@@ -135,8 +125,40 @@ const useInvoices = (contractId: number) => {
   };
 };
 
-export function InvoicesList(props: { contractData: ContractResDto }) {
-  const { data, isLoading, pagination } = useInvoices(props.contractData.id);
+async function getInvoices(paginationParams?: PaginationParams) {
+  const response = await api.get<InvoicesResDto>("/client/invoice_all", {
+    params: paginationParams,
+  });
+  return response.data;
+}
+
+const useInvoices = () => {
+  const paginationParams = usePaginationParams();
+  const query = useQuery({
+    queryKey: ["invoices"],
+    queryFn: () => getInvoices(paginationParams),
+  });
+
+  return {
+    ...query,
+    pagination: paginationParams,
+  };
+};
+
+export function ContractInvoicesList(props: { contractData: ContractResDto }) {
+  const invoicesQuery = useContractInvoices(props.contractData.id);
+  return <InvoicesList queryResult={invoicesQuery} />;
+}
+
+export function AllInvoicesList() {
+  const invoicesQuery = useInvoices();
+  return <InvoicesList queryResult={invoicesQuery} />;
+}
+
+export function InvoicesList(props: {
+  queryResult: WithPaginationResult<UseQueryResult<InvoicesResDto>>;
+}) {
+  const { data, isLoading, pagination } = props.queryResult;
   const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
     return [
       {

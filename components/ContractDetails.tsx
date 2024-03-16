@@ -19,7 +19,10 @@ import {
 } from "@/components/forms/ContractForm";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
-import { GenerateInvoice, InvoicesList } from "@/components/InvoicesList";
+import {
+  GenerateInvoice,
+  ContractInvoicesList,
+} from "@/components/InvoicesList";
 
 type Props = {
   clientId: number;
@@ -57,7 +60,7 @@ const ContractDetails: FunctionComponent<Props> = ({
           <h3 className="mb-5 ml-8 text-2xl font-semibold text-black dark:text-white">
             Invoices
           </h3>
-          <InvoicesList contractData={contract} />
+          <ContractInvoicesList contractData={contract} />
         </div>
       )}
     </div>
