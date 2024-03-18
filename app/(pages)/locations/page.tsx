@@ -2,18 +2,100 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
-import { LocationItem } from "@/types/locations/location.dto";
+import {
+  CreateLocationReqDto,
+  LocationItem,
+} from "@/types/locations/location.dto";
 import { ColumnDef } from "@tanstack/react-table";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
-import { useLocations } from "@/utils/locations";
-import LinkButton from "@/components/buttons/LinkButton";
+import { useCreateLocation, useLocations } from "@/utils/locations";
+import Button from "@/components/buttons/Button";
+import { ModalProps } from "@/types/modal-props";
+import FormModal from "@/components/Modals/FormModal";
+import { useModal } from "@/components/providers/ModalProvider";
+import { useFormik } from "formik";
+import InputField from "@/components/FormFields/InputField";
+import Textarea from "@/components/FormFields/Textarea";
+import * as yup from "yup";
+
+const initialValue: CreateLocationReqDto = {
+  name: "",
+  address: "",
+};
+
+const validationSchema: yup.ObjectSchema<CreateLocationReqDto> = yup.object({
+  name: yup.string().required("Naam is verplicht"),
+  address: yup.string().required("Adres is verplicht"),
+});
+
+const CreateLocationModal: FunctionComponent<ModalProps> = ({
+  onClose,
+  open,
+  additionalProps,
+}) => {
+  const { mutate, isLoading } = useCreateLocation();
+  const { handleSubmit, values, errors, touched, handleChange, handleBlur } =
+    useFormik({
+      initialValues: initialValue,
+      validationSchema,
+      onSubmit: (values) => {
+        mutate(values, {
+          onSuccess: () => {
+            onClose();
+            additionalProps?.onSuccess?.();
+          },
+        });
+      },
+    });
+  return (
+    <FormModal open={open} onClose={onClose} title={"Nieuwe locatie"}>
+      <form onSubmit={handleSubmit}>
+        <InputField
+          className={"mb-4"}
+          label={"Naam"}
+          name={"name"}
+          required={true}
+          value={values.name}
+          error={touched.name && errors.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={"Naam"}
+        />
+        <Textarea
+          className={"mb-6"}
+          label={"Adres"}
+          name={"address"}
+          required={true}
+          rows={6}
+          value={values.address}
+          error={touched.address && errors.address}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={"Adres"}
+        />
+        <Button type={"submit"} isLoading={isLoading} formNoValidate={true}>
+          Opslaan
+        </Button>
+      </form>
+    </FormModal>
+  );
+};
 
 const Page: FunctionComponent = (props) => {
+  const { open } = useModal(CreateLocationModal);
   return (
     <Panel
       title={"Locaties"}
-      sideActions={<LinkButton href="/locations/new" text="Nieuwe locatie" />}
+      sideActions={
+        <Button
+          onClick={() => {
+            open({});
+          }}
+        >
+          Nieuwe locatie
+        </Button>
+      }
     >
       <LocationsList />
     </Panel>
