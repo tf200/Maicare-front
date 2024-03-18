@@ -3,7 +3,7 @@ export type InvoiceResDto = {
   id: number;
   invoice_number: string;
   issue_date: number;
-  pdf_url: string;
+  url: string;
   pre_vat_total: string;
   status: string;
   total_amount: string;

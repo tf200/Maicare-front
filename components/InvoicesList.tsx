@@ -68,11 +68,6 @@ const useInvoices = () => {
   };
 };
 
-export function ContractInvoicesList(props: { contractData: ContractResDto }) {
-  const invoicesQuery = useContractInvoices(props.contractData.id);
-  return <InvoicesList queryResult={invoicesQuery} />;
-}
-
 export function AllInvoicesList() {
   const invoicesQuery = useInvoices();
   return <InvoicesList queryResult={invoicesQuery} />;
@@ -114,7 +109,7 @@ export function InvoicesList(props: {
         header: "Download",
         cell: (data) => (
           <a
-            href={data.row.original.pdf_url}
+            href={data.row.original.url}
             target="_blank"
             className="text-primary hover:underline"
           >
