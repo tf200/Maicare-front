@@ -11,6 +11,8 @@ export const EMPLOYEE_CREATE = "employee.create";
 export const ROLE_VIEW = "role.view";
 export const ROLE_CUD = "role.cud";
 
+export const LOCATION_VIEW = "location.view";
+
 export const DASHBOARD_VIEW = "dashboard.view";
 
 export const FINANCE_VIEW = "finance.view";
@@ -36,6 +38,8 @@ export const PERMISSIONS = [
 
   ROLE_VIEW,
   ROLE_CUD,
+
+  LOCATION_VIEW,
 
   DASHBOARD_VIEW,
 

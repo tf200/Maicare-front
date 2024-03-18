@@ -349,6 +349,12 @@ const GlobalMenu: FunctionComponent = () => {
           permission: consts.CARE_COORDINATION_VIEW,
         },
         {
+          completeHref: "/locations",
+          icon: <BuildingIcon className={"w-4.5 h-5"} />,
+          children: "Locaties",
+          permission: consts.LOCATION_VIEW,
+        },
+        {
           completeHref: "/tasks",
           icon: <CalendarIcon />,
           children: "Planning & Taken",

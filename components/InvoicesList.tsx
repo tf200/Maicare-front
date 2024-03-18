@@ -128,7 +128,7 @@ const useContractInvoices = (contractId: number) => {
 };
 
 async function getInvoices(paginationParams?: PaginationParams) {
-  const response = await api.get<InvoicesResDto>("/client/invoice_all", {
+  const response = await api.get<InvoicesResDto>("/client/invoice_all/", {
     params: paginationParams,
   });
   return response.data;
