@@ -80,9 +80,14 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   }, [data]);
   const { open: openCreateModal } = useModal(CreateOpContactModal);
   return (
-    <FormModal open={open} onClose={onClose} title={"Opdrachtgever Toevoegen"}>
+    <FormModal
+      panelClassName={"min-h-100"}
+      open={open}
+      onClose={onClose}
+      title={"Opdrachtgever Toevoegen"}
+    >
       <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit}>
+        <form className="grow flex flex-col" onSubmit={formik.handleSubmit}>
           <FormikCombobox
             name="selected"
             className="mb-0"

@@ -38,9 +38,14 @@ const ClientSelectModal: FunctionComponent<ModalProps> = ({
     },
   });
   return (
-    <FormModal open={open} onClose={onClose} title={"Selecteer een klant"}>
+    <FormModal
+      panelClassName={"min-h-100"}
+      open={open}
+      onClose={onClose}
+      title={"Selecteer een klant"}
+    >
       <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit}>
+        <form className="flex flex-col grow" onSubmit={formik.handleSubmit}>
           <Combobox
             name="client"
             className={"mb-5"}
@@ -53,7 +58,7 @@ const ClientSelectModal: FunctionComponent<ModalProps> = ({
             }}
             label={"Klant"}
           />
-          <Button type={"submit"} formNoValidate={false}>
+          <Button className="mt-auto" type={"submit"} formNoValidate={false}>
             Selecteer klant
           </Button>
         </form>

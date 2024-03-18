@@ -12,6 +12,7 @@ export const useDeleteContract = (clientId: number) => {
     mutationFn: deleteContract,
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "contracts"]);
+      queryClient.invalidateQueries(["contracts"]);
     },
   });
 };
