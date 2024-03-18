@@ -56,7 +56,7 @@ const ContractDetails: FunctionComponent<Props> = ({
       {contract && <ContractData contractData={contract} />}
       {contract && <GenerateInvoice contractData={contract} />}
       {contract && (
-        <div className="mt-10 -ml-9 -mr-9">
+        <div className="mt-10 xl:-mx-9 md:-mx-6">
           <h3 className="mb-5 ml-8 text-2xl font-semibold text-black dark:text-white">
             Invoices
           </h3>
