@@ -224,7 +224,7 @@ const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
         className={clsx(
           "group relative w-full flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
           {
-            "bg-graydark dark:bg-meta-4": inferOpen || isOpen,
+            "bg-graydark dark:bg-meta-4": inferOpen,
           }
         )}
         onClick={() => setIsOpen((prev) => !prev)}

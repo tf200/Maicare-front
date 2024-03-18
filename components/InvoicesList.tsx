@@ -19,87 +19,8 @@ import {
   UseQueryResult,
 } from "react-query";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
-import {
-  InvoiceResDto,
-  InvoiceItem,
-  InvoicesResDto,
-} from "@/types/invoices/invoices-res.dto";
-import { GenerateInvoiceReqDto } from "@/types/invoices/generate-invoice.req.dto";
+import { InvoiceItem, InvoicesResDto } from "@/types/invoices/invoices-res.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
-
-async function generateInvoice(req: GenerateInvoiceReqDto) {
-  const response = await api.post<InvoiceResDto>(
-    "/client/generate-invoice/",
-    req
-  );
-  return response.data;
-}
-
-const useGenerateInvoice = (contractId: number) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: generateInvoice,
-    onSuccess: (res) => {
-      queryClient.invalidateQueries(["contracts", contractId, "invoices"]);
-    },
-  });
-};
-
-export function GenerateInvoice(props: { contractData: ContractResDto }) {
-  const { mutate: generate, isLoading } = useGenerateInvoice(
-    props.contractData.id
-  );
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
-  const [invoiceURL, setInvoiceURL] = React.useState("");
-  return (
-    <div className="flex gap-4 items-end">
-      <InputField
-        label={"From"}
-        type="date"
-        value={from}
-        onChange={(e) => setFrom(e.target.value)}
-      />
-      <InputField
-        label={"To"}
-        type="date"
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-      />
-      <Button
-        isLoading={isLoading}
-        disabled={!from || !to}
-        onClick={() => {
-          setInvoiceURL("");
-          generate(
-            {
-              start_date: from,
-              end_date: to,
-              contract_id: props.contractData.id,
-            },
-            {
-              onSuccess: (data) => {
-                console.log(data.pdf_url);
-                setInvoiceURL(data.pdf_url);
-              },
-            }
-          );
-        }}
-      >
-        Generate Invoice
-      </Button>
-      {invoiceURL && (
-        <a
-          href={invoiceURL}
-          target="_blank"
-          className="text-primary hover:underline px-10 py-3"
-        >
-          <DownloadIcon className="inline-block mr-5" /> Download Invoice
-        </a>
-      )}
-    </div>
-  );
-}
 
 async function getContractInvoices(
   contractId: number,
@@ -137,7 +58,7 @@ async function getInvoices(paginationParams?: PaginationParams) {
 const useInvoices = () => {
   const paginationParams = usePaginationParams();
   const query = useQuery({
-    queryKey: ["invoices"],
+    queryKey: ["invoices", paginationParams],
     queryFn: () => getInvoices(paginationParams),
   });
 
@@ -146,11 +67,6 @@ const useInvoices = () => {
     pagination: paginationParams,
   };
 };
-
-export function ContractInvoicesList(props: { contractData: ContractResDto }) {
-  const invoicesQuery = useContractInvoices(props.contractData.id);
-  return <InvoicesList queryResult={invoicesQuery} />;
-}
 
 export function AllInvoicesList() {
   const invoicesQuery = useInvoices();
@@ -193,7 +109,7 @@ export function InvoicesList(props: {
         header: "Download",
         cell: (data) => (
           <a
-            href={data.row.original.pdf_url}
+            href={data.row.original.url}
             target="_blank"
             className="text-primary hover:underline"
           >

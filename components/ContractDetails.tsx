@@ -19,10 +19,6 @@ import {
 } from "@/components/forms/ContractForm";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
-import {
-  GenerateInvoice,
-  ContractInvoicesList,
-} from "@/components/InvoicesList";
 
 type Props = {
   clientId: number;
@@ -54,15 +50,6 @@ const ContractDetails: FunctionComponent<Props> = ({
         {contract && <WhenNotification values={mapToForm(contract)} />}
       </div>
       {contract && <ContractData contractData={contract} />}
-      {contract && <GenerateInvoice contractData={contract} />}
-      {contract && (
-        <div className="mt-10 -ml-9 -mr-9">
-          <h3 className="mb-5 ml-8 text-2xl font-semibold text-black dark:text-white">
-            Invoices
-          </h3>
-          <ContractInvoicesList contractData={contract} />
-        </div>
-      )}
     </div>
   );
 };

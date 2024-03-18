@@ -2,14 +2,17 @@ import React, { FunctionComponent, PropsWithChildren, ReactNode } from "react";
 import { Dialog } from "@headlessui/react";
 import { ModalProps } from "@/types/modal-props";
 import XMarkIcon from "@/components/icons/XMarkIcon";
+import { cn } from "@/utils/cn";
 
 type Props = PropsWithChildren<ModalProps> & {
   title: ReactNode;
+  panelClassName?: string;
 };
 
 const FormModal: FunctionComponent<Props> = ({
   open,
   onClose,
+  panelClassName,
   children,
   title,
 }) => {
@@ -19,7 +22,12 @@ const FormModal: FunctionComponent<Props> = ({
       onClose={onClose}
       className="fixed top-0 left-0 z-99999 flex h-screen w-full justify-center overflow-y-scroll bg-black/80 py-5 px-4"
     >
-      <Dialog.Panel className="relative m-auto w-full max-w-180 rounded-sm border border-stroke bg-gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5">
+      <Dialog.Panel
+        className={cn(
+          "flex flex-col relative m-auto w-full max-w-180 rounded-sm border border-stroke bg-gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5",
+          panelClassName
+        )}
+      >
         <Dialog.Title className="pb-2 text-xl mb-10 font-bold text-black dark:text-white sm:text-2xl">
           {title}
         </Dialog.Title>

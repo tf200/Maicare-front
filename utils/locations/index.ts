@@ -1,6 +1,9 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import api from "@/utils/api";
-import { LocationsResDto } from "@/types/locations/location.dto";
+import {
+  CreateLocationReqDto,
+  LocationsResDto,
+} from "@/types/locations/location.dto";
 
 async function getLocations() {
   const response = await api.get<LocationsResDto>("/locations/");
@@ -14,4 +17,18 @@ export const useLocations = () => {
   });
 
   return query;
+};
+
+async function createLocation(data: CreateLocationReqDto) {
+  const response = await api.post("/locations/", data);
+  return response.data;
+}
+
+export const useCreateLocation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createLocation, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["locations"]);
+    },
+  });
 };
