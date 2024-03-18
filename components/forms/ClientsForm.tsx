@@ -1,7 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 import Panel from "@/components/Panel";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
@@ -15,19 +15,20 @@ import { GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import FormikRadioGroup from "../FormFields/FormikRadioGroup";
 import { usePatchClient } from "@/utils/clients/patchClient";
+import { ClientFormType } from "@/types/clients/client-form-type";
+import { useLocations } from "@/utils/locations";
+import { SelectionOption } from "@/types/selection-option";
 
-type FormType = NewClientsRequest;
-
-const initialValues: FormType = {
+const initialValues: ClientFormType = {
   first_name: "",
   last_name: "",
   email: "",
   organisation: "",
-  location: 1,
+  location: "",
   birthplace: "",
   departement: "",
   gender: "",
-  filenumber: 0,
+  filenumber: "",
   date_of_birth: "",
   phone_number: "",
   city: "",
@@ -39,28 +40,32 @@ const initialValues: FormType = {
   source: "",
 };
 
-export const clientsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  id: Yup.number(),
-  first_name: Yup.string().required("Geef alstublieft een voornaam op"),
-  last_name: Yup.string().required("Geef alstublieft een achternaam op"),
-  email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
-  phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
-  // profile_picture: Yup.string().required("Geef alstublieft een profielfoto op"),
-  departement: Yup.string(),
-  filenumber: Yup.number(),
-  location: Yup.number(),
-  birthplace: Yup.string(),
-  date_of_birth: Yup.string().required("Geef alstublieft een geboortedatum op"),
-  organisation: Yup.string(),
-  gender: Yup.string(),
-  city: Yup.string(),
-  Zipcode: Yup.string(),
-  infix: Yup.string(),
-  streetname: Yup.string(),
-  street_number: Yup.string(),
-  bsn: Yup.string().required("Geef alstublieft een BSN op"),
-  source: Yup.string().required("Geef alstublieft een bron op"),
-});
+export const clientsSchema: Yup.ObjectSchema<ClientFormType> =
+  Yup.object().shape({
+    id: Yup.number(),
+    first_name: Yup.string().required("Geef alstublieft een voornaam op"),
+    last_name: Yup.string().required("Geef alstublieft een achternaam op"),
+    email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
+    phone_number: Yup.string().required(
+      "Geef alstublieft een telefoonnummer op"
+    ),
+    departement: Yup.string(),
+    filenumber: Yup.string(),
+    location: Yup.string(),
+    birthplace: Yup.string(),
+    date_of_birth: Yup.string().required(
+      "Geef alstublieft een geboortedatum op"
+    ),
+    organisation: Yup.string(),
+    gender: Yup.string(),
+    city: Yup.string(),
+    Zipcode: Yup.string(),
+    infix: Yup.string(),
+    streetname: Yup.string(),
+    street_number: Yup.string(),
+    bsn: Yup.string().required("Geef alstublieft een BSN op"),
+    source: Yup.string().required("Geef alstublieft een bron op"),
+  });
 
 type PropsType = {
   clientId?: number;
@@ -73,7 +78,23 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
 }) => {
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
+  const locationQuery = useLocations();
+  const locationOptions = useMemo<SelectionOption[]>(() => {
+    if (locationQuery.data) {
+      const options = locationQuery.data.results.map((location) => ({
+        value: location.id + "",
+        label: location.name,
+      }));
 
+      return [
+        {
+          value: "",
+          label: "Selecteer een locatie",
+        },
+      ].concat(options);
+    }
+    return [];
+  }, [locationQuery]);
   const {
     data,
     isLoading: isDataLoading,
@@ -83,11 +104,13 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
   const router = useRouter();
 
   const onSubmit = useCallback(
-    (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
+    (values: ClientFormType, { resetForm }: FormikHelpers<ClientFormType>) => {
       if (mode === "edit") {
         update(
           {
             ...values,
+            location: parseInt(values.location),
+            filenumber: parseInt(values.filenumber),
           },
           {
             onSuccess: () => {
@@ -97,12 +120,19 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
           }
         );
       } else if (mode === "new") {
-        create(values, {
-          onSuccess: () => {
-            resetForm();
-            router.push("/clients");
+        create(
+          {
+            ...values,
+            location: parseInt(values.location),
+            filenumber: parseInt(values.filenumber),
           },
-        });
+          {
+            onSuccess: () => {
+              resetForm();
+              router.push("/clients");
+            },
+          }
+        );
       }
     },
     [create, update]
@@ -281,17 +311,17 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     containerClassName="p-6.5 pb-5"
                     title={"Locatiegegevens"}
                   >
-                    {/*<InputField*/}
-                    {/*  label={"Locatie"}*/}
-                    {/*  id={"location"}*/}
-                    {/*  placeholder={"Locatie"}*/}
-                    {/*  type={"text"}*/}
-                    {/*  className="w-full mb-4.5"*/}
-                    {/*  value={values.location}*/}
-                    {/*  onChange={handleChange}*/}
-                    {/*  onBlur={handleBlur}*/}
-                    {/*  error={touched.location && errors.location}*/}
-                    {/*/>*/}
+                    <Select
+                      label={"Locatie"}
+                      id={"location"}
+                      placeholder={"Locatie"}
+                      options={locationOptions}
+                      className="w-full mb-4.5"
+                      value={values.location}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.location && errors.location}
+                    />
 
                     <InputField
                       label={"Geboorteplaats"}

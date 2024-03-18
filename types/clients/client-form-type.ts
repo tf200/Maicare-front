@@ -1,13 +1,13 @@
-export type NewClientsRequest = {
+export type ClientFormType = {
   first_name: string;
   last_name: string;
   email: string;
   organisation: string;
-  location: number;
+  location: string;
   birthplace: string;
   departement: string;
   gender: string;
-  filenumber: number;
+  filenumber: string;
   phone_number: string;
   bsn: string;
   source: string;

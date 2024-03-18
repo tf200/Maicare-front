@@ -2,33 +2,22 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
-import api from "@/utils/api";
-import { useQuery } from "react-query";
-import { LocationItem, LocationsResDto } from "@/types/locations/location.dto";
+import { LocationItem } from "@/types/locations/location.dto";
 import { ColumnDef } from "@tanstack/react-table";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
+import { useLocations } from "@/utils/locations";
+import LinkButton from "@/components/buttons/LinkButton";
 
 const Page: FunctionComponent = (props) => {
   return (
-    <Panel title={"Locaties"}>
+    <Panel
+      title={"Locaties"}
+      sideActions={<LinkButton href="/locations/new" text="Nieuwe locatie" />}
+    >
       <LocationsList />
     </Panel>
   );
-};
-
-async function getLocations() {
-  const response = await api.get<LocationsResDto>("/locations/");
-  return response.data;
-}
-
-const useLocations = () => {
-  const query = useQuery({
-    queryKey: ["locations"],
-    queryFn: getLocations,
-  });
-
-  return query;
 };
 
 const LocationsList = () => {
