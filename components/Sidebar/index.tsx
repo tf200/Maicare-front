@@ -378,6 +378,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}`,
             icon: <IndividualIcons width={18} height={18} />,
             children: "Overzicht",
+            permission: consts.CLIENT_VIEW,
             getIsActive: (pathname) => {
               return pathname === `/clients/${clientId}`;
             },
@@ -386,6 +387,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/medical-record`,
             icon: <HeartIcon width={18} height={18} />,
             children: "Medisch Dossier",
+            permission: consts.CLIENT_VIEW,
             getIsActive: (pathname) => {
               return (
                 pathname.startsWith(`/clients/${clientId}/medical-record`) ||
@@ -400,6 +402,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/client-network`,
             icon: <GroupIcon width={18} height={18} />,
             children: "Cliëntennetwerk",
+            permission: consts.CLIENT_VIEW,
             getIsActive: (pathname) => {
               return (
                 pathname.startsWith(`/clients/${clientId}/client-network`) ||
@@ -412,16 +415,19 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/reports`,
             icon: <ReportIcon height={18} width={18} />,
             children: "Rapporten",
+            permission: consts.CLIENT_VIEW,
           },
           {
             completeHref: `/clients/${clientId}/document`,
             icon: <DocumentIcon height={18} width={18} />,
             children: "Documenten",
+            permission: consts.CLIENT_VIEW,
           },
           {
             completeHref: `/clients/${clientId}/goals`,
             icon: <GoalIcon height={18} width={18} />,
             children: "Doelen",
+            permission: consts.CLIENT_VIEW,
           },
         ]}
         title={
@@ -445,6 +451,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}`,
           icon: <IndividualIcons width={18} height={18} />,
           children: "Overzicht",
+          permission: consts.EMPLOYEE_VIEW,
           getIsActive: (pathname) => {
             return pathname === `/employees/${employeeId}`;
           },
@@ -453,6 +460,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}/certificates`,
           icon: <CertifIcon width={18} height={18} />,
           children: "Certificaten",
+          permission: consts.EMPLOYEE_VIEW,
           getIsActive: (pathname) => {
             return pathname.startsWith(`/employees/${employeeId}/certificates`);
           },
@@ -461,6 +469,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}/educations`,
           icon: <EducationIcon width={18} height={18} />,
           children: "Opleidingen",
+          permission: consts.EMPLOYEE_VIEW,
           getIsActive: (pathname) => {
             return pathname.startsWith(`/employees/${employeeId}/educations`);
           },
@@ -469,6 +478,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}/experiences`,
           icon: <ExperienceIcon width={18} height={18} />,
           children: "Ervaringen",
+          permission: consts.EMPLOYEE_VIEW,
           getIsActive: (pathname) => {
             return pathname.startsWith(`/employees/${employeeId}/experiences`);
           },
@@ -477,6 +487,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}/teams`,
           icon: <RoleIcon width={18} height={18} />,
           children: "Rollen",
+          permission: consts.ROLE_VIEW,
           getIsActive: (pathname) => {
             return pathname.startsWith(`/employees/${employeeId}/teams`);
           },
