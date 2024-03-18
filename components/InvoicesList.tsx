@@ -58,7 +58,7 @@ async function getInvoices(paginationParams?: PaginationParams) {
 const useInvoices = () => {
   const paginationParams = usePaginationParams();
   const query = useQuery({
-    queryKey: ["invoices"],
+    queryKey: ["invoices", paginationParams],
     queryFn: () => getInvoices(paginationParams),
   });
 
