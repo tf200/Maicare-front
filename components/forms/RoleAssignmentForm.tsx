@@ -10,6 +10,7 @@ import { useCreateRoleAssignment } from "@/utils/role-assignements/create-role-a
 import * as yup from "yup";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import { NewAssignReqDto } from "@/types/role-assignments/new-assign-req.dto";
+import { ORGANIGRAM_TRANSLATE } from "@/consts";
 
 const initialValues: RoleAssignmentFormType = {
   group_id: undefined,
@@ -63,7 +64,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
   const { data: roles, isLoading: rolesLoading } = useListRoles();
   const rolesOptions = useMemo<SelectionOption[]>(() => {
     const options = roles?.map((role) => ({
-      label: role.name,
+      label: ORGANIGRAM_TRANSLATE[role.name],
       value: role.id + "",
     }));
     return options

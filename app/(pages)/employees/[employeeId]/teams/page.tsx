@@ -8,6 +8,7 @@ import { useListRoleAssignments } from "@/utils/role-assignements/list-role-assi
 import Loader from "@/components/common/Loader";
 import { AssignedRolesListItem } from "@/types/role-assignments/assigned-roles-list.dto";
 import { dateFormat } from "@/utils/timeFormatting";
+import { BACK_OFFICE, ORGANIGRAM_TRANSLATE } from "@/consts";
 
 type Props = {
   params: { employeeId: string };
@@ -55,7 +56,7 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
           title={"ROLLEN DIE AUTOMATISCH TOEGEWEZEN ZIJN"}
           roles={[
             {
-              group_name: "Automatisch toegewezen rol",
+              group_name: "Default",
               start_date: null,
               end_date: null,
             },
@@ -96,7 +97,7 @@ const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
           <tbody>
             {roles.map((role) => (
               <tr key={role.group_name}>
-                <td>{role.group_name}</td>
+                <td>{ORGANIGRAM_TRANSLATE[role.group_name]}</td>
                 {/* From Always - indefinitely */}
                 <td>
                   {role.start_date ? (

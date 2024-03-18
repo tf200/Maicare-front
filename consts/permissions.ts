@@ -114,3 +114,13 @@ export const PERMISSION_CONFIGURATIONS: Record<
   ],
   Default: [DASHBOARD_VIEW],
 };
+export const ORGANIGRAM_TRANSLATE = {
+  ADMIN: "Admin",
+  BEHAVIORAL_SPECIALIST: "Gedragswetenschapper",
+  MANAGEMENT: "Beheer",
+  TRAJECTORY_GUIDE: "Trajectbegeleider",
+  PEDAGOGICAL_WORKER: "Pedagogisch medewerker",
+  BACK_OFFICE: "Backoffice",
+  ADMINISTRATIVE_ASSISTANT: "Administratief medewerker",
+  Default: "Automatisch toegewezen rol",
+};

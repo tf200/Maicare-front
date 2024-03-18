@@ -4,6 +4,7 @@ import { useState } from "react";
 import { EmployeesSearchParams } from "@/types/employees/employees-search-params";
 import { useListRoles } from "@/utils/roles/list-roles";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
+import { ORGANIGRAM_TRANSLATE } from "@/consts";
 
 interface OrganisationFilterProps {
   onFiltersChange: Function;
@@ -91,7 +92,7 @@ const FolderList = ({
             }}
             className="px-4 rounded hover:text-[#0000FF] cursor-pointer"
           >
-            {group.name}
+            {ORGANIGRAM_TRANSLATE[group.name]}
           </li>
         </div>
       ))}
