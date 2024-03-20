@@ -110,21 +110,13 @@ const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
             className="flex flex-col items-center justify-center"
           >
             <div className="drop-shadow-2 w-full mx-auto rounded-full max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-              {false ? (
-                <div className="absolute inset-0">
-                  <span className="animate-spin">
-                    <LoadingCircle />
-                  </span>
-                </div>
-              ) : (
-                <div className="w-40 h-40">
-                  <ProfilePicture
-                    width={160}
-                    height={160}
-                    profilePicture={imagePreviewUrl}
-                  />
-                </div>
-              )}
+              <div className="w-40 h-40">
+                <ProfilePicture
+                  width={160}
+                  height={160}
+                  profilePicture={imagePreviewUrl}
+                />
+              </div>
               <label
                 htmlFor="profile_picture"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"

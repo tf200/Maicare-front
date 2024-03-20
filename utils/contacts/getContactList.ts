@@ -19,7 +19,7 @@ export const useContacts = (search?: string) => {
   const paginationParams = usePaginationParams();
 
   const params = {
-    ...paginationParams,
+    ...paginationParams.params,
     search,
   };
 

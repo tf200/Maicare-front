@@ -8,6 +8,7 @@ import { Combobox } from "@headlessui/react";
 import { BaseObject } from "@/types/base-object";
 import { useField } from "formik";
 import { ComboboxOption } from "@/types/selection-option";
+import { cn } from "@/utils/cn";
 
 type Props<T extends BaseObject> = InputHTMLAttributes<HTMLInputElement> & {
   options: ComboboxOption<T>[];
@@ -55,7 +56,7 @@ function FormikCombobox<T extends BaseObject>({
   return (
     <Combobox
       as="section"
-      className={className}
+      className={cn("relative", className)}
       onChange={(value: T["id"]) => {
         helpers.setValue(value);
       }}
@@ -72,11 +73,11 @@ function FormikCombobox<T extends BaseObject>({
       </Combobox.Label>
       <Combobox.Input
         displayValue={getDisplayValue}
-        className="w-full rounded border-[1.5px] mb-2.5 border-stroke bg-white py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+        className="w-full rounded border-[1.5px] border-stroke bg-white py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
         {...inputProps}
         onChange={handleQueryChange}
       />
-      <Combobox.Options className="shadow bg-white dark:bg-form-input z-40 left-0 rounded max-h-select overflow-y-auto flex flex-col w-full">
+      <Combobox.Options className="shadow absolute bg-white dark:bg-form-input z-40 left-0 rounded max-h-select overflow-y-auto flex flex-col w-full">
         {options.map((option) => (
           <Combobox.Option
             className="cursor-pointer border-stroke border-b last:border-b-0 dark:border-form-strokedark leading-6 p-3 pl-3 flex items-center ui-disabled:bg-whiter ui-disabled:text-graydark dark:ui-disabled:form-strokedark ui-active:bg-primary ui-active:text-white"

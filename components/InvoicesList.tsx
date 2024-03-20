@@ -1,9 +1,6 @@
 "use client";
 
-import { ContractResDto } from "@/types/contracts/contract-res.dto";
-import React, { useMemo } from "react";
-import InputField from "@/components/FormFields/InputField";
-import Button from "@/components/buttons/Button";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import DownloadIcon from "@/components/icons/DownloadIcon";
 import { PaginationParams } from "@/types/pagination-params";
 import api from "@/utils/api";
@@ -12,15 +9,16 @@ import { dateFormat } from "@/utils/timeFormatting";
 import { formatPrice } from "@/utils/priceFormatting";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { InvoiceItem, InvoicesResDto } from "@/types/invoices/invoices-res.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
+import ClientSelector from "@/components/FormFields/comboboxes/ClientSelector";
+import { FormikProvider, useFormik } from "formik";
+import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector";
+import Button from "@/components/buttons/Button";
+import Select from "@/components/FormFields/Select";
+import { INVOICE_STATUS_OPTIONS } from "@/consts";
 
 async function getContractInvoices(
   contractId: number,
@@ -48,18 +46,20 @@ const useContractInvoices = (contractId: number) => {
   };
 };
 
-async function getInvoices(paginationParams?: PaginationParams) {
+type InvoicesParams = PaginationParams & (FilterFormType | {});
+
+async function getInvoices(params?: InvoicesParams) {
   const response = await api.get<InvoicesResDto>("/client/invoice_all/", {
-    params: paginationParams,
+    params,
   });
   return response.data;
 }
 
-const useInvoices = () => {
+const useInvoices = (filter?: FilterFormType) => {
   const paginationParams = usePaginationParams();
   const query = useQuery({
-    queryKey: ["invoices", paginationParams],
-    queryFn: () => getInvoices(paginationParams),
+    queryKey: ["invoices", { ...paginationParams.params, ...filter }],
+    queryFn: () => getInvoices({ ...paginationParams.params, ...filter }),
   });
 
   return {
@@ -69,9 +69,69 @@ const useInvoices = () => {
 };
 
 export function AllInvoicesList() {
-  const invoicesQuery = useInvoices();
-  return <InvoicesList queryResult={invoicesQuery} />;
+  const [filter, setFilter] = useState<FilterFormType>();
+  const invoicesQuery = useInvoices(filter);
+
+  return (
+    <>
+      <Filter onSubmit={setFilter} />
+      <InvoicesList queryResult={invoicesQuery} />
+    </>
+  );
 }
+
+type FilterFormType = {
+  client: number;
+  sender: number;
+  status: string;
+};
+
+const initialValues: FilterFormType = {
+  status: "",
+  client: null,
+  sender: null,
+};
+
+type FilterProps = {
+  onSubmit: (values: FilterFormType) => void;
+};
+
+const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+  });
+  const { handleSubmit, dirty, handleReset, handleChange, values, handleBlur } =
+    formik;
+  return (
+    <FormikProvider value={formik}>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-wrap items-center gap-4 p-4"
+      >
+        <Select
+          label={"Status"}
+          options={INVOICE_STATUS_OPTIONS}
+          name={"status"}
+          className="basis-1/4 min-w-50"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.status}
+        />
+        <ContactSelector name={"sender"} />
+        <ClientSelector name={"client"} />
+        <div className="flex mt-8 gap-4">
+          <Button type="submit" formNoValidate={true}>
+            Zoeken
+          </Button>
+          <Button onClick={handleReset} buttonType={"Secondary"}>
+            Rust zoeken
+          </Button>
+        </div>
+      </form>
+    </FormikProvider>
+  );
+};
 
 export function InvoicesList(props: {
   queryResult: WithPaginationResult<UseQueryResult<InvoicesResDto>>;
@@ -127,14 +187,14 @@ export function InvoicesList(props: {
   }
   if (data) {
     return (
-      <div>
+      <>
         <PaginatedTable
           data={data}
           columns={columns}
           onPageChange={pagination.setPage}
           page={pagination.page}
         />
-      </div>
+      </>
     );
   }
 }

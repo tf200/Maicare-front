@@ -43,7 +43,6 @@ const GenerateInvoiceModal: FunctionComponent<ModalProps> = ({
   const formik = useFormik({
     initialValues,
     onSubmit: (data) => {
-      console.log("data", data);
       generate(data, {
         onSuccess: () => {
           onClose();
@@ -57,7 +56,7 @@ const GenerateInvoiceModal: FunctionComponent<ModalProps> = ({
     <FormModal open={open} onClose={onClose} title={"Genereer factuur"}>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit}>
-          <ClientSelector name={"client_id"} />
+          <ClientSelector name={"client_id"} className="mb-5" />
           <InputField
             type="date"
             name="start_date"
