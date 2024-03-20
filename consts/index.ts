@@ -105,4 +105,27 @@ export const BUTTON_CLASS_NAMES = {
   Success: "bg-success text-white",
 };
 
+export const INVOICE_STATUS_TYPES = [
+  "outstanding",
+  "partially_paid",
+  "paid",
+  "douabtfull_uncollectible",
+  "expired",
+  "overpaid",
+  "imported",
+  "concept",
+] as const;
+
+export const INVOICE_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
+  { label: "Openstaand", value: "outstanding" },
+  { label: "Gedeeltelijk betaald", value: "partially_paid" },
+  { label: "Betaald", value: "paid" },
+  { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
+  { label: "Verlopen", value: "expired" },
+  { label: "Teveel betaald", value: "overpaid" },
+  { label: "Geimporteerd", value: "imported" },
+  { label: "Concept", value: "concept" },
+];
+
 export * from "./permissions";

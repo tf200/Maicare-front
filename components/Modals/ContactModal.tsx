@@ -1,17 +1,15 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent } from "react";
 import api from "@/utils/api";
 import Button from "@/components/buttons/Button";
 import InfoIcon from "@/components/icons/InfoIcon";
 import FormModal from "@/components/Modals/FormModal";
-import FormikCombobox from "@/components/FormFields/Combobox";
 import CreateOpContactModal from "@/components/Modals/CreateOpContactModal";
 import { FormikProvider, useFormik } from "formik";
 import { ModalProps } from "@/types/modal-props";
 import { useMutation, useQueryClient } from "react-query";
-import { useDebounce } from "@/hooks/useDebounce";
 import { useModal } from "@/components/providers/ModalProvider";
-import { useContacts } from "@/utils/contacts/getContactList";
 import { ContactResDto } from "@/types/op-contact/contact-res.dto";
+import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector";
 
 type AssignClientContactReqDto = {
   sender: ContactResDto["id"];
@@ -50,9 +48,6 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   onClose,
   additionalProps,
 }) => {
-  const [query, setQuery] = useState<string>("");
-  const debounceQuery = useDebounce(query, 300);
-  const { data } = useContacts(debounceQuery);
   const { mutate: assign, isLoading } = usePatchClientContact(
     additionalProps.client
   );
@@ -71,13 +66,6 @@ const ContactModal: FunctionComponent<ModalProps> = ({
       );
     },
   });
-  const options = useMemo(() => {
-    if (!data) return [];
-    return data.results?.map((item) => ({
-      value: item,
-      label: item.name,
-    }));
-  }, [data]);
   const { open: openCreateModal } = useModal(CreateOpContactModal);
   return (
     <FormModal
@@ -88,17 +76,7 @@ const ContactModal: FunctionComponent<ModalProps> = ({
     >
       <FormikProvider value={formik}>
         <form className="grow flex flex-col" onSubmit={formik.handleSubmit}>
-          <FormikCombobox
-            name="selected"
-            className="mb-0"
-            options={options}
-            displayValue={(value) => value.name}
-            handleQueryChange={(e) => {
-              setQuery(e.target.value);
-            }}
-            label={"Opdrachtgever"}
-            placeholder={"Selecteer een opdrachtgever"}
-          />
+          <ContactSelector name={"selected"} />
           <button
             onClick={() => {
               openCreateModal({});

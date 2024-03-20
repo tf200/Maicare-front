@@ -30,7 +30,7 @@ const ClientSelectModal: FunctionComponent<ModalProps> = ({
     >
       <FormikProvider value={formik}>
         <form className="flex flex-col grow" onSubmit={formik.handleSubmit}>
-          <ClientSelector name="client" />
+          <ClientSelector name="client" className="mb-5" />
           <Button className="mt-auto" type={"submit"} formNoValidate={false}>
             Selecteer klant
           </Button>
