@@ -43,7 +43,6 @@ const GenerateInvoiceModal: FunctionComponent<ModalProps> = ({
   const formik = useFormik({
     initialValues,
     onSubmit: (data) => {
-      console.log("data", data);
       generate(data, {
         onSuccess: () => {
           onClose();
