@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 export type UserInfoResDto = {
   user: number;
-  employee_id?: number;
+  id?: number; // Employee id
   client_id?: number;
   username: string;
   email: string;
