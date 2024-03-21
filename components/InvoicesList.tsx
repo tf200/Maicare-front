@@ -19,6 +19,7 @@ import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector"
 import Button from "@/components/buttons/Button";
 import Select from "@/components/FormFields/Select";
 import { INVOICE_STATUS_OPTIONS } from "@/consts";
+import { useRouter } from "next/navigation";
 
 async function getContractInvoices(
   contractId: number,
@@ -137,6 +138,7 @@ export function InvoicesList(props: {
   queryResult: WithPaginationResult<UseQueryResult<InvoicesResDto>>;
 }) {
   const { data, isLoading, pagination } = props.queryResult;
+  const router = useRouter();
   const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
     return [
       {
@@ -193,6 +195,7 @@ export function InvoicesList(props: {
           columns={columns}
           onPageChange={pagination.setPage}
           page={pagination.page}
+          onRowClick={(row) => router.push(`/finances/${row.invoice_number}`)}
         />
       </>
     );

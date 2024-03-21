@@ -155,6 +155,7 @@ export default Sidebar;
 type SidebarDropdownProps = {
   isDropdown: true;
   completeHref?: undefined;
+  id: string;
   children: React.ReactNode;
   icon: React.ReactNode;
   getIsActive?: undefined;
@@ -283,7 +284,7 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
             {items.map((item) => (
               <SecureFragment
                 permission={item.permission}
-                key={item.completeHref}
+                key={"id" in item ? item.id : item.completeHref}
               >
                 <li>
                   {item.isDropdown ? (
@@ -332,6 +333,7 @@ const GlobalMenu: FunctionComponent = () => {
         },
         {
           isDropdown: true,
+          id: "care-coordination",
           icon: <HeartIcon width={18} height={18} />,
           children: "Zorgcoördinatie",
           subItems: [
