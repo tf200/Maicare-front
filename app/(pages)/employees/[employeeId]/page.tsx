@@ -15,7 +15,7 @@ const EmployeeDetailsPage: FunctionComponent<Props> = ({
   return (
     <>
       <Breadcrumb pageName="Medewerkerdetails" />
-      <EmployeeDetails employeeId={employeeId} />
+      <EmployeeDetails employeeId={+employeeId} />
     </>
   );
 };

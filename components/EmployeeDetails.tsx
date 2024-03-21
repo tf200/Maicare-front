@@ -21,7 +21,7 @@ import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 
 interface EmployeeDetailsProps {
-  employeeId: string;
+  employeeId: number;
   showAsProfile?: boolean;
 }
 
@@ -75,7 +75,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
                     onClick={() => {
                       open({
                         onConfirm: () => {
-                          deleteEmployee(parseInt(employeeId));
+                          deleteEmployee(employeeId);
                         },
                       });
                     }}
@@ -93,7 +93,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
             )
           }
         >
-          <EmployeeInformation employeeId={parseInt(employeeId)} />
+          <EmployeeInformation employeeId={employeeId} />
         </Panel>
         <Panel
           title={"Certificaten"}
@@ -107,7 +107,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
             )
           }
         >
-          <EmployeeCertificationsSummary employeeId={parseInt(employeeId)} />
+          <EmployeeCertificationsSummary employeeId={employeeId} />
         </Panel>
       </div>
       <div className="flex flex-col gap-9">
@@ -123,7 +123,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
             )
           }
         >
-          <EmployeeEducationsSummary employeeId={parseInt(employeeId)} />
+          <EmployeeEducationsSummary employeeId={employeeId} />
         </Panel>
         <Panel
           title={"Ervaringen"}
@@ -137,7 +137,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
             )
           }
         >
-          <EmployeeExperiencesSummary employeeId={parseInt(employeeId)} />
+          <EmployeeExperiencesSummary employeeId={employeeId} />
         </Panel>
         {showAsProfile && (
           <Panel
@@ -150,7 +150,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
               />
             }
           >
-            <EmployeeRolesSummary employeeId={parseInt(employeeId)} />
+            <EmployeeRolesSummary employeeId={employeeId} />
           </Panel>
         )}
       </div>
