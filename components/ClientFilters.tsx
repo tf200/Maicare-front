@@ -20,7 +20,7 @@ type Props = {
 const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [selected, setSelected] = useState<SelectionOption["value"][]>([]);
   const [search, setSearch] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState<number>();
   return (
     <div className="flex flex-wrap items-center gap-8">
       <InputField
@@ -33,7 +33,7 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           onFiltersChange({
             search: e.target.value,
             status__in: selected.join(", "),
-            location: "",
+            location,
           });
         }}
       />
@@ -41,11 +41,11 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
         label={"Locatie"}
         className={"lg:min-w-75 [&_label]:hidden"}
         onChange={(e) => {
-          setLocation(e.target.value);
+          setLocation(+e.target.value || undefined);
           onFiltersChange({
             search,
             status__in: selected.join(", "),
-            location: e.target.value,
+            location: +e.target.value || undefined,
           });
         }}
       />
