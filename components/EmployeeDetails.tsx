@@ -19,7 +19,7 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
-import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
+import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
 
 interface EmployeeDetailsProps {
   employeeId: number;
@@ -150,7 +150,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
         )}
         {showAsProfile && (
           <Panel title={"Reset Password"} containerClassName={"px-7 py-4"}>
-            <ResetPasswordForm />
+            <ChangePasswordForm />
           </Panel>
         )}
       </div>

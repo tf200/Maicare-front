@@ -3,29 +3,53 @@ import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import * as Yup from "yup";
+import { useMutation } from "react-query";
+import api from "@/utils/api";
+import { omit } from "@/utils/omit";
 
 type ResetPasswordFormType = {
-  password: string;
+  current_password: string;
   new_password: string;
   confirm_password: string;
 };
 
 const validationSchema: Yup.ObjectSchema<ResetPasswordFormType> = Yup.object({
-  password: Yup.string().required("Password is required"),
+  current_password: Yup.string().required("Password is required"),
   new_password: Yup.string().required("New Password is required"),
-  confirm_password: Yup.string().required("Confirm Password is required"),
+  confirm_password: Yup.string()
+    .required("Confirm Password is required")
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.new_password === value;
+    }),
 });
 
-const ResetPasswordForm: FunctionComponent = (props) => {
+type ChangePasswordFormType = {
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
+};
+
+type ChangePasswordReqDto = Omit<ChangePasswordFormType, "confirm_password">;
+
+async function changePassword(data: ChangePasswordReqDto) {
+  const response = await api.post("change-password/", data);
+  return response.data;
+}
+const useChangePassword = () => {
+  return useMutation(changePassword);
+};
+
+const ChangePasswordForm: FunctionComponent = (props) => {
+  const { mutate: changePassword } = useChangePassword();
   const formik = useFormik<ResetPasswordFormType>({
     initialValues: {
-      password: "",
+      current_password: "",
       new_password: "",
       confirm_password: "",
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      changePassword(omit(values, ["confirm_password"]));
     },
   });
   const { handleSubmit, handleChange, values, errors, touched } = formik;
@@ -33,14 +57,14 @@ const ResetPasswordForm: FunctionComponent = (props) => {
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <InputField
-          name="password"
+          name="current_password"
           type="password"
           label="Password"
           required={true}
           placeholder={"Enter your password"}
-          value={values.password}
+          value={values.current_password}
           onChange={handleChange}
-          error={touched.password && errors.password}
+          error={touched.current_password && errors.current_password}
         />
         <InputField
           name="new_password"
@@ -71,4 +95,4 @@ const ResetPasswordForm: FunctionComponent = (props) => {
   );
 };
 
-export default ResetPasswordForm;
+export default ChangePasswordForm;
