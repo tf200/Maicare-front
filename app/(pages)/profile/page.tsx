@@ -9,7 +9,7 @@ const Profile = () => {
   return (
     <>
       <Breadcrumb pageName="Profiel" />
-      <EmployeeDetails showAsProfile={false} employeeId={userData?.id} />
+      <EmployeeDetails showAsProfile={true} employeeId={userData?.id} />
     </>
   );
 };

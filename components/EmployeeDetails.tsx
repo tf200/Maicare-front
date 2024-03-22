@@ -19,6 +19,7 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
+import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 
 interface EmployeeDetailsProps {
   employeeId: number;
@@ -27,7 +28,7 @@ interface EmployeeDetailsProps {
 
 const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
   employeeId,
-  showAsProfile = true,
+  showAsProfile = false,
 }) => {
   const router = useRouter();
 
@@ -99,12 +100,10 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
           title={"Certificaten"}
           containerClassName="px-7 py-4"
           sideActions={
-            showAsProfile && (
-              <LinkButton
-                text={"Volledige Certificatenlijst"}
-                href={`/employees/${employeeId}/certificates`}
-              />
-            )
+            <LinkButton
+              text={"Volledige Certificatenlijst"}
+              href={`/employees/${employeeId}/certificates`}
+            />
           }
         >
           <EmployeeCertificationsSummary employeeId={employeeId} />
@@ -115,12 +114,10 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
           title={"Opleidingen"}
           containerClassName="px-7 py-4"
           sideActions={
-            showAsProfile && (
-              <LinkButton
-                text={"Volledige Opleidingenlijst"}
-                href={`/employees/${employeeId}/educations`}
-              />
-            )
+            <LinkButton
+              text={"Volledige Opleidingenlijst"}
+              href={`/employees/${employeeId}/educations`}
+            />
           }
         >
           <EmployeeEducationsSummary employeeId={employeeId} />
@@ -129,17 +126,15 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
           title={"Ervaringen"}
           containerClassName="px-7 py-4"
           sideActions={
-            showAsProfile && (
-              <LinkButton
-                text={"Volledige Ervaringenlijst"}
-                href={`/employees/${employeeId}/experiences`}
-              />
-            )
+            <LinkButton
+              text={"Volledige Ervaringenlijst"}
+              href={`/employees/${employeeId}/experiences`}
+            />
           }
         >
           <EmployeeExperiencesSummary employeeId={employeeId} />
         </Panel>
-        {showAsProfile && (
+        {!showAsProfile && (
           <Panel
             title={"Rollen"}
             containerClassName="px-7 py-4"
@@ -151,6 +146,11 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
             }
           >
             <EmployeeRolesSummary employeeId={employeeId} />
+          </Panel>
+        )}
+        {showAsProfile && (
+          <Panel title={"Reset Password"} containerClassName={"px-7 py-4"}>
+            <ResetPasswordForm />
           </Panel>
         )}
       </div>
