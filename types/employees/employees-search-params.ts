@@ -1,6 +1,6 @@
-export type EmployeesSearchParams = {
+export type EmployeesSearchParams = Partial<{
   search: string;
   groups?: string;
   out_of_service: boolean;
-  location: number;
-};
+  location?: number;
+}>;
