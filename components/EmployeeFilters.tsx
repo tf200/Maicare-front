@@ -10,7 +10,7 @@ const STATUS_OPTIONS: SelectionOption[] = [
 ];
 
 type Props = {
-  onFiltersChange: (filters: EmployeesSearchParams) => void;
+  onFiltersChange: (filters: Partial<EmployeesSearchParams>) => void;
 };
 
 const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
