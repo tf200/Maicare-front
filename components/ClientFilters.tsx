@@ -3,6 +3,7 @@ import InputField from "@/components/FormFields/InputField";
 import ControlledCheckboxGroup from "@/components/icons/ControlledCheckboxGroup";
 import { SelectionOption } from "@/types/selection-option";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
+import FormikLocation from "@/components/FormFields/FormikLocation";
 
 const STATUS_OPTIONS: SelectionOption[] = [
   { value: "On Waiting List", label: "Wachtlijst" },
