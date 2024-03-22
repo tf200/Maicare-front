@@ -104,63 +104,62 @@ const EmployeesPage: FunctionComponent = () => {
   };
 
   return (
-    <>
-      <Panel
-        title={"Employees List"}
-        header={
-          <div className="flex grow justify-between flex-wrap gap-4">
-            <EmployeeFilters onFiltersChange={setFilters} />
-            <SecureFragment permission={consts.EMPLOYEE_CREATE}>
-              <LinkButton
-                text={"Nieuwe Medewerker Toevoegen"}
-                href={`/employees/new`}
-              />
-            </SecureFragment>
-          </div>
-        }
-      >
-        <div className="px-[60px] pt-6">
-          <div className="flex flex-col items-start justify-start">
-            <OrganisationFilter
-              filters={filters}
-              onFiltersChange={setFilters}
+    <Panel
+      title={"Employees List"}
+      header={
+        <div className="flex grow justify-between flex-wrap gap-4">
+          <EmployeeFilters
+            onFiltersChange={(values) => {
+              setFilters((vs) => ({ ...vs, ...values }));
+            }}
+          />
+          <SecureFragment permission={consts.EMPLOYEE_CREATE}>
+            <LinkButton
+              text={"Nieuwe Medewerker Toevoegen"}
+              href={`/employees/new`}
             />
-          </div>
+          </SecureFragment>
         </div>
+      }
+    >
+      <div className="px-[60px] pt-6">
+        <div className="flex flex-col items-start justify-start">
+          <OrganisationFilter filters={filters} onFiltersChange={setFilters} />
+        </div>
+      </div>
 
-        {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-        {pagination}
+      {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+      {pagination}
 
-        {data && (
-          <Table
-            onRowClick={handleRowClick}
-            data={data.results}
-            columns={columnDef}
-            className={styles.table}
-          />
-        )}
+      {data && (
+        <Table
+          onRowClick={handleRowClick}
+          data={data.results}
+          columns={columnDef}
+          className={styles.table}
+        />
+      )}
 
-        {data && data.results.length === 0 && (
-          <LargeAlertMessage
-            firstLine={"Oops!"}
-            secondLine={
-              "Het lijkt erop dat er geen medewerkers zijn die aan uw zoekcriteria voldoen."
-            }
-          />
-        )}
+      {data && data.results.length === 0 && (
+        <LargeAlertMessage
+          firstLine={"Oops!"}
+          secondLine={
+            "Het lijkt erop dat er geen medewerkers zijn die aan uw zoekcriteria voldoen."
+          }
+        />
+      )}
 
-        {pagination}
+      {pagination}
 
-        {isError && (
-          <LargeAlertMessage
-            firstLine={"Oops!"}
-            secondLine={
-              "Een fout heeft ons verhinderd de medewerkerslijst op te halen."
-            }
-          />
-        )}
-      </Panel>
-    </>
+      {isError && (
+        <LargeAlertMessage
+          firstLine={"Oops!"}
+          secondLine={
+            "Een fout heeft ons verhinderd de medewerkerslijst op te halen."
+          }
+        />
+      )}
+    </Panel>
   );
 };
 
