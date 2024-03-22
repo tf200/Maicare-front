@@ -40,7 +40,7 @@ const useChangePassword = () => {
 };
 
 const ChangePasswordForm: FunctionComponent = (props) => {
-  const { mutate: changePassword } = useChangePassword();
+  const { mutate: changePassword, isLoading } = useChangePassword();
   const formik = useFormik<ResetPasswordFormType>({
     initialValues: {
       current_password: "",
@@ -48,8 +48,12 @@ const ChangePasswordForm: FunctionComponent = (props) => {
       confirm_password: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      changePassword(omit(values, ["confirm_password"]));
+    onSubmit: (values, { resetForm }) => {
+      changePassword(omit(values, ["confirm_password"]), {
+        onSuccess: () => {
+          resetForm();
+        },
+      });
     },
   });
   const { handleSubmit, handleChange, values, errors, touched } = formik;
@@ -87,8 +91,8 @@ const ChangePasswordForm: FunctionComponent = (props) => {
           error={touched.confirm_password && errors.confirm_password}
           className="mb-6"
         />
-        <Button formNoValidate={true} type="submit">
-          Submit
+        <Button isLoading={isLoading} formNoValidate={true} type="submit">
+          Change Password
         </Button>
       </form>
     </FormikProvider>
