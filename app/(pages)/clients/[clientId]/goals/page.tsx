@@ -17,6 +17,7 @@ import { useDeleteGoalReport } from "@/utils/goal-reports/deleteGoalReport";
 import RatingStars from "@/components/FormFields/RatingStars";
 import { useGetGoal } from "@/utils/goal/getGoal";
 import Table from "@/components/Table";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: { clientId: string };
@@ -24,7 +25,7 @@ type Props = {
 
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const [goalId, setGoalId] = useState<number>(null);
-
+  const router = useRouter();
   const {
     pagination,
     isFetching,
@@ -32,12 +33,6 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     isError,
     data,
   } = useGoalsList(parseInt(clientId));
-
-  const {
-    data: GoalReportsData,
-    isLoading: isGoalLoading,
-    isError: isGetGoalError,
-  } = useGetGoal(goalId, parseInt(clientId));
 
   const {
     mutate: deleteGoal,
@@ -51,23 +46,10 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     }
   }, [isDeleted]);
 
-  const {
-    mutate: deleteGoalReport,
-    isLoading: isDeletingGoalReport,
-    isSuccess: isDeletedGoalReport,
-  } = useDeleteGoalReport(+clientId);
-
   const { open } = useModal(
     getDangerActionConfirmationModal({
       msg: "Weet je zeker dat je dit doel wilt verwijderen?",
       title: "Doel verwijderen",
-    })
-  );
-
-  const { open: openGoalReport } = useModal(
-    getDangerActionConfirmationModal({
-      msg: "Weet u zeker dat u het rapport van dit doel wilt verwijderen?",
-      title: "VERWIJDER RAPPORT VAN DOEL",
     })
   );
 
@@ -96,7 +78,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           <div className="flex justify-center gap-4">
             <IconButton
               buttonType="Danger"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 open({
                   onConfirm: () => {
                     deleteGoal(info.getValue());
@@ -112,7 +95,12 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 <TrashIcon className="w-5 h-5" />
               )}
             </IconButton>
-            <Link href={`/clients/${clientId}/goals/${info.getValue()}/edit`}>
+            <Link
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              href={`/clients/${clientId}/goals/${info.getValue()}/edit`}
+            >
               <IconButton>
                 <PencilSquare className="w-5 h-5" />
               </IconButton>
@@ -123,112 +111,37 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const columnDefReport = useMemo(() => {
-    return [
-      {
-        accessorKey: "title",
-        header: () => "Titel",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "report_text",
-        header: () => "Rapport",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "id",
-        header: () => "",
-        cell: (info) => (
-          <div className="flex justify-center">
-            <IconButton
-              buttonType="Danger"
-              onClick={() => {
-                openGoalReport({
-                  onConfirm: () => {
-                    deleteGoalReport(info.getValue());
-                  },
-                });
-              }}
-              disabled={isDeleted}
-              isLoading={isDeleting}
-            >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
-            </IconButton>
-          </div>
-        ),
-      },
-    ];
-  }, []);
-
   return (
-    <div className="flex gap-12 w-full">
-      <Panel
-        className="w-full"
-        title={"Doelenlijst"}
-        sideActions={
-          <LinkButton
-            text={"Nieuw Doel Toevoegen"}
-            href={`/clients/${clientId}/goals/new`}
-          />
-        }
-      >
-        {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-        {data && (
-          <PaginatedTable
-            data={data}
-            columns={columnDef}
-            page={pagination.page ?? 1}
-            isFetching={isFetching}
-            onRowClick={(row) => {
-              setGoalId(row.id);
-            }}
-            onPageChange={(page) => pagination.setPage(page)}
-          />
-        )}
-        {isError && (
-          <p role="alert" className="text-red">
-            Er is een fout opgetreden.
-          </p>
-        )}
-      </Panel>
-
-      <Panel
-        className="w-full"
-        title={"Rapporten van het doel"}
-        sideActions={
-          goalId && (
-            <LinkButton
-              text={"Voeg rapport toe aan dit doel"}
-              href={`/clients/${clientId}/goals/${GoalReportsData?.id}/reports/new`}
-            />
-          )
-        }
-      >
-        {goalId ? (
-          ""
-        ) : (
-          <p role="alert" className="text-black text-center pt-10">
-            Selecteer doel om de rapporten te tonen
-          </p>
-        )}
-        {GoalReportsData && (
-          <Table
-            data={GoalReportsData?.goals_report}
-            columns={columnDefReport}
-          />
-        )}
-
-        {isError && (
-          <p role="alert" className="text-red">
-            Er is een fout opgetreden.
-          </p>
-        )}
-      </Panel>
-    </div>
+    <Panel
+      className="w-full"
+      title={"Doelenlijst"}
+      sideActions={
+        <LinkButton
+          text={"Nieuw Doel Toevoegen"}
+          href={`/clients/${clientId}/goals/new`}
+        />
+      }
+    >
+      {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDef}
+          page={pagination.page ?? 1}
+          isFetching={isFetching}
+          onRowClick={(row) => {
+            setGoalId(row.id);
+            router.push(`/clients/${clientId}/goals/${row.id}/reports`);
+          }}
+          onPageChange={(page) => pagination.setPage(page)}
+        />
+      )}
+      {isError && (
+        <p role="alert" className="text-red">
+          Er is een fout opgetreden.
+        </p>
+      )}
+    </Panel>
   );
 };
 

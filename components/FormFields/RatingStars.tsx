@@ -37,13 +37,16 @@ const Rating: React.FC<RatingProps> = ({
   return (
     <div className="pb-3">
       {label && (
-        <label htmlFor={"rate"} className="mb-2.5 block text-black dark:text-white">
+        <label
+          htmlFor={"rate"}
+          className="mb-2.5 block text-black dark:text-white"
+        >
           {label} {required && <span className="text-meta-1">*</span>}
         </label>
       )}
 
       <div className="flex" id="rate">
-        {[1, 2, 3, 4, 5].map((index) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
           <div
             className="cursor-pointer"
             onClick={() => {
@@ -60,7 +63,6 @@ const Rating: React.FC<RatingProps> = ({
         ))}
       </div>
     </div>
-      
   );
 };
 
