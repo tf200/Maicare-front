@@ -9,7 +9,11 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
-import { useCreateLocation, useLocations } from "@/utils/locations";
+import {
+  useCreateLocation,
+  useDeleteLocation,
+  useLocations,
+} from "@/utils/locations";
 import Button from "@/components/buttons/Button";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
@@ -18,6 +22,10 @@ import { useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Textarea from "@/components/FormFields/Textarea";
 import * as yup from "yup";
+import IconButton from "@/components/buttons/IconButton";
+import TrashIcon from "@/components/icons/TrashIcon";
+import XMarkIcon from "@/components/icons/XMarkIcon";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 const initialValue: CreateLocationReqDto = {
   name: "",
@@ -104,6 +112,13 @@ const Page: FunctionComponent = (props) => {
 
 const LocationsList = () => {
   const { data, isLoading } = useLocations();
+  const { mutate: deleteLocation } = useDeleteLocation();
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze locatie wilt verwijderen?",
+      title: "Locatie Verwijderen",
+    })
+  );
   const columnDefs = useMemo<ColumnDef<LocationItem>[]>(() => {
     return [
       {
@@ -114,8 +129,29 @@ const LocationsList = () => {
         accessorKey: "address",
         header: "Adres",
       },
+      {
+        id: "actions",
+        cell: (info) => {
+          return (
+            <div className="flex justify-end mr-4">
+              <IconButton
+                buttonType={"Danger"}
+                onClick={() => {
+                  open({
+                    onConfirm: () => {
+                      deleteLocation(info.row.original.id);
+                    },
+                  });
+                }}
+              >
+                <XMarkIcon className="w-5 h-5" />
+              </IconButton>
+            </div>
+          );
+        },
+      },
     ];
-  }, []);
+  }, [deleteLocation, open]);
 
   if (isLoading) {
     return <Loader />;
