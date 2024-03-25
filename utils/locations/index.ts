@@ -32,3 +32,17 @@ export const useCreateLocation = () => {
     },
   });
 };
+
+async function deleteLocation(id: number) {
+  const response = await api.delete(`/locations/${id}/`);
+  return response.data;
+}
+
+export const useDeleteLocation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(deleteLocation, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["locations"]);
+    },
+  });
+};
