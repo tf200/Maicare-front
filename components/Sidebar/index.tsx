@@ -308,7 +308,7 @@ const GlobalMenu: FunctionComponent = () => {
     <SidebarMenu
       items={[
         {
-          completeHref: "/dashboard/crm",
+          completeHref: "/dashboard",
           icon: <GridsIcon />,
           children: "Dashboard",
           permission: consts.DASHBOARD_VIEW,
