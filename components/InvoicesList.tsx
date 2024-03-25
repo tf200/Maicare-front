@@ -125,8 +125,8 @@ const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
           <Button type="submit" formNoValidate={true}>
             Zoeken
           </Button>
-          <Button onClick={handleReset} buttonType={"Secondary"}>
-            Rust zoeken
+          <Button onClick={handleReset} buttonType={"Outline"}>
+            Duidelijke zoek
           </Button>
         </div>
       </form>
@@ -142,7 +142,7 @@ export function InvoicesList(props: {
   const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
     return [
       {
-        accessorKey: "invoice_number",
+        accessorKey: "id",
         header: "Invoice Number",
         cell: (data) => data.getValue() as string,
       },

@@ -9,10 +9,12 @@ import React, {
 } from "react";
 import Panel from "@/components/Panel";
 import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
-import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import Button from "@/components/buttons/Button";
 import api from "@/utils/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { InvoiceType } from "@/types/InvoiceStatus";
+import { INVOICE_STATUS_OPTIONS } from "@/consts";
+import Select from "@/components/FormFields/Select";
 
 type InvoiceFormType = {
   items: {
@@ -23,9 +25,6 @@ type InvoiceFormType = {
   }[];
   pre_vat_total: string;
   total_amount: string;
-
-  auto_calculate_pre_vat: boolean;
-  auto_calculate_total: boolean;
 };
 
 type InvoiceDetailsDto = {
@@ -39,7 +38,7 @@ type InvoiceDetailsDto = {
   vat_rate: string;
   vat_amount: string;
   total_amount: string;
-  status: string;
+  status: InvoiceType;
   url: string;
   payment_type: string | null;
   invoice_details: {
@@ -69,9 +68,6 @@ const invoice: InvoiceFormType = {
   ],
   pre_vat_total: "",
   total_amount: "",
-
-  auto_calculate_pre_vat: true,
-  auto_calculate_total: true,
 };
 
 async function getInvoice(id: number) {
@@ -108,6 +104,55 @@ function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
   }));
 }
 
+async function patchInvoice(id: number, data: Partial<InvoiceDetailsDto>) {
+  const response = await api.patch(`/client/invoice_ru/${id}/`, data);
+  return response.data;
+}
+
+const usePatchInvoice = (id: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Partial<InvoiceDetailsDto>) => patchInvoice(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["invoices", id]);
+      queryClient.invalidateQueries(["invoices"]);
+    },
+  });
+};
+
+const UpdateStatus: FunctionComponent<{
+  invoice: InvoiceDetailsDto;
+}> = ({ invoice }) => {
+  const { mutate: updateStatus, isLoading } = usePatchInvoice(invoice.id);
+  const { handleSubmit, handleChange, handleBlur, values } = useFormik({
+    initialValues: {
+      status: invoice.status,
+    },
+    onSubmit: (values) => {
+      updateStatus(values);
+    },
+  });
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className={"flex items-center justify-between"}
+    >
+      <Select
+        label={"Status"}
+        options={INVOICE_STATUS_OPTIONS}
+        name={"status"}
+        className="basis-1/4 min-w-50"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.status}
+      />
+      <Button type="submit" className="mt-8" isLoading={isLoading}>
+        Update status
+      </Button>
+    </form>
+  );
+};
+
 const Page: FunctionComponent<{
   params: { invoiceId: string };
 }> = ({ params: { invoiceId } }) => {
@@ -117,7 +162,7 @@ const Page: FunctionComponent<{
     return {
       ...invoice,
       items:
-        data?.invoice_details.map((item) => ({
+        data?.invoice_details?.map((item) => ({
           care_type: item.care_type,
           contract: item.contract,
           pre_vat_total: item.pre_vat_total + "",
@@ -134,36 +179,25 @@ const Page: FunctionComponent<{
   });
   const { handleSubmit, values } = formik;
   useEffect(() => {
-    if (values.auto_calculate_pre_vat) {
-      const preVatTotal = values.items.reduce((acc, item) => {
-        return acc + Number(item.pre_vat_total);
-      }, 0);
-      formik.setFieldValue("pre_vat_total", preVatTotal.toFixed(2));
-    }
-    if (values.auto_calculate_total) {
-      const total = values.items.reduce((acc, item) => {
-        return (
-          acc + Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100)
-        );
-      }, 0);
-      formik.setFieldValue("total_amount", total.toFixed(2));
-    }
-  }, [
-    values.items,
-    values.auto_calculate_total,
-    values.auto_calculate_pre_vat,
-  ]);
+    const preVatTotal = values.items.reduce((acc, item) => {
+      return acc + Number(item.pre_vat_total);
+    }, 0);
+    formik.setFieldValue("pre_vat_total", preVatTotal.toFixed(2));
+    const total = values.items.reduce((acc, item) => {
+      return (
+        acc + Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100)
+      );
+    }, 0);
+    formik.setFieldValue("total_amount", total.toFixed(2));
+  }, [values.items]);
   return (
-    <Panel title={`Factuur ${1234}`} containerClassName={"px-6 py-4"}>
+    <Panel title={`Factuur #${data?.id}`}>
+      <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
+        {data && <UpdateStatus invoice={data} />}
+      </div>
       <FormikProvider value={formik}>
-        <form onSubmit={handleSubmit}>
-          <strong>Invoice: </strong> {1234}
-          <br />
-          <strong>Status: </strong>
-          STATUS
-          <br />
+        <form onSubmit={handleSubmit} className="px-6 py-4">
           <strong>Items: </strong>
-          <br />
           <br />
           <PricingTable />
           <div className="flex my-5 mr-5 justify-end">
@@ -193,6 +227,7 @@ const PricingTable: FunctionComponent = () => {
           <tr key={item.contract}>
             <td className="w-1/3">
               <TableInput
+                disabled={true}
                 placeholder={"Zorgtype"}
                 name={`items[${index}].care_type`}
               />
@@ -221,11 +256,6 @@ const PricingTable: FunctionComponent = () => {
           <td colSpan={2}>
             <div className="flex flex-col items-end">
               <strong>Pre vat total:</strong>
-              <FormikCheckboxItem
-                label={"Auto calculate"}
-                id={"auto_calculate_pre_vat"}
-                name={"auto_calculate_pre_vat"}
-              />
             </div>
           </td>
           <td>
@@ -240,11 +270,6 @@ const PricingTable: FunctionComponent = () => {
           <td colSpan={2}>
             <div className="flex flex-col items-end">
               <strong>Total:</strong>
-              <FormikCheckboxItem
-                label={"Auto calculate"}
-                id={"auto_calculate_total"}
-                name={"auto_calculate_total"}
-              />
             </div>
           </td>
           <td>
