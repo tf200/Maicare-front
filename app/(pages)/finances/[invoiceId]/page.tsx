@@ -5,26 +5,22 @@ import React, {
   FunctionComponent,
   InputHTMLAttributes,
   useEffect,
+  useMemo,
 } from "react";
-import { InvoiceType } from "@/types/InvoiceStatus";
 import Panel from "@/components/Panel";
 import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
-import PlusIcon from "@/components/icons/PlusIcon";
-import MinusIcon from "@/components/icons/MinusIcon";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import Button from "@/components/buttons/Button";
+import api from "@/utils/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 type InvoiceFormType = {
-  invoice_number: string;
-  status: InvoiceType;
   items: {
-    description: string;
-    vat: string;
-    price: string;
+    contract: number;
+    vat_rate: string;
+    care_type: string;
+    pre_vat_total: string;
   }[];
-  total: number;
-  due_date: string;
-  issue_date: number;
   pre_vat_total: string;
   total_amount: string;
 
@@ -32,19 +28,45 @@ type InvoiceFormType = {
   auto_calculate_total: boolean;
 };
 
+type InvoiceDetailsDto = {
+  id: number;
+  full_name: string;
+  sender: string;
+  invoice_number: string;
+  issue_date: string;
+  due_date: string;
+  pre_vat_total: string;
+  vat_rate: string;
+  vat_amount: string;
+  total_amount: string;
+  status: string;
+  url: string;
+  payment_type: string | null;
+  invoice_details: {
+    contract: number;
+    vat_rate: number;
+    care_type: string;
+    vat_amount: number;
+    total_amount: number;
+    pre_vat_total: number;
+  }[];
+};
+
+type UpdateInvoiceDto = {
+  contract: number;
+  vat_rate: number;
+  pre_vat_total: number;
+}[];
+
 const invoice: InvoiceFormType = {
-  invoice_number: "123",
-  status: "concept",
   items: [
     {
-      description: "",
-      price: "",
-      vat: "",
+      care_type: "",
+      contract: undefined,
+      pre_vat_total: undefined,
+      vat_rate: undefined,
     },
   ],
-  total: 120,
-  due_date: "",
-  issue_date: null,
   pre_vat_total: "",
   total_amount: "",
 
@@ -52,24 +74,77 @@ const invoice: InvoiceFormType = {
   auto_calculate_total: true,
 };
 
-const Page: FunctionComponent = () => {
+async function getInvoice(id: number) {
+  const response = await api.get<InvoiceDetailsDto>(
+    `/client/invoice_ru/${id}/`
+  );
+  return response.data;
+}
+
+const useInvoice = (id: number) => {
+  return useQuery(["invoices", id], () => getInvoice(id));
+};
+
+const updateInvoice = (id: number) => async (data: UpdateInvoiceDto) => {
+  const response = await api.put(`/client/invoice_update/${id}/`, data);
+  return response.data;
+};
+
+const useUpdateInvoice = (id: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateInvoice(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["invoices", id]);
+    },
+  });
+};
+
+function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
+  return values.items.map((item) => ({
+    contract: item.contract,
+    vat_rate: Number(item.vat_rate),
+    pre_vat_total: Number(item.pre_vat_total),
+  }));
+}
+
+const Page: FunctionComponent<{
+  params: { invoiceId: string };
+}> = ({ params: { invoiceId } }) => {
+  const { data } = useInvoice(+invoiceId);
+  const { mutate: updateInvoice, isLoading } = useUpdateInvoice(+invoiceId);
+  const initialValues = useMemo(() => {
+    return {
+      ...invoice,
+      items:
+        data?.invoice_details.map((item) => ({
+          care_type: item.care_type,
+          contract: item.contract,
+          pre_vat_total: item.pre_vat_total + "",
+          vat_rate: item.vat_rate + "",
+        })) ?? [],
+    };
+  }, [data]);
   const formik = useFormik({
-    initialValues: invoice,
+    initialValues,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      console.log(values);
+      updateInvoice(formToDto(values));
     },
   });
   const { handleSubmit, values } = formik;
   useEffect(() => {
     if (values.auto_calculate_pre_vat) {
       const preVatTotal = values.items.reduce((acc, item) => {
-        return acc + Number(item.price);
+        return acc + Number(item.pre_vat_total);
       }, 0);
       formik.setFieldValue("pre_vat_total", preVatTotal.toFixed(2));
     }
     if (values.auto_calculate_total) {
       const total = values.items.reduce((acc, item) => {
-        return acc + Number(item.price) * (1 + Number(item.vat) / 100);
+        return (
+          acc + Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100)
+        );
       }, 0);
       formik.setFieldValue("total_amount", total.toFixed(2));
     }
@@ -79,23 +154,20 @@ const Page: FunctionComponent = () => {
     values.auto_calculate_pre_vat,
   ]);
   return (
-    <Panel
-      title={`Factuur ${invoice.invoice_number}`}
-      containerClassName={"px-6 py-4"}
-    >
+    <Panel title={`Factuur ${1234}`} containerClassName={"px-6 py-4"}>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit}>
-          <strong>Invoice: </strong> {invoice.invoice_number}
+          <strong>Invoice: </strong> {1234}
           <br />
           <strong>Status: </strong>
-          {invoice.status}
+          STATUS
           <br />
-          <strong>Items:</strong>
+          <strong>Items: </strong>
           <br />
           <br />
           <PricingTable />
           <div className="flex my-5 mr-5 justify-end">
-            <Button formNoValidate={true} type="submit">
+            <Button isLoading={isLoading} formNoValidate={true} type="submit">
               Submit
             </Button>
           </div>
@@ -106,23 +178,23 @@ const Page: FunctionComponent = () => {
 };
 
 const PricingTable: FunctionComponent = () => {
-  const { values, setFieldValue } = useFormikContext<InvoiceFormType>();
+  const { values } = useFormikContext<InvoiceFormType>();
   return (
     <table className="border-separate border-spacing-2.5 w-full">
       <thead>
         <tr>
-          <th>Description</th>
+          <th>Zorgtype</th>
           <th>VAT</th>
           <th>Price</th>
         </tr>
       </thead>
       <tbody>
         {values.items.map((item, index) => (
-          <tr key={index}>
+          <tr key={item.contract}>
             <td className="w-1/3">
               <TableInput
-                placeholder={"Description"}
-                name={`items[${index}].description`}
+                placeholder={"Zorgtype"}
+                name={`items[${index}].care_type`}
               />
             </td>
             <td className="w-1/4">
@@ -130,7 +202,7 @@ const PricingTable: FunctionComponent = () => {
                 variant={"percentage"}
                 placeholder={"VAT"}
                 type="number"
-                name={`items[${index}].vat`}
+                name={`items[${index}].vat_rate`}
               />
             </td>
             <td className="w-1/4">
@@ -138,36 +210,8 @@ const PricingTable: FunctionComponent = () => {
                 variant={"currency"}
                 placeholder={"Price"}
                 type="number"
-                name={`items[${index}].price`}
+                name={`items[${index}].pre_vat_total`}
               />
-            </td>
-            <td>
-              <div className="flex gap-2.5">
-                <ActionButton
-                  onClick={() => {
-                    const split1 = values.items.slice(0, index + 1);
-                    const split2 = values.items.slice(index + 1);
-                    setFieldValue("items", [
-                      ...split1,
-                      { description: "", vat: "", price: "" },
-                      ...split2,
-                    ]);
-                  }}
-                >
-                  <PlusIcon />
-                </ActionButton>
-                <ActionButton
-                  disabled={values.items.length === 1}
-                  onClick={() => {
-                    setFieldValue(
-                      "items",
-                      values.items.filter((_, i) => i !== index)
-                    );
-                  }}
-                >
-                  <MinusIcon />
-                </ActionButton>
-              </div>
             </td>
           </tr>
         ))}

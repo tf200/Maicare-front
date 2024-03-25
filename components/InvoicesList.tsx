@@ -195,7 +195,7 @@ export function InvoicesList(props: {
           columns={columns}
           onPageChange={pagination.setPage}
           page={pagination.page}
-          onRowClick={(row) => router.push(`/finances/${row.invoice_number}`)}
+          onRowClick={(row) => router.push(`/finances/${row.id}`)}
         />
       </>
     );
