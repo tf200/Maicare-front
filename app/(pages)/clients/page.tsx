@@ -20,7 +20,7 @@ import LargeAlertMessage from "@/components/LargeErrorMessage";
 import LinkButton from "@/components/buttons/LinkButton";
 import { mappingGender } from "@/utils/gender";
 import { SecureFragment } from "@/components/SecureWrapper";
-import * as consts from "@/consts/permissions"
+import * as consts from "@/consts/permissions";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -99,7 +99,7 @@ const ClientsPage: FunctionComponent = () => {
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters
               onFiltersChange={(filters) => {
-                setFilters(filters);
+                setFilters((prev) => ({ ...prev, ...filters }));
                 setPage(1);
               }}
             />

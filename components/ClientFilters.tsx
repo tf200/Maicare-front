@@ -32,8 +32,6 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           setSearch(e.target.value);
           onFiltersChange({
             search: e.target.value,
-            status__in: selected.join(", "),
-            location,
           });
         }}
       />
@@ -43,8 +41,6 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
         onChange={(e) => {
           setLocation(+e.target.value || undefined);
           onFiltersChange({
-            search,
-            status__in: selected.join(", "),
             location: +e.target.value || undefined,
           });
         }}
@@ -58,9 +54,7 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           onChange={(selected) => {
             setSelected(selected);
             onFiltersChange({
-              search,
               status__in: selected.join(", "),
-              location,
             });
           }}
         />
