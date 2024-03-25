@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import ContactSummary from "@/components/clientDetails/ContactSummary";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
+import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
 
 type Props = {
   params: { clientId: string };
@@ -129,6 +130,9 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
+          <Panel title={"CLIËNTSTATUS"} containerClassName="px-7 py-4">
+            <UpdateClientStatus clientId={parseInt(clientId)} />
+          </Panel>
           <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
             <IdentityDetails clientId={parseInt(clientId)} />
           </Panel>

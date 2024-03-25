@@ -6,12 +6,7 @@ import { ClientsSearchParams } from "@/types/clients/clients-search-params";
 import FormikLocation, {
   LocationSelect,
 } from "@/components/FormFields/FormikLocation";
-
-const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "On Waiting List", label: "Wachtlijst" },
-  { value: "In Care", label: "In Zorg" },
-  { value: "Out Of Concern", label: "Uit Zorg" },
-];
+import { STATUS_OPTIONS } from "@/consts";
 
 type Props = {
   onFiltersChange: (filters: ClientsSearchParams) => void;

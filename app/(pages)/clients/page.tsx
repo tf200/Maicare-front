@@ -8,7 +8,7 @@ import Table from "@/components/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { ClientsResDto } from "@/types/clients/clients-res-dto";
 import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
+import { PAGE_SIZE, STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/components/ProfilePicture";
 import ClientFilters from "@/components/ClientFilters";
@@ -68,7 +68,7 @@ const ClientsPage: FunctionComponent = () => {
       {
         accessorKey: "status",
         header: () => "Status",
-        cell: (info) => info.getValue() || "N/A",
+        cell: (info) => STATUS_RECORD[info.getValue() as string] || "N/A",
       },
     ];
   }, []);

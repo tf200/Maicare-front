@@ -223,21 +223,16 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                       onBlur={handleBlur}
                       error={touched.infix && errors.infix}
                     />
-
-                    <div className="mb-4.5 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-6  px-6.5 dark:border-strokedark">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Geslacht
-                        </h3>
-                      </div>
-                      <div className="flex flex-row p-6.5">
-                        <FormikRadioGroup
-                          picked={values.gender}
-                          options={GENDER_OPTIONS}
-                          id={"gender"}
-                          name={"gender"}
-                        />
-                      </div>
+                    <div className="flex flex-col mb-4.5">
+                      <h3 className="font-medium text-black dark:text-white mb-2.5">
+                        Geslacht
+                      </h3>
+                      <FormikRadioGroup
+                        picked={values.gender}
+                        options={GENDER_OPTIONS}
+                        id={"gender"}
+                        name={"gender"}
+                      />
                     </div>
                     <InputField
                       label={"Geboortedatum"}
