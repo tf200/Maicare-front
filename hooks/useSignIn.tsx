@@ -15,7 +15,7 @@ const UseSignIn = async (
       localStorage.setItem("r", response.data.refresh);
       setAlertState(["Successfully login in", "green"]);
       setTimeout(() => {
-        open("/dashboard/crm", "_self");
+        open("/dashboard", "_self");
       }, 1500);
     })
     .catch((error) => {

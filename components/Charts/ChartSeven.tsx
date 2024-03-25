@@ -195,6 +195,7 @@ const ChartSeven: React.FC = () => {
             options={options}
             series={state.series}
             type="area"
+            width={"100%"}
             height={310}
           />
         </div>

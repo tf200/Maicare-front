@@ -60,7 +60,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     if (typeof localStorage !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
-        redirect("/dashboard/crm");
+        redirect("/dashboard");
       } else if (localStorage.getItem("a")) {
         verify();
       } else if (pathName.startsWith("/signin")) {
