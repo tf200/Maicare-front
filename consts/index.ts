@@ -135,3 +135,9 @@ export const STATUS_OPTIONS: SelectionOption[] = [
   { value: "In Care", label: "In Zorg" },
   { value: "Out Of Concern", label: "Uit Zorg" },
 ];
+
+export const STATUS_RECORD = {
+  "On Waiting List": "Wachtlijst",
+  "In Care": "In Zorg",
+  "Out Of Concern": "Uit Zorg",
+};
