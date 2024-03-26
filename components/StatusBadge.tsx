@@ -55,6 +55,11 @@ const BadgesRecord: Record<Props["type"], FunctionComponent<BadgeProps>> = {
       {text}
     </div>
   ),
+  Outline: ({ text }) => (
+    <div className="inline-flex rounded-full border border-[#EFEFEF] py-1 px-3 text-sm font-medium text-[#212B36] hover:bg-opacity-90">
+      {text}
+    </div>
+  ),
 };
 
 const StatusBadge: FunctionComponent<Props> = ({ type, text }) => {

@@ -31,11 +31,16 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 const initialValues: CreateLocationReqDto = {
   name: "",
   address: "",
+  capacity: undefined,
 };
 
 const validationSchema: yup.ObjectSchema<CreateLocationReqDto> = yup.object({
   name: yup.string().required("Naam is verplicht"),
   address: yup.string().required("Adres is verplicht"),
+  capacity: yup
+    .number()
+    .required("Capaciteit is verplicht")
+    .positive("Capaciteit moet positief zijn"),
 });
 
 const LocationFormModal: FunctionComponent<ModalProps> = ({
@@ -84,6 +89,18 @@ const LocationFormModal: FunctionComponent<ModalProps> = ({
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={"Naam"}
+        />
+        <InputField
+          className={"mb-4"}
+          label={"Capaciteit"}
+          name={"capacity"}
+          type={"number"}
+          required={true}
+          value={values.capacity}
+          error={touched.capacity && errors.capacity}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={"Capaciteit"}
         />
         <Textarea
           className={"mb-6"}
@@ -151,13 +168,18 @@ const LocationsList = () => {
         header: "Adres",
       },
       {
+        accessorKey: "capacity",
+        header: "Capaciteit",
+      },
+      {
         id: "actions",
         cell: (info) => {
           return (
             <div className="flex justify-end mr-4">
               <IconButton
                 buttonType={"Danger"}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   open({
                     onConfirm: () => {
                       deleteLocation(info.row.original.id);
