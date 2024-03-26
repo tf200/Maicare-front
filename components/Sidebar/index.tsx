@@ -33,6 +33,8 @@ import ChevronDown from "@/components/icons/ChevronDown";
 import { Permission } from "@/types/permissions";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
+import AlertIcon from "../svg/AlertIcon";
+import BellAlertIcon from "../svg/BellAlertIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -433,6 +435,12 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/goals`,
             icon: <GoalIcon height={18} width={18} />,
             children: "Doelen",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
+            completeHref: `/clients/${clientId}/incidents`,
+            icon: <BellAlertIcon height={18} width={18} />,
+            children: "Incidents",
             permission: consts.CLIENT_VIEW,
           },
         ]}
