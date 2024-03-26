@@ -13,11 +13,8 @@ import PencilSquare from "@/components/icons/PencilSquare";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useModal } from "@/components/providers/ModalProvider";
 import { useDeleteGoal } from "@/utils/goal/deleteGoal";
-import { useDeleteGoalReport } from "@/utils/goal-reports/deleteGoalReport";
-import RatingStars from "@/components/FormFields/RatingStars";
-import { useGetGoal } from "@/utils/goal/getGoal";
-import Table from "@/components/Table";
 import { useRouter } from "next/navigation";
+import GoalProgress from "@/components/GoalProgress";
 
 type Props = {
   params: { clientId: string };
@@ -61,52 +58,9 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
-        accessorKey: "rating",
-        header: () => "Beoordeling",
-        cell: (info) =>
-          <RatingStars value={info.getValue()} /> || "Niet Beschikbaar",
-      },
-      {
         accessorKey: "goal_details",
         header: () => "Beschrijving",
         cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "id",
-        header: () => "",
-        cell: (info) => (
-          <div className="flex justify-center gap-4">
-            <IconButton
-              buttonType="Danger"
-              onClick={(e) => {
-                e.stopPropagation();
-                open({
-                  onConfirm: () => {
-                    deleteGoal(info.getValue());
-                  },
-                });
-              }}
-              disabled={isDeleted}
-              isLoading={isDeleting}
-            >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
-            </IconButton>
-            <Link
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              href={`/clients/${clientId}/goals/${info.getValue()}/edit`}
-            >
-              <IconButton>
-                <PencilSquare className="w-5 h-5" />
-              </IconButton>
-            </Link>
-          </div>
-        ),
       },
     ];
   }, []);
@@ -129,9 +83,47 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           columns={columnDef}
           page={pagination.page ?? 1}
           isFetching={isFetching}
-          onRowClick={(row) => {
-            setGoalId(row.id);
-            router.push(`/clients/${clientId}/goals/${row.id}/reports`);
+          renderRowDetails={(row) => {
+            return (
+              <div>
+                <GoalProgress />
+                <div className="flex gap-4 justify-end items-center">
+                  <IconButton
+                    buttonType="Danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      open({
+                        onConfirm: () => {
+                          deleteGoal(row.original.id);
+                        },
+                      });
+                    }}
+                    disabled={isDeleted}
+                    isLoading={isDeleting}
+                  >
+                    {isDeleted ? (
+                      <CheckIcon className="w-5 h-5" />
+                    ) : (
+                      <TrashIcon className="w-5 h-5" />
+                    )}
+                  </IconButton>
+                  <Link
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    href={`/clients/${clientId}/goals/${row.original.id}/edit`}
+                  >
+                    <IconButton>
+                      <PencilSquare className="w-5 h-5" />
+                    </IconButton>
+                  </Link>
+                  <LinkButton
+                    text={"Doelrapporten"}
+                    href={`/clients/${clientId}/goals/${row.original.id}/reports`}
+                  />
+                </div>
+              </div>
+            );
           }}
           onPageChange={(page) => pagination.setPage(page)}
         />

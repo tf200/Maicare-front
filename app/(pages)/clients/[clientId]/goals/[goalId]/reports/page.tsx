@@ -11,6 +11,7 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import Panel from "@/components/Panel";
 import LinkButton from "@/components/buttons/LinkButton";
 import Table from "@/components/Table";
+import RatingStars from "@/components/FormFields/RatingStars";
 
 const GoalReportPage: FunctionComponent<{
   params: { clientId: string; goalId: string };
@@ -40,6 +41,12 @@ const GoalReportPage: FunctionComponent<{
         accessorKey: "title",
         header: () => "Titel",
         cell: (info) => info.getValue() || "Niet Beschikbaar",
+      },
+      {
+        accessorKey: "rating",
+        header: () => "Beoordeling",
+        cell: (info) =>
+          <RatingStars value={info.getValue()} /> || "Niet Beschikbaar",
       },
       {
         accessorKey: "report_text",
@@ -98,6 +105,11 @@ const GoalReportPage: FunctionComponent<{
         <Table data={GoalReportsData?.goals_report} columns={columnDefReport} />
       )}
 
+      {GoalReportsData?.goals_report?.length === 0 && (
+        <p role="alert" className="p-8">
+          Geen rapporten beschikbaar
+        </p>
+      )}
       {isGetGoalError && (
         <p role="alert" className="text-red">
           Er is een fout opgetreden.
