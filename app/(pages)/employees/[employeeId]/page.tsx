@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import EmployeeDetails from "@/components/EmployeeDetails";
 

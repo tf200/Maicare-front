@@ -60,7 +60,7 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
           title={"Medewerkerinformatie"}
           containerClassName="px-7 py-4"
           sideActions={
-            showAsProfile && (
+            !showAsProfile && (
               <div className="flex gap-4">
                 <SecureFragment permission={consts.EMPLOYEE_EDIT}>
                   <Link href={`/employees/${employeeId}/edit`}>
