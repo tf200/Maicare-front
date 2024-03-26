@@ -12,3 +12,5 @@ export type CreateLocationReqDto = {
 };
 
 export type LocationResDto = LocationItem;
+
+export type UpdateLocationReqDto = Partial<CreateLocationReqDto>;

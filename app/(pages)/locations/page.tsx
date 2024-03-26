@@ -12,7 +12,9 @@ import Table from "@/components/Table";
 import {
   useCreateLocation,
   useDeleteLocation,
+  useLocation,
   useLocations,
+  useUpdateLocation,
 } from "@/utils/locations";
 import Button from "@/components/buttons/Button";
 import { ModalProps } from "@/types/modal-props";
@@ -23,11 +25,10 @@ import InputField from "@/components/FormFields/InputField";
 import Textarea from "@/components/FormFields/Textarea";
 import * as yup from "yup";
 import IconButton from "@/components/buttons/IconButton";
-import TrashIcon from "@/components/icons/TrashIcon";
 import XMarkIcon from "@/components/icons/XMarkIcon";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
-const initialValue: CreateLocationReqDto = {
+const initialValues: CreateLocationReqDto = {
   name: "",
   address: "",
 };
@@ -37,23 +38,37 @@ const validationSchema: yup.ObjectSchema<CreateLocationReqDto> = yup.object({
   address: yup.string().required("Adres is verplicht"),
 });
 
-const CreateLocationModal: FunctionComponent<ModalProps> = ({
+const LocationFormModal: FunctionComponent<ModalProps> = ({
   onClose,
   open,
   additionalProps,
 }) => {
-  const { mutate, isLoading } = useCreateLocation();
+  const { mutate: createLocation, isLoading: isCreating } = useCreateLocation();
+  const { mutate: updateLocation, isLoading: isUpdating } = useUpdateLocation(
+    additionalProps.id
+  );
+  const { data: initialData } = useLocation(additionalProps.id);
   const { handleSubmit, values, errors, touched, handleChange, handleBlur } =
     useFormik({
-      initialValues: initialValue,
+      initialValues: initialData ?? initialValues,
       validationSchema,
+      enableReinitialize: true,
       onSubmit: (values) => {
-        mutate(values, {
-          onSuccess: () => {
-            onClose();
-            additionalProps?.onSuccess?.();
-          },
-        });
+        if (additionalProps.mode === "edit") {
+          updateLocation(values, {
+            onSuccess: () => {
+              onClose();
+              additionalProps?.onSuccess?.();
+            },
+          });
+        } else {
+          createLocation(values, {
+            onSuccess: () => {
+              onClose();
+              additionalProps?.onSuccess?.();
+            },
+          });
+        }
       },
     });
   return (
@@ -82,7 +97,12 @@ const CreateLocationModal: FunctionComponent<ModalProps> = ({
           onBlur={handleBlur}
           placeholder={"Adres"}
         />
-        <Button type={"submit"} isLoading={isLoading} formNoValidate={true}>
+        <Button
+          type={"submit"}
+          isLoading={isUpdating || isCreating}
+          disabled={isUpdating || isCreating}
+          formNoValidate={true}
+        >
           Opslaan
         </Button>
       </form>
@@ -91,7 +111,7 @@ const CreateLocationModal: FunctionComponent<ModalProps> = ({
 };
 
 const Page: FunctionComponent = (props) => {
-  const { open } = useModal(CreateLocationModal);
+  const { open } = useModal(LocationFormModal);
   return (
     <Panel
       title={"Locaties"}
@@ -119,6 +139,7 @@ const LocationsList = () => {
       title: "Locatie Verwijderen",
     })
   );
+  const { open: openLocationFormModal } = useModal(LocationFormModal);
   const columnDefs = useMemo<ColumnDef<LocationItem>[]>(() => {
     return [
       {
@@ -160,7 +181,15 @@ const LocationsList = () => {
   if (!data) {
     return null;
   }
-  return <Table data={data.results} columns={columnDefs} />;
+  return (
+    <Table
+      data={data.results}
+      columns={columnDefs}
+      onRowClick={(locationItem) => {
+        openLocationFormModal({ id: locationItem.id, mode: "edit" });
+      }}
+    />
+  );
 };
 
 export default Page;
