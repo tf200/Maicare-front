@@ -4,5 +4,4 @@ export type NewGoalsReqDto = {
   goal_name: string;
   goal_details: string;
   report: string;
-  rating: number;
 };

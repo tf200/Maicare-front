@@ -12,6 +12,7 @@ import Panel from "@/components/Panel";
 import LinkButton from "@/components/buttons/LinkButton";
 import Table from "@/components/Table";
 import RatingStars from "@/components/FormFields/RatingStars";
+import { dateFormat } from "@/utils/timeFormatting";
 
 const GoalReportPage: FunctionComponent<{
   params: { clientId: string; goalId: string };
@@ -38,6 +39,11 @@ const GoalReportPage: FunctionComponent<{
   const columnDefReport = useMemo(() => {
     return [
       {
+        accessorKey: "created_at",
+        header: () => "Aangemaakt op",
+        cell: (info) => dateFormat(info.getValue()) || "Niet Beschikbaar",
+      },
+      {
         accessorKey: "title",
         header: () => "Titel",
         cell: (info) => info.getValue() || "Niet Beschikbaar",
@@ -45,8 +51,7 @@ const GoalReportPage: FunctionComponent<{
       {
         accessorKey: "rating",
         header: () => "Beoordeling",
-        cell: (info) =>
-          <RatingStars value={info.getValue()} /> || "Niet Beschikbaar",
+        cell: (info) => `${info.getValue()} / 10`,
       },
       {
         accessorKey: "report_text",

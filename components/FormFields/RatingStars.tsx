@@ -1,5 +1,7 @@
 import React from "react";
 import StarIcon from "../svg/StarIcon";
+import { useGetGoal } from "@/utils/goal/getGoal";
+import { useParams } from "next/navigation";
 
 interface RatingProps {
   label?: string;
@@ -35,7 +37,7 @@ const Rating: React.FC<RatingProps> = ({
   };
 
   return (
-    <div className="pb-3">
+    <div className="pb-3 w-fit">
       {label && (
         <label
           htmlFor={"rate"}

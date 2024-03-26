@@ -1,6 +1,8 @@
 import { ApexOptions } from "apexcharts";
 import React, { FunctionComponent, useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useParams } from "next/navigation";
+import { useGetGoal } from "@/utils/goal/getGoal";
 
 const MOCK_PROGRESS_REPORTS_DATA = [
   {
@@ -123,7 +125,20 @@ const OPTIONS: ApexOptions = {
   },
 };
 
-const GoalProgress: FunctionComponent = () => {
+const GoalProgress: FunctionComponent<{
+  goalId: number;
+}> = ({ goalId }) => {
+  const { clientId } = useParams();
+  console.log("clientId", clientId);
+  console.log("goalId", goalId);
+
+  const {
+    data: GoalReportsData,
+    isLoading: isGoalLoading,
+    isError: isGetGoalError,
+  } = useGetGoal(goalId, parseInt(clientId as string));
+
+  console.log("GoalReportsData", GoalReportsData);
   const options = useMemo(() => {
     return {
       ...OPTIONS,
@@ -131,7 +146,9 @@ const GoalProgress: FunctionComponent = () => {
         id: "basic-bar",
       },
       xaxis: {
-        categories: MOCK_PROGRESS_REPORTS_DATA.map((report) => report.date),
+        categories: GoalReportsData?.goals_report.map(
+          (report) => report.created_at
+        ),
       },
       yaxis: {
         max: 10,
@@ -139,16 +156,16 @@ const GoalProgress: FunctionComponent = () => {
         tickAmount: 5,
       },
     };
-  }, []);
+  }, [GoalReportsData]);
 
   const series = useMemo(() => {
     return [
       {
         name: "Evaluation",
-        data: MOCK_PROGRESS_REPORTS_DATA.map((report) => report.evaluation),
+        data: GoalReportsData?.goals_report.map((report) => report.rating),
       },
     ];
-  }, []);
+  }, [GoalReportsData]);
   return (
     <div>
       <ReactApexChart

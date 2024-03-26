@@ -86,7 +86,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           renderRowDetails={(row) => {
             return (
               <div>
-                <GoalProgress />
+                <GoalProgress goalId={row.original.id} />
                 <div className="flex gap-4 justify-end items-center">
                   <IconButton
                     buttonType="Danger"
