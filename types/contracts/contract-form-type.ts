@@ -14,4 +14,5 @@ export type ContractFormType = {
   company_contract_period: CompanyContractType | "";
   client_contract_period: ContractDurationType | "";
   temporary_file_ids: string[];
+  attachment_ids_to_delete?: string[];
 };

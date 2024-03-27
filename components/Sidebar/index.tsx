@@ -338,24 +338,27 @@ const GlobalMenu: FunctionComponent = () => {
           id: "care-coordination",
           icon: <HeartIcon width={18} height={18} />,
           children: "Zorgcoördinatie",
+          permission: consts.CARE_COORDINATION_VIEW,
           subItems: [
             {
               completeHref: "/contacts",
               icon: <BuildingIcon className={"w-4.5 h-5"} />,
               children: "Opdrachtgevers",
+              permission: consts.CONTACTS_VIEW,
             },
             {
               completeHref: "/contracts",
               icon: <InvoiceIcon className={"w-4.5 h-5"} />,
               children: "Contracten",
+              permission: consts.CONTRACTS_VIEW,
             },
             {
               completeHref: "/care-plans",
               icon: <HeartIcon width={18} height={18} />,
               children: "Zorgplannen",
+              permission: consts.CARE_PLANS_VIEW,
             },
           ],
-          permission: consts.CARE_COORDINATION_VIEW,
         },
         {
           completeHref: "/locations",

@@ -9,11 +9,10 @@ export const CARE_PLAN_STATUS = [
 export type CarePlanStatus = (typeof CARE_PLAN_STATUS)[number];
 
 export type CarePlanFormType = {
-  client_id: number;
   description: string;
   start_date: string;
   end_date: string;
-  status: CarePlanStatus;
+  status: CarePlanStatus | "";
   temporary_file_ids: string[];
 };
 
@@ -30,4 +29,5 @@ export type UpdateCarePlanReqDto = Partial<
   }
 >;
 
-export type CarePlanListResDto = Omit<CarePlanResDto, "attachments">[];
+export type CarePlanListItem = Omit<CarePlanResDto, "attachments">;
+export type CarePlanListResDto = Paginated<CarePlanListItem>;

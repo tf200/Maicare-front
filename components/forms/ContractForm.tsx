@@ -33,6 +33,7 @@ import { FormProps } from "@/types/form-props";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useUpdateContract } from "@/utils/contracts/updateContract";
 import { mapToForm } from "@/utils/contracts/mapToForm";
+import FilesDeleter from "@/components/FormFields/FilesDeleter";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -42,6 +43,7 @@ const initialValues: ContractFormType = {
   company_contract_period: "",
   client_contract_period: "",
   temporary_file_ids: [],
+  attachment_ids_to_delete: [],
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
@@ -62,6 +64,7 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
       5,
       "Maximaal 5 bijlagen zijn toegestaan"
     ),
+    attachment_ids_to_delete: Yup.array(),
   });
 
 type PropsType = {
@@ -83,6 +86,7 @@ function mapData(
     rate_type: form.rate_type as RateType,
     rate_value: parseFloat(form.rate_value),
     temporary_file_ids: form.temporary_file_ids,
+    attachment_ids_to_delete: form.attachment_ids_to_delete,
   };
 }
 
@@ -111,7 +115,9 @@ const ContractForm: FunctionComponent<PropsType> = ({
   initialData,
 }) => {
   const parsedInitialValues = useMemo(() => {
-    return initialData ? mapToForm(initialData) : initialValues;
+    return initialData
+      ? { ...initialValues, ...mapToForm(initialData) }
+      : initialValues;
   }, [initialData]);
   const { mutate: create, isLoading: isCreating } = useCreateContract(clientId);
   const { mutate: update, isLoading: isUpdating } = useUpdateContract();
@@ -263,6 +269,13 @@ const ContractForm: FunctionComponent<PropsType> = ({
             name={"temporary_file_ids"}
             id={"temporary_file_ids"}
           />
+          {mode === "update" && initialData?.attachments && (
+            <FilesDeleter
+              alreadyUploadedFiles={initialData.attachments}
+              name={"attachment_ids_to_delete"}
+              id={"attachment_ids_to_delete"}
+            />
+          )}
         </div>
         <Button
           type={"submit"}
