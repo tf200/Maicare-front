@@ -150,3 +150,26 @@ export const STATUS_RECORD = {
   "In Care": "In Zorg",
   "Out Of Concern": "Uit Zorg",
 };
+
+const CARE_PLAN_OPTIONS: SelectionOption[] = [
+  {
+    label: "Concept",
+    value: "draft",
+  },
+  {
+    label: "Geaccepteerd",
+    value: "accepted",
+  },
+  {
+    label: "Actief",
+    value: "active",
+  },
+  {
+    label: "Opgeschort",
+    value: "suspended",
+  },
+  {
+    label: "Voltooid",
+    value: "completed",
+  },
+];

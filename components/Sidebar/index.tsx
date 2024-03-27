@@ -349,6 +349,11 @@ const GlobalMenu: FunctionComponent = () => {
               icon: <InvoiceIcon className={"w-4.5 h-5"} />,
               children: "Contracten",
             },
+            {
+              completeHref: "/care-plans",
+              icon: <HeartIcon width={18} height={18} />,
+              children: "Zorgplannen",
+            },
           ],
           permission: consts.CARE_COORDINATION_VIEW,
         },
