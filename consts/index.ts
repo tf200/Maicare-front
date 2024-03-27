@@ -28,6 +28,14 @@ export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Anders", value: "other" },
 ];
 
+export const INCIDENT_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer status", value: "" },
+  { label: "Reported", value: "Reported" },
+  { label: "Under Investigation", value: "Under Investigation" },
+  { label: "Resolved", value: "Resolved" },
+  { label: "Closed", value: "Closed" },
+];
+
 export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
   { label: "Selecteer Ernst", value: "" },
   { label: "Mild", value: "Mild" },

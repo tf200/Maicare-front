@@ -2,20 +2,21 @@ import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Panel from "@/components/Panel";
 import EpisodeForm from "@/components/forms/EpisodeForm";
+import IncidentForm from "@/components/forms/IncidentForm";
 
 const UpdateEpisodePage: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string; episodeId: number };
+  params: { clientId: string; incidentId: number };
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Bijwerken Episode" />
+      <Breadcrumb pageName="Bijwerken aflevering" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        <Panel title={"Bijwerken Episode"}>
-          <EpisodeForm
+        <Panel title={"Bijwerken aflevering"}>
+          <IncidentForm
             mode={"edit"}
-            episodeId={params.episodeId}
+            incidentId={params.incidentId}
             clientId={parseInt(params.clientId)}
           />
         </Panel>
