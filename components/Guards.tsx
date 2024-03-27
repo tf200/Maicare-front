@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname, redirect } from "next/navigation";
-import api from "@/utils/api";
-import { useQuery } from "react-query";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import { useIsActive } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
@@ -39,6 +37,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/locations")) {
     return consts.LOCATION_VIEW;
   }
+  if (pathname.startsWith("/profile")) {
+    return consts.VIEW_OWN_PROFILE;
+  }
 };
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -59,7 +60,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     if (typeof localStorage !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
-        redirect("/dashboard/crm");
+        redirect("/dashboard");
       } else if (localStorage.getItem("a")) {
         verify();
       } else if (pathName.startsWith("/signin")) {

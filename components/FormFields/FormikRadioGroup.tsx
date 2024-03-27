@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Field, Form } from "formik";
+import { Field } from "formik";
 import { SelectionOption } from "@/types/selection-option";
 import clsx from "clsx";
 
@@ -9,6 +9,7 @@ type Props = {
   id: string;
   label?: string;
   name: string;
+  className?: string;
 };
 
 const FormikRadioGroup: FunctionComponent<Props> = ({
@@ -17,9 +18,10 @@ const FormikRadioGroup: FunctionComponent<Props> = ({
   options,
   label,
   name,
+  className,
 }) => {
   return (
-    <Form>
+    <div className={className}>
       <div id={id} className="mb-2.5">
         {label}
       </div>
@@ -64,7 +66,7 @@ const FormikRadioGroup: FunctionComponent<Props> = ({
           );
         })}
       </div>
-    </Form>
+    </div>
   );
 };
 

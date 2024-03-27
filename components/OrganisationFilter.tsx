@@ -47,10 +47,10 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   ) : (
     <div className="w-full flex flex-col items-end">
       <div>
-        Team: {selectedGroup?.name} (in dienst:{" "}
+        Team: {ORGANIGRAM_TRANSLATE[selectedGroup?.name]} (in dienst:{" "}
         {isLoading || isFetchingEmployees ? "" : employeesData?.count})
       </div>
-      <p
+      <button
         onClick={() => {
           onFiltersChange({
             groups: "",
@@ -62,7 +62,7 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
         className="text-[#0000FF] cursor-pointer"
       >
         (organigram)
-      </p>
+      </button>
     </div>
   );
 };
@@ -79,8 +79,8 @@ const FolderList = ({
   return (
     <ul className="bg-gray-100 p-4 pt-0 rounded-md w-64">
       {folders.map((group, index) => (
-        <div className="flex">
-          <li
+        <li className="flex">
+          <button
             key={index}
             onClick={() => {
               onFiltersChange({
@@ -93,8 +93,8 @@ const FolderList = ({
             className="px-4 rounded hover:text-[#0000FF] cursor-pointer"
           >
             {ORGANIGRAM_TRANSLATE[group.name]}
-          </li>
-        </div>
+          </button>
+        </li>
       ))}
     </ul>
   );

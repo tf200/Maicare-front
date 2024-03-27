@@ -11,7 +11,6 @@ type Props = {
 const ClientSelector: FunctionComponent<Props> = ({ name, className }) => {
   const [filter, setFilter] = useState<ClientsSearchParams>({
     search: "",
-    status__in: "",
   });
   const { data } = useClientsList(filter);
   const options = useMemo(() => {

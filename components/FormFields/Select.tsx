@@ -2,7 +2,7 @@ import React, { FunctionComponent, SelectHTMLAttributes } from "react";
 import { SelectionOption } from "@/types/selection-option";
 import ChevronDown from "@/components/icons/ChevronDown";
 
-type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
+export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   options: SelectionOption[];
   error?: any;

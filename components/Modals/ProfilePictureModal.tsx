@@ -2,7 +2,6 @@ import { ModalProps } from "@/types/modal-props";
 import { FunctionComponent, useCallback, useState } from "react";
 import FormModal from "./FormModal";
 import CameraIcon from "@/components/svg/CameraIcon";
-import LoadingCircle from "../icons/LoadingCircle";
 import ModalActionButton from "../buttons/ModalActionButton";
 import * as Yup from "yup";
 import { usePatchEmployeePic } from "@/utils/employees/patchEmployeePicture";
@@ -109,7 +108,7 @@ const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
             onSubmit={handleSubmit}
             className="flex flex-col items-center justify-center"
           >
-            <div className="drop-shadow-2 w-full mx-auto rounded-full max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+            <div className="relative drop-shadow-2 w-full mx-auto rounded-full max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
               <div className="w-40 h-40">
                 <ProfilePicture
                   width={160}

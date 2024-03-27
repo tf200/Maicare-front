@@ -3,6 +3,7 @@ import api from "@/utils/api";
 import {
   CreateLocationReqDto,
   LocationsResDto,
+  UpdateLocationReqDto,
 } from "@/types/locations/location.dto";
 
 async function getLocations() {
@@ -30,5 +31,46 @@ export const useCreateLocation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["locations"]);
     },
+  });
+};
+
+async function deleteLocation(id: number) {
+  const response = await api.delete(`/locations/RUD/${id}/`);
+  return response.data;
+}
+
+export const useDeleteLocation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(deleteLocation, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["locations"]);
+    },
+  });
+};
+
+async function updateLocation(data: UpdateLocationReqDto, id: number) {
+  const response = await api.put(`/locations/RUD/${id}/`, data);
+  return response.data;
+}
+
+export const useUpdateLocation = (id: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: UpdateLocationReqDto) => updateLocation(data, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["locations"]);
+    },
+  });
+};
+
+async function getLocation(id: number) {
+  const response = await api.get(`/locations/RUD/${id}/`);
+  return response.data;
+}
+
+export const useLocation = (id: number) => {
+  return useQuery({
+    queryKey: ["locations", id],
+    queryFn: () => getLocation(id),
   });
 };

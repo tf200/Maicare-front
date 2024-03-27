@@ -3,12 +3,10 @@ import InputField from "@/components/FormFields/InputField";
 import ControlledCheckboxGroup from "@/components/icons/ControlledCheckboxGroup";
 import { SelectionOption } from "@/types/selection-option";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
-
-const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "On Waiting List", label: "Wachtlijst" },
-  { value: "In Care", label: "In Zorg" },
-  { value: "Out Of Concern", label: "Uit Zorg" },
-];
+import FormikLocation, {
+  LocationSelect,
+} from "@/components/FormFields/FormikLocation";
+import { STATUS_OPTIONS } from "@/consts";
 
 type Props = {
   onFiltersChange: (filters: ClientsSearchParams) => void;
@@ -17,8 +15,9 @@ type Props = {
 const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [selected, setSelected] = useState<SelectionOption["value"][]>([]);
   const [search, setSearch] = useState("");
+  const [location, setLocation] = useState<number>();
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex flex-wrap items-center gap-8">
       <InputField
         placeholder="Zoek Cliënten..."
         // placeholder="Search Clients ..."
@@ -28,7 +27,16 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           setSearch(e.target.value);
           onFiltersChange({
             search: e.target.value,
-            status__in: selected.join(", "),
+          });
+        }}
+      />
+      <LocationSelect
+        label={"Locatie"}
+        className={"lg:min-w-75 [&_label]:hidden"}
+        onChange={(e) => {
+          setLocation(+e.target.value || undefined);
+          onFiltersChange({
+            location: +e.target.value || undefined,
           });
         }}
       />
@@ -41,7 +49,6 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           onChange={(selected) => {
             setSelected(selected);
             onFiltersChange({
-              search,
               status__in: selected.join(", "),
             });
           }}

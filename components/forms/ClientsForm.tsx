@@ -18,6 +18,8 @@ import { usePatchClient } from "@/utils/clients/patchClient";
 import { ClientFormType } from "@/types/clients/client-form-type";
 import { useLocations } from "@/utils/locations";
 import { SelectionOption } from "@/types/selection-option";
+import FormikLocation from "@/components/FormFields/FormikLocation";
+import { omit } from "@/utils/omit";
 
 const initialValues: ClientFormType = {
   first_name: "",
@@ -78,28 +80,19 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
 }) => {
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
-  const locationQuery = useLocations();
-  const locationOptions = useMemo<SelectionOption[]>(() => {
-    if (locationQuery.data) {
-      const options = locationQuery.data.results.map((location) => ({
-        value: location.id + "",
-        label: location.name,
-      }));
 
-      return [
-        {
-          value: "",
-          label: "Selecteer een locatie",
-        },
-      ].concat(options);
-    }
-    return [];
-  }, [locationQuery]);
   const {
     data,
     isLoading: isDataLoading,
     isError,
   } = useClientDetails(clientId);
+  const initialData = useMemo(() => {
+    if (data) {
+      return omit(data, ["profile_picture", "id"]);
+    } else {
+      return null;
+    }
+  }, [data]);
 
   const router = useRouter();
 
@@ -142,7 +135,9 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
     <>
       <Formik
         enableReinitialize={true}
-        initialValues={mode === "edit" && data ? data : initialValues}
+        initialValues={
+          mode === "edit" && initialData ? initialData : initialValues
+        }
         onSubmit={onSubmit}
         validationSchema={clientsSchema}
       >
@@ -228,21 +223,16 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                       onBlur={handleBlur}
                       error={touched.infix && errors.infix}
                     />
-
-                    <div className="mb-4.5 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-6  px-6.5 dark:border-strokedark">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Geslacht
-                        </h3>
-                      </div>
-                      <div className="flex flex-row p-6.5">
-                        <FormikRadioGroup
-                          picked={values.gender}
-                          options={GENDER_OPTIONS}
-                          id={"gender"}
-                          name={"gender"}
-                        />
-                      </div>
+                    <div className="flex flex-col mb-4.5">
+                      <h3 className="font-medium text-black dark:text-white mb-2.5">
+                        Geslacht
+                      </h3>
+                      <FormikRadioGroup
+                        picked={values.gender}
+                        options={GENDER_OPTIONS}
+                        id={"gender"}
+                        name={"gender"}
+                      />
                     </div>
                     <InputField
                       label={"Geboortedatum"}
@@ -311,18 +301,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     containerClassName="p-6.5 pb-5"
                     title={"Locatiegegevens"}
                   >
-                    <Select
-                      label={"Locatie"}
-                      id={"location"}
-                      placeholder={"Locatie"}
-                      options={locationOptions}
-                      className="w-full mb-4.5"
-                      value={values.location}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={touched.location && errors.location}
-                    />
-
+                    <FormikLocation />
                     <InputField
                       label={"Geboorteplaats"}
                       id={"birthplace"}

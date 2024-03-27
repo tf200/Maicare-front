@@ -2,12 +2,9 @@
 import React from "react";
 import DataStatsThree from "../DataStats/DataStatsThree";
 import ChartSeven from "../Charts/ChartSeven";
-import ChartEight from "../Charts/ChartEight";
-import ChartNine from "../Charts/ChartNine";
-import LeadsReport from "../LeadsReport";
 import ToDoList from "../Todo/ToDoList";
 
-const CRM: React.FC = () => {
+const Charts: React.FC = () => {
   return (
     <>
       <DataStatsThree />
@@ -16,21 +13,10 @@ const CRM: React.FC = () => {
         <div className="col-span-12 xl:col-span-7">
           <ChartSeven />
         </div>
-
-        <div className="col-span-12 xl:col-span-5">
-          <ChartEight />
-        </div>
-
-        <LeadsReport />
-
-        <div className="col-span-12 xl:col-span-5">
-          <ChartNine />
-        </div>
-
         <ToDoList />
       </div>
     </>
   );
 };
 
-export default CRM;
+export default Charts;

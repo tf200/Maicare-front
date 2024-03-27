@@ -19,6 +19,7 @@ import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector"
 import Button from "@/components/buttons/Button";
 import Select from "@/components/FormFields/Select";
 import { INVOICE_STATUS_OPTIONS } from "@/consts";
+import { useRouter } from "next/navigation";
 
 async function getContractInvoices(
   contractId: number,
@@ -124,8 +125,8 @@ const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
           <Button type="submit" formNoValidate={true}>
             Zoeken
           </Button>
-          <Button onClick={handleReset} buttonType={"Secondary"}>
-            Rust zoeken
+          <Button onClick={handleReset} buttonType={"Outline"}>
+            Duidelijke zoek
           </Button>
         </div>
       </form>
@@ -137,10 +138,11 @@ export function InvoicesList(props: {
   queryResult: WithPaginationResult<UseQueryResult<InvoicesResDto>>;
 }) {
   const { data, isLoading, pagination } = props.queryResult;
+  const router = useRouter();
   const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
     return [
       {
-        accessorKey: "invoice_number",
+        accessorKey: "id",
         header: "Invoice Number",
         cell: (data) => data.getValue() as string,
       },
@@ -193,6 +195,7 @@ export function InvoicesList(props: {
           columns={columns}
           onPageChange={pagination.setPage}
           page={pagination.page}
+          onRowClick={(row) => router.push(`/finances/${row.id}`)}
         />
       </>
     );

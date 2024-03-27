@@ -7,4 +7,5 @@ export type BadgeType =
   | "Gray"
   | "Danger"
   | "Warning"
+  | "Outline"
   | "Info";

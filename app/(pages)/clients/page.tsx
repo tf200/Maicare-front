@@ -8,7 +8,7 @@ import Table from "@/components/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { ClientsResDto } from "@/types/clients/clients-res-dto";
 import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
+import { PAGE_SIZE, STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/components/ProfilePicture";
 import ClientFilters from "@/components/ClientFilters";
@@ -20,7 +20,7 @@ import LargeAlertMessage from "@/components/LargeErrorMessage";
 import LinkButton from "@/components/buttons/LinkButton";
 import { mappingGender } from "@/utils/gender";
 import { SecureFragment } from "@/components/SecureWrapper";
-import * as consts from "@/consts/permissions"
+import * as consts from "@/consts/permissions";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -68,7 +68,7 @@ const ClientsPage: FunctionComponent = () => {
       {
         accessorKey: "status",
         header: () => "Status",
-        cell: (info) => info.getValue() || "N/A",
+        cell: (info) => STATUS_RECORD[info.getValue() as string] || "N/A",
       },
     ];
   }, []);
@@ -99,7 +99,7 @@ const ClientsPage: FunctionComponent = () => {
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters
               onFiltersChange={(filters) => {
-                setFilters(filters);
+                setFilters((prev) => ({ ...prev, ...filters }));
                 setPage(1);
               }}
             />
