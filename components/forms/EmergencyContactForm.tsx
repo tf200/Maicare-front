@@ -1,7 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
@@ -30,7 +30,9 @@ type FormTypes = {
   relationship: string;
   relation_status: string;
   address: string;
-  auto_reports: boolean;
+  medical_reports: boolean;
+  goals_reports: boolean;
+  incidents_reports: boolean;
 };
 
 const initialValues: FormTypes = {
@@ -41,7 +43,9 @@ const initialValues: FormTypes = {
   relationship: "",
   relation_status: "",
   address: "",
-  auto_reports: false,
+  medical_reports: false,
+  goals_reports: false,
+  incidents_reports: false,
 };
 
 export const EmergencyContactForm: FunctionComponent<PropsType> = ({
@@ -56,6 +60,8 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
     isLoading: isDataLoading,
     isError,
   } = useGetEmergency(emergencyId, clientId);
+
+  console.log(data);
 
   const { mutate: create, isLoading: isCreating } =
     useCreateEmergencyContact(clientId);
@@ -103,7 +109,9 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       relationship: Yup.string().required("Geef alstublieft een relatie op"),
       relation_status: Yup.string().required("Geef alstublieft een afstand op"),
       address: Yup.string().required("Geef alstublieft een adres op"),
-      auto_reports: Yup.boolean(),
+      medical_reports: Yup.boolean(),
+      goals_reports: Yup.boolean(),
+      incidents_reports: Yup.boolean(),
     }),
     onSubmit: onSubmit,
   });
@@ -226,11 +234,27 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />
       <CheckBoxInputFieldThin
         className={"w-full mb-4.5"}
-        label={"Rapporten automatisch naar dit contact versturen ?"}
-        name={"auto_reports"}
+        label={"Medische rapporten automatisch verzenden?"}
+        name={"medical_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        defaultChecked={formik.values.auto_reports}
+        checked={formik.values.medical_reports}
+      />
+      <CheckBoxInputFieldThin
+        className={"w-full mb-4.5"}
+        label={"Doelrapporten automatisch verzenden?"}
+        name={"goals_reports"}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        checked={formik.values.goals_reports}
+      />
+      <CheckBoxInputFieldThin
+        className={"w-full mb-4.5"}
+        label={"Incidentenrapporten automatisch verzenden?"}
+        name={"incidents_reports"}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        checked={formik.values.incidents_reports}
       />
       <Button
         type={"submit"}

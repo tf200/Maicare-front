@@ -22,6 +22,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
 }) => {
   const { pagination, isFetching, isLoading, isError, data } =
     useEmergencyContactList(+clientId);
+  console.log(data);
 
   const {
     mutate: deleteEmergency,
@@ -74,17 +75,19 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
         cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
-        accessorKey: "auto_reports",
-        header: () => "Automatische rapporten",
-        cell: (info) => (
-          <div className="flex justify-center">
-            <input
-              className="w-[20px] h-[20px] cursor-pointer"
-              type="checkbox"
-              checked={info.getValue()}
-            />
-          </div>
-        ),
+        accessorKey: "medical_reports",
+        header: () => "Automatische medische rapporten",
+        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
+      },
+      {
+        accessorKey: "goals_reports",
+        header: () => "Automatische doelrapporten",
+        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
+      },
+      {
+        accessorKey: "incidents_reports",
+        header: () => "Automatische incidentenrapporten",
+        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
       },
       {
         accessorKey: "id",
