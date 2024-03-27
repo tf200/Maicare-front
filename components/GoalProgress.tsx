@@ -1,43 +1,13 @@
 import { ApexOptions } from "apexcharts";
 import React, { FunctionComponent, useMemo } from "react";
-import ReactApexChart from "react-apexcharts";
 import { useParams } from "next/navigation";
 import { useGetGoal } from "@/utils/goal/getGoal";
-
-const MOCK_PROGRESS_REPORTS_DATA = [
-  {
-    date: "2024-03-01",
-    evaluation: 5, // out of 10
-  },
-  {
-    date: "2024-03-02",
-    evaluation: 10, // out of 10
-  },
-  {
-    date: "2024-03-03",
-    evaluation: 8, // out of 10
-  },
-  {
-    date: "2024-03-04",
-    evaluation: 7, // out of 10
-  },
-  {
-    date: "2024-03-05",
-    evaluation: 9, // out of 10
-  },
-  {
-    date: "2024-03-06",
-    evaluation: 3, // out of 10
-  },
-  {
-    date: "2024-03-07",
-    evaluation: 5, // out of 10
-  },
-  {
-    date: "2024-03-08",
-    evaluation: 6, // out of 10
-  },
-];
+import dynamic from "next/dynamic";
+import { number, string } from "yup";
+import { dateFormat } from "@/utils/timeFormatting";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const OPTIONS: ApexOptions = {
   legend: {
@@ -88,12 +58,8 @@ const OPTIONS: ApexOptions = {
   ],
   stroke: {
     width: [2, 2],
-    curve: "straight",
+    curve: "smooth",
   },
-  // labels: {
-  //   show: false,
-  //   position: "top",
-  // },
   grid: {
     xaxis: {
       lines: {
@@ -133,47 +99,75 @@ const GoalProgress: FunctionComponent<{
   console.log("goalId", goalId);
 
   const {
-    data: GoalReportsData,
+    data: goalReportsData,
     isLoading: isGoalLoading,
     isError: isGetGoalError,
   } = useGetGoal(goalId, parseInt(clientId as string));
 
-  console.log("GoalReportsData", GoalReportsData);
-  const options = useMemo(() => {
+  const options: ApexOptions = useMemo(() => {
     return {
       ...OPTIONS,
       chart: {
         id: "basic-bar",
       },
+      tooltip: {
+        y: {
+          title: {
+            formatter(seriesName: string): string {
+              return "Evaluatie";
+            },
+          },
+        },
+      },
       xaxis: {
-        categories: GoalReportsData?.goals_report.map(
-          (report) => report.created_at
-        ),
+        type: "category",
+        labels: {
+          formatter(value: string): string | string[] {
+            return dateFormat(value);
+          },
+        },
+        categories:
+          goalReportsData?.goals_report.map((report) => report.created_at) ??
+          [],
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
       },
       yaxis: {
-        max: 10,
+        title: {
+          style: {
+            fontSize: "0px",
+          },
+        },
         min: 0,
-        tickAmount: 5,
+        max: 10,
       },
     };
-  }, [GoalReportsData]);
+  }, [goalReportsData]);
 
   const series = useMemo(() => {
     return [
       {
         name: "Evaluation",
-        data: GoalReportsData?.goals_report.map((report) => report.rating),
+        data:
+          goalReportsData?.goals_report.map((report) => report.rating) ?? [],
       },
     ];
-  }, [GoalReportsData]);
+  }, [goalReportsData]);
   return (
     <div>
-      <ReactApexChart
-        width={"100%"}
-        height={350}
-        options={options}
-        series={series}
-      />
+      {goalReportsData && (
+        <ReactApexChart
+          width={"100%"}
+          height={350}
+          options={options}
+          series={series}
+          type="line"
+        />
+      )}
     </div>
   );
 };
