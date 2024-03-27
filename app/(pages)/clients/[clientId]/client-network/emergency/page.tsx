@@ -22,7 +22,6 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
 }) => {
   const { pagination, isFetching, isLoading, isError, data } =
     useEmergencyContactList(+clientId);
-  console.log(data);
 
   const {
     mutate: deleteEmergency,
