@@ -1,52 +1,54 @@
 "use client";
 
-import React, { FunctionComponent, useCallback, useMemo } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { useModal } from "@/components/providers/ModalProvider";
 import ClientSelectModal from "@/components/Modals/ClientSelectModal";
 import { useRouter } from "next/navigation";
 import Panel from "@/components/Panel";
-import { CarePlanListItem, CarePlanListResDto } from "@/types/care-plan";
+import { CarePlanListItem } from "@/types/care-plan";
 import { ColumnDef } from "@tanstack/react-table";
 import PaginatedTable from "@/components/PaginatedTable";
 import { dateFormat } from "@/utils/timeFormatting";
 import LinkButton from "@/components/buttons/LinkButton";
+import { useClientCarePlans } from "@/utils/care-plans";
+import Link from "next/link";
+import {
+  CARE_PLAN_STATUS_TRANSLATION,
+  CARE_PLAN_STATUS_VARIANT,
+} from "@/consts";
+import StatusBadge from "@/components/StatusBadge";
+import { FormikProvider, useFormik } from "formik";
+import ClientSelector from "@/components/FormFields/comboboxes/ClientSelector";
+import Button from "@/components/buttons/Button";
 
 const Page: FunctionComponent = (props) => {
-  const { open } = useModal(ClientSelectModal);
-  const router = useRouter();
-  const selectClient = useCallback(() => {
-    open({
-      onSelect: (clientId) => {},
-    });
-  }, [open, router]);
+  const [selectedClient, setSelectedClient] = useState<number>();
 
-  const list: CarePlanListResDto = {
-    results: [],
-    count: 0,
-    next: null,
-    previous: null,
-  }; // TODO: Fetch care plans
+  const { data, pagination } = useClientCarePlans(selectedClient);
 
   const columnDefs = useMemo<ColumnDef<CarePlanListItem>[]>(() => {
     return [
       {
         header: "Zorgplan nummer",
-        accessor: "id",
+        accessorKey: "id",
         cell: (ctx) => {
           return (
-            <a
-              onClick={() => {
-                router.push(`/care-plans/${ctx.row.original.id}`);
+            <Link
+              className={"text-primary underline font-bold"}
+              href={`/care-plans/${ctx.row.original.id}`}
+              onClick={(e) => {
+                e.stopPropagation();
               }}
             >
               #{ctx.row.original.id}
-            </a>
+            </Link>
           );
         },
-      },
-      {
-        header: "Omschrijving",
-        accessor: "description",
       },
       {
         id: "from_to_dates",
@@ -62,7 +64,17 @@ const Page: FunctionComponent = (props) => {
       },
       {
         header: "Status",
-        accessor: "status",
+        accessorKey: "status",
+        cell: (ctx) => {
+          return (
+            <StatusBadge
+              type={
+                CARE_PLAN_STATUS_VARIANT[ctx.row.original.status] || "Outline"
+              }
+              text={CARE_PLAN_STATUS_TRANSLATION[ctx.row.original.status]}
+            />
+          );
+        },
       },
     ];
   }, []);
@@ -70,18 +82,64 @@ const Page: FunctionComponent = (props) => {
   return (
     <Panel
       title={"Zorgplannen"}
-      sideActions={
-        <LinkButton href={"/care-plans/new"} text={"Nieuw zorgplan"} />
+      header={
+        <div className="w-full flex justify-between items-center">
+          <SelectClient onSelect={setSelectedClient} />
+          <LinkButton
+            href={"/care-plans/new"}
+            className={"mt-2"}
+            text={"Nieuw zorgplan"}
+          />
+        </div>
       }
     >
-      <PaginatedTable
-        data={list}
-        columns={columnDefs}
-        page={1}
-        onPageChange={() => {}}
-      />
+      {!selectedClient && (
+        <h2 className="mb-6 pl-4 pt-4">
+          Selecteer een klant om een zorgplan te zoeken
+        </h2>
+      )}
+      {data && (
+        <PaginatedTable
+          data={data}
+          columns={columnDefs}
+          page={pagination.page}
+          onPageChange={pagination.setPage}
+          renderRowDetails={(row) => {
+            return (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: row.original.description,
+                }}
+              />
+            );
+          }}
+        />
+      )}
     </Panel>
   );
 };
 
 export default Page;
+
+const SelectClient: FunctionComponent<{
+  onSelect: (clientId: number) => void;
+}> = ({ onSelect }) => {
+  const formik = useFormik({
+    initialValues: {
+      client: undefined,
+    },
+    onSubmit: (values) => {
+      onSelect(values.client);
+    },
+  });
+  return (
+    <FormikProvider value={formik}>
+      <form onSubmit={formik.handleSubmit} className="flex items-center gap-4">
+        <ClientSelector name={"client"} className={"mb-6"} />
+        <Button type={"submit"} className={"mt-2.5"}>
+          Zorgplan Zoeken
+        </Button>
+      </form>
+    </FormikProvider>
+  );
+};

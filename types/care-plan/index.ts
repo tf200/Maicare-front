@@ -1,3 +1,5 @@
+import { EditorState } from "draft-js";
+
 export const CARE_PLAN_STATUS = [
   "draft",
   "accepted",
@@ -9,22 +11,31 @@ export const CARE_PLAN_STATUS = [
 export type CarePlanStatus = (typeof CARE_PLAN_STATUS)[number];
 
 export type CarePlanFormType = {
-  description: string;
+  client: number;
+  description: EditorState;
   start_date: string;
   end_date: string;
-  status: CarePlanStatus | "";
   temporary_file_ids: string[];
 };
 
-export type CarePlanResDto = Omit<CarePlanFormType, "temporary_file_ids"> & {
+export type CarePlanResDto = Omit<
+  CarePlanFormType,
+  "temporary_file_ids" | "description"
+> & {
   id: number;
   attachments: string[];
+  description: string;
+  status: CarePlanStatus;
 };
 
-export type CreateCarePlanReqDto = CarePlanFormType;
+export type CreateCarePlanReqDto = Omit<CarePlanFormType, "description"> & {
+  description: string;
+  client: number;
+  status: CarePlanStatus;
+};
 
 export type UpdateCarePlanReqDto = Partial<
-  CarePlanFormType & {
+  Omit<CarePlanResDto, "id"> & {
     attachment_ids_to_delete: string[];
   }
 >;

@@ -5,6 +5,9 @@ import {
   SeverityOption,
 } from "@/types/selection-option";
 import { PaginationParams } from "@/types/pagination-params";
+import Draft from "draft-js";
+import { CarePlanStatus } from "@/types/care-plan";
+import { BadgeType } from "@/types/badge-type";
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
@@ -151,7 +154,8 @@ export const STATUS_RECORD = {
   "Out Of Concern": "Uit Zorg",
 };
 
-const CARE_PLAN_OPTIONS: SelectionOption[] = [
+export const CARE_PLAN_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
   {
     label: "Concept",
     value: "draft",
@@ -173,3 +177,19 @@ const CARE_PLAN_OPTIONS: SelectionOption[] = [
     value: "completed",
   },
 ];
+
+export const CARE_PLAN_STATUS_TRANSLATION = {
+  draft: "Concept",
+  accepted: "Geaccepteerd",
+  active: "Actief",
+  suspended: "Opgeschort",
+  completed: "Voltooid",
+};
+
+export const CARE_PLAN_STATUS_VARIANT: Record<CarePlanStatus, BadgeType> = {
+  draft: "Outline",
+  accepted: "Info",
+  active: "Primary",
+  suspended: "Warning",
+  completed: "Success",
+};
