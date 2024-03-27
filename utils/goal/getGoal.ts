@@ -1,8 +1,11 @@
 import api from "@/utils/api";
 import { useQuery } from "react-query";
+import { GoalsReportsResDto } from "@/types/goalsReports/goals-reports-res-dto";
 
 const fetchGoal = (dataId: number) => async () => {
-  const response = await api.get(`employee/goals/${dataId}/`);
+  const response = await api.get<GoalsReportsResDto>(
+    `employee/goals/${dataId}/`
+  );
   return response.data;
 };
 

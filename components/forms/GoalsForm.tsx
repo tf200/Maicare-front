@@ -22,7 +22,6 @@ const initialValues: FormType = {
   goal_name: "",
   goal_details: "",
   report: "",
-  rating: 0,
 };
 
 export const goalsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
@@ -30,7 +29,6 @@ export const goalsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   client: Yup.number(),
   goal_name: Yup.string().required("Geef alstublieft een titel"),
   goal_details: Yup.string().required("Geef alstublieft een omschrijving"),
-  rating: Yup.number(),
   report: Yup.string(),
 });
 
@@ -54,7 +52,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
     isLoading: isDataLoading,
     isError,
   } = useGetGoal(goalId, clientId);
-  
+
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
 
@@ -117,15 +115,6 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               error={touched.goal_name && errors.goal_name}
-            />
-
-            <RatingStars
-              label={"Beoordelen"}
-              required={false}
-              value={values.rating}
-              onChange={(rate) => {
-                setFieldValue("rating", rate);
-              }}
             />
 
             <Textarea

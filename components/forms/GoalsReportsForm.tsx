@@ -20,12 +20,16 @@ const initialValues: FormType = {
   goal: 0,
   report_text: "",
   title: "",
+  rating: 0,
+  created_at: new Date().toISOString(),
 };
 
 export const goalsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   goal: Yup.number(),
   report_text: Yup.string().required("Report text is required."),
   title: Yup.string().required("Title is required."),
+  rating: Yup.number().required("Rating is required."),
+  created_at: Yup.string(),
 });
 
 type PropsType = {
@@ -50,7 +54,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
       create(values, {
         onSuccess: () => {
           resetForm;
-          router.push(`/clients/${clientId}/goals`);
+          router.push(`/clients/${clientId}/goals/${goalId}/reports`);
         },
       });
     },
@@ -77,6 +81,17 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
           <div className="p-6.5">
             <InputField
               className={"w-full mb-4.5"}
+              id={"created_at"}
+              label={"Datum"}
+              type={"date"}
+              value={values.created_at}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.created_at && errors.created_at}
+            />
+
+            <InputField
+              className={"w-full mb-4.5"}
               required={true}
               id={"title"}
               label={"Titel"}
@@ -86,6 +101,15 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               error={touched.title && errors.title}
+            />
+
+            <RatingStars
+              label={"Beoordelen"}
+              required={false}
+              value={values.rating}
+              onChange={(rate) => {
+                setFieldValue("rating", rate);
+              }}
             />
 
             <Textarea
