@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useCallback, useState } from "react";
+"use client";
+
+import React, { FunctionComponent } from "react";
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "@/node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";

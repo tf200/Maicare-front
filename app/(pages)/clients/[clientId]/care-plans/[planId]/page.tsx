@@ -2,7 +2,11 @@
 
 import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
-import { useCarePlan, useCarePlanPatch } from "@/utils/care-plans";
+import {
+  useCarePlan,
+  useCarePlanDelete,
+  useCarePlanPatch,
+} from "@/utils/care-plans";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import {
@@ -17,6 +21,11 @@ import { useFormik } from "formik";
 import Select from "@/components/FormFields/Select";
 import { CARE_PLAN_STATUS, CarePlanStatus } from "@/types/care-plan";
 import Button from "@/components/buttons/Button";
+import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/components/providers/ModalProvider";
+import ConfirmationModal from "@/components/ComfirmationModal";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 const PlanDetails: FunctionComponent<{
   params: {
@@ -24,9 +33,37 @@ const PlanDetails: FunctionComponent<{
   };
 }> = ({ params: { planId } }) => {
   const { data, isLoading } = useCarePlan(parseInt(planId));
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      title: "Zorgplan verwijderen",
+      msg: "Weet je zeker dat je dit zorgplan wilt verwijderen?",
+    })
+  );
+  const { mutate: deletePlan } = useCarePlanDelete();
   const { data: clientData } = useClientDetails(data?.client || 0);
+  const router = useRouter();
   return (
-    <Panel title={`Zorgplan: #${planId}`}>
+    <Panel
+      title={`Zorgplan: #${planId}`}
+      sideActions={
+        <DropdownDefault
+          onEdit={() => {
+            router.push(`${planId}/edit`);
+          }}
+          onDelete={() => {
+            open({
+              onConfirm: () => {
+                deletePlan(+planId, {
+                  onSuccess: () => {
+                    router.push("../care-plans");
+                  },
+                });
+              },
+            });
+          }}
+        />
+      }
+    >
       {isLoading && <Loader />}
       {data && (
         <div className="border-b-1 border-stroke px-7 py-4">

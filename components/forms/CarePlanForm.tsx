@@ -4,18 +4,20 @@ import {
   CarePlanFormType,
   CarePlanResDto,
   CreateCarePlanReqDto,
+  UpdateCarePlanReqDto,
 } from "@/types/care-plan";
 import * as Yup from "yup";
 import { FormikProvider, useFormik } from "formik";
 import RichText from "@/components/FormFields/RichText";
-import { convertToRaw, EditorState } from "draft-js";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
 import InputField from "@/components/FormFields/InputField";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import Button from "@/components/buttons/Button";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import { useCarePlanCreate } from "@/utils/care-plans";
+import { useCarePlanCreate, useCarePlanPatch } from "@/utils/care-plans";
 import { useRouter } from "next/navigation";
+import FilesDeleter from "@/components/FormFields/FilesDeleter";
 
 type CarePlanFormProps = FormProps<Partial<CarePlanResDto>> & {
   clientId: number;
@@ -26,6 +28,7 @@ const initialValues: CarePlanFormType = {
   start_date: "",
   end_date: "",
   temporary_file_ids: [],
+  attachment_ids_to_delete: [],
 };
 
 const validationSchema: Yup.ObjectSchema<CarePlanFormType> = Yup.object().shape(
@@ -36,6 +39,7 @@ const validationSchema: Yup.ObjectSchema<CarePlanFormType> = Yup.object().shape(
     temporary_file_ids: Yup.array()
       .of(Yup.string())
       .required("Dit veld is verplicht"),
+    attachment_ids_to_delete: Yup.array().of(Yup.string()),
   }
 );
 
@@ -55,26 +59,64 @@ function mapFormToCreateDTO(
   };
 }
 
-function mapValuesToForm(values: Partial<CarePlanResDto>): CarePlanFormType {
+function mapFormToUpdateDTO(
+  values: CarePlanFormType,
+  clientId: number
+): UpdateCarePlanReqDto {
   return {
-    description: EditorState.createWithContent(htmlToDraft(values.description)),
+    client: clientId,
+    description: draftToHtml(
+      convertToRaw(values.description.getCurrentContent())
+    ),
+    start_date: values.start_date,
+    end_date: values.end_date,
+    temporary_file_ids: values.temporary_file_ids,
+    status: "draft",
+    attachment_ids_to_delete: values.attachment_ids_to_delete,
+  };
+}
+
+function mapValuesToForm(values: Partial<CarePlanResDto>): CarePlanFormType {
+  let editorState = EditorState.createEmpty();
+  const contentBlock = htmlToDraft(values.description);
+  if (contentBlock) {
+    const contentState = ContentState.createFromBlockArray(
+      contentBlock.contentBlocks
+    );
+    editorState = EditorState.createWithContent(contentState);
+  }
+  return {
+    description: editorState,
     start_date: values.start_date || "",
     end_date: values.end_date || "",
-    temporary_file_ids: values.attachments || [],
+    temporary_file_ids: [],
+    attachment_ids_to_delete: [],
   };
 }
 
 const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
+  const { mode, initialData, clientId } = props;
   const { mutate: create, isLoading: isCreating } = useCarePlanCreate();
+  const { mutate: update, isLoading: isUpdating } = useCarePlanPatch(
+    initialData?.id
+  );
   const router = useRouter();
   const formik = useFormik({
-    initialValues,
+    initialValues:
+      mode === "update" ? mapValuesToForm(initialData) : initialValues,
     validationSchema,
     onSubmit: (values) => {
-      props.onSuccess();
+      if (mode === "update") {
+        update(mapFormToUpdateDTO(values, clientId), {
+          onSuccess: () => {
+            router.push(`/clients/${clientId}/care-plans`);
+          },
+        });
+        return;
+      }
       create(mapFormToCreateDTO(values, props.clientId), {
         onSuccess: () => {
-          router.push("/care-plans");
+          router.push(`/clients/${props.clientId}/care-plans`);
         },
       });
     },
@@ -117,10 +159,17 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
           name={"temporary_file_ids"}
           id={"temporary_file_ids"}
         />
+        {mode === "update" && (
+          <FilesDeleter
+            alreadyUploadedFiles={initialData.attachments}
+            name={"attachment_ids_to_delete"}
+            id={"attachment_ids_to_delete"}
+          />
+        )}
         <Button
           type="submit"
-          isLoading={isCreating}
-          disabled={isCreating}
+          isLoading={isCreating || isUpdating}
+          disabled={isCreating || isUpdating}
           className="mt-5"
         >
           Opslaan

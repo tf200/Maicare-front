@@ -76,7 +76,22 @@ export const useCarePlanPatch = (planId: number) => {
   return useMutation({
     mutationFn: (data: UpdateCarePlanReqDto) => patchCarePlan(planId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["care-plans", planId]);
+      queryClient.invalidateQueries(["care-plans"]);
+    },
+  });
+};
+
+async function deleteCarePlan(planId: number) {
+  const response = await api.delete(`client/careplan_rud/${planId}/`);
+  return response.data;
+}
+
+export const useCarePlanDelete = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteCarePlan,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["care-plans"]);
     },
   });
 };
