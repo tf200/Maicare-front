@@ -11,6 +11,8 @@ interface ComboBoxProps {
   setSearchedKey: Function;
   label: string;
   placeholder: string;
+  id?: string;
+  className?: string
 }
 
 const ComboBox: React.FC<ComboBoxProps> = ({
@@ -21,7 +23,9 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   setSelected,
   setSearchedKey,
   label,
-  placeholder
+  placeholder,
+  id,
+  className
 }) => {
   let defaultValue = "A2b#4Cp$9q";
   const [value, setValue] = useState<string>();
@@ -33,8 +37,9 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   }
 
   return (
-    <div>
+    <div className={className}>
       <InputField
+        id={id}
         className={"w-full mb-4.5"}
         label={label}
         name={"role"}
