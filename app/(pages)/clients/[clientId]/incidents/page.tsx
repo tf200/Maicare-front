@@ -17,6 +17,7 @@ import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import Panel from "@/components/Panel";
 
 type Props = {
   params: { clientId: string };
@@ -75,14 +76,16 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   };
 
   return (
-    <>
-      <div className="flex flex-wrap items-center p-4">
+    <Panel
+      title={"Incidenten"}
+      sideActions={
         <LinkButton
           text={"Add New Incident"}
           href={"./incidents/new"}
           className="ml-auto"
         />
-      </div>
+      }
+    >
       {isLoading && <Loader />}
       {data && (
         <PaginatedTable
@@ -101,7 +104,7 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           Sorry, er is een fout opgetreden waardoor we dit niet konden laden.
         </p>
       )}
-    </>
+    </Panel>
   );
 };
 
@@ -137,7 +140,10 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         value={fullDateFormat(data.date_reported)}
       />
       <DetailCell label={"Gemeld door"} value={data.reported_by_name} />
-      <DetailCell label={"Betrokken kinderen"} value={data.involved_children_name} />
+      <DetailCell
+        label={"Betrokken kinderen"}
+        value={data.involved_children_name}
+      />
       <DetailCell
         label={"Follow-up vereist"}
         value={data.follow_up_required === false ? "Nee" : "Ja"}

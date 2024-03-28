@@ -33,8 +33,8 @@ import ChevronDown from "@/components/icons/ChevronDown";
 import { Permission } from "@/types/permissions";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
-import AlertIcon from "../svg/AlertIcon";
 import BellAlertIcon from "../svg/BellAlertIcon";
+import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -338,19 +338,27 @@ const GlobalMenu: FunctionComponent = () => {
           id: "care-coordination",
           icon: <HeartIcon width={18} height={18} />,
           children: "Zorgcoördinatie",
+          permission: consts.CARE_COORDINATION_VIEW,
           subItems: [
             {
               completeHref: "/contacts",
               icon: <BuildingIcon className={"w-4.5 h-5"} />,
               children: "Opdrachtgevers",
+              permission: consts.CONTACTS_VIEW,
             },
             {
               completeHref: "/contracts",
               icon: <InvoiceIcon className={"w-4.5 h-5"} />,
               children: "Contracten",
+              permission: consts.CONTRACTS_VIEW,
+            },
+            {
+              completeHref: "/care-plans",
+              icon: <HeartIcon width={18} height={18} />,
+              children: "Zorgplannen",
+              permission: consts.CARE_PLANS_VIEW,
             },
           ],
-          permission: consts.CARE_COORDINATION_VIEW,
         },
         {
           completeHref: "/locations",
@@ -443,6 +451,12 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/incidents`,
             icon: <BellAlertIcon height={18} width={18} />,
             children: "Incidents",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
+            completeHref: `/clients/${clientId}/care-plans`,
+            icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
+            children: "Zorgplannen",
             permission: consts.CLIENT_VIEW,
           },
         ]}

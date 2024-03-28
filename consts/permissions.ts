@@ -8,6 +8,21 @@ export const EMPLOYEE_EDIT = "employee.edit";
 export const EMPLOYEE_DELETE = "employee.delete";
 export const EMPLOYEE_CREATE = "employee.create";
 
+export const CONTACT_VIEW = "contact.view";
+export const CONTACT_EDIT = "contact.edit";
+export const CONTACT_DELETE = "contact.delete";
+export const CONTACT_CREATE = "contact.create";
+
+export const CONTRACT_VIEW = "contract.view";
+export const CONTRACT_EDIT = "contract.edit";
+export const CONTRACT_DELETE = "contract.delete";
+export const CONTRACT_CREATE = "contract.create";
+
+export const CARE_PLAN_VIEW = "care_plan.view";
+export const CARE_PLAN_EDIT = "care_plan.edit";
+export const CARE_PLAN_DELETE = "care_plan.delete";
+export const CARE_PLAN_CREATE = "care_plan.create";
+
 export const ROLE_VIEW = "role.view";
 export const ROLE_CUD = "role.cud";
 
@@ -22,6 +37,7 @@ export const FINANCE_VIEW = "finance.view";
 export const CARE_COORDINATION_VIEW = "care_coordination.view";
 export const CONTACTS_VIEW = "contacts.view";
 export const CONTRACTS_VIEW = "contracts.view";
+export const CARE_PLANS_VIEW = "care_plans.view";
 
 export const TASKS_VIEW = "tasks.view";
 
@@ -52,6 +68,7 @@ export const PERMISSIONS = [
   CARE_COORDINATION_VIEW,
   CONTACTS_VIEW,
   CONTRACTS_VIEW,
+  CARE_PLANS_VIEW,
   TASKS_VIEW,
 
   CONVERSATION_VIEW,

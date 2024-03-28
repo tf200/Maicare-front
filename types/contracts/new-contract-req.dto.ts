@@ -10,4 +10,5 @@ export type NewContractReqDto = {
   rate_type: RateType;
   rate_value: number;
   temporary_file_ids: string[];
+  attachment_ids_to_delete?: string[];
 };

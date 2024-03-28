@@ -75,6 +75,10 @@ const OPTIONS: ApexOptions = {
   dataLabels: {
     enabled: false,
   },
+  title: {
+    text: "Evaluatie",
+    align: "left",
+  },
   markers: {
     size: 4,
     colors: "#fff",
@@ -95,8 +99,6 @@ const GoalProgress: FunctionComponent<{
   goalId: number;
 }> = ({ goalId }) => {
   const { clientId } = useParams();
-  console.log("clientId", clientId);
-  console.log("goalId", goalId);
 
   const {
     data: goalReportsData,
