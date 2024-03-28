@@ -18,5 +18,4 @@ jobs:
           key: ${{ secrets.AWS_KEY }}
           script: |
             cd /home/ubuntu/mai-care
-            git pull
             sh deploy.sh
