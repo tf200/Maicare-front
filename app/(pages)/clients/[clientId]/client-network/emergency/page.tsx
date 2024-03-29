@@ -74,21 +74,6 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
         cell: (info) => info.getValue() || "Niet Beschikbaar",
       },
       {
-        accessorKey: "medical_reports",
-        header: () => "Automatische medische rapporten",
-        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
-      },
-      {
-        accessorKey: "goals_reports",
-        header: () => "Automatische doelrapporten",
-        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
-      },
-      {
-        accessorKey: "incidents_reports",
-        header: () => "Automatische incidentenrapporten",
-        cell: (info) => (info.getValue() === true ? "Ja" : "Nee"),
-      },
-      {
         accessorKey: "id",
         header: () => "",
         cell: (info) => (
