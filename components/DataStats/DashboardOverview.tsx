@@ -6,7 +6,6 @@ import { LocationItem, LocationResDto } from "@/types/locations/location.dto";
 import { useLocations } from "@/utils/locations";
 import { useClientsList } from "@/utils/clients/getClientsList";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
-import { min } from "date-arithmetic";
 
 function greeting() {
   const time = new Date().getHours();
@@ -21,26 +20,27 @@ function greeting() {
 
 const DashboardOverview: React.FC = () => {
   const { data: profile } = useMyInfo();
-  const { data: locations } = useLocations();
+  const { data: locations, isLoading: loadingLocation } = useLocations();
+  if (!profile) return null;
   return (
     <div>
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-title-lg font-bold text-black dark:text-white">
-            {greeting() + " " + profile?.first_name + " " + profile?.last_name}
+            {greeting() + ", " + profile?.first_name + " " + profile?.last_name}
           </h1>
         </div>
       </div>
 
       <h2 className="text-title-sm font-bold text-black dark:text-white mb-6">
-        Overzicht van locaties{" "}
-        {/* Dutch translation for 'Locaties overzicht' */}
+        Overzicht van locaties
       </h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
         {locations?.results.map((location: LocationResDto) => (
           <Location key={location.id} location={location} />
         ))}
+        {loadingLocation ? <div>Laden...</div> : null}
       </div>
     </div>
   );
