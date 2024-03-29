@@ -6,6 +6,7 @@ import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import { useRouter } from "next/navigation";
 import { dateFormat } from "@/utils/timeFormatting";
+import { ORGANIGRAM_TRANSLATE } from "@/consts";
 
 type Props = {
   employeeId: number;
@@ -28,7 +29,9 @@ const EmployeeRolesSummary: FunctionComponent<Props> = ({ employeeId }) => {
             <DetailCell
               ignoreIfEmpty={true}
               label={"Rol"}
-              value={role.group_name || "Niet gespecificeerd"}
+              value={
+                ORGANIGRAM_TRANSLATE[role.group_name] || "Niet gespecificeerd"
+              }
             />
 
             <DetailCell

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import ProfilePicture from "@/components/ProfilePicture";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
+import { ORGANIGRAM_TRANSLATE } from "@/consts";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -56,7 +57,9 @@ const DropdownUser = () => {
               <span className="block text-sm font-medium text-black dark:text-white">
                 {userData.first_name} {userData.last_name}
               </span>
-              <span className="block text-xs capitalize">{role}</span>
+              <span className="block text-xs capitalize">
+                {ORGANIGRAM_TRANSLATE[role]}
+              </span>
             </span>
 
             <span className="h-12 w-12 overflow-hidden rounded-full">

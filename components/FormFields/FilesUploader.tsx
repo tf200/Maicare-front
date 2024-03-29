@@ -14,6 +14,8 @@ import {
   useUploadFile,
 } from "@/utils/attachments/uploadFile";
 import Button from "@/components/buttons/Button";
+import Link from "next/link";
+import DownloadIcon from "@/components/icons/DownloadIcon";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -108,14 +110,16 @@ const FileUploader: FunctionComponent<{
     isError,
   } = useUploadFile(endpoint);
   const [fileId, setFileId] = React.useState<string | null>(null);
+  const [url, setUrl] = React.useState<string | null>(null);
   const uploadFile = useCallback(() => {
     upload(file, {
       onSuccess: (data) => {
         setFileId(data.id);
+        setUrl(data.file);
         onUploaded(data.id);
       },
     });
-  }, [upload, file, setFileId, onUploaded]);
+  }, [upload, file, setFileId, setUrl, onUploaded]);
   useEffect(() => {
     uploadFile();
   }, []);
@@ -130,8 +134,11 @@ const FileUploader: FunctionComponent<{
           </div>
         )}
         {isSuccess && (
-          <div className="ml-auto mr-4">
+          <div className="ml-auto mr-4 flex gap-4">
             <span className="text-primary">Gelukt!</span>
+            <Link href={url} target={"_blank"} download>
+              <DownloadIcon />
+            </Link>
           </div>
         )}
         {isError && (

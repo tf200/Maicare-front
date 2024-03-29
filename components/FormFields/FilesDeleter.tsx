@@ -2,6 +2,8 @@ import React, { FunctionComponent, useMemo } from "react";
 import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
 import XMarkIcon from "@/components/icons/XMarkIcon";
 import { useField } from "formik";
+import DownloadIcon from "@/components/icons/DownloadIcon";
+import Link from "next/link";
 
 type Props = {
   alreadyUploadedFiles?: AttachmentItem[];
@@ -45,8 +47,14 @@ const UploadedFile: FunctionComponent<{
 }> = ({ file, onRemove }) => {
   return (
     <div className="mt-4.5 border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div>{file.name}</div>
+
+        {file.file && (
+          <Link href={file.file} target={"_blank"} download className="ml-auto">
+            <DownloadIcon />
+          </Link>
+        )}
         <button
           onClick={() => {
             onRemove(file.id);
