@@ -40,7 +40,7 @@ const Page: FunctionComponent = (props) => {
           return (
             <Link
               className={"text-primary underline font-bold"}
-              href={`/care-plans/${ctx.row.original.id}`}
+              href={`/clients/${ctx.row.original.client}/care-plans/${ctx.row.original.id}`}
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -85,11 +85,6 @@ const Page: FunctionComponent = (props) => {
       header={
         <div className="w-full flex justify-between items-center">
           <SelectClient onSelect={setSelectedClient} />
-          <LinkButton
-            href={"/care-plans/new"}
-            className={"mt-2"}
-            text={"Nieuw zorgplan"}
-          />
         </div>
       }
     >

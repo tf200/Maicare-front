@@ -174,6 +174,7 @@ export function InvoicesList(props: {
             href={data.row.original.url}
             target="_blank"
             className="text-primary hover:underline"
+            onClick={(e) => e.stopPropagation()}
           >
             <DownloadIcon />
           </a>

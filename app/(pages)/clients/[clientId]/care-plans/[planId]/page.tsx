@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/components/providers/ModalProvider";
 import ConfirmationModal from "@/components/ComfirmationModal";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import DownloadFile from "@/components/DownloadFile";
 
 const PlanDetails: FunctionComponent<{
   params: {
@@ -98,6 +99,19 @@ const PlanDetails: FunctionComponent<{
                 }}
               />
             }
+          />
+          <DetailCell
+            label={"Attachments"}
+            value={
+              <>
+                <div className="flex flex-wrap gap-4">
+                  {data?.attachments.map((attachment) => (
+                    <DownloadFile file={attachment} />
+                  ))}
+                </div>
+              </>
+            }
+            className="col-span-2"
           />
         </div>
       )}

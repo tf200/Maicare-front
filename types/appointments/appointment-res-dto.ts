@@ -2,8 +2,10 @@ import { NewAppointmentReqDto } from "@/types/appointments/appointment-req-dto";
 
 export type AttachmentItem = {
   id: string;
-  file: string;
   name: string;
+  file: string;
+  attachment?: string; // like file field due to inconsistent backend
+  attachement?: string; // typo in the backend
 };
 
 export type AppointmentResDto = Omit<

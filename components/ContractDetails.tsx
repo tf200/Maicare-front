@@ -19,6 +19,7 @@ import {
 } from "@/components/forms/ContractForm";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
+import DownloadFile from "@/components/DownloadFile";
 
 type Props = {
   clientId: number;
@@ -50,6 +51,11 @@ const ContractDetails: FunctionComponent<Props> = ({
         {contract && <WhenNotification values={mapToForm(contract)} />}
       </div>
       {contract && <ContractData contractData={contract} />}
+      <div className="flex flex-wrap gap-4">
+        {contract?.attachments.map((attachment) => (
+          <DownloadFile file={attachment} />
+        ))}
+      </div>
     </div>
   );
 };
