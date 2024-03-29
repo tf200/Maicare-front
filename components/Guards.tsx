@@ -1,10 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
-import { usePathname, redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { usePathname, redirect, useRouter } from "next/navigation";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import { useIsActive } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
 import { Permission } from "@/types/permissions";
+import Loader from "@/components/common/Loader";
+import LogoutIcon from "@/components/icons/LogoutIcon";
 
 const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname === "" || pathname === "/") {
@@ -48,6 +50,7 @@ const getPermissionByPathname = (pathname: string): Permission => {
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathName = usePathname();
   const isActive = useIsActive();
+  const router = useRouter();
   const [isAllowed, setIsAllowed] = useState(false);
 
   const { refetch } = useMyInfo(false);
@@ -74,7 +77,33 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [pathName, isActive]);
 
-  return isAllowed ? children : <></>;
+  const [safeHatch, setSafeHatch] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setSafeHatch(true);
+    }, 10000);
+  }, []);
+
+  return isAllowed ? (
+    children
+  ) : (
+    <div className="h-[100vh] bg-white flex flex-col items-center justify-center">
+      <Loader />
+      {safeHatch && (
+        <button
+          onClick={() => {
+            localStorage.clear();
+            router.push("/");
+          }}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
+          <LogoutIcon />
+          Als u niet wordt omgeleid, klik hier om uit te loggen en opnieuw in te
+          loggen...
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default Guards;
