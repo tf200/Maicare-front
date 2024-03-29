@@ -13,4 +13,5 @@ export type EmployeeFormType = {
   work_phone_number: string;
   private_phone_number: string;
   home_telephone_number: string;
+  location: string;
 };

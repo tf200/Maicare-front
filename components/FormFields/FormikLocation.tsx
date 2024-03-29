@@ -11,6 +11,7 @@ const FormikLocation: FunctionComponent = (props) => {
   return (
     <LocationSelect
       id={"location"}
+      name={"location"}
       placeholder={"Locatie"}
       className="w-full mb-4.5"
       value={values.location}

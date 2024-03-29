@@ -14,6 +14,7 @@ import { useCreateEmployee } from "@/utils/employees/createEmployee";
 import { usePatchEmployee } from "@/utils/employees/patchEmployee";
 import { useRouter } from "next/navigation";
 import { useEmployeeDetails } from "@/utils/employees/getEmployeeDetails";
+import FormikLocation from "@/components/FormFields/FormikLocation";
 
 type FormType = EmployeeFormType;
 
@@ -21,6 +22,7 @@ const initialValues: FormType = {
   id: 0,
   employee_number: undefined,
   employment_number: undefined,
+  location: "",
   is_subcontractor: false,
   first_name: "",
   last_name: "",
@@ -39,6 +41,7 @@ const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
   employee_number: Yup.string().required("Medewerkernummer Vereist"),
   employment_number: Yup.string().required("Dienstnummer Vereist"),
   is_subcontractor: Yup.boolean(),
+  location: Yup.string(),
   first_name: Yup.string().required("Geef alstublieft de voornaam op"),
   last_name: Yup.string().required("Geef alstublieft de achternaam op"),
   date_of_birth: Yup.string().required("Geef alstublieft de geboortedatum op"),
@@ -60,12 +63,8 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
   const { mutate: create, isLoading: isCreating } = useCreateEmployee();
   const { mutate: update, isLoading: isPatching } = usePatchEmployee();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useEmployeeDetails(employeeId);
-  
+  const { data, isLoading: isDataLoading } = useEmployeeDetails(employeeId);
+
   const router = useRouter();
 
   const onSubmit = useCallback(
@@ -99,7 +98,9 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
+      initialValues={
+        mode == "edit" ? (data ? data : initialValues) : initialValues
+      }
       onSubmit={onSubmit}
       validationSchema={employeeSchema}
     >
@@ -143,6 +144,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                 onBlur={handleBlur}
                 error={touched.employment_number && errors.employment_number}
               />
+              <FormikLocation />
               <FormikCheckboxItem
                 label={"Is een onderaannemer"}
                 id="is_subcontractor"
