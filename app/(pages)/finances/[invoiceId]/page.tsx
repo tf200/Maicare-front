@@ -147,7 +147,7 @@ const UpdateStatus: FunctionComponent<{
         value={values.status}
       />
       <Button type="submit" className="mt-8" isLoading={isLoading}>
-        Update status
+        Status bijwerken
       </Button>
     </form>
   );
@@ -202,7 +202,7 @@ const Page: FunctionComponent<{
           <PricingTable />
           <div className="flex my-5 mr-5 justify-end">
             <Button isLoading={isLoading} formNoValidate={true} type="submit">
-              Submit
+              Verzenden
             </Button>
           </div>
         </form>
@@ -218,8 +218,8 @@ const PricingTable: FunctionComponent = () => {
       <thead>
         <tr>
           <th>Zorgtype</th>
-          <th>VAT</th>
-          <th>Price</th>
+          <th>BTW</th>
+          <th>Prijs</th>
         </tr>
       </thead>
       <tbody>
@@ -235,7 +235,7 @@ const PricingTable: FunctionComponent = () => {
             <td className="w-1/4">
               <TableInput
                 variant={"percentage"}
-                placeholder={"VAT"}
+                placeholder={"BTW"}
                 type="number"
                 name={`items[${index}].vat_rate`}
               />
@@ -243,7 +243,7 @@ const PricingTable: FunctionComponent = () => {
             <td className="w-1/4">
               <TableInput
                 variant={"currency"}
-                placeholder={"Price"}
+                placeholder={"Prijs"}
                 type="number"
                 name={`items[${index}].pre_vat_total`}
               />
@@ -255,12 +255,12 @@ const PricingTable: FunctionComponent = () => {
         <tr>
           <td colSpan={2}>
             <div className="flex flex-col items-end">
-              <strong>Pre vat total:</strong>
+              <strong>Totaal voor BTW:</strong>
             </div>
           </td>
           <td>
             <TableInput
-              placeholder={"Pre vat total"}
+              placeholder={"Totaal voor BTW"}
               name={"pre_vat_total"}
               variant={"currency"}
             />
@@ -269,12 +269,12 @@ const PricingTable: FunctionComponent = () => {
         <tr>
           <td colSpan={2}>
             <div className="flex flex-col items-end">
-              <strong>Total:</strong>
+              <strong>Totaal:</strong>
             </div>
           </td>
           <td>
             <TableInput
-              placeholder={"Pre vat total"}
+              placeholder={"Totaal"}
               name={"total_amount"}
               variant={"currency"}
             />
