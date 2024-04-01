@@ -140,6 +140,17 @@ export const INVOICE_STATUS_OPTIONS: SelectionOption[] = [
   { label: "Concept", value: "concept" },
 ];
 
+export const INVOICE_STATUS_RECORD = {
+  outstanding: "Openstaand",
+  partially_paid: "Gedeeltelijk betaald",
+  paid: "Betaald",
+  douabtfull_uncollectible: "Twijfelachtig",
+  expired: "Verlopen",
+  overpaid: "Teveel betaald",
+  imported: "Geimporteerd",
+  concept: "Concept",
+};
+
 export * from "./permissions";
 
 export const STATUS_OPTIONS: SelectionOption[] = [

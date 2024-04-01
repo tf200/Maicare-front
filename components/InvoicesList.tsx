@@ -18,7 +18,7 @@ import { FormikProvider, useFormik } from "formik";
 import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector";
 import Button from "@/components/buttons/Button";
 import Select from "@/components/FormFields/Select";
-import { INVOICE_STATUS_OPTIONS } from "@/consts";
+import { INVOICE_STATUS_OPTIONS, INVOICE_STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
 
 async function getContractInvoices(
@@ -143,32 +143,32 @@ export function InvoicesList(props: {
     return [
       {
         accessorKey: "id",
-        header: "Invoice Number",
+        header: "Factuurnummer",
         cell: (data) => data.getValue() as string,
       },
       {
         accessorKey: "issue_date",
-        header: "Issue Date",
+        header: "Factuurdatum",
         cell: (data) => dateFormat(data.getValue() as string),
       },
       {
         accessorKey: "due_date",
-        header: "Due Date",
+        header: "Vervaldag",
         cell: (data) => dateFormat(data.getValue() as string),
       },
       {
         accessorKey: "status",
         header: "Status",
-        cell: (data) => data.getValue() as string,
+        cell: (data) => INVOICE_STATUS_RECORD[data.getValue() as string],
       },
       {
         accessorKey: "total_amount",
-        header: "Total Amount",
+        header: "Totaalbedrag",
         cell: (data) => formatPrice(parseFloat(data.getValue() as string)),
       },
       {
         id: "download",
-        header: "Download",
+        header: "Downloaden",
         cell: (data) => (
           <a
             href={data.row.original.url}
@@ -186,7 +186,7 @@ export function InvoicesList(props: {
     return <Loader />;
   }
   if (!data) {
-    return <div>No data found</div>;
+    return <div>Geen gegevens gevonden</div>;
   }
   if (data) {
     return (
