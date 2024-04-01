@@ -6,6 +6,8 @@ import {
   useAutomaticReports,
   useGenerateAutomaticReports,
 } from "@/utils/automatic-reports";
+import { dateFormat } from "@/utils/timeFormatting";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
 
 const MainContent: React.FC = () => {
   return (
@@ -31,9 +33,13 @@ const AutomaticReports: React.FC = () => {
                 <div
                   key={report.id}
                   className={
-                    "flex items-center justify-between px-7 py-4 border-b border-stroke dark:border-stroke-dark"
+                    "px-7 py-4 border-b border-stroke dark:border-stroke-dark"
                   }
                 >
+                  <div>
+                    <strong>{dateFormat(report.created_at)}</strong>
+                    <Client client={report.client} />
+                  </div>
                   {report.summary_text}
                 </div>
               ))}
@@ -53,6 +59,22 @@ const AutomaticReports: React.FC = () => {
       {/*    </Button>*/}
       {/*  </Panel>*/}
       {/*)}*/}
+    </>
+  );
+};
+
+const Client: React.FC<{ client: number }> = ({ client }) => {
+  const { data } = useClientDetails(client);
+  return (
+    <>
+      {data && (
+        <div className={"my-2"}>
+          <strong>
+            {data.first_name} {data.last_name}
+          </strong>
+          <div>{data.email}</div>
+        </div>
+      )}
     </>
   );
 };
