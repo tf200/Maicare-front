@@ -23,7 +23,7 @@ const DashboardOverview: React.FC = () => {
   const { data: locations, isLoading: loadingLocation } = useLocations();
   if (!profile) return null;
   return (
-    <div>
+    <div className="mb-6">
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-title-lg font-bold text-black dark:text-white">

@@ -1,7 +1,7 @@
-import Charts from "@/components/Dashboard/Charts";
+import MainContent from "@/components/Dashboard/MainContent";
 
 const Page = () => {
-  return <Charts />;
+  return <MainContent />;
 };
 
 export default Page;
