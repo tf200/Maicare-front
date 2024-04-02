@@ -23,7 +23,10 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
       <Panel
         title={"Teambeheer"}
         sideActions={
-          <Button onClick={() => setIsAssigning((is) => !is)}>
+          <Button
+            onClick={() => setIsAssigning((is) => !is)}
+            buttonType={isAssigning ? "Outline" : "Primary"}
+          >
             {/*Cancel | Assign a new team*/}
             {isAssigning ? "Annuleren" : "+ Toevoegen Team"}
           </Button>
