@@ -8,6 +8,9 @@ export const EMPLOYEE_EDIT = "employee.edit";
 export const EMPLOYEE_DELETE = "employee.delete";
 export const EMPLOYEE_CREATE = "employee.create";
 
+export const EMPLOYEE_PERMISSIONS_VIEW = "employee.permissions.view";
+export const EMPLOYEE_PERMISSIONS_EDIT = "employee.permissions.edit";
+
 export const CONTACT_VIEW = "contact.view";
 export const CONTACT_EDIT = "contact.edit";
 export const CONTACT_DELETE = "contact.delete";
@@ -22,9 +25,6 @@ export const CARE_PLAN_VIEW = "care_plan.view";
 export const CARE_PLAN_EDIT = "care_plan.edit";
 export const CARE_PLAN_DELETE = "care_plan.delete";
 export const CARE_PLAN_CREATE = "care_plan.create";
-
-export const ROLE_VIEW = "role.view";
-export const ROLE_CUD = "role.cud";
 
 export const LOCATION_VIEW = "location.view";
 
@@ -56,8 +56,23 @@ export const PERMISSIONS = [
 
   VIEW_OWN_PROFILE,
 
-  ROLE_VIEW,
-  ROLE_CUD,
+  EMPLOYEE_PERMISSIONS_VIEW,
+  EMPLOYEE_PERMISSIONS_EDIT,
+
+  CONTACT_VIEW,
+  CONTACT_EDIT,
+  CONTACT_DELETE,
+  CONTACT_CREATE,
+
+  CONTRACT_VIEW,
+  CONTRACT_EDIT,
+  CONTRACT_DELETE,
+  CONTRACT_CREATE,
+
+  CARE_PLAN_VIEW,
+  CARE_PLAN_EDIT,
+  CARE_PLAN_DELETE,
+  CARE_PLAN_CREATE,
 
   LOCATION_VIEW,
 
