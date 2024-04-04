@@ -517,7 +517,7 @@ const EmployeeMenu: FunctionComponent = () => {
           completeHref: `/employees/${employeeId}/teams`,
           icon: <RoleIcon width={18} height={18} />,
           children: "Rollen",
-          permission: consts.ROLE_VIEW,
+          permission: consts.EMPLOYEE_PERMISSIONS_VIEW,
           getIsActive: (pathname) => {
             return pathname.startsWith(`/employees/${employeeId}/teams`);
           },
