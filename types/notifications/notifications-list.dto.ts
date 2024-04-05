@@ -12,9 +12,9 @@ export const NotificationTypes = [
 export type NotificationType = (typeof NotificationTypes)[number];
 
 export type NotificationItem = {
-  text: string;
+  content: string;
   title: string;
-  type: NotificationType;
+  event: NotificationType;
   read: boolean;
   id: number;
   createdAt: string;

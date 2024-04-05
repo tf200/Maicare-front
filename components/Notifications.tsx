@@ -52,7 +52,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
           {notification.title}
         </p>
         <p className="text-sm mb-2.5 max-h-20 overflow-hidden line-clamp-4 text-ellipsis">
-          {notification.text}
+          {notification.content}
         </p>
 
         <p className="text-xs">{dateFormat(notification.createdAt)}</p>
