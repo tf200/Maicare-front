@@ -19,6 +19,11 @@ export function fullDateFormat(date: string | Date) {
   return dayjs(date).format(FULL_DATE_FORMAT);
 }
 
+export const SHORT_DATE_TIME_FORMAT = "D MMM YY, HH:mm";
+export function shortDateTimeFormat(date: string | Date) {
+  return dayjs(date).format(SHORT_DATE_TIME_FORMAT);
+}
+
 export const FULL_DATE_TIME_FORMAT = "dddd DD MMMM YYYY HH:mm";
 export function fullDateTimeFormat(date: string | Date) {
   return dayjs(date).format(FULL_DATE_TIME_FORMAT);
