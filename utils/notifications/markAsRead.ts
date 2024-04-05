@@ -3,7 +3,9 @@ import { mockApi } from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 async function markAsRead(req: ReadNotifsReqDto) {
-  const response = await mockApi.post("/notifications/read", req);
+  const response = await mockApi.post(
+    `/system/notifications/${req.notificationIds}/read/`
+  );
   return response.data;
 }
 
