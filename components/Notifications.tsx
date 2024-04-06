@@ -1,14 +1,11 @@
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
-import {
-  NotificationItem,
-  NotificationsListDto,
-} from "@/types/notifications/notifications-list.dto";
+import { NotificationItem } from "@/types/notifications/notifications-list.dto";
 import { dateFormat } from "@/utils/timeFormatting";
 import { useMarkAsRead } from "@/utils/notifications/markAsRead";
 
 type Props = {
-  notifications: NotificationsListDto;
+  notifications: NotificationItem[];
 };
 
 const Notifications: FunctionComponent<Props> = ({ notifications }) => {
@@ -39,7 +36,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
   const { mutate: markAsRead } = useMarkAsRead();
   return (
     <li
-      className={notification.read ? "" : "font-bold"}
+      className={notification.is_read ? "" : "font-bold"}
       onClick={() => {
         markAsRead({ notificationIds: [notification.id] });
       }}

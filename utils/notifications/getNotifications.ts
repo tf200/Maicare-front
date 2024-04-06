@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 async function getNotifications() {
   const notifications = await api.get<NotificationsListDto>(
-    "/system/notifications"
+    "/system/notifications/"
   );
   return notifications.data;
 }
