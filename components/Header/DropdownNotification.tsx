@@ -38,7 +38,7 @@ const DropdownNotification = () => {
   const { data, isLoading } = useNotifications();
   const hasUnread = useMemo(() => {
     if (!data) return false;
-    return data?.some((n) => !n.read);
+    return data?.results.some((n) => !n.is_read);
   }, [data]);
 
   return (
@@ -62,7 +62,7 @@ const DropdownNotification = () => {
             dropdownOpen === true ? "block" : "hidden"
           }`}
         >
-          <Notifications notifications={data} />
+          <Notifications notifications={data.results} />
         </div>
       )}
     </li>

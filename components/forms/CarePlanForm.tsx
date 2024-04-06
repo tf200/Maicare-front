@@ -18,6 +18,7 @@ import htmlToDraft from "html-to-draftjs";
 import { useCarePlanCreate, useCarePlanPatch } from "@/utils/care-plans";
 import { useRouter } from "next/navigation";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
+import MaturityMatrix from "@/components/MaturityMatrix";
 
 type CarePlanFormProps = FormProps<Partial<CarePlanResDto>> & {
   clientId: number;
@@ -154,6 +155,7 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
           name={"description"}
           className="mb-6"
         />
+        <MaturityMatrix />
         <FilesUploader
           label={"Bestanden"}
           name={"temporary_file_ids"}

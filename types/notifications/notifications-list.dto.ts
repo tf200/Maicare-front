@@ -15,9 +15,9 @@ export type NotificationItem = {
   content: string;
   title: string;
   event: NotificationType;
-  read: boolean;
+  is_read: boolean;
   id: number;
   createdAt: string;
 };
 
-export type NotificationsListDto = NotificationItem[];
+export type NotificationsListDto = Paginated<NotificationItem>;

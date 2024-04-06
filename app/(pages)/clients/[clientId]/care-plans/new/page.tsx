@@ -16,7 +16,7 @@ const NewCarePlan: FunctionComponent<{
   return (
     <>
       <Breadcrumb pageName="Nieuw Zorgplan Registreren" />
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <Panel
           title={"Nieuw Zorgplan Registreren"}
           containerClassName="px-7 py-4"

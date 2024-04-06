@@ -13,12 +13,14 @@ type Props = {
   onEdit?: MouseEventHandler<HTMLButtonElement>;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
   onTriggerClick?: MouseEventHandler<HTMLButtonElement>;
+  visible?: boolean[];
 };
 
 const DropdownDefault: FunctionComponent<Props> = ({
   onEdit,
   onDelete,
   onTriggerClick,
+  visible,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -54,6 +56,7 @@ const DropdownDefault: FunctionComponent<Props> = ({
   return (
     <div className="relative">
       <button
+        type="button"
         ref={trigger}
         onClick={(event) => {
           onTriggerClick?.(event);
@@ -72,24 +75,30 @@ const DropdownDefault: FunctionComponent<Props> = ({
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
-        <button
-          onClick={(e) => {
-            onEdit?.(e);
-          }}
-          className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-        >
-          <EditIcon />
-          Bewerking
-        </button>
-        <button
-          onClick={(e) => {
-            onDelete?.(e);
-          }}
-          className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
-        >
-          <DeleteIcon />
-          Verwijderen
-        </button>
+        {(visible?.[0] ?? true) && (
+          <button
+            onClick={(e) => {
+              onEdit?.(e);
+            }}
+            type="button"
+            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+          >
+            <EditIcon />
+            Bewerking
+          </button>
+        )}
+        {(visible?.[1] ?? true) && (
+          <button
+            onClick={(e) => {
+              onDelete?.(e);
+            }}
+            type="button"
+            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+          >
+            <DeleteIcon />
+            Verwijderen
+          </button>
+        )}
       </div>
     </div>
   );
