@@ -81,9 +81,11 @@ const MaturityMatrix: FunctionComponent = (props) => {
               {domain.levels.map((level) => (
                 <td
                   key={level.level}
-                  className="align-top p-2 w-1/6 border border-stroke"
+                  className="align-top p-2 w-1/6 border border-stroke whitespace-pre-wrap"
                 >
-                  <div>{level.assessments}</div>
+                  <p>
+                    <div>{level.assessments}</div>
+                  </p>
                 </td>
               ))}
               <td className="align-top py-4 px-2 border border-stroke">
