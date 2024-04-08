@@ -161,7 +161,6 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
           name={"description"}
           className="mb-6"
         />
-        <MaturityMatrix />
         <FilesUploader
           label={"Bestanden"}
           name={"temporary_file_ids"}
