@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import { FormikProvider, useFormik } from "formik";
+import { FormikProvider, useField, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { useModal } from "@/components/providers/ModalProvider";
 import Textarea from "@/components/FormFields/Textarea";
@@ -52,6 +52,9 @@ const GRADIENT_COLORS = [
 const MaturityMatrix: FunctionComponent = (props) => {
   const { open } = useModal(SelectDomainModal);
   const [domains, setDomains] = React.useState<MDomain[]>([]);
+  const [inputProps, metaProps, helperProps] = useField({
+    name: "domain_ids",
+  });
   return (
     <div className="mb-6">
       <table className="table-auto w-full">
@@ -93,6 +96,9 @@ const MaturityMatrix: FunctionComponent = (props) => {
                   visible={[false, true]}
                   onDelete={() => {
                     setDomains((ds) => ds.filter((d) => d.id !== domain.id));
+                    helperProps.setValue(
+                      domains.map((d) => d.id).filter((id) => id !== domain.id)
+                    );
                   }}
                 />
               </td>
@@ -106,6 +112,10 @@ const MaturityMatrix: FunctionComponent = (props) => {
                     open({
                       onSelected: (created: MDomain) => {
                         setDomains([...domains, created]);
+                        helperProps.setValue([
+                          ...domains.map((d) => d.id),
+                          created.id,
+                        ]);
                       },
                     });
                   }}

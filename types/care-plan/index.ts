@@ -13,6 +13,7 @@ export type CarePlanStatus = (typeof CARE_PLAN_STATUS)[number];
 
 export type CarePlanFormType = {
   description: EditorState;
+  domain_ids: number[];
   start_date: string;
   end_date: string;
   temporary_file_ids: string[];
