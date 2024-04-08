@@ -13,6 +13,7 @@ import { useCreateDomain, useDomains } from "@/utils/domains";
 import Select from "@/components/FormFields/Select";
 import * as Yup from "yup";
 import InfoIcon from "@/components/icons/InfoIcon";
+import PlusIcon from "@/components/icons/PlusIcon";
 
 const MaturityLevelTypes = [
   "acute_problems",
@@ -52,7 +53,7 @@ const MaturityMatrix: FunctionComponent = (props) => {
   const { open } = useModal(SelectDomainModal);
   const [domains, setDomains] = React.useState<MDomain[]>([]);
   return (
-    <div>
+    <div className="mb-6">
       <table className="table-auto w-full">
         <thead>
           <tr>
@@ -96,7 +97,7 @@ const MaturityMatrix: FunctionComponent = (props) => {
             </tr>
           ))}
           <tr>
-            <td colSpan={7} className="border border-stroke p-2">
+            <td colSpan={7} className="border border-stroke py-5">
               <div className="flex justify-center">
                 <Button
                   onClick={() => {
@@ -106,8 +107,9 @@ const MaturityMatrix: FunctionComponent = (props) => {
                       },
                     });
                   }}
+                  className="flex items-center gap-2"
                 >
-                  + Domein toevoegen
+                  <PlusIcon /> <span>Domein toevoegen</span>
                 </Button>
               </div>
             </td>
