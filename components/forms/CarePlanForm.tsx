@@ -76,6 +76,7 @@ function mapFormToUpdateDTO(
     end_date: values.end_date,
     temporary_file_ids: values.temporary_file_ids,
     status: "draft",
+    domain_ids: values.domain_ids,
     attachment_ids_to_delete: values.attachment_ids_to_delete,
   };
 }
