@@ -18,7 +18,7 @@ import htmlToDraft from "html-to-draftjs";
 import { useCarePlanCreate, useCarePlanPatch } from "@/utils/care-plans";
 import { useRouter } from "next/navigation";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
-import MaturityMatrix from "@/components/MaturityMatrix";
+import MaturityMatrixField from "@/components/MaturityMatrixField";
 
 type CarePlanFormProps = FormProps<Partial<CarePlanResDto>> & {
   clientId: number;
@@ -26,6 +26,7 @@ type CarePlanFormProps = FormProps<Partial<CarePlanResDto>> & {
 
 const initialValues: CarePlanFormType = {
   description: EditorState.createEmpty(),
+  domain_ids: [],
   start_date: "",
   end_date: "",
   temporary_file_ids: [],
@@ -35,6 +36,7 @@ const initialValues: CarePlanFormType = {
 const validationSchema: Yup.ObjectSchema<CarePlanFormType> = Yup.object().shape(
   {
     description: Yup.mixed(),
+    domain_ids: Yup.array().of(Yup.number()),
     start_date: Yup.string().required("Dit veld is verplicht"),
     end_date: Yup.string().required("Dit veld is verplicht"),
     temporary_file_ids: Yup.array()
@@ -53,6 +55,7 @@ function mapFormToCreateDTO(
     description: draftToHtml(
       convertToRaw(values.description.getCurrentContent())
     ),
+    domain_ids: values.domain_ids,
     start_date: values.start_date,
     end_date: values.end_date,
     temporary_file_ids: values.temporary_file_ids,
@@ -73,6 +76,7 @@ function mapFormToUpdateDTO(
     end_date: values.end_date,
     temporary_file_ids: values.temporary_file_ids,
     status: "draft",
+    domain_ids: values.domain_ids,
     attachment_ids_to_delete: values.attachment_ids_to_delete,
   };
 }
@@ -88,6 +92,7 @@ function mapValuesToForm(values: Partial<CarePlanResDto>): CarePlanFormType {
   }
   return {
     description: editorState,
+    domain_ids: values.domain_ids || [],
     start_date: values.start_date || "",
     end_date: values.end_date || "",
     temporary_file_ids: [],
@@ -150,12 +155,12 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
             error={touched.end_date && errors.end_date}
           />
         </div>
+        <MaturityMatrixField />
         <RichText
           label={"Beschrijving"}
           name={"description"}
           className="mb-6"
         />
-        <MaturityMatrix />
         <FilesUploader
           label={"Bestanden"}
           name={"temporary_file_ids"}

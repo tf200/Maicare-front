@@ -4,7 +4,12 @@ import { useQuery } from "react-query";
 
 async function getNotifications() {
   const notifications = await api.get<NotificationsListDto>(
-    "/system/notifications/"
+    "/system/notifications",
+    {
+      params: {
+        page: 1, // TODO: remove this
+      },
+    }
   );
   return notifications.data;
 }

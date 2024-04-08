@@ -1,18 +1,21 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useEffect, useMemo } from "react";
 import Button from "@/components/buttons/Button";
 import { cn } from "@/utils/cn";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import { FormikProvider, useFormik } from "formik";
+import { FormikProvider, useField, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { useModal } from "@/components/providers/ModalProvider";
 import Textarea from "@/components/FormFields/Textarea";
 import { MDomain } from "@/types/domains";
-import { useCreateDomain, useDomains } from "@/utils/domains";
+import { getDomainsByIds, useCreateDomain, useDomains } from "@/utils/domains";
 import Select from "@/components/FormFields/Select";
 import * as Yup from "yup";
 import InfoIcon from "@/components/icons/InfoIcon";
+import PlusIcon from "@/components/icons/PlusIcon";
+import { useQueryClient } from "react-query";
+import { useParams } from "next/navigation";
 
 const MaturityLevelTypes = [
   "acute_problems",
@@ -48,77 +51,131 @@ const GRADIENT_COLORS = [
   "bg-meta-3/[0.4]",
 ];
 
-const MaturityMatrix: FunctionComponent = (props) => {
+const MaturityMatrixField: FunctionComponent = () => {
   const { open } = useModal(SelectDomainModal);
+  const [inputProps, metaProps, helperProps] = useField<number[]>({
+    name: "domain_ids",
+  });
   const [domains, setDomains] = React.useState<MDomain[]>([]);
+  const queryClient = useQueryClient();
+  const { planId } = useParams();
+  useEffect(() => {
+    getDomainsByIds(queryClient, +planId, inputProps.value).then((data) => {
+      setDomains(data);
+    });
+  }, []);
   return (
-    <div>
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="border border-stroke">Domein</th>
-            {MLevels.map((level, index) => (
-              <th
-                className={cn(
-                  GRADIENT_COLORS[index],
-                  "px-5 py-2 border border-stroke"
-                )}
-                key={level}
-              >
-                {level}
-              </th>
-            ))}
-            <th className="border border-stroke" />
-          </tr>
-        </thead>
-        <tbody>
-          {domains.map((domain, index) => (
-            <tr key={domain.name}>
-              <td className="w-1/8 align-top border border-stroke p-2">
-                {domain.name}
-              </td>
-              {domain.levels.map((level) => (
-                <td
-                  key={level.level}
-                  className="align-top p-2 w-1/6 border border-stroke"
-                >
-                  <div>{level.assessments}</div>
-                </td>
-              ))}
-              <td className="align-top py-4 px-2 border border-stroke">
-                <DropdownDefault
-                  visible={[false, true]}
-                  onDelete={() => {
-                    setDomains((ds) => ds.filter((d) => d.id !== domain.id));
-                  }}
-                />
+    <div className="mb-6">
+      <MatrixView
+        domains={domains}
+        RowAction={({ domain }) => {
+          return (
+            <td className="align-top py-4 px-2 border border-stroke">
+              <DropdownDefault
+                visible={[false, true]}
+                onDelete={() => {
+                  setDomains((ds) => ds.filter((d) => d.id !== domain.id));
+                  helperProps.setValue(
+                    domains.map((d) => d.id).filter((id) => id !== domain.id)
+                  );
+                }}
+              />
+            </td>
+          );
+        }}
+        AdditionalActions={() => {
+          return (
+            <tr>
+              <td colSpan={7} className="border border-stroke py-5">
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => {
+                      open({
+                        onSelected: (created: MDomain) => {
+                          setDomains([...domains, created]);
+                          helperProps.setValue([
+                            ...domains.map((d) => d.id),
+                            created.id,
+                          ]);
+                        },
+                      });
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <PlusIcon /> <span>Domein toevoegen</span>
+                  </Button>
+                </div>
               </td>
             </tr>
-          ))}
-          <tr>
-            <td colSpan={7} className="border border-stroke p-2">
-              <div className="flex justify-center">
-                <Button
-                  onClick={() => {
-                    open({
-                      onSelected: (created: MDomain) => {
-                        setDomains([...domains, created]);
-                      },
-                    });
-                  }}
-                >
-                  + Domein toevoegen
-                </Button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          );
+        }}
+      />
     </div>
   );
 };
 
-export default MaturityMatrix;
+export default MaturityMatrixField;
+
+export const MaturityMatrix: FunctionComponent<{ ids: number[] }> = ({
+  ids,
+}) => {
+  const [domains, setDomains] = React.useState<MDomain[]>([]);
+  const queryClient = useQueryClient();
+  const { planId } = useParams();
+  useEffect(() => {
+    getDomainsByIds(queryClient, +planId, ids).then((data) => {
+      setDomains(data);
+    });
+  }, [ids]);
+  return <MatrixView domains={domains} />;
+};
+
+const MatrixView: FunctionComponent<{
+  domains: MDomain[];
+  RowAction?: FunctionComponent<{ domain: MDomain }>;
+  AdditionalActions?: FunctionComponent;
+}> = ({ domains, RowAction, AdditionalActions }) => {
+  return (
+    <table className="table-auto w-full">
+      <thead>
+        <tr>
+          <th className="border border-stroke">Domein</th>
+          {MLevels.map((level, index) => (
+            <th
+              className={cn(
+                GRADIENT_COLORS[index],
+                "px-5 py-2 border border-stroke"
+              )}
+              key={level}
+            >
+              {level}
+            </th>
+          ))}
+          {RowAction && <th className="border border-stroke" />}
+        </tr>
+      </thead>
+      <tbody>
+        {domains.map((domain, index) => (
+          <tr key={domain.name}>
+            <td className="w-1/8 align-top border border-stroke p-2">
+              {domain.name}
+            </td>
+            {domain.levels.map((level) => (
+              <td
+                key={level.level}
+                className="align-top p-2 w-1/6 border border-stroke whitespace-pre-wrap"
+              >
+                <p>{level.assessments}</p>
+              </td>
+            ))}
+            {RowAction && <RowAction domain={domain} />}
+          </tr>
+        ))}
+        {AdditionalActions && <AdditionalActions />}
+      </tbody>
+    </table>
+  );
+};
 
 const DomainFormModal: FunctionComponent<ModalProps> = ({
   additionalProps,
