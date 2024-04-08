@@ -18,7 +18,7 @@ import htmlToDraft from "html-to-draftjs";
 import { useCarePlanCreate, useCarePlanPatch } from "@/utils/care-plans";
 import { useRouter } from "next/navigation";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
-import MaturityMatrix from "@/components/MaturityMatrix";
+import MaturityMatrixField from "@/components/MaturityMatrixField";
 
 type CarePlanFormProps = FormProps<Partial<CarePlanResDto>> & {
   clientId: number;
@@ -155,7 +155,7 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
             error={touched.end_date && errors.end_date}
           />
         </div>
-        <MaturityMatrix />
+        <MaturityMatrixField />
         <RichText
           label={"Beschrijving"}
           name={"description"}

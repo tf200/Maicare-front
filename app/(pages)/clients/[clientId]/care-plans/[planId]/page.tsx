@@ -19,14 +19,14 @@ import { dateFormat } from "@/utils/timeFormatting";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import { useFormik } from "formik";
 import Select from "@/components/FormFields/Select";
-import { CARE_PLAN_STATUS, CarePlanStatus } from "@/types/care-plan";
+import { CarePlanStatus } from "@/types/care-plan";
 import Button from "@/components/buttons/Button";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/components/providers/ModalProvider";
-import ConfirmationModal from "@/components/ComfirmationModal";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import DownloadFile from "@/components/DownloadFile";
+import { MaturityMatrix } from "@/components/MaturityMatrixField";
 
 const PlanDetails: FunctionComponent<{
   params: {
@@ -89,30 +89,45 @@ const PlanDetails: FunctionComponent<{
           />
           <DetailCell label={"Van"} value={dateFormat(data.start_date)} />
           <DetailCell label={"Tot"} value={dateFormat(data.end_date)} />
-          <DetailCell
-            className={"col-span-2"}
-            label={"Omschrijving"}
-            value={
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: data.description,
-                }}
-              />
-            }
-          />
-          <DetailCell
-            label={"Attachments"}
-            value={
-              <>
-                <div className="flex flex-wrap gap-4">
-                  {data?.attachments.map((attachment) => (
-                    <DownloadFile file={attachment} />
-                  ))}
+          {data.domain_ids.length > 0 && (
+            <DetailCell
+              label={"Volwassenheidsmatrix"}
+              value={
+                <div className="py-2">
+                  <MaturityMatrix ids={data.domain_ids} />
                 </div>
-              </>
-            }
-            className="col-span-2"
-          />
+              }
+              className="col-span-2"
+            />
+          )}
+          {data.description && (
+            <DetailCell
+              className={"col-span-2"}
+              label={"Omschrijving"}
+              value={
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: data.description,
+                  }}
+                />
+              }
+            />
+          )}
+          {data?.attachments.length > 0 && (
+            <DetailCell
+              label={"Bijlagen"}
+              value={
+                <>
+                  <div className="flex flex-wrap gap-4">
+                    {data?.attachments.map((attachment) => (
+                      <DownloadFile file={attachment} />
+                    ))}
+                  </div>
+                </>
+              }
+              className="col-span-2"
+            />
+          )}
         </div>
       )}
     </Panel>

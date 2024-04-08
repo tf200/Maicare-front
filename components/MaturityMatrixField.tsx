@@ -51,12 +51,12 @@ const GRADIENT_COLORS = [
   "bg-meta-3/[0.4]",
 ];
 
-const MaturityMatrix: FunctionComponent = () => {
+const MaturityMatrixField: FunctionComponent = () => {
   const { open } = useModal(SelectDomainModal);
-  const [domains, setDomains] = React.useState<MDomain[]>([]);
   const [inputProps, metaProps, helperProps] = useField<number[]>({
     name: "domain_ids",
   });
+  const [domains, setDomains] = React.useState<MDomain[]>([]);
   const queryClient = useQueryClient();
   const { planId } = useParams();
   useEffect(() => {
@@ -114,7 +114,21 @@ const MaturityMatrix: FunctionComponent = () => {
   );
 };
 
-export default MaturityMatrix;
+export default MaturityMatrixField;
+
+export const MaturityMatrix: FunctionComponent<{ ids: number[] }> = ({
+  ids,
+}) => {
+  const [domains, setDomains] = React.useState<MDomain[]>([]);
+  const queryClient = useQueryClient();
+  const { planId } = useParams();
+  useEffect(() => {
+    getDomainsByIds(queryClient, +planId, ids).then((data) => {
+      setDomains(data);
+    });
+  }, [ids]);
+  return <MatrixView domains={domains} />;
+};
 
 const MatrixView: FunctionComponent<{
   domains: MDomain[];
@@ -137,7 +151,7 @@ const MatrixView: FunctionComponent<{
               {level}
             </th>
           ))}
-          <th className="border border-stroke" />
+          {RowAction && <th className="border border-stroke" />}
         </tr>
       </thead>
       <tbody>
@@ -154,10 +168,10 @@ const MatrixView: FunctionComponent<{
                 <p>{level.assessments}</p>
               </td>
             ))}
-            <RowAction domain={domain} />
+            {RowAction && <RowAction domain={domain} />}
           </tr>
         ))}
-        <AdditionalActions />
+        {AdditionalActions && <AdditionalActions />}
       </tbody>
     </table>
   );
