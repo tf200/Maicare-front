@@ -15,6 +15,7 @@ import { usePatchMedication } from "@/utils/medications/patchMedication";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import ComboBox from "../ComboBox";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
+import MultipleDatePicker from "@/components/FormFields/MultipleDatePicker";
 
 const initialValues: MedicationFormType = {
   name: "",
@@ -166,6 +167,7 @@ const MedicationForm: FunctionComponent<Props> = ({
               onBlur={handleBlur}
               error={touched.frequency && errors.frequency}
             />
+            <MultipleDatePicker name={"days"} label={"Dagen"} required={true} />
             <ComboBox
               label="Beheerd door"
               placeholder="Zoek naar werknemers"
