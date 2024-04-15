@@ -8,7 +8,6 @@ import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
-import { FormikHelpers } from "formik/dist/types";
 import { useRouter } from "next/navigation";
 import { useGetMedication } from "@/utils/medications/getMedication";
 import { usePatchMedication } from "@/utils/medications/patchMedication";
@@ -21,7 +20,6 @@ import MultipleTimePicker from "@/components/FormFields/MultipleTimePicker";
 const initialValues: MedicationFormType = {
   name: "",
   dosage: "",
-  frequency: "",
   start_date: "",
   end_date: "",
   days: [],
@@ -34,7 +32,6 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
   Yup.object().shape({
     name: Yup.string().required("Geef alstublieft de medicatienaam op"),
     dosage: Yup.string().required("Geef alstublieft de dosering op"),
-    frequency: Yup.string().required("Geef alstublieft de frequentie op"),
     start_date: Yup.string().required("Geef alstublieft de startdatum op"),
     end_date: Yup.string().required("Geef alstublieft de einddatum op"),
     days: Yup.array()

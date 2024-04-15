@@ -43,10 +43,6 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Dosering",
       },
       {
-        accessorKey: "frequency",
-        header: "Frequentie",
-      },
-      {
         accessorKey: "administer_name",
         header: "Beheerd door",
       },
@@ -93,7 +89,9 @@ const MedicationsPage: FunctionComponent<Props> = ({
           page={pagination.page ?? 1}
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
-          renderRowDetails={({ original }) => <RowDetails clientId={parseInt(clientId)} data={original} />}
+          renderRowDetails={({ original }) => (
+            <RowDetails clientId={parseInt(clientId)} data={original} />
+          )}
         />
       )}
       {isError && (
@@ -109,7 +107,7 @@ export default MedicationsPage;
 
 type RowDetailsProps = {
   data: MedicationsResDto;
-  clientId: number
+  clientId: number;
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
@@ -130,7 +128,6 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Naam"} value={data.name} />
       <DetailCell label={"Dosering"} value={data.dosage} />
-      <DetailCell label={"Frequentie"} value={data.frequency} />
       <DetailCell label={"Startdatum"} value={data.start_date} />
       <DetailCell label={"Einddatum"} value={data.end_date} />
       <DetailCell
