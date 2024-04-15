@@ -21,6 +21,10 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { fullDateFormat } from "@/utils/timeFormatting";
+import Button from "@/components/buttons/Button";
+import { ModalProps } from "@/types/modal-props";
+import Modal from "@/components/Modals/Modal";
+import FormModal from "@/components/Modals/FormModal";
 
 type Props = {
   params: { clientId: string };
@@ -124,6 +128,8 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
     })
   );
 
+  const { open: manageRecord } = useModal(MedicationRecordsModal);
+
   return (
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Naam"} value={data.name} />
@@ -135,25 +141,34 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div className="flex gap-4">
-        <IconButton
-          buttonType="Danger"
+      <div className="flex gap-4 items-center">
+        <Button
           onClick={() => {
-            open({
-              onConfirm: () => {
-                deleteMedication(data.id);
-              },
-            });
+            manageRecord({ id: data.id });
           }}
-          disabled={isDeleted}
-          isLoading={isDeleting}
         >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
-        </IconButton>
+          Beheer Medicatie Records
+        </Button>
+        <div>
+          <IconButton
+            buttonType="Danger"
+            onClick={() => {
+              open({
+                onConfirm: () => {
+                  deleteMedication(data.id);
+                },
+              });
+            }}
+            disabled={isDeleted}
+            isLoading={isDeleting}
+          >
+            {isDeleted ? (
+              <CheckIcon className="w-5 h-5" />
+            ) : (
+              <TrashIcon className="w-5 h-5" />
+            )}
+          </IconButton>
+        </div>
         <Link href={`/clients/${clientId}/medications/${data.id}/edit`}>
           <IconButton>
             <PencilSquare className="w-5 h-5" />
@@ -161,5 +176,16 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         </Link>
       </div>
     </div>
+  );
+};
+
+const MedicationRecordsModal: FunctionComponent<ModalProps> = ({
+  additionalProps,
+  ...rest
+}) => {
+  return (
+    <FormModal {...rest} title={"Medicatie Records"}>
+      Medication ID: {additionalProps?.id}
+    </FormModal>
   );
 };

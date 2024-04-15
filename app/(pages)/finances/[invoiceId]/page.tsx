@@ -13,8 +13,16 @@ import Button from "@/components/buttons/Button";
 import api from "@/utils/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { InvoiceType } from "@/types/InvoiceStatus";
-import { INVOICE_STATUS_OPTIONS } from "@/consts";
+import {
+  INVOICE_STATUS_GRAPH,
+  INVOICE_STATUS_OPTIONS,
+  PAYMENT_TYPE_OPTIONS,
+} from "@/consts";
 import Select from "@/components/FormFields/Select";
+import ButtonsGroup from "@/components/buttons/LinksGroup";
+import ToolbarButtonsGroup from "@/components/buttons/ToolbarButtonsGroup";
+import DetailCell from "@/components/DetailCell";
+import InputField from "@/components/FormFields/InputField";
 
 type InvoiceFormType = {
   items: {
@@ -124,28 +132,54 @@ const UpdateStatus: FunctionComponent<{
   invoice: InvoiceDetailsDto;
 }> = ({ invoice }) => {
   const { mutate: updateStatus, isLoading } = usePatchInvoice(invoice.id);
-  const { handleSubmit, handleChange, handleBlur, values } = useFormik({
-    initialValues: {
-      status: invoice.status,
-    },
-    onSubmit: (values) => {
-      updateStatus(values);
-    },
-  });
+  const { handleSubmit, handleChange, setValues, handleBlur, values } =
+    useFormik({
+      initialValues: {
+        status: invoice.status,
+      },
+      enableReinitialize: true,
+      onSubmit: (values) => {
+        updateStatus(values);
+      },
+    });
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={"flex items-center justify-between"}
-    >
-      <Select
-        label={"Status"}
-        options={INVOICE_STATUS_OPTIONS}
-        name={"status"}
-        className="basis-1/4 min-w-50"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.status}
+    <form onSubmit={handleSubmit} className={"flex flex-col"}>
+      <DetailCell
+        className="mb-6"
+        label={"Huidige status"}
+        value={invoice.status}
       />
+      <DetailCell
+        label={"Status bijwerken"}
+        value={
+          <div className="mt-2 mb-5">
+            <ToolbarButtonsGroup
+              selectedOption={values.status}
+              onOptionClicked={(option) => {
+                setValues({ status: option.value as any });
+              }}
+              options={INVOICE_STATUS_GRAPH[invoice.status]}
+            />
+          </div>
+        }
+      />
+      {values.status === "partially_paid" && (
+        <InputField
+          name={"payed_amount"}
+          label={"Payed amount"}
+          placeholder={"Payed amount"}
+          className="mb-4"
+          type={"number"}
+          isPrice={true}
+        />
+      )}
+      {(values.status === "paid" || values.status === "partially_paid") && (
+        <Select
+          options={PAYMENT_TYPE_OPTIONS}
+          name={"payment_type"}
+          label={"Betaalmethode"}
+        />
+      )}
       <Button type="submit" className="mt-8" isLoading={isLoading}>
         Status bijwerken
       </Button>

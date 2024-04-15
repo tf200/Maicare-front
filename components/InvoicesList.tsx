@@ -102,8 +102,14 @@ const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
     initialValues,
     onSubmit,
   });
-  const { handleSubmit, dirty, handleReset, handleChange, values, handleBlur } =
-    formik;
+  const {
+    handleSubmit,
+    handleReset,
+    submitForm,
+    handleChange,
+    values,
+    handleBlur,
+  } = formik;
   return (
     <FormikProvider value={formik}>
       <form
@@ -125,7 +131,13 @@ const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
           <Button type="submit" formNoValidate={true}>
             Zoeken
           </Button>
-          <Button onClick={handleReset} buttonType={"Outline"}>
+          <Button
+            onClick={(e) => {
+              handleReset(e);
+              submitForm();
+            }}
+            buttonType={"Outline"}
+          >
             Duidelijke zoek
           </Button>
         </div>

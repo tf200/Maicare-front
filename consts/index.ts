@@ -140,6 +140,13 @@ export const INVOICE_STATUS_OPTIONS: SelectionOption[] = [
   { label: "Concept", value: "concept" },
 ];
 
+export const PAYMENT_TYPE_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Betaalmethode", value: "" },
+  { label: "Contant", value: "cash" },
+  { label: "Bank ", value: "bank_transfer" },
+  { label: "Creditcard", value: "credit_card" },
+];
+
 export const INVOICE_STATUS_RECORD = {
   outstanding: "Openstaand",
   partially_paid: "Gedeeltelijk betaald",
@@ -149,6 +156,33 @@ export const INVOICE_STATUS_RECORD = {
   overpaid: "Teveel betaald",
   imported: "Geimporteerd",
   concept: "Concept",
+};
+
+export const INVOICE_STATUS_GRAPH = {
+  concept: [
+    { label: "Openstaand", value: "outstanding" },
+    { label: "Verlopen", value: "expired" },
+  ],
+  outstanding: [
+    { label: "Gedeeltelijk betaald", value: "partially_paid" },
+    { label: "Betaald", value: "paid" },
+    { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
+    { label: "Verlopen", value: "expired" },
+    { label: "Teveel betaald", value: "overpaid" },
+  ],
+  partially_paid: [
+    { label: "Betaald", value: "paid" },
+    { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
+    { label: "Verlopen", value: "expired" },
+    { label: "Teveel betaald", value: "overpaid" },
+  ],
+  paid: [],
+  expired: [],
+  douabtfull_uncollectible: [
+    { label: "Betaald", value: "paid" },
+    { label: "Verlopen", value: "expired" },
+    { label: "Teveel betaald", value: "overpaid" },
+  ],
 };
 
 export * from "./permissions";
