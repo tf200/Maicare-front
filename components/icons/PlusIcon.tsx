@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from "react";
+import { IconProps } from "@/types/IconProps";
+import { cn } from "@/utils/cn";
 
-const PlusIcon: FunctionComponent = (props) => {
+const PlusIcon: FunctionComponent<IconProps> = (props) => {
   return (
     <svg
-      className="fill-current"
+      className={cn("fill-current", props.className)}
       width="20"
       height="20"
       viewBox="0 0 20 20"

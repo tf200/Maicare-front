@@ -16,6 +16,7 @@ import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import ComboBox from "../ComboBox";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import MultipleDatePicker from "@/components/FormFields/MultipleDatePicker";
+import MultipleTimePicker from "@/components/FormFields/MultipleTimePicker";
 
 const initialValues: MedicationFormType = {
   name: "",
@@ -23,6 +24,8 @@ const initialValues: MedicationFormType = {
   frequency: "",
   start_date: "",
   end_date: "",
+  days: [],
+  times: [],
   notes: "",
   self_administered: false,
 };
@@ -34,6 +37,15 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
     frequency: Yup.string().required("Geef alstublieft de frequentie op"),
     start_date: Yup.string().required("Geef alstublieft de startdatum op"),
     end_date: Yup.string().required("Geef alstublieft de einddatum op"),
+    days: Yup.array()
+      .required("Geef alstublieft de dagen op")
+      .min(1, "Geef alstublieft de dagen op"),
+    times: Yup.array()
+      .required("Geef alstublieft de tijden op")
+      .min(1, "Geef alstublieft de tijden op")
+      .test("validate-time", "Geef alstublieft de tijden op", (value) => {
+        return value.every((time) => !!time);
+      }),
     notes: Yup.string().required("Geef alstublieft notities op"),
     self_administered: Yup.boolean(),
   });
@@ -60,11 +72,10 @@ const MedicationForm: FunctionComponent<Props> = ({
     out_of_service: false,
   });
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetMedication(medicationId, clientId);
+  const { data, isLoading: isDataLoading } = useGetMedication(
+    medicationId,
+    clientId
+  );
 
   const { mutate: create, isLoading: isCreating } =
     useCreateMedication(clientId);
@@ -155,29 +166,6 @@ const MedicationForm: FunctionComponent<Props> = ({
               onBlur={handleBlur}
               error={touched.dosage && errors.dosage}
             />
-            <InputField
-              className={"w-full mb-4.5"}
-              required={true}
-              id={"frequency"}
-              label={"Frequentie"}
-              type={"text"}
-              placeholder={"Enter frequency"}
-              value={values.frequency}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.frequency && errors.frequency}
-            />
-            <MultipleDatePicker name={"days"} label={"Dagen"} required={true} />
-            <ComboBox
-              label="Beheerd door"
-              placeholder="Zoek naar werknemers"
-              data={SearchData}
-              isLoading={isSearching}
-              setSelected={setSelectedOption}
-              setSearchedKey={setSearchedKey}
-              error={errorOptionMessage}
-              setError={setErrorOptionMessage}
-            />
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
               <InputField
                 label={"Startdatum"}
@@ -208,6 +196,30 @@ const MedicationForm: FunctionComponent<Props> = ({
                 }
               />
             </div>
+            <MultipleDatePicker
+              minDate={values.start_date}
+              maxDate={values.end_date}
+              name={"days"}
+              label={"Dagen"}
+              required={true}
+              error={touched.days && errors.days}
+            />
+            <MultipleTimePicker
+              name={"times"}
+              label={"Tijden"}
+              required={true}
+              error={touched.times && errors.times}
+            />
+            <ComboBox
+              label="Beheerd door"
+              placeholder="Zoek naar werknemers"
+              data={SearchData}
+              isLoading={isSearching}
+              setSelected={setSelectedOption}
+              setSearchedKey={setSearchedKey}
+              error={errorOptionMessage}
+              setError={setErrorOptionMessage}
+            />
             <Textarea
               rows={6}
               id={"notes"}

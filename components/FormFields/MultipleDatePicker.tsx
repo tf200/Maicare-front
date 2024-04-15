@@ -1,17 +1,20 @@
 import React, { FunctionComponent } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { nl } from "date-fns/locale";
-registerLocale("nl", nl);
 import { useField } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
+registerLocale("nl", nl);
 import "./date-picker.css";
 
 const MultipleDatePicker: FunctionComponent<{
   name: string;
   label: string;
+  minDate?: Date;
+  maxDate?: Date;
   required?: boolean;
+  error?: any;
 }> = (props) => {
-  const [inputProps, metaProps, helperProps] = useField<Date[]>({
+  const [inputProps, metaProps, helperProps] = useField<string[]>({
     name: props.name,
   });
   return (
@@ -20,15 +23,23 @@ const MultipleDatePicker: FunctionComponent<{
         {props.label} {props.required && <span className="text-meta-1">*</span>}
       </div>
       <DatePicker
-        onChange={(values) => {
-          helperProps.setValue(values);
+        onChange={async (values) => {
+          await helperProps.setTouched(true);
+          await helperProps.setValue(values.map((date) => date.toISOString()));
         }}
         selectsMultiple={true}
         inline={true}
-        selectedDates={inputProps.value}
+        selectedDates={inputProps.value.map((date) => new Date(date))}
         required={props.required}
         locale="nl"
+        minDate={props.minDate}
+        maxDate={props.maxDate}
       />
+      {props.error && (
+        <p role="alert" className="pt-1 text-red">
+          {props.error}
+        </p>
+      )}
     </div>
   );
 };

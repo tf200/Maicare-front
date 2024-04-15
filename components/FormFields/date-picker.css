@@ -9,7 +9,11 @@
 }
 
 .react-datepicker__header {
-    @apply rounded-[0] border-b border-stroke;
+    @apply border-b border-stroke;
+}
+
+.react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+    @apply rounded-t-[0];
 }
 
 .react-datepicker__day--selected {

@@ -4,7 +4,9 @@ export type NewMedicationReqDto = {
   frequency: string;
   start_date: string;
   end_date: string;
+  self_administered: boolean;
+  days: string[];
+  times: string[];
   notes: string;
   client: number;
-  self_administered: boolean
 };
