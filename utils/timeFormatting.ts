@@ -43,3 +43,13 @@ export const DAY_MONTH_FORMAT = "DD MMM";
 export function dayMonthFormat(date: string | Date) {
   return dayjs(date).format(DAY_MONTH_FORMAT);
 }
+
+export const MONTH_FORMAT = "MMMM";
+export function monthFormat(date: string | Date) {
+  return dayjs(date).format(MONTH_FORMAT);
+}
+
+export const MONTH_YEAR_FORMAT = "MMMM YYYY";
+export function monthYearFormat(date: string | Date) {
+  return dayjs(date).format(MONTH_YEAR_FORMAT);
+}

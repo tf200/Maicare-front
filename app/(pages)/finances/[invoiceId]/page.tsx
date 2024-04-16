@@ -163,16 +163,17 @@ const UpdateStatus: FunctionComponent<{
           </div>
         }
       />
-      {values.status === "partially_paid" && (
-        <InputField
-          name={"payed_amount"}
-          label={"Payed amount"}
-          placeholder={"Payed amount"}
-          className="mb-4"
-          type={"number"}
-          isPrice={true}
-        />
-      )}
+      {values.status === "partially_paid" ||
+        (values.status === "overpaid" && (
+          <InputField
+            name={"payed_amount"}
+            label={"Payed amount"}
+            placeholder={"Payed amount"}
+            className="mb-4"
+            type={"number"}
+            isPrice={true}
+          />
+        ))}
       {(values.status === "paid" || values.status === "partially_paid") && (
         <Select
           options={PAYMENT_TYPE_OPTIONS}

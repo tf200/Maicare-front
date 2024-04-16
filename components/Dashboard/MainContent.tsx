@@ -8,12 +8,16 @@ import {
 } from "@/utils/automatic-reports";
 import { dateFormat } from "@/utils/timeFormatting";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
+import InflowOutflow from "@/components/Charts/InflowOutflow";
+import TopCareTypes from "@/components/Charts/TopCareTypes";
 
 const MainContent: React.FC = () => {
   return (
     <>
       <DashboardOverview />
       <AutomaticReports />
+      <FinancesOverview />
+      <CareTypeRevenue />
     </>
   );
 };
@@ -76,5 +80,25 @@ const Client: React.FC<{ client: number }> = ({ client }) => {
         </div>
       )}
     </>
+  );
+};
+
+const FinancesOverview: React.FC = () => {
+  return (
+    <Panel title="Financiën" containerClassName="px-4 py-7" className={"mb-6"}>
+      <InflowOutflow />
+    </Panel>
+  );
+};
+
+const CareTypeRevenue: React.FC = () => {
+  return (
+    <Panel
+      title="Top zorgtypes"
+      containerClassName="px-4 py-7 flex justify-center"
+      className="max-w-2xl"
+    >
+      <TopCareTypes />
+    </Panel>
   );
 };
