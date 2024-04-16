@@ -30,6 +30,8 @@ export const LOCATION_VIEW = "location.view";
 
 export const VIEW_OWN_PROFILE = "view.own.profile";
 
+export const NOTIFICATIONS_VIEW = "notifications.view";
+
 export const DASHBOARD_VIEW = "dashboard.view";
 
 export const FINANCE_VIEW = "finance.view";
@@ -58,6 +60,8 @@ export const PERMISSIONS = [
 
   EMPLOYEE_PERMISSIONS_VIEW,
   EMPLOYEE_PERMISSIONS_EDIT,
+
+  NOTIFICATIONS_VIEW,
 
   CONTACT_VIEW,
   CONTACT_EDIT,

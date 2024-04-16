@@ -14,7 +14,7 @@ import { usePatchMedication } from "@/utils/medications/patchMedication";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import ComboBox from "../ComboBox";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
-import MultipleDatePicker from "@/components/FormFields/MultipleDatePicker";
+import DateTimePicker from "@/components/FormFields/DateTimePicker";
 import MultipleTimePicker from "@/components/FormFields/MultipleTimePicker";
 
 const initialValues: MedicationFormType = {
@@ -22,8 +22,7 @@ const initialValues: MedicationFormType = {
   dosage: "",
   start_date: "",
   end_date: "",
-  days: [],
-  times: [],
+  slots: [],
   notes: "",
   self_administered: false,
 };
@@ -34,15 +33,7 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
     dosage: Yup.string().required("Geef alstublieft de dosering op"),
     start_date: Yup.string().required("Geef alstublieft de startdatum op"),
     end_date: Yup.string().required("Geef alstublieft de einddatum op"),
-    days: Yup.array()
-      .required("Geef alstublieft de dagen op")
-      .min(1, "Geef alstublieft de dagen op"),
-    times: Yup.array()
-      .required("Geef alstublieft de tijden op")
-      .min(1, "Geef alstublieft de tijden op")
-      .test("validate-time", "Geef alstublieft de tijden op", (value) => {
-        return value.every((time) => !!time);
-      }),
+    slots: Yup.array(),
     notes: Yup.string().required("Geef alstublieft notities op"),
     self_administered: Yup.boolean(),
   });
@@ -193,19 +184,13 @@ const MedicationForm: FunctionComponent<Props> = ({
                 }
               />
             </div>
-            <MultipleDatePicker
+            <DateTimePicker
               minDate={values.start_date}
               maxDate={values.end_date}
-              name={"days"}
+              name={"slots"}
               label={"Dagen"}
               required={true}
               error={touched.days && errors.days}
-            />
-            <MultipleTimePicker
-              name={"times"}
-              label={"Tijden"}
-              required={true}
-              error={touched.times && errors.times}
             />
             <ComboBox
               label="Beheerd door"
@@ -245,6 +230,9 @@ const MedicationForm: FunctionComponent<Props> = ({
               isLoading={isCreating || isPatching}
               formNoValidate={true}
               loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
+              onClick={() => {
+                console.log("clicked", values);
+              }}
             >
               {mode === "edit" ? "Medicatie bijwerken" : "Medicatie indienen"}
             </Button>

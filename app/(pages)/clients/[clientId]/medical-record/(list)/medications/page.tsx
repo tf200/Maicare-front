@@ -141,7 +141,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center col-span-3">
         <Button
           onClick={() => {
             manageRecord({ id: data.id });

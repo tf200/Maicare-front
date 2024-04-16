@@ -45,6 +45,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/profile")) {
     return consts.VIEW_OWN_PROFILE;
   }
+  if (pathname.startsWith("/notifications")) {
+    return consts.NOTIFICATIONS_VIEW;
+  }
 };
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -1,6 +1,7 @@
-import React, { FunctionComponent, PropsWithChildren } from "react";
+import React, { FunctionComponent, PropsWithChildren, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import ModalActionButton from "@/components/buttons/ModalActionButton";
+import { usePathname, useRouter } from "next/navigation";
 
 type ModalProps = {
   open: boolean;

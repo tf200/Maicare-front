@@ -42,3 +42,23 @@
 .react-datepicker__day-name {
     @apply w-1/7 m-0 h-10 text-center leading-10;
 }
+
+.picked-date.picked-date {
+    position: relative;
+    z-index: 1;
+    color: white;
+    background: none;
+}
+
+.picked-date.picked-date::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    transform: translate(-50%, -50%);
+    background-color: #3c50e0;
+    z-index: -1;
+}
