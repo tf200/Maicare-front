@@ -50,6 +50,7 @@ const Page: FunctionComponent = (props) => {
           columns={columns}
           page={page}
           onPageChange={setPage}
+          rowClassName={(row) => (row.original.is_read ? "" : styles.unread)}
         />
       )}
     </Panel>

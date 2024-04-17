@@ -55,9 +55,7 @@ function PaginatedTable<TData>({
         <LargeAlertMessage
           firstLine={"Oops!"}
           secondLine={
-            alertMessage
-              ? alertMessage
-              : "Sorry, geen resultaten gevonden!"
+            alertMessage ? alertMessage : "Sorry, geen resultaten gevonden!"
           }
         />
       )}

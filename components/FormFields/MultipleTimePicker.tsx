@@ -53,7 +53,6 @@ const MultipleTimePicker: FunctionComponent<{
             <Button
               onClick={() => {
                 helperProps.setValue([...inputProps.value, ""]);
-                helperProps.setTouched(true);
               }}
               className={"px-4"}
             >

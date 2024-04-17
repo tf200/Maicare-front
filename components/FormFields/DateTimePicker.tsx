@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { nl } from "date-fns/locale";
+registerLocale("nl", nl);
 import { Formik, useField } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
-registerLocale("nl", nl);
 import "./date-picker.css";
 import { useModal } from "@/components/providers/ModalProvider";
 import { ModalProps } from "@/types/modal-props";
@@ -67,6 +67,7 @@ const DateTimePicker: FunctionComponent<{
         required={props.required}
         locale="nl"
         minDate={props.minDate}
+        disabledKeyboardNavigation={true}
         maxDate={props.maxDate}
         dayClassName={(day) => {
           if (inputProps.value.some(({ date }) => date === day.toISOString())) {
@@ -88,14 +89,14 @@ export default DateTimePicker;
 
 const validationSchema = Yup.object().shape({
   times: Yup.array()
-    .of(Yup.string())
+    .min(1, "Voeg minimaal 1 tijd toe")
     .test("when-selected", (value, context) => {
       return context.parent.selected ? value.length > 0 : true;
     })
-    .test("valid-time", "Invalid time", (value) => {
+    .test("valid-time", "Ongeldige tijd", (value) => {
       return !value.some((time) => !/^\d{2}:\d{2}$/.test(time));
     })
-    .test("unique-time", "Duplicate time", (value) => {
+    .test("unique-time", "Dubbele tijd", (value) => {
       return new Set(value).size === value.length;
     }),
   selected: Yup.boolean(),

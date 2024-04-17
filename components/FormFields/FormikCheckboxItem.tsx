@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import CheckIcon from "@/components/icons/CheckIcon";
 import clsx from "clsx";
 import { Field } from "formik";
+import { cn } from "@/utils/cn";
 
 interface Props {
   label: string;
@@ -34,7 +35,12 @@ const FormikCheckboxItem: FunctionComponent<Props> = ({
             }
           )}
         >
-          <span className="text-white opacity-100">
+          <span
+            className={cn("text-white dark:text-white", {
+              "opacity-100": value,
+              "opacity-0": !value,
+            })}
+          >
             <CheckIcon />
           </span>
         </div>
