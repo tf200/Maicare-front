@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 import PaginatedTable from "@/components/PaginatedTable";
 import { useNotifications } from "@/utils/notifications/getNotifications";
 import { ColumnDef } from "@tanstack/react-table";
@@ -8,6 +8,7 @@ import Panel from "@/components/Panel";
 import { dateFormat, shortDateTimeFormat } from "@/utils/timeFormatting";
 import styles from "./styles.module.scss";
 import BellIcon from "@/components/icons/BellIcon";
+import { Row } from "@tanstack/table-core";
 
 const Page: FunctionComponent = (props) => {
   const { data, page, setPage, isFetching } = useNotifications();
@@ -30,6 +31,11 @@ const Page: FunctionComponent = (props) => {
     ];
   }, []);
 
+  const rowClassName = useCallback(
+    (row: Row<NotificationItem>) => (row.original.is_read ? "" : styles.unread),
+    []
+  );
+
   return (
     <Panel
       title={"Notifications"}
@@ -50,7 +56,7 @@ const Page: FunctionComponent = (props) => {
           columns={columns}
           page={page}
           onPageChange={setPage}
-          rowClassName={(row) => (row.original.is_read ? "" : styles.unread)}
+          rowClassName={rowClassName}
         />
       )}
     </Panel>

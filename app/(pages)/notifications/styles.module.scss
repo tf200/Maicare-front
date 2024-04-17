@@ -8,3 +8,6 @@
 .unread {
     @apply bg-primary/10;
 }
+.unread.unread:hover {
+    @apply bg-primary/20;
+}
