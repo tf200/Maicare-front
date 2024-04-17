@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import { NotificationItem } from "@/types/notifications/notifications-list.dto";
-import { dateFormat } from "@/utils/timeFormatting";
+import { shortDateTimeFormat } from "@/utils/timeFormatting";
 import { useMarkAsRead } from "@/utils/notifications/markAsRead";
 
 type Props = {
@@ -19,6 +19,16 @@ const Notifications: FunctionComponent<Props> = ({ notifications }) => {
         {notifications.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}
+        <li>
+          <Link
+            href="/notifications"
+            className="flex flex-col border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+          >
+            <p className="text-sm mb-0 text-black dark:text-white font-bold text-center">
+              View all
+            </p>
+          </Link>
+        </li>
       </ul>
     </>
   );
@@ -52,7 +62,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
           {notification.content}
         </p>
 
-        <p className="text-xs">{dateFormat(notification.createdAt)}</p>
+        <p className="text-xs">{shortDateTimeFormat(notification.createdAt)}</p>
       </Link>
     </li>
   );

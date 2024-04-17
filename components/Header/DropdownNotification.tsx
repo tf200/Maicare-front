@@ -3,7 +3,7 @@ import Link from "next/link";
 import Notifications from "@/components/Notifications";
 import BellIcon from "@/components/icons/BellIcon";
 import Ping from "@/components/Ping";
-import { useNotifications } from "@/utils/notifications/getNotifications";
+import { useLatestNotifications } from "@/utils/notifications/getNotifications";
 
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -35,7 +35,7 @@ const DropdownNotification = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
-  const { data, isLoading } = useNotifications();
+  const { data, isLoading } = useLatestNotifications();
   const hasUnread = useMemo(() => {
     if (!data) return false;
     return data?.results.some((n) => !n.is_read);

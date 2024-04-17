@@ -16,8 +16,12 @@ async function getNotifications(params: PaginationParams) {
 
 export const useNotifications = () => {
   const paginationParams = usePaginationParams();
-  const query = useQuery(["notifications"], () =>
-    getNotifications(paginationParams.params)
+  const query = useQuery(
+    ["notifications", paginationParams.params],
+    () => getNotifications(paginationParams.params),
+    {
+      keepPreviousData: true,
+    }
   );
 
   return {
