@@ -142,13 +142,10 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         value={data.notes}
       />
       <div className="flex gap-4 items-center col-span-3">
-        <Button
-          onClick={() => {
-            manageRecord({ id: data.id });
-          }}
-        >
-          Beheer Medicatie Records
-        </Button>
+        <LinkButton
+          href={`/clients/${clientId}/medications/${data.id}/records`}
+          text={"Beheer Medicatie Records"}
+        />
         <div>
           <IconButton
             buttonType="Danger"

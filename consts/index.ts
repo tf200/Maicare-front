@@ -238,3 +238,9 @@ export const CARE_PLAN_STATUS_VARIANT: Record<CarePlanStatus, BadgeType> = {
   suspended: "Warning",
   completed: "Success",
 };
+
+export const MEDICATION_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
+  { label: "Niet genomen", value: "not_taken" },
+  { label: "Genomen", value: "taken" },
+];
