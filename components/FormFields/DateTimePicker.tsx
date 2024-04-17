@@ -32,7 +32,6 @@ const DateTimePicker: FunctionComponent<{
       </div>
       <DatePicker
         onChange={async (date) => {
-          await helperProps.setTouched(true);
           open({
             selected: inputProps.value.some(
               ({ date: d }) => d === date.toISOString()
@@ -40,25 +39,28 @@ const DateTimePicker: FunctionComponent<{
             times: inputProps.value.find(
               ({ date: d }) => d === date.toISOString()
             )?.times,
-            onSubmit: ({ times, selected }) => {
+            onSubmit: async ({ times, selected }) => {
               if (
                 selected &&
                 inputProps.value.find((d) => d.date === date.toISOString())
               ) {
-                helperProps.setValue(
+                await helperProps.setValue(
                   inputProps.value.map((d) =>
                     d.date === date.toISOString() ? { date: d.date, times } : d
                   )
                 );
+                await helperProps.setTouched(true);
               } else if (selected) {
-                helperProps.setValue([
+                await helperProps.setValue([
                   ...inputProps.value,
                   { date: date.toISOString(), times },
                 ]);
+                await helperProps.setTouched(true);
               } else {
-                helperProps.setValue(
+                await helperProps.setValue(
                   inputProps.value.filter((d) => d.date !== date.toISOString())
                 );
+                await helperProps.setTouched(true);
               }
             },
           });
