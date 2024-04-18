@@ -9,6 +9,7 @@ import {
 import { flexRender, useReactTable } from "@tanstack/react-table";
 import ChevronDown from "@/components/icons/ChevronDown";
 import clsx from "clsx";
+import { cn } from "@/utils/cn";
 
 const debugTable = process.env.NODE_ENV === "development";
 
@@ -17,6 +18,7 @@ export type TableProps<InstanceType> = {
   columns: ColumnDef<InstanceType>[];
   onRowClick?: (instance: InstanceType) => void;
   className?: string;
+  rowClassName?: (row: Row<InstanceType>) => string;
   renderRowDetails?: (row: Row<InstanceType>) => React.ReactNode;
 };
 
@@ -26,6 +28,7 @@ function Table<T>({
   onRowClick,
   className,
   renderRowDetails,
+  rowClassName,
 }: TableProps<T>) {
   const [showRowDetails, setShowRowDetails] = useState<Row<T>>();
 
@@ -137,7 +140,10 @@ function Table<T>({
                     return row;
                   });
                 }}
-                className="px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl"
+                className={cn(
+                  "px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl",
+                  rowClassName?.(row)
+                )}
               >
                 {row.getVisibleCells().map((cell) => {
                   return (

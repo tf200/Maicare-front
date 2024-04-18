@@ -43,10 +43,6 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Dosering",
       },
       {
-        accessorKey: "frequency",
-        header: "Frequentie",
-      },
-      {
         accessorKey: "administer_name",
         header: "Beheerd door",
       },
@@ -93,7 +89,9 @@ const MedicationsPage: FunctionComponent<Props> = ({
           page={pagination.page ?? 1}
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
-          renderRowDetails={({ original }) => <RowDetails clientId={parseInt(clientId)} data={original} />}
+          renderRowDetails={({ original }) => (
+            <RowDetails clientId={parseInt(clientId)} data={original} />
+          )}
         />
       )}
       {isError && (
@@ -109,7 +107,7 @@ export default MedicationsPage;
 
 type RowDetailsProps = {
   data: MedicationsResDto;
-  clientId: number
+  clientId: number;
 };
 
 const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
@@ -130,7 +128,6 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Naam"} value={data.name} />
       <DetailCell label={"Dosering"} value={data.dosage} />
-      <DetailCell label={"Frequentie"} value={data.frequency} />
       <DetailCell label={"Startdatum"} value={data.start_date} />
       <DetailCell label={"Einddatum"} value={data.end_date} />
       <DetailCell
@@ -138,25 +135,31 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         label={"Notities"}
         value={data.notes}
       />
-      <div className="flex gap-4">
-        <IconButton
-          buttonType="Danger"
-          onClick={() => {
-            open({
-              onConfirm: () => {
-                deleteMedication(data.id);
-              },
-            });
-          }}
-          disabled={isDeleted}
-          isLoading={isDeleting}
-        >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
-        </IconButton>
+      <div className="flex gap-4 items-center col-span-3">
+        <LinkButton
+          href={`/clients/${clientId}/medications/${data.id}/records`}
+          text={"Beheer Medicatie Records"}
+        />
+        <div>
+          <IconButton
+            buttonType="Danger"
+            onClick={() => {
+              open({
+                onConfirm: () => {
+                  deleteMedication(data.id);
+                },
+              });
+            }}
+            disabled={isDeleted}
+            isLoading={isDeleting}
+          >
+            {isDeleted ? (
+              <CheckIcon className="w-5 h-5" />
+            ) : (
+              <TrashIcon className="w-5 h-5" />
+            )}
+          </IconButton>
+        </div>
         <Link href={`/clients/${clientId}/medications/${data.id}/edit`}>
           <IconButton>
             <PencilSquare className="w-5 h-5" />

@@ -1,10 +1,11 @@
 export type NewMedicationReqDto = {
   name: string;
   dosage: string;
-  frequency: string;
   start_date: string;
   end_date: string;
+  self_administered: boolean;
+  slots: DateTimes;
   notes: string;
   client: number;
-  self_administered: boolean
+  administered_by: number;
 };

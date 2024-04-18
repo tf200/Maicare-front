@@ -1,10 +1,9 @@
-import { ReadNotifsReqDto } from "@/types/notifications/read-notifs-req.dto";
-import { mockApi } from "@/utils/api";
+import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-async function markAsRead(req: ReadNotifsReqDto) {
-  const response = await mockApi.post(
-    `/system/notifications/${req.notificationIds}/read/`
+async function markAsRead(notificationId: number) {
+  const response = await api.post(
+    `/system/notifications/${notificationId}/read`
   );
   return response.data;
 }
@@ -15,6 +14,7 @@ export const useMarkAsRead = () => {
     mutationFn: markAsRead,
     onSuccess: () => {
       queryClient.invalidateQueries(["notifications"]);
+      queryClient.invalidateQueries(["latestNotifications"]);
     },
   });
 };

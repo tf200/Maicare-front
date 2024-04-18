@@ -6,32 +6,12 @@ import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import ClientSelector from "@/components/FormFields/comboboxes/ClientSelector";
 import { GenerateInvoiceReqDto } from "@/types/invoices/generate-invoice.req.dto";
-import api from "@/utils/api";
-import { InvoiceResDto } from "@/types/invoices/invoices-res.dto";
-import { useMutation, useQueryClient } from "react-query";
+import { useGenerateInvoice } from "@/utils/invoices";
 
 const initialValues: GenerateInvoiceReqDto = {
   client_id: undefined,
   start_date: "",
   end_date: "",
-};
-
-async function generateInvoice(req: GenerateInvoiceReqDto) {
-  const response = await api.post<InvoiceResDto>(
-    "/client/generate-invoice/",
-    req
-  );
-  return response.data;
-}
-
-const useGenerateInvoice = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: generateInvoice,
-    onSuccess: (res) => {
-      queryClient.invalidateQueries(["invoices"]);
-    },
-  });
 };
 
 const GenerateInvoiceModal: FunctionComponent<ModalProps> = ({

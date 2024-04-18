@@ -70,6 +70,9 @@ module.exports = {
         "title-sm2": ["22px", "28px"],
         "title-xsm": ["18px", "24px"],
       },
+      width: {
+        "1/7": "14.2857143%",
+      },
       spacing: {
         4.5: "1.125rem",
         5.5: "1.375rem",

@@ -3,7 +3,6 @@ import { MedicationsListResDto } from "@/types/medications/medications-list-res-
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { PaginationParams } from "@/types/pagination-params";
-import pagination from "@/components/Pagination";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 
 async function fetchMedicationsList(

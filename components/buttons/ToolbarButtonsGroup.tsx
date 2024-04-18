@@ -21,10 +21,11 @@ const ToolbarButtonsGroup: FunctionComponent<Props> = ({
   onOptionClicked,
 }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center flex-wrap">
       {options.map((option) => (
         <button
           key={option.value}
+          type={"button"}
           onClick={() => onOptionClicked(option)}
           className={clsx(
             "inline-flex border py-2 px-4 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary first:rounded-l-full first:pl-6 last:rounded-r-full last:pr-6",
