@@ -5,14 +5,17 @@ import { useNotifications } from "@/utils/notifications/getNotifications";
 import { ColumnDef } from "@tanstack/react-table";
 import { NotificationItem } from "@/types/notifications/notifications-list.dto";
 import Panel from "@/components/Panel";
-import { dateFormat, shortDateTimeFormat } from "@/utils/timeFormatting";
+import { shortDateTimeFormat } from "@/utils/timeFormatting";
 import styles from "./styles.module.scss";
 import BellIcon from "@/components/icons/BellIcon";
 import { Row } from "@tanstack/table-core";
+import { useMarkAsRead } from "@/utils/notifications/markAsRead";
+import { useMedicalRecordNotif } from "@/hooks/useMedicalRecordNotif";
 
 const Page: FunctionComponent = (props) => {
   const { data, page, setPage, isFetching } = useNotifications();
-
+  const { mutate: markAsRead } = useMarkAsRead();
+  const { reportMedication } = useMedicalRecordNotif();
   const columns = useMemo<ColumnDef<NotificationItem>[]>(() => {
     return [
       {
@@ -57,6 +60,12 @@ const Page: FunctionComponent = (props) => {
           page={page}
           onPageChange={setPage}
           rowClassName={rowClassName}
+          onRowClick={(notification) => {
+            if (notification.event === "medication_time") {
+              reportMedication(notification.metadata.medication_record_id);
+            }
+            markAsRead(notification.id);
+          }}
         />
       )}
     </Panel>

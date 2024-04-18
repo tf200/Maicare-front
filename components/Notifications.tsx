@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NotificationItem } from "@/types/notifications/notifications-list.dto";
 import { shortDateTimeFormat } from "@/utils/timeFormatting";
 import { useMarkAsRead } from "@/utils/notifications/markAsRead";
+import { useMedicalRecordNotif } from "@/hooks/useMedicalRecordNotif";
 
 type Props = {
   notifications: NotificationItem[];
@@ -44,11 +45,15 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
   notification,
 }) => {
   const { mutate: markAsRead } = useMarkAsRead();
+  const { reportMedication } = useMedicalRecordNotif();
   return (
     <li
       className={notification.is_read ? "" : "font-bold"}
       onClick={() => {
-        markAsRead({ notificationIds: [notification.id] });
+        if (notification.event === "medication_time") {
+          reportMedication(notification.metadata.medication_record_id);
+        }
+        markAsRead(notification.id);
       }}
     >
       <Link
@@ -62,7 +67,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
           {notification.content}
         </p>
 
-        <p className="text-xs">{shortDateTimeFormat(notification.createdAt)}</p>
+        <p className="text-xs">{shortDateTimeFormat(notification.created)}</p>
       </Link>
     </li>
   );

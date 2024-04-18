@@ -1,5 +1,5 @@
 import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -7,98 +7,89 @@ interface ChartNineState {
   series: { data: number[] }[];
 }
 
-const ChartNine: React.FC = () => {
-  const [state, setState] = useState<ChartNineState>({
-    series: [
+const options: ApexOptions = {
+  colors: ["#3C50E0", "#80CAEE"],
+  chart: {
+    fontFamily: "Satoshi, sans-serif",
+    type: "bar",
+    height: 250,
+    toolbar: {
+      show: false,
+    },
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: "35%",
+      // endingShape: 'rounded',
+      borderRadius: 0,
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    show: true,
+    width: 4,
+    colors: ["transparent"],
+  },
+  xaxis: {
+    categories: [],
+    axisBorder: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
+  },
+  legend: {
+    show: false,
+    position: "top",
+    horizontalAlign: "left",
+    fontFamily: "Satoshi",
+
+    markers: {
+      radius: 99,
+    },
+  },
+  // yaxis: {
+  //   title: false,
+  // },
+  grid: {
+    strokeDashArray: 7,
+    yaxis: {
+      lines: {
+        show: true,
+      },
+    },
+  },
+  fill: {
+    opacity: 1,
+  },
+
+  tooltip: {
+    x: {
+      show: false,
+    },
+    // y: {
+    //   formatter: function (val) {
+    //     return val;
+    //   },
+    // },
+  },
+};
+
+const CareTypesMonthlyReview: React.FC = () => {
+  const series = useMemo(() => {
+    return [
       {
         data: [268, 385, 201, 298, 187, 195, 291],
       },
       {
         data: [345, 160, 291, 187, 195, 298, 201],
       },
-    ],
-  });
-
-  // Update the state
-  const updateState = () => {
-    setState((prevState) => ({
-      ...prevState,
-      // Update the desired properties
-    }));
-  };
-  updateState;
-
-  const options: ApexOptions = {
-    colors: ["#3C50E0", "#80CAEE"],
-    chart: {
-      fontFamily: "Satoshi, sans-serif",
-      type: "bar",
-      height: 250,
-      toolbar: {
-        show: false,
-      },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "35%",
-        // endingShape: 'rounded',
-        borderRadius: 0,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      show: true,
-      width: 4,
-      colors: ["transparent"],
-    },
-    xaxis: {
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    legend: {
-      show: false,
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "Satoshi",
-
-      markers: {
-        radius: 99,
-      },
-    },
-    // yaxis: {
-    //   title: false,
-    // },
-    grid: {
-      strokeDashArray: 7,
-      yaxis: {
-        lines: {
-          show: true,
-        },
-      },
-    },
-    fill: {
-      opacity: 1,
-    },
-
-    tooltip: {
-      x: {
-        show: false,
-      },
-      // y: {
-      //   formatter: function (val) {
-      //     return val;
-      //   },
-      // },
-    },
-  };
+    ];
+  }, []);
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -143,7 +134,7 @@ const ChartNine: React.FC = () => {
         <div id="chartNine" className="-ml-5">
           <ApexCharts
             options={options}
-            series={state.series}
+            series={series}
             type="bar"
             height={250}
           />
@@ -153,4 +144,4 @@ const ChartNine: React.FC = () => {
   );
 };
 
-export default ChartNine;
+export default CareTypesMonthlyReview;

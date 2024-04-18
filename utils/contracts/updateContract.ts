@@ -1,7 +1,6 @@
 import api from "@/utils/api";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useMutation, useQueryClient } from "react-query";
-import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
 
 async function updateContract(data: Partial<ContractResDto>) {
   const { id: contractId, ...rest } = data;

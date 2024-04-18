@@ -56,3 +56,22 @@ export const usePatchMedicationRecord = (recordId: number) => {
     }
   );
 };
+
+export async function getMedicationRecord(recordId: number) {
+  const response = await api.get<MedicationRecord>(
+    `/clients/medications/records/${recordId}`
+  );
+  return response.data;
+}
+
+export const useMedicationRecordFetcher = () => {
+  const queryClient = useQueryClient();
+
+  return {
+    fetch: async (recordId: number) => {
+      return await queryClient.fetchQuery(["medication-record", recordId], () =>
+        getMedicationRecord(recordId)
+      );
+    },
+  };
+};

@@ -1,7 +1,6 @@
 import React, { FunctionComponent, PropsWithChildren, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import ModalActionButton from "@/components/buttons/ModalActionButton";
-import { usePathname, useRouter } from "next/navigation";
 
 type ModalProps = {
   open: boolean;
@@ -27,19 +26,23 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
         </Dialog.Title>
         <span className="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"></span>
         <div className="mb-10">{children}</div>
-        <div className="-mx-3 flex flex-wrap gap-y-4">
-          <div className="w-full px-3 2xsm:w-1/2 flex">
+        <div className="-mx-3 flex flex-wrap gap-y-4 justify-center">
+          {/*<div className="w-full px-3 2xsm:w-1/2 flex">*/}
+          {/*  <ModalActionButton*/}
+          {/*    onClick={onClose}*/}
+          {/*    actionType="CANCEL"*/}
+          {/*    className="w-full"*/}
+          {/*  >*/}
+          {/*    Annuleren*/}
+          {/*  </ModalActionButton>*/}
+          {/*</div>*/}
+          <div className="w-full px-3 2xsm:w-1/2">
             <ModalActionButton
               onClick={onClose}
-              actionType="CANCEL"
+              actionType="CONFIRM"
               className="w-full"
             >
-              Cancel
-            </ModalActionButton>
-          </div>
-          <div className="w-full px-3 2xsm:w-1/2">
-            <ModalActionButton actionType="CONFIRM" className="w-full">
-              Confirm
+              Bevestigen
             </ModalActionButton>
           </div>
         </div>
@@ -49,3 +52,10 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
 };
 
 export default Modal;
+
+export function getConfirmationModal(props: {
+  children: React.ReactNode;
+  modalTitle: string;
+}) {
+  return (modalProps: ModalProps) => <Modal {...modalProps} {...props} />;
+}

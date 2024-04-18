@@ -9,6 +9,13 @@ import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
 import * as Yup from "yup";
 import { usePatchMedicationRecord } from "@/utils/medication-records";
+import { useGetMedication } from "@/utils/medications/getMedication";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
+import DetailCell from "@/components/DetailCell";
+import { dateFormat, fullDateTimeFormat } from "@/utils/timeFormatting";
+import ProfilePicture from "@/components/ProfilePicture";
+import dayjs from "dayjs";
+import Loader from "@/components/common/Loader";
 
 const validationSchema = Yup.object().shape({
   status: Yup.string().required("Dit veld is verplicht"),
@@ -20,12 +27,18 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-const RecordModal: FunctionComponent<ModalProps> = ({
+const MedicationRecordModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...reset
 }) => {
   const record: MedicationRecord = additionalProps.record;
   const { mutate: patch, isLoading } = usePatchMedicationRecord(record.id);
+  const { data: medication, isLoading: isLoadingMedication } = useGetMedication(
+    record?.client_medication_id
+  );
+  const { data: client, isLoading: isLoadingClient } = useClientDetails(
+    medication?.client
+  );
   const { values, handleBlur, handleChange, errors, touched, handleSubmit } =
     useFormik({
       initialValues: {
@@ -48,7 +61,34 @@ const RecordModal: FunctionComponent<ModalProps> = ({
       validationSchema,
     });
   return (
-    <FormModal {...reset} title="Fill Record">
+    <FormModal {...reset} title="Medicatie record">
+      {client && (
+        <div className="flex items-center gap-4 mb-6 border border-stroke p-6 bg-white">
+          <ProfilePicture profilePicture={client.profile_picture} />
+          <DetailCell
+            label={"Naam"}
+            value={`${client.first_name} ${client.last_name}`}
+          />
+          <DetailCell
+            label={"Geboortedatum"}
+            value={
+              dateFormat(client.date_of_birth) +
+              " (" +
+              dayjs().diff(client.date_of_birth, "year") +
+              " jaar)"
+            }
+          />
+        </div>
+      )}
+      {isLoadingMedication && <Loader />}
+      {isLoadingClient && <Loader />}
+      {medication && (
+        <div className="flex gap-4 mb-6 p-6 border border-stroke bg-white">
+          <DetailCell label={"Medicatie"} value={medication.name} />
+          <DetailCell value={medication.dosage} label={"Dosering"} />
+          <DetailCell value={fullDateTimeFormat(record.time)} label={"Tijd"} />
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <Select
           className="mb-6"
@@ -82,4 +122,4 @@ const RecordModal: FunctionComponent<ModalProps> = ({
   );
 };
 
-export default RecordModal;
+export default MedicationRecordModal;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "@/utils/api";
 
 const UseSignIn = async (
   authData: {},
@@ -8,8 +9,8 @@ const UseSignIn = async (
   setIsLoading(true);
   setAlertState(["", ""]);
 
-  await axios
-    .post(process.env.NEXT_PUBLIC_API_URL + "/token/", authData)
+  await api
+    .post("token/", authData)
     .then((response) => {
       localStorage.setItem("a", response.data.access);
       localStorage.setItem("r", response.data.refresh);

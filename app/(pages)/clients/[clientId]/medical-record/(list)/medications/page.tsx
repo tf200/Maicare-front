@@ -21,10 +21,6 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { fullDateFormat } from "@/utils/timeFormatting";
-import Button from "@/components/buttons/Button";
-import { ModalProps } from "@/types/modal-props";
-import Modal from "@/components/Modals/Modal";
-import FormModal from "@/components/Modals/FormModal";
 
 type Props = {
   params: { clientId: string };
@@ -128,8 +124,6 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
     })
   );
 
-  const { open: manageRecord } = useModal(MedicationRecordsModal);
-
   return (
     <div className={"grid grid-cols-3 gap-2"}>
       <DetailCell label={"Naam"} value={data.name} />
@@ -173,16 +167,5 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         </Link>
       </div>
     </div>
-  );
-};
-
-const MedicationRecordsModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...rest
-}) => {
-  return (
-    <FormModal {...rest} title={"Medicatie Records"}>
-      Medication ID: {additionalProps?.id}
-    </FormModal>
   );
 };
