@@ -31,6 +31,7 @@ const initialValues: MedicationFormType = {
   end_date: "",
   slots: [],
   notes: "",
+  administered_by: undefined,
   self_administered: false,
 };
 
@@ -42,6 +43,7 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
     end_date: Yup.string().required("Geef alstublieft de einddatum op"),
     slots: Yup.array().min(1, "Selecteer alstublieft minstens één dag"),
     notes: Yup.string().required("Geef alstublieft notities op"),
+    administered_by: Yup.mixed(),
     self_administered: Yup.boolean(),
   });
 
@@ -214,8 +216,8 @@ const MedicationForm: FunctionComponent<Props> = ({
             />
           </div>
           <DateTimePicker
-            minDate={values.start_date}
-            maxDate={values.end_date}
+            minDate={dayjs(values.start_date).toDate()}
+            maxDate={dayjs(values.end_date).toDate()}
             name={"slots"}
             label={"Dagen"}
             required={true}

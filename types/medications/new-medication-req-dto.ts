@@ -7,4 +7,5 @@ export type NewMedicationReqDto = {
   slots: DateTimes;
   notes: string;
   client: number;
+  administered_by: number;
 };
