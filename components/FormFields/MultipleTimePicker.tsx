@@ -22,7 +22,7 @@ const MultipleTimePicker: FunctionComponent<{
       <div>
         <div className="flex flex-col gap-2">
           {inputProps.value.map((time, index) => (
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2" key={time}>
               <InputField
                 key={index}
                 className="w-1/4"

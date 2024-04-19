@@ -6,7 +6,7 @@ import Panel from "@/components/Panel";
 import PaginatedTable from "@/components/PaginatedTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { MedicationRecord } from "@/types/medication-records";
-import { shortDateTimeFormat } from "@/utils/timeFormatting";
+import { dateFormat, shortDateTimeFormat } from "@/utils/timeFormatting";
 import { useModal } from "@/components/providers/ModalProvider";
 import MedicationRecordModal from "@/components/Modals/MedicationRecordModal";
 import StatusBadge from "@/components/StatusBadge";
@@ -58,7 +58,7 @@ const Page: FunctionComponent<Props> = ({
       },
       {
         accessorKey: "reason",
-        header: "Reden",
+        header: "Reden (voor het geval niet genomen)",
       },
     ];
   }, []);
@@ -106,7 +106,11 @@ const MedicationDetails: FunctionComponent<{
         <div className="flex gap-4 p-5">
           <DetailCell label={"Naam"} value={data.name} />
           <DetailCell label={"Dosering"} value={data.dosage} />
-          <DetailCell label={"Startdatum"} value={data.start_date} />
+          <DetailCell
+            label={"Startdatum"}
+            value={dateFormat(data.start_date)}
+          />
+          <DetailCell label={"Einddatum"} value={dateFormat(data.end_date)} />
         </div>
       )}
     </div>

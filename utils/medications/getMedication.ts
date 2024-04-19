@@ -16,6 +16,7 @@ export const useGetMedication = (dataId: number, clientId?: number) => {
       : ["medications", dataId],
     queryFn: fetchMedication(dataId),
     keepPreviousData: true,
+    enabled: !!dataId,
   });
 
   return {
