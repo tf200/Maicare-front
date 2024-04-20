@@ -6,7 +6,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { ColumnDef } from "@tanstack/react-table";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { fullDateFormat } from "@/utils/timeFormatting";
-import { getRate, rateType } from "@/utils/contracts/rate-utils";
+import { careTypeDict, getRate, rateType } from "@/utils/contracts/rate-utils";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
@@ -50,6 +50,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
       {
         accessorKey: "care_type",
         header: "Zorgtype",
+        accessorFn: (item) => careTypeDict[item.care_type],
       },
       {
         id: "Tarieftype",
@@ -77,7 +78,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
               onEdit={(e) => {
                 e.stopPropagation();
                 router.push(
-                  `/clients/${info.row.original.client}/contracts/${info.row.original.id}/edit`
+                  `/clients/${info.row.original.client_id}/contracts/${info.row.original.id}/edit`
                 );
               }}
             />
@@ -98,7 +99,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
           onRowClick={(row) =>
-            router.push(`/clients/${row.client}/contracts/${row.id}`)
+            router.push(`/clients/${row.client_id}/contracts/${row.id}`)
           }
         />
       )}

@@ -16,7 +16,7 @@ export const useUpdateContract = () => {
   return useMutation({
     mutationFn: updateContract,
     onSuccess: (res) => {
-      queryClient.invalidateQueries([res.client, "contracts"]);
+      queryClient.invalidateQueries([res.client_id, "contracts"]);
       queryClient.invalidateQueries(["contracts"]);
     },
   });

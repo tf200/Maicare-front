@@ -11,7 +11,7 @@ import {
   ContractFormType,
 } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
-import { CARE_TYPE_OPTIONS, RATE_TYPE_ARRAY } from "@/consts";
+import { CARE_RATE_TYPE_OPTIONS, RATE_TYPE_ARRAY } from "@/consts";
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
@@ -77,14 +77,14 @@ function mapData(
   contact: number
 ): NewContractReqDto {
   return {
-    client: client,
-    sender: contact,
+    client_id: client,
+    sender_id: contact,
     start_date: form.start_date,
     duration_client: +form.client_contract_period,
     duration_sender: +form.company_contract_period,
     care_type: form.care_type,
-    rate_type: form.rate_type as RateType,
-    rate_value: parseFloat(form.rate_value),
+    price_frequency: form.rate_type as RateType,
+    price: parseFloat(form.rate_value),
     temporary_file_ids: form.temporary_file_ids,
     attachment_ids_to_delete: form.attachment_ids_to_delete,
   };
@@ -237,7 +237,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={values.rate_type}
               onChange={handleChange}
               onBlur={handleBlur}
-              options={CARE_TYPE_OPTIONS}
+              options={CARE_RATE_TYPE_OPTIONS}
               error={
                 touched.rate_type && errors.rate_type && errors.rate_type + ""
               }
