@@ -14,6 +14,7 @@ import { UseQueryResult } from "react-query";
 import { ContractsListDto } from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
 import { careTypeDict } from "@/consts";
+import MonthsBetween from "@/components/MonthsBetween";
 
 type Props = {
   queryResult: WithPaginationResult<UseQueryResult<ContractsListDto>>;
@@ -40,10 +41,21 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
     return [
       {
         header: "Periode",
-        accessorFn: (item) => (
+        cell: ({
+          row: {
+            original: { start_date, end_date },
+          },
+        }) => (
           <div>
-            <div>{fullDateFormat(item.start_date)}</div>
-            <div>{fullDateFormat(item.end_date)}</div>
+            <div>
+              <strong>Van:</strong> {fullDateFormat(start_date)}
+            </div>
+            <div>
+              <strong>Tot:</strong> {fullDateFormat(end_date)}
+            </div>
+            <div>
+              <MonthsBetween startDate={start_date} endDate={end_date} />
+            </div>
           </div>
         ),
       },
