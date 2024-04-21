@@ -5,6 +5,7 @@ type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   error?: any;
   isPrice?: boolean;
+  unit?: string;
 };
 
 const InputField: FunctionComponent<InputFieldType> = ({
@@ -14,6 +15,7 @@ const InputField: FunctionComponent<InputFieldType> = ({
   required,
   error,
   isPrice,
+  unit,
   form,
   ...props
 }) => {
@@ -32,10 +34,17 @@ const InputField: FunctionComponent<InputFieldType> = ({
             </span>
           </span>
         )}
+        {unit && (
+          <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
+            <span className="text-graydark/70 font-bold text-lg dark:text-white">
+              {unit}
+            </span>
+          </span>
+        )}
         <input
           {...props}
           id={id}
-          data-is-price={isPrice}
+          data-is-price={!!(isPrice || unit)}
           required={required}
           aria-label={label || props.placeholder}
           className={clsx(

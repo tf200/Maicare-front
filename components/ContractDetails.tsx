@@ -20,6 +20,7 @@ import {
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import DownloadFile from "@/components/DownloadFile";
+import MonthsBetween from "@/components/MonthsBetween";
 
 type Props = {
   clientId: number;
@@ -108,7 +109,11 @@ function ContractData(props: { contractData: ContractResDto }) {
               </span>
               <span className="mr-5">
                 {" "}
-                Zorgperiode: {props.contractData.duration_client} maanden{" "}
+                Zorgperiode:{" "}
+                <MonthsBetween
+                  startDate={props.contractData.start_date}
+                  endDate={props.contractData.end_date}
+                />
               </span>
             </p>
           </div>

@@ -6,13 +6,14 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { ColumnDef } from "@tanstack/react-table";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { fullDateFormat } from "@/utils/timeFormatting";
-import { careTypeDict, getRate, rateType } from "@/utils/contracts/rate-utils";
+import { getRate, rateType } from "@/utils/contracts/rate-utils";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
 import { UseQueryResult } from "react-query";
 import { ContractsListDto } from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
+import { careTypeDict } from "@/consts";
 
 type Props = {
   queryResult: WithPaginationResult<UseQueryResult<ContractsListDto>>;
@@ -38,19 +39,18 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const columnDef = useMemo<ColumnDef<ContractResDto>[]>(() => {
     return [
       {
-        accessorKey: "start_date",
-        header: "Startdatum",
-        cell: (info) => fullDateFormat(info.getValue() as string),
-      },
-      {
-        accessorKey: "end_date",
-        header: "Einddatum",
-        cell: (info) => fullDateFormat(info.getValue() as string),
+        header: "Periode",
+        accessorFn: (item) => (
+          <div>
+            <div>{fullDateFormat(item.start_date)}</div>
+            <div>{fullDateFormat(item.end_date)}</div>
+          </div>
+        ),
       },
       {
         accessorKey: "care_type",
         header: "Zorgtype",
-        accessorFn: (item) => careTypeDict[item.care_type],
+        cell: (item) => careTypeDict[item.getValue() as string],
       },
       {
         id: "Tarieftype",

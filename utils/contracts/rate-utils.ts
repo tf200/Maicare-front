@@ -12,11 +12,6 @@ const rateDict: Record<RateType, string> = {
   monthly: "Per maand",
 };
 
-export const careTypeDict: Record<CareType, string> = {
-  ambulante: "Ambulante",
-  accommodation: "Accommodatie",
-};
-
 export function getRate(item: ContractResDto) {
   const rate = item.price;
 
