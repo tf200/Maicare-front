@@ -242,7 +242,12 @@ const ContractForm: FunctionComponent<PropsType> = ({
               error={touched.type && errors.type && errors.type + ""}
             />
           </div>
-          <ManageContractType />
+          <div className="flex flex-col xl:flex-row gap-6 mb-6">
+            <div className="xl:w-1/2" />
+            <div className="xl:w-1/2">
+              <ManageContractType />
+            </div>
+          </div>
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select
               label={"Raamovereenkomst"}
@@ -500,11 +505,14 @@ const ManageContractType: FunctionComponent = () => {
       onClick={() => {
         open({});
       }}
-      className="flex flex-col gap-2 px-4 py-3 info-box"
+      className="flex w-full flex-col gap-2 px-4 py-3 info-box"
     >
       <p>
         <InfoIcon className="inline-block relative -top-0.5" />{" "}
-        <span>Beheer contracttypen</span>
+        <span>
+          Beheer contracttypen?{" "}
+          <div className="inline-block text-primary">Klik hier!</div>
+        </span>
       </p>
     </button>
   );
@@ -587,7 +595,7 @@ const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({
 }) => {
   const { mutate: deleteContractType, isLoading } = useDeleteContractType();
   return (
-    <div className="flex justify-between items-center border-b border-stroke py-3">
+    <div className="flex justify-between items-center border p-4 rounded-lg bg-white border-stroke py-3">
       <p>{name}</p>
       <div className="flex gap-2">
         <IconButton
