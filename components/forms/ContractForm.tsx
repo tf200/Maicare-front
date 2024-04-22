@@ -55,6 +55,7 @@ import {
 import IconButton from "@/components/buttons/IconButton";
 import TrashIcon from "@/components/icons/TrashIcon";
 import Loader from "@/components/common/Loader";
+import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -69,6 +70,7 @@ const initialValues: ContractFormType = {
   tax: "",
   contract_name: "",
   type: "",
+  is_default_tax: false,
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
@@ -113,9 +115,17 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
           return true;
         }
       ),
-    tax: Yup.string().required("Geef alstublieft de belasting op"),
     contract_name: Yup.string().required("Geef alstublieft de contractnaam op"),
     type: Yup.string().required("Geef alstublieft het type op"),
+    is_default_tax: Yup.boolean(),
+    tax: Yup.string().test("required_if_not_default", function (value, ctx) {
+      if (ctx.parent.is_default_tax) {
+        return true;
+      }
+      return Yup.string()
+        .required("Geef alstublieft de BTW op")
+        .isValidSync(value);
+    }),
   });
 
 type PropsType = {
@@ -142,7 +152,7 @@ function mapData(
         .filter((a) => !form.removed_attachments.includes(a))
         .concat(form.added_attachments) ?? form.added_attachments,
     reminder_period: +form.reminder_period,
-    tax: +form.tax,
+    tax: form.is_default_tax ? -1 : +form.tax,
     care_name: form.contract_name,
     type_id: +form.type,
   };
@@ -375,23 +385,30 @@ const ContractForm: FunctionComponent<PropsType> = ({
             />
           </div>
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
+            <div className="w-full xl:w-1/2">
+              <FormikCheckboxItem
+                id="is_default_tax"
+                name="is_default_tax"
+                label="Standaard BTW"
+              />
+            </div>
             <InputField
               name={"tax"}
               id={"tax"}
-              required={true}
+              required={!values.is_default_tax}
               type={"number"}
               min={0}
               step="0.1"
               label={"BTW percentage"}
               unit={"%"}
+              disabled={values.is_default_tax}
               placeholder={"Voer BTW percentage in"}
-              value={values.tax}
+              value={values.is_default_tax ? "" : values.tax}
               onChange={handleChange}
               onBlur={handleBlur}
               error={touched.tax && errors.tax && errors.tax + ""}
               className="w-full xl:w-1/2"
             />
-            <div className="w-full xl:w-1/2 h-0" />
           </div>
         </div>
         <div>
@@ -402,6 +419,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
             label={"Bestanden"}
             name={"added_attachments"}
             id={"added_attachments"}
+            endpoint={"global_v2"}
           />
           {mode === "update" && initialData?.attachments && (
             <FilesDeleter

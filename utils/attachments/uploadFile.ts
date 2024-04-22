@@ -5,6 +5,7 @@ import { FileUploadResponse } from "@/types/attachments/file-upload-res.dto";
 export const endpoints = {
   global: "client/temporary-files/",
   appointment: "appointments/temporary-files/",
+  global_v2: "system/attachments/upload",
 };
 
 export type UploadEndpointType = keyof typeof endpoints;

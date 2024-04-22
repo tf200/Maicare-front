@@ -19,4 +19,5 @@ export type ContractFormType = {
   tax: string;
   contract_name: string;
   type: string;
+  is_default_tax: boolean;
 };
