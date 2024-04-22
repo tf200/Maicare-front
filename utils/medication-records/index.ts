@@ -24,7 +24,7 @@ async function getMedicationRecords(
 export const useMedicationRecords = (medicationId: number) => {
   const pagination = usePaginationParams();
   const query = useQuery({
-    queryKey: ["medication-records", pagination.params],
+    queryKey: ["medication-records", medicationId, pagination.params],
     queryFn: () => getMedicationRecords(medicationId, pagination.params),
   });
 
@@ -51,7 +51,7 @@ export const usePatchMedicationRecord = (recordId: number) => {
     (data: PatchMedicationRecordDto) => patchMedicationRecord(recordId, data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["medication-records"]);
+        queryClient.invalidateQueries(["medication-records", recordId]);
       },
     }
   );
@@ -69,8 +69,9 @@ export const useMedicationRecordFetcher = () => {
 
   return {
     fetch: async (recordId: number) => {
-      return await queryClient.fetchQuery(["medication-record", recordId], () =>
-        getMedicationRecord(recordId)
+      return await queryClient.fetchQuery(
+        ["medication-record-details", recordId],
+        () => getMedicationRecord(recordId)
       );
     },
   };

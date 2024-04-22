@@ -1,12 +1,15 @@
 "use client";
 
-import React, { Fragment, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent, useMemo } from "react";
 import { useClientContractsList } from "@/utils/contracts/getClientContractsList";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { dateFormat, shortDateFormat } from "@/utils/timeFormatting";
 import { getRate, rateString } from "@/utils/contracts/rate-utils";
+import { monthsBetween } from "@/utils/monthsBetween";
+import dayjs from "dayjs";
+import MonthsBetween from "@/components/MonthsBetween";
 
 type Props = {
   clientId: number;
@@ -33,7 +36,12 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
           <DetailCell label={"Zorgtype"} value={item.care_type} />
           <DetailCell
             label={"Zorgperiode"}
-            value={`${item.duration_client} maanden`}
+            value={
+              <MonthsBetween
+                startDate={item.start_date}
+                endDate={item.end_date}
+              />
+            }
           />
           <DetailCell label={rateString(item)} value={getRate(item)} />
         </div>

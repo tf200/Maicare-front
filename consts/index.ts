@@ -8,6 +8,8 @@ import { PaginationParams } from "@/types/pagination-params";
 import Draft from "draft-js";
 import { CarePlanStatus } from "@/types/care-plan";
 import { BadgeType } from "@/types/badge-type";
+import { CareType } from "@/types/contracts/new-contract-req.dto";
+import { RateType } from "@/types/rate-type";
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
@@ -20,7 +22,13 @@ export const ALLERGY_TYPE_ARRAY = [
   "Pollen",
   "Overig",
 ] as const;
-export const RATE_TYPE_ARRAY = ["day", "minute", "hour", "week"] as const;
+export const RATE_TYPE_ARRAY = [
+  "daily",
+  "minute",
+  "hourly",
+  "weekly",
+  "monthly",
+] as const;
 
 export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work"] as const;
 
@@ -78,13 +86,33 @@ export const ALLERGY_TYPE_OPTIONS: AllergyOption[] = [
   { label: "Overig", value: "Overig" },
 ];
 
-export const CARE_TYPE_OPTIONS: RateTypeOption[] = [
+export const CARE_RATE_TYPE_OPTIONS: RateTypeOption[] = [
   { label: "Selecteer Zorgtype", value: "" },
-  { label: "Per uur", value: "hour" },
-  { label: "Dagelijks", value: "day" },
   { label: "Per minuut", value: "minute" },
-  { label: "Per week", value: "week" },
+  { label: "Per uur", value: "hourly" },
+  { label: "Dagelijks", value: "daily" },
+  { label: "Per week", value: "weekly" },
+  { label: "Per maand", value: "monthly" },
 ];
+
+export const CARE_RATE_OPTIONS_BY_TYPE: Record<CareType, RateTypeOption[]> = {
+  ambulante: [
+    { label: "Selecteer Tarieftype", value: "" },
+    { label: "Per minuut", value: "minute" },
+    { label: "Per uur", value: "hourly" },
+  ],
+  accommodation: [
+    { label: "Selecteer Tarieftype", value: "" },
+    { label: "Dagelijks", value: "daily" },
+    { label: "Per week", value: "weekly" },
+    { label: "Per maand", value: "monthly" },
+  ],
+};
+
+export const CARE_RATE_BY_TYPE: Record<CareType, RateType[]> = {
+  ambulante: ["hourly", "minute"],
+  accommodation: ["daily", "weekly", "monthly"],
+};
 
 export const GENDER_OPTIONS: SelectionOption[] = [
   {
@@ -243,4 +271,17 @@ export const MEDICATION_STATUS_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Status", value: "" },
   { label: "Niet genomen", value: "not_taken" },
   { label: "Genomen", value: "taken" },
+];
+
+export const CARE_TYPE_ARRAY = ["ambulante", "accommodation"] as const;
+
+export const careTypeDict = {
+  ambulante: "Ambulante",
+  accommodation: "Accommodatie",
+};
+
+export const CARE_TYPE_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Zorgtype", value: "" },
+  { label: "Ambulante", value: "ambulante" },
+  { label: "Accommodatie", value: "accommodation" },
 ];

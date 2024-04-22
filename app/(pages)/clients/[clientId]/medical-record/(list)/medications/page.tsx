@@ -4,14 +4,10 @@ import React, { FunctionComponent, useMemo } from "react";
 import { useMedicationsList } from "@/utils/medications/getMedicationsList";
 import { ColumnDef } from "@tanstack/table-core";
 import { MedicationsResDto } from "@/types/medications/medications-res-dto";
-import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
 import Loader from "@/components/common/Loader";
-import Table from "@/components/Table";
 import LinkButton from "@/components/buttons/LinkButton";
 import DetailCell from "@/components/DetailCell";
 import PaginatedTable from "@/components/PaginatedTable";
-import router from "next/router";
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
@@ -21,6 +17,8 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { fullDateFormat } from "@/utils/timeFormatting";
+import styles from "./styles.module.scss";
+import WarningIcon from "@/components/icons/WarningIcon";
 
 type Props = {
   params: { clientId: string };
@@ -37,6 +35,19 @@ const MedicationsPage: FunctionComponent<Props> = ({
       {
         accessorKey: "name",
         header: "Naam",
+        cell: (info) => (
+          <>
+            {info.row.original.is_critical ? (
+              <span className="font-bold text-red">
+                <WarningIcon className="inline-block w-4 h-4" /> Kritiek
+                Medicijn
+              </span>
+            ) : (
+              ""
+            )}{" "}
+            {info.getValue()}
+          </>
+        ),
       },
       {
         accessorKey: "dosage",
@@ -75,6 +86,12 @@ const MedicationsPage: FunctionComponent<Props> = ({
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
+        <div className="font-bold text-red flex items-center gap-2">
+          <div className="w-8 h-8 flex items-center justify-center rounded bg-red text-white">
+            <WarningIcon />
+          </div>
+          <div>Kritische medicijnen zijn rood gemarkeerd</div>
+        </div>
         <LinkButton
           text={"Voeg een Medicatie toe"}
           href={"../medications/new"}
@@ -84,6 +101,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
       {isLoading && <Loader />}
       {data && (
         <PaginatedTable
+          className={styles.table}
           data={data}
           columns={columnDef}
           page={pagination.page ?? 1}
@@ -92,6 +110,9 @@ const MedicationsPage: FunctionComponent<Props> = ({
           renderRowDetails={({ original }) => (
             <RowDetails clientId={parseInt(clientId)} data={original} />
           )}
+          rowClassName={(row) => {
+            return row.original.is_critical ? styles.critical : "";
+          }}
         />
       )}
       {isError && (

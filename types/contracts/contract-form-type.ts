@@ -8,11 +8,16 @@ export type CompanyContractType = (typeof COMPANY_CONTRACT_OPTIONS)[number];
 
 export type ContractFormType = {
   start_date: string;
+  end_date: string;
   care_type: string;
   rate_type: RateType | "";
   rate_value: string;
   company_contract_period: CompanyContractType | "";
-  client_contract_period: ContractDurationType | "";
-  temporary_file_ids: string[];
-  attachment_ids_to_delete?: string[];
+  added_attachments: string[];
+  removed_attachments?: string[];
+  reminder_period: string;
+  tax: string;
+  contract_name: string;
+  type: string;
+  is_default_tax: boolean;
 };

@@ -10,7 +10,7 @@ async function getClientContractsList(
   params: PaginationParams = DEFAULT_PAGINATION_PARAMS
 ): Promise<ContractsListDto> {
   const response = await api.get<ContractsListDto>(
-    `client/contract_list/${clientId}/`,
+    `/clients/${clientId}/contracts`,
     {
       params,
     }

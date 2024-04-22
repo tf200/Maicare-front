@@ -9,19 +9,19 @@ import React, {
 import { useCreateMedication } from "@/utils/medications/createMedication";
 import { MedicationFormType } from "@/types/medications/medication-form-type";
 import * as Yup from "yup";
-import { Formik, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
 import { useRouter } from "next/navigation";
 import { useGetMedication } from "@/utils/medications/getMedication";
 import { usePatchMedication } from "@/utils/medications/patchMedication";
-import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import ComboBox from "../ComboBox";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import DateTimePicker from "@/components/FormFields/DateTimePicker";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 dayjs.extend(isBetween);
 
 const initialValues: MedicationFormType = {
@@ -33,6 +33,7 @@ const initialValues: MedicationFormType = {
   notes: "",
   administered_by: undefined,
   self_administered: false,
+  is_critical: false,
 };
 
 const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
@@ -45,6 +46,7 @@ const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
     notes: Yup.string().required("Geef alstublieft notities op"),
     administered_by: Yup.mixed(),
     self_administered: Yup.boolean(),
+    is_critical: Yup.boolean(),
   });
 
 type Props = {
@@ -195,6 +197,8 @@ const MedicationForm: FunctionComponent<Props> = ({
               value={(values.start_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
+              min={dayjs().format("YYYY-MM-DD")}
+              max={values.end_date}
               error={
                 touched.start_date &&
                 errors.start_date &&
@@ -207,6 +211,7 @@ const MedicationForm: FunctionComponent<Props> = ({
               required={true}
               type={"date"}
               label={"Einddatum"}
+              min={values.start_date}
               value={(values.end_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -215,14 +220,16 @@ const MedicationForm: FunctionComponent<Props> = ({
               }
             />
           </div>
-          <DateTimePicker
-            minDate={dayjs(values.start_date).toDate()}
-            maxDate={dayjs(values.end_date).toDate()}
-            name={"slots"}
-            label={"Dagen"}
-            required={true}
-            error={touched.slots && errors.slots}
-          />
+          {values.start_date && values.end_date && (
+            <DateTimePicker
+              minDate={dayjs(values.start_date).toDate()}
+              maxDate={dayjs(values.end_date).toDate()}
+              name={"slots"}
+              label={"Dagen en Tijden"}
+              required={true}
+              error={touched.slots && errors.slots}
+            />
+          )}
           <ComboBox
             label="Beheerd door"
             placeholder="Zoek naar werknemers"
@@ -246,13 +253,18 @@ const MedicationForm: FunctionComponent<Props> = ({
             error={touched.notes && errors.notes}
           />
 
-          <CheckBoxInputFieldThin
-            className={"w-full mb-4.5"}
+          <FormikCheckboxItem
+            className={"mb-6"}
             label={"Zelf toegediend ?"}
             name={"self_administered"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.self_administered}
+            id={"self_administered"}
+          />
+
+          <FormikCheckboxItem
+            className={"mb-6"}
+            label={"Kritiek Medicatie"}
+            id={"is_critical"}
+            name={"is_critical"}
           />
 
           <Button

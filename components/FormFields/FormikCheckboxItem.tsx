@@ -9,6 +9,7 @@ interface Props {
   id: string;
   value?: boolean;
   name?: string;
+  className?: string;
 }
 
 const FormikCheckboxItem: FunctionComponent<Props> = ({
@@ -16,9 +17,10 @@ const FormikCheckboxItem: FunctionComponent<Props> = ({
   label,
   name,
   value,
+  className,
 }) => {
   return (
-    <label htmlFor={id} className="flex cursor-pointer">
+    <label htmlFor={id} className={cn("flex cursor-pointer", className)}>
       <div className="relative pt-0.5">
         <Field
           type="checkbox"

@@ -6,16 +6,23 @@ import { useCreateContract } from "@/utils/contracts/createContract";
 import {
   COMPANY_CONTRACT_OPTIONS,
   CompanyContractType,
-  CONTRACT_DURATION_OPTIONS,
-  ContractDurationType,
   ContractFormType,
 } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
-import { CARE_TYPE_OPTIONS, RATE_TYPE_ARRAY } from "@/consts";
+import {
+  CARE_RATE_BY_TYPE,
+  CARE_RATE_OPTIONS_BY_TYPE,
+  CARE_TYPE_ARRAY,
+  CARE_TYPE_OPTIONS,
+  RATE_TYPE_ARRAY,
+} from "@/consts";
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
-import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
+import {
+  CareType,
+  NewContractReqDto,
+} from "@/types/contracts/new-contract-req.dto";
 import { useRouter } from "next/navigation";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import DetailCell from "@/components/DetailCell";
@@ -34,37 +41,91 @@ import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useUpdateContract } from "@/utils/contracts/updateContract";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
+import {
+  useContractTypes,
+  useCreateContractType,
+  useDeleteContractType,
+} from "@/utils/contract-types";
+import { ModalProps } from "@/types/modal-props";
+import FormModal from "@/components/Modals/FormModal";
+import {
+  ContractTypeCreateReqDto,
+  ContractTypeItem,
+} from "@/types/contract-type";
+import IconButton from "@/components/buttons/IconButton";
+import TrashIcon from "@/components/icons/TrashIcon";
+import Loader from "@/components/common/Loader";
+import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 
 const initialValues: ContractFormType = {
   start_date: "",
+  end_date: "",
   care_type: "",
   rate_type: "",
   rate_value: "",
   company_contract_period: "",
-  client_contract_period: "",
-  temporary_file_ids: [],
-  attachment_ids_to_delete: [],
+  added_attachments: [],
+  removed_attachments: [],
+  reminder_period: "",
+  tax: "",
+  contract_name: "",
+  type: "",
+  is_default_tax: false,
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
   Yup.object().shape({
     start_date: Yup.string().required("Geef alstublieft de startdatum op"),
-    care_type: Yup.string().required("Geef alstublieft het zorgtype op"),
+    end_date: Yup.string().required("Geef alstublieft de startdatum op"),
+    care_type: Yup.string()
+      .oneOf(CARE_TYPE_ARRAY)
+      .required("Geef alstublieft het zorgtype op"),
     rate_type: Yup.string()
       .oneOf(RATE_TYPE_ARRAY)
+      .test(
+        "valid_rate_type",
+        "Geef alstublieft het tarieftype op",
+        (value, ctx) => {
+          if (value && ctx.parent.care_type) {
+            return (
+              CARE_RATE_BY_TYPE[ctx.parent.care_type]?.includes(value) ?? false
+            );
+          }
+          return false;
+        }
+      )
       .required("Geef alstublieft het tarieftype op"),
     rate_value: Yup.string().required("Geef alstublieft het tarief op"),
     company_contract_period: Yup.string()
       .oneOf(COMPANY_CONTRACT_OPTIONS)
       .required("Geef alstublieft het bedrijfs contractperiode op"),
-    client_contract_period: Yup.string()
-      .oneOf(CONTRACT_DURATION_OPTIONS)
-      .required("Geef alstublieft de client contractperiode op"),
-    temporary_file_ids: Yup.array().max(
-      5,
-      "Maximaal 5 bijlagen zijn toegestaan"
-    ),
-    attachment_ids_to_delete: Yup.array(),
+    added_attachments: Yup.array(),
+    removed_attachments: Yup.array(),
+    reminder_period: Yup.string()
+      .required("Geef alstublieft de herinneringsperiode op")
+      .test(
+        "within-range",
+        "Herinneringsperiode moet binnen de contractperiode vallen",
+        function (value, ctx) {
+          const start = ctx.parent.start_date;
+          const end = ctx.parent.end_date;
+          if (start && end && value) {
+            return dayjs(start).isBefore(dayjs(end).subtract(+value, "days"));
+          }
+          return true;
+        }
+      ),
+    contract_name: Yup.string().required("Geef alstublieft de contractnaam op"),
+    type: Yup.string().required("Geef alstublieft het type op"),
+    is_default_tax: Yup.boolean(),
+    tax: Yup.string().test("required_if_not_default", function (value, ctx) {
+      if (ctx.parent.is_default_tax) {
+        return true;
+      }
+      return Yup.string()
+        .required("Geef alstublieft de BTW op")
+        .isValidSync(value);
+    }),
   });
 
 type PropsType = {
@@ -74,32 +135,28 @@ type PropsType = {
 function mapData(
   form: ContractFormType,
   client: number,
-  contact: number
+  contact: number,
+  contractToEdit?: ContractResDto
 ): NewContractReqDto {
   return {
-    client: client,
-    sender: contact,
+    client_id: client,
+    sender_id: contact,
     start_date: form.start_date,
-    duration_client: +form.client_contract_period,
-    duration_sender: +form.company_contract_period,
-    care_type: form.care_type,
-    rate_type: form.rate_type as RateType,
-    rate_value: parseFloat(form.rate_value),
-    temporary_file_ids: form.temporary_file_ids,
-    attachment_ids_to_delete: form.attachment_ids_to_delete,
+    end_date: form.end_date,
+    care_type: form.care_type as CareType,
+    price_frequency: form.rate_type as RateType,
+    price: parseFloat(form.rate_value),
+    attachments:
+      contractToEdit?.attachments
+        ?.map((a) => a.id)
+        .filter((a) => !form.removed_attachments.includes(a))
+        .concat(form.added_attachments) ?? form.added_attachments,
+    reminder_period: +form.reminder_period,
+    tax: form.is_default_tax ? -1 : +form.tax,
+    care_name: form.contract_name,
+    type_id: +form.type,
   };
 }
-
-const ClientPeriodOptions: GenericSelectionOption<
-  string,
-  ContractDurationType | ""
->[] = [
-  { label: "Selecteer een periode", value: "" },
-  { label: "3 maanden", value: "3" },
-  { label: "6 maanden", value: "6" },
-  { label: "9 maanden", value: "9" },
-  { label: "12 maanden", value: "12" },
-];
 
 const CompanyContractOptions: GenericSelectionOption<
   string,
@@ -120,35 +177,39 @@ const ContractForm: FunctionComponent<PropsType> = ({
       : initialValues;
   }, [initialData]);
   const { mutate: create, isLoading: isCreating } = useCreateContract(clientId);
-  const { mutate: update, isLoading: isUpdating } = useUpdateContract();
+  const { mutate: update, isLoading: isUpdating } = useUpdateContract(
+    initialData?.id
+  );
   const router = useRouter();
   const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
-    if (mode === "add") {
-      create(mapData(value, clientId, contactData.id), {
-        onSuccess: () => {
-          router.push(`/clients/${clientId}/contracts`);
-        },
-      });
-    } else {
-      update(
-        {
-          ...mapData(value, clientId, contactData.id),
-          id: initialData.id,
-        },
-        {
-          onSuccess: () => {
-            router.push(`/clients/${clientId}/contracts`);
-          },
-        }
-      );
-    }
+    const method = mode === "add" ? create : update;
+    method(mapData(value, clientId, contactData.id), {
+      onSuccess: () => {
+        router.push(`/clients/${clientId}/contracts`);
+      },
+    });
   };
   const formik = useFormik<ContractFormType>({
     initialValues: parsedInitialValues,
     validationSchema: contractSchema,
     onSubmit,
   });
+
+  const { data: contractTypes } = useContractTypes();
+
+  const contractTypeOptions = useMemo(() => {
+    if (!contractTypes) {
+      return [];
+    }
+    return [
+      { label: "Selecteer contracttype", value: "" },
+      ...contractTypes.map((contractType) => ({
+        label: contractType.name,
+        value: contractType.id + "",
+      })),
+    ];
+  }, [contractTypes]);
 
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
@@ -161,6 +222,42 @@ const ContractForm: FunctionComponent<PropsType> = ({
       >
         <div>
           <ContactAssignment clientId={clientId} data={contactData} />
+          <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+            <InputField
+              label={"Contractnaam"}
+              className={"w-full xl:w-1/2"}
+              placeholder={"Voer Contractnaam in"}
+              required={true}
+              id={"contract_name"}
+              value={values.contract_name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                touched.contract_name &&
+                errors.contract_name &&
+                errors.contract_name + ""
+              }
+            />
+            <Select
+              label={"Contract Type"}
+              className={"w-full xl:w-1/2"}
+              required={true}
+              name={"type"}
+              id={"type"}
+              placeholder={"Selecteer Contract Type"}
+              options={contractTypeOptions}
+              value={values.type}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.type && errors.type && errors.type + ""}
+            />
+          </div>
+          <div className="flex flex-col xl:flex-row gap-6 mb-6">
+            <div className="xl:w-1/2" />
+            <div className="xl:w-1/2">
+              <ManageContractType />
+            </div>
+          </div>
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select
               label={"Raamovereenkomst"}
@@ -178,19 +275,23 @@ const ContractForm: FunctionComponent<PropsType> = ({
                 errors.company_contract_period
               }
             />
-            <Select
-              label={"Cliënt overeenkomst"}
+            {/*reminder in days*/}
+            <InputField
+              label={"Herinneringsperiode"}
+              placeholder={"Dagen"}
               required={true}
-              name={"client_contract_period"}
-              id={"client_contract_period"}
-              placeholder={"Voer Cliëntcontractperiode in"}
-              options={ClientPeriodOptions}
+              id={"reminder_period"}
+              type={"number"}
+              min={0}
               className="w-full xl:w-1/2"
-              value={values.client_contract_period}
+              value={values.reminder_period}
               onChange={handleChange}
               onBlur={handleBlur}
+              unit={"dagen"}
               error={
-                touched.client_contract_period && errors.client_contract_period
+                touched.reminder_period &&
+                errors.reminder_period &&
+                errors.reminder_period + ""
               }
             />
           </div>
@@ -204,21 +305,34 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={(values.start_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
+              min={dayjs().format("YYYY-MM-DD")}
+              max={values.end_date}
               error={
                 touched.start_date &&
                 errors.start_date &&
                 errors.start_date + ""
               }
             />
-            <div className={"w-full xl:w-1/2 mt-3.5"}>
-              <WhenNotification values={values} />
-            </div>
+            <InputField
+              label={"Einddatum"}
+              required={true}
+              id={"end_date"}
+              type={"date"}
+              className="w-full xl:w-1/2"
+              min={values.start_date}
+              value={(values.end_date ?? "") + ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                touched.end_date && errors.end_date && errors.end_date + ""
+              }
+            />
           </div>
-          <InputField
+          <Select
             className={"w-full mb-4.5"}
             id={"care_type"}
             required={true}
-            type={"text"}
+            options={CARE_TYPE_OPTIONS}
             label={"Zorgtype"}
             placeholder={"Voer Zorgtype in"}
             value={values.care_type}
@@ -233,11 +347,19 @@ const ContractForm: FunctionComponent<PropsType> = ({
               label={"Tarieftype"}
               required={true}
               id={"rate_type"}
+              disabled={!values.care_type}
               className="w-full xl:w-1/2"
               value={values.rate_type}
               onChange={handleChange}
               onBlur={handleBlur}
-              options={CARE_TYPE_OPTIONS}
+              options={
+                CARE_RATE_OPTIONS_BY_TYPE[values.care_type] ?? [
+                  {
+                    label: "Selecteer Tarieftype",
+                    value: "",
+                  },
+                ]
+              }
               error={
                 touched.rate_type && errors.rate_type && errors.rate_type + ""
               }
@@ -262,18 +384,48 @@ const ContractForm: FunctionComponent<PropsType> = ({
               }
             />
           </div>
+          <div className="mb-6 flex flex-col gap-6 xl:flex-row">
+            <div className="w-full xl:w-1/2">
+              <FormikCheckboxItem
+                id="is_default_tax"
+                name="is_default_tax"
+                label="Standaard BTW"
+              />
+            </div>
+            <InputField
+              name={"tax"}
+              id={"tax"}
+              required={!values.is_default_tax}
+              type={"number"}
+              min={0}
+              step="0.1"
+              label={"BTW percentage"}
+              unit={"%"}
+              disabled={values.is_default_tax}
+              placeholder={"Voer BTW percentage in"}
+              value={values.is_default_tax ? "" : values.tax}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.tax && errors.tax && errors.tax + ""}
+              className="w-full xl:w-1/2"
+            />
+          </div>
         </div>
         <div>
+          <div className="mb-6">
+            <WhenNotification values={values} />
+          </div>
           <FilesUploader
             label={"Bestanden"}
-            name={"temporary_file_ids"}
-            id={"temporary_file_ids"}
+            name={"added_attachments"}
+            id={"added_attachments"}
+            endpoint={"global_v2"}
           />
           {mode === "update" && initialData?.attachments && (
             <FilesDeleter
               alreadyUploadedFiles={initialData.attachments}
-              name={"attachment_ids_to_delete"}
-              id={"attachment_ids_to_delete"}
+              name={"removed_attachments"}
+              id={"removed_attachments"}
             />
           )}
         </div>
@@ -346,10 +498,9 @@ export const ContactAssignment: FunctionComponent<{
 export const WhenNotification: FunctionComponent<{
   values: ContractFormType;
 }> = ({ values }) => {
-  if (+values.client_contract_period > 3 && values.start_date) {
-    const period = +values.client_contract_period;
-    const reminderDate = dayjs(values.start_date)
-      .add(period - 3, "month")
+  if (values.end_date && values.start_date && values.reminder_period) {
+    const reminderDate = dayjs(values.end_date)
+      .subtract(+values.reminder_period, "days")
       .toDate();
     return (
       <div className="flex flex-col gap-2 px-4 py-3 info-box">
@@ -362,4 +513,117 @@ export const WhenNotification: FunctionComponent<{
     );
   }
   return null;
+};
+
+const ManageContractType: FunctionComponent = () => {
+  const { open } = useModal(ManageContractTypeModal);
+  return (
+    <button
+      type={"button"}
+      onClick={() => {
+        open({});
+      }}
+      className="flex w-full flex-col gap-2 px-4 py-3 info-box"
+    >
+      <p>
+        <InfoIcon className="inline-block relative -top-0.5" />{" "}
+        <span>
+          Beheer contracttypen?{" "}
+          <div className="inline-block text-primary">Klik hier!</div>
+        </span>
+      </p>
+    </button>
+  );
+};
+
+const ManageContractTypeModal: FunctionComponent<ModalProps> = ({
+  additionalProps,
+  ...props
+}) => {
+  const { data, isLoading } = useContractTypes();
+  const { mutate: createContractType, isLoading: isCreating } =
+    useCreateContractType();
+  const formik = useFormik<ContractTypeCreateReqDto>({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Geef alstublieft de naam op"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      createContractType(values, {
+        onSuccess: () => {
+          resetForm();
+        },
+      });
+    },
+  });
+  return (
+    <FormModal {...props} title={"Beheer Contracttypen"}>
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          className="border-b border-stroke pb-6 mb-6"
+        >
+          <InputField
+            label={"Naam"}
+            id={"name"}
+            name={"name"}
+            className={"mb-6"}
+            placeholder={"Voer Naam in"}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && formik.errors.name}
+            required={true}
+          />
+          <Button
+            disabled={isCreating}
+            isLoading={isCreating}
+            type={"submit"}
+            formNoValidate={true}
+          >
+            Toevoegen
+          </Button>
+        </form>
+      </FormikProvider>
+      {isLoading && <Loader />}
+      {data?.length > 0 && (
+        <div>
+          <h3 className="text-lg font-bold mb-4">Contracttypen</h3>
+          <div className="flex flex-col gap-2">
+            {data?.map((contractType) => (
+              <ContractTypeItem key={contractType.id} {...contractType} />
+            ))}
+          </div>
+        </div>
+      )}
+      {data?.length === 0 && (
+        <p className="text-sm text-gray-2 dark:text-gray-4">
+          Geen contracttypen gevonden
+        </p>
+      )}
+    </FormModal>
+  );
+};
+
+const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({
+  name,
+  id,
+}) => {
+  const { mutate: deleteContractType, isLoading } = useDeleteContractType();
+  return (
+    <div className="flex justify-between items-center border p-4 rounded-lg bg-white border-stroke py-3">
+      <p>{name}</p>
+      <div className="flex gap-2">
+        <IconButton
+          onClick={() => deleteContractType(id)}
+          buttonType={"Danger"}
+          isLoading={isLoading}
+        >
+          <TrashIcon />
+        </IconButton>
+      </div>
+    </div>
+  );
 };

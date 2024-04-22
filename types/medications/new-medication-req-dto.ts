@@ -8,4 +8,5 @@ export type NewMedicationReqDto = {
   notes: string;
   client: number;
   administered_by: number;
+  is_critical: boolean;
 };

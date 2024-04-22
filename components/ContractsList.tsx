@@ -13,6 +13,8 @@ import PaginatedTable from "@/components/PaginatedTable";
 import { UseQueryResult } from "react-query";
 import { ContractsListDto } from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
+import { careTypeDict } from "@/consts";
+import MonthsBetween from "@/components/MonthsBetween";
 
 type Props = {
   queryResult: WithPaginationResult<UseQueryResult<ContractsListDto>>;
@@ -22,11 +24,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const { data, pagination, isLoading, isFetching } = queryResult;
   const router = useRouter();
 
-  const {
-    mutate: deleteContract,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteContract(0);
+  const { mutate: deleteContract } = useDeleteContract(0);
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
@@ -38,18 +36,29 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const columnDef = useMemo<ColumnDef<ContractResDto>[]>(() => {
     return [
       {
-        accessorKey: "start_date",
-        header: "Startdatum",
-        cell: (info) => fullDateFormat(info.getValue() as string),
-      },
-      {
-        accessorKey: "end_date",
-        header: "Einddatum",
-        cell: (info) => fullDateFormat(info.getValue() as string),
+        header: "Periode",
+        cell: ({
+          row: {
+            original: { start_date, end_date },
+          },
+        }) => (
+          <div>
+            <div>
+              <strong>Van:</strong> {fullDateFormat(start_date)}
+            </div>
+            <div>
+              <strong>Tot:</strong> {fullDateFormat(end_date)}
+            </div>
+            <div>
+              <MonthsBetween startDate={start_date} endDate={end_date} />
+            </div>
+          </div>
+        ),
       },
       {
         accessorKey: "care_type",
         header: "Zorgtype",
+        cell: (item) => careTypeDict[item.getValue() as string],
       },
       {
         id: "Tarieftype",
@@ -77,7 +86,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
               onEdit={(e) => {
                 e.stopPropagation();
                 router.push(
-                  `/clients/${info.row.original.client}/contracts/${info.row.original.id}/edit`
+                  `/clients/${info.row.original.client_id}/contracts/${info.row.original.id}/edit`
                 );
               }}
             />
@@ -98,7 +107,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
           onRowClick={(row) =>
-            router.push(`/clients/${row.client}/contracts/${row.id}`)
+            router.push(`/clients/${row.client_id}/contracts/${row.id}`)
           }
         />
       )}

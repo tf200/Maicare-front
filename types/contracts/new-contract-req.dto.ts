@@ -1,14 +1,18 @@
 import { RateType } from "@/types/rate-type";
 
+export type CareType = "ambulante" | "accommodation";
+
 export type NewContractReqDto = {
-  client: number;
-  sender: number;
+  client_id: number;
+  sender_id: number;
+  type_id: number;
+  attachments: string[];
+  price: number;
+  price_frequency: RateType;
+  care_type: CareType;
   start_date: string;
-  duration_client: number;
-  duration_sender: number;
-  care_type: string;
-  rate_type: RateType;
-  rate_value: number;
-  temporary_file_ids: string[];
-  attachment_ids_to_delete?: string[];
+  end_date: string;
+  reminder_period: number; // in days
+  tax: number;
+  care_name: string;
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { nl } from "date-fns/locale";
 registerLocale("nl", nl);
@@ -12,6 +12,7 @@ import MultipleTimePicker from "@/components/FormFields/MultipleTimePicker";
 import Button from "@/components/buttons/Button";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import * as Yup from "yup";
+import { daysBetween } from "@/utils/daysBetween";
 
 const DateTimePicker: FunctionComponent<{
   name: string;
@@ -63,6 +64,16 @@ const DateTimePicker: FunctionComponent<{
                 await helperProps.setTouched(true);
               }
             },
+            onApplyToAll: async ({ times }) => {
+              const days = daysBetween(props.minDate, props.maxDate);
+              const dateTimes = days.map((day) => {
+                return {
+                  date: day.toISOString(),
+                  times,
+                };
+              });
+              await helperProps.setValue(dateTimes);
+            },
           });
         }}
         inline={true}
@@ -108,6 +119,7 @@ const TimesModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...rest
 }) => {
+  const [confirmApplyToAll, setConfirmApplyToAll] = useState(false);
   return (
     <FormModal {...rest} title={"Selecteer tijden"}>
       <Formik
@@ -140,7 +152,42 @@ const TimesModal: FunctionComponent<ModalProps> = ({
                 />
               )}
             </div>
-            <Button type="submit">Opslaan</Button>
+            <div className="flex justify-center gap-4">
+              {!confirmApplyToAll &&
+                additionalProps.onApplyToAll &&
+                values.selected && (
+                  <Button
+                    buttonType={"Outline"}
+                    onClick={() => {
+                      setConfirmApplyToAll(true);
+                    }}
+                  >
+                    Pas toe op alle dagen
+                  </Button>
+                )}
+              {!confirmApplyToAll && <Button type="submit">Opslaan</Button>}
+              {confirmApplyToAll && (
+                <>
+                  <Button
+                    buttonType={"Outline"}
+                    onClick={() => {
+                      setConfirmApplyToAll(false);
+                    }}
+                  >
+                    Annuleer
+                  </Button>
+                  <Button
+                    buttonType={"Danger"}
+                    onClick={() => {
+                      additionalProps.onApplyToAll({ times: values.times });
+                      rest.onClose();
+                    }}
+                  >
+                    Pas toe op alle dagen
+                  </Button>
+                </>
+              )}
+            </div>
           </form>
         )}
       </Formik>

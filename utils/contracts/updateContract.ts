@@ -1,22 +1,22 @@
 import api from "@/utils/api";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useMutation, useQueryClient } from "react-query";
+import { PatchContractReqDto } from "@/types/contracts";
 
-async function updateContract(data: Partial<ContractResDto>) {
-  const { id: contractId, ...rest } = data;
+async function updateContract(contractId: number, data: PatchContractReqDto) {
   const response = await api.patch<ContractResDto>(
     `client/contract_update/${contractId}/`,
-    rest
+    data
   );
   return response.data;
 }
 
-export const useUpdateContract = () => {
+export const useUpdateContract = (contractId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: updateContract,
+    mutationFn: (data: PatchContractReqDto) => updateContract(contractId, data),
     onSuccess: (res) => {
-      queryClient.invalidateQueries([res.client, "contracts"]);
+      queryClient.invalidateQueries([res.client_id, "contracts"]);
       queryClient.invalidateQueries(["contracts"]);
     },
   });

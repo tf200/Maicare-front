@@ -1,0 +1,15 @@
+.table {
+  .critical {
+    @apply bg-red/10 hover:bg-red/20;
+  }
+
+  th:first-child,
+  td:first-child {
+    @apply lg:w-1/5;
+  }
+
+  td:last-child:not([colspan]),
+  th:last-child {
+    @apply w-15 pl-0;
+  }
+}

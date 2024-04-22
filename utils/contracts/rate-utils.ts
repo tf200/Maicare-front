@@ -2,44 +2,53 @@ import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import dayjs, { OpUnitType, QUnitType } from "dayjs";
 import { RateType } from "@/types/rate-type";
 import { formatPrice } from "@/utils/priceFormatting";
+import { CareType } from "@/types/contracts/new-contract-req.dto";
 
 const rateDict: Record<RateType, string> = {
-  day: "Dagelijks",
-  hour: "Per uur",
+  daily: "Dagelijks",
+  hourly: "Per uur",
   minute: "Per minuut",
-  week: "Per week",
+  weekly: "Per week",
+  monthly: "Per maand",
 };
 
 export function getRate(item: ContractResDto) {
-  const rate = item.rate_value;
+  const rate = item.price;
 
   return rate ? formatPrice(rate) : "No rate set";
 }
 
 export function rateType(item: ContractResDto) {
-  return rateDict[item.rate_type];
+  return rateDict[item.price_frequency];
 }
 
 export function getRateUnit(item: ContractResDto): QUnitType | OpUnitType {
-  return item.rate_type;
+  return unitDict[item.price_frequency];
 }
 
 export const tarifDict: Record<RateType, string> = {
-  day: "Tarief per dag",
-  hour: "Tarief per uur",
+  daily: "Tarief per dag",
+  hourly: "Tarief per uur",
   minute: "Tarief per minuut",
-  week: "Tarief per week",
+  weekly: "Tarief per week",
+  monthly: "Tarief per maand",
+};
+
+export const unitDict: Record<RateType, QUnitType | OpUnitType> = {
+  daily: "day",
+  hourly: "hour",
+  minute: "minute",
+  weekly: "week",
+  monthly: "month",
 };
 
 export function rateString(item: ContractResDto) {
-  return tarifDict[item.rate_type];
+  return tarifDict[item.price_frequency];
 }
 
 export function calculateTotalRate(item: ContractResDto) {
   const from = dayjs(item.start_date);
-  const to = dayjs(item.start_date).add(item.duration_client, "month");
+  const to = dayjs(item.end_date);
   const duration = to.diff(from, getRateUnit(item));
-  return item.rate_value
-    ? formatPrice(item.rate_value * duration)
-    : "No rate set";
+  return item.price ? formatPrice(item.price * duration) : "No rate set";
 }
