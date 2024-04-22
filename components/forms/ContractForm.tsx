@@ -41,7 +41,20 @@ import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useUpdateContract } from "@/utils/contracts/updateContract";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
-import { useContractTypes } from "@/utils/contract-types";
+import {
+  useContractTypes,
+  useCreateContractType,
+  useDeleteContractType,
+} from "@/utils/contract-types";
+import { ModalProps } from "@/types/modal-props";
+import FormModal from "@/components/Modals/FormModal";
+import {
+  ContractTypeCreateReqDto,
+  ContractTypeItem,
+} from "@/types/contract-type";
+import IconButton from "@/components/buttons/IconButton";
+import TrashIcon from "@/components/icons/TrashIcon";
+import Loader from "@/components/common/Loader";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -229,6 +242,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               error={touched.type && errors.type && errors.type + ""}
             />
           </div>
+          <ManageContractType />
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select
               label={"Raamovereenkomst"}
@@ -476,4 +490,114 @@ export const WhenNotification: FunctionComponent<{
     );
   }
   return null;
+};
+
+const ManageContractType: FunctionComponent = () => {
+  const { open } = useModal(ManageContractTypeModal);
+  return (
+    <button
+      type={"button"}
+      onClick={() => {
+        open({});
+      }}
+      className="flex flex-col gap-2 px-4 py-3 info-box"
+    >
+      <p>
+        <InfoIcon className="inline-block relative -top-0.5" />{" "}
+        <span>Beheer contracttypen</span>
+      </p>
+    </button>
+  );
+};
+
+const ManageContractTypeModal: FunctionComponent<ModalProps> = ({
+  additionalProps,
+  ...props
+}) => {
+  const { data, isLoading } = useContractTypes();
+  const { mutate: createContractType, isLoading: isCreating } =
+    useCreateContractType();
+  const formik = useFormik<ContractTypeCreateReqDto>({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Geef alstublieft de naam op"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      createContractType(values, {
+        onSuccess: () => {
+          resetForm();
+        },
+      });
+    },
+  });
+  return (
+    <FormModal {...props} title={"Beheer Contracttypen"}>
+      <FormikProvider value={formik}>
+        <form
+          onSubmit={formik.handleSubmit}
+          className="border-b border-stroke pb-6 mb-6"
+        >
+          <InputField
+            label={"Naam"}
+            id={"name"}
+            name={"name"}
+            className={"mb-6"}
+            placeholder={"Voer Naam in"}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && formik.errors.name}
+            required={true}
+          />
+          <Button
+            disabled={isCreating}
+            isLoading={isCreating}
+            type={"submit"}
+            formNoValidate={true}
+          >
+            Toevoegen
+          </Button>
+        </form>
+      </FormikProvider>
+      {isLoading && <Loader />}
+      {data?.length > 0 && (
+        <div>
+          <h3 className="text-lg font-bold mb-4">Contracttypen</h3>
+          <div className="flex flex-col gap-2">
+            {data?.map((contractType) => (
+              <ContractTypeItem key={contractType.id} {...contractType} />
+            ))}
+          </div>
+        </div>
+      )}
+      {data?.length === 0 && (
+        <p className="text-sm text-gray-2 dark:text-gray-4">
+          Geen contracttypen gevonden
+        </p>
+      )}
+    </FormModal>
+  );
+};
+
+const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({
+  name,
+  id,
+}) => {
+  const { mutate: deleteContractType, isLoading } = useDeleteContractType();
+  return (
+    <div className="flex justify-between items-center border-b border-stroke py-3">
+      <p>{name}</p>
+      <div className="flex gap-2">
+        <IconButton
+          onClick={() => deleteContractType(id)}
+          buttonType={"Danger"}
+          isLoading={isLoading}
+        >
+          <TrashIcon />
+        </IconButton>
+      </div>
+    </div>
+  );
 };

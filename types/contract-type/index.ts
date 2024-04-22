@@ -4,3 +4,7 @@ export type ContractTypeItem = {
 };
 
 export type ContractTypesResDto = ContractTypeItem[];
+
+export type ContractTypeCreateReqDto = {
+  name: string;
+};

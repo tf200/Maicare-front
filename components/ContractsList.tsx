@@ -24,11 +24,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const { data, pagination, isLoading, isFetching } = queryResult;
   const router = useRouter();
 
-  const {
-    mutate: deleteContract,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteContract(0);
+  const { mutate: deleteContract } = useDeleteContract(0);
 
   const { open } = useModal(
     getDangerActionConfirmationModal({

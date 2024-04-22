@@ -12,8 +12,10 @@ const MonthsBetween: FunctionComponent<{
   );
   return (
     <>
-      {months > 0 ? `${months} maanden` : ""}{" "}
-      {remainingDays > 0 ? ` ${remainingDays} dagen` : ""}
+      {[
+        months > 0 ? `${months} maanden` : "",
+        remainingDays > 0 ? `${remainingDays} dagen` : "",
+      ].join(" ")}
     </>
   );
 };
