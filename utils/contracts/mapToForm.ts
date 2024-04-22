@@ -13,10 +13,10 @@ export function mapToForm(data: ContractResDto): ContractFormType {
     rate_type: data.price_frequency,
     rate_value: data.price + "",
     company_contract_period: "1",
-    client_contract_period: "3",
     added_attachments: data.attachments.map((attachment) => attachment.id + ""),
     reminder_period: data.reminder_period + "",
     tax: data.tax + "",
     contract_name: data.care_name,
+    type: data.type_id + "",
   };
 }
