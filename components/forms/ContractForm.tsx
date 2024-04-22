@@ -10,6 +10,7 @@ import {
 } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
 import {
+  AGREEMENT_FILES_TAGS,
   CARE_RATE_BY_TYPE,
   CARE_RATE_OPTIONS_BY_TYPE,
   CARE_TYPE_ARRAY,
@@ -389,7 +390,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               <FormikCheckboxItem
                 id="is_default_tax"
                 name="is_default_tax"
-                label="Standaard BTW"
+                label="Standaard BTW (20%)"
               />
             </div>
             <InputField
@@ -420,6 +421,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
             name={"added_attachments"}
             id={"added_attachments"}
             endpoint={"global_v2"}
+            tagOptions={AGREEMENT_FILES_TAGS}
           />
           {mode === "update" && initialData?.attachments && (
             <FilesDeleter

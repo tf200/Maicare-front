@@ -34,3 +34,26 @@ export const useUploadFile = (endpoint: UploadEndpointType = "global") => {
     },
   });
 };
+
+async function patchFileData(
+  fileId: string,
+  data: Partial<FileUploadResponse>
+) {
+  const response = await api.patch<FileUploadResponse>(
+    `/system/attachments/${fileId}/update`,
+    data
+  );
+  return response.data;
+}
+
+export const usePatchFileData = (fileId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: Partial<FileUploadResponse>) => patchFileData(fileId, data),
+    {
+      onSuccess: (data, variables) => {
+        queryClient.setQueryData(["attachments", variables[0]], data);
+      },
+    }
+  );
+};

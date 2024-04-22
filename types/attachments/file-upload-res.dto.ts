@@ -6,4 +6,5 @@ export type FileUploadResponse = {
   is_used: boolean;
   updated: string;
   created: string;
+  tag: string;
 };
