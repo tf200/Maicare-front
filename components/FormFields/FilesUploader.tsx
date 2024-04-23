@@ -26,12 +26,14 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
   endpoint?: UploadEndpointType;
   tagOptions?: SelectionOption[];
+  tagLabel?: string;
 };
 
 const FilesUploader: FunctionComponent<Props> = ({
   label,
   endpoint,
   tagOptions,
+  tagLabel,
   ...props
 }) => {
   const [_i, _m, helpers] = useField<string[]>({
@@ -94,6 +96,7 @@ const FilesUploader: FunctionComponent<Props> = ({
               setSelectedFiles((files) => files.filter((f) => f !== file));
             }}
             tagOptions={tagOptions}
+            tagLabel={tagLabel}
           />
         ))}
       </div>
@@ -109,7 +112,8 @@ const FileUploader: FunctionComponent<{
   onRemove: (id?: string) => void;
   endpoint?: UploadEndpointType;
   tagOptions?: SelectionOption[];
-}> = ({ file, onRemove, onUploaded, endpoint, tagOptions }) => {
+  tagLabel?: string;
+}> = ({ file, onRemove, onUploaded, endpoint, tagOptions, tagLabel }) => {
   const {
     mutate: upload,
     isLoading: isUploading,
@@ -175,6 +179,8 @@ const FileUploader: FunctionComponent<{
             fileUpdate({ tag: e.target.value });
           }}
           options={tagOptions}
+          id={`${fileId}_tag`}
+          label={tagLabel}
         />
       )}
     </div>

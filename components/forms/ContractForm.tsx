@@ -404,6 +404,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
             id={"added_attachments"}
             endpoint={"global_v2"}
             tagOptions={AGREEMENT_FILES_TAGS}
+            tagLabel={"Bijlagelabel:"}
           />
           {mode === "update" && initialData?.attachments && (
             <FilesDeleter

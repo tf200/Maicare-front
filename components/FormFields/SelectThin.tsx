@@ -6,6 +6,7 @@ import { cn } from "@/utils/cn";
 export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   options: SelectionOption[];
   error?: any;
+  label?: string;
 };
 
 const Select: FunctionComponent<SelectProps> = ({
@@ -14,19 +15,26 @@ const Select: FunctionComponent<SelectProps> = ({
   className,
   required,
   error,
+  label,
   ...props
 }) => {
   return (
-    <div
+    <label
       className={cn(
-        "relative z-20 bg-transparent dark:bg-form-input",
+        "relative flex gap-2 bg-gray dark:bg-graydark dark:text-white z-20 w-full rounded-0 border border-stroke py-1 pl-5 transition focus-within:border-primary group-active:border-primary dark:border-form-strokedark dark:focus:border-primary",
         className
       )}
+      htmlFor={id}
     >
+      {label && (
+        <div>
+          <strong>{label}</strong>
+        </div>
+      )}
       <select
+        className="bg-transparent appearance-none pr-5 flex-grow outline-none"
         id={id}
         required={required}
-        className="relative bg-gray dark:bg-graydark dark:text-white z-20 w-full appearance-none rounded-0 border border-stroke py-1 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:focus:border-primary"
         {...props}
       >
         {options.map((option) => {
@@ -40,7 +48,7 @@ const Select: FunctionComponent<SelectProps> = ({
       <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
         <ChevronDown className="w-4 h-4" />
       </span>
-    </div>
+    </label>
   );
 };
 
