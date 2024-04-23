@@ -169,9 +169,8 @@ const FileUploader: FunctionComponent<{
           )}
         </div>
       </div>
-      {tagOptions && (
+      {tagOptions && !isUploading && isSuccess && (
         <SelectThin
-          disabled={isUploading || !isSuccess}
           onChange={(e) => {
             fileUpdate({ tag: e.target.value });
           }}
