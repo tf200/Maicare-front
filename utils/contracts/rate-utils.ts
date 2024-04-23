@@ -3,6 +3,7 @@ import dayjs, { OpUnitType, QUnitType } from "dayjs";
 import { RateType } from "@/types/rate-type";
 import { formatPrice } from "@/utils/priceFormatting";
 import { CareType } from "@/types/contracts/new-contract-req.dto";
+import { ContractItem } from "@/types/contracts/contracts-list.dto";
 
 const rateDict: Record<RateType, string> = {
   daily: "Dagelijks",
@@ -12,17 +13,19 @@ const rateDict: Record<RateType, string> = {
   monthly: "Per maand",
 };
 
-export function getRate(item: ContractResDto) {
+export function getRate(item: ContractResDto | ContractItem) {
   const rate = item.price;
 
   return rate ? formatPrice(rate) : "No rate set";
 }
 
-export function rateType(item: ContractResDto) {
+export function rateType(item: ContractResDto | ContractItem) {
   return rateDict[item.price_frequency];
 }
 
-export function getRateUnit(item: ContractResDto): QUnitType | OpUnitType {
+export function getRateUnit(
+  item: ContractResDto | ContractItem
+): QUnitType | OpUnitType {
   return unitDict[item.price_frequency];
 }
 

@@ -4,14 +4,16 @@ import { useDeleteContract } from "@/utils/contracts/deleteContract";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { ColumnDef } from "@tanstack/react-table";
-import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { fullDateFormat } from "@/utils/timeFormatting";
 import { getRate, rateType } from "@/utils/contracts/rate-utils";
 import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
 import { UseQueryResult } from "react-query";
-import { ContractsListDto } from "@/types/contracts/contracts-list.dto";
+import {
+  ContractItem,
+  ContractsListDto,
+} from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
 import { careTypeDict } from "@/consts";
 import MonthsBetween from "@/components/MonthsBetween";
@@ -33,8 +35,19 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
     })
   );
 
-  const columnDef = useMemo<ColumnDef<ContractResDto>[]>(() => {
+  const columnDef = useMemo<ColumnDef<ContractItem>[]>(() => {
     return [
+      {
+        header: "Cliënt",
+        cell: ({
+          row: {
+            original: {
+              client_first_name: firstName,
+              client_last_name: lastName,
+            },
+          },
+        }) => `${firstName} ${lastName}`,
+      },
       {
         header: "Periode",
         cell: ({
@@ -61,12 +74,14 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
         cell: (item) => careTypeDict[item.getValue() as string],
       },
       {
-        id: "Tarieftype",
-        accessorFn: rateType,
-      },
-      {
-        id: "Tarief",
-        accessorFn: getRate,
+        accessorKey: "price",
+        header: "Tarief",
+        cell: ({ row: { original } }) => (
+          <>
+            <div>{rateType(original)}</div>
+            <div>{getRate(original)}</div>
+          </>
+        ),
       },
       {
         id: "actions",

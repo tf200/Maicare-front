@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
 import ContractDetails from "@/components/ContractDetails";
-import Link from "next/link";
 import LinkButton from "@/components/buttons/LinkButton";
 
 type Props = {

@@ -22,6 +22,7 @@ import DateTimePicker from "@/components/FormFields/DateTimePicker";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
+import EmployeeSelector from "@/components/FormFields/comboboxes/EmployeeSelector";
 dayjs.extend(isBetween);
 
 const initialValues: MedicationFormType = {
@@ -62,15 +63,6 @@ const MedicationForm: FunctionComponent<Props> = ({
 }) => {
   const router = useRouter();
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [searchedKey, setSearchedKey] = useState(null);
-  const [errorOptionMessage, setErrorOptionMessage] = useState(null);
-
-  const { data: SearchData, isLoading: isSearching } = useEmployeesList({
-    search: searchedKey,
-    out_of_service: false,
-  });
-
   const { data, isLoading: isDataLoading } = useGetMedication(
     medicationId,
     clientId
@@ -92,7 +84,7 @@ const MedicationForm: FunctionComponent<Props> = ({
           },
           {
             onSuccess: () => {
-              resetForm;
+              resetForm();
               router.push(`/clients/${clientId}/medical-record/medications`);
             },
           }
@@ -102,7 +94,7 @@ const MedicationForm: FunctionComponent<Props> = ({
           { ...values, client: clientId },
           {
             onSuccess: () => {
-              resetForm;
+              resetForm();
               router.push(`/clients/${clientId}/medical-record/medications`);
             },
           }
@@ -117,17 +109,7 @@ const MedicationForm: FunctionComponent<Props> = ({
     initialValues:
       mode == "edit" ? (data ? data : initialValues) : initialValues,
     validationSchema: medicationSchema,
-    onSubmit: (values, { resetForm }) => {
-      if (!selectedOption) {
-        setErrorOptionMessage("Geef alstublieft een medewerker op");
-        return;
-      } else {
-        setErrorOptionMessage("");
-        let data = values;
-        data.administered_by = selectedOption?.id;
-        onSubmit(data, { resetForm });
-      }
-    },
+    onSubmit,
   });
 
   const {
@@ -230,15 +212,10 @@ const MedicationForm: FunctionComponent<Props> = ({
               error={touched.slots && errors.slots}
             />
           )}
-          <ComboBox
-            label="Beheerd door"
-            placeholder="Zoek naar werknemers"
-            data={SearchData}
-            isLoading={isSearching}
-            setSelected={setSelectedOption}
-            setSearchedKey={setSearchedKey}
-            error={errorOptionMessage}
-            setError={setErrorOptionMessage}
+          <EmployeeSelector
+            className="mb-6"
+            required={true}
+            name={"administered_by"}
           />
           <Textarea
             rows={6}
@@ -273,9 +250,6 @@ const MedicationForm: FunctionComponent<Props> = ({
             isLoading={isCreating || isPatching}
             formNoValidate={true}
             loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
-            onClick={() => {
-              console.log("clicked", values);
-            }}
           >
             {mode === "edit" ? "Medicatie bijwerken" : "Medicatie indienen"}
           </Button>
