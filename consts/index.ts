@@ -8,7 +8,10 @@ import { PaginationParams } from "@/types/pagination-params";
 import Draft from "draft-js";
 import { CarePlanStatus } from "@/types/care-plan";
 import { BadgeType } from "@/types/badge-type";
-import { CareType } from "@/types/contracts/new-contract-req.dto";
+import {
+  CareType,
+  ContractStatus,
+} from "@/types/contracts/new-contract-req.dto";
 import { RateType } from "@/types/rate-type";
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
@@ -300,3 +303,16 @@ export const AGREEMENT_FILES_TAGS_RECORD = {
   decision: "Besluit",
   other: "Overige",
 };
+
+export const CONTRACT_STATUS_VARIANT_DICT: Record<ContractStatus, BadgeType> = {
+  draft: "Outline",
+  approved: "Success",
+  terminated: "Dark",
+};
+
+export const CONTRACT_STATUS_TRANSLATION_DICT: Record<ContractStatus, string> =
+  {
+    draft: "Concept",
+    approved: "Goedgekeurd",
+    terminated: "Beëindigd",
+  };

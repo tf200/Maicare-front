@@ -15,8 +15,15 @@ import {
   ContractsListDto,
 } from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
-import { careTypeDict } from "@/consts";
+import {
+  careTypeDict,
+  CONTRACT_STATUS_TRANSLATION_DICT,
+  CONTRACT_STATUS_VARIANT_DICT,
+} from "@/consts";
 import MonthsBetween from "@/components/MonthsBetween";
+import { ContractStatus } from "@/types/contracts/new-contract-req.dto";
+import { BadgeType } from "@/types/badge-type";
+import StatusBadge from "@/components/StatusBadge";
 
 type Props = {
   queryResult: WithPaginationResult<UseQueryResult<ContractsListDto>>;
@@ -81,6 +88,16 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
             <div>{rateType(original)}</div>
             <div>{getRate(original)}</div>
           </>
+        ),
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row: { original } }) => (
+          <StatusBadge
+            type={CONTRACT_STATUS_VARIANT_DICT[original.status]}
+            text={CONTRACT_STATUS_TRANSLATION_DICT[original.status]}
+          />
         ),
       },
       {

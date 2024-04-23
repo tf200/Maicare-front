@@ -6,12 +6,16 @@ type ModalProps = {
   open: boolean;
   onClose: () => void;
   modalTitle: string;
+  variant?: "ack" | "confirm";
+  onConfirm?: () => void;
 };
 
 const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
   open,
   onClose,
   modalTitle,
+  variant = "ack",
+  onConfirm,
   children,
 }) => {
   return (
@@ -27,18 +31,20 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
         <span className="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"></span>
         <div className="mb-10">{children}</div>
         <div className="-mx-3 flex flex-wrap gap-y-4 justify-center">
-          {/*<div className="w-full px-3 2xsm:w-1/2 flex">*/}
-          {/*  <ModalActionButton*/}
-          {/*    onClick={onClose}*/}
-          {/*    actionType="CANCEL"*/}
-          {/*    className="w-full"*/}
-          {/*  >*/}
-          {/*    Annuleren*/}
-          {/*  </ModalActionButton>*/}
-          {/*</div>*/}
+          {variant === "confirm" && (
+            <div className="w-full px-3 2xsm:w-1/2 flex">
+              <ModalActionButton
+                onClick={onClose}
+                actionType="CANCEL"
+                className="w-full"
+              >
+                Annuleren
+              </ModalActionButton>
+            </div>
+          )}
           <div className="w-full px-3 2xsm:w-1/2">
             <ModalActionButton
-              onClick={onClose}
+              onClick={variant === "confirm" ? onConfirm : onClose}
               actionType="CONFIRM"
               className="w-full"
             >
@@ -53,9 +59,29 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
 
 export default Modal;
 
-export function getConfirmationModal(props: {
+export function getAckModal(props: {
   children: React.ReactNode;
   modalTitle: string;
 }) {
   return (modalProps: ModalProps) => <Modal {...modalProps} {...props} />;
+}
+
+export function getConfirmModal(props: {
+  children: React.ReactNode;
+  modalTitle: string;
+}) {
+  return (
+    modalProps: ModalProps & {
+      additionalProps: { onConfirm: (onClose: () => void) => void };
+    }
+  ) => (
+    <Modal
+      {...modalProps}
+      {...props}
+      variant={"confirm"}
+      onConfirm={() => {
+        modalProps.additionalProps.onConfirm(modalProps.onClose);
+      }}
+    />
+  );
 }

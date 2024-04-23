@@ -9,6 +9,7 @@ export type ContractItem = Pick<
   | "client_id"
   | "price_frequency"
   | "price"
+  | "status"
 > & {
   client_first_name: string;
   client_last_name: string;

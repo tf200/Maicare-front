@@ -1,7 +1,10 @@
+"use client";
+
 import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
 import ContractDetails from "@/components/ContractDetails";
 import LinkButton from "@/components/buttons/LinkButton";
+import { useContractDetails } from "@/utils/contracts/getContractDetails";
 
 type Props = {
   params: { clientId: string; contractId: string };
@@ -10,15 +13,21 @@ type Props = {
 const Page: FunctionComponent<Props> = ({
   params: { clientId, contractId },
 }) => {
+  const { data: contract, isLoading: isContractLoading } = useContractDetails(
+    +clientId,
+    +contractId
+  );
   return (
     <div>
       <Panel
         title={"Contract #" + contractId}
         sideActions={
-          <LinkButton
-            href={`/clients/${clientId}/contracts/${contractId}/edit`}
-            text={"Bewerk contract"}
-          />
+          contract?.status === "draft" && (
+            <LinkButton
+              href={`/clients/${clientId}/contracts/${contractId}/edit`}
+              text={"Bewerk contract"}
+            />
+          )
         }
       >
         <ContractDetails

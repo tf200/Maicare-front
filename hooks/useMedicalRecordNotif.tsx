@@ -1,19 +1,19 @@
 import { useModal } from "@/components/providers/ModalProvider";
 import MedicationRecordModal from "@/components/Modals/MedicationRecordModal";
 import { useMedicationRecordFetcher } from "@/utils/medication-records";
-import { getConfirmationModal } from "@/components/Modals/Modal";
+import { getAckModal } from "@/components/Modals/Modal";
 
 export const useMedicalRecordNotif = () => {
   const { open: report } = useModal(MedicationRecordModal);
   const { open: informTaken } = useModal(
-    getConfirmationModal({
+    getAckModal({
       modalTitle: "Medicatie ingenomen",
       children:
         "Je hebt deze medicatie al ingenomen. Wil je dit nogmaals rapporteren?",
     })
   );
   const { open: informMissed } = useModal(
-    getConfirmationModal({
+    getAckModal({
       modalTitle: "Medicatie gemist",
       children:
         "Je hebt deze medicatie nog niet ingenomen. Wil je dit rapporteren?",

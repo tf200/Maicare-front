@@ -9,7 +9,7 @@ type ModalProps = {
   modalTitle: string;
 };
 
-const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
+const KnowMoreModal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
   open,
   onClose,
   modalTitle,
@@ -40,4 +40,4 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
   );
 };
 
-export default Modal;
+export default KnowMoreModal;
