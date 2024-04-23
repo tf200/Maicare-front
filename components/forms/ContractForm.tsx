@@ -411,6 +411,8 @@ const ContractForm: FunctionComponent<PropsType> = ({
               alreadyUploadedFiles={initialData.attachments}
               name={"removed_attachments"}
               id={"removed_attachments"}
+              tagOptions={AGREEMENT_FILES_TAGS}
+              tagLabel={"Bijlagelabel:"}
             />
           )}
         </div>

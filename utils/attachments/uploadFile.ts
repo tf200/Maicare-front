@@ -1,6 +1,7 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import api from "@/utils/api";
 import { FileUploadResponse } from "@/types/attachments/file-upload-res.dto";
+import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
 
 export const endpoints = {
   global: "client/temporary-files/",
@@ -52,8 +53,21 @@ export const usePatchFileData = (fileId: string) => {
     (data: Partial<FileUploadResponse>) => patchFileData(fileId, data),
     {
       onSuccess: (data, variables) => {
-        queryClient.setQueryData(["attachments", variables[0]], data);
+        queryClient.setQueryData(["attachments", data.id], data);
       },
     }
   );
+};
+
+async function getFileData(fileId: string) {
+  const response = await api.get<FileUploadResponse>(
+    `/system/attachments/${fileId}`
+  );
+  return response.data;
+}
+
+export const useFileData = (fileId?: string) => {
+  return useQuery(["attachments", fileId], () => getFileData(fileId), {
+    enabled: !!fileId,
+  });
 };

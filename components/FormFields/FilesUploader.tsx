@@ -11,6 +11,7 @@ import UploadIcon from "@/components/svg/UploadIcon";
 import LoadingCircle from "@/components/icons/LoadingCircle";
 import {
   UploadEndpointType,
+  useFileData,
   usePatchFileData,
   useUploadFile,
 } from "@/utils/attachments/uploadFile";
@@ -135,6 +136,7 @@ const FileUploader: FunctionComponent<{
     uploadFile();
   }, []);
   const { mutate: fileUpdate } = usePatchFileData(fileId);
+  const { data: fileData } = useFileData(fileId);
 
   return (
     <div className="mt-4.5">
@@ -181,6 +183,7 @@ const FileUploader: FunctionComponent<{
           options={tagOptions}
           id={`${fileId}_tag`}
           label={tagLabel}
+          value={fileData?.tag}
         />
       )}
     </div>
