@@ -165,7 +165,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
   const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
     const method = mode === "add" ? create : update;
-    method(formToDto(value, clientId, contactData.id), {
+    method(formToDto(value, clientId, contactData.id, initialData), {
       onSuccess: () => {
         router.push(`/clients/${clientId}/contracts`);
       },
