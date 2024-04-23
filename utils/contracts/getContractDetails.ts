@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 async function getContractDetails(contractId: number): Promise<ContractResDto> {
   const response = await api.get<ContractResDto>(
-    `client/contract_retrieve/${contractId}/`
+    `/clients/contracts/${contractId}`
   );
   return response.data;
 }

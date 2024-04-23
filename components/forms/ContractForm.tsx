@@ -22,6 +22,7 @@ import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
 import {
   CareType,
+  ContractStatus,
   NewContractReqDto,
 } from "@/types/contracts/new-contract-req.dto";
 import { useRouter } from "next/navigation";
@@ -57,6 +58,7 @@ import IconButton from "@/components/buttons/IconButton";
 import TrashIcon from "@/components/icons/TrashIcon";
 import Loader from "@/components/common/Loader";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
+import { formToDto } from "@/utils/contracts/formToDto";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -71,7 +73,8 @@ const initialValues: ContractFormType = {
   tax: "",
   contract_name: "",
   type: "",
-  is_default_tax: false,
+  is_default_tax: true,
+  status: "draft",
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
@@ -119,45 +122,22 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
     contract_name: Yup.string().required("Geef alstublieft de contractnaam op"),
     type: Yup.string().required("Geef alstublieft het type op"),
     is_default_tax: Yup.boolean(),
-    tax: Yup.string().test("required_if_not_default", function (value, ctx) {
-      if (ctx.parent.is_default_tax) {
-        return true;
+    tax: Yup.string().test(
+      "required_if_not_default",
+      "Geef alstublieft de BTW op",
+      function (value, ctx) {
+        if (ctx.parent.is_default_tax) {
+          return true;
+        }
+        return !!value;
       }
-      return Yup.string()
-        .required("Geef alstublieft de BTW op")
-        .isValidSync(value);
-    }),
+    ),
+    status: Yup.string().oneOf(["draft", "approved", "terminated"]),
   });
 
 type PropsType = {
   clientId: number;
 } & FormProps<ContractResDto>;
-
-function mapData(
-  form: ContractFormType,
-  client: number,
-  contact: number,
-  contractToEdit?: ContractResDto
-): NewContractReqDto {
-  return {
-    client_id: client,
-    sender_id: contact,
-    start_date: form.start_date,
-    end_date: form.end_date,
-    care_type: form.care_type as CareType,
-    price_frequency: form.rate_type as RateType,
-    price: parseFloat(form.rate_value),
-    attachments:
-      contractToEdit?.attachments
-        ?.map((a) => a.id)
-        .filter((a) => !form.removed_attachments.includes(a))
-        .concat(form.added_attachments) ?? form.added_attachments,
-    reminder_period: +form.reminder_period,
-    tax: form.is_default_tax ? -1 : +form.tax,
-    care_name: form.contract_name,
-    type_id: +form.type,
-  };
-}
 
 const CompanyContractOptions: GenericSelectionOption<
   string,
@@ -185,7 +165,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
   const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
     const method = mode === "add" ? create : update;
-    method(mapData(value, clientId, contactData.id), {
+    method(formToDto(value, clientId, contactData.id), {
       onSuccess: () => {
         router.push(`/clients/${clientId}/contracts`);
       },
@@ -214,6 +194,8 @@ const ContractForm: FunctionComponent<PropsType> = ({
 
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
+
+  console.log("values", values);
 
   return (
     <FormikProvider value={formik}>

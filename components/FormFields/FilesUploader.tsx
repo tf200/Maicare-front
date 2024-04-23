@@ -112,7 +112,7 @@ const FileUploader: FunctionComponent<{
 }> = ({ file, onRemove, onUploaded, endpoint, tagOptions }) => {
   const {
     mutate: upload,
-    isLoading,
+    isLoading: isUploading,
     isSuccess,
     isError,
   } = useUploadFile(endpoint);
@@ -137,7 +137,7 @@ const FileUploader: FunctionComponent<{
       <div className="border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
         <div className="flex items-center">
           <div>{file.name}</div>
-          {isLoading && (
+          {isUploading && (
             <div className="animate-spin ml-auto">
               <LoadingCircle />
             </div>
@@ -158,7 +158,7 @@ const FileUploader: FunctionComponent<{
               </Button>
             </div>
           )}
-          {!isLoading && (
+          {!isUploading && (
             <button
               onClick={() => {
                 onRemove?.(fileId);
@@ -171,6 +171,7 @@ const FileUploader: FunctionComponent<{
       </div>
       {tagOptions && (
         <SelectThin
+          disabled={isUploading || !isSuccess}
           onChange={(e) => {
             fileUpdate({ tag: e.target.value });
           }}

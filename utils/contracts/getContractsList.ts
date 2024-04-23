@@ -8,7 +8,7 @@ import { usePaginationParams } from "@/hooks/usePaginationParams";
 async function getContractsList(
   params: PaginationParams = DEFAULT_PAGINATION_PARAMS
 ): Promise<ContractsListDto> {
-  const response = await api.get<ContractsListDto>(`client/contract_all/`, {
+  const response = await api.get<ContractsListDto>(`clients/contracts`, {
     params,
   });
   return response.data;
