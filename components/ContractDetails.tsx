@@ -21,6 +21,7 @@ import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import DownloadFile from "@/components/DownloadFile";
 import MonthsBetween from "@/components/MonthsBetween";
+import { careTypeDict } from "@/consts";
 
 type Props = {
   clientId: number;
@@ -45,7 +46,7 @@ const ContractDetails: FunctionComponent<Props> = ({
     >
       {isClientLoading && isContractLoading && <Loader />}
       {client && <ClientData clientData={client} contractId={contractId} />}
-      <div className="flex items-start justify-between mt-5">
+      <div className="flex flex-col xl:flex-row items-start justify-between mt-5">
         {contactData && (
           <ContactAssignment clientId={clientId} data={contactData} />
         )}
@@ -72,7 +73,7 @@ function ClientData(props: {
       <div className="flex flex-col gap-4 sm:flex-row xl:gap-9">
         <div>
           <p className="mb-1.5 text-lg font-medium text-black dark:text-white">
-            Client
+            Cliënt
           </p>
           <h4 className="mb-4 text-2xl font-semibold text-black dark:text-white">
             {props.clientData.first_name} {props.clientData.last_name}
@@ -81,7 +82,7 @@ function ClientData(props: {
             <span className="font-medium">Email:</span> {props.clientData.email}
           </a>
           <span className="mt-2 block">
-            <span className="font-medium">Location:</span>{" "}
+            <span className="font-medium">Locatie:</span>{" "}
             {props.clientData.location}
           </span>
         </div>
@@ -100,12 +101,17 @@ function ContractData(props: { contractData: ContractResDto }) {
         <div className="w-full items-center justify-between md:flex">
           <div className="mb-3 md:mb-0">
             <span className="inline-block font-medium text-black hover:text-primary dark:text-white">
-              {props.contractData.care_type}
+              {props.contractData.care_name} (
+              {careTypeDict[props.contractData.care_type]})
             </span>
             <p className="flex text-sm font-medium">
               <span className="mr-5">
                 {" "}
-                From: {fullDateFormat(props.contractData.start_date)}{" "}
+                Van: {fullDateFormat(props.contractData.start_date)}{" "}
+              </span>
+              <span className="mr-5">
+                {" "}
+                Tot: {fullDateFormat(props.contractData.end_date)}{" "}
               </span>
               <span className="mr-5">
                 {" "}

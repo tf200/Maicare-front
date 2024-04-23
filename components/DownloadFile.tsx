@@ -2,21 +2,29 @@ import React, { FunctionComponent } from "react";
 import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
 import Link from "next/link";
 import DownloadIcon from "@/components/icons/DownloadIcon";
+import { AGREEMENT_FILES_TAGS_RECORD } from "@/consts";
+import StatusBadge from "@/components/StatusBadge";
 
 const DownloadFile: FunctionComponent<{
   file: AttachmentItem;
-}> = (props) => {
+}> = ({ file }) => {
   return (
     <Link
-      href={
-        props.file.file || props.file.attachment || props.file.attachement || ""
-      }
+      href={file.file || file.attachment || file.attachement || ""}
       target={"_blank"}
       download
-      className="flex flex-col items-center border-1 p-4 border-stroke dark:border-strokedark rounded-md"
+      className="flex gap-4 flex-col items-center border-1 p-4 border-stroke dark:border-strokedark rounded-md"
     >
       <DownloadIcon />
-      {props.file.name}
+      <div className="font-bold">{file.name}</div>
+      <div className="flex">
+        {file.tag && (
+          <StatusBadge
+            text={AGREEMENT_FILES_TAGS_RECORD[file.tag]}
+            type={"Info"}
+          />
+        )}
+      </div>
     </Link>
   );
 };

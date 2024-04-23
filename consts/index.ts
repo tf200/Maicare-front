@@ -285,3 +285,18 @@ export const CARE_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Ambulante", value: "ambulante" },
   { label: "Accommodatie", value: "accommodation" },
 ];
+
+export const AGREEMENT_FILES_TAGS: SelectionOption[] = [
+  { value: "", label: "Selecteer Overeenkomst..." },
+  { value: "client_agreement", label: "Client Overeenkomst" },
+  { value: "framework_agreement", label: "Raamovereenkomst" },
+  { value: "decision", label: "Besluit" },
+  { value: "other", label: "Overige" },
+];
+
+export const AGREEMENT_FILES_TAGS_RECORD = {
+  client_agreement: "Klant Overeenkomst",
+  framework_agreement: "Raamovereenkomst",
+  decision: "Besluit",
+  other: "Overige",
+};

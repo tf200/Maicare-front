@@ -6,6 +6,7 @@ export type AttachmentItem = {
   file: string;
   attachment?: string; // like file field due to inconsistent backend
   attachement?: string; // typo in the backend
+  tag?: string;
 };
 
 export type AppointmentResDto = Omit<

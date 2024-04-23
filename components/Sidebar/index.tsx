@@ -35,6 +35,7 @@ import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
 import BellAlertIcon from "../svg/BellAlertIcon";
 import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
+import styles from "./styles.module.scss";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -103,12 +104,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [pathname]);
 
+  const classNames = useMemo(() => {
+    if (
+      pathname.startsWith("/clients/") &&
+      !pathname.startsWith("/clients/new")
+    ) {
+      return styles.clientBg;
+    } else if (
+      pathname.startsWith("/employees/") &&
+      !pathname.startsWith("/employees/new")
+    ) {
+      return styles.employeeBg;
+    } else {
+      return "bg-black dark:bg-boxdark";
+    }
+  }, [pathname]);
+
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      className={cn(
+        `absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`,
+        classNames
+      )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
@@ -188,12 +208,13 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
     <Link
       href={completeHref}
       className={clsx(
-        "group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
+        "group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out",
         {
-          "bg-graydark dark:bg-meta-4": getIsActive
+          [styles.active]: getIsActive
             ? getIsActive(pathname, completeHref)
             : pathname.startsWith(completeHref),
-        }
+        },
+        styles.element
       )}
     >
       {icon}
@@ -227,7 +248,7 @@ const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
         className={clsx(
           "group relative w-full flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
           {
-            "bg-graydark dark:bg-meta-4": inferOpen,
+            [styles.active]: inferOpen,
           }
         )}
         onClick={() => setIsOpen((prev) => !prev)}

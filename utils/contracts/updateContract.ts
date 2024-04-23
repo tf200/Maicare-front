@@ -4,8 +4,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { PatchContractReqDto } from "@/types/contracts";
 
 async function updateContract(contractId: number, data: PatchContractReqDto) {
-  const response = await api.patch<ContractResDto>(
-    `client/contract_update/${contractId}/`,
+  const response = await api.put<ContractResDto>(
+    `clients/contracts/${contractId}/update`,
     data
   );
   return response.data;
