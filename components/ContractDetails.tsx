@@ -22,6 +22,12 @@ import { mapToForm } from "@/utils/contracts/mapToForm";
 import DownloadFile from "@/components/DownloadFile";
 import MonthsBetween from "@/components/MonthsBetween";
 import { careTypeDict } from "@/consts";
+import Button from "@/components/buttons/Button";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getConfirmModal } from "@/components/Modals/Modal";
+import { useUpdateContract } from "@/utils/contracts/updateContract";
+import { resDtoToPatchDto } from "@/utils/contracts/resDtoToPatchDto";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   clientId: number;
@@ -45,7 +51,9 @@ const ContractDetails: FunctionComponent<Props> = ({
       className="rounded-sm bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"
     >
       {isClientLoading && isContractLoading && <Loader />}
-      {client && <ClientData clientData={client} contractId={contractId} />}
+      {client && contract && (
+        <ClientData clientData={client} contractData={contract} />
+      )}
       <div className="flex flex-col xl:flex-row items-start justify-between mt-5">
         {contactData && (
           <ContactAssignment clientId={clientId} data={contactData} />
@@ -66,8 +74,22 @@ export default ContractDetails;
 
 function ClientData(props: {
   clientData: ClientDetailsResDto;
-  contractId: number;
+  contractData: ContractResDto;
 }) {
+  const { mutate: updateContract } = useUpdateContract(props.contractData.id);
+  const { open: openApprove } = useModal(
+    getConfirmModal({
+      modalTitle: "Contract goedkeuren",
+      children: "Weet je zeker dat je dit contract wilt goedkeuren?",
+    })
+  );
+
+  const { open: openTerminate } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je dit contract wilt beëindigen?",
+      title: "Contract Beëindigen",
+    })
+  );
   return (
     <div className="flex flex-col-reverse gap-5 xl:flex-row xl:justify-between">
       <div className="flex flex-col gap-4 sm:flex-row xl:gap-9">
@@ -87,9 +109,59 @@ function ClientData(props: {
           </span>
         </div>
       </div>
-      <h3 className="text-2xl font-semibold text-black dark:text-white">
-        Contract #{props.contractId}
-      </h3>
+      <div className="flex flex-col items-end">
+        <h3 className="text-2xl mb-10 font-semibold text-black dark:text-white">
+          Contract #{props.contractData.id}
+        </h3>
+        {props.contractData.status === "draft" && (
+          <Button
+            onClick={() => {
+              openApprove({
+                onConfirm: (close: () => void) => {
+                  updateContract(
+                    {
+                      ...resDtoToPatchDto(props.contractData),
+                      status: "approved",
+                    },
+                    {
+                      onSuccess: () => {
+                        close();
+                      },
+                    }
+                  );
+                },
+              });
+            }}
+            buttonType={"Outline"}
+          >
+            Contract goedkeuren
+          </Button>
+        )}
+        {props.contractData.status === "approved" && (
+          <Button
+            buttonType={"Danger"}
+            onClick={() => {
+              openTerminate({
+                onConfirm: (close: () => void) => {
+                  updateContract(
+                    {
+                      ...resDtoToPatchDto(props.contractData),
+                      status: "terminated",
+                    },
+                    {
+                      onSuccess: () => {
+                        close();
+                      },
+                    }
+                  );
+                },
+              });
+            }}
+          >
+            Contract beëindigen
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

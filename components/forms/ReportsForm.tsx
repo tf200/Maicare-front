@@ -17,6 +17,7 @@ import { useCreateReports } from "@/utils/reports/createReports";
 import { useRouter } from "next/navigation";
 import { usePatchReport } from "@/utils/reports/patchReport";
 import { useGetReport } from "@/utils/reports/getReport";
+import SmartTextarea from "@/components/FormFields/SmartTextarea";
 
 type FormType = NewReportsReqDto;
 
@@ -133,16 +134,15 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
               error={touched.created && errors.created}
             />
 
-            <Textarea
+            <SmartTextarea
               rows={10}
               id={"report_text"}
+              name={"report_text"}
+              modalTitle={"Rapporten verbeteren"}
               required={true}
               className={"mb-6"}
               label={"Rapporten"}
               placeholder={"Geef alstublieft rapporten"}
-              value={values.report_text}
-              onChange={handleChange}
-              onBlur={handleBlur}
               error={touched.report_text && errors.report_text}
             />
 
