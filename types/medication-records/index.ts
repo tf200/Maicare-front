@@ -16,3 +16,8 @@ export type PatchMedicationRecordDto = Pick<
   MedicationRecord,
   "status" | "reason"
 >;
+
+export type MedicationRecordParams = {
+  created?: string;
+  status?: MedicationRecordStatus;
+};
