@@ -19,7 +19,6 @@ import PencilSquare from "@/components/icons/PencilSquare";
 import { fullDateFormat } from "@/utils/timeFormatting";
 import styles from "./styles.module.scss";
 import WarningIcon from "@/components/icons/WarningIcon";
-import Ping from "@/components/Ping";
 import StatusBadge from "@/components/StatusBadge";
 
 type Props = {
@@ -56,7 +55,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Dosering",
       },
       {
-        accessorKey: "administer_name",
+        accessorKey: "administered_by_name",
         header: "Beheerd door",
       },
       {
