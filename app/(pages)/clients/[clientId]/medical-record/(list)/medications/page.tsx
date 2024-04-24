@@ -19,6 +19,7 @@ import PencilSquare from "@/components/icons/PencilSquare";
 import { fullDateFormat } from "@/utils/timeFormatting";
 import styles from "./styles.module.scss";
 import WarningIcon from "@/components/icons/WarningIcon";
+import StatusBadge from "@/components/StatusBadge";
 
 type Props = {
   params: { clientId: string };
@@ -36,17 +37,17 @@ const MedicationsPage: FunctionComponent<Props> = ({
         accessorKey: "name",
         header: "Naam",
         cell: (info) => (
-          <>
-            {info.row.original.is_critical ? (
-              <span className="font-bold text-red">
-                <WarningIcon className="inline-block w-4 h-4" /> Kritiek
-                Medicijn
-              </span>
-            ) : (
-              ""
-            )}{" "}
-            {info.getValue()}
-          </>
+          <div>
+            <div>{info.getValue() as string}</div>
+            <div className="flex items-center gap-x-4 gap-y-2 flex-wrap">
+              {info.row.original.is_critical && (
+                <StatusBadge text={"Kritisch medicijn"} type={"Danger"} />
+              )}
+              {info.row.original.unset_medications > 0 && (
+                <StatusBadge text={"Medicijn onvolledig"} type={"Warning"} />
+              )}
+            </div>
+          </div>
         ),
       },
       {
@@ -54,7 +55,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
         header: "Dosering",
       },
       {
-        accessorKey: "administer_name",
+        accessorKey: "administered_by_name",
         header: "Beheerd door",
       },
       {

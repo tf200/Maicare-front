@@ -372,7 +372,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               <FormikCheckboxItem
                 id="is_default_tax"
                 name="is_default_tax"
-                label="Standaard BTW (20%)"
+                label="Standaard BTW (0%)"
               />
             </div>
             <InputField

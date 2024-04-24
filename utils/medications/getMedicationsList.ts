@@ -1,6 +1,5 @@
 import api from "@/utils/api";
 import { MedicationsListResDto } from "@/types/medications/medications-list-res-dto";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { PaginationParams } from "@/types/pagination-params";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
@@ -10,7 +9,7 @@ async function fetchMedicationsList(
   params: PaginationParams
 ) {
   const response = await api.get<MedicationsListResDto>(
-    `client/medication_list/${clientId}/`,
+    `/clients/${clientId}/medications`,
     {
       params,
     }
