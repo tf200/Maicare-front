@@ -45,7 +45,7 @@ export const unitDict: Record<RateType, QUnitType | OpUnitType> = {
   monthly: "month",
 };
 
-export function rateString(item: ContractResDto) {
+export function rateString(item: ContractResDto | ContractItem) {
   return tarifDict[item.price_frequency];
 }
 
