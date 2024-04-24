@@ -14,6 +14,8 @@ import {
 } from "@/types/contracts/new-contract-req.dto";
 import { RateType } from "@/types/rate-type";
 
+export const MIN_CHARACTERS_TO_ENHANCE = 75;
+
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
   "Voedsel",

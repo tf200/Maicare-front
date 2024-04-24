@@ -23,7 +23,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       type={type}
       {...props}
       className={cn(
-        "flex justify-center px-10 py-3 font-medium rounded bg-primary text-gray",
+        "flex justify-center px-10 py-3 font-medium rounded",
         BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
           BUTTON_CLASS_NAMES.Primary,
         props.className
