@@ -1,14 +1,17 @@
+import { InvoiceType } from "@/types/InvoiceStatus";
+
 export type InvoiceResDto = {
-  due_date: string;
+  client_id: number;
   id: number;
   invoice_number: string;
-  issue_date: number;
-  url: string;
-  pre_vat_total: string;
-  status: string;
-  total_amount: string;
-  vat_amount: string;
-  vat_rate: string;
+  due_date: string;
+  payment_method: string;
+  status: InvoiceType;
+  issue_date: string;
+  invoice_details: {};
+  total_amount: number;
+  updated: string;
+  created: string;
 };
 
 export type InvoiceItem = InvoiceResDto;

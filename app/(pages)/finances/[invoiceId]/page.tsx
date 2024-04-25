@@ -23,6 +23,8 @@ import ButtonsGroup from "@/components/buttons/LinksGroup";
 import ToolbarButtonsGroup from "@/components/buttons/ToolbarButtonsGroup";
 import DetailCell from "@/components/DetailCell";
 import InputField from "@/components/FormFields/InputField";
+import PlusIcon from "@/components/icons/PlusIcon";
+import MinusIcon from "@/components/icons/MinusIcon";
 
 type InvoiceFormType = {
   items: {
@@ -79,9 +81,7 @@ const invoice: InvoiceFormType = {
 };
 
 async function getInvoice(id: number) {
-  const response = await api.get<InvoiceDetailsDto>(
-    `/client/invoice_ru/${id}/`
-  );
+  const response = await api.get<InvoiceDetailsDto>(`/clients/invoices/${id}`);
   return response.data;
 }
 
@@ -113,7 +113,7 @@ function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
 }
 
 async function patchInvoice(id: number, data: Partial<InvoiceDetailsDto>) {
-  const response = await api.patch(`/client/invoice_ru/${id}/`, data);
+  const response = await api.patch(`/clients/invoices/${id}/update`, data);
   return response.data;
 }
 
@@ -226,7 +226,7 @@ const Page: FunctionComponent<{
     formik.setFieldValue("total_amount", total.toFixed(2));
   }, [values.items]);
   return (
-    <Panel title={`Factuur #${data?.id}`}>
+    <Panel title={`Factuur #${data?.invoice_number}`}>
       <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
         {data && <UpdateStatus invoice={data} />}
       </div>
@@ -247,7 +247,7 @@ const Page: FunctionComponent<{
 };
 
 const PricingTable: FunctionComponent = () => {
-  const { values } = useFormikContext<InvoiceFormType>();
+  const { values, setFieldValue } = useFormikContext<InvoiceFormType>();
   return (
     <table className="border-separate border-spacing-2.5 w-full">
       <thead>
@@ -272,7 +272,7 @@ const PricingTable: FunctionComponent = () => {
                 variant={"percentage"}
                 placeholder={"BTW"}
                 type="number"
-                name={`items[${index}].vat_rate`}
+                name={`items[${index}].used_tax`}
               />
             </td>
             <td className="w-1/4">
@@ -282,6 +282,34 @@ const PricingTable: FunctionComponent = () => {
                 type="number"
                 name={`items[${index}].pre_vat_total`}
               />
+            </td>
+            <td>
+              <div className="flex gap-2.5">
+                <ActionButton
+                  onClick={() => {
+                    const split1 = values.items.slice(0, index + 1);
+                    const split2 = values.items.slice(index + 1);
+                    setFieldValue("items", [
+                      ...split1,
+                      { description: "", vat: "", price: "" },
+                      ...split2,
+                    ]);
+                  }}
+                >
+                  <PlusIcon />
+                </ActionButton>
+                <ActionButton
+                  disabled={values.items.length === 1}
+                  onClick={() => {
+                    setFieldValue(
+                      "items",
+                      values.items.filter((_, i) => i !== index)
+                    );
+                  }}
+                >
+                  <MinusIcon />
+                </ActionButton>
+              </div>
             </td>
           </tr>
         ))}

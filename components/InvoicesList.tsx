@@ -50,7 +50,7 @@ const useContractInvoices = (contractId: number) => {
 type InvoicesParams = PaginationParams & (FilterFormType | {});
 
 async function getInvoices(params?: InvoicesParams) {
-  const response = await api.get<InvoicesResDto>("/client/invoice_all/", {
+  const response = await api.get<InvoicesResDto>("/clients/invoices", {
     params,
   });
   return response.data;
@@ -154,9 +154,11 @@ export function InvoicesList(props: {
   const columns = useMemo<ColumnDef<InvoiceItem>[]>(() => {
     return [
       {
-        accessorKey: "id",
+        accessorKey: "invoice_number",
         header: "Factuurnummer",
-        cell: (data) => data.getValue() as string,
+        cell: (data) => (
+          <span className="font-bold">{("#" + data.getValue()) as string}</span>
+        ),
       },
       {
         accessorKey: "issue_date",
@@ -178,20 +180,20 @@ export function InvoicesList(props: {
         header: "Totaalbedrag",
         cell: (data) => formatPrice(parseFloat(data.getValue() as string)),
       },
-      {
-        id: "download",
-        header: "Downloaden",
-        cell: (data) => (
-          <a
-            href={data.row.original.url}
-            target="_blank"
-            className="text-primary hover:underline"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <DownloadIcon />
-          </a>
-        ),
-      },
+      // {
+      //   id: "download",
+      //   header: "Downloaden",
+      //   cell: (data) => (
+      //     <a
+      //       href={data.row.original.url}
+      //       target="_blank"
+      //       className="text-primary hover:underline"
+      //       onClick={(e) => e.stopPropagation()}
+      //     >
+      //       <DownloadIcon />
+      //     </a>
+      //   ),
+      // },
     ];
   }, []);
   if (isLoading) {
