@@ -52,12 +52,11 @@ type InvoiceDetailsDto = {
   url: string;
   payment_type: string | null;
   invoice_details: {
-    contract: number;
-    vat_rate: number;
-    care_type: string;
-    vat_amount: number;
-    total_amount: number;
-    pre_vat_total: number;
+    contract_id: number;
+    used_tax: number;
+    item_desc: string;
+    contract_amount: number;
+    contract_amount_without_tax: number;
   }[];
 };
 
@@ -198,10 +197,10 @@ const Page: FunctionComponent<{
       ...invoice,
       items:
         data?.invoice_details?.map((item) => ({
-          care_type: item.care_type,
-          contract: item.contract,
-          pre_vat_total: item.pre_vat_total + "",
-          vat_rate: item.vat_rate + "",
+          care_type: item.item_desc,
+          contract: item.contract_id,
+          pre_vat_total: item.contract_amount_without_tax + "",
+          vat_rate: item.used_tax + "",
         })) ?? [],
     };
   }, [data]);
@@ -272,7 +271,7 @@ const PricingTable: FunctionComponent = () => {
                 variant={"percentage"}
                 placeholder={"BTW"}
                 type="number"
-                name={`items[${index}].used_tax`}
+                name={`items[${index}].vat_rate`}
               />
             </td>
             <td className="w-1/4">
