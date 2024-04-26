@@ -191,6 +191,17 @@ export const INVOICE_STATUS_RECORD = {
   concept: "Concept",
 };
 
+export const INVOICE_STATUS_VARIANT: Record<string, BadgeType> = {
+  outstanding: "Warning",
+  partially_paid: "Warning",
+  paid: "Success",
+  douabtfull_uncollectible: "Danger",
+  expired: "Dark",
+  overpaid: "Success",
+  imported: "Info",
+  concept: "Outline",
+};
+
 export const INVOICE_STATUS_GRAPH = {
   concept: [
     { label: "Selecteer Status", value: "" },

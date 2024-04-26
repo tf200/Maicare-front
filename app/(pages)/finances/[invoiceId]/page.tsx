@@ -10,7 +10,12 @@ import React, {
 import Panel from "@/components/Panel";
 import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
 import Button from "@/components/buttons/Button";
-import { INVOICE_STATUS_GRAPH, PAYMENT_TYPE_OPTIONS } from "@/consts";
+import {
+  INVOICE_STATUS_GRAPH,
+  INVOICE_STATUS_RECORD,
+  INVOICE_STATUS_VARIANT,
+  PAYMENT_TYPE_OPTIONS,
+} from "@/consts";
 import Select from "@/components/FormFields/Select";
 import DetailCell from "@/components/DetailCell";
 import InputField from "@/components/FormFields/InputField";
@@ -36,6 +41,7 @@ import FormModal from "@/components/Modals/FormModal";
 import { useModal } from "@/components/providers/ModalProvider";
 import * as Yup from "yup";
 import { InvoiceType } from "@/types/InvoiceStatus";
+import StatusBadge from "@/components/StatusBadge";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -62,6 +68,17 @@ function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
     })),
   };
 }
+
+const InvoiceStatus: FunctionComponent<{ status: InvoiceType }> = ({
+  status,
+}) => {
+  return (
+    <StatusBadge
+      text={INVOICE_STATUS_RECORD[status]}
+      type={INVOICE_STATUS_VARIANT[status]}
+    />
+  );
+};
 
 const Page: FunctionComponent<{
   params: { invoiceId: string };
@@ -115,9 +132,17 @@ const Page: FunctionComponent<{
 
   return (
     <Panel
-      title={`Factuur #${data?.invoice_number}`}
-      sideActions={
-        <Button onClick={() => manageStatus({ data })}>Status bijwerken</Button>
+      title={"Factuur"}
+      header={
+        <div className="flex items-center w-full gap-4">
+          <h2 className="font-medium text-black dark:text-white">
+            Factuur #${data?.invoice_number}{" "}
+          </h2>
+          <InvoiceStatus status={data.status} />
+          <Button className="ml-auto" onClick={() => manageStatus({ data })}>
+            Status bijwerken
+          </Button>
+        </div>
       }
     >
       <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
@@ -125,7 +150,7 @@ const Page: FunctionComponent<{
       </div>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="px-6 py-4">
-          <strong>Items: </strong>
+          <strong>Factuurartikelen</strong>
           <br />
           <PricingTable disabled={data.status !== "concept"} />
           {data.status === "concept" && (
@@ -172,7 +197,6 @@ const UpdateStatus: FunctionComponent<{
           return schema;
         }),
         amount: Yup.string().when("status", (value, schema) => {
-          console.log("validating amount", value);
           if (value[0] === "partially_paid" || value[0] === "overpaid") {
             return schema.required("Dit veld is verplicht");
           }
@@ -216,16 +240,16 @@ const UpdateStatus: FunctionComponent<{
         }
       },
     });
-
-  useEffect(() => {}, [invoice.status]);
-
-  console.log("values", values);
   return (
     <form onSubmit={handleSubmit} className={"flex flex-col"}>
       <DetailCell
         className="mb-6"
         label={"Huidige status"}
-        value={invoice.status}
+        value={
+          <div className="mt-2">
+            <InvoiceStatus status={invoice.status} />
+          </div>
+        }
       />
       <DetailCell
         label={"Status bijwerken"}
