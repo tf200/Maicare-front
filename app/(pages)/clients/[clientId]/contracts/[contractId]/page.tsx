@@ -5,6 +5,7 @@ import Panel from "@/components/Panel";
 import ContractDetails from "@/components/ContractDetails";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useContractDetails } from "@/utils/contracts/getContractDetails";
+import WorkingHours from "@/components/WorkingHours";
 
 type Props = {
   params: { clientId: string; contractId: string };
@@ -34,6 +35,7 @@ const Page: FunctionComponent<Props> = ({
           clientId={parseInt(clientId)}
           contractId={parseInt(contractId)}
         />
+        <WorkingHours contractId={parseInt(contractId)} />
       </Panel>
     </div>
   );
