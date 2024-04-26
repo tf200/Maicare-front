@@ -46,7 +46,7 @@ const ContractDetails: FunctionComponent<Props> = ({
   return (
     <div
       id="contract"
-      className="rounded-sm bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"
+      className="rounded-sm bg-white p-4 dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"
     >
       {isClientLoading && isContractLoading && <Loader />}
       {client && contract && (
