@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FunctionComponent, useMemo } from "react";
-import { useFormik, FormikProvider } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import { useCreateContract } from "@/utils/contracts/createContract";
 import {
   COMPANY_CONTRACT_OPTIONS,
@@ -20,24 +20,14 @@ import {
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
 import Button from "@/components/buttons/Button";
-import {
-  CareType,
-  ContractStatus,
-  NewContractReqDto,
-} from "@/types/contracts/new-contract-req.dto";
 import { useRouter } from "next/navigation";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
-import DetailCell from "@/components/DetailCell";
-import { OpClientTypeRecord } from "@/components/forms/OpContactForms/OpContactForm";
 import InfoIcon from "@/components/icons/InfoIcon";
 import { useModal } from "@/components/providers/ModalProvider";
-import ContactModal from "@/components/Modals/ContactModal";
 import { GenericSelectionOption } from "@/types/selection-option";
 import dayjs from "dayjs";
 import { dateFormat } from "@/utils/timeFormatting";
 import FilesUploader from "@/components/FormFields/FilesUploader";
-import { RateType } from "@/types/rate-type";
-import { ContactResDto } from "@/types/op-contact/contact-res.dto";
 import { FormProps } from "@/types/form-props";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useUpdateContract } from "@/utils/contracts/updateContract";
@@ -59,6 +49,8 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import Loader from "@/components/common/Loader";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import { formToDto } from "@/utils/contracts/formToDto";
+import ContactAssignment from "@/components/ContactAssignment";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
 
 const initialValues: ContractFormType = {
   start_date: "",
@@ -195,7 +187,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
 
-  console.log("values", values);
+  const { data: clientData } = useClientDetails(clientId);
 
   return (
     <FormikProvider value={formik}>
@@ -204,7 +196,11 @@ const ContractForm: FunctionComponent<PropsType> = ({
         className="grid gap-10 grid-cols-1 lg:grid-cols-2"
       >
         <div>
-          <ContactAssignment clientId={clientId} data={contactData} />
+          <ContactAssignment
+            clientId={clientId}
+            data={contactData}
+            unassigned={clientData && !clientData.sender}
+          />
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <InputField
               label={"Contractnaam"}
@@ -431,56 +427,6 @@ const ContractForm: FunctionComponent<PropsType> = ({
 };
 
 export default ContractForm;
-
-export const ContactAssignment: FunctionComponent<{
-  data: ContactResDto;
-  clientId: number;
-}> = ({ data, clientId }) => {
-  const { open } = useModal(ContactModal);
-  return (
-    <>
-      {data && (
-        <div className="mb-6 bg-gray rounded-md p-4 dark:bg-graydark dark:text-white">
-          <h2 className="text-l font-bold mb-4">
-            <InfoIcon className="inline-block relative -top-0.5" /> Maak een
-            contracten voor de gegeven opdrachtgever
-          </h2>
-          <div className="flex flex-wrap gap-8">
-            <DetailCell
-              label={"Soort opdrachtgever"}
-              value={OpClientTypeRecord[data.types]}
-            />
-            <DetailCell label={"Naam"} value={data.name} />
-            <DetailCell
-              label={"Telefoonnummer"}
-              type={"phone"}
-              value={data.phone_number}
-            />
-          </div>
-        </div>
-      )}
-      {!data && (
-        <div className="mb-6 flex flex-col p-4  info-box">
-          <h2 className="text-l font-bold mb-4">
-            <InfoIcon className="inline-block relative -top-0.5" /> Geen
-            opdrachtgever toegewezen
-          </h2>
-          <p>
-            Deze cliënt heeft geen opdrachtgever toegewezen, wijs er een toe
-          </p>
-          <Button
-            className={"py-2 gap-2 self-center flex items-center px-6 mt-4"}
-            onClick={() => {
-              open({ clientId });
-            }}
-          >
-            Voeg opdrachtgever toe
-          </Button>
-        </div>
-      )}
-    </>
-  );
-};
 
 export const WhenNotification: FunctionComponent<{
   values: ContractFormType;

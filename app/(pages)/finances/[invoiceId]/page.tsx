@@ -10,61 +10,32 @@ import React, {
 import Panel from "@/components/Panel";
 import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
 import Button from "@/components/buttons/Button";
-import api from "@/utils/api";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { InvoiceType } from "@/types/InvoiceStatus";
-import {
-  INVOICE_STATUS_GRAPH,
-  INVOICE_STATUS_OPTIONS,
-  PAYMENT_TYPE_OPTIONS,
-} from "@/consts";
+import { INVOICE_STATUS_GRAPH, PAYMENT_TYPE_OPTIONS } from "@/consts";
 import Select from "@/components/FormFields/Select";
-import ButtonsGroup from "@/components/buttons/LinksGroup";
-import ToolbarButtonsGroup from "@/components/buttons/ToolbarButtonsGroup";
 import DetailCell from "@/components/DetailCell";
 import InputField from "@/components/FormFields/InputField";
 import PlusIcon from "@/components/icons/PlusIcon";
 import MinusIcon from "@/components/icons/MinusIcon";
-
-type InvoiceFormType = {
-  items: {
-    contract: number;
-    vat_rate: string;
-    care_type: string;
-    pre_vat_total: string;
-  }[];
-  pre_vat_total: string;
-  total_amount: string;
-};
-
-type InvoiceDetailsDto = {
-  id: number;
-  full_name: string;
-  sender: string;
-  invoice_number: string;
-  issue_date: string;
-  due_date: string;
-  pre_vat_total: string;
-  vat_rate: string;
-  vat_amount: string;
-  total_amount: string;
-  status: InvoiceType;
-  url: string;
-  payment_type: string | null;
-  invoice_details: {
-    contract_id: number;
-    used_tax: number;
-    item_desc: string;
-    contract_amount: number;
-    contract_amount_without_tax: number;
-  }[];
-};
-
-type UpdateInvoiceDto = {
-  contract: number;
-  vat_rate: number;
-  pre_vat_total: number;
-}[];
+import {
+  useAddPaymentHistory,
+  useInvoice,
+  usePatchInvoice,
+  useUpdateInvoice,
+} from "@/utils/invoices";
+import {
+  InvoiceDetailsDto,
+  InvoiceFormType,
+  UpdateInvoiceDto,
+} from "@/types/invoices";
+import Loader from "@/components/common/Loader";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
+import { useClientContact } from "@/components/clientDetails/ContactSummary";
+import ContactAssignment from "@/components/ContactAssignment";
+import { ModalProps } from "@/types/modal-props";
+import FormModal from "@/components/Modals/FormModal";
+import { useModal } from "@/components/providers/ModalProvider";
+import * as Yup from "yup";
+import { InvoiceType } from "@/types/InvoiceStatus";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -79,118 +50,23 @@ const invoice: InvoiceFormType = {
   total_amount: "",
 };
 
-async function getInvoice(id: number) {
-  const response = await api.get<InvoiceDetailsDto>(`/clients/invoices/${id}`);
-  return response.data;
-}
-
-const useInvoice = (id: number) => {
-  return useQuery(["invoices", id], () => getInvoice(id));
-};
-
-const updateInvoice = (id: number) => async (data: UpdateInvoiceDto) => {
-  const response = await api.put(`/client/invoice_update/${id}/`, data);
-  return response.data;
-};
-
-const useUpdateInvoice = (id: number) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: updateInvoice(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["invoices", id]);
-    },
-  });
-};
-
 function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
-  return values.items.map((item) => ({
-    contract: item.contract,
-    vat_rate: Number(item.vat_rate),
-    pre_vat_total: Number(item.pre_vat_total),
-  }));
+  return {
+    invoice_details: values.items.map((item) => ({
+      contract_id: item.contract,
+      used_tax: Number(item.vat_rate),
+      item_desc: item.care_type,
+      contract_amount:
+        Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100),
+      contract_amount_without_tax: Number(item.pre_vat_total),
+    })),
+  };
 }
-
-async function patchInvoice(id: number, data: Partial<InvoiceDetailsDto>) {
-  const response = await api.patch(`/clients/invoices/${id}/update`, data);
-  return response.data;
-}
-
-const usePatchInvoice = (id: number) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (data: Partial<InvoiceDetailsDto>) => patchInvoice(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["invoices", id]);
-      queryClient.invalidateQueries(["invoices"]);
-    },
-  });
-};
-
-const UpdateStatus: FunctionComponent<{
-  invoice: InvoiceDetailsDto;
-}> = ({ invoice }) => {
-  const { mutate: updateStatus, isLoading } = usePatchInvoice(invoice.id);
-  const { handleSubmit, handleChange, setValues, handleBlur, values } =
-    useFormik({
-      initialValues: {
-        status: invoice.status,
-      },
-      enableReinitialize: true,
-      onSubmit: (values) => {
-        updateStatus(values);
-      },
-    });
-  return (
-    <form onSubmit={handleSubmit} className={"flex flex-col"}>
-      <DetailCell
-        className="mb-6"
-        label={"Huidige status"}
-        value={invoice.status}
-      />
-      <DetailCell
-        label={"Status bijwerken"}
-        value={
-          <div className="mt-2 mb-5">
-            <ToolbarButtonsGroup
-              selectedOption={values.status}
-              onOptionClicked={(option) => {
-                setValues({ status: option.value as any });
-              }}
-              options={INVOICE_STATUS_GRAPH[invoice.status]}
-            />
-          </div>
-        }
-      />
-      {values.status === "partially_paid" ||
-        (values.status === "overpaid" && (
-          <InputField
-            name={"payed_amount"}
-            label={"Payed amount"}
-            placeholder={"Payed amount"}
-            className="mb-4"
-            type={"number"}
-            isPrice={true}
-          />
-        ))}
-      {(values.status === "paid" || values.status === "partially_paid") && (
-        <Select
-          options={PAYMENT_TYPE_OPTIONS}
-          name={"payment_type"}
-          label={"Betaalmethode"}
-        />
-      )}
-      <Button type="submit" className="mt-8" isLoading={isLoading}>
-        Status bijwerken
-      </Button>
-    </form>
-  );
-};
 
 const Page: FunctionComponent<{
   params: { invoiceId: string };
 }> = ({ params: { invoiceId } }) => {
-  const { data } = useInvoice(+invoiceId);
+  const { data, isLoading: isLoadingInvoices } = useInvoice(+invoiceId);
   const { mutate: updateInvoice, isLoading } = useUpdateInvoice(+invoiceId);
   const initialValues = useMemo(() => {
     return {
@@ -212,40 +88,259 @@ const Page: FunctionComponent<{
     },
   });
   const { handleSubmit, values } = formik;
+
   useEffect(() => {
     const preVatTotal = values.items.reduce((acc, item) => {
-      return acc + Number(item.pre_vat_total);
+      return acc + Number(item.pre_vat_total ?? 0);
     }, 0);
     formik.setFieldValue("pre_vat_total", preVatTotal.toFixed(2));
     const total = values.items.reduce((acc, item) => {
       return (
-        acc + Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100)
+        acc +
+        Number(item.pre_vat_total ?? 0) * (1 + Number(item.vat_rate ?? 0) / 100)
       );
     }, 0);
     formik.setFieldValue("total_amount", total.toFixed(2));
   }, [values.items]);
+
+  if (isLoadingInvoices) {
+    return <Loader />;
+  }
+
+  if (!data) {
+    return <></>;
+  }
+
+  const { open: manageStatus } = useModal(ManageStatusModal);
+
   return (
-    <Panel title={`Factuur #${data?.invoice_number}`}>
+    <Panel
+      title={`Factuur #${data?.invoice_number}`}
+      sideActions={
+        <Button onClick={() => manageStatus({ data })}>Status bijwerken</Button>
+      }
+    >
       <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
-        {data && <UpdateStatus invoice={data} />}
+        <ClientDetails clientId={data.client_id} />
       </div>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="px-6 py-4">
           <strong>Items: </strong>
           <br />
-          <PricingTable />
-          <div className="flex my-5 mr-5 justify-end">
-            <Button isLoading={isLoading} formNoValidate={true} type="submit">
-              Verzenden
-            </Button>
-          </div>
+          <PricingTable disabled={data.status !== "concept"} />
+          {data.status === "concept" && (
+            <div className="flex my-5 mr-5 justify-end">
+              <Button
+                isLoading={isLoading}
+                disabled={isLoading || data.status !== "concept"}
+                formNoValidate={true}
+                type="submit"
+              >
+                Verzenden
+              </Button>
+            </div>
+          )}
         </form>
       </FormikProvider>
     </Panel>
   );
 };
 
-const PricingTable: FunctionComponent = () => {
+const UpdateStatus: FunctionComponent<{
+  invoice: InvoiceDetailsDto;
+  onSuccess?: () => void;
+}> = ({ invoice, onSuccess }) => {
+  const { mutate: updateStatus, isLoading } = usePatchInvoice(invoice.id);
+  const { mutate: addPaymentHistory } = useAddPaymentHistory(invoice.id);
+  const { handleSubmit, handleChange, touched, errors, handleBlur, values } =
+    useFormik({
+      initialValues: {
+        status: "",
+        payment_method: "",
+        amount: "",
+      },
+      validationSchema: Yup.object().shape({
+        status: Yup.string().required(),
+        payment_method: Yup.string().when("status", (value, schema) => {
+          if (
+            value[0] === "partially_paid" ||
+            value[0] === "overpaid" ||
+            value[0] === "paid"
+          ) {
+            return schema.required("Dit veld is verplicht");
+          }
+          return schema;
+        }),
+        amount: Yup.string().when("status", (value, schema) => {
+          console.log("validating amount", value);
+          if (value[0] === "partially_paid" || value[0] === "overpaid") {
+            return schema.required("Dit veld is verplicht");
+          }
+          return schema;
+        }),
+      }),
+      enableReinitialize: true,
+      onSubmit: (values, { resetForm }) => {
+        if (
+          values.status === "partially_paid" ||
+          values.status === "overpaid" ||
+          values.status === "paid"
+        ) {
+          addPaymentHistory(
+            {
+              payment_method: values.payment_method,
+              amount: Number(
+                values.status === "paid" ? values.amount : invoice.total_amount
+              ),
+              invoice_status: values.status as InvoiceType,
+            },
+            {
+              onSuccess: () => {
+                resetForm();
+                onSuccess?.();
+              },
+            }
+          );
+        } else {
+          updateStatus(
+            {
+              status: values.status as InvoiceType,
+            },
+            {
+              onSuccess: () => {
+                resetForm();
+                onSuccess?.();
+              },
+            }
+          );
+        }
+      },
+    });
+
+  useEffect(() => {}, [invoice.status]);
+
+  console.log("values", values);
+  return (
+    <form onSubmit={handleSubmit} className={"flex flex-col"}>
+      <DetailCell
+        className="mb-6"
+        label={"Huidige status"}
+        value={invoice.status}
+      />
+      <DetailCell
+        label={"Status bijwerken"}
+        value={
+          <div className="mt-2 mb-5">
+            <Select
+              label={"Factuur status"}
+              value={values.status}
+              options={INVOICE_STATUS_GRAPH[invoice.status]}
+              name={"status"}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.status && errors.status}
+            />
+          </div>
+        }
+      />
+      {(values.status === "paid" ||
+        values.status === "partially_paid" ||
+        values.status === "overpaid") && (
+        <Select
+          options={PAYMENT_TYPE_OPTIONS}
+          name={"payment_method"}
+          label={"Betaalmethode"}
+          className="mb-4"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.payment_method}
+          error={touched.payment_method && errors.payment_method}
+        />
+      )}
+      {(values.status === "partially_paid" || values.status === "overpaid") && (
+        <InputField
+          name={"amount"}
+          type={"number"}
+          isPrice={true}
+          max={
+            values.status === "partially_paid"
+              ? invoice.total_amount
+              : undefined
+          }
+          min={values.status === "overpaid" ? invoice.total_amount : 0}
+          label={"Betaald bedrag"}
+          placeholder={"Betaald bedrag"}
+          className="mb-4"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.amount}
+          error={touched.amount && errors.amount}
+        />
+      )}
+      <Button type="submit" className="mt-8" isLoading={isLoading}>
+        Status bijwerken
+      </Button>
+    </form>
+  );
+};
+
+const ManageStatusModal: FunctionComponent<ModalProps> = ({
+  additionalProps,
+  ...props
+}) => {
+  return (
+    <FormModal {...props} title={"Status bijwerken"}>
+      <UpdateStatus invoice={additionalProps.data} />
+    </FormModal>
+  );
+};
+
+const ClientDetails: FunctionComponent<{
+  clientId: number;
+}> = ({ clientId }) => {
+  const { data: client, isLoading: isLoadingClient } =
+    useClientDetails(clientId);
+
+  const { data: contact, isLoading: isLoadingContact } =
+    useClientContact(clientId);
+  return (
+    <div className="flex flex-wrap justify-between">
+      {isLoadingClient ? (
+        <Loader />
+      ) : (
+        <div>
+          <h3 className="text-lg font-semibold">Cliënt</h3>
+          <div className="flex gap-2.5">
+            <DetailCell
+              label={"Naam"}
+              value={`${client?.first_name} ${client?.last_name}`}
+            />
+            <DetailCell label={"Email"} value={client?.email} type={"email"} />
+            <DetailCell
+              label={"Telefoon"}
+              value={client?.phone_number}
+              type={"phone"}
+            />
+          </div>
+        </div>
+      )}
+      {isLoadingContact ? (
+        <Loader />
+      ) : (
+        <ContactAssignment
+          clientId={clientId}
+          data={contact}
+          unassigned={client && !client.sender}
+          text={"Maak een factuur voor de gegeven opdrachtgever"}
+        />
+      )}
+    </div>
+  );
+};
+
+const PricingTable: FunctionComponent<{
+  disabled?: boolean;
+}> = ({ disabled }) => {
   const { values, setFieldValue } = useFormikContext<InvoiceFormType>();
   return (
     <table className="border-separate border-spacing-2.5 w-full">
@@ -261,21 +356,24 @@ const PricingTable: FunctionComponent = () => {
           <tr key={item.contract}>
             <td className="w-1/3">
               <TableInput
-                disabled={true}
+                disabled={!!item.contract || disabled}
                 placeholder={"Zorgtype"}
                 name={`items[${index}].care_type`}
               />
             </td>
             <td className="w-1/4">
               <TableInput
+                disabled={disabled}
                 variant={"percentage"}
                 placeholder={"BTW"}
+                min={0}
                 type="number"
                 name={`items[${index}].vat_rate`}
               />
             </td>
             <td className="w-1/4">
               <TableInput
+                disabled={disabled}
                 variant={"currency"}
                 placeholder={"Prijs"}
                 type="number"
@@ -285,6 +383,7 @@ const PricingTable: FunctionComponent = () => {
             <td>
               <div className="flex gap-2.5">
                 <ActionButton
+                  disabled={disabled}
                   onClick={() => {
                     const split1 = values.items.slice(0, index + 1);
                     const split2 = values.items.slice(index + 1);
@@ -298,7 +397,7 @@ const PricingTable: FunctionComponent = () => {
                   <PlusIcon />
                 </ActionButton>
                 <ActionButton
-                  disabled={values.items.length === 1}
+                  disabled={values.items.length === 1 || disabled}
                   onClick={() => {
                     setFieldValue(
                       "items",
@@ -325,6 +424,7 @@ const PricingTable: FunctionComponent = () => {
               placeholder={"Totaal voor BTW"}
               name={"pre_vat_total"}
               variant={"currency"}
+              disabled={true}
             />
           </td>
         </tr>
@@ -339,6 +439,7 @@ const PricingTable: FunctionComponent = () => {
               placeholder={"Totaal"}
               name={"total_amount"}
               variant={"currency"}
+              disabled={true}
             />
           </td>
         </tr>

@@ -1,0 +1,62 @@
+import React, { FunctionComponent } from "react";
+import { ContactResDto } from "@/types/op-contact/contact-res.dto";
+import { useModal } from "@/components/providers/ModalProvider";
+import ContactModal from "@/components/Modals/ContactModal";
+import InfoIcon from "@/components/icons/InfoIcon";
+import DetailCell from "@/components/DetailCell";
+import { OpClientTypeRecord } from "@/components/forms/OpContactForms/OpContactForm";
+import Button from "@/components/buttons/Button";
+
+const ContactAssignment: FunctionComponent<{
+  data?: ContactResDto;
+  clientId: number;
+  unassigned: boolean;
+  text?: string;
+}> = ({ data, clientId, unassigned, text }) => {
+  const { open } = useModal(ContactModal);
+  return (
+    <>
+      {data && (
+        <div className="mb-6 bg-gray rounded-md p-4 dark:bg-graydark dark:text-white">
+          <h2 className="text-l font-bold mb-4">
+            <InfoIcon className="inline-block relative -top-0.5" />{" "}
+            {text ?? "Maak een contracten voor de gegeven opdrachtgever"}
+          </h2>
+          <div className="flex flex-wrap gap-8">
+            <DetailCell
+              label={"Soort opdrachtgever"}
+              value={OpClientTypeRecord[data.types]}
+            />
+            <DetailCell label={"Naam"} value={data.name} />
+            <DetailCell
+              label={"Telefoonnummer"}
+              type={"phone"}
+              value={data.phone_number}
+            />
+          </div>
+        </div>
+      )}
+      {unassigned && (
+        <div className="mb-6 flex flex-col p-4  info-box">
+          <h2 className="text-l font-bold mb-4">
+            <InfoIcon className="inline-block relative -top-0.5" /> Geen
+            opdrachtgever toegewezen
+          </h2>
+          <p>
+            Deze cliënt heeft geen opdrachtgever toegewezen, wijs er een toe
+          </p>
+          <Button
+            className={"py-2 gap-2 self-center flex items-center px-6 mt-4"}
+            onClick={() => {
+              open({ clientId });
+            }}
+          >
+            Voeg opdrachtgever toe
+          </Button>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ContactAssignment;

@@ -13,10 +13,7 @@ import React, { FunctionComponent } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import { useContractDetails } from "@/utils/contracts/getContractDetails";
 import Loader from "@/components/common/Loader";
-import {
-  ContactAssignment,
-  WhenNotification,
-} from "@/components/forms/ContractForm";
+import { WhenNotification } from "@/components/forms/ContractForm";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import DownloadFile from "@/components/DownloadFile";
@@ -28,6 +25,7 @@ import { getConfirmModal } from "@/components/Modals/Modal";
 import { useUpdateContract } from "@/utils/contracts/updateContract";
 import { resDtoToPatchDto } from "@/utils/contracts/resDtoToPatchDto";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import ContactAssignment from "@/components/ContactAssignment";
 
 type Props = {
   clientId: number;
@@ -56,7 +54,11 @@ const ContractDetails: FunctionComponent<Props> = ({
       )}
       <div className="flex flex-col xl:flex-row items-start justify-between mt-5">
         {contactData && (
-          <ContactAssignment clientId={clientId} data={contactData} />
+          <ContactAssignment
+            clientId={clientId}
+            data={contactData}
+            unassigned={client && !client.sender}
+          />
         )}
         {contract && <WhenNotification values={mapToForm(contract)} />}
       </div>

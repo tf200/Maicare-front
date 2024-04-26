@@ -193,10 +193,12 @@ export const INVOICE_STATUS_RECORD = {
 
 export const INVOICE_STATUS_GRAPH = {
   concept: [
+    { label: "Selecteer Status", value: "" },
     { label: "Openstaand", value: "outstanding" },
     { label: "Verlopen", value: "expired" },
   ],
   outstanding: [
+    { label: "Selecteer Status", value: "" },
     { label: "Gedeeltelijk betaald", value: "partially_paid" },
     { label: "Betaald", value: "paid" },
     { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
@@ -204,6 +206,7 @@ export const INVOICE_STATUS_GRAPH = {
     { label: "Teveel betaald", value: "overpaid" },
   ],
   partially_paid: [
+    { label: "Selecteer Status", value: "" },
     { label: "Betaald", value: "paid" },
     { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
     { label: "Verlopen", value: "expired" },
@@ -212,6 +215,7 @@ export const INVOICE_STATUS_GRAPH = {
   paid: [],
   expired: [],
   douabtfull_uncollectible: [
+    { label: "Selecteer Status", value: "" },
     { label: "Betaald", value: "paid" },
     { label: "Verlopen", value: "expired" },
     { label: "Teveel betaald", value: "overpaid" },
