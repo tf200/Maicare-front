@@ -180,6 +180,12 @@ export const PAYMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Creditcard", value: "credit_card" },
 ];
 
+export const PAYMENT_TYPE_RECORD = {
+  cash: "Contant",
+  bank_transfer: "Bank",
+  credit_card: "Creditcard",
+};
+
 export const INVOICE_STATUS_RECORD = {
   outstanding: "Openstaand",
   partially_paid: "Gedeeltelijk betaald",
@@ -191,12 +197,25 @@ export const INVOICE_STATUS_RECORD = {
   concept: "Concept",
 };
 
+export const INVOICE_STATUS_VARIANT: Record<string, BadgeType> = {
+  outstanding: "Warning",
+  partially_paid: "Warning",
+  paid: "Success",
+  douabtfull_uncollectible: "Danger",
+  expired: "Dark",
+  overpaid: "Success",
+  imported: "Info",
+  concept: "Outline",
+};
+
 export const INVOICE_STATUS_GRAPH = {
   concept: [
+    { label: "Selecteer Status", value: "" },
     { label: "Openstaand", value: "outstanding" },
     { label: "Verlopen", value: "expired" },
   ],
   outstanding: [
+    { label: "Selecteer Status", value: "" },
     { label: "Gedeeltelijk betaald", value: "partially_paid" },
     { label: "Betaald", value: "paid" },
     { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
@@ -204,6 +223,7 @@ export const INVOICE_STATUS_GRAPH = {
     { label: "Teveel betaald", value: "overpaid" },
   ],
   partially_paid: [
+    { label: "Selecteer Status", value: "" },
     { label: "Betaald", value: "paid" },
     { label: "Twijfelachtig", value: "douabtfull_uncollectible" },
     { label: "Verlopen", value: "expired" },
@@ -211,7 +231,9 @@ export const INVOICE_STATUS_GRAPH = {
   ],
   paid: [],
   expired: [],
+  overpaid: [],
   douabtfull_uncollectible: [
+    { label: "Selecteer Status", value: "" },
     { label: "Betaald", value: "paid" },
     { label: "Verlopen", value: "expired" },
     { label: "Teveel betaald", value: "overpaid" },
