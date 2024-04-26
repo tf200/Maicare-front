@@ -131,16 +131,11 @@ const Page: FunctionComponent<{
             Factuur #{data?.invoice_number}{" "}
           </h2>
           <InvoiceStatus status={data.status} />
-          {data.status !== "paid" &&
-            data.status !== "expired" &&
-            data.status !== "overpaid" && (
-              <Button
-                className="ml-auto"
-                onClick={() => manageStatus({ data })}
-              >
-                Status bijwerken
-              </Button>
-            )}
+          {data.status !== "paid" && data.status !== "expired" && (
+            <Button className="ml-auto" onClick={() => manageStatus({ data })}>
+              Status bijwerken
+            </Button>
+          )}
         </div>
       }
     >
@@ -194,16 +189,19 @@ const InvoiceHistory: FunctionComponent<{
               value={fullDateTimeFormat(item.created)}
               label={"Datum"}
               className="border-b-1 border-gray pb-5"
+              ignoreIfEmpty={true}
             />
             <DetailCell
               className="border-b-1 border-gray pb-5"
               value={PAYMENT_TYPE_RECORD[item.payment_method]}
               label={"Betaalmethode"}
+              ignoreIfEmpty={true}
             />
             <DetailCell
               className="border-b-1 border-gray pb-5"
               value={formatPrice(item.amount)}
               label={"Betaald bedrag"}
+              ignoreIfEmpty={true}
             />
           </div>
         ))}
@@ -254,9 +252,7 @@ const UpdateStatus: FunctionComponent<{
           addPaymentHistory(
             {
               payment_method: values.payment_method,
-              amount: Number(
-                values.status === "paid" ? values.amount : invoice.total_amount
-              ),
+              amount: Number(values.amount),
               invoice_status: values.status as InvoiceType,
             },
             {
@@ -322,10 +318,13 @@ const UpdateStatus: FunctionComponent<{
           error={touched.payment_method && errors.payment_method}
         />
       )}
-      {(values.status === "partially_paid" || values.status === "overpaid") && (
+      {(values.status === "partially_paid" ||
+        values.status === "overpaid" ||
+        values.status === "paid") && (
         <InputField
           name={"amount"}
           type={"number"}
+          step={"0.01"}
           isPrice={true}
           max={
             values.status === "partially_paid"
@@ -342,7 +341,12 @@ const UpdateStatus: FunctionComponent<{
           error={touched.amount && errors.amount}
         />
       )}
-      <Button type="submit" className="mt-8" isLoading={isLoading}>
+      <Button
+        type="submit"
+        formNoValidate={true}
+        className="mt-8"
+        isLoading={isLoading}
+      >
         Status bijwerken
       </Button>
     </form>
@@ -355,7 +359,12 @@ const ManageStatusModal: FunctionComponent<ModalProps> = ({
 }) => {
   return (
     <FormModal {...props} title={"Status bijwerken"}>
-      <UpdateStatus invoice={additionalProps.data} />
+      <UpdateStatus
+        invoice={additionalProps.data}
+        onSuccess={() => {
+          props.onClose();
+        }}
+      />
     </FormModal>
   );
 };
