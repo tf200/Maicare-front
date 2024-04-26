@@ -231,6 +231,7 @@ export const INVOICE_STATUS_GRAPH = {
   ],
   paid: [],
   expired: [],
+  overpaid: [],
   douabtfull_uncollectible: [
     { label: "Selecteer Status", value: "" },
     { label: "Betaald", value: "paid" },

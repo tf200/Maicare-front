@@ -12,8 +12,6 @@ import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
 import Button from "@/components/buttons/Button";
 import {
   INVOICE_STATUS_GRAPH,
-  INVOICE_STATUS_RECORD,
-  INVOICE_STATUS_VARIANT,
   PAYMENT_TYPE_OPTIONS,
   PAYMENT_TYPE_RECORD,
 } from "@/consts";
@@ -42,8 +40,11 @@ import FormModal from "@/components/Modals/FormModal";
 import { useModal } from "@/components/providers/ModalProvider";
 import * as Yup from "yup";
 import { InvoiceType } from "@/types/InvoiceStatus";
-import StatusBadge from "@/components/StatusBadge";
 import DownloadIcon from "@/components/icons/DownloadIcon";
+import { InvoiceStatus } from "@/components/invoiceStatus";
+import { fullDateTimeFormat } from "@/utils/timeFormatting";
+import GrayBox from "@/components/GrayBox";
+import { formatPrice } from "@/utils/priceFormatting";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -70,17 +71,6 @@ function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
     })),
   };
 }
-
-const InvoiceStatus: FunctionComponent<{ status: InvoiceType }> = ({
-  status,
-}) => {
-  return (
-    <StatusBadge
-      text={INVOICE_STATUS_RECORD[status]}
-      type={INVOICE_STATUS_VARIANT[status]}
-    />
-  );
-};
 
 const Page: FunctionComponent<{
   params: { invoiceId: string };
@@ -141,20 +131,22 @@ const Page: FunctionComponent<{
             Factuur #{data?.invoice_number}{" "}
           </h2>
           <InvoiceStatus status={data.status} />
-          <Button className="ml-auto" onClick={() => manageStatus({ data })}>
-            Status bijwerken
-          </Button>
+          {data.status !== "paid" &&
+            data.status !== "expired" &&
+            data.status !== "overpaid" && (
+              <Button
+                className="ml-auto"
+                onClick={() => manageStatus({ data })}
+              >
+                Status bijwerken
+              </Button>
+            )}
         </div>
       }
     >
       <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
         <ClientDetails clientId={data.client_id} />
       </div>
-      {data.history.length > 0 && (
-        <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
-          <InvoiceHistory history={data.history} />
-        </div>
-      )}
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="px-6 py-4">
           <strong>Factuurartikelen</strong>
@@ -174,6 +166,11 @@ const Page: FunctionComponent<{
           )}
         </form>
       </FormikProvider>
+      {data.history.length > 0 && (
+        <div className="px-6 py-4 border-t-1 border-stroke dark:border-strokedark">
+          <InvoiceHistory history={data.history} />
+        </div>
+      )}
       <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark w-full">
         <Button disabled={true} className="flex gap-4 items-center ml-auto">
           <DownloadIcon />
@@ -190,16 +187,27 @@ const InvoiceHistory: FunctionComponent<{
   return (
     <div>
       <h3 className="text-lg font-semibold mb-6">Factuur geschiedenis:</h3>
-      {history.map((item) => (
-        <div key={item.id} className="flex flex-wrap gap-4 mb-2">
-          <DetailCell value={item.invoice_status} label={"Factuur status"} />
-          <DetailCell
-            value={PAYMENT_TYPE_RECORD[item.payment_method]}
-            label={"Betaalmethode"}
-          />
-          <DetailCell value={item.amount} label={"Betaald bedrag"} />
-        </div>
-      ))}
+      <div className="grid grid-cols-3 gap-y-4">
+        {history.map((item) => (
+          <div key={item.id} className="contents">
+            <DetailCell
+              value={fullDateTimeFormat(item.created)}
+              label={"Datum"}
+              className="border-b-1 border-gray pb-5"
+            />
+            <DetailCell
+              className="border-b-1 border-gray pb-5"
+              value={PAYMENT_TYPE_RECORD[item.payment_method]}
+              label={"Betaalmethode"}
+            />
+            <DetailCell
+              className="border-b-1 border-gray pb-5"
+              value={formatPrice(item.amount)}
+              label={"Betaald bedrag"}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -365,8 +373,8 @@ const ClientDetails: FunctionComponent<{
       {isLoadingClient ? (
         <Loader />
       ) : (
-        <div>
-          <h3 className="text-lg font-semibold">Cliënt</h3>
+        <GrayBox>
+          <h3 className="text-l font-bold mb-4">Cliënt</h3>
           <div className="flex gap-2.5">
             <DetailCell
               label={"Naam"}
@@ -379,7 +387,7 @@ const ClientDetails: FunctionComponent<{
               type={"phone"}
             />
           </div>
-        </div>
+        </GrayBox>
       )}
       {isLoadingContact ? (
         <Loader />
@@ -388,7 +396,7 @@ const ClientDetails: FunctionComponent<{
           clientId={clientId}
           data={contact}
           unassigned={client && !client.sender}
-          text={"Maak een factuur voor de gegeven opdrachtgever"}
+          text={"Opdrachtgever"}
         />
       )}
     </div>

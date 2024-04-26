@@ -20,6 +20,8 @@ import Button from "@/components/buttons/Button";
 import Select from "@/components/FormFields/Select";
 import { INVOICE_STATUS_OPTIONS, INVOICE_STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
+import { InvoiceStatus } from "@/components/invoiceStatus";
+import { InvoiceType } from "@/types/InvoiceStatus";
 
 async function getContractInvoices(
   contractId: number,
@@ -173,7 +175,9 @@ export function InvoicesList(props: {
       {
         accessorKey: "status",
         header: "Status",
-        cell: (data) => INVOICE_STATUS_RECORD[data.getValue() as string],
+        cell: (data) => (
+          <InvoiceStatus status={data.getValue() as InvoiceType} />
+        ),
       },
       {
         accessorKey: "total_amount",
