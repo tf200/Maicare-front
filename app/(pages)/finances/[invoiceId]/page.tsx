@@ -15,6 +15,7 @@ import {
   INVOICE_STATUS_RECORD,
   INVOICE_STATUS_VARIANT,
   PAYMENT_TYPE_OPTIONS,
+  PAYMENT_TYPE_RECORD,
 } from "@/consts";
 import Select from "@/components/FormFields/Select";
 import DetailCell from "@/components/DetailCell";
@@ -42,6 +43,7 @@ import { useModal } from "@/components/providers/ModalProvider";
 import * as Yup from "yup";
 import { InvoiceType } from "@/types/InvoiceStatus";
 import StatusBadge from "@/components/StatusBadge";
+import DownloadIcon from "@/components/icons/DownloadIcon";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -136,7 +138,7 @@ const Page: FunctionComponent<{
       header={
         <div className="flex items-center w-full gap-4">
           <h2 className="font-medium text-black dark:text-white">
-            Factuur #${data?.invoice_number}{" "}
+            Factuur #{data?.invoice_number}{" "}
           </h2>
           <InvoiceStatus status={data.status} />
           <Button className="ml-auto" onClick={() => manageStatus({ data })}>
@@ -148,6 +150,11 @@ const Page: FunctionComponent<{
       <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
         <ClientDetails clientId={data.client_id} />
       </div>
+      {data.history.length > 0 && (
+        <div className="px-6 py-4 border-b-1 border-stroke dark:border-strokedark">
+          <InvoiceHistory history={data.history} />
+        </div>
+      )}
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="px-6 py-4">
           <strong>Factuurartikelen</strong>
@@ -167,7 +174,33 @@ const Page: FunctionComponent<{
           )}
         </form>
       </FormikProvider>
+      <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark w-full">
+        <Button disabled={true} className="flex gap-4 items-center ml-auto">
+          <DownloadIcon />
+          <span>Download factuur</span>
+        </Button>
+      </div>
     </Panel>
+  );
+};
+
+const InvoiceHistory: FunctionComponent<{
+  history: InvoiceDetailsDto["history"];
+}> = ({ history }) => {
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-6">Factuur geschiedenis:</h3>
+      {history.map((item) => (
+        <div key={item.id} className="flex flex-wrap gap-4 mb-2">
+          <DetailCell value={item.invoice_status} label={"Factuur status"} />
+          <DetailCell
+            value={PAYMENT_TYPE_RECORD[item.payment_method]}
+            label={"Betaalmethode"}
+          />
+          <DetailCell value={item.amount} label={"Betaald bedrag"} />
+        </div>
+      ))}
+    </div>
   );
 };
 

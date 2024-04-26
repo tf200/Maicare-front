@@ -42,4 +42,6 @@ export type AddPaymentHistoryDto = {
 
 export type HistoryItem = AddPaymentHistoryDto & {
   id: number;
+  created: string;
+  updated: string;
 };

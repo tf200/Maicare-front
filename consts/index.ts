@@ -180,6 +180,12 @@ export const PAYMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Creditcard", value: "credit_card" },
 ];
 
+export const PAYMENT_TYPE_RECORD = {
+  cash: "Contant",
+  bank_transfer: "Bank",
+  credit_card: "Creditcard",
+};
+
 export const INVOICE_STATUS_RECORD = {
   outstanding: "Openstaand",
   partially_paid: "Gedeeltelijk betaald",
