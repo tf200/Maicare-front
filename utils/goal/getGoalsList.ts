@@ -1,7 +1,7 @@
 import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { PaginationParams } from "@/types/pagination-params";
-import { GoalsListResDto } from "@/types/goals/goals-list-res-dto";
+import { GoalsListResDto } from "@/types/goals";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
 
@@ -9,7 +9,8 @@ const fetchGoalsList =
   (clientId: number, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
     const response = await api.get<GoalsListResDto>(
-      `employee/goals_list/${clientId}/`,
+      // `employee/goals_list/${clientId}/`,
+      `/clients/${clientId}/goals`,
       {
         params,
       }

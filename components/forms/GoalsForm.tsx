@@ -1,35 +1,30 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 import { Formik } from "formik";
 import InputField from "@/components/FormFields/InputField";
-import RatingStars from "@/components/FormFields/RatingStars";
 import Textarea from "@/components/FormFields/Textarea";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
-import { NewGoalsReqDto } from "@/types/goals/new-goals-req-dto";
 import { useCreateGoal } from "@/utils/goal/createGoal";
 import { useRouter } from "next/navigation";
 import { useGetGoal } from "@/utils/goal/getGoal";
 import { usePatchGoal } from "@/utils/goal/patchGoal";
+import Select from "@/components/FormFields/Select";
+import { useClientDomains, useDomains } from "@/utils/domains";
+import { GoalsFormType } from "@/types/goals";
 
-type FormType = NewGoalsReqDto;
-
-export type GoalsFormType = FormType;
-
-const initialValues: FormType = {
+const initialValues: GoalsFormType = {
   goal_name: "",
   goal_details: "",
-  report: "",
+  domain_id: "",
 };
 
-export const goalsSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  id: Yup.number(),
-  client: Yup.number(),
+export const goalsSchema: Yup.ObjectSchema<GoalsFormType> = Yup.object().shape({
   goal_name: Yup.string().required("Geef alstublieft een titel"),
   goal_details: Yup.string().required("Geef alstublieft een omschrijving"),
-  report: Yup.string(),
+  domain_id: Yup.string().required("Selecteer alstublieft een domein"),
 });
 
 type PropsType = {
@@ -57,32 +52,39 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
 
   const onSubmit = useCallback(
-    (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
-      values.report = "";
-      if (mode === "edit") {
-        update(
-          {
-            ...values,
-            id: goalId,
-          },
-          {
-            onSuccess: () => {
-              resetForm;
-              router.push(`/clients/${clientId}/goals`);
-            },
-          }
-        );
-      } else if (mode === "new") {
-        create(values, {
-          onSuccess: () => {
-            resetForm;
-            router.push(`/clients/${clientId}/goals`);
-          },
-        });
-      }
+    (values: GoalsFormType, { resetForm }: FormikHelpers<GoalsFormType>) => {
+      const method = mode === "edit" ? update : create;
+      method(values, {
+        onSuccess: () => {
+          resetForm;
+          router.push(`/clients/${clientId}/goals`);
+        },
+      });
     },
     [create, update]
   );
+
+  const { data: domains, isLoading: isLoadingDomains } =
+    useClientDomains(clientId);
+  const options = useMemo(() => {
+    if (!domains)
+      return [
+        {
+          label: "Selecteer domein",
+          value: "",
+        },
+      ];
+    return [
+      {
+        label: "Selecteer domein",
+        value: "",
+      },
+      ...domains?.map((domain) => ({
+        label: domain.name,
+        value: domain.id + "",
+      })),
+    ];
+  }, [domains]);
 
   return (
     <Formik
@@ -97,13 +99,21 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
         values,
         handleChange,
         handleBlur,
-        setFieldValue,
         touched,
         handleSubmit,
         errors,
       }) => (
         <form onSubmit={handleSubmit} className={className}>
           <div className="p-6.5">
+            <Select
+              label={"Domain"}
+              id={"domain_id"}
+              disabled={isLoadingDomains}
+              options={options}
+              required={true}
+              className="mb-4.5"
+            />
+
             <InputField
               className={"w-full mb-4.5"}
               required={true}
