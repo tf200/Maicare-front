@@ -129,6 +129,7 @@ const GoalProgress: FunctionComponent<{
           },
         },
         categories:
+          // @ts-ignore
           goalReportsData?.goals_report.map((report) => report.created_at) ??
           [],
         axisBorder: {
@@ -155,6 +156,7 @@ const GoalProgress: FunctionComponent<{
       {
         name: "Evaluation",
         data:
+          // @ts-ignore
           goalReportsData?.goals_report.map((report) => report.rating) ?? [],
       },
     ];

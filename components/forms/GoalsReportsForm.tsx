@@ -103,15 +103,6 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
               error={touched.title && errors.title}
             />
 
-            <RatingStars
-              label={"Beoordelen"}
-              required={false}
-              value={values.rating}
-              onChange={(rate) => {
-                setFieldValue("rating", rate);
-              }}
-            />
-
             <Textarea
               rows={10}
               id={"report_text"}

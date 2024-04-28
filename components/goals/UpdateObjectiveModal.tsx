@@ -2,21 +2,24 @@ import React, { FunctionComponent } from "react";
 import FormModal from "@/components/Modals/FormModal";
 import { ModalProps } from "@/types/modal-props";
 import { ObjectiveItem } from "@/types/goals";
+import ObjectiveForm from "@/components/forms/ObjectiveForm";
 
-const ObjectiveModal: FunctionComponent<ModalProps> = ({
+const UpdateObjectiveModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...props
 }) => {
   const objective: ObjectiveItem = additionalProps?.objective;
   return (
     <FormModal {...props} title={"Objectief"}>
-      <h2>
-        <div>{objective.title}</div>
-        <div>{objective.rating}</div>
-      </h2>
-      <p>{objective.desc}</p>
+      <ObjectiveForm
+        goalId={additionalProps.goalId}
+        clientId={additionalProps.clientId}
+        mode="edit"
+        initialData={objective}
+        onSuccess={props.onClose}
+      />
     </FormModal>
   );
 };
 
-export default ObjectiveModal;
+export default UpdateObjectiveModal;

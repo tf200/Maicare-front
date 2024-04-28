@@ -9,7 +9,6 @@ const fetchGoalsList =
   (clientId: number, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
     const response = await api.get<GoalsListResDto>(
-      // `employee/goals_list/${clientId}/`,
       `/clients/${clientId}/goals`,
       {
         params,

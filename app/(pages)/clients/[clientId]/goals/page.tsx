@@ -11,6 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
+import { useDomains, useGetDomain } from "@/utils/domains";
 
 type Props = {
   params: { clientId: string };
@@ -34,10 +35,13 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           return (
             <div>
               <h3 className="font-bold flex text-lg mb-6 justify-between">
-                <span className="block">{info.row.original.title}</span>
-                <span className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold">
+                <div className="block">
+                  <div>{info.row.original.title}</div>
+                  <Domain id={info.row.original.domain_id} />
+                </div>
+                <div className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold">
                   {info.row.original.main_goal_rating}
-                </span>
+                </div>
               </h3>
               <p>{info.row.original.desc}</p>
             </div>
@@ -85,3 +89,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 };
 
 export default GoalsPage;
+
+const Domain: FunctionComponent<{ id: number }> = ({ id }) => {
+  const { data } = useGetDomain(id);
+  return <div className="font-normal italic">{data?.name}</div>;
+};

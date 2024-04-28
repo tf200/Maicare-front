@@ -2,16 +2,19 @@ import React, { FunctionComponent } from "react";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
 import GoalsForm from "@/components/forms/GoalsForm";
+import { GoalsListItem } from "@/types/goals";
 
-const NewGoalModal: FunctionComponent<ModalProps> = ({
+const UpdateGoalModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...props
 }) => {
+  const goal: GoalsListItem = additionalProps.goal;
   return (
-    <FormModal {...props} title={"Nieuw Doel"}>
+    <FormModal {...props} title={"Doel bijwerken"}>
       <GoalsForm
-        mode="new"
-        clientId={parseInt(additionalProps.clientId)}
+        clientId={goal.client_id}
+        mode={"edit"}
+        initialData={goal}
         onSuccess={() => {
           props.onClose();
         }}
@@ -20,4 +23,4 @@ const NewGoalModal: FunctionComponent<ModalProps> = ({
   );
 };
 
-export default NewGoalModal;
+export default UpdateGoalModal;

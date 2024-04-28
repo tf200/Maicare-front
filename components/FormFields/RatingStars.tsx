@@ -2,12 +2,14 @@ import React from "react";
 import StarIcon from "../svg/StarIcon";
 import { useGetGoal } from "@/utils/goal/getGoal";
 import { useParams } from "next/navigation";
+import { useField } from "formik";
+import { cn } from "@/utils/cn";
 
 interface RatingProps {
   label?: string;
-  value: number;
+  name: string;
   required?: boolean;
-  onChange?: (newValue: number) => void;
+  className?: string;
 }
 
 const StarIconComponent: React.FC<{
@@ -27,17 +29,22 @@ const StarIconComponent: React.FC<{
 };
 
 const Rating: React.FC<RatingProps> = ({
-  value,
-  onChange,
   label,
+  name,
   required,
+  className,
 }) => {
-  const handleClick = (newValue: number) => {
-    onChange(newValue);
+  const [fieldInput, meta, helpers] = useField<number>({
+    name,
+  });
+
+  const handleClick = async (newValue: number) => {
+    await helpers.setTouched(true);
+    helpers.setValue(newValue);
   };
 
   return (
-    <div className="pb-3 w-fit">
+    <div className={cn(className, "pb-3 w-fit")}>
       {label && (
         <label
           htmlFor={"rate"}
@@ -59,7 +66,7 @@ const Rating: React.FC<RatingProps> = ({
               key={index}
               width={23}
               height={23}
-              selected={index <= value ? true : false}
+              selected={index <= fieldInput.value ? true : false}
             />
           </div>
         ))}

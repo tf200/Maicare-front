@@ -1,7 +1,13 @@
 export type GoalsFormType = {
-  goal_name: string;
-  goal_details: string;
+  title: string;
+  desc: string;
   domain_id: string;
+};
+
+export type NewGoalsReqDto = {
+  title: string;
+  desc: string;
+  domain_id: number;
 };
 
 export type ObjectiveItem = {
@@ -28,3 +34,19 @@ export type GoalsListItem = {
 };
 
 export type GoalsListResDto = Paginated<GoalsListItem>;
+
+export type ObjectiveFormType = {
+  title: string;
+  desc: string;
+  rating: number;
+};
+
+export type NewObjectiveReqDto = {
+  title: string;
+  desc: string;
+  rating: number;
+};
+
+export type UpdateObjectiveReqDto = Partial<NewObjectiveReqDto>;
+
+export type UpdateGoalReqDto = Partial<Pick<NewGoalsReqDto, "desc" | "title">>;

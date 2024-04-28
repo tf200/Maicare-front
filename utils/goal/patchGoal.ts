@@ -1,15 +1,17 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
+import { UpdateGoalReqDto } from "@/types/goals";
 
-const PatchGoal = async (data: any) => {
-  const response = await api.patch(`employee/goals/${data.id}/`, data);
+const patchGoal = async (goalId: number, data: UpdateGoalReqDto) => {
+  const response = await api.patch(`clients/goals/${goalId}/update`, data);
   return response.data;
 };
 
-export const usePatchGoal = (clientId: number) => {
+export const usePatchGoal = (clientId: number, goalId: number) => {
+  console.log("clientId", clientId, "goalId", goalId);
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: PatchGoal,
+    mutationFn: (data: UpdateGoalReqDto) => patchGoal(goalId, data),
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "goals"]);
     },
