@@ -32,6 +32,23 @@ export const useDomains = () => {
   return useQuery(["domains"], getDomains);
 };
 
+async function getClientDomains(clientId: number) {
+  const response = await api.get<DomainsList>(`/clients/${clientId}/domains`);
+  return response.data;
+}
+
+export const useClientDomains = (clientId: number) => {
+  return useQuery(["client_domains", clientId], () =>
+    getClientDomains(clientId)
+  );
+};
+
+/**
+ * Get list of domain details by their ids
+ * @param queryClient
+ * @param planId
+ * @param ids
+ */
 export async function getDomainsByIds(
   queryClient: QueryClient,
   planId: number,

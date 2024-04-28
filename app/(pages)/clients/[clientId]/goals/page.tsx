@@ -1,28 +1,22 @@
 "use client";
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
 import "dayjs/locale/en";
 import PaginatedTable from "@/components/PaginatedTable";
-import LinkButton from "@/components/buttons/LinkButton";
 import { useGoalsList } from "@/utils/goal/getGoalsList";
-import IconButton from "@/components/buttons/IconButton";
-import CheckIcon from "@/components/icons/CheckIcon";
-import TrashIcon from "@/components/icons/TrashIcon";
-import Link from "next/link";
-import PencilSquare from "@/components/icons/PencilSquare";
-import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useModal } from "@/components/providers/ModalProvider";
-import { useDeleteGoal } from "@/utils/goal/deleteGoal";
-import { useRouter } from "next/navigation";
-import GoalProgress from "@/components/GoalProgress";
+import Button from "@/components/buttons/Button";
+import NewGoalModal from "@/components/goals/NewGoalModal";
+import { ColumnDef } from "@tanstack/react-table";
+import { GoalsListItem } from "@/types/goals";
+import styles from "./styles.module.scss";
+import GoalDetails from "@/components/goals/GoalDetails";
 
 type Props = {
   params: { clientId: string };
 };
 
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const [goalId, setGoalId] = useState<number>(null);
-  const router = useRouter();
   const {
     pagination,
     isFetching,
@@ -31,105 +25,58 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     data,
   } = useGoalsList(parseInt(clientId));
 
-  const {
-    mutate: deleteGoal,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteGoal(+clientId);
-
-  useEffect(() => {
-    if (isDeleted == true) {
-      setGoalId(null);
-    }
-  }, [isDeleted]);
-
-  const { open } = useModal(
-    getDangerActionConfirmationModal({
-      msg: "Weet je zeker dat je dit doel wilt verwijderen?",
-      title: "Doel verwijderen",
-    })
-  );
-
-  const columnDef = useMemo(() => {
+  const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
       {
-        accessorKey: "goal_name",
-        header: () => "Doelen",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "goal_details",
-        header: () => "Beschrijving",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
+        accessorKey: "item",
+        header: () => "",
+        cell: (info) => {
+          return (
+            <div>
+              <h3 className="font-bold flex text-lg mb-6 justify-between">
+                <span className="block">{info.row.original.title}</span>
+                <span className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold">
+                  {info.row.original.main_goal_rating}
+                </span>
+              </h3>
+              <p>{info.row.original.desc}</p>
+            </div>
+          );
+        },
       },
     ];
   }, []);
+
+  const { open: openGoalModal } = useModal(NewGoalModal);
 
   return (
     <Panel
       className="w-full"
       title={"Doelenlijst"}
       sideActions={
-        <LinkButton
-          text={"Nieuw Doel Toevoegen"}
-          href={`/clients/${clientId}/goals/new`}
-        />
+        <Button
+          onClick={() => {
+            openGoalModal({ clientId });
+          }}
+        >
+          Nieuw Doel Toevoegen
+        </Button>
       }
     >
       {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
       {data && (
         <PaginatedTable
           data={data}
+          className={styles.table}
           columns={columnDef}
           page={pagination.page ?? 1}
           isFetching={isFetching}
-          renderRowDetails={(row) => {
-            return (
-              <div>
-                <GoalProgress goalId={row.original.id} />
-                <div className="flex gap-4 justify-end items-center">
-                  <IconButton
-                    buttonType="Danger"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      open({
-                        onConfirm: () => {
-                          deleteGoal(row.original.id);
-                        },
-                      });
-                    }}
-                    disabled={isDeleted}
-                    isLoading={isDeleting}
-                  >
-                    {isDeleted ? (
-                      <CheckIcon className="w-5 h-5" />
-                    ) : (
-                      <TrashIcon className="w-5 h-5" />
-                    )}
-                  </IconButton>
-                  <Link
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    href={`/clients/${clientId}/goals/${row.original.id}/edit`}
-                  >
-                    <IconButton>
-                      <PencilSquare className="w-5 h-5" />
-                    </IconButton>
-                  </Link>
-                  <LinkButton
-                    text={"Doelrapporten"}
-                    href={`/clients/${clientId}/goals/${row.original.id}/reports`}
-                  />
-                </div>
-              </div>
-            );
-          }}
+          renderRowDetails={(row) => <GoalDetails goal={row.original} />}
           onPageChange={(page) => pagination.setPage(page)}
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="p-7 text-red">
           Er is een fout opgetreden.
         </p>
       )}
