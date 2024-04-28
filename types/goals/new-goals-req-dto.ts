@@ -1,5 +1,5 @@
 export type NewGoalsReqDto = {
-  goal_name: string;
-  goal_details: string;
+  title: string;
+  desc: string;
   domain_id: number;
 };
