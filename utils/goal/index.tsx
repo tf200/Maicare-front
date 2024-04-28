@@ -34,14 +34,14 @@ async function updateObjective(objectId: number, data: UpdateObjectiveReqDto) {
   return response.data;
 }
 
-export const useUpdateObjective = (objectId: number) => {
+export const useUpdateObjective = (clientId: number, objectId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: UpdateObjectiveReqDto) => {
       return updateObjective(objectId, data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([objectId, "goals"]);
+      queryClient.invalidateQueries([clientId, "goals"]);
     },
   });
 };

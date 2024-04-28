@@ -37,7 +37,6 @@ const GoalDetails: FunctionComponent<{
   const { open: newObjectiveModal } = useModal(NewObjectiveModal);
   return (
     <div>
-      <GoalProgress goalId={goal.id} />
       <div className="mb-6 ">
         <h3 className="flex justify-between text-lg font-bold mb-4">
           <span>Objectieven</span>
@@ -64,6 +63,8 @@ const GoalDetails: FunctionComponent<{
                 onClick={() => {
                   openObjectiveModal({
                     objective,
+                    goalId: goal.id,
+                    clientId: goal.client_id,
                   });
                 }}
                 className="text-left flex flex-grow justify-between items-center"

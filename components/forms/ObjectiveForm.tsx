@@ -34,12 +34,13 @@ const ObjectiveForm: FunctionComponent<{
     goalId
   );
   const { mutate: update, isLoading: isUpdating } = useUpdateObjective(
+    clientId,
     initialData?.id
   );
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues,
+    initialValues: initialData ? initialData : initialValues,
     validationSchema: objectiveSchema,
     onSubmit: (values) => {
       const method = mode === "edit" ? update : create;
@@ -56,15 +57,8 @@ const ObjectiveForm: FunctionComponent<{
       );
     },
   });
-  const {
-    values,
-    handleChange,
-    setValues,
-    handleBlur,
-    errors,
-    touched,
-    handleSubmit,
-  } = formik;
+  const { values, handleChange, handleBlur, errors, touched, handleSubmit } =
+    formik;
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -99,8 +93,8 @@ const ObjectiveForm: FunctionComponent<{
           error={touched.desc && errors.desc}
         />
         <Button
-          isLoading={isCreating}
-          disabled={isCreating}
+          isLoading={isCreating || isUpdating}
+          disabled={isCreating || isUpdating}
           type="submit"
           formNoValidate={true}
         >
