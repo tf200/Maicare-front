@@ -3,7 +3,7 @@ import FormModal from "@/components/Modals/FormModal";
 import { ModalProps } from "@/types/modal-props";
 import { ObjectiveItem } from "@/types/goals";
 
-const ObjectiveModal: FunctionComponent<ModalProps> = ({
+const UpdateObjectiveModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...props
 }) => {
@@ -19,4 +19,4 @@ const ObjectiveModal: FunctionComponent<ModalProps> = ({
   );
 };
 
-export default ObjectiveModal;
+export default UpdateObjectiveModal;

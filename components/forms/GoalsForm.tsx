@@ -7,22 +7,20 @@ import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
 import { useCreateGoal } from "@/utils/goal/createGoal";
 import { useRouter } from "next/navigation";
-import { useGetGoal } from "@/utils/goal/getGoal";
 import { usePatchGoal } from "@/utils/goal/patchGoal";
 import Select from "@/components/FormFields/Select";
-import { useClientDomains, useDomains } from "@/utils/domains";
+import { useClientDomains } from "@/utils/domains";
 import { GoalsFormType, GoalsListItem } from "@/types/goals";
-import { GoalsReportsResDto } from "@/types/goalsReports/goals-reports-res-dto";
 
 const initialValues: GoalsFormType = {
-  goal_name: "",
-  goal_details: "",
+  title: "",
+  desc: "",
   domain_id: "",
 };
 
 export const goalsSchema: Yup.ObjectSchema<GoalsFormType> = Yup.object().shape({
-  goal_name: Yup.string().required("Geef alstublieft een titel"),
-  goal_details: Yup.string().required("Geef alstublieft een omschrijving"),
+  title: Yup.string().required("Geef alstublieft een titel"),
+  desc: Yup.string().required("Geef alstublieft een omschrijving"),
   domain_id: Yup.string().required("Selecteer alstublieft een domein"),
 });
 
@@ -30,14 +28,14 @@ type PropsType = {
   clientId: number;
   className?: string;
   mode: string;
-  goalId?: number;
   onSuccess?: () => void;
+  initialData?: GoalsListItem;
 };
 
 const dtoToForm = (data: GoalsListItem): GoalsFormType => {
   return {
-    goal_name: data.title,
-    goal_details: data.desc,
+    title: data.title,
+    desc: data.desc,
     domain_id: data.domain_id + "",
   };
 };
@@ -46,15 +44,16 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   clientId,
   className,
   mode,
-  goalId,
   onSuccess,
+  initialData,
 }) => {
   const router = useRouter();
 
-  const { data, isLoading: isDataLoading } = useGetGoal(goalId, clientId);
-
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
-  const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchGoal(
+    clientId,
+    initialData.id
+  );
 
   const onSubmit = useCallback(
     (values: GoalsFormType, { resetForm }: FormikHelpers<GoalsFormType>) => {
@@ -97,8 +96,8 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
       enableReinitialize={true}
       initialValues={
         mode == "edit"
-          ? data
-            ? dtoToForm(data)
+          ? initialData
+            ? dtoToForm(initialData)
             : initialValues
           : initialValues
       }
@@ -131,27 +130,27 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
             <InputField
               className={"w-full mb-4.5"}
               required={true}
-              id={"goal_name"}
+              id={"title"}
               label={"Titel"}
               type={"text"}
               placeholder={"Voer titel van het doel in"}
-              value={values.goal_name}
+              value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.goal_name && errors.goal_name}
+              error={touched.title && errors.title}
             />
 
             <Textarea
               rows={10}
-              id={"goal_details"}
+              id={"desc"}
               required={true}
               className={"mb-6"}
               label={"Omschrijving"}
               placeholder={"Geef alstublieft omschrijving"}
-              value={values.goal_details}
+              value={values.desc}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.goal_details && errors.goal_details}
+              error={touched.desc && errors.desc}
             />
 
             <Button

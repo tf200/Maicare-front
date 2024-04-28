@@ -1,6 +1,6 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
-import { NewGoalsReqDto } from "@/types/goals/new-goals-req-dto";
+import { NewGoalsReqDto } from "@/types/goals";
 import { GoalsFormType } from "@/types/goals";
 
 export async function createGoal(clientId: number, data: NewGoalsReqDto) {
@@ -14,8 +14,8 @@ export const useCreateGoal = (clientId: number) => {
     mutationFn: async (data: GoalsFormType) => {
       return createGoal(clientId, {
         domain_id: +data.domain_id,
-        title: data.goal_name,
-        desc: data.goal_details,
+        title: data.title,
+        desc: data.desc,
       });
     },
     onSuccess: (data: NewGoalsReqDto) => {

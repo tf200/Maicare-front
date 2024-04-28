@@ -13,7 +13,9 @@ import TrashIcon from "@/components/icons/TrashIcon";
 import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
 import LinkButton from "@/components/buttons/LinkButton";
-import ObjectiveModal from "@/components/goals/ObjectiveModal";
+import UpdateObjectiveModal from "@/components/goals/UpdateObjectiveModal";
+import UpdateGoalModal from "@/components/goals/UpdateGoalModal";
+import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -30,14 +32,26 @@ const GoalDetails: FunctionComponent<{
     isSuccess: isDeleted,
   } = useDeleteGoal(goal.client_id);
 
-  const { open: openObjectiveModal } = useModal(ObjectiveModal);
+  const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
+  const { open: updateGoalModal } = useModal(UpdateGoalModal);
+  const { open: newObjectiveModal } = useModal(NewObjectiveModal);
   return (
     <div>
       <GoalProgress goalId={goal.id} />
       <div className="mb-6 ">
         <h3 className="flex justify-between text-lg font-bold mb-4">
           <span>Objectieven</span>
-          <Button className={styles.button}>Nieuwe Objectief Toevoegen</Button>
+          <Button
+            className={styles.button}
+            onClick={() => {
+              newObjectiveModal({
+                goalId: goal.id,
+                clientId: goal.client_id,
+              });
+            }}
+          >
+            Nieuwe Objectief Toevoegen
+          </Button>
         </h3>
         <ul className="flex flex-col gap-4">
           {goal.objectives.map((objective) => (
@@ -83,16 +97,14 @@ const GoalDetails: FunctionComponent<{
             <TrashIcon className="w-5 h-5" />
           )}
         </IconButton>
-        <Link
+        <IconButton
           onClick={(e) => {
             e.stopPropagation();
+            updateGoalModal({ goal });
           }}
-          href={`/clients/${goal.client_id}/goals/${goal.id}/edit`}
         >
-          <IconButton>
-            <PencilSquare className="w-5 h-5" />
-          </IconButton>
-        </Link>
+          <PencilSquare className="w-5 h-5" />
+        </IconButton>
         <LinkButton
           text={"Doelrapporten"}
           href={`/clients/${goal.client_id}/goals/${goal.id}/reports`}
