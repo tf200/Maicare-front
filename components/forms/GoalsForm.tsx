@@ -1,5 +1,3 @@
-"use client";
-
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback, useMemo } from "react";
 import { Formik } from "formik";
@@ -13,7 +11,8 @@ import { useGetGoal } from "@/utils/goal/getGoal";
 import { usePatchGoal } from "@/utils/goal/patchGoal";
 import Select from "@/components/FormFields/Select";
 import { useClientDomains, useDomains } from "@/utils/domains";
-import { GoalsFormType } from "@/types/goals";
+import { GoalsFormType, GoalsListItem } from "@/types/goals";
+import { GoalsReportsResDto } from "@/types/goalsReports/goals-reports-res-dto";
 
 const initialValues: GoalsFormType = {
   goal_name: "",
@@ -32,6 +31,15 @@ type PropsType = {
   className?: string;
   mode: string;
   goalId?: number;
+  onSuccess?: () => void;
+};
+
+const dtoToForm = (data: GoalsListItem): GoalsFormType => {
+  return {
+    goal_name: data.title,
+    goal_details: data.desc,
+    domain_id: data.domain_id + "",
+  };
 };
 
 export const GoalsForm: FunctionComponent<PropsType> = ({
@@ -39,14 +47,11 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   className,
   mode,
   goalId,
+  onSuccess,
 }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetGoal(goalId, clientId);
+  const { data, isLoading: isDataLoading } = useGetGoal(goalId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId);
@@ -58,6 +63,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
         onSuccess: () => {
           resetForm;
           router.push(`/clients/${clientId}/goals`);
+          onSuccess?.();
         },
       });
     },
@@ -90,7 +96,11 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
     <Formik
       enableReinitialize={true}
       initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
+        mode == "edit"
+          ? data
+            ? dtoToForm(data)
+            : initialValues
+          : initialValues
       }
       onSubmit={onSubmit}
       validationSchema={goalsSchema}
@@ -106,12 +116,16 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
         <form onSubmit={handleSubmit} className={className}>
           <div className="p-6.5">
             <Select
+              className="mb-4.5"
               label={"Domain"}
               id={"domain_id"}
-              disabled={isLoadingDomains}
               options={options}
               required={true}
-              className="mb-4.5"
+              disabled={isLoadingDomains}
+              value={values.domain_id}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.domain_id && errors.domain_id}
             />
 
             <InputField

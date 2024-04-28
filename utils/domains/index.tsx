@@ -33,14 +33,16 @@ export const useDomains = () => {
 };
 
 async function getClientDomains(clientId: number) {
-  const response = await api.get<DomainsList>(`/clients/${clientId}/domains`);
+  const response = await api.get<number[]>(`/clients/${clientId}/domains`);
   return response.data;
 }
 
 export const useClientDomains = (clientId: number) => {
-  return useQuery(["client_domains", clientId], () =>
-    getClientDomains(clientId)
-  );
+  const queryClient = useQueryClient();
+  return useQuery(["client_domains", clientId], async () => {
+    const domainIds = await getClientDomains(clientId);
+    return await getDomainsByIds(queryClient, 0, domainIds);
+  });
 };
 
 /**
@@ -62,3 +64,11 @@ export async function getDomainsByIds(
     queryFn: () => domains.filter((d) => ids.includes(d.id)),
   });
 }
+
+export const useGetDomain = (domainId: number) => {
+  const queryClient = useQueryClient();
+  return useQuery(["domain", domainId], async () => {
+    const domains = await getDomainsByIds(queryClient, 0, [domainId]);
+    return domains[0];
+  });
+};
