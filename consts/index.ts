@@ -248,13 +248,13 @@ export * from "./permissions";
 export const STATUS_OPTIONS: SelectionOption[] = [
   { value: "On Waiting List", label: "Wachtlijst" },
   { value: "In Care", label: "In Zorg" },
-  { value: "Out Of Concern", label: "Uit Zorg" },
+  { value: "Out Of Care", label: "Uit Zorg" },
 ];
 
 export const STATUS_RECORD = {
   "On Waiting List": "Wachtlijst",
   "In Care": "In Zorg",
-  "Out Of Concern": "Uit Zorg",
+  "Out Of Care": "Uit Zorg",
 };
 
 export const CARE_PLAN_STATUS_OPTIONS: SelectionOption[] = [
@@ -330,6 +330,13 @@ export const AGREEMENT_FILES_TAGS_RECORD = {
   decision: "Besluit",
   other: "Overige",
 };
+
+export const CONTRACT_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
+  { label: "Concept", value: "draft" },
+  { label: "Goedgekeurd", value: "approved" },
+  { label: "Beëindigd", value: "terminated" },
+];
 
 export const CONTRACT_STATUS_VARIANT_DICT: Record<ContractStatus, BadgeType> = {
   draft: "Outline",

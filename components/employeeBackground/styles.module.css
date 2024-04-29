@@ -1,7 +1,7 @@
 .table {
-    @apply border-collapse w-full;
+  @apply border-collapse w-full;
 }
 
 .table tbody tr td:not(.formTd) {
-    @apply py-2;
+  @apply py-2;
 }

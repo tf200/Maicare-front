@@ -9,9 +9,7 @@ type Props = {
   };
 };
 
-const NewEpisodePage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
+const NewEpisodePage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <Breadcrumb pageName="Registreer Nieuwe Episode" />

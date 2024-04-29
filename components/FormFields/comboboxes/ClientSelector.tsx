@@ -26,14 +26,14 @@ const ClientSelector: FunctionComponent<Props> = ({ name, className }) => {
     <Combobox
       name={name}
       className={className}
-      placeholder={"Zoek klant..."}
+      placeholder={"Zoek Cliënt..."}
       options={options}
       displayValue={(value) => value.first_name + " " + value.last_name}
       handleQueryChange={(e) => {
         const search = e.target.value;
         setFilter({ ...filter, search });
       }}
-      label={"Klant"}
+      label={"Cliënt"}
     />
   );
 };

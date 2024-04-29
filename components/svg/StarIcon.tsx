@@ -4,7 +4,7 @@ import { IconProps } from "@/types/IconProps";
 const StarIcon: FunctionComponent<IconProps> = ({
   width = 18,
   height = 18,
-  color = "gray"
+  color = "gray",
 }) => {
   return (
     <svg

@@ -1,13 +1,13 @@
 .table {
-    tr td:last-child,
-    tr th:last-child {
-        @apply lg:w-1/2 xl:w-2/3;
-    }
+  tr td:last-child,
+  tr th:last-child {
+    @apply lg:w-1/2 xl:w-2/3;
+  }
 }
 
 .unread {
-    @apply bg-primary/10 font-bold;
+  @apply bg-primary/10 font-bold;
 }
 .unread.unread:hover {
-    @apply bg-primary/20;
+  @apply bg-primary/20;
 }

@@ -1,15 +1,15 @@
-$event-bg: #FFFFFF;
-$event-color: #1C2434;
-$today-highlight-bg: #EFF4FB;
-$cell-border: #E2E8F0;
+$event-bg: #ffffff;
+$event-color: #1c2434;
+$today-highlight-bg: #eff4fb;
+$cell-border: #e2e8f0;
 $event-border-radius: 0;
-$current-time-color: #FB5454;
-$calendar-border: #E2E8F0;
-$out-of-range-bg-color: #F7F9FC;
-$out-of-range-color: #64748B;
+$current-time-color: #fb5454;
+$calendar-border: #e2e8f0;
+$out-of-range-bg-color: #f7f9fc;
+$out-of-range-color: #64748b;
 
-@import 'react-big-calendar/lib/sass/styles';
-@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+@import "react-big-calendar/lib/sass/styles";
+@import "react-big-calendar/lib/addons/dragAndDrop/styles";
 
 .rbc-month-header {
   .rbc-header {

@@ -5,5 +5,5 @@ export type ClientDetailsResDto = NewClientsRequest & {
   profile_picture: string;
   identity: boolean;
   sender: number;
-  status: "On Waiting List" | "In Care" | "Out Of Concern";
+  status: "On Waiting List" | "In Care" | "Out Of Care";
 };
