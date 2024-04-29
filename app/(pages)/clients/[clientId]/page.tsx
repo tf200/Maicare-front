@@ -28,6 +28,7 @@ import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
 import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory";
 import Button from "@/components/buttons/Button";
 import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
+import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
 
 type Props = {
   params: { clientId: string };
@@ -148,6 +149,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           <Panel title={"Adresgegevens"} containerClassName="px-7 py-4">
             <AddressDetails clientId={parseInt(clientId)} />
           </Panel>
+          <ClientPositionPicker />
           <Panel
             title={"Medisch Dossier"}
             containerClassName="px-7 py-4"
