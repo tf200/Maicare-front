@@ -3,19 +3,17 @@ import { GoalsListItem } from "@/types/goals";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useDeleteGoal } from "@/utils/goal/deleteGoal";
-import GoalProgress from "@/components/GoalProgress";
 import Button from "@/components/buttons/Button";
 import styles from "@/app/(pages)/clients/[clientId]/goals/styles.module.scss";
 import CheckboxItem from "@/components/FormFields/CheckboxItem";
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
-import Link from "next/link";
 import PencilSquare from "@/components/icons/PencilSquare";
-import LinkButton from "@/components/buttons/LinkButton";
 import UpdateObjectiveModal from "@/components/goals/UpdateObjectiveModal";
 import UpdateGoalModal from "@/components/goals/UpdateGoalModal";
 import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
+import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -35,6 +33,8 @@ const GoalDetails: FunctionComponent<{
       title: "Doel verwijderen",
     })
   );
+  const { open: openObjectiveProgressModal } = useModal(ObjectiveProgressModal);
+
   return (
     <div>
       <div className="mb-6 ">
@@ -70,9 +70,18 @@ const GoalDetails: FunctionComponent<{
                 className="text-left flex flex-grow justify-between items-center"
               >
                 <div>{objective.title}</div>
-                <div className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold">
+                <button
+                  type={"button"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openObjectiveProgressModal({
+                      objectiveId: objective.id,
+                    });
+                  }}
+                  className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
+                >
                   {objective.rating}
-                </div>
+                </button>
               </button>
             </li>
           ))}

@@ -11,7 +11,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
-import { useDomains, useGetDomain } from "@/utils/domains";
+import { useGetDomain } from "@/utils/domains";
+import GoalProgressModal from "@/components/goals/GoalProgressModal";
 
 type Props = {
   params: { clientId: string };
@@ -26,6 +27,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     data,
   } = useGoalsList(parseInt(clientId));
 
+  const { open: openGoalProgressModal } = useModal(GoalProgressModal);
+
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
       {
@@ -39,9 +42,17 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   <div>{info.row.original.title}</div>
                   <Domain id={info.row.original.domain_id} />
                 </div>
-                <div className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openGoalProgressModal({
+                      goalId: info.row.original.id,
+                    });
+                  }}
+                  className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold"
+                >
                   {info.row.original.main_goal_rating}
-                </div>
+                </button>
               </h3>
               <p>{info.row.original.desc}</p>
             </div>

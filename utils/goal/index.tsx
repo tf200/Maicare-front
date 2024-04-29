@@ -1,6 +1,10 @@
-import { NewObjectiveReqDto, UpdateObjectiveReqDto } from "@/types/goals";
+import {
+  NewObjectiveReqDto,
+  RatingHistory,
+  UpdateObjectiveReqDto,
+} from "@/types/goals";
 import api from "@/utils/api";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 async function createObjective(
   clientId: number,
@@ -57,5 +61,33 @@ export const useDeleteObjective = (clientId: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "goals"]);
     },
+  });
+};
+
+async function getObjectiveHistory(objectiveId: number) {
+  const response = await api.get<RatingHistory>(
+    `/clients/goals/objectives/${objectiveId}/history`
+  );
+  return response.data;
+}
+
+export const useObjectiveHistory = (objectiveId: number) => {
+  return useQuery({
+    queryKey: ["objectives", objectiveId, "history"],
+    queryFn: () => getObjectiveHistory(objectiveId),
+  });
+};
+
+async function getGoalHistory(goalId: number) {
+  const response = await api.get<RatingHistory>(
+    `/clients/goals/${goalId}/history`
+  );
+  return response.data;
+}
+
+export const useGoalHistory = (goalId: number) => {
+  return useQuery({
+    queryKey: ["goals", goalId, "history"],
+    queryFn: () => getGoalHistory(goalId),
   });
 };

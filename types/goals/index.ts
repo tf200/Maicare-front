@@ -50,3 +50,10 @@ export type NewObjectiveReqDto = {
 export type UpdateObjectiveReqDto = Partial<NewObjectiveReqDto>;
 
 export type UpdateGoalReqDto = Partial<Pick<NewGoalsReqDto, "desc" | "title">>;
+
+export type RatingHistoryItem = {
+  rating: number;
+  date: string;
+};
+
+export type RatingHistory = RatingHistoryItem[];
