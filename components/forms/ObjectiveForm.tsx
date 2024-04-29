@@ -5,8 +5,14 @@ import * as Yup from "yup";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
-import { useCreateObjective, useUpdateObjective } from "@/utils/goal";
+import {
+  useCreateObjective,
+  useDeleteObjective,
+  useUpdateObjective,
+} from "@/utils/goal";
 import RatingStars from "@/components/FormFields/RatingStars";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 const initialValues: ObjectiveFormType = {
   title: "",
@@ -37,6 +43,7 @@ const ObjectiveForm: FunctionComponent<{
     clientId,
     initialData?.id
   );
+  const { mutate: deleteObjective } = useDeleteObjective(clientId);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -59,6 +66,13 @@ const ObjectiveForm: FunctionComponent<{
   });
   const { values, handleChange, handleBlur, errors, touched, handleSubmit } =
     formik;
+
+  const { open: deleteObjectiveModal } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je dit doel wilt verwijderen?",
+      title: "Doel verwijderen",
+    })
+  );
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -92,14 +106,31 @@ const ObjectiveForm: FunctionComponent<{
           onBlur={handleBlur}
           error={touched.desc && errors.desc}
         />
-        <Button
-          isLoading={isCreating || isUpdating}
-          disabled={isCreating || isUpdating}
-          type="submit"
-          formNoValidate={true}
-        >
-          Verzenden
-        </Button>
+        <div className="flex justify-center gap-4">
+          {initialData && mode === "edit" && (
+            <Button
+              buttonType={"Danger"}
+              onClick={() => {
+                deleteObjectiveModal({
+                  onConfirm: () => {
+                    deleteObjective(initialData?.id);
+                    onSuccess?.();
+                  },
+                });
+              }}
+            >
+              Verwijderen
+            </Button>
+          )}
+          <Button
+            isLoading={isCreating || isUpdating}
+            disabled={isCreating || isUpdating}
+            type="submit"
+            formNoValidate={true}
+          >
+            Verzenden
+          </Button>
+        </div>
       </form>
     </FormikProvider>
   );

@@ -45,3 +45,17 @@ export const useUpdateObjective = (clientId: number, objectId: number) => {
     },
   });
 };
+
+async function deleteObjective(objectiveId: number) {
+  await api.delete(`/clients/goals/objective/${objectiveId}/delete`);
+}
+
+export const useDeleteObjective = (clientId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteObjective,
+    onSuccess: () => {
+      queryClient.invalidateQueries([clientId, "goals"]);
+    },
+  });
+};

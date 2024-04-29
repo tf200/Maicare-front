@@ -20,12 +20,6 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
 }> = ({ goal }) => {
-  const { open } = useModal(
-    getDangerActionConfirmationModal({
-      msg: "Weet je zeker dat je dit doel wilt verwijderen?",
-      title: "Doel verwijderen",
-    })
-  );
   const {
     mutate: deleteGoal,
     isLoading: isDeleting,
@@ -35,6 +29,12 @@ const GoalDetails: FunctionComponent<{
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
   const { open: newObjectiveModal } = useModal(NewObjectiveModal);
+  const { open: deleteGoalModal } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je dit doel wilt verwijderen?",
+      title: "Doel verwijderen",
+    })
+  );
   return (
     <div>
       <div className="mb-6 ">
@@ -83,7 +83,7 @@ const GoalDetails: FunctionComponent<{
           buttonType="Danger"
           onClick={(e) => {
             e.stopPropagation();
-            open({
+            deleteGoalModal({
               onConfirm: () => {
                 deleteGoal(goal.id);
               },
@@ -106,10 +106,6 @@ const GoalDetails: FunctionComponent<{
         >
           <PencilSquare className="w-5 h-5" />
         </IconButton>
-        <LinkButton
-          text={"Doelrapporten"}
-          href={`/clients/${goal.client_id}/goals/${goal.id}/reports`}
-        />
       </div>
     </div>
   );

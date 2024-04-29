@@ -1,8 +1,8 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-async function deleteGoal(clientId: number) {
-  const response = await api.delete(`employee/goals/${clientId}/`);
+async function deleteGoal(goalId: number) {
+  const response = await api.delete(`/clients/goals/${goalId}/delete`);
   return response.data;
 }
 
