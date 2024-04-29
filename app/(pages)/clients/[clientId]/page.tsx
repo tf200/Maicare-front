@@ -27,6 +27,7 @@ import * as consts from "@/consts/permissions";
 import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
 import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory";
 import Button from "@/components/buttons/Button";
+import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
 
 type Props = {
   params: { clientId: string };
@@ -117,6 +118,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           >
             <EmergencyContactsSummary clientId={parseInt(clientId)} />
           </Panel>
+          <InvolvedEmployeesSummary clientId={parseInt(clientId)} />
           <ContactSummary clientId={parseInt(clientId)} />
           <Panel
             title={"Contracten"}
