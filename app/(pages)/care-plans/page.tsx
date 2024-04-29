@@ -90,7 +90,7 @@ const Page: FunctionComponent = (props) => {
     >
       {!selectedClient && (
         <h2 className="mb-6 pl-4 pt-4">
-          Selecteer een klant om een zorgplan te zoeken
+          Selecteer een cliënt om een zorgplan te zoeken
         </h2>
       )}
       {data && (

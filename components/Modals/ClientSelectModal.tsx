@@ -26,13 +26,13 @@ const ClientSelectModal: FunctionComponent<ModalProps> = ({
       panelClassName={"min-h-100"}
       open={open}
       onClose={onClose}
-      title={"Selecteer een klant"}
+      title={"Selecteer een Cliënt"}
     >
       <FormikProvider value={formik}>
         <form className="flex flex-col grow" onSubmit={formik.handleSubmit}>
           <ClientSelector name="client" className="mb-5" />
           <Button className="mt-auto" type={"submit"} formNoValidate={false}>
-            Selecteer klant
+            Selecteer Cliënt
           </Button>
         </form>
       </FormikProvider>

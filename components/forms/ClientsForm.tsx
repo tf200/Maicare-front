@@ -400,7 +400,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                     mode === "edit" ? "Bijwerken..." : "Toevoegen..."
                   }
                 >
-                  {mode === "edit" ? "Klant Bijwerken" : "Cliënten Indienen"}
+                  {mode === "edit" ? "Cliënt Bijwerken" : "Cliënten Indienen"}
                 </Button>
               </div>
             </form>

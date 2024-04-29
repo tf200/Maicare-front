@@ -7,6 +7,8 @@ import {
   COMPANY_CONTRACT_OPTIONS,
   CompanyContractType,
   ContractFormType,
+  FINANCING_LAW_TYPES,
+  FINANCING_OPTION_TYPES,
 } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
 import {
@@ -58,7 +60,6 @@ const initialValues: ContractFormType = {
   care_type: "",
   rate_type: "",
   rate_value: "",
-  company_contract_period: "",
   added_attachments: [],
   removed_attachments: [],
   reminder_period: "",
@@ -67,6 +68,8 @@ const initialValues: ContractFormType = {
   type: "",
   is_default_tax: true,
   status: "draft",
+  financing_act: "",
+  financing_option: "",
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
@@ -125,19 +128,13 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
       }
     ),
     status: Yup.string().oneOf(["draft", "approved", "terminated"]),
+    financing_act: Yup.string().oneOf(FINANCING_LAW_TYPES),
+    financing_option: Yup.string().oneOf(FINANCING_OPTION_TYPES),
   });
 
 type PropsType = {
   clientId: number;
 } & FormProps<ContractResDto>;
-
-const CompanyContractOptions: GenericSelectionOption<
-  string,
-  CompanyContractType | ""
->[] = [
-  { label: "Selecteer een contract", value: "" },
-  { label: "1 per jaar", value: "1" },
-];
 
 const ContractForm: FunctionComponent<PropsType> = ({
   clientId,
@@ -202,6 +199,19 @@ const ContractForm: FunctionComponent<PropsType> = ({
             unassigned={clientData && !clientData.sender}
           />
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+            <Select
+              label={"Contract Type"}
+              className={"w-full xl:w-1/2"}
+              required={true}
+              name={"type"}
+              id={"type"}
+              placeholder={"Selecteer Contract Type"}
+              options={contractTypeOptions}
+              value={values.type}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.type && errors.type && errors.type + ""}
+            />
             <InputField
               label={"Contractnaam"}
               className={"w-full xl:w-1/2"}
@@ -217,43 +227,11 @@ const ContractForm: FunctionComponent<PropsType> = ({
                 errors.contract_name + ""
               }
             />
-            <Select
-              label={"Contract Type"}
-              className={"w-full xl:w-1/2"}
-              required={true}
-              name={"type"}
-              id={"type"}
-              placeholder={"Selecteer Contract Type"}
-              options={contractTypeOptions}
-              value={values.type}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.type && errors.type && errors.type + ""}
-            />
           </div>
-          <div className="flex flex-col xl:flex-row gap-6 mb-6">
-            <div className="xl:w-1/2" />
+          <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <div className="xl:w-1/2">
               <ManageContractType />
             </div>
-          </div>
-          <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-            <Select
-              label={"Raamovereenkomst"}
-              required={true}
-              name={"company_contract_period"}
-              id={"company_contract_period"}
-              placeholder={"Voer Raamovereenkomst in"}
-              options={CompanyContractOptions}
-              className="w-full xl:w-1/2"
-              value={values.company_contract_period}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={
-                touched.company_contract_period &&
-                errors.company_contract_period
-              }
-            />
             {/*reminder in days*/}
             <InputField
               label={"Herinneringsperiode"}
@@ -312,7 +290,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
             id={"care_type"}
             required={true}
             options={CARE_TYPE_OPTIONS}
-            label={"Zorgtype"}
+            label={"Soort Hulpverlening"}
             placeholder={"Voer Zorgtype in"}
             value={values.care_type}
             onChange={handleChange}
@@ -323,7 +301,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
           />
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
             <Select
-              label={"Tarieftype"}
+              label={"Eenheid"}
               required={true}
               id={"rate_type"}
               disabled={!values.care_type}
@@ -387,6 +365,22 @@ const ContractForm: FunctionComponent<PropsType> = ({
               onBlur={handleBlur}
               error={touched.tax && errors.tax && errors.tax + ""}
               className="w-full xl:w-1/2"
+            />
+          </div>
+          <div className="mb-6 flex flex-col gap-6 xl:flex-row">
+            <Select
+              className="w-full xl:w-1/2"
+              id={"care_type"}
+              required={true}
+              options={CARE_TYPE_OPTIONS}
+              label={"Financieringswet"}
+              placeholder={"Voer Zorgtype in"}
+              value={values.care_type}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                touched.care_type && errors.care_type && errors.care_type + ""
+              }
             />
           </div>
         </div>

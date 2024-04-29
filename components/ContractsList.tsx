@@ -45,6 +45,10 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const columnDef = useMemo<ColumnDef<ContractItem>[]>(() => {
     return [
       {
+        header: "Opdrachtgever",
+        accessorKey: "sender_name",
+      },
+      {
         header: "Cliënt",
         cell: ({
           row: {
@@ -56,7 +60,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
         }) => `${firstName} ${lastName}`,
       },
       {
-        header: "Periode",
+        header: "Zorgduur",
         cell: ({
           row: {
             original: { start_date, end_date },
@@ -85,8 +89,8 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
         header: "Tarief",
         cell: ({ row: { original } }) => (
           <>
-            <div>{rateType(original)}</div>
             <div>{getRate(original)}</div>
+            <div>{rateType(original)}</div>
           </>
         ),
       },

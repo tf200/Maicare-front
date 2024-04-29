@@ -57,6 +57,9 @@ const ContractFilters: FunctionComponent<{
           className="min-w-47.5"
         />
         <div className="flex gap-4">
+          <Button type="submit" onClick={submitForm}>
+            Zoeken
+          </Button>
           <Button
             type="button"
             buttonType={"Outline"}
@@ -66,9 +69,6 @@ const ContractFilters: FunctionComponent<{
             }}
           >
             Duidelijke Zoek
-          </Button>
-          <Button type="submit" onClick={submitForm}>
-            Zoeken
           </Button>
         </div>
       </form>

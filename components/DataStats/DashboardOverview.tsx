@@ -86,7 +86,7 @@ const LocationWidget: FunctionComponent<{
             {title}
           </h3>
           <p className="font-medium">
-            <strong>Klanten:</strong>
+            <strong>Cliënten:</strong>
             {clients}
           </p>
           <p className="font-medium">

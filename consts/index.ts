@@ -325,7 +325,7 @@ export const AGREEMENT_FILES_TAGS: SelectionOption[] = [
 ];
 
 export const AGREEMENT_FILES_TAGS_RECORD = {
-  client_agreement: "Klant Overeenkomst",
+  client_agreement: "Cliënt Overeenkomst",
   framework_agreement: "Raamovereenkomst",
   decision: "Besluit",
   other: "Overige",

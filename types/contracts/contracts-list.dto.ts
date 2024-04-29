@@ -14,6 +14,7 @@ export type ContractItem = Pick<
   client_first_name: string;
   client_last_name: string;
   client_email: string;
+  sender_name: string;
 };
 
 export type ContractsListDto = Paginated<ContractItem>;

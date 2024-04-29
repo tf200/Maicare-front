@@ -6,13 +6,18 @@ export type ContractDurationType = (typeof CONTRACT_DURATION_OPTIONS)[number];
 export const COMPANY_CONTRACT_OPTIONS = ["1"] as const; // per year
 export type CompanyContractType = (typeof COMPANY_CONTRACT_OPTIONS)[number];
 
+export const FINANCING_LAW_TYPES = ["WMO", "ZVW", "WLZ", "JW", "WPG"] as const;
+export type FinancingLawType = (typeof FINANCING_LAW_TYPES)[number];
+
+export const FINANCING_OPTION_TYPES = ["ZIN", "PGB"] as const;
+export type FinancingOptionType = (typeof FINANCING_OPTION_TYPES)[number];
+
 export type ContractFormType = {
   start_date: string;
   end_date: string;
   care_type: string;
   rate_type: RateType | "";
   rate_value: string;
-  company_contract_period: CompanyContractType | "";
   added_attachments: string[];
   removed_attachments?: string[];
   reminder_period: string;
@@ -21,4 +26,6 @@ export type ContractFormType = {
   type: string;
   is_default_tax: boolean;
   status: string;
+  financing_act: FinancingLawType | "";
+  financing_option: FinancingOptionType | "";
 };
