@@ -2,6 +2,7 @@ import { RateType } from "@/types/rate-type";
 import {
   FinancingLawType,
   FinancingOptionType,
+  HoursTermType,
 } from "@/types/contracts/contract-form-type";
 
 export type CareType = "ambulante" | "accommodation";
@@ -24,6 +25,6 @@ export type NewContractReqDto = {
   status: ContractStatus;
   financing_act: FinancingLawType;
   financing_option: FinancingOptionType;
-  hours_type: string;
+  hours_type: HoursTermType;
   hours: number;
 };

@@ -2,6 +2,7 @@ import {
   ContractFormType,
   FinancingLawType,
   FinancingOptionType,
+  HoursTermType,
 } from "@/types/contracts/contract-form-type";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import {
@@ -37,7 +38,7 @@ export function formToDto(
     status: form.status as ContractStatus,
     financing_act: form.financing_act as FinancingLawType,
     financing_option: form.financing_option as FinancingOptionType,
-    hours_type: form.hours_type,
+    hours_type: form.hours_type as HoursTermType,
     hours: parseFloat(form.hours),
   };
 }
