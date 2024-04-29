@@ -15,11 +15,11 @@ const icon = L.icon({
   iconUrl: iconUrl.src,
   shadowUrl: shadowUrl.src,
 
-  iconSize: [20, 36], // size of the icon
-  shadowSize: [25, 32], // size of the shadow
-  iconAnchor: [10, 40], // point of the icon which will correspond to marker's location
-  shadowAnchor: [10, 40], // the same for the shadow
-  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+  iconSize: [20, 36],
+  shadowSize: [25, 32],
+  iconAnchor: [10, 40],
+  shadowAnchor: [10, 40],
+  popupAnchor: [-3, -76],
 });
 
 const Amsterdam: [number, number] = [52.3676, 4.9041];
