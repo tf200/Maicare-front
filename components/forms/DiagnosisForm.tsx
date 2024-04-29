@@ -77,9 +77,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({
     "mock-clinician"
   );
 
-  const { mutate: update, isLoading: isPatching } = usePatchDiagnosis(
-    clientId
-  );
+  const { mutate: update, isLoading: isPatching } = usePatchDiagnosis(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
@@ -107,7 +105,7 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({
     },
     [create, update]
   );
-  
+
   return (
     <Formik
       enableReinitialize={true}

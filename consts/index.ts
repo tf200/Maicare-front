@@ -331,6 +331,13 @@ export const AGREEMENT_FILES_TAGS_RECORD = {
   other: "Overige",
 };
 
+export const CONTRACT_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
+  { label: "Concept", value: "draft" },
+  { label: "Goedgekeurd", value: "approved" },
+  { label: "Beëindigd", value: "terminated" },
+];
+
 export const CONTRACT_STATUS_VARIANT_DICT: Record<ContractStatus, BadgeType> = {
   draft: "Outline",
   approved: "Success",

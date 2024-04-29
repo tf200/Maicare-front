@@ -9,7 +9,7 @@ async function createMeasurement(
   const res = await api.post<NewMeasurmentReqDto>(
     "employee/measurment_cl/",
     data
-  );  
+  );
   return res.data;
 }
 

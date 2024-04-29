@@ -27,7 +27,7 @@ const ClientNetworkTabs: FunctionComponent = () => {
         {
           label: "Betrokken medewerkers",
           href: `/clients/${clientId}/client-network/involved-employees`,
-        }
+        },
       ]}
       title={
         `Cliëntennetwerk` +

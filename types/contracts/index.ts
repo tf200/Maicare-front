@@ -21,3 +21,12 @@ export type WorkingHoursFormType = {
   datetime: string;
   notes: string;
 };
+
+export type ContractFilterFormType = {
+  sender: number;
+  client: number;
+  care_type: string;
+  status: string;
+};
+
+export type ContractSearchParams = Partial<ContractFilterFormType>;

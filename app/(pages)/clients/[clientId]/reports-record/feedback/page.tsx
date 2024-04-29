@@ -59,7 +59,6 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         accessorKey: "id",
         header: () => "",
         cell: (info) => (
-          
           <div className="flex justify-center gap-4">
             <IconButton
               buttonType="Danger"

@@ -124,7 +124,7 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
               onBlur={handleBlur}
               error={touched.measurement_type && errors.measurement_type}
             />
-            
+
             <Button
               type={"submit"}
               disabled={isCreating || isPatching}

@@ -332,5 +332,5 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .info-box {
-  @apply bg-gray rounded-md dark:bg-graydark dark:text-white
+  @apply bg-gray rounded-md dark:bg-graydark dark:text-white;
 }
