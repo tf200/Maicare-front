@@ -34,7 +34,7 @@ const ClientStatusHistory: FunctionComponent<{
       ))}
       {statusHistory?.length > SHOW_COUNT && (
         <Button
-          className="p-0 flex items-center h-10 top-0 w-full rounded-0"
+          className="p-0 flex items-center h-10 top-0 w-full rounded-none"
           onClick={() => setExpanded((prev) => !prev)}
         >
           <span className="mr-4">{expanded ? "Zie minder" : "Zie meer"}</span>

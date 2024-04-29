@@ -62,6 +62,10 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
 export const SOURCE_OPTIONS = [
   { label: "Selecteer Bron", value: "" },
   { label: "BRP", value: "BRP" },
+  { label: "ID", value: "ID" },
+  { label: "Paspoort", value: "passport" },
+  { label: "Poliskaart", value: "policy_card" },
+  { label: "Brief Overheidsinstantie", value: "government_agency_letter" },
 ];
 
 export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
@@ -379,3 +383,34 @@ export const HOURS_TERM_OPTIONS: SelectionOption[] = [
   { label: "Per Week", value: "week" },
   { label: "Gehele Periode", value: "all_period" },
 ];
+
+export const EMPLOYEE_ASSIGNMENT_TYPES = [
+  "care_nurse",
+  "first_responsible",
+  "mentor",
+  "personal_coach",
+  "care_coordinator",
+  "outpatient_counselor",
+  "co-mentor",
+] as const;
+
+export const EMPLOYEE_ASSIGNMENT_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Relatie", value: "" },
+  { label: "Verzorging / Verpleging", value: "care_nurse" },
+  { label: "Eerst Verantwoordelijke", value: "first_responsible" },
+  { label: "Mentor", value: "mentor" },
+  { label: "Persoonlijke Coach", value: "personal_coach" },
+  { label: "Zorgcoördinator", value: "care_coordinator" },
+  { label: "Ambulant Begeleider", value: "outpatient_counselor" },
+  { label: "Co-Mentor", value: "co-mentor" },
+];
+
+export const EMPLOYEE_ASSIGNMENT_RECORD = {
+  care_nurse: "Verzorging / Verpleging",
+  first_responsible: "Eerst Verantwoordelijke",
+  mentor: "Mentor",
+  personal_coach: "Persoonlijke Coach",
+  care_coordinator: "Zorgcoördinator",
+  outpatient_counselor: "Ambulant Begeleider",
+  "co-mentor": "Co-Mentor",
+};

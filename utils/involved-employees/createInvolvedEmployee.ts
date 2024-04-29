@@ -1,7 +1,7 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-export async function createInvolvedEmployee(data: {}) {
+export async function createInvolvedEmployee(data: any) {
   const response = await api.post("/employee/clientassignment_cl/", data);
   return response.data;
 }

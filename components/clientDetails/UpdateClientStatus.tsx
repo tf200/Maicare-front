@@ -25,6 +25,7 @@ const UpdateClientStatus: FunctionComponent<{
   const { handleSubmit, values, dirty } = formik;
   const { data: contracts } = useContractsList({
     status: "approved",
+    client: props.clientId,
   });
 
   const cantUpdate = useMemo(() => {

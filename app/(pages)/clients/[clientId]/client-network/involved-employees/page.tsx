@@ -5,7 +5,7 @@ import Table from "@/components/Table";
 import Link from "next/link";
 import Pagination from "@/components/Pagination";
 import { useInvolvedEmployeesList } from "@/utils/involved-employees/getInvolvedEmployeesList";
-import { PAGE_SIZE } from "@/consts";
+import { EMPLOYEE_ASSIGNMENT_RECORD, PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
@@ -52,7 +52,9 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
       {
         accessorKey: "role",
         header: () => "Relatie",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
+        cell: (info) =>
+          EMPLOYEE_ASSIGNMENT_RECORD[info.getValue() as string] ||
+          "Niet Beschikbaar",
       },
       {
         accessorKey: "start_date",
