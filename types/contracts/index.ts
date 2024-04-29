@@ -1,4 +1,7 @@
-import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
+import {
+  ContractStatus,
+  NewContractReqDto,
+} from "@/types/contracts/new-contract-req.dto";
 
 export type PatchContractReqDto = NewContractReqDto;
 
@@ -26,7 +29,7 @@ export type ContractFilterFormType = {
   sender: number;
   client: number;
   care_type: string;
-  status: string;
+  status: ContractStatus | "";
 };
 
 export type ContractSearchParams = Partial<ContractFilterFormType>;

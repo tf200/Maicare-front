@@ -133,10 +133,12 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
         </div>
         <div className="flex flex-col gap-9">
           <Panel title={"CLIËNTSTATUS"} containerClassName="py-4">
+            <SecureFragment permission={consts.EDIT_CLIENT_STATUS}>
+              <div className="px-4 mt-7">
+                <UpdateClientStatus clientId={parseInt(clientId)} />
+              </div>
+            </SecureFragment>
             <ClientStatusHistory clientId={parseInt(clientId)} />
-            <div className="px-4 mt-7">
-              <UpdateClientStatus clientId={parseInt(clientId)} />
-            </div>
           </Panel>
           <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
             <IdentityDetails clientId={parseInt(clientId)} />
