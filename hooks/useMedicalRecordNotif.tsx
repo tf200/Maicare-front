@@ -8,15 +8,13 @@ export const useMedicalRecordNotif = () => {
   const { open: informTaken } = useModal(
     getAckModal({
       modalTitle: "Medicatie ingenomen",
-      children:
-        "Je hebt deze medicatie al ingenomen. Wil je dit nogmaals rapporteren?",
+      children: "Dit medicijn werd gerapporteerd als ingenomen.",
     })
   );
   const { open: informMissed } = useModal(
     getAckModal({
       modalTitle: "Medicatie gemist",
-      children:
-        "Je hebt deze medicatie nog niet ingenomen. Wil je dit rapporteren?",
+      children: "Dit medicijn werd gerapporteerd als gemist.",
     })
   );
   const { fetch } = useMedicationRecordFetcher();
