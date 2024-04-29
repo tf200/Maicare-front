@@ -12,6 +12,9 @@ export type FinancingLawType = (typeof FINANCING_LAW_TYPES)[number];
 export const FINANCING_OPTION_TYPES = ["ZIN", "PGB"] as const;
 export type FinancingOptionType = (typeof FINANCING_OPTION_TYPES)[number];
 
+export const HOURS_TERM_TYPES = ["week", "all_period"] as const;
+export type HoursTermType = (typeof HOURS_TERM_TYPES)[number];
+
 export type ContractFormType = {
   start_date: string;
   end_date: string;
@@ -28,4 +31,6 @@ export type ContractFormType = {
   status: string;
   financing_act: FinancingLawType | "";
   financing_option: FinancingOptionType | "";
+  hours_type: HoursTermType | "";
+  hours: string;
 };

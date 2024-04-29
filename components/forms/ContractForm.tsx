@@ -9,6 +9,7 @@ import {
   ContractFormType,
   FINANCING_LAW_TYPES,
   FINANCING_OPTION_TYPES,
+  HOURS_TERM_TYPES,
 } from "@/types/contracts/contract-form-type";
 import * as Yup from "yup";
 import {
@@ -17,6 +18,9 @@ import {
   CARE_RATE_OPTIONS_BY_TYPE,
   CARE_TYPE_ARRAY,
   CARE_TYPE_OPTIONS,
+  FINANCING_LAW_OPTIONS,
+  FINANCING_OPTION_OPTIONS,
+  HOURS_TERM_OPTIONS,
   RATE_TYPE_ARRAY,
 } from "@/consts";
 import InputField from "@/components/FormFields/InputField";
@@ -70,6 +74,8 @@ const initialValues: ContractFormType = {
   status: "draft",
   financing_act: "",
   financing_option: "",
+  hours_type: "",
+  hours: "",
 };
 
 export const contractSchema: Yup.ObjectSchema<ContractFormType> =
@@ -95,9 +101,6 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
       )
       .required("Geef alstublieft het tarieftype op"),
     rate_value: Yup.string().required("Geef alstublieft het tarief op"),
-    company_contract_period: Yup.string()
-      .oneOf(COMPANY_CONTRACT_OPTIONS)
-      .required("Geef alstublieft het bedrijfs contractperiode op"),
     added_attachments: Yup.array(),
     removed_attachments: Yup.array(),
     reminder_period: Yup.string()
@@ -130,6 +133,8 @@ export const contractSchema: Yup.ObjectSchema<ContractFormType> =
     status: Yup.string().oneOf(["draft", "approved", "terminated"]),
     financing_act: Yup.string().oneOf(FINANCING_LAW_TYPES),
     financing_option: Yup.string().oneOf(FINANCING_OPTION_TYPES),
+    hours_type: Yup.string().oneOf(HOURS_TERM_TYPES),
+    hours: Yup.string(),
   });
 
 type PropsType = {
@@ -185,6 +190,8 @@ const ContractForm: FunctionComponent<PropsType> = ({
     formik;
 
   const { data: clientData } = useClientDetails(clientId);
+
+  console.log("errors", errors);
 
   return (
     <FormikProvider value={formik}>
@@ -370,19 +377,69 @@ const ContractForm: FunctionComponent<PropsType> = ({
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
             <Select
               className="w-full xl:w-1/2"
-              id={"care_type"}
+              id={"financing_act"}
               required={true}
-              options={CARE_TYPE_OPTIONS}
+              options={FINANCING_LAW_OPTIONS}
               label={"Financieringswet"}
-              placeholder={"Voer Zorgtype in"}
-              value={values.care_type}
+              placeholder={"Selecteer Financieringswet"}
+              value={values.financing_act}
               onChange={handleChange}
               onBlur={handleBlur}
               error={
-                touched.care_type && errors.care_type && errors.care_type + ""
+                touched.financing_act &&
+                errors.financing_act &&
+                errors.financing_act + ""
+              }
+            />
+            <Select
+              className="w-full xl:w-1/2"
+              id={"financing_option"}
+              required={true}
+              options={FINANCING_OPTION_OPTIONS}
+              label={"Financieringsoptie"}
+              placeholder={"Selecteer Financieringsoptie"}
+              value={values.financing_option}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                touched.financing_option &&
+                errors.financing_option &&
+                errors.financing_option + ""
               }
             />
           </div>
+          {values.care_type === "ambulante" && (
+            <div className="mb-6 flex flex-col gap-6 xl:flex-row">
+              <Select
+                className="w-full xl:w-1/2"
+                id={"hours_type"}
+                options={HOURS_TERM_OPTIONS}
+                label={"Uren Term"}
+                placeholder={"Selecteer Uren Term"}
+                value={values.hours_type}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.hours_type &&
+                  errors.hours_type &&
+                  errors.hours_type + ""
+                }
+              />
+              <InputField
+                className="w-full xl:w-1/2"
+                id={"hours"}
+                type={"number"}
+                min={0}
+                label={"Uren"}
+                placeholder={"Voer Uren in"}
+                value={values.hours}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                unit={"uur"}
+                error={touched.hours && errors.hours && errors.hours + ""}
+              />
+            </div>
+          )}
         </div>
         <div>
           <div className="mb-6">

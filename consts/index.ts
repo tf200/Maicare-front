@@ -350,3 +350,32 @@ export const CONTRACT_STATUS_TRANSLATION_DICT: Record<ContractStatus, string> =
     approved: "Goedgekeurd",
     terminated: "Beëindigd",
   };
+
+export const FINANCING_LAW_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Financieringswet", value: "" },
+  { label: "Wmo 2015", value: "WMO" },
+  { label: "Zorgverzekeringswet (Zvw)", value: "ZVW" },
+  { label: "Wet langdurige zorg (WlZ)", value: "WLZ" },
+  { label: "Jeugdwet (JW)", value: "JW" },
+  { label: "Wet publieke gezondheidszorg (Wpg)", value: "WPG" },
+];
+
+export const FINANCING_LAW_RECORD = {
+  WMO: "Wmo 2015",
+  ZVW: "Zorgverzekeringswet (Zvw)",
+  WLZ: "Wet langdurige zorg (WlZ)",
+  JW: "Jeugdwet (JW)",
+  WPG: "Wet publieke gezondheidszorg (Wpg)",
+};
+
+export const FINANCING_OPTION_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Financieringsoptie", value: "" },
+  { label: "ZIN", value: "ZIN" },
+  { label: "PGB", value: "PGB" },
+];
+
+export const HOURS_TERM_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Uren Term", value: "" },
+  { label: "Per Week", value: "week" },
+  { label: "Gehele Periode", value: "all_period" },
+];
