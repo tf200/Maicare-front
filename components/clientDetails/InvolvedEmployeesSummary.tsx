@@ -1,11 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { useInvolvedEmployeesList } from "@/utils/involved-employees/getInvolvedEmployeesList";
 import Panel from "@/components/Panel";
-import { useEmergencyContacts } from "@/utils/emergency/getEmergencyContacts";
-import { useRouter } from "next/navigation";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
-import { SecureFragment } from "@/components/SecureWrapper";
 import LinkButton from "@/components/buttons/LinkButton";
 import { dateFormat } from "@/utils/timeFormatting";
 
