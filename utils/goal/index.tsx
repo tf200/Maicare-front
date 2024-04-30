@@ -113,3 +113,24 @@ export const useSetDomainLevel = (clientId: number) => {
     },
   });
 };
+
+async function updateDomainLevel(levelId: number, req: SetDomainLevelReqDto) {
+  const response = await api.patch(
+    `/clients/current-levels/${levelId}/update`,
+    req
+  );
+  return response.data;
+}
+
+export const useUpdateDomainLevel = (clientId: number, levelId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (req: SetDomainLevelReqDto) => {
+      return updateDomainLevel(levelId, req);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["client_domains", clientId]);
+      queryClient.invalidateQueries(["client_levels", clientId]);
+    },
+  });
+};

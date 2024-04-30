@@ -15,9 +15,9 @@ import { getImgProps } from "next/dist/shared/lib/get-img-props";
 import FormModal from "@/components/Modals/FormModal";
 import { useModal } from "@/components/providers/ModalProvider";
 import ChevronDown from "@/components/icons/ChevronDown";
-import { MDomain } from "@/types/domains";
+import { DomainLevel, MDomain } from "@/types/domains";
 import Button from "@/components/buttons/Button";
-import { useSetDomainLevel } from "@/utils/goal";
+import { useSetDomainLevel, useUpdateDomainLevel } from "@/utils/goal";
 
 const DomainLevels: FunctionComponent<{
   clientId: number;
@@ -27,7 +27,7 @@ const DomainLevels: FunctionComponent<{
   const { data: levels, isLoading: isLoadingLevels } =
     useClientLevels(clientId);
   const getLevelByDomain = (domainId: number) => {
-    return levels.find((level) => level.domain_id === domainId)?.level;
+    return levels.find((level) => level.domain_id === domainId);
   };
   const { open: editLevel } = useModal(UpdateDomainLevelModal);
   if (isLoadingDomains || isLoadingLevels) {
@@ -46,7 +46,7 @@ const DomainLevels: FunctionComponent<{
               <button
                 className={cn(
                   "mt-4 flex items-center justify-center gap-2 w-full bg-meta-4/20 text-sm font-medium text-center py-1 px-2 rounded-md",
-                  GRADIENT_COLORS[getLevelByDomain(domain.id)]
+                  GRADIENT_COLORS[getLevelByDomain(domain.id)?.level - 1]
                 )}
                 onClick={() => {
                   editLevel({
@@ -57,7 +57,7 @@ const DomainLevels: FunctionComponent<{
                 }}
               >
                 <PencilSquare className="w-5 h-5" />
-                {MLevels[getLevelByDomain(domain.id)] ?? "N/A"}
+                {MLevels[getLevelByDomain(domain.id)?.level - 1] ?? "N/A"}
               </button>
             </DataCard>
           ))}
@@ -73,11 +73,15 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...props
 }) => {
-  const currentLevel = additionalProps?.currentLevel;
+  const currentLevel: DomainLevel = additionalProps?.currentLevel;
   const currentDomain: MDomain = additionalProps?.currentDomain;
-  const [level, setLevel] = useState<number>(currentLevel);
+  const [level, setLevel] = useState<number>(currentLevel?.level);
   const { mutate: setDomainLevel, isLoading: isSetting } = useSetDomainLevel(
     additionalProps.clientId
+  );
+  const { mutate: updateLevel } = useUpdateDomainLevel(
+    additionalProps.clientId,
+    currentLevel?.id
   );
   return (
     <FormModal
@@ -122,15 +126,27 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
           isLoading={isSetting}
           disabled={isSetting}
           onClick={() => {
-            setDomainLevel(
-              {
-                domain_id: currentDomain.id,
-                level,
-              },
-              {
-                onSuccess: props.onClose,
-              }
-            );
+            if (currentLevel?.id) {
+              updateLevel(
+                {
+                  domain_id: currentDomain.id,
+                  level,
+                },
+                {
+                  onSuccess: props.onClose,
+                }
+              );
+            } else {
+              setDomainLevel(
+                {
+                  domain_id: currentDomain.id,
+                  level,
+                },
+                {
+                  onSuccess: props.onClose,
+                }
+              );
+            }
           }}
         >
           Opslaan
