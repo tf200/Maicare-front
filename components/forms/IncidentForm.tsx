@@ -134,7 +134,11 @@ const EpisodeForm: FunctionComponent<Props> = ({
     <Formik
       enableReinitialize={true}
       initialValues={
-        mode == "edit" ? (data ? data : initialValues) : {...initialValues, involved_children: [clientId]}
+        mode == "edit"
+          ? data
+            ? data
+            : initialValues
+          : { ...initialValues, involved_children: [clientId] }
       }
       onSubmit={(values: IncidentsFormType) => {
         if (!selectedEmployee) {

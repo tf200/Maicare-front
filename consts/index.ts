@@ -62,6 +62,10 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
 export const SOURCE_OPTIONS = [
   { label: "Selecteer Bron", value: "" },
   { label: "BRP", value: "BRP" },
+  { label: "ID", value: "ID" },
+  { label: "Paspoort", value: "passport" },
+  { label: "Poliskaart", value: "policy_card" },
+  { label: "Brief Overheidsinstantie", value: "government_agency_letter" },
 ];
 
 export const EMERGENCY_RELATION_OPTIONS: SelectionOption[] = [
@@ -248,13 +252,13 @@ export * from "./permissions";
 export const STATUS_OPTIONS: SelectionOption[] = [
   { value: "On Waiting List", label: "Wachtlijst" },
   { value: "In Care", label: "In Zorg" },
-  { value: "Out Of Concern", label: "Uit Zorg" },
+  { value: "Out Of Care", label: "Uit Zorg" },
 ];
 
 export const STATUS_RECORD = {
   "On Waiting List": "Wachtlijst",
   "In Care": "In Zorg",
-  "Out Of Concern": "Uit Zorg",
+  "Out Of Care": "Uit Zorg",
 };
 
 export const CARE_PLAN_STATUS_OPTIONS: SelectionOption[] = [
@@ -325,11 +329,18 @@ export const AGREEMENT_FILES_TAGS: SelectionOption[] = [
 ];
 
 export const AGREEMENT_FILES_TAGS_RECORD = {
-  client_agreement: "Klant Overeenkomst",
+  client_agreement: "Cliënt Overeenkomst",
   framework_agreement: "Raamovereenkomst",
   decision: "Besluit",
   other: "Overige",
 };
+
+export const CONTRACT_STATUS_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Status", value: "" },
+  { label: "Concept", value: "draft" },
+  { label: "Goedgekeurd", value: "approved" },
+  { label: "Beëindigd", value: "terminated" },
+];
 
 export const CONTRACT_STATUS_VARIANT_DICT: Record<ContractStatus, BadgeType> = {
   draft: "Outline",
@@ -343,3 +354,63 @@ export const CONTRACT_STATUS_TRANSLATION_DICT: Record<ContractStatus, string> =
     approved: "Goedgekeurd",
     terminated: "Beëindigd",
   };
+
+export const FINANCING_LAW_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Financieringswet", value: "" },
+  { label: "Wmo 2015", value: "WMO" },
+  { label: "Zorgverzekeringswet (Zvw)", value: "ZVW" },
+  { label: "Wet langdurige zorg (WlZ)", value: "WLZ" },
+  { label: "Jeugdwet (JW)", value: "JW" },
+  { label: "Wet publieke gezondheidszorg (Wpg)", value: "WPG" },
+];
+
+export const FINANCING_LAW_RECORD = {
+  WMO: "Wmo 2015",
+  ZVW: "Zorgverzekeringswet (Zvw)",
+  WLZ: "Wet langdurige zorg (WlZ)",
+  JW: "Jeugdwet (JW)",
+  WPG: "Wet publieke gezondheidszorg (Wpg)",
+};
+
+export const FINANCING_OPTION_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Financieringsoptie", value: "" },
+  { label: "ZIN", value: "ZIN" },
+  { label: "PGB", value: "PGB" },
+];
+
+export const HOURS_TERM_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Uren Term", value: "" },
+  { label: "Per Week", value: "week" },
+  { label: "Gehele Periode", value: "all_period" },
+];
+
+export const EMPLOYEE_ASSIGNMENT_TYPES = [
+  "care_nurse",
+  "first_responsible",
+  "mentor",
+  "personal_coach",
+  "care_coordinator",
+  "outpatient_counselor",
+  "co-mentor",
+] as const;
+
+export const EMPLOYEE_ASSIGNMENT_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Relatie", value: "" },
+  { label: "Verzorging / Verpleging", value: "care_nurse" },
+  { label: "Eerst Verantwoordelijke", value: "first_responsible" },
+  { label: "Mentor", value: "mentor" },
+  { label: "Persoonlijke Coach", value: "personal_coach" },
+  { label: "Zorgcoördinator", value: "care_coordinator" },
+  { label: "Ambulant Begeleider", value: "outpatient_counselor" },
+  { label: "Co-Mentor", value: "co-mentor" },
+];
+
+export const EMPLOYEE_ASSIGNMENT_RECORD = {
+  care_nurse: "Verzorging / Verpleging",
+  first_responsible: "Eerst Verantwoordelijke",
+  mentor: "Mentor",
+  personal_coach: "Persoonlijke Coach",
+  care_coordinator: "Zorgcoördinator",
+  outpatient_counselor: "Ambulant Begeleider",
+  "co-mentor": "Co-Mentor",
+};

@@ -11,7 +11,7 @@ export const useGetIncident = (IncidentId: number, clientId: number) => {
     queryKey: [clientId, "incidents", IncidentId],
     queryFn: fetchIncident(IncidentId),
     keepPreviousData: true,
-    enabled: !!IncidentId
+    enabled: !!IncidentId,
   });
 
   return {

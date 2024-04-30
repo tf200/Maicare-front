@@ -420,7 +420,7 @@ const PricingTable: FunctionComponent<{
     <table className="border-separate border-spacing-2.5 w-full">
       <thead>
         <tr>
-          <th>Zorgtype</th>
+          <th>Soort Hulpverlening</th>
           <th>BTW</th>
           <th>Prijs</th>
         </tr>

@@ -25,6 +25,10 @@ import ContactSummary from "@/components/clientDetails/ContactSummary";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
+import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory";
+import Button from "@/components/buttons/Button";
+import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
+import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
 
 type Props = {
   params: { clientId: string };
@@ -115,6 +119,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           >
             <EmergencyContactsSummary clientId={parseInt(clientId)} />
           </Panel>
+          <InvolvedEmployeesSummary clientId={parseInt(clientId)} />
           <ContactSummary clientId={parseInt(clientId)} />
           <Panel
             title={"Contracten"}
@@ -130,8 +135,13 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
-          <Panel title={"CLIËNTSTATUS"} containerClassName="px-7 py-4">
-            <UpdateClientStatus clientId={parseInt(clientId)} />
+          <Panel title={"CLIËNTSTATUS"} containerClassName="py-4">
+            <SecureFragment permission={consts.EDIT_CLIENT_STATUS}>
+              <div className="px-4 mt-7">
+                <UpdateClientStatus clientId={parseInt(clientId)} />
+              </div>
+            </SecureFragment>
+            <ClientStatusHistory clientId={parseInt(clientId)} />
           </Panel>
           <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
             <IdentityDetails clientId={parseInt(clientId)} />
@@ -139,6 +149,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           <Panel title={"Adresgegevens"} containerClassName="px-7 py-4">
             <AddressDetails clientId={parseInt(clientId)} />
           </Panel>
+          <ClientPositionPicker />
           <Panel
             title={"Medisch Dossier"}
             containerClassName="px-7 py-4"

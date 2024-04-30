@@ -52,7 +52,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchGoal(
     clientId,
-    initialData.id
+    initialData?.id
   );
 
   const onSubmit = useCallback(

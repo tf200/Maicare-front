@@ -19,7 +19,9 @@ const AllergiesSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   if (isLoading) return <Loader />;
   if (isError)
     return (
-      <div className="text-red">Een fout heeft ons verhinderd gegevens te laden.</div>
+      <div className="text-red">
+        Een fout heeft ons verhinderd gegevens te laden.
+      </div>
     );
   if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0)

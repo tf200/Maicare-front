@@ -21,6 +21,8 @@ export const CONTRACT_EDIT = "contract.edit";
 export const CONTRACT_DELETE = "contract.delete";
 export const CONTRACT_CREATE = "contract.create";
 
+export const EDIT_CLIENT_STATUS = "edit.client.status";
+
 export const CARE_PLAN_VIEW = "care_plan.view";
 export const CARE_PLAN_EDIT = "care_plan.edit";
 export const CARE_PLAN_DELETE = "care_plan.delete";
@@ -50,6 +52,8 @@ export const PERMISSIONS = [
   CLIENT_EDIT,
   CLIENT_DELETE,
   CLIENT_CREATE,
+
+  EDIT_CLIENT_STATUS,
 
   EMPLOYEE_VIEW,
   EMPLOYEE_EDIT,

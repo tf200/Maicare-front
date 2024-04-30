@@ -12,7 +12,7 @@ interface ComboBoxProps {
   label: string;
   placeholder: string;
   id?: string;
-  className?: string
+  className?: string;
 }
 
 const ComboBox: React.FC<ComboBoxProps> = ({
@@ -25,7 +25,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   label,
   placeholder,
   id,
-  className
+  className,
 }) => {
   let defaultValue = "A2b#4Cp$9q";
   const [value, setValue] = useState<string>();

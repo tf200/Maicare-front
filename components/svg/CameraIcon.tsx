@@ -2,17 +2,13 @@ import { IconProps } from "@/types/IconProps";
 import clsx from "clsx";
 import { FunctionComponent } from "react";
 
-const CameraIcon: FunctionComponent<IconProps> = ({
-  className
-}) => {
+const CameraIcon: FunctionComponent<IconProps> = ({ className }) => {
   return (
     <svg
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={clsx(
-        "fill-current", className ?? "w-4 h-4"
-      )}
+      className={clsx("fill-current", className ?? "w-4 h-4")}
     >
       <path
         fillRule="evenodd"

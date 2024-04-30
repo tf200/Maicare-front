@@ -13,7 +13,11 @@ const UpdateMedicationPage: FunctionComponent = ({
       <Breadcrumb pageName="Bijwerken allergie" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <Panel title={"Bijwerken allergie"}>
-          <AllergyForm mode={"edit"} allergieId={params.allergieId} clientId={parseInt(params.clientId)} />
+          <AllergyForm
+            mode={"edit"}
+            allergieId={params.allergieId}
+            clientId={parseInt(params.clientId)}
+          />
         </Panel>
       </div>
     </>

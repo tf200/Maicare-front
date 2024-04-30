@@ -1,64 +1,64 @@
 .react-datepicker {
-    width: 100%;
-    @apply rounded-[0] border-stroke border;
+  width: 100%;
+  @apply rounded-[0] border-stroke border;
 }
 
 .react-datepicker__month-container {
-    width: 100%;
-    @apply rounded-[0];
+  width: 100%;
+  @apply rounded-[0];
 }
 
 .react-datepicker__header {
-    @apply border-b border-stroke;
+  @apply border-b border-stroke;
 }
 
 .react-datepicker__header:not(.react-datepicker__header--has-time-select) {
-    @apply rounded-t-[0];
+  @apply rounded-t-[0];
 }
 
 .react-datepicker__day--selected {
-    color: white;
-    font-weight: bold;
-    @apply bg-primary rounded-[0];
+  color: white;
+  font-weight: bold;
+  @apply bg-primary rounded-[0];
 }
 
 .react-datepicker__day--selected:hover {
-    @apply bg-primary/80 rounded-[0];
+  @apply bg-primary/80 rounded-[0];
 }
 
 .react-datepicker__day {
-    @apply w-1/7 m-0 h-10 text-center leading-10;
+  @apply w-1/7 m-0 h-10 text-center leading-10;
 }
 
 .react-datepicker__day:hover {
-    @apply rounded-[0];
+  @apply rounded-[0];
 }
 
 .react-datepicker__day--keyboard-selected,
-.react-datepicker__day--keyboard-selected:hover  {
-    @apply bg-primary/50 rounded-[0] outline-white box-content;
+.react-datepicker__day--keyboard-selected:hover {
+  @apply bg-primary/50 rounded-[0] outline-white box-content;
 }
 
 .react-datepicker__day-name {
-    @apply w-1/7 m-0 h-10 text-center leading-10;
+  @apply w-1/7 m-0 h-10 text-center leading-10;
 }
 
 .picked-date.picked-date {
-    position: relative;
-    z-index: 1;
-    color: white;
-    background: none;
+  position: relative;
+  z-index: 1;
+  color: white;
+  background: none;
 }
 
 .picked-date.picked-date::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 100%;
-    width: 2rem;
-    height: 2rem;
-    transform: translate(-50%, -50%);
-    background-color: #3c50e0;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  transform: translate(-50%, -50%);
+  background-color: #3c50e0;
+  z-index: -1;
 }

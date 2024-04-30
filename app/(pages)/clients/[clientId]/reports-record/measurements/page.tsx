@@ -29,19 +29,19 @@ const MeasurementsPage: FunctionComponent<Props> = ({
   const { pagination, data, isError, isLoading, isFetching } =
     useMeasurementList(parseInt(clientId));
 
-    const {
-      mutate: deleteMeasurement,
-      isLoading: isDeleting,
-      isSuccess: isDeleted,
-    } = useDeleteMeasurement(+clientId);
-  
-    const { open } = useModal(
-      getDangerActionConfirmationModal({
-        msg: "Weet je zeker dat je deze meting wilt verwijderen?",
-        title: "Meting Verwijderen",
-      })
-    );
-    
+  const {
+    mutate: deleteMeasurement,
+    isLoading: isDeleting,
+    isSuccess: isDeleted,
+  } = useDeleteMeasurement(+clientId);
+
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze meting wilt verwijderen?",
+      title: "Meting Verwijderen",
+    })
+  );
+
   const columnDef = useMemo<ColumnDef<MeasurmentResDto>[]>(() => {
     return [
       {

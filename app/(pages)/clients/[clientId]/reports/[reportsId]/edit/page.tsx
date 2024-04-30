@@ -5,7 +5,7 @@ import ReportsForm from "@/components/forms/ReportsForm";
 const EditReports: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string, reportsId: number };
+  params: { clientId: string; reportsId: number };
 }) => {
   return (
     <>
@@ -20,7 +20,11 @@ const EditReports: FunctionComponent = ({
                 Bijwerken verslag
               </h3>
             </div>
-            <ReportsForm mode={"edit"} reportsId={params.reportsId} clientId={+params.clientId} />
+            <ReportsForm
+              mode={"edit"}
+              reportsId={params.reportsId}
+              clientId={+params.clientId}
+            />
           </div>
         </div>
       </div>

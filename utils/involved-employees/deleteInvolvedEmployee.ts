@@ -2,7 +2,9 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 async function deleteInvolvedEmployee(clientId: number) {
-  const response = await api.delete(`employee/clientassignment_rud/${clientId}/`);
+  const response = await api.delete(
+    `employee/clientassignment_rud/${clientId}/`
+  );
   return response.data;
 }
 

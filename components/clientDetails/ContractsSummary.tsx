@@ -33,7 +33,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
     <section className="grid grid-cols-3 gap-2">
       {data.results?.map((item) => (
         <div className="contents cursor-pointer" key={item.id}>
-          <DetailCell label={"Zorgtype"} value={item.care_type} />
+          <DetailCell label={"Soort Hulpverlening"} value={item.care_type} />
           <DetailCell
             label={"Zorgperiode"}
             value={

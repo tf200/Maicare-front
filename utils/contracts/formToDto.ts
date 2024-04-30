@@ -1,4 +1,9 @@
-import { ContractFormType } from "@/types/contracts/contract-form-type";
+import {
+  ContractFormType,
+  FinancingLawType,
+  FinancingOptionType,
+  HoursTermType,
+} from "@/types/contracts/contract-form-type";
 import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import {
   CareType,
@@ -31,5 +36,9 @@ export function formToDto(
     care_name: form.contract_name,
     type_id: +form.type,
     status: form.status as ContractStatus,
+    financing_act: form.financing_act as FinancingLawType,
+    financing_option: form.financing_option as FinancingOptionType,
+    hours_type: form.hours_type as HoursTermType,
+    hours: parseFloat(form.hours),
   };
 }

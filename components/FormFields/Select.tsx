@@ -37,7 +37,7 @@ const Select: FunctionComponent<SelectProps> = ({
             );
           })}
         </select>
-        <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
+        <span className="absolute bg-white dark:bg-form-input top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
           <ChevronDown />
         </span>
       </div>
