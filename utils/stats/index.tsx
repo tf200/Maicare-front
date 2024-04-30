@@ -72,20 +72,12 @@ export const useInflowsOutflows = () => {
 async function mockCareTypeRevenue() {
   return [
     {
-      careType: "Zorgtype #1",
+      careType: "Ambulante Zorg",
       revenue: 5000,
     },
     {
-      careType: "Zorgtype #2",
+      careType: "Accommodatie",
       revenue: 3000,
-    },
-    {
-      careType: "Zorgtype #3",
-      revenue: 1000,
-    },
-    {
-      careType: "Andere zorgtypen",
-      revenue: 2000,
     },
   ];
 }
