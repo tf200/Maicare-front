@@ -16,3 +16,11 @@ export type MDomainFormType = {
 };
 
 export type DomainsList = MDomain[];
+
+export type DomainLevel = {
+  domain_id: number;
+  id: number;
+  level: number;
+};
+
+export type DomainLevels = DomainLevel[];

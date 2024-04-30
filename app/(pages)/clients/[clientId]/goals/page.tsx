@@ -13,6 +13,7 @@ import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
 import { useGetDomain } from "@/utils/domains";
 import GoalProgressModal from "@/components/goals/GoalProgressModal";
+import DomainLevels from "@/components/goals/DomainLevels";
 
 type Props = {
   params: { clientId: string };
@@ -65,37 +66,40 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { open: openGoalModal } = useModal(NewGoalModal);
 
   return (
-    <Panel
-      className="w-full"
-      title={"Doelenlijst"}
-      sideActions={
-        <Button
-          onClick={() => {
-            openGoalModal({ clientId });
-          }}
-        >
-          Nieuw Doel Toevoegen
-        </Button>
-      }
-    >
-      {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
-      {data && (
-        <PaginatedTable
-          data={data}
-          className={styles.table}
-          columns={columnDef}
-          page={pagination.page ?? 1}
-          isFetching={isFetching}
-          renderRowDetails={(row) => <GoalDetails goal={row.original} />}
-          onPageChange={(page) => pagination.setPage(page)}
-        />
-      )}
-      {isError && (
-        <p role="alert" className="p-7 text-red">
-          Er is een fout opgetreden.
-        </p>
-      )}
-    </Panel>
+    <>
+      <DomainLevels clientId={+clientId} />
+      <Panel
+        className="w-full"
+        title={"Doelenlijst"}
+        sideActions={
+          <Button
+            onClick={() => {
+              openGoalModal({ clientId });
+            }}
+          >
+            Nieuw Doel Toevoegen
+          </Button>
+        }
+      >
+        {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {data && (
+          <PaginatedTable
+            data={data}
+            className={styles.table}
+            columns={columnDef}
+            page={pagination.page ?? 1}
+            isFetching={isFetching}
+            renderRowDetails={(row) => <GoalDetails goal={row.original} />}
+            onPageChange={(page) => pagination.setPage(page)}
+          />
+        )}
+        {isError && (
+          <p role="alert" className="p-7 text-red">
+            Er is een fout opgetreden.
+          </p>
+        )}
+      </Panel>
+    </>
   );
 };
 

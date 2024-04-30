@@ -1,4 +1,5 @@
 import {
+  SetDomainLevelReqDto,
   NewObjectiveReqDto,
   RatingHistory,
   UpdateObjectiveReqDto,
@@ -89,5 +90,26 @@ export const useGoalHistory = (goalId: number) => {
   return useQuery({
     queryKey: ["goals", goalId, "history"],
     queryFn: () => getGoalHistory(goalId),
+  });
+};
+
+async function setDomainLevel(clientId: number, req: SetDomainLevelReqDto) {
+  const response = await api.post(
+    `/clients/${clientId}/current-levels/add`,
+    req
+  );
+  return response.data;
+}
+
+export const useSetDomainLevel = (clientId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (req: SetDomainLevelReqDto) => {
+      return setDomainLevel(clientId, req);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["client_domains", clientId]);
+      queryClient.invalidateQueries(["client_levels", clientId]);
+    },
   });
 };

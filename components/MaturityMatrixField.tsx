@@ -16,40 +16,7 @@ import InfoIcon from "@/components/icons/InfoIcon";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { useQueryClient } from "react-query";
 import { useParams } from "next/navigation";
-
-const MaturityLevelTypes = [
-  "acute_problems",
-  "not_self_reliant",
-  "limited_self_reliant",
-  "sufficient_self_reliant",
-  "fully_self_reliant",
-] as const;
-
-type MaturityLevelType = (typeof MaturityLevelTypes)[number];
-
-const MLevelTrans: { [key in MaturityLevelType]: string } = {
-  acute_problems: "Acute problematiek",
-  not_self_reliant: "Niet zelfredzaam",
-  limited_self_reliant: "Beperkt zelfredzaam",
-  sufficient_self_reliant: "Voldoende zelfredzaam",
-  fully_self_reliant: "Volledig zelfredzaam",
-};
-
-const MLevels = [
-  "Acute problematiek", // acute problems
-  "Niet zelfredzaam", // not self-reliant
-  "Beperkt zelfredzaam", // limited self-reliant
-  "Voldoende zelfredzaam", // sufficient self-reliant
-  "Volledig zelfredzaam", // fully self-reliant
-];
-
-const GRADIENT_COLORS = [
-  "bg-meta-7/[0.4]",
-  "bg-meta-8/[0.4]",
-  "bg-meta-8/[0.2]",
-  "bg-meta-3/[0.2]",
-  "bg-meta-3/[0.4]",
-];
+import { GRADIENT_COLORS, MLevels } from "@/consts";
 
 const MaturityMatrixField: FunctionComponent = () => {
   const { open } = useModal(SelectDomainModal);

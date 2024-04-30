@@ -13,6 +13,7 @@ import {
   ContractStatus,
 } from "@/types/contracts/new-contract-req.dto";
 import { RateType } from "@/types/rate-type";
+import { MaturityLevelType } from "@/types/MatruityLevelType";
 
 export const MIN_CHARACTERS_TO_ENHANCE = 75;
 
@@ -414,3 +415,35 @@ export const EMPLOYEE_ASSIGNMENT_RECORD = {
   outpatient_counselor: "Ambulant Begeleider",
   "co-mentor": "Co-Mentor",
 };
+
+export const MaturityLevelTypes = [
+  "acute_problems",
+  "not_self_reliant",
+  "limited_self_reliant",
+  "sufficient_self_reliant",
+  "fully_self_reliant",
+] as const;
+
+export const MLevelTrans: { [key in MaturityLevelType]: string } = {
+  acute_problems: "Acute problematiek",
+  not_self_reliant: "Niet zelfredzaam",
+  limited_self_reliant: "Beperkt zelfredzaam",
+  sufficient_self_reliant: "Voldoende zelfredzaam",
+  fully_self_reliant: "Volledig zelfredzaam",
+};
+
+export const MLevels = [
+  "Acute problematiek", // acute problems
+  "Niet zelfredzaam", // not self-reliant
+  "Beperkt zelfredzaam", // limited self-reliant
+  "Voldoende zelfredzaam", // sufficient self-reliant
+  "Volledig zelfredzaam", // fully self-reliant
+];
+
+export const GRADIENT_COLORS = [
+  "bg-meta-7/[0.4]",
+  "bg-meta-8/[0.4]",
+  "bg-meta-8/[0.2]",
+  "bg-meta-3/[0.2]",
+  "bg-meta-3/[0.4]",
+];

@@ -57,3 +57,8 @@ export type RatingHistoryItem = {
 };
 
 export type RatingHistory = RatingHistoryItem[];
+
+export type SetDomainLevelReqDto = {
+  level: number;
+  domain_id: number;
+};
