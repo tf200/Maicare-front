@@ -14,5 +14,7 @@ export type InvoiceResDto = {
   created: string;
 };
 
-export type InvoiceItem = InvoiceResDto;
+export type InvoiceItem = InvoiceResDto & {
+  sender_name: string;
+};
 export type InvoicesResDto = Paginated<InvoiceItem>;

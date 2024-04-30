@@ -12,15 +12,12 @@ const Analytics: FunctionComponent = (props) => {
   if (!data) return null;
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mb-6">
-      <DataCard title={"Cliënten"}>
+      <DataCard title={`Cliënten (${data?.users.total_users})`}>
         <div className="mt-4 flex gap-6">
           <div className="bg-meta-5/20 w-15 h-15 flex items-center justify-center text-meta-5 rounded-xl">
             <IndividualIcons width={30} height={30} />
           </div>
           <div>
-            <div>
-              <strong>Totaal:</strong> {data?.users.total_users}
-            </div>
             <div>
               <strong>In zorg:</strong> {data?.users.total_in_care_users}
             </div>
@@ -34,15 +31,12 @@ const Analytics: FunctionComponent = (props) => {
           </div>
         </div>
       </DataCard>
-      <DataCard title={"Contracten"}>
+      <DataCard title={`Contracten (${data?.contracts.total_contracts})`}>
         <div className="mt-4 flex gap-6">
           <div className="bg-meta-3/20 text-meta-3 w-15 h-15 flex items-center justify-center rounded-xl">
             <IndividualIcons width={30} height={30} />
           </div>
           <div>
-            <div>
-              <strong>Totaal:</strong> {data?.contracts.total_contracts}
-            </div>
             <div>
               <strong>Accommodatie:</strong>{" "}
               {data?.contracts.total_accommodation_contracts}
@@ -67,16 +61,12 @@ const Analytics: FunctionComponent = (props) => {
         </div>
       </DataCard>
 
-      <DataCard title={"Medicatie"}>
+      <DataCard title={`Medicatie (${data?.medications.total_attachments})`}>
         <div className="mt-4 flex gap-6">
           <div className="bg-meta-7/20 text-meta-7 w-15 h-15 flex items-center justify-center rounded-xl">
             <HeartIcon width={30} height={30} />
           </div>
           <div>
-            <div>
-              <strong>Totaal bijlagen:</strong>{" "}
-              {data?.medications.total_attachments}
-            </div>
             <div>
               <strong>Totaal medicijnen:</strong>{" "}
               {data?.medications.total_medications}
@@ -105,15 +95,12 @@ const Analytics: FunctionComponent = (props) => {
         </div>
       </DataCard>
 
-      <DataCard title={"Facturen"}>
+      <DataCard title={`Facturen (${data?.invoices.total_invoices})`}>
         <div className="mt-4 flex gap-6">
           <div className="bg-meta-6/20 text-meta-6 w-15 h-15 flex items-center justify-center rounded-xl">
             <InvoiceIcon width={30} height={30} />
           </div>
           <div>
-            <div>
-              <strong>Totaal facturen:</strong> {data?.invoices.total_invoices}
-            </div>
             <div>
               <strong>Betaalde facturen:</strong>{" "}
               {data?.invoices.total_paid_invoices}

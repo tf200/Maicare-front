@@ -45,3 +45,7 @@ export type HistoryItem = AddPaymentHistoryDto & {
   created: string;
   updated: string;
 };
+
+export type GeneratedInvoiceDto = {
+  download_link: string;
+};

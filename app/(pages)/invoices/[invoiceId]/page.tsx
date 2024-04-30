@@ -23,6 +23,7 @@ import MinusIcon from "@/components/icons/MinusIcon";
 import {
   useAddPaymentHistory,
   useInvoice,
+  useInvoiceDownloadLink,
   usePatchInvoice,
   useUpdateInvoice,
 } from "@/utils/invoices";
@@ -45,6 +46,8 @@ import { InvoiceStatus } from "@/components/invoiceStatus";
 import { fullDateTimeFormat } from "@/utils/timeFormatting";
 import GrayBox from "@/components/GrayBox";
 import { formatPrice } from "@/utils/priceFormatting";
+import Link from "next/link";
+import LinkButton from "@/components/buttons/LinkButton";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -112,6 +115,13 @@ const Page: FunctionComponent<{
     formik.setFieldValue("total_amount", total.toFixed(2));
   }, [values.items]);
 
+  const { open: manageStatus } = useModal(ManageStatusModal);
+  const {
+    data: generatedInvoice,
+    refetch: generate,
+    isLoading: isGenerating,
+  } = useInvoiceDownloadLink(data?.id);
+
   if (isLoadingInvoices) {
     return <Loader />;
   }
@@ -119,8 +129,6 @@ const Page: FunctionComponent<{
   if (!data) {
     return <></>;
   }
-
-  const { open: manageStatus } = useModal(ManageStatusModal);
 
   return (
     <Panel
@@ -167,10 +175,26 @@ const Page: FunctionComponent<{
         </div>
       )}
       <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark w-full">
-        <Button disabled={true} className="flex gap-4 items-center ml-auto">
-          <DownloadIcon />
-          <span>Download factuur</span>
-        </Button>
+        {!generatedInvoice ? (
+          <Button
+            onClick={() => {
+              generate();
+            }}
+            isLoading={isGenerating}
+            className="flex gap-4 items-center ml-auto"
+          >
+            <span>Genereer factuur</span>
+          </Button>
+        ) : (
+          <Link
+            href={generatedInvoice.download_link}
+            target={"_blank"}
+            className="flex gap-4 items-center ml-auto bg-primary text-white px-4 py-3 rounded-md hover:bg-primary-dark"
+          >
+            <DownloadIcon />
+            <span>Download factuur</span>
+          </Link>
+        )}
       </div>
     </Panel>
   );
@@ -181,7 +205,9 @@ const InvoiceHistory: FunctionComponent<{
 }> = ({ history }) => {
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-6">Factuur geschiedenis:</h3>
+      <h3 className="text-lg font-semibold mb-6">
+        Betalingsgeschiedenis van facturen:
+      </h3>
       <div className="grid grid-cols-3 gap-y-4">
         {history.map((item) => (
           <div key={item.id} className="contents">

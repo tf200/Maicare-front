@@ -4,6 +4,7 @@ import api from "@/utils/api";
 import { InvoiceResDto } from "@/types/invoices/invoices-res.dto";
 import {
   AddPaymentHistoryDto,
+  GeneratedInvoiceDto,
   InvoiceDetailsDto,
   UpdateInvoiceDto,
 } from "@/types/invoices";
@@ -86,4 +87,21 @@ export const useAddPaymentHistory = (invoiceId: number) => {
       queryClient.invalidateQueries(["invoices", invoiceId]);
     },
   });
+};
+
+const generateInvoiceV2 = async (id: number) => {
+  const response = await api.get<GeneratedInvoiceDto>(
+    `/clients/invoices/${id}/download-link`
+  );
+  return response.data;
+};
+
+export const useInvoiceDownloadLink = (invoiceId: number) => {
+  return useQuery(
+    ["generated_invoice", invoiceId],
+    () => generateInvoiceV2(invoiceId),
+    {
+      enabled: false,
+    }
+  );
 };

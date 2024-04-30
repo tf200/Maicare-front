@@ -181,6 +181,10 @@ export function InvoicesList(props: {
         ),
       },
       {
+        accessorKey: "sender_name",
+        header: "Opdrachtgever",
+      },
+      {
         accessorKey: "total_amount",
         header: "Totaalbedrag",
         cell: (data) => formatPrice(parseFloat(data.getValue() as string)),
