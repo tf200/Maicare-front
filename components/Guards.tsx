@@ -21,7 +21,10 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/employees")) {
     return consts.EMPLOYEE_VIEW;
   }
-  if (pathname.startsWith("/finances")) {
+  if (pathname.startsWith("/invoices")) {
+    return consts.FINANCE_VIEW;
+  }
+  if (pathname.startsWith("/expenses")) {
     return consts.FINANCE_VIEW;
   }
   if (pathname.startsWith("/contacts")) {

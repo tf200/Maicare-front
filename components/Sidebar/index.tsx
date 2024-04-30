@@ -349,10 +349,25 @@ const GlobalMenu: FunctionComponent = () => {
           permission: consts.EMPLOYEE_VIEW,
         },
         {
-          completeHref: "/finances",
+          isDropdown: true,
+          id: "finance",
           icon: <InvoiceIcon className={"w-4.5 h-5"} />,
           children: "Financiën",
           permission: consts.FINANCE_VIEW,
+          subItems: [
+            {
+              completeHref: "/invoices",
+              icon: <InvoiceIcon className={"w-4.5 h-5"} />,
+              children: "Facturen",
+              permission: consts.FINANCE_VIEW,
+            },
+            {
+              completeHref: "/expenses",
+              icon: <InvoiceIcon className={"w-4.5 h-5"} />,
+              children: "Uitgaven",
+              permission: consts.FINANCE_VIEW,
+            },
+          ],
         },
         {
           isDropdown: true,

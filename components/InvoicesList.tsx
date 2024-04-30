@@ -22,6 +22,7 @@ import { INVOICE_STATUS_OPTIONS, INVOICE_STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
 import { InvoiceStatus } from "@/components/invoiceStatus";
 import { InvoiceType } from "@/types/InvoiceStatus";
+import { cleanQueryParams } from "@/utils/cleanQueryParams";
 
 async function getContractInvoices(
   contractId: number,
@@ -53,7 +54,7 @@ type InvoicesParams = PaginationParams & (FilterFormType | {});
 
 async function getInvoices(params?: InvoicesParams) {
   const response = await api.get<InvoicesResDto>("/clients/invoices", {
-    params,
+    params: cleanQueryParams(params),
   });
   return response.data;
 }
