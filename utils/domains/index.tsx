@@ -1,4 +1,9 @@
-import { DomainsList, MDomain, MDomainFormType } from "@/types/domains";
+import {
+  DomainLevels,
+  DomainsList,
+  MDomain,
+  MDomainFormType,
+} from "@/types/domains";
 import api from "@/utils/api";
 import {
   QueryClient,
@@ -41,7 +46,7 @@ export const useClientDomains = (clientId: number) => {
   const queryClient = useQueryClient();
   return useQuery(["client_domains", clientId], async () => {
     const domainIds = await getClientDomains(clientId);
-    return await getDomainsByIds(queryClient, 0, domainIds);
+    return await getClientDomainsByIds(queryClient, clientId, domainIds);
   });
 };
 
@@ -65,10 +70,35 @@ export async function getDomainsByIds(
   });
 }
 
+export async function getClientDomainsByIds(
+  queryClient: QueryClient,
+  clientId: number,
+  ids: number[]
+) {
+  const domains = await queryClient.fetchQuery<MDomain[]>(
+    ["domains"],
+    getDomains
+  );
+  return queryClient.fetchQuery(["clients", clientId, "domains"], {
+    queryFn: () => domains.filter((d) => ids.includes(d.id)),
+  });
+}
+
 export const useGetDomain = (domainId: number) => {
   const queryClient = useQueryClient();
   return useQuery(["domain", domainId], async () => {
     const domains = await getDomainsByIds(queryClient, 0, [domainId]);
     return domains[0];
   });
+};
+
+async function getClientLevels(clientId: number) {
+  const response = await api.get<DomainLevels>(
+    `/clients/${clientId}/current-levels`
+  );
+  return response.data;
+}
+
+export const useClientLevels = (clientId: number) => {
+  return useQuery(["client_levels", clientId], () => getClientLevels(clientId));
 };

@@ -59,44 +59,7 @@ const options: ApexOptions = {
   ],
 };
 
-const TopCareTypes: FunctionComponent = (props) => {
-  const { data } = useCareTypeRevenue();
-  const series = useMemo(() => {
-    if (!data) return [];
-    return data.map((item) => item.revenue);
-  }, [data]);
-  const optionsWithLabels = useMemo(() => {
-    if (!data) return options;
-    return {
-      ...options,
-      labels: data.map((item) => item.careType),
-    };
-  }, [data]);
-  return (
-    <div>
-      <ReactApexChart
-        options={optionsWithLabels}
-        series={series}
-        type="donut"
-        height={300}
-      />
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        {data?.map((item, index) => (
-          <Label
-            key={index}
-            label={item.careType}
-            value={formatPrice(item.revenue)}
-            color={COLORS[index % COLORS.length]}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default TopCareTypes;
-
-export const PieChart: FunctionComponent<{
+const PieChart: FunctionComponent<{
   series: number[];
   labels: string[];
   height?: number;
@@ -149,3 +112,5 @@ const Label: FunctionComponent<{
     </div>
   );
 };
+
+export default PieChart;

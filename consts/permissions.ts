@@ -47,6 +47,8 @@ export const TASKS_VIEW = "tasks.view";
 
 export const CONVERSATION_VIEW = "conversation.view";
 
+export const MANAGE_DOMAIN_LEVELS = "manage.domain.levels";
+
 export const PERMISSIONS = [
   CLIENT_VIEW,
   CLIENT_EDIT,
@@ -95,6 +97,8 @@ export const PERMISSIONS = [
   TASKS_VIEW,
 
   CONVERSATION_VIEW,
+
+  MANAGE_DOMAIN_LEVELS,
 ] as const;
 
 export const ADMIN = "ADMIN";
@@ -142,6 +146,7 @@ export const PERMISSION_CONFIGURATIONS: Record<
     CLIENT_EDIT,
     EMPLOYEE_VIEW,
     EMPLOYEE_EDIT,
+    MANAGE_DOMAIN_LEVELS,
   ],
   MANAGEMENT: [
     ...DEFAULT_PERMISSIONS,

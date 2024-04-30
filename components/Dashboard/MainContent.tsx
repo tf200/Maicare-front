@@ -10,14 +10,21 @@ import { dateFormat } from "@/utils/timeFormatting";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import InflowOutflow from "@/components/Charts/InflowOutflow";
 import TopCareTypes from "@/components/Charts/TopCareTypes";
+import Analytics from "@/components/DataStats/Analytics";
 
 const MainContent: React.FC = () => {
   return (
     <>
       <DashboardOverview />
+      <div>
+        <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
+          Statistieken
+        </h2>
+        <Analytics />
+      </div>
       <AutomaticReports />
-      <FinancesOverview />
-      <CareTypeRevenue />
+      {/*<FinancesOverview />*/}
+      {/*<CareTypeRevenue />*/}
     </>
   );
 };

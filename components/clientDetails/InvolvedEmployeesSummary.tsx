@@ -5,6 +5,7 @@ import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import LinkButton from "@/components/buttons/LinkButton";
 import { dateFormat } from "@/utils/timeFormatting";
+import { EMPLOYEE_ASSIGNMENT_RECORD } from "@/consts";
 
 const InvolvedEmployeesContent: FunctionComponent<{
   clientId: number;
@@ -32,7 +33,7 @@ const InvolvedEmployeesContent: FunctionComponent<{
             <DetailCell
               ignoreIfEmpty={true}
               label={employee.employee_name}
-              value={employee.role}
+              value={EMPLOYEE_ASSIGNMENT_RECORD[employee.role]}
             />
             <DetailCell
               label={"Startdatum"}
