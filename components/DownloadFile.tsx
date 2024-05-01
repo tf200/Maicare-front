@@ -17,14 +17,14 @@ const DownloadFile: FunctionComponent<{
     >
       <DownloadIcon />
       <div className="font-bold">{file.name}</div>
-      <div className="flex">
-        {file.tag && (
+      {file.tag && (
+        <div className="flex">
           <StatusBadge
             text={AGREEMENT_FILES_TAGS_RECORD[file.tag]}
             type={"Info"}
           />
-        )}
-      </div>
+        </div>
+      )}
     </Link>
   );
 };
