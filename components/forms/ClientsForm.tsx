@@ -161,8 +161,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
 
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
-  console.log("errors", errors);
-  console.log("values", values);
   return (
     <>
       <FormikProvider value={formik}>
