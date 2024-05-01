@@ -22,6 +22,8 @@ import InputField from "@/components/FormFields/InputField";
 import IconButton from "@/components/buttons/IconButton";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import FilesUploader from "@/components/FormFields/FilesUploader";
+import FilesDeleter from "@/components/FormFields/FilesDeleter";
 
 const Page: FunctionComponent = (props) => {
   const { open } = useModal(CreateExpenseModal);
@@ -116,17 +118,25 @@ const CreateExpenseModal: FunctionComponent<ModalProps> = ({
   ...props
 }) => {
   const createExpense = useCreateExpense();
+  const initialData: ExpenseResDto = additionalProps?.data;
   const formik = useFormik<ExpenseFormType>({
     initialValues: {
       amount: "",
       created: "",
       desc: "",
+      added_attachments: [],
+      removed_attachments: [],
     },
     onSubmit: (values) => {
       createExpense.mutate(
         {
           ...values,
           amount: parseFloat(values.amount),
+          attachment_ids:
+            initialData?.attachments
+              .filter((a) => !values.removed_attachments.includes(a.id))
+              .map((a) => a.id)
+              .concat(values.added_attachments) ?? values.added_attachments,
         },
         {
           onSuccess: () => {
@@ -174,6 +184,18 @@ const CreateExpenseModal: FunctionComponent<ModalProps> = ({
             error={touched.amount && errors.amount}
             placeholder={"Bedrag"}
           />
+          <FilesUploader
+            label={"Bijlagen"}
+            endpoint={"global_v2"}
+            name={"added_attachments"}
+          />
+          {initialData && (
+            <FilesDeleter
+              id={"removed_attachments"}
+              name={"removed_attachments"}
+              alreadyUploadedFiles={initialData.attachments}
+            />
+          )}
           <div className="flex gap-4 justify-center">
             <Button
               buttonType="Outline"
