@@ -219,7 +219,10 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
   const { handleSubmit, handleBlur, errors, touched, values, handleChange } =
     formik;
   return (
-    <FormModal {...props} title={"Nieuwe uitgave"}>
+    <FormModal
+      {...props}
+      title={initialData ? "Uitgave bewerken" : "Nieuwe uitgave"}
+    >
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <InputField
