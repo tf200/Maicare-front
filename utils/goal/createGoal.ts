@@ -11,12 +11,8 @@ export async function createGoal(clientId: number, data: NewGoalsReqDto) {
 export const useCreateGoal = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: GoalsFormType) => {
-      return createGoal(clientId, {
-        domain_id: +data.domain_id,
-        title: data.title,
-        desc: data.desc,
-      });
+    mutationFn: async (data: NewGoalsReqDto) => {
+      return createGoal(clientId, data);
     },
     onSuccess: (data: NewGoalsReqDto) => {
       queryClient.invalidateQueries([clientId, "goals"]);

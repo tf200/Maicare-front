@@ -3,6 +3,8 @@ import {
   NewObjectiveReqDto,
   RatingHistory,
   UpdateObjectiveReqDto,
+  ObjectiveReportReqDto,
+  UpdateObjectiveReportReqDto,
 } from "@/types/goals";
 import api from "@/utils/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -131,6 +133,67 @@ export const useUpdateDomainLevel = (clientId: number, levelId: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["client_domains", clientId]);
       queryClient.invalidateQueries(["client_levels", clientId]);
+    },
+  });
+};
+
+async function addObjectiveReport(
+  objectiveId: number,
+  report: ObjectiveReportReqDto
+) {
+  const response = await api.post(
+    `/clients/goals/objectives/${objectiveId}/report/add`,
+    report
+  );
+  return response.data;
+}
+
+export const useAddObjectiveReport = (
+  clientId: number,
+  objectiveId: number
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (report: ObjectiveReportReqDto) => {
+      return addObjectiveReport(objectiveId, report);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "client-objectives",
+        clientId,
+        objectiveId,
+      ]);
+    },
+  });
+};
+
+async function updateObjectiveReport(
+  reportId: number,
+  report: UpdateObjectiveReportReqDto
+) {
+  const response = await api.patch(
+    `/clients/goals/objectives/report/${reportId}/update`,
+    report
+  );
+  return response.data;
+}
+
+export const useUpdateObjectiveReport = (
+  clientId: number,
+  objectiveId: number,
+  reportId: number
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (report: UpdateObjectiveReportReqDto) => {
+      return updateObjectiveReport(reportId, report);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "client-objectives",
+        clientId,
+        objectiveId,
+      ]);
     },
   });
 };

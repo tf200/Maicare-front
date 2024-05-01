@@ -1,11 +1,13 @@
 export type FormProps<TInitialData> =
   | {
       mode?: "add";
-      onSuccess: () => void;
+      onSuccess?: () => void;
+      onCancel?: () => void;
       initialData?: undefined;
     }
   | {
       mode: "update";
-      onSuccess: () => void;
+      onSuccess?: () => void;
+      onCancel?: () => void;
       initialData: TInitialData;
     };
