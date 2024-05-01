@@ -439,11 +439,3 @@ export const MLevels = [
   "Voldoende zelfredzaam", // sufficient self-reliant
   "Volledig zelfredzaam", // fully self-reliant
 ];
-
-export const GRADIENT_COLORS = [
-  "bg-meta-7/[0.4]",
-  "bg-meta-8/[0.4]",
-  "bg-meta-8/[0.2]",
-  "bg-meta-3/[0.2]",
-  "bg-meta-3/[0.4]",
-];

@@ -1,23 +1,25 @@
 import React, { Fragment, FunctionComponent, useState } from "react";
 import { SecureFragment } from "@/components/SecureWrapper";
-import {
-  GRADIENT_COLORS,
-  MANAGE_DOMAIN_LEVELS,
-  MaturityLevelTypes,
-  MLevels,
-} from "@/consts";
+import { MANAGE_DOMAIN_LEVELS, MLevels } from "@/consts";
 import { useClientDomains, useClientLevels } from "@/utils/domains";
 import DataCard from "@/components/DataCard";
 import { cn } from "@/utils/cn";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { ModalProps } from "@/types/modal-props";
-import { getImgProps } from "next/dist/shared/lib/get-img-props";
 import FormModal from "@/components/Modals/FormModal";
 import { useModal } from "@/components/providers/ModalProvider";
 import ChevronDown from "@/components/icons/ChevronDown";
 import { DomainLevel, MDomain } from "@/types/domains";
 import Button from "@/components/buttons/Button";
 import { useSetDomainLevel, useUpdateDomainLevel } from "@/utils/goal";
+
+const GRADIENT_COLORS = [
+  "bg-meta-7/[0.4]",
+  "bg-meta-8/[0.4]",
+  "bg-meta-8/[0.2]",
+  "bg-meta-3/[0.2]",
+  "bg-meta-3/[0.4]",
+];
 
 const DomainLevels: FunctionComponent<{
   clientId: number;
