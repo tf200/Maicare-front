@@ -17,4 +17,5 @@ export type NewClientsRequest = {
   infix: string;
   streetname: string;
   street_number: string;
+  identity_attachment_ids: string[];
 };
