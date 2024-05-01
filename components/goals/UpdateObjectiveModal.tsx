@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import FormModal from "@/components/Modals/FormModal";
 import { ModalProps } from "@/types/modal-props";
 import { ObjectiveItem } from "@/types/goals";
-import ObjectiveForm from "@/components/forms/ObjectiveForm";
+import ObjectiveForm from "@/components/goals/ObjectiveForm";
 
 const UpdateObjectiveModal: FunctionComponent<ModalProps> = ({
   additionalProps,

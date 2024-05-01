@@ -16,14 +16,12 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 
 const initialValues: ObjectiveFormType = {
   title: "",
-  rating: 0,
   desc: "",
 };
 
 const objectiveSchema: Yup.ObjectSchema<ObjectiveFormType> = Yup.object().shape(
   {
     title: Yup.string().required("Geef alstublieft een titel"),
-    rating: Yup.number().required("Geef alstublieft een rating"),
     desc: Yup.string().required("Geef alstublieft een omschrijving"),
   }
 );
@@ -54,7 +52,6 @@ const ObjectiveForm: FunctionComponent<{
       method(
         {
           ...values,
-          rating: +values.rating,
         },
         {
           onSuccess: () => {
@@ -87,12 +84,6 @@ const ObjectiveForm: FunctionComponent<{
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.title && errors.title}
-        />
-        <RatingStars
-          className="mb-6"
-          name={"rating"}
-          label={"Rating"}
-          required={true}
         />
         <Textarea
           label={"Omschrijving"}

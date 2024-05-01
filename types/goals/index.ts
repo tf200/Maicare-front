@@ -31,6 +31,10 @@ export type GoalsListItem = {
   desc: string;
   updated: string;
   created: string;
+  created_by_name: string;
+  reviewed_by_name: string;
+  created_by: number;
+  reviewed_by: number;
 };
 
 export type GoalsListResDto = Paginated<GoalsListItem>;
@@ -38,13 +42,11 @@ export type GoalsListResDto = Paginated<GoalsListItem>;
 export type ObjectiveFormType = {
   title: string;
   desc: string;
-  rating: number;
 };
 
 export type NewObjectiveReqDto = {
   title: string;
   desc: string;
-  rating: number;
 };
 
 export type UpdateObjectiveReqDto = Partial<NewObjectiveReqDto>;

@@ -197,3 +197,20 @@ export const useUpdateObjectiveReport = (
     },
   });
 };
+
+async function approveGoal(goalId: number) {
+  const response = await api.patch(`/clients/goals/${goalId}/approval`);
+  return response.data;
+}
+
+export const useApproveGoal = (clientId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (goalId: number) => {
+      return approveGoal(goalId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([clientId, "goals"]);
+    },
+  });
+};
