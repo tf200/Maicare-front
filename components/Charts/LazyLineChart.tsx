@@ -16,6 +16,11 @@ const OPTIONS: ApexOptions = {
     fontFamily: "Satoshi, sans-serif",
     height: 335,
     type: "area",
+    events: {
+      mounted: (chart) => {
+        chart.windowResizeHandler();
+      },
+    },
     dropShadow: {
       enabled: true,
       color: "#623CEA14",
