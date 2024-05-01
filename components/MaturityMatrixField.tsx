@@ -16,7 +16,15 @@ import InfoIcon from "@/components/icons/InfoIcon";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { useQueryClient } from "react-query";
 import { useParams } from "next/navigation";
-import { GRADIENT_COLORS, MLevels } from "@/consts";
+import { MLevels } from "@/consts";
+
+const GRADIENT_COLORS = [
+  "bg-meta-7/[0.4]",
+  "bg-meta-8/[0.4]",
+  "bg-meta-8/[0.2]",
+  "bg-meta-3/[0.2]",
+  "bg-meta-3/[0.4]",
+];
 
 const MaturityMatrixField: FunctionComponent = () => {
   const { open } = useModal(SelectDomainModal);
