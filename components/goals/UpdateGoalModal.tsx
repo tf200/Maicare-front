@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import GoalsForm from "@/components/forms/GoalsForm";
 import { GoalsListItem } from "@/types/goals";
+import GoalsForm from "@/components/goals/GoalsForm";
 
 const UpdateGoalModal: FunctionComponent<ModalProps> = ({
   additionalProps,
