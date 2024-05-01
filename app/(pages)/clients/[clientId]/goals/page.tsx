@@ -20,6 +20,7 @@ import { APPROVE_GOALS } from "@/consts";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
+import Loader from "@/components/common/Loader";
 
 type Props = {
   params: { clientId: string };
@@ -123,7 +124,11 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           </Button>
         }
       >
-        {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {isListLoading && (
+          <div className="p-4 sm:p-6 xl:p-7.5">
+            <Loader />
+          </div>
+        )}
         {data && (
           <PaginatedTable
             data={data}
