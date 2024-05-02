@@ -37,56 +37,58 @@ const GoalDetails: FunctionComponent<{
 
   return (
     <div>
-      <div className="mb-6 ">
-        <h3 className="flex justify-between text-lg font-bold mb-4">
-          <span>Objectieven</span>
-          <Button
-            className={styles.button}
-            onClick={() => {
-              newObjectiveModal({
-                goalId: goal.id,
-                clientId: goal.client_id,
-              });
-            }}
-          >
-            Nieuwe Objectief Toevoegen
-          </Button>
-        </h3>
-        <ul className="flex flex-col gap-4">
-          {goal.objectives.map((objective) => (
-            <li
-              key={objective.id}
-              className="flex bg-white px-4 py-2 rounded shadow items-center"
+      {goal.reviewed_by && (
+        <div className="mb-6 ">
+          <h3 className="flex justify-between text-lg font-bold mb-4">
+            <span>Objectieven</span>
+            <Button
+              className={styles.button}
+              onClick={() => {
+                newObjectiveModal({
+                  goalId: goal.id,
+                  clientId: goal.client_id,
+                });
+              }}
             >
-              <CheckboxItem label={""} checked={false} />
-              <button
-                onClick={() => {
-                  openObjectiveModal({
-                    objective,
-                    goalId: goal.id,
-                    clientId: goal.client_id,
-                  });
-                }}
-                className="text-left flex flex-grow justify-between items-center"
+              Nieuwe Objectief Toevoegen
+            </Button>
+          </h3>
+          <ul className="flex flex-col gap-4">
+            {goal.objectives.map((objective) => (
+              <li
+                key={objective.id}
+                className="flex bg-white px-4 py-2 rounded shadow items-center"
               >
-                <div>{objective.title}</div>
+                <CheckboxItem label={""} checked={false} />
                 <button
-                  type={"button"}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openObjectiveProgressModal({
-                      objectiveId: objective.id,
+                  onClick={() => {
+                    openObjectiveModal({
+                      objective,
+                      goalId: goal.id,
+                      clientId: goal.client_id,
                     });
                   }}
-                  className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
+                  className="text-left flex flex-grow justify-between items-center"
                 >
-                  {objective.rating}
+                  <div>{objective.title}</div>
+                  <button
+                    type={"button"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openObjectiveProgressModal({
+                        objectiveId: objective.id,
+                      });
+                    }}
+                    className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
+                  >
+                    {objective.rating}
+                  </button>
                 </button>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="flex gap-4 justify-end items-center">
         <IconButton
           buttonType="Danger"

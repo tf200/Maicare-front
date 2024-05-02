@@ -65,7 +65,7 @@ export async function getDomainsByIds(
     ["domains"],
     getDomains
   );
-  return queryClient.fetchQuery(["care_plan", planId, "domains"], {
+  return queryClient.fetchQuery(["care_plan", planId, "domains", ids], {
     queryFn: () => domains.filter((d) => ids.includes(d.id)),
   });
 }
@@ -79,7 +79,7 @@ export async function getClientDomainsByIds(
     ["domains"],
     getDomains
   );
-  return queryClient.fetchQuery(["clients", clientId, "domains"], {
+  return queryClient.fetchQuery(["clients", clientId, "domains", ids], {
     queryFn: () => domains.filter((d) => ids.includes(d.id)),
   });
 }

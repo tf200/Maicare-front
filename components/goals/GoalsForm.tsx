@@ -58,13 +58,20 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   const onSubmit = useCallback(
     (values: GoalsFormType, { resetForm }: FormikHelpers<GoalsFormType>) => {
       const method = mode === "edit" ? update : create;
-      method(values, {
-        onSuccess: () => {
-          resetForm;
-          router.push(`/clients/${clientId}/goals`);
-          onSuccess?.();
+      method(
+        {
+          title: values.title,
+          desc: values.desc,
+          domain_id: +values.domain_id,
         },
-      });
+        {
+          onSuccess: () => {
+            resetForm;
+            router.push(`/clients/${clientId}/goals`);
+            onSuccess?.();
+          },
+        }
+      );
     },
     [create, update]
   );

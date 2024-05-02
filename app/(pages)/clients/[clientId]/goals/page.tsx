@@ -14,6 +14,13 @@ import GoalDetails from "@/components/goals/GoalDetails";
 import { useGetDomain } from "@/utils/domains";
 import GoalProgressModal from "@/components/goals/GoalProgressModal";
 import DomainLevels from "@/components/goals/DomainLevels";
+import DetailCell from "@/components/DetailCell";
+import SecureWrapper, { SecureFragment } from "@/components/SecureWrapper";
+import { APPROVE_GOALS } from "@/consts";
+import CheckIcon from "@/components/icons/CheckIcon";
+import { cn } from "@/utils/cn";
+import { useApproveGoal } from "@/utils/goal";
+import Loader from "@/components/common/Loader";
 
 type Props = {
   params: { clientId: string };
@@ -29,33 +36,69 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   } = useGoalsList(parseInt(clientId));
 
   const { open: openGoalProgressModal } = useModal(GoalProgressModal);
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(
+    parseInt(clientId)
+  );
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
       {
         accessorKey: "item",
         header: () => "",
-        cell: (info) => {
+        cell: ({ row: { original: goal } }) => {
           return (
             <div>
               <h3 className="font-bold flex text-lg mb-6 justify-between">
                 <div className="block">
-                  <div>{info.row.original.title}</div>
-                  <Domain id={info.row.original.domain_id} />
+                  <div>{goal.title}</div>
+                  <Domain id={goal.domain_id} />
                 </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     openGoalProgressModal({
-                      goalId: info.row.original.id,
+                      goalId: goal.id,
                     });
                   }}
                   className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold"
                 >
-                  {info.row.original.main_goal_rating}
+                  {goal.main_goal_rating}
                 </button>
               </h3>
-              <p>{info.row.original.desc}</p>
+              <p>{goal.desc}</p>
+              <div className="mb-6 mt-6 flex gap-4">
+                <DetailCell
+                  value={goal.created_by_name}
+                  label={"Aangemaakt door"}
+                />
+                <DetailCell
+                  value={goal.reviewed_by_name}
+                  label={"Goedgekeurd door"}
+                />
+                {!goal.reviewed_by && (
+                  <SecureFragment permission={APPROVE_GOALS}>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        approveGoal(goal.id);
+                      }}
+                      isLoading={isApprovingGoal}
+                      className={cn(
+                        "ml-auto self-center flex items-center gap-4",
+                        styles.button
+                      )}
+                    >
+                      <CheckIcon /> <div>keurt dit doel goed</div>
+                    </Button>
+                  </SecureFragment>
+                )}
+                {goal.reviewed_by && (
+                  <div className="ml-auto text-primary font-bold flex items-center gap-2">
+                    {/*  approved V*/}
+                    <CheckIcon /> Goedgekeurd
+                  </div>
+                )}
+              </div>
             </div>
           );
         },
@@ -81,7 +124,11 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           </Button>
         }
       >
-        {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {isListLoading && (
+          <div className="p-4 sm:p-6 xl:p-7.5">
+            <Loader />
+          </div>
+        )}
         {data && (
           <PaginatedTable
             data={data}

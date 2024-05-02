@@ -49,6 +49,8 @@ export const CONVERSATION_VIEW = "conversation.view";
 
 export const MANAGE_DOMAIN_LEVELS = "manage.domain.levels";
 
+export const APPROVE_GOALS = "approve.goals";
+
 export const PERMISSIONS = [
   CLIENT_VIEW,
   CLIENT_EDIT,
@@ -99,6 +101,8 @@ export const PERMISSIONS = [
   CONVERSATION_VIEW,
 
   MANAGE_DOMAIN_LEVELS,
+
+  APPROVE_GOALS,
 ] as const;
 
 export const ADMIN = "ADMIN";
@@ -147,6 +151,7 @@ export const PERMISSION_CONFIGURATIONS: Record<
     EMPLOYEE_VIEW,
     EMPLOYEE_EDIT,
     MANAGE_DOMAIN_LEVELS,
+    APPROVE_GOALS,
   ],
   MANAGEMENT: [
     ...DEFAULT_PERMISSIONS,

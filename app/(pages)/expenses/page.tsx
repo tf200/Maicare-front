@@ -7,6 +7,7 @@ import {
   useCreateExpense,
   useDeleteExpense,
   useGetExpenses,
+  useUpdateExpense,
 } from "@/utils/expenses";
 import { ColumnDef } from "@tanstack/react-table";
 import { ExpenseFormType, ExpenseResDto } from "@/types/expenses";
@@ -22,9 +23,16 @@ import InputField from "@/components/FormFields/InputField";
 import IconButton from "@/components/buttons/IconButton";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import FilesUploader from "@/components/FormFields/FilesUploader";
+import FilesDeleter from "@/components/FormFields/FilesDeleter";
+import PencilSquare from "@/components/icons/PencilSquare";
+import dayjs from "dayjs";
+import { omit } from "@/utils/omit";
+import DetailCell from "@/components/DetailCell";
+import DownloadFile from "@/components/DownloadFile";
 
 const Page: FunctionComponent = (props) => {
-  const { open } = useModal(CreateExpenseModal);
+  const { open } = useModal(ExpenseModal);
   return (
     <Panel
       title={"Uitgaven"}
@@ -56,6 +64,8 @@ const ExpensesList: FunctionComponent = () => {
       title: "Uitgave Verwijderen",
     })
   );
+
+  const { open: openExpenseModal } = useModal(ExpenseModal);
   const columnDef = useMemo<ColumnDef<ExpenseResDto>[]>(() => {
     return [
       {
@@ -77,6 +87,14 @@ const ExpensesList: FunctionComponent = () => {
         cell: ({ row }) => {
           return (
             <div className="flex gap-4 justify-end">
+              <IconButton
+                buttonType="Primary"
+                onClick={() => {
+                  openExpenseModal({ data: row.original });
+                }}
+              >
+                <PencilSquare className="w-5 h-5" />
+              </IconButton>
               <IconButton
                 buttonType="Danger"
                 onClick={() => {
@@ -106,27 +124,89 @@ const ExpensesList: FunctionComponent = () => {
         columns={columnDef}
         isFetching={isFetching}
         data={data}
+        renderRowDetails={({ original: data }) => {
+          return <ExpenseDetails data={data} />;
+        }}
       />
     );
   }
 };
 
-const CreateExpenseModal: FunctionComponent<ModalProps> = ({
+const ExpenseDetails: FunctionComponent<{ data: ExpenseResDto }> = ({
+  data,
+}) => {
+  return (
+    <div className="grid gap-4 grid-cols-3">
+      <DetailCell
+        label={"Datum"}
+        value={dateFormat(data.created)}
+        ignoreIfEmpty={true}
+      />
+      <DetailCell
+        label={"Omschrijving"}
+        value={data.desc}
+        ignoreIfEmpty={true}
+      />
+      <DetailCell
+        label={"Bedrag"}
+        value={formatPrice(data.amount)}
+        ignoreIfEmpty={true}
+      />
+      {data.attachments?.length > 0 && (
+        <div className={"col-span-3"}>
+          <h3 className="text-lg font-semibold mb-2">{"Bijlagen"}</h3>
+          <div className="flex gap-4">
+            {data.attachments.map((attachment) => {
+              return <DownloadFile file={attachment} key={attachment.id} />;
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ExpenseModal: FunctionComponent<ModalProps> = ({
   additionalProps,
   ...props
 }) => {
-  const createExpense = useCreateExpense();
+  const initialData: ExpenseResDto = additionalProps?.data;
+  const { mutate: createExpense, isLoading: isCreating } = useCreateExpense();
+  const { mutate: updateExpense, isLoading: isUpdating } = useUpdateExpense(
+    initialData?.id
+  );
+
+  const initialValues = useMemo(() => {
+    return initialData
+      ? {
+          amount: initialData.amount.toString(),
+          created: dayjs(initialData.created).format("YYYY-MM-DD"),
+          desc: initialData.desc,
+          added_attachments: [],
+          removed_attachments: [],
+        }
+      : {
+          amount: "",
+          created: "",
+          desc: "",
+          added_attachments: [],
+          removed_attachments: [],
+        };
+  }, [initialData]);
   const formik = useFormik<ExpenseFormType>({
-    initialValues: {
-      amount: "",
-      created: "",
-      desc: "",
-    },
+    enableReinitialize: true,
+    initialValues,
     onSubmit: (values) => {
-      createExpense.mutate(
+      const method = initialData ? updateExpense : createExpense;
+      method(
         {
-          ...values,
+          ...omit(values, ["added_attachments", "removed_attachments"]),
           amount: parseFloat(values.amount),
+          attachment_ids:
+            initialData?.attachments
+              .filter((a) => !values.removed_attachments.includes(a.id))
+              .map((a) => a.id)
+              .concat(values.added_attachments) ?? values.added_attachments,
         },
         {
           onSuccess: () => {
@@ -139,7 +219,10 @@ const CreateExpenseModal: FunctionComponent<ModalProps> = ({
   const { handleSubmit, handleBlur, errors, touched, values, handleChange } =
     formik;
   return (
-    <FormModal {...props} title={"Nieuwe uitgave"}>
+    <FormModal
+      {...props}
+      title={initialData ? "Uitgave bewerken" : "Nieuwe uitgave"}
+    >
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <InputField
@@ -174,6 +257,18 @@ const CreateExpenseModal: FunctionComponent<ModalProps> = ({
             error={touched.amount && errors.amount}
             placeholder={"Bedrag"}
           />
+          <FilesUploader
+            label={"Bijlagen"}
+            endpoint={"global_v2"}
+            name={"added_attachments"}
+          />
+          {initialData && (
+            <FilesDeleter
+              id={"removed_attachments"}
+              name={"removed_attachments"}
+              alreadyUploadedFiles={initialData.attachments}
+            />
+          )}
           <div className="flex gap-4 justify-center">
             <Button
               buttonType="Outline"
@@ -185,8 +280,8 @@ const CreateExpenseModal: FunctionComponent<ModalProps> = ({
             </Button>
             <Button
               type="submit"
-              disabled={createExpense.isLoading}
-              isLoading={createExpense.isLoading}
+              disabled={isCreating || isUpdating}
+              isLoading={isCreating || isUpdating}
             >
               {"Opslaan"}
             </Button>

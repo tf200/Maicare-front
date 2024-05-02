@@ -17,4 +17,6 @@ export type ClientFormType = {
   infix: string;
   streetname: string;
   street_number: string;
+  added_identity_documents?: string[];
+  removed_identity_documents?: string[];
 };
