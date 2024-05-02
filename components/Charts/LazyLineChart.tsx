@@ -104,7 +104,7 @@ const LazyLineChart: FunctionComponent<{
       height={350}
       options={options}
       series={props.series}
-      type="line"
+      type="area"
     />
   );
 };

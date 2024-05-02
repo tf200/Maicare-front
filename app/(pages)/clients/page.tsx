@@ -21,6 +21,7 @@ import LinkButton from "@/components/buttons/LinkButton";
 import { mappingGender } from "@/utils/gender";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
+import Loader from "@/components/common/Loader";
 
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
@@ -114,7 +115,11 @@ const ClientsPage: FunctionComponent = () => {
           </div>
         }
       >
-        {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
+        {isLoading && (
+          <div className="p-4 sm:p-6 xl:p-7.5">
+            <Loader />
+          </div>
+        )}
         {pagination}
 
         {data && (

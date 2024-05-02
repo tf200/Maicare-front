@@ -453,6 +453,12 @@ const ClientMenu: FunctionComponent = () => {
             },
           },
           {
+            completeHref: `/clients/${clientId}/incidents`,
+            icon: <BellAlertIcon height={18} width={18} />,
+            children: "Incidents",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
             completeHref: `/clients/${clientId}/client-network`,
             icon: <GroupIcon width={18} height={18} />,
             children: "Cliëntennetwerk",
@@ -478,21 +484,15 @@ const ClientMenu: FunctionComponent = () => {
             permission: consts.CLIENT_VIEW,
           },
           {
-            completeHref: `/clients/${clientId}/goals`,
-            icon: <GoalIcon height={18} width={18} />,
-            children: "Doelen",
-            permission: consts.CLIENT_VIEW,
-          },
-          {
-            completeHref: `/clients/${clientId}/incidents`,
-            icon: <BellAlertIcon height={18} width={18} />,
-            children: "Incidents",
-            permission: consts.CLIENT_VIEW,
-          },
-          {
             completeHref: `/clients/${clientId}/care-plans`,
             icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
             children: "Zorgplannen",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
+            completeHref: `/clients/${clientId}/goals`,
+            icon: <GoalIcon height={18} width={18} />,
+            children: "Doelen",
             permission: consts.CLIENT_VIEW,
           },
         ]}

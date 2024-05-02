@@ -37,7 +37,13 @@ const GoalDetails: FunctionComponent<{
 
   return (
     <div>
-      {goal.reviewed_by && (
+      {!goal.is_approved && (
+        <div className="px-4 py-2">
+          Dit doel moet worden goedgekeurd voordat er objectieven aan kunnen
+          worden toegevoegd
+        </div>
+      )}
+      {goal.is_approved && (
         <div className="mb-6 ">
           <h3 className="flex justify-between text-lg font-bold mb-4">
             <span>Objectieven</span>
@@ -59,7 +65,6 @@ const GoalDetails: FunctionComponent<{
                 key={objective.id}
                 className="flex bg-white px-4 py-2 rounded shadow items-center"
               >
-                <CheckboxItem label={""} checked={false} />
                 <button
                   onClick={() => {
                     openObjectiveModal({
@@ -77,6 +82,9 @@ const GoalDetails: FunctionComponent<{
                       e.stopPropagation();
                       openObjectiveProgressModal({
                         objectiveId: objective.id,
+                        objectiveTitle: objective.title,
+                        objective,
+                        clientId: goal.client_id,
                       });
                     }}
                     className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"

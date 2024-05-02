@@ -11,7 +11,9 @@ import WarningIcon from "@/components/icons/WarningIcon";
 const UpdateClientStatus: FunctionComponent<{
   clientId: number;
 }> = (props) => {
-  const { data } = useClientDetails(props.clientId);
+  const { data, isLoading: isLoadingClientDetails } = useClientDetails(
+    props.clientId
+  );
   const { mutate, isLoading } = usePatchClient(props.clientId);
   const formik = useFormik({
     initialValues: {
@@ -23,7 +25,7 @@ const UpdateClientStatus: FunctionComponent<{
     },
   });
   const { handleSubmit, values, dirty } = formik;
-  const { data: contracts } = useContractsList({
+  const { data: contracts, isLoading: isLoadingContracts } = useContractsList({
     status: "approved",
     client: props.clientId,
   });
@@ -44,7 +46,7 @@ const UpdateClientStatus: FunctionComponent<{
           name={"status"}
           className="mb-4"
         />
-        {cantUpdate && (
+        {cantUpdate && !isLoadingContracts && !isLoadingClientDetails && (
           <div className="text-sm text-red p-2">
             <p>
               <WarningIcon className="inline-block" /> Er zijn nog{" "}
@@ -54,7 +56,7 @@ const UpdateClientStatus: FunctionComponent<{
             </p>
           </div>
         )}
-        {dirty && !cantUpdate && (
+        {dirty && (
           <Button type="submit" disabled={isLoading} isLoading={isLoading}>
             Bijwerken
           </Button>

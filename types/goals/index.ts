@@ -33,8 +33,9 @@ export type GoalsListItem = {
   created: string;
   created_by_name: string;
   reviewed_by_name: string;
-  created_by: number;
-  reviewed_by: number;
+  created_by_id: number;
+  reviewed_by_id: number;
+  is_approved: boolean;
 };
 
 export type GoalsListResDto = Paginated<GoalsListItem>;
@@ -54,13 +55,24 @@ export type UpdateObjectiveReqDto = Partial<NewObjectiveReqDto>;
 export type UpdateGoalReqDto = Partial<NewGoalsReqDto>;
 
 export type RatingHistoryItem = {
+  id: number;
   rating: number;
   date: string;
+  week: number;
   title: string;
-  desc: string;
+  content: string;
 };
 
 export type RatingHistory = RatingHistoryItem[];
+
+export type WeeklyRatingHistoryItem = {
+  id: number;
+  rating: number;
+  week: number;
+  content: string;
+};
+
+export type WeeklyRatingHistory = WeeklyRatingHistoryItem[];
 
 export type SetDomainLevelReqDto = {
   level: number;
@@ -68,13 +80,13 @@ export type SetDomainLevelReqDto = {
 };
 
 export type ObjectiveReportFormType = {
-  date: string;
+  week: string;
   content: string;
   rating: number;
 };
 
 export type ObjectiveReportReqDto = {
-  date: string;
+  week: number;
   content: string;
   rating: number;
 };
@@ -82,8 +94,9 @@ export type ObjectiveReportReqDto = {
 export type ObjectiveReportResDto = {
   id: number;
   title: string;
-  desc: string;
+  content: string;
   rating: number;
+  week: number;
 };
 
 export type UpdateObjectiveReportReqDto = Partial<ObjectiveReportReqDto>;
