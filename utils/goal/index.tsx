@@ -96,10 +96,10 @@ export const useGoalHistory = (goalId: number) => {
 };
 
 async function setDomainLevel(clientId: number, req: SetDomainLevelReqDto) {
-  const response = await api.post(
-    `/clients/${clientId}/current-levels/add`,
-    req
-  );
+  const response = await api.post(`/clients/${clientId}/levels/add`, {
+    ...req,
+    content: "",
+  });
   return response.data;
 }
 
@@ -116,19 +116,19 @@ export const useSetDomainLevel = (clientId: number) => {
   });
 };
 
-async function updateDomainLevel(levelId: number, req: SetDomainLevelReqDto) {
-  const response = await api.patch(`/clients/levels/${levelId}/update`, {
+async function updateDomainLevel(clientId: number, req: SetDomainLevelReqDto) {
+  const response = await api.post(`/clients/${clientId}/levels/add`, {
     ...req,
     content: "",
   });
   return response.data;
 }
 
-export const useUpdateDomainLevel = (clientId: number, levelId: number) => {
+export const useUpdateDomainLevel = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (req: SetDomainLevelReqDto) => {
-      return updateDomainLevel(levelId, req);
+      return updateDomainLevel(clientId, req);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["client_domains", clientId]);

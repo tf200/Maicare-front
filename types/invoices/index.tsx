@@ -7,6 +7,7 @@ export type InvoiceFormType = {
     care_type: string;
     pre_vat_total: string;
   }[];
+  extra_content?: string;
   pre_vat_total: string;
   total_amount: string;
 };
@@ -23,6 +24,7 @@ export type InvoiceDetailsDto = {
   url: string;
   payment_type: string | null;
   history: HistoryItem[];
+  extra_content: string | null;
   invoice_details: {
     contract_id: number;
     used_tax: number;

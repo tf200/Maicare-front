@@ -5,7 +5,6 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { useDeleteGoal } from "@/utils/goal/deleteGoal";
 import Button from "@/components/buttons/Button";
 import styles from "@/app/(pages)/clients/[clientId]/goals/styles.module.scss";
-import CheckboxItem from "@/components/FormFields/CheckboxItem";
 import IconButton from "@/components/buttons/IconButton";
 import CheckIcon from "@/components/icons/CheckIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
@@ -37,16 +36,10 @@ const GoalDetails: FunctionComponent<{
 
   return (
     <div>
-      {!goal.is_approved && (
-        <div className="px-4 py-2">
-          Dit doel moet worden goedgekeurd voordat er objectieven aan kunnen
-          worden toegevoegd
-        </div>
-      )}
-      {goal.is_approved && (
-        <div className="mb-6 ">
-          <h3 className="flex justify-between text-lg font-bold mb-4">
-            <span>Objectieven</span>
+      <div className="mb-6 ">
+        <h3 className="flex justify-between text-lg font-bold mb-4">
+          <span>Objectieven</span>
+          {!goal.is_approved && (
             <Button
               className={styles.button}
               onClick={() => {
@@ -58,45 +51,45 @@ const GoalDetails: FunctionComponent<{
             >
               Nieuwe Objectief Toevoegen
             </Button>
-          </h3>
-          <ul className="flex flex-col gap-4">
-            {goal.objectives.map((objective) => (
-              <li
-                key={objective.id}
-                className="flex bg-white px-4 py-2 rounded shadow items-center"
+          )}
+        </h3>
+        <ul className="flex flex-col gap-4">
+          {goal.objectives.map((objective) => (
+            <li
+              key={objective.id}
+              className="flex bg-white px-4 py-2 rounded shadow items-center"
+            >
+              <button
+                onClick={() => {
+                  openObjectiveModal({
+                    objective,
+                    goalId: goal.id,
+                    clientId: goal.client_id,
+                  });
+                }}
+                className="text-left flex flex-grow justify-between items-center"
               >
+                <div>{objective.title}</div>
                 <button
-                  onClick={() => {
-                    openObjectiveModal({
+                  type={"button"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openObjectiveProgressModal({
+                      objectiveId: objective.id,
+                      objectiveTitle: objective.title,
                       objective,
-                      goalId: goal.id,
                       clientId: goal.client_id,
                     });
                   }}
-                  className="text-left flex flex-grow justify-between items-center"
+                  className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
                 >
-                  <div>{objective.title}</div>
-                  <button
-                    type={"button"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openObjectiveProgressModal({
-                        objectiveId: objective.id,
-                        objectiveTitle: objective.title,
-                        objective,
-                        clientId: goal.client_id,
-                      });
-                    }}
-                    className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
-                  >
-                    {objective.rating}
-                  </button>
+                  {objective.rating}
                 </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="flex gap-4 justify-end items-center">
         <IconButton
           buttonType="Danger"

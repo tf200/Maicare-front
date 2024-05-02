@@ -56,9 +56,9 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    openGoalProgressModal({
-                      goalId: goal.id,
-                    });
+                    // openGoalProgressModal({
+                    //   goalId: goal.id,
+                    // });
                   }}
                   className="block border border-stroke rounded p-4 w-16 text-center bg-meta-5/10 font-bold"
                 >
