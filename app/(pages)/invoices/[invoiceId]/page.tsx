@@ -48,6 +48,7 @@ import GrayBox from "@/components/GrayBox";
 import { formatPrice } from "@/utils/priceFormatting";
 import Link from "next/link";
 import LinkButton from "@/components/buttons/LinkButton";
+import Textarea from "@/components/FormFields/Textarea";
 
 const invoice: InvoiceFormType = {
   items: [
@@ -64,6 +65,7 @@ const invoice: InvoiceFormType = {
 
 function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
   return {
+    extra_content: values.extra_content,
     invoice_details: values.items.map((item) => ({
       contract_id: item.contract,
       used_tax: Number(item.vat_rate),
@@ -83,6 +85,7 @@ const Page: FunctionComponent<{
   const initialValues = useMemo(() => {
     return {
       ...invoice,
+      extra_content: data?.extra_content ?? "",
       items:
         data?.invoice_details?.map((item) => ({
           care_type: item.item_desc,
@@ -156,6 +159,17 @@ const Page: FunctionComponent<{
           <br />
           <PricingTable disabled={data.status !== "concept"} />
           {data.status === "concept" && (
+            <Textarea
+              label={"Opmerkingen"}
+              name={"extra_content"}
+              rows={6}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.extra_content}
+              className="w-full xl:w-1/2"
+            />
+          )}
+          {data.status === "concept" && (
             <div className="flex my-5 mr-5 justify-end">
               <Button
                 isLoading={isLoading}
@@ -175,17 +189,20 @@ const Page: FunctionComponent<{
         </div>
       )}
       <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark w-full">
-        {!generatedInvoice ? (
-          <Button
-            onClick={() => {
-              generate();
-            }}
-            isLoading={isGenerating}
-            className="flex gap-4 items-center ml-auto"
-          >
+        <Button
+          onClick={() => {
+            generate();
+          }}
+          isLoading={isGenerating}
+          className="flex gap-4 items-center ml-auto"
+        >
+          {generatedInvoice ? (
+            <span>Factuur gegenereerd</span>
+          ) : (
             <span>Genereer factuur</span>
-          </Button>
-        ) : (
+          )}
+        </Button>
+        {generatedInvoice && (
           <Link
             href={generatedInvoice.download_link}
             target={"_blank"}

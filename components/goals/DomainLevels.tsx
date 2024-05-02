@@ -82,8 +82,7 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
     additionalProps.clientId
   );
   const { mutate: updateLevel, isLoading: isUpdating } = useUpdateDomainLevel(
-    additionalProps.clientId,
-    currentLevel?.id
+    additionalProps.clientId
   );
 
   return (
