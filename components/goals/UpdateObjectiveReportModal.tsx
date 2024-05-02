@@ -9,7 +9,7 @@ const ObjectiveReportModal: FunctionComponent<ModalProps> = ({
   ...props
 }) => {
   const clientId: number = additionalProps.clientId;
-  const objectiveId: number = additionalProps.objectiveId;
+  const objective = additionalProps.objective;
   const initialData: ObjectiveReportResDto = additionalProps.initialData;
   return (
     <FormModal {...props} title={"Objectieve rapport"}>
@@ -17,7 +17,7 @@ const ObjectiveReportModal: FunctionComponent<ModalProps> = ({
         onSuccess={props.onClose}
         onCancel={props.onClose}
         clientId={clientId}
-        objectiveId={objectiveId}
+        objective={objective}
         mode={"update"}
         initialData={initialData}
       />

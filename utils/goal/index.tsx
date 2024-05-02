@@ -142,7 +142,7 @@ async function addObjectiveReport(
   report: ObjectiveReportReqDto
 ) {
   const response = await api.post(
-    `/clients/goals/objectives/${objectiveId}/report/add`,
+    `/clients/goals/objectives/${objectiveId}/history/add`,
     report
   );
   return response.data;
@@ -158,11 +158,8 @@ export const useAddObjectiveReport = (
       return addObjectiveReport(objectiveId, report);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        "client-objectives",
-        clientId,
-        objectiveId,
-      ]);
+      queryClient.invalidateQueries(["objectives", objectiveId, "history"]);
+      queryClient.invalidateQueries([clientId, "goals"]);
     },
   });
 };
@@ -189,11 +186,25 @@ export const useUpdateObjectiveReport = (
       return updateObjectiveReport(reportId, report);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        "client-objectives",
-        clientId,
-        objectiveId,
-      ]);
+      queryClient.invalidateQueries(["objectives", objectiveId, "history"]);
+    },
+  });
+};
+
+async function deleteObjectiveReport(reportId: number) {
+  await api.delete(`/clients/goals/objectives/history/${reportId}/delete`);
+}
+
+export const useDeleteObjectiveReport = (
+  clientId: number,
+  objectiveId: number
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteObjectiveReport,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["objectives", objectiveId, "history"]);
+      queryClient.invalidateQueries([clientId, "goals"]);
     },
   });
 };

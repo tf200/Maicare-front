@@ -89,7 +89,8 @@ const ExpensesList: FunctionComponent = () => {
             <div className="flex gap-4 justify-end">
               <IconButton
                 buttonType="Primary"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   openExpenseModal({ data: row.original });
                 }}
               >
@@ -97,7 +98,8 @@ const ExpensesList: FunctionComponent = () => {
               </IconButton>
               <IconButton
                 buttonType="Danger"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   open({
                     onConfirm: () => {
                       deleteExpense(row.original.id);
@@ -250,6 +252,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             label={"Bedrag"}
             name={"amount"}
             required={true}
+            type={"number"}
             onChange={handleChange}
             onBlur={handleBlur}
             isPrice={true}
@@ -257,18 +260,20 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             error={touched.amount && errors.amount}
             placeholder={"Bedrag"}
           />
-          <FilesUploader
-            label={"Bijlagen"}
-            endpoint={"global_v2"}
-            name={"added_attachments"}
-          />
-          {initialData && (
-            <FilesDeleter
-              id={"removed_attachments"}
-              name={"removed_attachments"}
-              alreadyUploadedFiles={initialData.attachments}
+          <section>
+            <FilesUploader
+              label={"Bijlagen"}
+              endpoint={"global_v2"}
+              name={"added_attachments"}
             />
-          )}
+            {initialData && (
+              <FilesDeleter
+                id={"removed_attachments"}
+                name={"removed_attachments"}
+                alreadyUploadedFiles={initialData.attachments}
+              />
+            )}
+          </section>
           <div className="flex gap-4 justify-center">
             <Button
               buttonType="Outline"

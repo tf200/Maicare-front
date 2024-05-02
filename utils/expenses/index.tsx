@@ -41,7 +41,7 @@ export const useGetExpenses = () => {
 };
 
 async function deleteExpense(id: number) {
-  await api.delete(`/system/expenses/${id}/delete`);
+  await api.delete(`/system/expenses/${id}`);
 }
 
 export const useDeleteExpense = () => {
@@ -64,7 +64,7 @@ export const useGetExpense = (id: number) => {
 
 async function updateExpense(id: number, data: PatchExpenseReqDto) {
   const response = await api.patch<ExpenseResDto>(
-    `/system/expenses/${id}`,
+    `/system/expenses/${id}/update`,
     data
   );
   return response.data;

@@ -75,7 +75,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   value={goal.reviewed_by_name}
                   label={"Goedgekeurd door"}
                 />
-                {!goal.reviewed_by && (
+                {!goal.is_approved && (
                   <SecureFragment permission={APPROVE_GOALS}>
                     <Button
                       onClick={(e) => {
@@ -88,12 +88,12 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                         styles.button
                       )}
                     >
-                      <CheckIcon /> <div>keurt dit doel goed</div>
+                      <CheckIcon /> <div>keurt dit doel</div>
                     </Button>
                   </SecureFragment>
                 )}
-                {goal.reviewed_by && (
-                  <div className="ml-auto text-primary font-bold flex items-center gap-2">
+                {goal.is_approved && (
+                  <div className="ml-auto text-meta-3 font-bold flex items-center gap-2">
                     {/*  approved V*/}
                     <CheckIcon /> Goedgekeurd
                   </div>
