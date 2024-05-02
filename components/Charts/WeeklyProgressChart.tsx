@@ -20,6 +20,12 @@ const WeeklyProgressChart: FunctionComponent<{
       },
       xaxis: {
         type: "category",
+        title: {
+          text: "weken",
+          style: {
+            fontSize: "10px",
+          },
+        },
         labels: {
           formatter(value: string): string | string[] {
             return "Week #" + value;
@@ -35,8 +41,9 @@ const WeeklyProgressChart: FunctionComponent<{
       },
       yaxis: {
         title: {
+          text: "Evaluaties",
           style: {
-            fontSize: "0px",
+            fontSize: "10px",
           },
         },
         min: 0,
