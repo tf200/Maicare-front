@@ -117,10 +117,10 @@ export const useSetDomainLevel = (clientId: number) => {
 };
 
 async function updateDomainLevel(levelId: number, req: SetDomainLevelReqDto) {
-  const response = await api.patch(
-    `/clients/current-levels/${levelId}/update`,
-    req
-  );
+  const response = await api.patch(`/clients/levels/${levelId}/update`, {
+    ...req,
+    content: "",
+  });
   return response.data;
 }
 
