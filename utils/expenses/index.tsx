@@ -41,7 +41,7 @@ export const useGetExpenses = () => {
 };
 
 async function deleteExpense(id: number) {
-  await api.delete(`/system/expenses/${id}`);
+  await api.delete(`/system/expenses/${id}/delete`);
 }
 
 export const useDeleteExpense = () => {

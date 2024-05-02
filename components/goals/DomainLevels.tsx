@@ -81,10 +81,11 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
   const { mutate: setDomainLevel, isLoading: isSetting } = useSetDomainLevel(
     additionalProps.clientId
   );
-  const { mutate: updateLevel } = useUpdateDomainLevel(
+  const { mutate: updateLevel, isLoading: isUpdating } = useUpdateDomainLevel(
     additionalProps.clientId,
     currentLevel?.id
   );
+
   return (
     <FormModal
       {...props}
@@ -125,8 +126,8 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
           Annuleren
         </Button>
         <Button
-          isLoading={isSetting}
-          disabled={isSetting}
+          isLoading={isSetting || isUpdating}
+          disabled={isSetting || isUpdating}
           onClick={() => {
             if (currentLevel?.id) {
               updateLevel(
