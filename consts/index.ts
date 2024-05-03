@@ -360,7 +360,7 @@ export const FINANCING_LAW_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Financieringswet", value: "" },
   { label: "Wmo 2015", value: "WMO" },
   { label: "Zorgverzekeringswet (Zvw)", value: "ZVW" },
-  { label: "Wet langdurige zorg (WlZ)", value: "WLZ" },
+  { label: "Wet langdurige zorg (WLZ)", value: "WLZ" },
   { label: "Jeugdwet (JW)", value: "JW" },
   { label: "Wet publieke gezondheidszorg (Wpg)", value: "WPG" },
 ];
@@ -368,7 +368,7 @@ export const FINANCING_LAW_OPTIONS: SelectionOption[] = [
 export const FINANCING_LAW_RECORD = {
   WMO: "Wmo 2015",
   ZVW: "Zorgverzekeringswet (Zvw)",
-  WLZ: "Wet langdurige zorg (WlZ)",
+  WLZ: "Wet langdurige zorg (WLZ)",
   JW: "Jeugdwet (JW)",
   WPG: "Wet publieke gezondheidszorg (Wpg)",
 };

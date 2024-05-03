@@ -2,6 +2,7 @@ import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
 
 export type ExpenseFormType = {
   amount: string;
+  tax: string;
   created: string;
   desc: string;
   added_attachments: string[];
@@ -10,6 +11,7 @@ export type ExpenseFormType = {
 
 export type ExpenseReqDto = {
   amount: number;
+  tax: number;
   created: string;
   desc: string;
   attachment_ids: string[];
@@ -20,6 +22,7 @@ export type PatchExpenseReqDto = Partial<ExpenseReqDto>;
 export type ExpenseResDto = {
   id: number;
   amount: number;
+  tax: number;
   created: string;
   desc: string;
   attachments: AttachmentItem[];
