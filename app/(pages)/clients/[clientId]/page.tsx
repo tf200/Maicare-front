@@ -143,9 +143,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             </SecureFragment>
             <ClientStatusHistory clientId={parseInt(clientId)} />
           </Panel>
-          <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
-            <IdentityDetails clientId={parseInt(clientId)} />
-          </Panel>
+          <SecureFragment permission={consts.CLIENT_IDENTITY_VIEW}>
+            <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
+              <IdentityDetails clientId={parseInt(clientId)} />
+            </Panel>
+          </SecureFragment>
           <Panel title={"Adresgegevens"} containerClassName="px-7 py-4">
             <AddressDetails clientId={parseInt(clientId)} />
           </Panel>

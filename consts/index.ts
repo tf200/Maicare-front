@@ -393,6 +393,7 @@ export const EMPLOYEE_ASSIGNMENT_TYPES = [
   "care_coordinator",
   "outpatient_counselor",
   "co-mentor",
+  "program_counselor",
 ] as const;
 
 export const EMPLOYEE_ASSIGNMENT_OPTIONS: SelectionOption[] = [
@@ -404,6 +405,7 @@ export const EMPLOYEE_ASSIGNMENT_OPTIONS: SelectionOption[] = [
   { label: "Zorgcoördinator", value: "care_coordinator" },
   { label: "Ambulant Begeleider", value: "outpatient_counselor" },
   { label: "Co-Mentor", value: "co-mentor" },
+  { label: "Trajectbegeleider", value: "program_counselor" },
 ];
 
 export const EMPLOYEE_ASSIGNMENT_RECORD = {
@@ -414,6 +416,7 @@ export const EMPLOYEE_ASSIGNMENT_RECORD = {
   care_coordinator: "Zorgcoördinator",
   outpatient_counselor: "Ambulant Begeleider",
   "co-mentor": "Co-Mentor",
+  program_counselor: "Trajectbegeleider",
 };
 
 export const MaturityLevelTypes = [
