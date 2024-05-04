@@ -54,6 +54,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/expenses")) {
     return consts.FINANCE_VIEW;
   }
+  if (pathname.startsWith("/permissions")) {
+    return consts.PERMISSIONS_EDIT;
+  }
 };
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {

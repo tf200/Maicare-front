@@ -54,6 +54,9 @@ export const MANAGE_DOMAIN_LEVELS = "manage.domain.levels";
 
 export const APPROVE_GOALS = "approve.goals";
 
+export const SETTINGS_VIEW = "settings.view";
+export const PERMISSIONS_EDIT = "permissions.edit";
+
 export const PERMISSIONS = [
   CLIENT_VIEW,
   CLIENT_EDIT,
@@ -109,6 +112,9 @@ export const PERMISSIONS = [
   MANAGE_DOMAIN_LEVELS,
 
   APPROVE_GOALS,
+
+  SETTINGS_VIEW,
+  PERMISSIONS_EDIT,
 ] as const;
 
 export const ADMIN = "ADMIN";

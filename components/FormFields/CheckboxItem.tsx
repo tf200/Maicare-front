@@ -21,7 +21,13 @@ const CheckboxItem: FunctionComponent<Props> = ({ id, label, ...props }) => {
             }
           )}
         >
-          <span className="text-white opacity-100">
+          <span
+            className={clsx("text-white dark:text-white", {
+              "opacity-100": props.checked,
+              "opacity-0": !props.checked,
+            })}
+            aria-hidden="true"
+          >
             <CheckIcon />
           </span>
         </div>
