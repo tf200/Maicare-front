@@ -4,6 +4,7 @@ import React, { FunctionComponent } from "react";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
+import DownloadFile from "@/components/DownloadFile";
 
 type Props = {
   clientId: number;
@@ -31,6 +32,17 @@ const IdentityDetails: FunctionComponent<Props> = ({ clientId }) => {
           ignoreIfEmpty={true}
           label={"Bron"}
           value={data.source || "Niet gespecificeerd"}
+        />
+        <DetailCell
+          className="col-span-2"
+          label={"Identiteitsbewijs"}
+          value={
+            <div className="flex flex-wrap mt-2 gap-4">
+              {data.attachments?.map((attachment) => (
+                <DownloadFile file={attachment} key={attachment.id} />
+              ))}
+            </div>
+          }
         />
       </div>
     );

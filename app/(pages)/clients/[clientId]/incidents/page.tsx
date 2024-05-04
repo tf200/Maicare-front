@@ -165,7 +165,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         label={"Opmerkingen"}
         value={<p className="text-sm">{data.notes}</p>}
       />
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-start">
         <IconButton
           buttonType="Danger"
           onClick={() => {

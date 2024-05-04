@@ -83,6 +83,15 @@ const ExpensesList: FunctionComponent = () => {
         cell: ({ row }) => formatPrice(row.original.amount),
       },
       {
+        accessorKey: "tax",
+        header: "BTW",
+        cell: ({
+          row: {
+            original: { tax },
+          },
+        }) => (tax ? tax + "%" : "N/A"),
+      },
+      {
         id: "actions",
         cell: ({ row }) => {
           return (
@@ -182,6 +191,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
     return initialData
       ? {
           amount: initialData.amount.toString(),
+          tax: initialData.tax?.toString() || "",
           created: dayjs(initialData.created).format("YYYY-MM-DD"),
           desc: initialData.desc,
           added_attachments: [],
@@ -189,6 +199,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
         }
       : {
           amount: "",
+          tax: "",
           created: "",
           desc: "",
           added_attachments: [],
@@ -204,6 +215,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
         {
           ...omit(values, ["added_attachments", "removed_attachments"]),
           amount: parseFloat(values.amount),
+          tax: parseFloat(values.tax),
           attachment_ids:
             initialData?.attachments
               .filter((a) => !values.removed_attachments.includes(a.id))
@@ -249,7 +261,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             placeholder={"Omschrijving"}
           />
           <InputField
-            label={"Bedrag"}
+            label={"Bedrag excl. BTW"}
             name={"amount"}
             required={true}
             type={"number"}
@@ -259,6 +271,17 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             value={values.amount}
             error={touched.amount && errors.amount}
             placeholder={"Bedrag"}
+          />
+          <InputField
+            unit={"%"}
+            name={"tax"}
+            label={"BTW"}
+            type={"number"}
+            value={values.tax}
+            onBlur={handleBlur}
+            placeholder={"BTW"}
+            onChange={handleChange}
+            error={touched.tax && errors.tax}
           />
           <section>
             <FilesUploader

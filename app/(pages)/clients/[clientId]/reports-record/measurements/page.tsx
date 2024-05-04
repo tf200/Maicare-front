@@ -2,11 +2,8 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import { ColumnDef } from "@tanstack/table-core";
-import Pagination from "@/components/Pagination";
-import { PAGE_SIZE } from "@/consts";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
-import Table from "@/components/Table";
 import { MeasurmentResDto } from "@/types/measurment/measurment-res-dto";
 import { useMeasurementList } from "@/utils/measurement/getMeasuremenList";
 import PaginatedTable from "@/components/PaginatedTable";
@@ -112,7 +109,7 @@ const MeasurementsPage: FunctionComponent<Props> = ({
         />
       )}{" "}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red p-2">
           Sorry, een fout heeft ons verhinderd de allergielijst te laden.
         </p>
       )}

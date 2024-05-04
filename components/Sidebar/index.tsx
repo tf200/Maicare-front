@@ -36,6 +36,7 @@ import * as consts from "@/consts";
 import BellAlertIcon from "../svg/BellAlertIcon";
 import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
 import styles from "./styles.module.scss";
+import SmileyFace from "@/components/icons/SmileyFace";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -493,6 +494,12 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/goals`,
             icon: <GoalIcon height={18} width={18} />,
             children: "Doelen",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
+            completeHref: `/clients/${clientId}/physical_emotional_states`,
+            icon: <SmileyFace className={"w-4.5 h-4.5"} />,
+            children: "Fysieke & Emotionele",
             permission: consts.CLIENT_VIEW,
           },
         ]}
