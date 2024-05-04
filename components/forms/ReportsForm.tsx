@@ -15,6 +15,8 @@ import SmartTextarea from "@/components/FormFields/SmartTextarea";
 import { useClientMedicationRecords } from "@/utils/medication-records";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { DAILY_REPORT_TYPES, DAILY_REPORT_TYPES_OPTIONS } from "@/consts";
+import Select from "@/components/FormFields/Select";
 
 type FormType = NewReportsReqDto;
 
@@ -34,6 +36,7 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   author: Yup.string(),
   id: Yup.number(),
   created: Yup.string().required("Gelieve de datum en tijd op te geven."),
+  type: Yup.string().oneOf(DAILY_REPORT_TYPES),
 });
 
 type PropsType = {
@@ -107,8 +110,6 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
     return medicationRecords?.count === 0;
   }, [medicationRecords]);
 
-  console.log(values);
-
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit} className={className}>
@@ -128,6 +129,17 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
           </div>
         )}
         <div className="p-6.5">
+          <Select
+            label={"Type rapport"}
+            name={"type"}
+            required={true}
+            options={DAILY_REPORT_TYPES_OPTIONS}
+            value={values.type}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.type && errors.type}
+            className={"w-full mb-4.5"}
+          />
           <InputField
             className={"w-full mb-4.5"}
             required={true}

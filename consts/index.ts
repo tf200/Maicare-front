@@ -442,3 +442,37 @@ export const MLevels = [
   "Voldoende zelfredzaam", // sufficient self-reliant
   "Volledig zelfredzaam", // fully self-reliant
 ];
+
+export const DAILY_REPORT_TYPES = [
+  "morning_report",
+  "evening_report",
+  "night_report",
+  "shift_report",
+  "one_to_one_report",
+  "process_report",
+  "contact_journal",
+  "other",
+] as const;
+
+export const DAILY_REPORT_TYPES_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Rapport Type", value: "" },
+  { label: "Ochtendrapport", value: "morning_report" },
+  { label: "Avondrapport", value: "evening_report" },
+  { label: "Nachtrapport", value: "night_report" },
+  { label: "Tussenrapport", value: "shift_report" },
+  { label: "1 op 1 Rapportage", value: "one_to_one_report" },
+  { label: "Procesrapportage", value: "process_report" },
+  { label: "Contact Journal", value: "contact_journal" },
+  { label: "Overige", value: "other" },
+];
+
+export const REPORT_TYPE_RECORD = {
+  morning_report: "Ochtendrapport",
+  evening_report: "Avondrapport",
+  night_report: "Nachtrapport",
+  shift_report: "Tussenrapport",
+  one_to_one_report: "1 op 1 Rapportage",
+  process_report: "Procesrapportage",
+  contact_journal: "Contact Journal",
+  other: "Overige",
+};

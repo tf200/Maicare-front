@@ -1,3 +1,5 @@
+import { ReportType } from "@/types/reports/index";
+
 export type ReportsListItem = {
   id: number;
   date: string;
@@ -8,6 +10,7 @@ export type ReportsListItem = {
   author: string;
   full_name: string;
   profile_picture: string;
+  type: ReportType;
 };
 
 export type ReportsListResDto = Paginated<ReportsListItem>;
