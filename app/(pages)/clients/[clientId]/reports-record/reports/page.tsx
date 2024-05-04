@@ -14,6 +14,7 @@ import { useDeleteReport } from "@/utils/reports/deleteReport";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useRouter } from "next/navigation";
+import { REPORT_TYPE_RECORD } from "@/consts";
 
 type Props = {
   params: { clientId: string };
@@ -106,7 +107,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       </span>
                     </p>
                     <span className="mt-1 block text-sm">
-                      {getTime(post.created)}
+                      {getTime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
                     </span>
                     <p className="mt-2.5 text-black dark:text-white">
                       {post.report_text}

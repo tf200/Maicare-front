@@ -11,6 +11,11 @@ const fetchReportsInfiniteList =
   }) => {
     const response = await api.get<ReportsListResDto>(
       pageParam ?? `employee/progress_report/list/${clientId}/`
+      // {
+      //   params: {
+      //     type: "night_report", // TODO: FILTER BY REPORT TYPE
+      //   },
+      // }
     );
     return response.data;
   };

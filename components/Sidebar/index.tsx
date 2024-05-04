@@ -37,6 +37,7 @@ import BellAlertIcon from "../svg/BellAlertIcon";
 import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
 import styles from "./styles.module.scss";
 import SmileyFace from "@/components/icons/SmileyFace";
+import GearIcon from "@/components/icons/GearIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -414,6 +415,21 @@ const GlobalMenu: FunctionComponent = () => {
           icon: <ChatBubblesIcon className={"w-4.5 h-4.5"} />,
           children: "Conversaties",
           permission: consts.CONVERSATION_VIEW,
+        },
+        {
+          isDropdown: true,
+          id: "settings",
+          icon: <GearIcon className="w-4.5 h-4.5" />,
+          children: "Instellingen",
+          permission: consts.SETTINGS_VIEW,
+          subItems: [
+            {
+              completeHref: "/permissions",
+              icon: <RoleIcon width={18} height={18} />,
+              children: "Permissies",
+              permission: consts.PERMISSIONS_EDIT,
+            },
+          ],
         },
       ]}
       title={"MENU"}

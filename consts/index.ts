@@ -442,3 +442,78 @@ export const MLevels = [
   "Voldoende zelfredzaam", // sufficient self-reliant
   "Volledig zelfredzaam", // fully self-reliant
 ];
+
+export const DAILY_REPORT_TYPES = [
+  "morning_report",
+  "evening_report",
+  "night_report",
+  "shift_report",
+  "one_to_one_report",
+  "process_report",
+  "contact_journal",
+  "other",
+] as const;
+
+export const DAILY_REPORT_TYPES_OPTIONS: SelectionOption[] = [
+  { label: "Selecteer Rapport Type", value: "" },
+  { label: "Ochtendrapport", value: "morning_report" },
+  { label: "Avondrapport", value: "evening_report" },
+  { label: "Nachtrapport", value: "night_report" },
+  { label: "Tussenrapport", value: "shift_report" },
+  { label: "1 op 1 Rapportage", value: "one_to_one_report" },
+  { label: "Procesrapportage", value: "process_report" },
+  { label: "Contact Journal", value: "contact_journal" },
+  { label: "Overige", value: "other" },
+];
+
+export const REPORT_TYPE_RECORD = {
+  morning_report: "Ochtendrapport",
+  evening_report: "Avondrapport",
+  night_report: "Nachtrapport",
+  shift_report: "Tussenrapport",
+  one_to_one_report: "1 op 1 Rapportage",
+  process_report: "Procesrapportage",
+  contact_journal: "Contact Journal",
+  other: "Overige",
+};
+
+export const PERMISSION_TRANS = {
+  "client.view": "Bekijk cliënt",
+  "client.edit": "Bewerk cliënt",
+  "client.delete": "Verwijder cliënt",
+  "client.create": "Maak cliënt aan",
+  "client.identity.view": "Bekijk cliënt identiteit",
+  "client.identity.edit": "Bewerk cliënt identiteit",
+  "employee.view": "Bekijk medewerker",
+  "employee.edit": "Bewerk medewerker",
+  "employee.delete": "Verwijder medewerker",
+  "employee.create": "Maak medewerker aan",
+  "employee.permissions.view": "Bekijk medewerker rechten",
+  "employee.permissions.edit": "Bewerk medewerker rechten",
+  "contact.view": "Bekijk contact",
+  "contact.edit": "Bewerk contact",
+  "contact.delete": "Verwijder contact",
+  "contact.create": "Maak contact aan",
+  "contract.view": "Bekijk contract",
+  "contract.edit": "Bewerk contract",
+  "contract.delete": "Verwijder contract",
+  "contract.create": "Maak contract aan",
+  "edit.client.status": "Bewerk cliënt status",
+  "care_plan.view": "Bekijk zorgplan",
+  "care_plan.edit": "Bewerk zorgplan",
+  "care_plan.delete": "Verwijder zorgplan",
+  "care_plan.create": "Maak zorgplan aan",
+  "location.view": "Bekijk locatie",
+  "view.own.profile": "Bekijk eigen profiel",
+  "notifications.view": "Bekijk notificaties",
+  "dashboard.view": "Bekijk dashboard",
+  "finance.view": "Bekijk financiën",
+  "care_coordination.view": "Bekijk zorgcoördinatie",
+  "contacts.view": "Bekijk contacten",
+  "contracts.view": "Bekijk contracten",
+  "care_plans.view": "Bekijk zorgplannen",
+  "tasks.view": "Bekijk taken",
+  "conversation.view": "Bekijk conversaties",
+  "manage.domain.levels": "Beheer domein niveaus",
+  "approve.goals": "Keur doelen goed",
+};
