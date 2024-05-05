@@ -35,13 +35,16 @@ async function getPermissions(employeeId: number) {
   return response.data;
 }
 
-export const usePermissions = (employeeId?: number) => {
+export const usePermissions = (
+  employeeId?: number,
+  enabled: boolean = true
+) => {
   return useQuery(
     ["permissions", employeeId],
     () => getPermissions(employeeId),
     {
       refetchOnWindowFocus: false,
-      enabled: !!employeeId,
+      enabled: !!employeeId || enabled,
       cacheTime: Infinity,
       staleTime: Infinity,
     }
@@ -60,6 +63,30 @@ export const useIsActive = () => {
     },
     [permissions]
   );
+};
+
+export const useGuardIsActive = () => {
+  const { data: myInfo, refetch: fetchInfo } = useMyInfo(false);
+  const { data: permissions, refetch: fetchPermissions } = usePermissions(
+    myInfo?.id,
+    false
+  );
+  const isActive = useCallback(
+    (permission: Permission) => {
+      if (permission === DASHBOARD_VIEW) {
+        return true;
+      }
+      return permissions?.includes(permission) ?? false;
+    },
+    [permissions]
+  );
+  return {
+    isActive,
+    fetchPermissions: async () => {
+      await fetchInfo();
+      return fetchPermissions();
+    },
+  };
 };
 
 type SecureWrapperProps = PropsWithChildren<

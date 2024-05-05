@@ -11,6 +11,8 @@ import { dateFormat } from "@/utils/timeFormatting";
 import { ORGANIGRAM_TRANSLATE } from "@/consts";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { useDeleteRoleAssignment } from "@/utils/permissions";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 type Props = {
   params: { employeeId: string };
@@ -91,6 +93,12 @@ const RolesList: FunctionComponent<RolesListProps> = ({
 }) => {
   const { mutate: deleteAssignment } = useDeleteRoleAssignment(employeeId);
 
+  const { open: openDeleteModal } = useModal(
+    getDangerActionConfirmationModal({
+      title: "Rol verwijderen",
+      msg: "Weet u zeker dat u deze rol wilt verwijderen?",
+    })
+  );
   return (
     <div>
       <h2 className="py-2 px-4 text-sm font-medium uppercase">{title}</h2>
@@ -145,7 +153,11 @@ const RolesList: FunctionComponent<RolesListProps> = ({
                       <button
                         onClick={() => {
                           // Delete role
-                          deleteAssignment(role.id);
+                          openDeleteModal({
+                            onConfirm: () => {
+                              deleteAssignment(role.id);
+                            },
+                          });
                         }}
                         className="block"
                       >
