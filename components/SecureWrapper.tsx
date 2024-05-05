@@ -10,8 +10,10 @@ import {
 } from "react";
 import jwt from "jsonwebtoken";
 import { Permission, Role } from "@/types/permissions";
-import { PERMISSION_CONFIGURATIONS } from "@/consts";
+import { DASHBOARD_VIEW, PERMISSION_CONFIGURATIONS } from "@/consts";
 import { useQuery } from "react-query";
+import api from "@/utils/api";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 
 const useRoles = () => {
   return useQuery({
@@ -25,15 +27,38 @@ const useRoles = () => {
   });
 };
 
+async function getPermissions(employeeId: number) {
+  const response = await api.get<Permission[]>(
+    `/system/administration/permissions/${employeeId}`
+  );
+
+  return response.data;
+}
+
+export const usePermissions = (employeeId?: number) => {
+  return useQuery(
+    ["permissions", employeeId],
+    () => getPermissions(employeeId),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!employeeId,
+      cacheTime: Infinity,
+      staleTime: Infinity,
+    }
+  );
+};
+
 export const useIsActive = () => {
-  const { data: roles } = useRoles();
+  const { data: myInfo } = useMyInfo();
+  const { data: permissions } = usePermissions(myInfo?.id);
   return useCallback(
     (permission: Permission) => {
-      return roles?.some((role) =>
-        PERMISSION_CONFIGURATIONS[role].includes(permission)
-      );
+      if (permission === DASHBOARD_VIEW) {
+        return true;
+      }
+      return permissions?.includes(permission) ?? false;
     },
-    [roles]
+    [permissions]
   );
 };
 

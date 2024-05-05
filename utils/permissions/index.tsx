@@ -94,3 +94,22 @@ export const useDeleteGroup = (groupId: number) => {
     },
   });
 };
+
+async function deleteRoleAssignment(roleAssignmentId: number) {
+  const response = await api.delete(
+    `/system/administration/group-access/${roleAssignmentId}/delete`
+  );
+  return response.data;
+}
+
+export const useDeleteRoleAssignment = (employeeId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (assignmentId: number) => deleteRoleAssignment(assignmentId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["employees", employeeId, "teams"]);
+      },
+    }
+  );
+};

@@ -5,9 +5,7 @@ export type AssignedRolesListItem = Omit<
   "group_id" | "employee_id"
 > & {
   group_name: string;
+  id: number;
 };
 
-export type AssignedRolesListDto = {
-  employee_id: number;
-  groups: AssignedRolesListItem[];
-};
+export type AssignedRolesListDto = AssignedRolesListItem[];

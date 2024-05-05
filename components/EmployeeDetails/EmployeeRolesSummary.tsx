@@ -17,10 +17,11 @@ const EmployeeRolesSummary: FunctionComponent<Props> = ({ employeeId }) => {
   const router = useRouter();
   if (isLoading) return <Loader />;
 
-  if (data?.groups?.length === 0) return <div>Geen rollen gevonden</div>;
+  if (data?.length === 0) return <div>Geen rollen gevonden</div>;
+  if (!data) return null;
   return (
     <ul className="flex flex-col gap-2">
-      {data.groups?.map((role) => {
+      {data?.map((role) => {
         return (
           <li
             onClick={() => router.push(`/employees/${employeeId}/teams`)}
@@ -30,7 +31,9 @@ const EmployeeRolesSummary: FunctionComponent<Props> = ({ employeeId }) => {
               ignoreIfEmpty={true}
               label={"Rol"}
               value={
-                ORGANIGRAM_TRANSLATE[role.group_name] || "Niet gespecificeerd"
+                ORGANIGRAM_TRANSLATE[role.group_name] ??
+                role.group_name ??
+                "Niet gespecificeerd"
               }
             />
 

@@ -70,6 +70,13 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const verify = async () => {
     await refetch();
 
+    if (
+      pathName.startsWith("/signin") ||
+      pathName.startsWith("/") ||
+      pathName.startsWith("/dashboard")
+    ) {
+      setIsAllowed(true);
+    }
     if (isActive(getPermissionByPathname(pathName))) {
       setIsAllowed(true);
     }

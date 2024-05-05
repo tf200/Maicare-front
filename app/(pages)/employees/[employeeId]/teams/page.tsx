@@ -8,7 +8,9 @@ import { useListRoleAssignments } from "@/utils/role-assignements/list-role-assi
 import Loader from "@/components/common/Loader";
 import { AssignedRolesListItem } from "@/types/role-assignments/assigned-roles-list.dto";
 import { dateFormat } from "@/utils/timeFormatting";
-import { BACK_OFFICE, ORGANIGRAM_TRANSLATE } from "@/consts";
+import { ORGANIGRAM_TRANSLATE } from "@/consts";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { useDeleteRoleAssignment } from "@/utils/permissions";
 
 type Props = {
   params: { employeeId: string };
@@ -50,7 +52,8 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
             {/*Manual Roles*/}
             <RolesList
               title={"HANDMATIGE ROLLEN"}
-              roles={roleAssignments.groups}
+              roles={roleAssignments}
+              employeeId={+employeeId}
             />
             <div className="border-stroke w-full border-t my-4" />
           </>
@@ -60,10 +63,13 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
           roles={[
             {
               group_name: "Default",
+              id: 0,
               start_date: null,
               end_date: null,
+              disableDelete: true,
             },
           ]}
+          employeeId={+employeeId}
         />
       </Panel>
     </div>
@@ -74,10 +80,17 @@ export default Page;
 
 type RolesListProps = {
   title: string;
-  roles: AssignedRolesListItem[];
+  roles: (AssignedRolesListItem & { disableDelete?: boolean })[];
+  employeeId: number;
 };
 
-const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
+const RolesList: FunctionComponent<RolesListProps> = ({
+  title,
+  roles,
+  employeeId,
+}) => {
+  const { mutate: deleteAssignment } = useDeleteRoleAssignment(employeeId);
+
   return (
     <div>
       <h2 className="py-2 px-4 text-sm font-medium uppercase">{title}</h2>
@@ -95,12 +108,15 @@ const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
               <th>Rol</th>
               {/* Period */}
               <th>Periode</th>
+              <th />
             </tr>
           </thead>
           <tbody>
             {roles.map((role) => (
-              <tr key={role.group_name}>
-                <td>{ORGANIGRAM_TRANSLATE[role.group_name]}</td>
+              <tr key={role.id}>
+                <td>
+                  {ORGANIGRAM_TRANSLATE[role.group_name] ?? role.group_name}
+                </td>
                 {/* From Always - indefinitely */}
                 <td>
                   {role.start_date ? (
@@ -122,6 +138,21 @@ const RolesList: FunctionComponent<RolesListProps> = ({ title, roles }) => {
                       voor <strong>onbepaalde</strong> tijd
                     </>
                   )}
+                </td>
+                <td>
+                  <div className="w-full flex justify-end">
+                    {!role.disableDelete && (
+                      <button
+                        onClick={() => {
+                          // Delete role
+                          deleteAssignment(role.id);
+                        }}
+                        className="block"
+                      >
+                        <TrashIcon />
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
