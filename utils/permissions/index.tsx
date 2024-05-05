@@ -27,7 +27,9 @@ async function getGroupDetails(groupId: number) {
 }
 
 export const useGroupDetails = (groupId: number) => {
-  return useQuery(["group", groupId], () => getGroupDetails(groupId));
+  return useQuery(["group", groupId], () => getGroupDetails(groupId), {
+    staleTime: Infinity,
+  });
 };
 
 async function getAllGroups() {
@@ -91,4 +93,23 @@ export const useDeleteGroup = (groupId: number) => {
       queryClient.invalidateQueries("groups");
     },
   });
+};
+
+async function deleteRoleAssignment(roleAssignmentId: number) {
+  const response = await api.delete(
+    `/system/administration/group-access/${roleAssignmentId}/delete`
+  );
+  return response.data;
+}
+
+export const useDeleteRoleAssignment = (employeeId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (assignmentId: number) => deleteRoleAssignment(assignmentId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["employees", employeeId, "teams"]);
+      },
+    }
+  );
 };

@@ -14,6 +14,7 @@ import {
 } from "@/types/contracts/new-contract-req.dto";
 import { RateType } from "@/types/rate-type";
 import { MaturityLevelType } from "@/types/MatruityLevelType";
+import { PERMISSIONS_EDIT, SETTINGS_VIEW } from "@/consts/permissions";
 
 export const MIN_CHARACTERS_TO_ENHANCE = 75;
 
@@ -516,4 +517,6 @@ export const PERMISSION_TRANS = {
   "conversation.view": "Bekijk conversaties",
   "manage.domain.levels": "Beheer domein niveaus",
   "approve.goals": "Keur doelen goed",
+  "settings.view": "Bekijk instellingen",
+  "permissions.edit": "Bewerk rechten",
 };

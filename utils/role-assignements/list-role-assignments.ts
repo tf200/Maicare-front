@@ -5,7 +5,7 @@ import { AssignedRolesListDto } from "@/types/role-assignments/assigned-roles-li
 
 async function listRoleAssignments(employeeId: number) {
   const response = await api.get<AssignedRolesListDto>(
-    `ad/user-groups/${employeeId}/`
+    `/system/administration/group-access/employee/${employeeId}`
   );
   return response.data;
 }

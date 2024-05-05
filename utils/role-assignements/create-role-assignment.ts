@@ -4,7 +4,10 @@ import { useMutation, useQueryClient } from "react-query";
 import { AssignedRoleResDto } from "@/types/role-assignments/assigned-role-res.dto";
 
 async function createRoleAssignment(data: NewAssignReqDto) {
-  const response = await api.post<AssignedRoleResDto>("ad/assign-group/", data);
+  const response = await api.post<AssignedRoleResDto>(
+    "/system/administration/group-access/assign-group",
+    data
+  );
   return response.data;
 }
 

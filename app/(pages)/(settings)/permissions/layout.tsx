@@ -15,10 +15,15 @@ import { useParams } from "next/navigation";
 import { cn } from "@/utils/cn";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import Link from "next/link";
+import { ADMIN, ORGANIGRAM_TRANSLATE } from "@/consts";
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Panel title={"Systeemrechten"} containerClassName={"flex items-stretch"}>
+    <Panel
+      title={"Systeemrechten"}
+      containerClassName={"flex items-stretch max-h-[calc(100vh-230px)]"}
+    >
       <Groups />
       <div className="flex-grow">{children}</div>
     </Panel>
@@ -30,7 +35,7 @@ export default Layout;
 const Groups: FC = (props) => {
   const { open: newGroupModal } = useModal(NewGroupModal);
   return (
-    <section className="flex flex-col gap-4 xl:w-1/4 p-4 border-r-1 border-stroke dark:border-strokedark">
+    <section className="flex flex-col overflow-auto gap-4 xl:w-1/4 p-4 border-r-1 border-stroke dark:border-strokedark">
       <Button
         onClick={newGroupModal}
         buttonType={"Outline"}
@@ -73,7 +78,8 @@ const GroupItem: FC<{ group: GroupDetailsResDto }> = ({ group }) => {
   );
   const { mutate: deleteGroup } = useDeleteGroup(group.id);
   return (
-    <div
+    <Link
+      href={`/permissions/${group.id}`}
       className={cn(
         "flex flex-col gap-1 border border-stroke p-4 rounded-lg dark:border-strokedark",
         {
@@ -82,18 +88,20 @@ const GroupItem: FC<{ group: GroupDetailsResDto }> = ({ group }) => {
       )}
     >
       <div className="text-xl font-bold flex items-center justify-between">
-        <div>{group.name}</div>
-        <button
-          onClick={() => {
-            confirmDeleteModal({
-              onConfirm: () => {
-                deleteGroup();
-              },
-            });
-          }}
-        >
-          <TrashIcon className="w-5 h-5" />
-        </button>
+        <div>{ORGANIGRAM_TRANSLATE[group.name] ?? group.name}</div>
+        {group.name !== ADMIN && (
+          <button
+            onClick={() => {
+              confirmDeleteModal({
+                onConfirm: () => {
+                  deleteGroup();
+                },
+              });
+            }}
+          >
+            <TrashIcon className="w-5 h-5" />
+          </button>
+        )}
       </div>
       <div>
         Heeft toegang tot{" "}
@@ -102,12 +110,12 @@ const GroupItem: FC<{ group: GroupDetailsResDto }> = ({ group }) => {
         </span>{" "}
         rechten
       </div>
-    </div>
+    </Link>
   );
 };
 
 const NewGroupModal: FC<ModalProps> = ({ additionalProps, ...props }) => {
-  const { mutate: createGroup } = useCreateGroup();
+  const { mutate: createGroup, isLoading: isCreating } = useCreateGroup();
 
   return (
     <FormModal {...props} title={"Nieuwe groep"}>
@@ -129,7 +137,9 @@ const NewGroupModal: FC<ModalProps> = ({ additionalProps, ...props }) => {
           <Button buttonType={"Outline"} onClick={props.onClose}>
             Annuleren
           </Button>
-          <Button type={"submit"}>Opslaan</Button>
+          <Button isLoading={isCreating} disabled={isCreating} type={"submit"}>
+            Opslaan
+          </Button>
         </div>
       </form>
     </FormModal>

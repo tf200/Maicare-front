@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import ProfilePicture from "@/components/ProfilePicture";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import { ORGANIGRAM_TRANSLATE } from "@/consts";
+import { useListRoleAssignments } from "@/utils/role-assignements/list-role-assignments";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,6 +13,7 @@ const DropdownUser = () => {
   const decode = jwt.decode(localStorage.getItem("a"));
 
   const { data: userData } = useMyInfo();
+  const { data: groups } = useListRoleAssignments(userData?.id);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -40,8 +42,8 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
-  if (!decode) return null;
-  const role = decode.groups.length > 0 ? decode.groups[0] : null;
+  if (!decode || !groups) return null;
+  const role = groups.length > 0 ? groups[0].group_name : null;
 
   return (
     <div className="relative">
@@ -58,7 +60,12 @@ const DropdownUser = () => {
                 {userData.first_name} {userData.last_name}
               </span>
               <span className="block text-xs capitalize">
-                {ORGANIGRAM_TRANSLATE[role]}
+                {groups
+                  .map(
+                    ({ group_name }) =>
+                      ORGANIGRAM_TRANSLATE[group_name] ?? group_name
+                  )
+                  .join(" | ")}
               </span>
             </span>
 
