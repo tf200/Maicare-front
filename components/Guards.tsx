@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { usePathname, redirect, useRouter } from "next/navigation";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
-import { useIsActive } from "@/components/SecureWrapper";
+import { useGuardIsActive, useIsActive } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
 import { Permission } from "@/types/permissions";
 import Loader from "@/components/common/Loader";
@@ -61,26 +61,19 @@ const getPermissionByPathname = (pathname: string): Permission => {
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathName = usePathname();
-  const isActive = useIsActive();
+  const { isActive, fetchPermissions } = useGuardIsActive();
   const router = useRouter();
   const [isAllowed, setIsAllowed] = useState(false);
 
   const { refetch } = useMyInfo(false);
 
-  const verify = async () => {
+  const verify = useCallback(async () => {
     await refetch();
-
-    if (
-      pathName.startsWith("/signin") ||
-      pathName.startsWith("/") ||
-      pathName.startsWith("/dashboard")
-    ) {
-      setIsAllowed(true);
-    }
+    await fetchPermissions();
     if (isActive(getPermissionByPathname(pathName))) {
       setIsAllowed(true);
     }
-  };
+  }, [isActive, pathName]);
 
   useEffect(() => {
     if (typeof localStorage !== "undefined") {
@@ -94,7 +87,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         redirect("/signin");
       }
     }
-  }, [pathName, isActive]);
+  }, [pathName, isActive, verify]);
 
   const [safeHatch, setSafeHatch] = useState(false);
   useEffect(() => {

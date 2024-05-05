@@ -108,6 +108,7 @@ export const useDeleteRoleAssignment = (employeeId: number) => {
     (assignmentId: number) => deleteRoleAssignment(assignmentId),
     {
       onSuccess: () => {
+        console.log("invalidateQueries");
         queryClient.invalidateQueries(["employees", employeeId, "teams"]);
       },
     }
