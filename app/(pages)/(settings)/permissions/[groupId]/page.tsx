@@ -60,7 +60,7 @@ const PermissionManagement: FunctionComponent<{
 
   return (
     <div className="flex flex-col h-full">
-      <h1 className="p-4">
+      <h1 className="p-4 font-bold">
         {ORGANIGRAM_TRANSLATE[groupDetails.name] ?? groupDetails.name}
       </h1>
       <div className="p-4 flex overflow-auto flex-col flex-wrap gap-4 border-y border-stroke dark:border-strokedark">
@@ -76,7 +76,7 @@ const PermissionManagement: FunctionComponent<{
                 );
               }}
               checked={selectedPermissions.includes(permission)}
-              disabled={groupDetails.name !== ADMIN}
+              disabled={groupDetails.name == ADMIN}
             />
           </div>
         ))}
