@@ -67,7 +67,7 @@ const PermissionManagement: FunctionComponent<{
         {permissions?.map((permission) => (
           <div key={permission}>
             <CheckboxItem
-              label={PERMISSION_TRANS[permission]}
+              label={PERMISSION_TRANS[permission] || permission}
               onClick={() => {
                 setSelectedPermissions((prev) =>
                   prev.includes(permission)
@@ -76,6 +76,7 @@ const PermissionManagement: FunctionComponent<{
                 );
               }}
               checked={selectedPermissions.includes(permission)}
+              disabled={groupDetails.name !== ADMIN}
             />
           </div>
         ))}
