@@ -27,7 +27,9 @@ async function getGroupDetails(groupId: number) {
 }
 
 export const useGroupDetails = (groupId: number) => {
-  return useQuery(["group", groupId], () => getGroupDetails(groupId));
+  return useQuery(["group", groupId], () => getGroupDetails(groupId), {
+    staleTime: Infinity,
+  });
 };
 
 async function getAllGroups() {
