@@ -37,12 +37,13 @@ export const RATE_TYPE_ARRAY = [
   "monthly",
 ] as const;
 
-export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work"] as const;
+export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work", "home_care"] as const;
 
 export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Type", value: "" },
   { label: "Werk", value: "work" },
   { label: "Afspraak", value: "meeting" },
+  { label: "Thuiszorg", value: "home_care" },
   { label: "Anders", value: "other" },
 ];
 
