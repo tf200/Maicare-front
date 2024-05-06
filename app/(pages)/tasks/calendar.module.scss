@@ -8,6 +8,10 @@
     @apply border-danger;
   }
 
+  &.home_care {
+      @apply border-success;
+  }
+
   &.other {
     @apply border-meta-6;
   }

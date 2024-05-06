@@ -9,4 +9,5 @@ export type AppointmentFormType = {
   temporary_file_ids: string[];
   employees: number[];
   clients: number[];
+  location: string;
 };
