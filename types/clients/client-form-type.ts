@@ -21,4 +21,6 @@ export type ClientFormType = {
   street_number: string;
   added_identity_documents?: string[];
   removed_identity_documents?: string[];
-} & DepartureEntries;
+  departure_reason?: string;
+  departure_report?: string;
+};

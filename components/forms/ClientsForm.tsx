@@ -73,6 +73,8 @@ export const clientsSchema: Yup.ObjectSchema<ClientFormType> =
     source: Yup.string().required("Geef alstublieft een bron op"),
     added_identity_documents: Yup.array(),
     removed_identity_documents: Yup.array(),
+    departure_reason: Yup.string(),
+    departure_report: Yup.string(),
   });
 
 type PropsType = {
