@@ -123,11 +123,11 @@ const EmployeesPage: FunctionComponent = () => {
         </div>
       }
     >
-      <div className="px-[60px] pt-6">
-        <div className="flex flex-col items-start justify-start">
-          <OrganisationFilter filters={filters} onFiltersChange={setFilters} />
-        </div>
-      </div>
+      {/*<div className="px-[60px] pt-6">*/}
+      {/*  <div className="flex flex-col items-start justify-start">*/}
+      {/*    <OrganisationFilter filters={filters} onFiltersChange={setFilters} />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
       {isLoading && <Loader />}
       {pagination}
