@@ -4,8 +4,12 @@ import { SelectionOption } from "@/types/selection-option";
 import Select, { SelectProps } from "@/components/FormFields/Select";
 import { useFormikContext } from "formik";
 import { ClientFormType } from "@/types/clients/client-form-type";
+import { cn } from "@/utils/cn";
 
-const FormikLocation: FunctionComponent = (props) => {
+const FormikLocation: FunctionComponent<{
+  className?: string;
+  required?: boolean;
+}> = ({ className, required }) => {
   const { values, touched, errors, handleChange, handleBlur } =
     useFormikContext<ClientFormType>();
   return (
@@ -13,12 +17,13 @@ const FormikLocation: FunctionComponent = (props) => {
       id={"location"}
       name={"location"}
       placeholder={"Locatie"}
-      className="w-full mb-4.5"
+      className={cn("w-full mb-4.5", className)}
       value={values.location}
       onChange={handleChange}
       onBlur={handleBlur}
       error={touched.location && errors.location}
       label={"Locatie"}
+      required={required}
     />
   );
 };

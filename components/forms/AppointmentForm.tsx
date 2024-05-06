@@ -16,12 +16,14 @@ import * as Yup from "yup";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
 import Select from "@/components/FormFields/Select";
 import { APPOINTMENT_TYPE_ARRAY, APPOINTMENT_TYPE_OPTIONS } from "@/consts";
+import FormikLocation from "@/components/FormFields/FormikLocation";
 
 const initialValues: AppointmentFormType = {
   title: "",
   start_time: "",
   end_time: "",
   description: "",
+  location: "",
   appointment_type: "meeting",
   temporary_file_ids: [],
   employees: [],
@@ -48,10 +50,11 @@ const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
           return true;
         }
       ),
-    description: Yup.string().required("Beschrijving is verplicht"),
+    description: Yup.string(),
     employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
-    clients: Yup.array().min(1, "Minimaal 1 Cliënt is verplicht"),
+    clients: Yup.array(),
     temporary_file_ids: Yup.array(),
+    location: Yup.string().required("Locatie is verplicht"),
   });
 
 export type AppointmentFormProps =
@@ -140,18 +143,21 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           value={values.title}
           error={touched.title && formik.errors.title}
         />
-        <Select
-          label={"Appointment Type"}
-          options={APPOINTMENT_TYPE_OPTIONS}
-          id={"appointment_type"}
-          name={"appointment_type"}
-          className="mb-5"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          required
-          value={values.appointment_type}
-          error={touched.appointment_type && formik.errors.appointment_type}
-        />
+        <div className="flex gap-4 mb-5 flex-col lg:flex-row">
+          <Select
+            label={"Appointment Type"}
+            options={APPOINTMENT_TYPE_OPTIONS}
+            id={"appointment_type"}
+            name={"appointment_type"}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            required
+            value={values.appointment_type}
+            error={touched.appointment_type && formik.errors.appointment_type}
+            className="w-full lg:basis-1/2"
+          />
+          <FormikLocation required={true} className="w-full lg:basis-1/2" />
+        </div>
         <div className="flex gap-4 mb-5 flex-col lg:flex-row">
           {/* From date time */}
           <InputField
@@ -193,7 +199,6 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           id={"clients"}
           name={"clients"}
           placeholder={"add client..."}
-          required={true}
           className="mb-5"
         />
         {/* Description */}
@@ -204,7 +209,6 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           className="mb-5"
           onChange={handleChange}
           onBlur={handleBlur}
-          required
           placeholder={"Geef een beschrijving op"}
           rows={6}
           defaultValue={values.description}
