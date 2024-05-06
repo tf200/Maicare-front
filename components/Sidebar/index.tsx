@@ -429,6 +429,12 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Permissies",
               permission: consts.PERMISSIONS_EDIT,
             },
+            {
+              completeHref: "/activity_logs",
+              icon: <></>,
+              children: "Activiteitenlogs",
+              permission: consts.ACTIVITY_LOGS_VIEW,
+            },
           ],
         },
       ]}

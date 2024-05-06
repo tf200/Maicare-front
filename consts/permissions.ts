@@ -57,6 +57,8 @@ export const APPROVE_GOALS = "approve.goals";
 export const SETTINGS_VIEW = "settings.view";
 export const PERMISSIONS_EDIT = "permissions.edit";
 
+export const ACTIVITY_LOGS_VIEW = "activity_logs.view";
+
 export const PERMISSIONS = [
   CLIENT_VIEW,
   CLIENT_EDIT,
@@ -115,6 +117,7 @@ export const PERMISSIONS = [
 
   SETTINGS_VIEW,
   PERMISSIONS_EDIT,
+  ACTIVITY_LOGS_VIEW,
 ] as const;
 
 export const ADMIN = "ADMIN";
