@@ -56,7 +56,7 @@ const WorkingHours: FunctionComponent<{
           </p>
         )}
         {isLoading && <Loader />}
-        {data && (
+        {data && data.count > 0 && (
           <PaginatedTable
             columns={columnDef}
             page={pagination.page}

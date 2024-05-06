@@ -37,8 +37,8 @@ const TerminationModal: FunctionComponent<ModalProps> = ({
         <form onSubmit={handleSubmit}>
           <InputField
             type="text"
-            label={"Reden van vertrek"}
-            placeholder={"Reden van vertrek"}
+            label={"Reden van beëindiging"}
+            placeholder={"Reden van beëindiging"}
             id="departure_reason"
             name="departure_reason"
             value={values.departure_reason}

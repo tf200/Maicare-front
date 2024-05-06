@@ -18,7 +18,11 @@ import { useClientContact } from "@/components/clientDetails/ContactSummary";
 import { mapToForm } from "@/utils/contracts/mapToForm";
 import DownloadFile from "@/components/DownloadFile";
 import MonthsBetween from "@/components/MonthsBetween";
-import { careTypeDict } from "@/consts";
+import {
+  careTypeDict,
+  CONTRACT_STATUS_TRANSLATION_DICT,
+  CONTRACT_STATUS_VARIANT_DICT,
+} from "@/consts";
 import Button from "@/components/buttons/Button";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getConfirmModal } from "@/components/Modals/Modal";
@@ -26,6 +30,9 @@ import { useUpdateContract } from "@/utils/contracts/updateContract";
 import { resDtoToPatchDto } from "@/utils/contracts/resDtoToPatchDto";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import ContactAssignment from "@/components/ContactAssignment";
+import TerminationModal from "@/components/TerminationModal";
+import { DepartureEntries } from "@/types/departure_entries";
+import StatusBadge from "@/components/StatusBadge";
 
 type Props = {
   clientId: number;
@@ -78,7 +85,9 @@ function ClientData(props: {
   clientData: ClientDetailsResDto;
   contractData: ContractResDto;
 }) {
-  const { mutate: updateContract } = useUpdateContract(props.contractData.id);
+  const { mutate: updateContract, isLoading: isUpdating } = useUpdateContract(
+    props.contractData.id
+  );
   const { open: openApprove } = useModal(
     getConfirmModal({
       modalTitle: "Contract goedkeuren",
@@ -86,12 +95,7 @@ function ClientData(props: {
     })
   );
 
-  const { open: openTerminate } = useModal(
-    getDangerActionConfirmationModal({
-      msg: "Weet je zeker dat je dit contract wilt beëindigen?",
-      title: "Contract Beëindigen",
-    })
-  );
+  const { open: openTerminate } = useModal(TerminationModal);
   return (
     <div className="flex flex-col-reverse gap-5 xl:flex-row xl:justify-between">
       <div className="flex flex-col gap-4 sm:flex-row xl:gap-9">
@@ -111,7 +115,7 @@ function ClientData(props: {
           </span>
         </div>
       </div>
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end w-full max-w-142.5">
         <h3 className="text-2xl mb-10 font-semibold text-black dark:text-white">
           Contract #{props.contractData.id}
         </h3>
@@ -141,27 +145,49 @@ function ClientData(props: {
         )}
         {props.contractData.status === "approved" && (
           <Button
+            isLoading={isUpdating}
+            disabled={isUpdating}
             buttonType={"Danger"}
             onClick={() => {
               openTerminate({
-                onConfirm: (close: () => void) => {
-                  updateContract(
-                    {
-                      ...resDtoToPatchDto(props.contractData),
-                      status: "terminated",
-                    },
-                    {
-                      onSuccess: () => {
-                        close();
-                      },
-                    }
-                  );
+                title: "Contract beëindigen",
+                msg: "Weet je zeker dat je dit contract wilt beëindigen?",
+                onSubmit: (terminationEntries: DepartureEntries) => {
+                  updateContract({
+                    ...resDtoToPatchDto(props.contractData),
+                    status: "terminated",
+                    ...terminationEntries,
+                  });
                 },
               });
             }}
           >
             Contract beëindigen
           </Button>
+        )}
+        {props.contractData.status === "terminated" && (
+          <div className="flex flex-col gap-4 w-full bg-gray rounded-lg p-4">
+            <div>
+              <StatusBadge
+                type={CONTRACT_STATUS_VARIANT_DICT[props.contractData.status]}
+                text={
+                  CONTRACT_STATUS_TRANSLATION_DICT[props.contractData.status]
+                }
+              />
+            </div>
+            <div>
+              <p className="text-sm font-bold">Reden van beëindiging:</p>
+              <p className="text-black dark:text-white">
+                {props.contractData.departure_reason}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-bold">Afsluitend rapport:</p>
+              <p className="text-black dark:text-white">
+                {props.contractData.departure_report}
+              </p>
+            </div>
+          </div>
         )}
       </div>
     </div>
