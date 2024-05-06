@@ -520,4 +520,5 @@ export const PERMISSION_TRANS = {
   "approve.goals": "Keur doelen goed",
   "settings.view": "Bekijk instellingen",
   "permissions.edit": "Bewerk rechten",
+  "activity_logs.view": "Activiteitenlogboeken bekijken",
 };
