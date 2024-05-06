@@ -2,6 +2,7 @@ import {
   ExpenseListResDto,
   ExpenseReqDto,
   ExpenseResDto,
+  ExpensesSearchParams,
   PatchExpenseReqDto,
 } from "@/types/expenses";
 import api from "@/utils/api";
@@ -9,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { PaginationParams } from "@/types/pagination-params";
 import { useSearchParams } from "next/navigation";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
+import { cleanQueryParams } from "@/utils/cleanQueryParams";
 
 async function createExpense(data: ExpenseReqDto) {
   const response = await api.post<ExpenseResDto>("/system/expenses/add", data);
@@ -24,16 +26,19 @@ export const useCreateExpense = () => {
   });
 };
 
-async function getExpenses(params?: PaginationParams) {
+async function getExpenses(params?: PaginationParams & ExpensesSearchParams) {
   const response = await api.get<ExpenseListResDto>("/system/expenses", {
-    params,
+    params: cleanQueryParams(params),
   });
   return response.data;
 }
 
-export const useGetExpenses = () => {
+export const useGetExpenses = (filters?: ExpensesSearchParams) => {
   const pagination = usePaginationParams();
-  const query = useQuery(["expenses", pagination.params], () => getExpenses());
+  const query = useQuery(
+    ["expenses", { ...pagination.params, ...filters }],
+    () => getExpenses({ ...pagination.params, ...filters })
+  );
   return {
     ...query,
     pagination,
