@@ -230,7 +230,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
       ? {
           amount: initialData.amount.toString(),
           tax: initialData.tax?.toString() || "",
-          location: initialData.location_id.toString(),
+          location: initialData.location?.toString(),
           created: dayjs(initialData.created).format("YYYY-MM-DD"),
           desc: initialData.desc,
           added_attachments: [],
@@ -313,6 +313,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             value={values.amount}
             error={touched.amount && errors.amount}
             placeholder={"Bedrag"}
+            min={0}
           />
           <InputField
             unit={"%"}
@@ -324,6 +325,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             placeholder={"BTW"}
             onChange={handleChange}
             error={touched.tax && errors.tax}
+            min={0}
           />
           <section>
             <FilesUploader
