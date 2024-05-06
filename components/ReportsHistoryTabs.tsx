@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FunctionComponent } from "react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import PageTabs from "./PageTabs";
 
@@ -18,6 +18,10 @@ const ReportsHistoryTabs: FunctionComponent = () => {
         {
           label: "Rapporten",
           href: `/clients/${clientId}/reports-record/reports`,
+        },
+        {
+          href: `/clients/${clientId}/reports-record/automatic-reports`,
+          label: "Automatische rapporten",
         },
         {
           label: "Metingen",
