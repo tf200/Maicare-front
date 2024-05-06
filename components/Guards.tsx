@@ -57,6 +57,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/permissions")) {
     return consts.PERMISSIONS_EDIT;
   }
+  if (pathname.startsWith("/activity_logs")) {
+    return consts.ACTIVITY_LOGS_VIEW;
+  }
 };
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
