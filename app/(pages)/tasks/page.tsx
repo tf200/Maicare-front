@@ -38,6 +38,8 @@ const localizer = dayjsLocalizer(dayjs);
 import styles from "./calendar.module.scss";
 import "./calendar.styles.scss";
 import clsx from "clsx";
+import { LocationSelect } from "@/components/FormFields/FormikLocation";
+import { AppointmentSearchParams } from "@/types/appointments";
 
 type CalendarEvent = AppointmentListItem & {
   start: Date;
@@ -66,7 +68,8 @@ const Page: FunctionComponent = (props) => {
   const onView = useCallback((newView: View) => setView(newView), [setView]);
   const { open } = useModal(AppointmentFormModal);
   const { mutate: updateAppointment } = useUpdateAppointment();
-  const { data, isLoading } = useAppointmentsList();
+  const [filters, setFilter] = useState<AppointmentSearchParams>({});
+  const { data, isLoading } = useAppointmentsList(filters);
   const events = useMemo<CalendarEvent[]>(() => {
     if (!data) return [];
     return data.map((appointment) => {
@@ -150,7 +153,21 @@ const Page: FunctionComponent = (props) => {
   }, []);
 
   return (
-    <Panel title={"Kalender"} containerClassName="px-7 py-4">
+    <Panel
+      title={""}
+      containerClassName="px-7 py-4"
+      header={
+        <div className="flex justify-between items-center w-full">
+          <h2 className="text-2xl font-bold">Kalender</h2>
+          <LocationSelect
+            value={filters.location}
+            onChange={(e) => setFilter({ location: Number(e.target.value) })}
+            className="min-w-75"
+            label=""
+          />
+        </div>
+      }
+    >
       <DnDCalendar
         localizer={localizer}
         events={events}
