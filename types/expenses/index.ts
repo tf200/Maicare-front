@@ -23,7 +23,7 @@ export type PatchExpenseReqDto = Partial<ExpenseReqDto>;
 
 export type ExpenseResDto = {
   id: number;
-  location_id: number;
+  location: number;
   amount: number;
   tax: number;
   created: string;
