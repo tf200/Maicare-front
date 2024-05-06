@@ -60,7 +60,7 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
             <div className="border-stroke w-full border-t my-4" />
           </>
         )}
-        <RolesList
+        {/* <RolesList
           title={"ROLLEN DIE AUTOMATISCH TOEGEWEZEN ZIJN"}
           roles={[
             {
@@ -72,7 +72,7 @@ const Page: FunctionComponent<Props> = ({ params: { employeeId } }) => {
             },
           ]}
           employeeId={+employeeId}
-        />
+        /> */}
       </Panel>
     </div>
   );
