@@ -7,10 +7,14 @@ import { usePatchClient } from "@/utils/clients/patchClient";
 import Button from "@/components/buttons/Button";
 import { useContractsList } from "@/utils/contracts/getContractsList";
 import WarningIcon from "@/components/icons/WarningIcon";
+import TerminationModal from "@/components/TerminationModal";
+import { useModal } from "@/components/providers/ModalProvider";
+import { DepartureEntries } from "@/types/departure_entries";
 
 const UpdateClientStatus: FunctionComponent<{
   clientId: number;
 }> = (props) => {
+  const { open: openTerminationModal } = useModal(TerminationModal);
   const { data, isLoading: isLoadingClientDetails } = useClientDetails(
     props.clientId
   );
@@ -21,7 +25,15 @@ const UpdateClientStatus: FunctionComponent<{
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      mutate({ status: values.status });
+      if (values.status === "Out Of Care") {
+        openTerminationModal({
+          onSubmit: (departureEntries: DepartureEntries) => {
+            mutate({ status: values.status, ...departureEntries });
+          },
+        });
+      } else {
+        mutate({ status: values.status });
+      }
     },
   });
   const { handleSubmit, values, dirty } = formik;
@@ -30,7 +42,7 @@ const UpdateClientStatus: FunctionComponent<{
     client: props.clientId,
   });
 
-  const cantUpdate = useMemo(() => {
+  const showTerminationWarning = useMemo(() => {
     return (
       (contracts?.results.length > 0 && values.status === "Out Of Care") ||
       !contracts
@@ -46,16 +58,18 @@ const UpdateClientStatus: FunctionComponent<{
           name={"status"}
           className="mb-4"
         />
-        {cantUpdate && !isLoadingContracts && !isLoadingClientDetails && (
-          <div className="text-sm text-red p-2">
-            <p>
-              <WarningIcon className="inline-block" /> Er zijn nog{" "}
-              {contracts?.results.length} contracten actief voor deze cliënt.
-              Pas de status van deze contracten aan voordat u de status van de
-              cliënt wijzigt.
-            </p>
-          </div>
-        )}
+        {showTerminationWarning &&
+          !isLoadingContracts &&
+          !isLoadingClientDetails && (
+            <div className="text-sm text-red p-2">
+              <p>
+                <WarningIcon className="inline-block" /> Er zijn nog{" "}
+                {contracts?.results.length} contracten actief voor deze cliënt.
+                Pas de status van deze contracten aan voordat u de status van de
+                cliënt wijzigt.
+              </p>
+            </div>
+          )}
         {dirty && (
           <Button type="submit" disabled={isLoading} isLoading={isLoading}>
             Bijwerken

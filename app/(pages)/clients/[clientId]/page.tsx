@@ -29,6 +29,7 @@ import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory"
 import Button from "@/components/buttons/Button";
 import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
 import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
+import ClientDeparture from "@/components/clientDetails/ClientDeparture";
 
 type Props = {
   params: { clientId: string };
@@ -135,7 +136,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           </Panel>
         </div>
         <div className="flex flex-col gap-9">
-          <Panel title={"CLIËNTSTATUS"} containerClassName="py-4">
+          <Panel title={"Cliëntstatus"} containerClassName="py-4">
             <SecureFragment permission={consts.EDIT_CLIENT_STATUS}>
               <div className="px-4 mt-7">
                 <UpdateClientStatus clientId={parseInt(clientId)} />
@@ -143,6 +144,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             </SecureFragment>
             <ClientStatusHistory clientId={parseInt(clientId)} />
           </Panel>
+          <ClientDeparture clientId={parseInt(clientId)} />
           <SecureFragment permission={consts.CLIENT_IDENTITY_VIEW}>
             <Panel title={"Identiteitsgegevens"} containerClassName="px-7 py-4">
               <IdentityDetails clientId={parseInt(clientId)} />

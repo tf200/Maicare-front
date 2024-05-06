@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import Panel from "@/components/Panel";
 import Button from "@/components/buttons/Button";
 import {
@@ -10,7 +10,11 @@ import {
   useUpdateExpense,
 } from "@/utils/expenses";
 import { ColumnDef } from "@tanstack/react-table";
-import { ExpenseFormType, ExpenseResDto } from "@/types/expenses";
+import {
+  ExpenseFormType,
+  ExpenseResDto,
+  ExpensesSearchParams,
+} from "@/types/expenses";
 import { dateFormat } from "@/utils/timeFormatting";
 import PaginatedTable from "@/components/PaginatedTable";
 import Loader from "@/components/common/Loader";
@@ -30,9 +34,13 @@ import dayjs from "dayjs";
 import { omit } from "@/utils/omit";
 import DetailCell from "@/components/DetailCell";
 import DownloadFile from "@/components/DownloadFile";
+import FormikLocation, {
+  LocationSelect,
+} from "@/components/FormFields/FormikLocation";
 
 const Page: FunctionComponent = (props) => {
   const { open } = useModal(ExpenseModal);
+  const [filters, setFilters] = useState<ExpensesSearchParams>({});
   return (
     <Panel
       title={"Uitgaven"}
@@ -47,15 +55,27 @@ const Page: FunctionComponent = (props) => {
         </Button>
       }
     >
-      <ExpensesList />
+      <div className="py-2 px-4 flex justify-end">
+        <LocationSelect
+          label={""}
+          className="lg:max-w-70 w-full"
+          value={filters.location ? filters.location.toString() : ""}
+          onChange={({ target: { value } }) =>
+            setFilters({ location: value ? +value : undefined })
+          }
+        />
+      </div>
+      <ExpensesList filters={filters} />
     </Panel>
   );
 };
 
 export default Page;
 
-const ExpensesList: FunctionComponent = () => {
-  const { data, pagination, isFetching, isLoading } = useGetExpenses();
+const ExpensesList: FunctionComponent<{
+  filters?: ExpensesSearchParams;
+}> = ({ filters }) => {
+  const { data, pagination, isFetching, isLoading } = useGetExpenses(filters);
 
   const { mutate: deleteExpense } = useDeleteExpense();
   const { open } = useModal(
@@ -80,7 +100,25 @@ const ExpensesList: FunctionComponent = () => {
       {
         accessorKey: "amount",
         header: "Bedrag",
-        cell: ({ row }) => formatPrice(row.original.amount),
+        cell: ({ row: { original: expense } }) => {
+          return (
+            <div>
+              <div>
+                <span className="text-sm font-bold">Beldrag ext. BTW</span>{" "}
+                <span>{formatPrice(expense.amount)}</span>
+              </div>
+              <div>
+                <span className="text-sm font-bold">Beldrag incl. BTW</span>{" "}
+                <span>
+                  {formatPrice(
+                    parseFloat(expense.amount + "") +
+                      (expense.tax / 100) * expense.amount
+                  )}
+                </span>
+              </div>
+            </div>
+          );
+        },
       },
       {
         accessorKey: "tax",
@@ -192,6 +230,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
       ? {
           amount: initialData.amount.toString(),
           tax: initialData.tax?.toString() || "",
+          location: initialData.location_id.toString(),
           created: dayjs(initialData.created).format("YYYY-MM-DD"),
           desc: initialData.desc,
           added_attachments: [],
@@ -199,6 +238,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
         }
       : {
           amount: "",
+          location: "",
           tax: "",
           created: "",
           desc: "",
@@ -216,6 +256,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
           ...omit(values, ["added_attachments", "removed_attachments"]),
           amount: parseFloat(values.amount),
           tax: parseFloat(values.tax),
+          location_id: +values.location,
           attachment_ids:
             initialData?.attachments
               .filter((a) => !values.removed_attachments.includes(a.id))
@@ -250,6 +291,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             error={touched.created && errors.created}
             placeholder={"Datum"}
           />
+          <FormikLocation required={true} className="mb-0" />
           <InputField
             label={"Omschrijving"}
             name={"desc"}

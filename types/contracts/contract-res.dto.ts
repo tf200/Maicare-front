@@ -1,5 +1,6 @@
 import { NewContractReqDto } from "@/types/contracts/new-contract-req.dto";
 import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
+import { DepartureEntries } from "@/types/departure_entries";
 
 export type ContractResDto = Omit<
   NewContractReqDto,
@@ -8,4 +9,4 @@ export type ContractResDto = Omit<
   id: number;
   type: number;
   attachments: AttachmentItem[];
-};
+} & Partial<DepartureEntries>;

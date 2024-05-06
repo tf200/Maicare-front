@@ -34,7 +34,7 @@ const Button: FunctionComponent<ButtonProps> = ({
           <span className="animate-spin">
             <LoadingCircle />
           </span>
-          <span className="ml-2">{loadingText ?? "Loading..."}</span>
+          <span className="ml-2">{loadingText ?? "Bezig met laden..."}</span>
         </>
       ) : (
         children

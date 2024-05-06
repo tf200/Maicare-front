@@ -1,3 +1,5 @@
+import { DepartureEntries } from "@/types/departure_entries";
+
 export type ClientFormType = {
   first_name: string;
   last_name: string;
@@ -19,4 +21,6 @@ export type ClientFormType = {
   street_number: string;
   added_identity_documents?: string[];
   removed_identity_documents?: string[];
+  departure_reason?: string;
+  departure_report?: string;
 };
