@@ -15,7 +15,7 @@ async function getActivityLogs(params: PaginationParams) {
 export const useActivityLogs = () => {
   const pagination = usePaginationParams();
   const query = useQuery(
-    "activity_logs",
+    ["activity_logs", pagination.params],
     () => getActivityLogs(pagination.params),
     {
       keepPreviousData: true,
