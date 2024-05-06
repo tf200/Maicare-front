@@ -116,7 +116,7 @@ const Page: FunctionComponent = (props) => {
   const updateEventTime = useCallback(
     (interaction: EventInteractionArgs<CalendarEvent>) => {
       queryClient.setQueryData<AppointmentListResDto>(
-        ["appointments"],
+        ["appointments", filters],
         (data) => {
           return data.map((appointment) => {
             if (appointment.id === interaction.event.id) {
@@ -134,7 +134,7 @@ const Page: FunctionComponent = (props) => {
       );
       queryClient.setQueryDefaults(["appointments"], { enabled: true });
     },
-    [queryClient]
+    [queryClient, filters]
   );
 
   const deactivateQuery = useCallback(() => {
