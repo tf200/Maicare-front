@@ -201,8 +201,8 @@ const Analytics: FunctionComponent = (props) => {
             </div>
             <div>
               <strong>Totale winst:</strong>{" "}
-              <span className={cn([(data?.finance.total_paid_amount - data?.finance.total_expenses) > 0 ? "text-green-600" : "text-pink-500"])}>
-                {formatPrice(+data?.finance.total_paid_amount - data?.finance.total_expenses)}
+              <span className={cn([(+data?.finance.total_paid_amount - +data?.finance.total_expenses) > 0 ? "text-green-600" : "text-pink-500"])}>
+                {formatPrice(+data?.finance.total_paid_amount - +data?.finance.total_expenses)}
               </span>
             </div>
           </div>
