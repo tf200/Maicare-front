@@ -73,8 +73,8 @@ export const clientsSchema: Yup.ObjectSchema<ClientFormType> =
     source: Yup.string().required("Geef alstublieft een bron op"),
     added_identity_documents: Yup.array(),
     removed_identity_documents: Yup.array(),
-    departure_reason: Yup.string(),
-    departure_report: Yup.string(),
+    departure_reason: Yup.string().optional().nullable(),
+    departure_report: Yup.string().optional().nullable(),
   });
 
 type PropsType = {
@@ -163,7 +163,8 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
 
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
-  return (
+
+    return (
     <>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit}>
