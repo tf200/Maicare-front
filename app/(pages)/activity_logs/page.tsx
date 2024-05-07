@@ -25,8 +25,9 @@ const List = () => {
         cell: (row) => shortDateTimeFormat(row.getValue() as string),
       },
       {
-        accessorKey: "user_pk_as_string", // employee
+        accessorKey: "user_name", // employee
         header: "Medewerker",
+        cell: (row) => row.getValue() || "-" 
       },
       {
         accessorKey: "event_type_name", // event
@@ -49,11 +50,26 @@ const List = () => {
       isFetching={isFetching}
       renderRowDetails={({ original: data }) => {
         const parsedObjectJsonRepr = JSON.parse(data.object_json_repr);
+        const parsedChangedFields = JSON.parse(data.changed_fields);
+
         return (
           <div className={"overflow-x-auto"}>
-            <code>
-              <pre>{JSON.stringify(parsedObjectJsonRepr, null, 2)}</pre>
-            </code>
+            <div className="mb-5">
+              <b className="block">### Object REPR (ID: #{data.object_id}) ###</b>
+              <i>{data.object_repr}</i>
+            </div>
+            <div className="mb-5">
+              <b className="block">### DATA ###</b>
+              <code>
+                <pre>{JSON.stringify(parsedObjectJsonRepr, null, 2)}</pre>
+              </code>
+            </div>
+            <div className="mb-5">
+              <b className="block">### Changed Fields ###</b>
+              <code>
+                <pre>{JSON.stringify(parsedChangedFields, null, 2)}</pre>
+              </code>
+            </div>
           </div>
         );
       }}

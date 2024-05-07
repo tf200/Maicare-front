@@ -6,6 +6,7 @@ import { LocationItem, LocationResDto } from "@/types/locations/location.dto";
 import { useLocations } from "@/utils/locations";
 import { useClientsList } from "@/utils/clients/getClientsList";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
+import { useLocationStats } from "@/utils/locations/getLocationStats";
 
 function greeting() {
   const time = new Date().getHours();
@@ -20,7 +21,12 @@ function greeting() {
 
 const DashboardOverview: React.FC = () => {
   const { data: profile } = useMyInfo();
-  const { data: locations, isLoading: loadingLocation } = useLocations();
+
+  const { data: locationStats, isLoading: locationStatsLoading } = useLocationStats()
+
+  if (locationStatsLoading)
+    return <span>Loading...</span>
+
   if (!profile) return null;
   return (
     <div className="mb-6">
@@ -37,10 +43,17 @@ const DashboardOverview: React.FC = () => {
       </h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-        {locations?.results.map((location: LocationResDto) => (
-          <Location key={location.id} location={location} />
-        ))}
-        {loadingLocation ? <div>Laden...</div> : null}
+        {locationStats.map((locationStat, i) =>
+          <LocationWidget key={i}
+            title={locationStat.location_name}
+            clients={locationStat.total_clients}
+            employees={locationStat.total_employees}
+            percentage={Math.min(100 * (locationStat.total_clients / locationStat.location_capacity), 100)}
+            capacity={locationStat.location_capacity}
+            expenses={locationStat.total_expenses}
+            revenue={locationStat.total_revenue}
+          />
+        )}
       </div>
     </div>
   );
@@ -51,23 +64,11 @@ export default DashboardOverview;
 const Location: FunctionComponent<{
   location: LocationItem;
 }> = ({ location }) => {
-  const { data: clients } = useClientsList({
-    location: location.id,
-    status__in: "In Care",
-  });
-  const { data: employees } = useEmployeesList({
-    location: location.id,
-  });
+  
+
   return (
     <>
-      {clients && employees && (
-        <LocationWidget
-          title={location.name}
-          clients={clients.count}
-          employees={employees.count}
-          percentage={Math.min(100 * (clients.count / location.capacity), 100)}
-        />
-      )}
+      
     </>
   );
 };
@@ -77,7 +78,10 @@ const LocationWidget: FunctionComponent<{
   clients?: number;
   employees?: number;
   percentage?: number;
-}> = ({ title, clients, employees, percentage }) => {
+  capacity?: number;
+  expenses?: number;
+  revenue?: number;
+}> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
@@ -86,12 +90,25 @@ const LocationWidget: FunctionComponent<{
             {title}
           </h3>
           <p className="font-medium">
+            <strong>Capaciteit:</strong>
+            {capacity}
+          </p>
+          <p className="font-medium">
             <strong>Cliënten:</strong>
             {clients}
           </p>
           <p className="font-medium">
-            <strong>Medewerkers:</strong> {employees}
+            <strong>Medewerkers:</strong> 
+            {employees}
           </p>
+          <p className="font-medium">
+            <strong>Uitgaven: </strong> 
+            €{expenses}
+          </p>          
+          {/* <p className="font-medium">
+            <strong>Winst: </strong> 
+            €{revenue}
+          </p> */}
           {percentage >= 100 && (
             <span className="mt-2 flex items-center gap-2">
               <span className="flex items-center gap-1 rounded-md bg-red p-1 text-xs font-medium text-white">
@@ -102,7 +119,7 @@ const LocationWidget: FunctionComponent<{
         </div>
 
         <div>
-          <svg className="h-17.5 w-17.5 -rotate-90 transform">
+          <svg className="h-20 w-20 -rotate-90 transform">
             <circle
               className="text-stroke dark:text-strokedark"
               strokeWidth="10"
