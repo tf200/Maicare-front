@@ -3,6 +3,7 @@ import { ButtonProps } from "@/components/buttons/Button";
 import LoadingCircle from "@/components/icons/LoadingCircle";
 import clsx from "clsx";
 import { BUTTON_CLASS_NAMES } from "@/consts";
+import { cn } from "@/utils/cn";
 
 const IconButton: FunctionComponent<ButtonProps> = ({
   isLoading = false,
@@ -15,11 +16,11 @@ const IconButton: FunctionComponent<ButtonProps> = ({
     <button
       type={type}
       {...props}
-      className={clsx(
-        props.className,
+      className={cn(
         "flex justify-center p-2 font-medium rounded-full",
         BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
-          BUTTON_CLASS_NAMES.Primary
+        BUTTON_CLASS_NAMES.Primary,
+        props.className,
       )}
     >
       {isLoading ? (

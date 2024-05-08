@@ -55,9 +55,9 @@ const SmartTextarea: FunctionComponent<Props> = ({
           {...props}
           {...fieldInput}
         ></textarea>
-        {fieldInput.value?.length > 75 && (
+        {1 && (
           <IconButton
-            disabled={props.disabled}
+            disabled={props.disabled || fieldInput.value?.length < 75}
             onClick={() => {
               open({
                 title: modalTitle,
@@ -67,7 +67,7 @@ const SmartTextarea: FunctionComponent<Props> = ({
                 },
               });
             }}
-            className="absolute bottom-4 right-2"
+            className={cn("absolute bottom-4 right-2", (fieldInput.value?.length < 75) ? "bg-gray-400 text-gray-500" : "")}
           >
             <Sparkles />
           </IconButton>

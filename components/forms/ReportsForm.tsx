@@ -178,16 +178,18 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             placeholder={"Geef alstublieft rapporten"}
             error={touched.report_text && errors.report_text}
           />
-
-          <Button
-            type={"submit"}
-            disabled={isCreating || isPatching || !canSubmit}
-            isLoading={isCreating || isPatching}
-            formNoValidate={true}
-            loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
-          >
-            {mode === "edit" ? "Rapport bijwerken" : "Rapport indienen"}
-          </Button>
+          <div className="text-muted mb-2">Voer meer dan 50 woorden in om het rapport in te dienen <b>({values.report_text.split(" ").length - 1} woorden geschreven)</b></div>
+          {values.report_text.split(" ").length > 50 && (
+            <Button
+              type={"submit"}
+              disabled={isCreating || isPatching || !canSubmit}
+              isLoading={isCreating || isPatching}
+              formNoValidate={true}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
+            >
+              {mode === "edit" ? "Rapport bijwerken" : "Rapport indienen"}
+            </Button>
+          )}
         </div>
       </form>
     </FormikProvider>
