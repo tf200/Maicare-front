@@ -28,24 +28,8 @@ const Amsterdam: [number, number] = [52.37161673882133, 4.891405105590821];
 
 const ClientPositionPicker: FunctionComponent<{clientId: number}> = ({clientId}) => {
 
-  return (
-    <Panel title={"Locatie"}>
-      <MapContainer
-        className={"w-full h-100"}
-        center={Amsterdam}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MarkerOnPosition clientId={clientId} />
-      </MapContainer>
-    </Panel>
-  );
-};
-
-const MarkerOnPosition = ({clientId}: {clientId: number}) => {
   const { data: clientDetails, isLoading, refetch } = useClientDetails(clientId)
-  const [position, setPosition] = useState<[number, number]>(null);
+  const [position, setPosition] = useState<[number, number]>(undefined);
 
   useEffect(() => {
     if (clientDetails?.gps_position.length == 2)
@@ -54,8 +38,40 @@ const MarkerOnPosition = ({clientId}: {clientId: number}) => {
         parseFloat(clientDetails.gps_position[0]), 
         parseFloat(clientDetails.gps_position[1])
       ])
-    }
+    } 
   }, [clientDetails?.gps_position])
+
+  useEffect(() => {
+    if (position != null && !isLoading)
+    {
+      setPosition(position)
+    }
+  }, [position])
+
+  const center: [number, number] = clientDetails?.gps_position.length == 2 ? [
+    parseFloat(clientDetails.gps_position[0]), 
+    parseFloat(clientDetails.gps_position[1])
+  ] : Amsterdam
+
+  if (isLoading || !clientDetails)
+    return null
+
+  return (
+    <Panel title={"Locatie"}>
+        <MapContainer
+        className={"w-full h-100"}
+        center={center}
+        zoom={13}
+        scrollWheelZoom={true}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <MarkerOnPosition position={position} clientId={clientId} refetch={refetch} setPosition={setPosition} />
+      </MapContainer>
+    </Panel>
+  );
+};
+
+const MarkerOnPosition = ({clientId, position, setPosition, refetch}: {clientId: number, position: [number, number], refetch: () => void, setPosition: (pos: [number, number]) => void}) => {
 
   useMapEvents({
     click(event) {
@@ -69,7 +85,7 @@ const MarkerOnPosition = ({clientId}: {clientId: number}) => {
     },
   });
 
-  if (!position || isLoading) return null;
+  if (!position) return null;
 
   return <Marker icon={icon} position={position} />;
 };
