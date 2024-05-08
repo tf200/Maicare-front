@@ -11,6 +11,7 @@ import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 import L from "leaflet";
 import Panel from "@/components/Panel";
+import api from "@/utils/api";
 const icon = L.icon({
   iconUrl: iconUrl.src,
   shadowUrl: shadowUrl.src,
@@ -22,7 +23,7 @@ const icon = L.icon({
   popupAnchor: [-3, -76],
 });
 
-const Amsterdam: [number, number] = [52.3676, 4.9041];
+const Amsterdam: [number, number] = [52.37161673882133, 4.891405105590821] as const;
 
 const ClientPositionPicker: FunctionComponent = (props) => {
   return (
@@ -42,10 +43,13 @@ const ClientPositionPicker: FunctionComponent = (props) => {
 
 const MarkerOnPosition = () => {
   const [position, setPosition] = useState<[number, number]>(null);
-
+ 
   useMapEvents({
     click(event) {
       setPosition([event.latlng.lat, event.latlng.lng]);
+      api.post("/clients/gps/update", {
+
+      })
     },
   });
 
