@@ -11,8 +11,8 @@ export const getClientDetails = async (clientId: number) => {
 
 export const useClientDetails = (clientId: number) => {
   return useQuery<ClientDetailsResDto>({
-    queryFn: () => getClientDetails(clientId),
     queryKey: ["clients", clientId],
+    queryFn: () => getClientDetails(clientId),
     enabled: !!clientId,
   });
 };

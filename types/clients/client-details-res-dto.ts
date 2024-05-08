@@ -8,4 +8,5 @@ export type ClientDetailsResDto = NewClientsRequest & {
   sender: number;
   status: "On Waiting List" | "In Care" | "Out Of Care";
   attachments: AttachmentItem[];
+  gps_position: string[];
 };

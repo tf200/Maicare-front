@@ -153,7 +153,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           <Panel title={"Adresgegevens"} containerClassName="px-7 py-4">
             <AddressDetails clientId={parseInt(clientId)} />
           </Panel>
-          <ClientPositionPicker />
+          <ClientPositionPicker clientId={parseInt(clientId)} />
           <Panel
             title={"Medisch Dossier"}
             containerClassName="px-7 py-4"
