@@ -24,7 +24,7 @@ const icon = L.icon({
   popupAnchor: [-3, -76],
 });
 
-const Amsterdam: [number, number] = [52.37161673882133, 4.891405105590821] as const;
+const Amsterdam: [number, number] = [52.37161673882133, 4.891405105590821];
 
 const ClientPositionPicker: FunctionComponent<{clientId: number}> = ({clientId}) => {
 
