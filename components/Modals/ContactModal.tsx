@@ -49,11 +49,14 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   additionalProps,
 }) => {
   const { mutate: assign, isLoading } = usePatchClientContact(
-    additionalProps.client
+    additionalProps.clientId
   );
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (value) => {
+
+      console.log("Sender Value:", value)
+
       assign(
         {
           sender: value.selected,
