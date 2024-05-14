@@ -1,18 +1,19 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, InputHTMLAttributes } from "react";
 import CheckIcon from "@/components/icons/CheckIcon";
 import clsx from "clsx";
 import { Field } from "formik";
 import { cn } from "@/utils/cn";
 
-interface Props {
+type CheckBoxPropsType = {
   label: string;
   id: string;
   value?: boolean;
   name?: string;
   className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormikCheckboxItem: FunctionComponent<Props> = ({
+const FormikCheckboxItem: FunctionComponent<CheckBoxPropsType> = ({
   id,
   label,
   name,
