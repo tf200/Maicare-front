@@ -111,7 +111,9 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
         errors,
         touched,
         handleBlur,
-      }) => (
+      }) => {
+        
+        return <>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 gap-9 sm:grid-cols-2"
@@ -150,6 +152,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                 id="is_subcontractor"
                 name="is_subcontractor"
                 value={values.is_subcontractor}
+                onChange={handleChange}
               />
             </Panel>
             <Panel title={"Naam"} containerClassName="px-7 py-4">
@@ -294,7 +297,9 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
             </Panel>
           </div>
         </form>
-      )}
+
+        </> 
+      }}
     </Formik>
   );
 };

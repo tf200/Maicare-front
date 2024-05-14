@@ -18,6 +18,7 @@ const FormikCheckboxItem: FunctionComponent<Props> = ({
   name,
   value,
   className,
+  ...props
 }) => {
   return (
     <label htmlFor={id} className={cn("flex cursor-pointer", className)}>
@@ -27,6 +28,7 @@ const FormikCheckboxItem: FunctionComponent<Props> = ({
           name={name}
           id={id}
           className="sr-only taskCheckbox"
+          {...props}
         />
         <div
           className={clsx(
