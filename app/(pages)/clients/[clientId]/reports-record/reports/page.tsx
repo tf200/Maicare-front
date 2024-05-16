@@ -2,7 +2,7 @@
 
 import React, { Fragment, FunctionComponent } from "react";
 import ProfilePicture from "@/components/ProfilePicture";
-import { getDate, getLocateDatetime, getTime } from "@/utils/message-time";
+import { getLocateDatetime } from "@/utils/message-time";
 import LargeErrorMessage from "@/components/LargeErrorMessage";
 import styles from "./reports.module.css";
 import clsx from "clsx";
