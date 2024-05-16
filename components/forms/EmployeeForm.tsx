@@ -34,6 +34,7 @@ const initialValues: FormType = {
   work_phone_number: "",
   private_phone_number: "",
   home_telephone_number: "",
+  out_of_service: false,
 };
 
 const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
@@ -52,6 +53,7 @@ const employeeSchema: Yup.ObjectSchema<EmployeeFormType> = Yup.object({
   work_phone_number: Yup.string(),
   private_phone_number: Yup.string(),
   home_telephone_number: Yup.string(),
+  out_of_service: Yup.boolean().default(false),
 });
 
 type PropsType = {
@@ -152,6 +154,13 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                 id="is_subcontractor"
                 name="is_subcontractor"
                 value={values.is_subcontractor}
+                onChange={handleChange}
+              />
+              <FormikCheckboxItem
+                label={"Uit Dienst"}
+                id="out_of_service"
+                name="out_of_service"
+                value={values.out_of_service }
                 onChange={handleChange}
               />
             </Panel>

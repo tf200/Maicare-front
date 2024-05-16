@@ -30,14 +30,13 @@ import Button from "@/components/buttons/Button";
 import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
 import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
 import ClientDeparture from "@/components/clientDetails/ClientDeparture";
+import { useDocumentList } from "@/utils/document/getDocumentList";
 
 type Props = {
   params: { clientId: string };
 };
 
-const ClientDetailsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
+const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const router = useRouter();
 
   const {
@@ -45,6 +44,15 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteClient();
+
+  const {
+    pagination,
+    isFetching,
+    isLoading: isListLoading,
+    isError,
+    data,
+  } = useDocumentList(clientId);
+
 
   useEffect(() => {
     if (isDeleted) {
@@ -179,12 +187,13 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             <ReportsSummary clientId={parseInt(clientId)} />
           </Panel>
           <Panel
-            title={"Documenten"}
+            title={`Documenten (${data?.results.length}/4)`}
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={"Volledige Documenten"}
+                text={data?.results.length < 4 ? `Moet ${4 - data?.results.length} extra documenten toevoegen` : "Volledige Documenten"}
                 href={`${clientId}/document`}
+                className={data?.results.length < 4 && "bg-red"}
               />
             }
           >

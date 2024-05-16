@@ -21,4 +21,5 @@ export type NewEmployeesRequest = {
   date_of_birth: string;
   certifications: string;
   experience: string;
+  out_of_service: boolean;
 };

@@ -165,6 +165,7 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
           label={"Bestanden"}
           name={"temporary_file_ids"}
           id={"temporary_file_ids"}
+          // endpoint="global_v2"
         />
         {mode === "update" && (
           <FilesDeleter

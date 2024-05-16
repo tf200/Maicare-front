@@ -58,15 +58,16 @@ const UploadedFile: FunctionComponent<{
 }> = ({ file, onRemove, tagLabel, tagOptions }) => {
   const { mutate: fileUpdate } = usePatchFileData(file.id);
   const { data: fileData } = useFileData(file.id);
+
   return (
     <div className="mt-4.5">
       <div className="border border-stroke bg-white py-3 px-4 dark:border-strokedark dark:bg-boxdark">
         <div className="flex items-center justify-between gap-4">
           <div>{file.name}</div>
 
-          {file.file && (
+          {(file.file || file.attachement) && (
             <Link
-              href={file.file}
+              href={file.file || file.attachement}
               target={"_blank"}
               download
               className="ml-auto"

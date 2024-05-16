@@ -29,7 +29,7 @@ const initialValues: FormType = {
 };
 
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
-  title: Yup.string().required("Geef alstublieft een titel"),
+  title: Yup.string().optional().default(""),
   report_text: Yup.string().required("Geef alstublieft een rapport"),
   date: Yup.string(),
   client: Yup.number(),
@@ -140,7 +140,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             error={touched.type && errors.type}
             className={"w-full mb-4.5"}
           />
-          <InputField
+          {/* <InputField
             className={"w-full mb-4.5"}
             required={true}
             id={"title"}
@@ -151,7 +151,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.title && errors.title}
-          />
+          /> */}
 
           <InputField
             className={"w-full mb-4.5"}
@@ -178,8 +178,8 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             placeholder={"Geef alstublieft rapporten"}
             error={touched.report_text && errors.report_text}
           />
-          <div className="text-muted mb-2">Voer meer dan 50 woorden in om het rapport in te dienen <b>({values.report_text.split(" ").length - 1} woorden geschreven)</b></div>
-          {values.report_text.split(" ").length > 50 && (
+          <div className="text-muted mb-2">Voer meer dan 50 woorden in om het rapport in te dienen.</div>
+          {values.report_text.split(" ").length > 50 && canSubmit && (
             <Button
               type={"submit"}
               disabled={isCreating || isPatching || !canSubmit}
