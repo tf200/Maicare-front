@@ -14,4 +14,5 @@ export type EmployeeFormType = {
   private_phone_number: string;
   home_telephone_number: string;
   location: string;
+  out_of_service: boolean;
 };

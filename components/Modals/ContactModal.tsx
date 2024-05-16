@@ -49,8 +49,9 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   additionalProps,
 }) => {
   const { mutate: assign, isLoading } = usePatchClientContact(
-    additionalProps.clientId
+    additionalProps.clientId || additionalProps.client
   );
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (value) => {

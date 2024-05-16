@@ -31,3 +31,15 @@ export function getTime(time: string) {
   }
   return fullDateTimeFormat(time);
 }
+
+export function getLocateDatetime(date: string) {
+  return new Date(date).toLocaleString()
+}
+
+export function getLocateDate(date: string) {
+  return new Date(date).toLocaleDateString()
+}
+
+export function getLocateTime(date: string) {
+  return new Date(date).toLocaleTimeString()
+}

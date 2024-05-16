@@ -2,7 +2,7 @@
 
 import React, { Fragment, FunctionComponent } from "react";
 import ProfilePicture from "@/components/ProfilePicture";
-import { getTime } from "@/utils/message-time";
+import { getDate, getLocateDatetime, getTime } from "@/utils/message-time";
 import LargeErrorMessage from "@/components/LargeErrorMessage";
 import styles from "./reports.module.css";
 import clsx from "clsx";
@@ -84,7 +84,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   <div className="group">
                     <p className="text-black dark:text-white flex gap-4">
                       <div>
-                        <span className="font-medium">{post.title}</span>
+                        <span className="font-medium">Report #{post.id}</span>
                         <span className="px-1">Geschreven door</span>
                         <span className="font-medium">{post.full_name}</span>
                       </div>
@@ -107,7 +107,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       </span>
                     </p>
                     <span className="mt-1 block text-sm">
-                      {getTime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
+                      {getLocateDatetime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
                     </span>
                     <p className="mt-2.5 text-black dark:text-white">
                       {post.report_text}

@@ -123,11 +123,12 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       />
 
       <Panel
-        title={"Documentenlijst"}
+        title={`Documentenlijst ${data?.results.length}/4`}
         sideActions={
           <LinkButton
-            text={"Upload een Nieuw Document"}
+            text={data?.results.length < 4 ? `Moet ${4 - data?.results.length} extra documenten toevoegen` : "Upload een Nieuw Document"}
             href={`/clients/${clientId}/document/new`}
+            className={data?.results.length < 4 && "bg-red"}
           />
         }
       >

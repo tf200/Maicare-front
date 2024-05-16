@@ -6,7 +6,8 @@ import { EmployeesSearchParams } from "@/types/employees/employees-search-params
 import { LocationSelect } from "@/components/FormFields/FormikLocation";
 
 const STATUS_OPTIONS: SelectionOption[] = [
-  { value: "out of service", label: "Uit Dienst" },
+  { value: "out_of_service", label: "Uit Dienst" },
+  // { value: "is_archived", label: "wordt gearchiveerd" },
 ];
 
 type Props = {
@@ -17,6 +18,8 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [selected, setSelected] = useState<SelectionOption["value"][]>([]);
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState<number>();
+
+
   return (
     <div className="flex flex-wrap items-center gap-8">
       <InputField
@@ -27,8 +30,9 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           setSearch(e.target.value);
           onFiltersChange({
             search: e.target.value,
-            out_of_service: selected.length === 1,
+            out_of_service: selected.includes("out_of_service"),
             location,
+            is_archived: selected.includes("is_archived"),
           });
         }}
       />
@@ -39,8 +43,9 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
           setLocation(+e.target.value || undefined);
           onFiltersChange({
             search,
-            out_of_service: selected.length === 1,
+            out_of_service: selected.includes("out_of_service"),
             location: +e.target.value || undefined,
+            is_archived: selected.includes("is_archived"),
           });
         }}
       />
@@ -52,11 +57,13 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
             setSelected(selected);
             onFiltersChange({
               search,
-              out_of_service: selected.length === 1,
+              out_of_service: selected.includes("out_of_service"),
               location,
+              is_archived: selected.includes("is_archived"),
             });
           }}
         />
+        
       </div>
     </div>
   );
