@@ -47,7 +47,11 @@ const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
             <DetailCell
               className="flex items-center"
               ignoreIfEmpty={true}
-              label={<span className="text-sm min-w-[120px] text-center p-0 px-2 text-yellow-700 bg-yellow-400 transition border rounded-full cursor-pointer hover:bg-opacity-90">{DOCUMENT_LABELS[document.label]}</span>}
+              label={
+                <span className="text-sm  p-1 px-2 text-yellow-700 bg-yellow-400 transition font-bold rounded-full">
+                  {DOCUMENT_LABELS[document.label] || "-"}
+                </span>
+              }
               value=""
             />
             <DetailCell

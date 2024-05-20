@@ -81,9 +81,16 @@ function Table<T>({
       <thead className="px-4 border-separate">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr className="border-t border-stroke" key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
+            {headerGroup.headers.map((header, i) => {
               return (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  className={
+                    "className" in header.column.columnDef &&
+                    (header.column.columnDef.className as string)
+                  }
+                >
                   {header.isPlaceholder ? null : (
                     <div
                       {...{
@@ -141,7 +148,7 @@ function Table<T>({
                   });
                 }}
                 className={cn(
-                  "px-4 py-6 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl",
+                  "px-2 py-2 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl",
                   rowClassName?.(row)
                 )}
               >

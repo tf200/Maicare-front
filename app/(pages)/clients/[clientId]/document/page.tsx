@@ -63,22 +63,30 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             <FileIcon />
           </div>
         ),
+        className: "w-[70px]",
       },
       {
         accessorKey: "original_filename",
         header: () => "Bestandsnaam",
         cell: (info) => info.getValue() || "Niet Beschikbaar",
+        className: "w-[30%]",
       },
       {
         accessorKey: "file_size",
         header: () => "Bestandsgrootte",
         cell: (info) =>
           bytesToSize(parseInt(info.getValue())) || "Niet Beschikbaar",
+        className: "w-[150px]",
       },
       {
         accessorKey: "label",
         header: () => "Label",
-        cell: (info) => <span className="w-[30%] text-sm min-w-[120px] p-1 px-2 text-yellow-700 bg-yellow-400 transition border rounded-full cursor-pointer hover:bg-opacity-90">{DOCUMENT_LABELS[info.getValue()] || "-"}</span>,
+        cell: (info) => (
+          <span className="text-sm  p-1 px-2 text-yellow-700 bg-yellow-400 transition font-bold rounded-full">
+            {DOCUMENT_LABELS[info.getValue()] || "-"}
+          </span>
+        ),
+        className: "w-[250px]",
       },
       {
         accessorKey: "uploaded_at",
@@ -93,6 +101,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           <a
             href={info.getValue()}
             className="w-[30%] text-sm min-w-[120px] p-2 px-3 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
+            style={{ textWrap: "nowrap" }}
           >
             Downloaden
           </a>
@@ -108,6 +117,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               setModalOpen(true);
             }}
             className="w-[30%] text-sm min-w-[120px] p-2 px-3 text-white transition border rounded-lg cursor-pointer border-danger bg-danger hover:bg-opacity-90"
+            style={{ textWrap: "nowrap" }}
           >
             Verwijderen
           </a>
@@ -118,14 +128,17 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
 
   const TOTAL_REQUIRED_DOCUMENTS = Object.keys(DOCUMENT_LABELS).length - 1;
 
-  let ALREADY_UPLOADED_DOCUMENTS = []
-  let NOT_UPLOADED_DOCUMENTS = []
+  let ALREADY_UPLOADED_DOCUMENTS = [];
+  let NOT_UPLOADED_DOCUMENTS = [];
 
-  if (!isListLoading && data !== undefined && data?.results !== undefined)
-  {
+  if (!isListLoading && data !== undefined && data?.results !== undefined) {
     ALREADY_UPLOADED_DOCUMENTS = data?.results.map((doc) => doc.label);
-    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(option => option.value !== "") // remove the select option
-    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(option => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value));
+    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(
+      (option) => option.value !== ""
+    ); // remove the select option
+    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(
+      (option) => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value) && option.value != "other"
+    );
   }
 
   return (
@@ -146,7 +159,11 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         title={`Documentenlijst (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
         sideActions={
           <LinkButton
-            text={NOT_UPLOADED_DOCUMENTS.length ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen` : "Upload een Nieuw Document"}
+            text={
+              NOT_UPLOADED_DOCUMENTS.length
+                ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen`
+                : "Upload een Nieuw Document"
+            }
             href={`/clients/${clientId}/document/new`}
             className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
           />

@@ -11,7 +11,7 @@ type CheckBoxPropsType = {
   name?: string;
   className?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 const FormikCheckboxItem: FunctionComponent<CheckBoxPropsType> = ({
   id,

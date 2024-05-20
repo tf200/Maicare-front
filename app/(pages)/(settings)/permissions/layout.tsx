@@ -124,7 +124,7 @@ const NewGroupModal: FC<ModalProps> = ({ additionalProps, ...props }) => {
           e.preventDefault();
           const name = e.target["name"].value;
           createGroup({ name, permissions: [] });
-          props.onClose()
+          props.onClose();
         }}
       >
         <InputField

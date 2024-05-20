@@ -71,6 +71,19 @@ const ClientsPage: FunctionComponent = () => {
         header: () => "Status",
         cell: (info) => STATUS_RECORD[info.getValue() as string] || "N/A",
       },
+      {
+        accessorKey: "document_info",
+        header: () => "Documenten",
+        cell: (info) => {
+          let missing_documents = info.getValue()["not_uploaded_document_labels"]?.length
+
+          return missing_documents > 0 ? (
+            <span className="text-red">{missing_documents} missende documenten</span>
+          ) : (
+            <span className="text-green">✅ voltooid</span>
+          )
+        }
+      },
     ];
   }, []);
 

@@ -22,10 +22,10 @@ function greeting() {
 const DashboardOverview: React.FC = () => {
   const { data: profile } = useMyInfo();
 
-  const { data: locationStats, isLoading: locationStatsLoading } = useLocationStats()
+  const { data: locationStats, isLoading: locationStatsLoading } =
+    useLocationStats();
 
-  if (locationStatsLoading)
-    return <span>Loading...</span>
+  if (locationStatsLoading) return <span>Loading...</span>;
 
   if (!profile) return null;
   return (
@@ -43,17 +43,22 @@ const DashboardOverview: React.FC = () => {
       </h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-        {locationStats.map((locationStat, i) =>
-          <LocationWidget key={i}
+        {locationStats.map((locationStat, i) => (
+          <LocationWidget
+            key={i}
             title={locationStat.location_name}
             clients={locationStat.total_clients}
             employees={locationStat.total_employees}
-            percentage={Math.min(100 * (locationStat.total_clients / locationStat.location_capacity), 100)}
+            percentage={Math.min(
+              100 *
+                (locationStat.total_clients / locationStat.location_capacity),
+              100
+            )}
             capacity={locationStat.location_capacity}
             expenses={locationStat.total_expenses}
             revenue={locationStat.total_revenue}
           />
-        )}
+        ))}
       </div>
     </div>
   );
@@ -64,13 +69,7 @@ export default DashboardOverview;
 const Location: FunctionComponent<{
   location: LocationItem;
 }> = ({ location }) => {
-  
-
-  return (
-    <>
-      
-    </>
-  );
+  return <></>;
 };
 
 const LocationWidget: FunctionComponent<{
@@ -81,7 +80,15 @@ const LocationWidget: FunctionComponent<{
   capacity?: number;
   expenses?: number;
   revenue?: number;
-}> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
+}> = ({
+  title,
+  clients,
+  employees,
+  percentage,
+  capacity,
+  expenses,
+  revenue,
+}) => {
   return (
     <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
@@ -98,13 +105,12 @@ const LocationWidget: FunctionComponent<{
             {clients}
           </p>
           <p className="font-medium">
-            <strong>Medewerkers:</strong> 
+            <strong>Medewerkers:</strong>
             {employees}
           </p>
           <p className="font-medium">
-            <strong>Uitgaven: </strong> 
-            €{expenses}
-          </p>          
+            <strong>Uitgaven: </strong>€{expenses}
+          </p>
           {/* <p className="font-medium">
             <strong>Winst: </strong> 
             €{revenue}

@@ -15,7 +15,11 @@ import SmartTextarea from "@/components/FormFields/SmartTextarea";
 import { useClientMedicationRecords } from "@/utils/medication-records";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { DAILY_REPORT_TYPES, DAILY_REPORT_TYPES_OPTIONS, EMOTIONAL_STATE_OPTIONS } from "@/consts";
+import {
+  DAILY_REPORT_TYPES,
+  DAILY_REPORT_TYPES_OPTIONS,
+  EMOTIONAL_STATE_OPTIONS,
+} from "@/consts";
 import Select from "@/components/FormFields/Select";
 
 type FormType = NewReportsReqDto;
@@ -37,7 +41,9 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   created: Yup.string().required("Gelieve de datum en tijd op te geven."),
   type: Yup.string().oneOf(DAILY_REPORT_TYPES),
-  emotional_state: Yup.string().required("Gelieve de emotionele toestand op te geven."),
+  emotional_state: Yup.string().required(
+    "Gelieve de emotionele toestand op te geven."
+  ),
 });
 
 type PropsType = {
@@ -190,7 +196,9 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             placeholder={"Geef alstublieft rapporten"}
             error={touched.report_text && errors.report_text}
           />
-          <div className="text-muted mb-2">Voer meer dan 50 woorden in om het rapport in te dienen.</div>
+          <div className="text-muted mb-2">
+            Voer meer dan 50 woorden in om het rapport in te dienen.
+          </div>
           {values.report_text.split(" ").length > 50 && canSubmit && (
             <Button
               type={"submit"}

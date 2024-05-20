@@ -15,7 +15,7 @@ type PropsType = {
 export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
   const { mutate, isLoading } = useCreateDocument(parseInt(clientId));
   const router = useRouter();
-  
+
   const {
     pagination,
     isFetching,
@@ -37,7 +37,6 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
     }
   }
 
-
   const handleFileChange = (e: any) => {
     setError("");
     if (!checkFileExtension(e.target.files[0].name)) {
@@ -58,7 +57,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
       mutate(formData, {
         onSuccess: () => {
           setFile(null);
-          setLabel("")
+          setLabel("");
           router.push(`/clients/${clientId}/document`);
         },
       });
@@ -76,18 +75,27 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
     onSubmit(file);
   };
 
-  let ALREADY_UPLOADED_DOCUMENTS = []
-  let CUSTOM_DOCUMENT_LABEL_OPTIONS = []
+  let ALREADY_UPLOADED_DOCUMENTS = [];
+  let CUSTOM_DOCUMENT_LABEL_OPTIONS = [];
 
-  if (!isLoading && data !== undefined && data?.results !== undefined)
-  {
-    ALREADY_UPLOADED_DOCUMENTS = data?.results.map((doc) => doc.label).filter(label => label !== "other");
-    CUSTOM_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(option => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value))
+  if (!isLoading && data !== undefined && data?.results !== undefined) {
+    ALREADY_UPLOADED_DOCUMENTS = data?.results
+      .map((doc) => doc.label)
+      .filter((label) => label !== "other");
+    CUSTOM_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(
+      (option) => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value)
+    );
   }
 
   return (
     <form onSubmit={checkFileInput} className="p-6.5 pt-4.5">
-      <Select label="label" options={CUSTOM_DOCUMENT_LABEL_OPTIONS} className="mb-5" name="label" onChange={(e) => setLabel(e.target.value)} />
+      <Select
+        label="label"
+        options={CUSTOM_DOCUMENT_LABEL_OPTIONS}
+        className="mb-5"
+        name="label"
+        onChange={(e) => setLabel(e.target.value)}
+      />
       {file ? <div className=" pb-4.5"> {file.name} </div> : <></>}
       <div
         id="FileUpload"

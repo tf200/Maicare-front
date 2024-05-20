@@ -37,7 +37,9 @@ type Props = {
   params: { clientId: string };
 };
 
-const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+const ClientDetailsPage: FunctionComponent<Props> = ({
+  params: { clientId },
+}) => {
   const router = useRouter();
 
   const {
@@ -57,7 +59,6 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
     page: 1,
   });
 
-
   useEffect(() => {
     if (isDeleted) {
       setTimeout(() => {
@@ -74,14 +75,17 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
   );
 
   const TOTAL_REQUIRED_DOCUMENTS = Object.keys(DOCUMENT_LABELS).length - 1;
-  let ALREADY_UPLOADED_DOCUMENTS = []
-  let NOT_UPLOADED_DOCUMENTS = []
+  let ALREADY_UPLOADED_DOCUMENTS = [];
+  let NOT_UPLOADED_DOCUMENTS = [];
 
-  if (!isListLoading && data !== undefined && data?.results !== undefined)
-  {
+  if (!isListLoading && data !== undefined && data?.results !== undefined) {
     ALREADY_UPLOADED_DOCUMENTS = data?.results.map((doc) => doc.label);
-    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(option => option.value !== "") // remove the select option
-    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(option => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value));
+    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(
+      (option) => option.value !== ""
+    ); // remove the select option
+    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(
+      (option) => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value) && option.value != "other"
+    );
   }
 
   return (
@@ -162,7 +166,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
             containerClassName="px-7 py-4"
             sideActions={
               <LinkButton
-                text={NOT_UPLOADED_DOCUMENTS.length ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen` : "Volledige Documenten"}
+                text={
+                  NOT_UPLOADED_DOCUMENTS.length
+                    ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen`
+                    : "Volledige Documenten"
+                }
                 href={`${clientId}/document`}
                 className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
               />
@@ -224,7 +232,6 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
           >
             <ReportsSummary clientId={parseInt(clientId)} />
           </Panel>
-          
         </div>
       </div>
     </>
