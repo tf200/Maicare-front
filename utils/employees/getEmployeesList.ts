@@ -7,12 +7,15 @@ import { EmployeesSearchParams } from "@/types/employees/employees-search-params
 const fetchEmployees =
   (params?: EmployeesSearchParams, page = 1) =>
   async () => {
-    const res = await api.get<EmployeesListResDto>(`employee/employees_list/?out_of_service=false&is_archived=false`, {
-      params: {
-        page,
-        ...params,
-      },
-    });
+    const res = await api.get<EmployeesListResDto>(
+      `employee/employees_list/?out_of_service=false&is_archived=false`,
+      {
+        params: {
+          page,
+          ...params,
+        },
+      }
+    );
     return res.data;
   };
 

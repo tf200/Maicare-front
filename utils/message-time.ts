@@ -33,13 +33,13 @@ export function getTime(time: string) {
 }
 
 export function getLocateDatetime(date: string) {
-  return new Date(date).toLocaleString()
+  return new Date(date).toLocaleString();
 }
 
 export function getLocateDate(date: string) {
-  return new Date(date).toLocaleDateString()
+  return new Date(date).toLocaleDateString();
 }
 
 export function getLocateTime(date: string) {
-  return new Date(date).toLocaleTimeString()
+  return new Date(date).toLocaleTimeString();
 }

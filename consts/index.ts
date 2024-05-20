@@ -37,7 +37,12 @@ export const RATE_TYPE_ARRAY = [
   "monthly",
 ] as const;
 
-export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work", "home_care"] as const;
+export const APPOINTMENT_TYPE_ARRAY = [
+  "meeting",
+  "other",
+  "work",
+  "home_care",
+] as const;
 
 export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Type", value: "" },
@@ -532,7 +537,7 @@ export const EMOTIONAL_STATE_OPTIONS = [
   { label: "😰 Angstig", value: "anxious" },
   { label: "😞 Depressief", value: "depressed" },
   { label: "😡 Boos", value: "angry" },
-]
+];
 
 export const DOCUMENT_LABELS = {
   registration_form: "Registratieformulier",
@@ -547,7 +552,6 @@ export const DOCUMENT_LABELS = {
   other: "Overige",
 };
 
-
 export const DOCUMENT_LABEL_OPTIONS = [
   { label: "Selecteer Document", value: "" },
   { label: "Registratieformulier", value: "registration_form" },
@@ -560,4 +564,4 @@ export const DOCUMENT_LABEL_OPTIONS = [
   { label: "Signaleringsplan", value: "signaling_plan" },
   { label: "Samenwerkingsovereenkomst", value: "cooperation_agreement" },
   { label: "Overige", value: "other" },
-]
+];

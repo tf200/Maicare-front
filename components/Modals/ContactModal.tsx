@@ -55,8 +55,7 @@ const ContactModal: FunctionComponent<ModalProps> = ({
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (value) => {
-
-      console.log("Sender Value:", value)
+      console.log("Sender Value:", value);
 
       assign(
         {

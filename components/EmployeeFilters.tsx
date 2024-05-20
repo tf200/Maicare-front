@@ -19,7 +19,6 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState<number>();
 
-
   return (
     <div className="flex flex-wrap items-center gap-8">
       <InputField
@@ -63,7 +62,6 @@ const EmployeeFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
             });
           }}
         />
-        
       </div>
     </div>
   );

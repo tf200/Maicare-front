@@ -27,7 +27,7 @@ const List = () => {
       {
         accessorKey: "user_name", // employee
         header: "Medewerker",
-        cell: (row) => row.getValue() || "-" 
+        cell: (row) => row.getValue() || "-",
       },
       {
         accessorKey: "event_type_name", // event
@@ -55,7 +55,9 @@ const List = () => {
         return (
           <div className={"overflow-x-auto"}>
             <div className="mb-5">
-              <b className="block">### Object REPR (ID: #{data.object_id}) ###</b>
+              <b className="block">
+                ### Object REPR (ID: #{data.object_id}) ###
+              </b>
               <i>{data.object_repr}</i>
             </div>
             <div className="mb-5">

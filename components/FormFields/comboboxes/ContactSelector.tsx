@@ -18,7 +18,6 @@ const ContactSelector: FunctionComponent<{
     }));
   }, [data]);
 
-
   return (
     <FormikCombobox
       name={name}

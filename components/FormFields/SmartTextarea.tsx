@@ -67,7 +67,10 @@ const SmartTextarea: FunctionComponent<Props> = ({
                 },
               });
             }}
-            className={cn("absolute bottom-4 right-2", (fieldInput.value?.length < 75) ? "bg-gray-400 text-gray-500" : "")}
+            className={cn(
+              "absolute bottom-4 right-2",
+              fieldInput.value?.length < 75 ? "bg-gray-400 text-gray-500" : ""
+            )}
           >
             <Sparkles />
           </IconButton>

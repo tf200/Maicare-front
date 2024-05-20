@@ -38,7 +38,7 @@ export function showEmojies(emotional_state: string) {
     case "anxious":
       return "😰 angstig";
     case "depressed":
-      return "😞 depressief";  
+      return "😞 depressief";
     case "angry":
       return "😡 boos";
     default:

@@ -164,7 +164,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
   const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
     formik;
 
-    return (
+  return (
     <>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit}>

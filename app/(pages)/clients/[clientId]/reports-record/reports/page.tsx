@@ -108,9 +108,12 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       </span>
                     </p>
                     <span className="mt-1 block text-sm">
-                      {getLocateDatetime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
+                      {getLocateDatetime(post.created)} -{" "}
+                      {REPORT_TYPE_RECORD[post.type]}
                     </span>
-                    <span className="">{showEmojies(post.emotional_state)}</span>
+                    <span className="">
+                      {showEmojies(post.emotional_state)}
+                    </span>
                     <p className="mt-2.5 text-black dark:text-white">
                       {post.report_text}
                     </p>
