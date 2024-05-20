@@ -533,3 +533,31 @@ export const EMOTIONAL_STATE_OPTIONS = [
   { label: "😞 Depressief", value: "depressed" },
   { label: "😡 Boos", value: "angry" },
 ]
+
+export const DOCUMENT_LABELS = {
+  registration_form: "Registratieformulier",
+  intake_form: "Intakeformulier",
+  consent_form: "Toestemmingsformulier",
+  risk_assessment: "Risicoanalyse",
+  self_reliance_matrix: "Zelfredzaamheidsmatrix",
+  force_inventory: "Force Inventaris",
+  care_plan: "Zorgplan",
+  signaling_plan: "Signaleringsplan",
+  cooperation_agreement: "Samenwerkingsovereenkomst",
+  other: "Overige",
+};
+
+
+export const DOCUMENT_LABEL_OPTIONS = [
+  { label: "Selecteer Document", value: "" },
+  { label: "Registratieformulier", value: "registration_form" },
+  { label: "Intakeformulier", value: "intake_form" },
+  { label: "Toestemmingsformulier", value: "consent_form" },
+  { label: "Risicoanalyse", value: "risk_assessment" },
+  { label: "Zelfredzaamheidsmatrix", value: "self_reliance_matrix" },
+  { label: "Force Inventaris", value: "force_inventory" },
+  { label: "Zorgplan", value: "care_plan" },
+  { label: "Signaleringsplan", value: "signaling_plan" },
+  { label: "Samenwerkingsovereenkomst", value: "cooperation_agreement" },
+  { label: "Overige", value: "other" },
+]
