@@ -5,8 +5,7 @@ import api from "@/utils/api";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-const fetchDocuments =
-  (clientId: string, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
+const fetchDocuments = (clientId: string, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
     const response = await api.get(`client/document_list/${clientId}/`, {
       params,

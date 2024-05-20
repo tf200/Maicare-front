@@ -9,7 +9,7 @@ import Link from "next/link";
 import Table from "@/components/Table";
 import Pagination from "@/components/Pagination";
 import { useDocumentList } from "@/utils/document/getDocumentList";
-import { PAGE_SIZE } from "@/consts";
+import { DOCUMENT_LABELS, DOCUMENT_LABEL_OPTIONS, PAGE_SIZE } from "@/consts";
 import Panel from "@/components/Panel";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
@@ -31,7 +31,10 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     isLoading: isListLoading,
     isError,
     data,
-  } = useDocumentList(clientId);
+  } = useDocumentList(clientId, {
+    page_size: 1000,
+    page: 1,
+  });
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [documentId, setDocumentId] = useState<number>(null);
@@ -73,6 +76,11 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           bytesToSize(parseInt(info.getValue())) || "Niet Beschikbaar",
       },
       {
+        accessorKey: "label",
+        header: () => "Label",
+        cell: (info) => <span className="w-[30%] text-sm min-w-[120px] p-1 px-2 text-yellow-700 bg-yellow-400 transition border rounded-full cursor-pointer hover:bg-opacity-90">{DOCUMENT_LABELS[info.getValue()] || "-"}</span>,
+      },
+      {
         accessorKey: "uploaded_at",
         header: () => "Geüpload Op",
         cell: (info) =>
@@ -108,6 +116,18 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
+  const TOTAL_REQUIRED_DOCUMENTS = Object.keys(DOCUMENT_LABELS).length - 1;
+
+  let ALREADY_UPLOADED_DOCUMENTS = []
+  let NOT_UPLOADED_DOCUMENTS = []
+
+  if (!isListLoading && data !== undefined && data?.results !== undefined)
+  {
+    ALREADY_UPLOADED_DOCUMENTS = data?.results.map((doc) => doc.label);
+    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(option => option.value !== "") // remove the select option
+    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(option => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value));
+  }
+
   return (
     <>
       <ConfirmationModal
@@ -123,24 +143,36 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       />
 
       <Panel
-        title={`Documentenlijst ${data?.results.length}/4`}
+        title={`Documentenlijst (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
         sideActions={
           <LinkButton
-            text={data?.results.length < 4 ? `Moet ${4 - data?.results.length} extra documenten toevoegen` : "Upload een Nieuw Document"}
+            text={NOT_UPLOADED_DOCUMENTS.length ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen` : "Upload een Nieuw Document"}
             href={`/clients/${clientId}/document/new`}
-            className={data?.results.length < 4 && "bg-red"}
+            className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
           />
         }
       >
         {isListLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}
         {data && (
-          <PaginatedTable
-            data={data}
-            columns={columnDef}
-            page={pagination.page ?? 1}
-            isFetching={isFetching}
-            onPageChange={(page) => pagination.setPage(page)}
-          />
+          <>
+            {NOT_UPLOADED_DOCUMENTS.length > 0 && (
+              <div className="p-5 bg-red text-white font-bold rounded-lg m-5">
+                Zorg ervoor dat u de rest van de documenttypen uploadt:
+                <ul>
+                  {NOT_UPLOADED_DOCUMENTS.map((doc) => (
+                    <li>- {doc.label}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <PaginatedTable
+              data={data}
+              columns={columnDef}
+              page={pagination.page ?? 1}
+              isFetching={isFetching}
+              onPageChange={(page) => pagination.setPage(page)}
+            />
+          </>
         )}
         {isError && (
           <p role="alert" className="text-red">

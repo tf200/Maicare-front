@@ -31,6 +31,7 @@ import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmploye
 import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
 import ClientDeparture from "@/components/clientDetails/ClientDeparture";
 import { useDocumentList } from "@/utils/document/getDocumentList";
+import { DOCUMENT_LABELS, DOCUMENT_LABEL_OPTIONS } from "@/consts";
 
 type Props = {
   params: { clientId: string };
@@ -51,7 +52,10 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
     isLoading: isListLoading,
     isError,
     data,
-  } = useDocumentList(clientId);
+  } = useDocumentList(clientId, {
+    page_size: 1000,
+    page: 1,
+  });
 
 
   useEffect(() => {
@@ -68,6 +72,17 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
       title: "Cliënt Verwijderen",
     })
   );
+
+  const TOTAL_REQUIRED_DOCUMENTS = Object.keys(DOCUMENT_LABELS).length - 1;
+  let ALREADY_UPLOADED_DOCUMENTS = []
+  let NOT_UPLOADED_DOCUMENTS = []
+
+  if (!isListLoading && data !== undefined && data?.results !== undefined)
+  {
+    ALREADY_UPLOADED_DOCUMENTS = data?.results.map((doc) => doc.label);
+    let JUST_DOCUMENT_LABEL_OPTIONS = DOCUMENT_LABEL_OPTIONS.filter(option => option.value !== "") // remove the select option
+    NOT_UPLOADED_DOCUMENTS = JUST_DOCUMENT_LABEL_OPTIONS.filter(option => !ALREADY_UPLOADED_DOCUMENTS.includes(option.value));
+  }
 
   return (
     <>
@@ -142,6 +157,29 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
           >
             <ContractsSummary clientId={parseInt(clientId)} />
           </Panel>
+          <Panel
+            title={`Documenten (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
+            containerClassName="px-7 py-4"
+            sideActions={
+              <LinkButton
+                text={NOT_UPLOADED_DOCUMENTS.length ? `Moet ${NOT_UPLOADED_DOCUMENTS.length} extra documenten toevoegen` : "Volledige Documenten"}
+                href={`${clientId}/document`}
+                className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
+              />
+            }
+          >
+            {NOT_UPLOADED_DOCUMENTS.length > 0 && (
+              <div className="p-5 bg-red text-white font-bold rounded-lg mb-5">
+                Zorg ervoor dat u de rest van de documenttypen uploadt:
+                <ul>
+                  {NOT_UPLOADED_DOCUMENTS.map((doc) => (
+                    <li>- {doc.label}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <DocumentsSummary clientId={parseInt(clientId)} />
+          </Panel>
         </div>
         <div className="flex flex-col gap-9">
           <Panel title={"Cliëntstatus"} containerClassName="py-4">
@@ -186,19 +224,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
           >
             <ReportsSummary clientId={parseInt(clientId)} />
           </Panel>
-          <Panel
-            title={`Documenten (${data?.results.length}/4)`}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton
-                text={data?.results.length < 4 ? `Moet ${4 - data?.results.length} extra documenten toevoegen` : "Volledige Documenten"}
-                href={`${clientId}/document`}
-                className={data?.results.length < 4 && "bg-red"}
-              />
-            }
-          >
-            <DocumentsSummary clientId={parseInt(clientId)} />
-          </Panel>
+          
         </div>
       </div>
     </>

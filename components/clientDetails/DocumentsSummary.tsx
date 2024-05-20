@@ -7,6 +7,7 @@ import DetailCell from "@/components/DetailCell";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import bytesToSize from "@/hooks/useSizeConverter";
+import { DOCUMENT_LABELS } from "@/consts";
 
 type Props = {
   clientId: number;
@@ -41,6 +42,12 @@ const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
               className="flex items-center"
               ignoreIfEmpty={true}
               label={bytesToSize(document.file_size)}
+              value=""
+            />
+            <DetailCell
+              className="flex items-center"
+              ignoreIfEmpty={true}
+              label={<span className="text-sm min-w-[120px] text-center p-0 px-2 text-yellow-700 bg-yellow-400 transition border rounded-full cursor-pointer hover:bg-opacity-90">{DOCUMENT_LABELS[document.label]}</span>}
               value=""
             />
             <DetailCell
