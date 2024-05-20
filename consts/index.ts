@@ -522,3 +522,14 @@ export const PERMISSION_TRANS = {
   "permissions.edit": "Bewerk rechten",
   "activity_logs.view": "Activiteitenlogboeken bekijken",
 };
+
+export const EMOTIONAL_STATE_OPTIONS = [
+  { label: "Selecteer Emotionele Staat", value: "" },
+  { label: "😃 Blij", value: "excited" },
+  { label: "😊 Gelukkig", value: "happy" },
+  { label: "😢 Verdrietig", value: "sad" },
+  { label: "😐 Normaal", value: "normal" },
+  { label: "😰 Angstig", value: "anxious" },
+  { label: "😞 Depressief", value: "depressed" },
+  { label: "😡 Boos", value: "angry" },
+]
