@@ -15,7 +15,7 @@ import SmartTextarea from "@/components/FormFields/SmartTextarea";
 import { useClientMedicationRecords } from "@/utils/medication-records";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { DAILY_REPORT_TYPES, DAILY_REPORT_TYPES_OPTIONS } from "@/consts";
+import { DAILY_REPORT_TYPES, DAILY_REPORT_TYPES_OPTIONS, EMOTIONAL_STATE_OPTIONS } from "@/consts";
 import Select from "@/components/FormFields/Select";
 
 type FormType = NewReportsReqDto;
@@ -37,6 +37,7 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   created: Yup.string().required("Gelieve de datum en tijd op te geven."),
   type: Yup.string().oneOf(DAILY_REPORT_TYPES),
+  emotional_state: Yup.string().required("Gelieve de emotionele toestand op te geven."),
 });
 
 type PropsType = {
@@ -138,6 +139,17 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.type && errors.type}
+            className={"w-full mb-4.5"}
+          />
+          <Select
+            label={"Emotionele toestand"}
+            name={"emotional_state"}
+            required={true}
+            options={EMOTIONAL_STATE_OPTIONS}
+            value={values.emotional_state}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.emotional_state && errors.emotional_state}
             className={"w-full mb-4.5"}
           />
           {/* <InputField

@@ -15,6 +15,7 @@ import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { useRouter } from "next/navigation";
 import { REPORT_TYPE_RECORD } from "@/consts";
+import { showEmojies } from "@/types/reports/reports-list-res-dto";
 
 type Props = {
   params: { clientId: string };
@@ -109,6 +110,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                     <span className="mt-1 block text-sm">
                       {getLocateDatetime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
                     </span>
+                    <span className="">{showEmojies(post.emotional_state)}</span>
                     <p className="mt-2.5 text-black dark:text-white">
                       {post.report_text}
                     </p>
