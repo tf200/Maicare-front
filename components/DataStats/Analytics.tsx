@@ -13,7 +13,7 @@ const Analytics: FunctionComponent = (props) => {
   if (isLoading) return <Loader />;
   if (!data) return null;
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mb-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mb-6">
       <DataCard title={`Cliënten (${data?.users.total_users})`}>
         <div className="mt-4 flex gap-6">
           <div className="bg-meta-5/20 w-15 h-15 flex items-center justify-center text-meta-5 rounded-xl">
@@ -51,6 +51,25 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width={380}
+          />
+        </div>
+      </DataCard>
+
+      <DataCard title={`Voltooide documentprofielen (${data?.users.total_users - data?.users.total_missing_documents_profiles}/${data?.users.total_users} profielen)`}>
+        <div className="mt-4 flex gap-6">
+          <ReactApexChart
+            options={{
+              labels: [
+                `ingevulde profielen (${data?.users.total_users - data?.users.total_missing_documents_profiles})`,
+                `onvolledige documentprofielen (${data?.users.total_missing_documents_profiles})`,
+              ],
+            }}
+            series={[
+              data?.users.total_users - data?.users.total_missing_documents_profiles,
+              data?.users.total_missing_documents_profiles,
+            ]}
+            type="donut"
+            width={450}
           />
         </div>
       </DataCard>

@@ -4,6 +4,8 @@ export type AnalyticsResDto = {
     total_in_care_users: number;
     total_out_of_care_users: number;
     total_on_waiting_list_users: number;
+    total_missing_documents: number;
+    total_missing_documents_profiles: number;
   };
   contracts: {
     total_contracts: number;
