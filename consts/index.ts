@@ -52,6 +52,100 @@ export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Anders", value: "other" },
 ];
 
+export const CONSULTATION_NEEDED_OPTIONS = [
+  { label: "Selecteer Type", value: "" },
+  { label: "Nee", value: "work" },
+  { label: "Nog niet duidelijk", value: "meeting" },
+  { label: "Ziekenhuisopname", value: "home_care" },
+  { label: "Consult huisarts", value: "other" },
+];
+
+export const PSYCHOLOGICAL_DAMAGE_OPTIONS = [
+  { label: "Selecteer Type", value: "" },
+  { label: "Geen", value: "work" },
+  { label: "Nog niet merkbaar", value: "meeting" },
+  { label: "Sufheid", value: "home_care" },
+  { label: "Onrust", value: "other" },
+  { label: "anders, nl.", value: "other" },
+];
+
+export const INJURY_OPTIONS = [
+  { label: "Selecteer Type", value: "" },
+  { label: "Geen letsel", value: "work" },
+  { label: "Nog niet merkbaar", value: "meeting" },
+  { label: "Blauwe plek / zwelling", value: "home_care" },
+  { label: "Huidletsel", value: "other" },
+  { label: "Botbreuk", value: "other" },
+  { label: "Benauwdheid", value: "other" },
+  { label: "Overleden", value: "other" },
+  { label: "anders, nl.", value: "other" },
+];
+
+export const DELETE_INVOLVEMENT_OPTIONS: SelectionOption[] = [
+  { label: "Selecter status", value: "" },
+  { label: "Directly involved", value: "Reported" },
+  { label: "Witness", value: "Under Investigation" },
+  { label: "Found afterwards", value: "Resolved" },
+  { label: "Alarmed", value: "Closed" },
+];
+
+export const SEVERITY_OF_INCIDENT_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  {
+    label: "Bijna incident: Geen gevolgen voor de cliënt / medewerker",
+    value: "yes",
+  },
+  {
+    label:
+      "Minder ernstig: beinvloedt de cliënt / medewerker en/of vervolgprocessen",
+    value: "yes",
+  },
+  {
+    label:
+      "Ernstig: tijdelijke gevolgen voor de cliënt / medewerker Zeer ernstig: blijvende gevolgen voor de client / medewerker",
+    value: "yes",
+  },
+  {
+    label:
+      "Fataal: Overlijden van de client / medewerker als gevolg van het incident",
+    value: "yes",
+  },
+];
+
+export const RISK_OF_RECURRENCE_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  {
+    label:
+      "Zeer laag: het zal niet vaker dan 1 x per 5 jaar gebeuren Laag: het zal mogelijk binnen enkele maanden weer gebeuren",
+    value: "yes",
+  },
+  {
+    label: "Middel: het zal mogelijk binnen enkele weken weer gebeuren",
+    value: "yes",
+  },
+  {
+    label: "Hoog: het zal waarschijnlijk binnen enkele dagen weer gebeuren",
+    value: "yes",
+  },
+  {
+    label: "Zeer hoog: het zal waarschijnlijk binnen 24 uur weer gebeuren",
+    value: "yes",
+  },
+];
+
+export const REPORTER_INVOLVEMENT_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  { label: "Direct betrokken", value: "direct betrokken" },
+  { label: "Getuige", value: "getuige" },
+  { label: "Achteraf aangetroffen", value: "achteraf" },
+  { label: "Gealarmeerd", value: "gealarmeerd" },
+];
+export const YES_NO_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  { label: "Nee", value: "yes" },
+  { label: "Ja", value: "no" },
+];
+
 export const INCIDENT_STATUS_OPTIONS: SelectionOption[] = [
   { label: "Selecteer status", value: "" },
   { label: "Reported", value: "Reported" },
