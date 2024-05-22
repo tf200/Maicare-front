@@ -521,4 +521,5 @@ export const PERMISSION_TRANS = {
   "settings.view": "Bekijk instellingen",
   "permissions.edit": "Bewerk rechten",
   "activity_logs.view": "Activiteitenlogboeken bekijken",
+  "medication.notifications.receive": "Medische meldingen ontvangen",
 };

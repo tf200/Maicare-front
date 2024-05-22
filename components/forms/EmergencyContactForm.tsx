@@ -234,7 +234,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />
       <CheckBoxInputFieldThin
         className={"w-full mb-4.5"}
-        label={"Medische rapporten automatisch verzenden?"}
+        label={"Medische rapporten automatisch verzenden (wekelijks)?"}
         name={"medical_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -242,7 +242,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />
       <CheckBoxInputFieldThin
         className={"w-full mb-4.5"}
-        label={"Doelrapporten automatisch verzenden?"}
+        label={"Voortgangsrapporten automatisch versturen?"}
         name={"goals_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
