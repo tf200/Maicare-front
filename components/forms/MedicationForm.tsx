@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import FormikCheckboxItem from "@/components/FormFields/FormikCheckboxItem";
 import EmployeeSelector from "@/components/FormFields/comboboxes/EmployeeSelector";
+import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 dayjs.extend(isBetween);
 
 const initialValues: MedicationFormType = {
@@ -74,8 +75,13 @@ const MedicationForm: FunctionComponent<Props> = ({
   const { mutate: update, isLoading: isPatching } =
     usePatchMedication(clientId);
 
-  const onSubmit = useCallback(
-    (values, { resetForm }) => {
+
+  const [administredByEveryone, setAdministredByEveryone] = useState(true)
+
+    const onSubmit = useCallback((values, { resetForm }) => {
+      if (administredByEveryone)
+        values.administered_by = null
+
       if (mode === "edit") {
         update(
           {
@@ -101,7 +107,7 @@ const MedicationForm: FunctionComponent<Props> = ({
         );
       }
     },
-    [create, update]
+    [create, update, administredByEveryone]
   );
 
   const formik = useFormik({
@@ -140,6 +146,10 @@ const MedicationForm: FunctionComponent<Props> = ({
       };
     });
   }, [values.start_date, values.end_date]);
+
+  useEffect(() => {
+    setAdministredByEveryone(!formik.values.administered_by)
+  }, [formik.values.administered_by])
 
   return (
     <FormikProvider value={formik}>
@@ -212,11 +222,20 @@ const MedicationForm: FunctionComponent<Props> = ({
               error={touched.slots && errors.slots}
             />
           )}
-          <EmployeeSelector
-            className="mb-6"
-            required={true}
-            name={"administered_by"}
+          
+          <CheckBoxInputFieldThin
+            className={"mb-6"}
+            label={"Beheerd door iedereen (met de toestemming \"medische meldingen ontvangen\".)"}
+            onChange={(e) => setAdministredByEveryone(e.target.checked)}
+            checked={administredByEveryone}
           />
+          {!administredByEveryone && (
+            <EmployeeSelector
+              className="mb-6"
+              required={!administredByEveryone}
+              name={"administered_by"}
+            />
+          )}
           <Textarea
             rows={6}
             id={"notes"}

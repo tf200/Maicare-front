@@ -57,6 +57,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
       {
         accessorKey: "administered_by_name",
         header: "Beheerd door",
+        cell: (info) => info.getValue() as string || "iedereen",
       },
       {
         accessorKey: "start_date",
