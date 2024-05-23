@@ -16,18 +16,6 @@ export default function Succession({
   return (
     <Panel title={"5. Opvolging"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
-        <InputField
-          className={"w-full"}
-          id={"employeeName"}
-          required={true}
-          label={"Naam betrokken medewerker(s)"}
-          placeholder=""
-          type={"text"}
-          value={values.employeeName}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.employeeName && errors.employeeName}
-        />
         <div className="flex flex-col ">
           <label className="mb-4 block text-black dark:text-white">
             Opvolging
