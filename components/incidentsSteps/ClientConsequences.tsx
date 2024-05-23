@@ -72,7 +72,7 @@ export default function ClientConsequences({
           error={touched.employeeName && errors.employeeName}
         />
         <Select
-          label={"Psychische schade"}
+          label={"Consult nodig"}
           name="delete_involvem"
           id="delete_involveme"
           value={values.delete_involvement || ""}
