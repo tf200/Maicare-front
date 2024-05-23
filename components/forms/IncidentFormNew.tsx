@@ -21,6 +21,7 @@ import Analysis, { AnalysisShema } from "../incidentsSteps/Analysis";
 import ClientConsequences, {
   ClientConsequencesShema,
 } from "../incidentsSteps/ClientConsequences";
+import Succession from "../incidentsSteps/Succession";
 
 const initialValues = {
   ...GeneralInfosInitial,
@@ -104,6 +105,7 @@ const EpisodeForm: FunctionComponent<Props> = ({
     { name: "IncidentInfos", component: IncidentInfos },
     { name: "Analysis", component: Analysis },
     { name: "ClientConsequences", component: ClientConsequences },
+    { name: "Succession", component: Succession },
   ];
 
   return (

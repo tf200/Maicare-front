@@ -161,6 +161,18 @@ export const DIAGNOSIS_SEVERITY_OPTIONS: SeverityOption[] = [
   { label: "Ernstig", value: "Severe" },
 ];
 
+export const EMPLOYEE_ABSENTEEISM_OPTIONS = [
+  { label: "Selecteer Bron", value: "" },
+  { label: "Geen ziekteverzuim", value: "BRP" },
+  { label: "Ziekteverzuim ‹ 3 dagen", value: "ID" },
+  { label: "Ziekteverzuim minder dan een half jaar", value: "passport" },
+  { label: "Ziekteverzuim minder dan een jaar", value: "policy_card" },
+  {
+    label: "Langdurig ziekteverzuim › meer dan een jaar",
+    value: "government_agency_letter",
+  },
+];
+
 export const SOURCE_OPTIONS = [
   { label: "Selecteer Bron", value: "" },
   { label: "BRP", value: "BRP" },
