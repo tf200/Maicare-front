@@ -180,7 +180,7 @@ export default function GeneralInfos({
           id={"date_of_incident2"}
           required={true}
           label={"Datum ontstaan incident"}
-          type={"datetime-local"}
+          type={"date"}
           value={values.date_of_incident2}
           onChange={handleChange}
           onBlur={handleBlur}

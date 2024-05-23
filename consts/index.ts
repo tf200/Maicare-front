@@ -146,6 +146,13 @@ export const YES_NO_OPTIONS = [
   { label: "Ja", value: "no" },
 ];
 
+export const TYPES_INCIDENT_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  { label: "gevaarlijke situatie (bijna incident)", value: "yes" },
+  { label: "incident", value: "no" },
+  { label: "calamiteit", value: "nxo" },
+];
+
 export const INCIDENT_STATUS_OPTIONS: SelectionOption[] = [
   { label: "Selecteer status", value: "" },
   { label: "Reported", value: "Reported" },

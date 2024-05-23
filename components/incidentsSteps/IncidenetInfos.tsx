@@ -4,6 +4,7 @@ import {
   YES_NO_OPTIONS,
   RISK_OF_RECURRENCE_OPTIONS,
   SEVERITY_OF_INCIDENT_OPTIONS,
+  TYPES_INCIDENT_OPTIONS,
 } from "@/consts";
 import * as Yup from "yup";
 import Panel from "../Panel";
@@ -42,7 +43,7 @@ export default function IncidentInfos({
           id="select1"
           value={values.select1 || ""}
           required={true}
-          options={YES_NO_OPTIONS}
+          options={TYPES_INCIDENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.select1 && errors.select1}
