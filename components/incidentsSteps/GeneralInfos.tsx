@@ -5,6 +5,7 @@ import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import { REPORTER_INVOLVEMENT_OPTIONS } from "@/consts";
 import * as Yup from "yup";
 import Panel from "../Panel";
+import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
 
 export const GeneralInfosInitial = {
   employee_fullname: "",
@@ -97,18 +98,9 @@ export default function GeneralInfos({
           error={touched.reporter_involvement && errors.reporter_involvement}
         />
         <div className="flex flex-col ">
-          <label className="mb-4 block text-black dark:text-white">
-            Wie moet geinformeerd worden?<span className="text-meta-1">*</span>
-          </label>
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: jeugdbeschermer"}
-            className="mb-3"
-            name={"checkbox1"}
-            id={"checkbox1"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox1 || false}
-          />
+          <MultiCheckBoxInputField label="Wie moet geinformeerd worden?" selected={[1]} options={["label1", "label2", "label3"]} />
+
+          {/* 
           <CheckBoxInputFieldThin
             label={"Met maatregel: jeugdreclasseerder"}
             className="mb-3"
@@ -171,7 +163,7 @@ export default function GeneralInfos({
             onChange={handleChange}
             onBlur={handleBlur}
             defaultChecked={values.checkbox8 || false}
-          />
+          /> */}
         </div>
         <InputField
           className={"w-full"}
