@@ -10,8 +10,8 @@ import * as Yup from "yup";
 import Panel from "../Panel";
 
 export const ClientConsequencesShema = {
-  employeeName: Yup.string().required("Geef alstublieft "),
-  delete_involvement: Yup.string().required("Geef alstublieft ."),
+  physical_injury_desc: Yup.string().required("Geef alstublieft "),
+  physical_injury: Yup.string().required("Geef alstublieft ."),
 };
 
 export default function ClientConsequences({
@@ -27,61 +27,64 @@ export default function ClientConsequences({
         <label className="font-bold">Gevolgen cliënt</label>
         <Select
           label={"Lichamelijjk letsel"}
-          name="delete_involvement"
-          id="delete_involvement"
-          value={values.delete_involvement || ""}
+          name="physical_injury"
+          id="physical_injury"
+          value={values.physical_injury || ""}
           className="w-full"
           required={true}
           options={INJURY_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.delete_involvement && errors.delete_involvement}
+          error={touched.physical_injury && errors.physical_injury}
         />
         <InputField
           className={"w-full"}
-          id={"employeeName"}
+          id={"physical_injury_desc"}
           required={true}
           placeholder=""
           type={"text"}
-          value={values.employeeName}
+          value={values.physical_injury_desc}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.employeeName && errors.employeeName}
+          error={touched.physical_injury_desc && errors.physical_injury_desc}
         />
         <Select
           label={"Psychische schade"}
-          name="delete_involvet"
-          id="delete_involvet"
-          value={values.delete_involvement || ""}
+          name="psychological_damage"
+          id="psychological_damage"
+          value={values.psychological_damage || ""}
           className="w-full"
           required={true}
           options={PSYCHOLOGICAL_DAMAGE_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.delete_involvement && errors.delete_involvement}
+          error={touched.psychological_damage && errors.psychological_damage}
         />
         <InputField
           className={"w-full"}
-          id={"employeeName"}
+          id={"psychological_damage_desc"}
           required={true}
           placeholder=""
           type={"text"}
-          value={values.employeeName}
+          value={values.psychological_damage_desc}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.employeeName && errors.employeeName}
+          error={
+            touched.psychological_damage_desc &&
+            errors.psychological_damage_desc
+          }
         />
         <Select
           label={"Consult nodig"}
-          name="delete_involvem"
-          id="delete_involveme"
-          value={values.delete_involvement || ""}
+          name="needed_consultation"
+          id="needed_consultation"
+          value={values.needed_consultation || ""}
           className="w-full"
           required={true}
           options={CONSULTATION_NEEDED_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.delete_involvement && errors.delete_involvement}
+          error={touched.needed_consultation && errors.needed_consultation}
         />
       </div>
     </Panel>

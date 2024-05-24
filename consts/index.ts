@@ -54,30 +54,30 @@ export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
 
 export const CONSULTATION_NEEDED_OPTIONS = [
   { label: "Selecteer Type", value: "" },
-  { label: "Nee", value: "work" },
-  { label: "Nog niet duidelijk", value: "meeting" },
-  { label: "Ziekenhuisopname", value: "home_care" },
-  { label: "Consult huisarts", value: "other" },
+  { label: "Nee", value: "no" },
+  { label: "Nog niet duidelijk", value: "not_clear" },
+  { label: "Ziekenhuisopname", value: "hospitalization" },
+  { label: "Consult huisarts", value: "consult_gp" },
 ];
 
 export const PSYCHOLOGICAL_DAMAGE_OPTIONS = [
   { label: "Selecteer Type", value: "" },
-  { label: "Geen", value: "work" },
-  { label: "Nog niet merkbaar", value: "meeting" },
-  { label: "Sufheid", value: "home_care" },
-  { label: "Onrust", value: "other" },
+  { label: "Geen", value: "no" },
+  { label: "Nog niet merkbaar", value: "not_noticeable_yet" },
+  { label: "Sufheid", value: "drowsiness" },
+  { label: "Onrust", value: "unrest" },
   { label: "anders, nl.", value: "other" },
 ];
 
 export const INJURY_OPTIONS = [
   { label: "Selecteer Type", value: "" },
-  { label: "Geen letsel", value: "work" },
-  { label: "Nog niet merkbaar", value: "meeting" },
-  { label: "Blauwe plek / zwelling", value: "home_care" },
-  { label: "Huidletsel", value: "other" },
-  { label: "Botbreuk", value: "other" },
-  { label: "Benauwdheid", value: "other" },
-  { label: "Overleden", value: "other" },
+  { label: "Geen letsel", value: "no_injuries" },
+  { label: "Nog niet merkbaar", value: "not_noticeable_yet" },
+  { label: "Blauwe plek / zwelling", value: "bruising_swelling" },
+  { label: "Huidletsel", value: "skin_injury" },
+  { label: "Botbreuk", value: "broken_bones" },
+  { label: "Benauwdheid", value: "shortness_of_breath" },
+  { label: "Overleden", value: "death" },
   { label: "anders, nl.", value: "other" },
 ];
 
