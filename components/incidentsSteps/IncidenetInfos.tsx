@@ -11,20 +11,36 @@ import Panel from "../Panel";
 import Textarea from "../FormFields/Textarea";
 
 export const IncidentInfosShema = {
-  select1: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select2: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select3: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select4: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select5: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select6: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select7: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select8: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select9: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select10: Yup.string().required("Selecteer minstens één betrokken kind."),
-  select11: Yup.string().required("Selecteer minstens één betrokken kind."),
-  textArea1: Yup.string().required("Selecteer minstens één betrokken kind."),
-  textArea2: Yup.string().required("Selecteer minstens één betrokken kind."),
-  textArea3: Yup.string().required("Selecteer minstens één betrokken kind."),
+  incident_type: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  passing_away: Yup.string().required("Selecteer minstens één betrokken kind."),
+  self_harm: Yup.string().required("Selecteer minstens één betrokken kind."),
+  violence: Yup.string().required("Selecteer minstens één betrokken kind."),
+  fire_water_damage: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  accident: Yup.string().required("Selecteer minstens één betrokken kind."),
+  client_absence: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  medicines: Yup.string().required("Selecteer minstens één betrokken kind."),
+  organization: Yup.string().required("Selecteer minstens één betrokken kind."),
+  use_prohibited_substances: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  other_notifications: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  incident_explanation: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  incident_prevent_steps: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
+  incident_taken_measures: Yup.string().required(
+    "Selecteer minstens één betrokken kind."
+  ),
 };
 
 export default function IncidentInfos({
@@ -39,134 +55,137 @@ export default function IncidentInfos({
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
         <Select
           label={"Type incident"}
-          name="select1"
-          id="select1"
-          value={values.select1 || ""}
+          name="incident_type"
+          id="incident_type"
+          value={values.incident_type || ""}
           required={true}
           options={TYPES_INCIDENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.select1 && errors.select1}
+          error={touched.incident_type && errors.incident_type}
         />
         <div className="grid grid-cols-2 gap-4">
           <Select
             label={"Overlijden"}
-            name="select2"
-            id="select2"
-            value={values.select2 || ""}
+            name="passing_away"
+            id="passing_away"
+            value={values.passing_away || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select2 && errors.select2}
+            error={touched.passing_away && errors.passing_away}
           />
           <Select
             label={"Zelfbeschadiging"}
-            name="select3"
-            id="select3"
-            value={values.select3 || ""}
+            name="self_harm"
+            id="self_harm"
+            value={values.self_harm || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select3 && errors.select3}
+            error={touched.self_harm && errors.self_harm}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <Select
             label={"Agressie/geweld"}
-            name="select4"
-            id="select4"
-            value={values.select4 || ""}
+            name="violence"
+            id="violence"
+            value={values.violence || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select4 && errors.select4}
+            error={touched.violence && errors.violence}
           />
           <Select
             label={"Brand- en waterschade"}
-            name="select5"
-            id="select5"
-            value={values.select5 || ""}
+            name="fire_water_damage"
+            id="fire_water_damage"
+            value={values.fire_water_damage || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select5 && errors.select5}
+            error={touched.fire_water_damage && errors.fire_water_damage}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Select
             label={"Ongevallen"}
-            name="select6"
-            id="select6"
-            value={values.select6 || ""}
+            name="accident"
+            id="accident"
+            value={values.accident || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select6 && errors.select6}
+            error={touched.accident && errors.accident}
           />
           <Select
             label={"Afwezigheid client"}
-            name="select7"
-            id="select7"
-            value={values.select7 || ""}
+            name="client_absence"
+            id="client_absence"
+            value={values.client_absence || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select7 && errors.select7}
+            error={touched.client_absence && errors.client_absence}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Select
             label={"Medicijnen"}
-            name="select8"
-            id="select8"
-            value={values.select8 || ""}
+            name="medicines"
+            id="medicines"
+            value={values.medicines || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select8 && errors.select8}
+            error={touched.medicines && errors.medicines}
           />
           <Select
             label={"Organisatie"}
-            name="select9"
-            id="select9"
-            value={values.select9 || ""}
+            name="organization"
+            id="organization"
+            value={values.organization || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select9 && errors.select9}
+            error={touched.organization && errors.organization}
           />
           <Select
             className="my-4"
             label={"Gebruik verboden middelen"}
-            name="select10"
-            id="select10"
-            value={values.select10 || ""}
+            name="use_prohibited_substances"
+            id="use_prohibited_substances"
+            value={values.use_prohibited_substances || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select10 && errors.select10}
+            error={
+              touched.use_prohibited_substances &&
+              errors.use_prohibited_substances
+            }
           />
           <Select
             className="my-4"
             label={"Overige meldingen"}
-            name="select11"
-            id="select11"
-            value={values.select11 || ""}
+            name="other_notifications"
+            id="other_notifications"
+            value={values.other_notifications || ""}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.select11 && errors.select11}
+            error={touched.other_notifications && errors.other_notifications}
           />
         </div>
       </div>
@@ -175,63 +194,70 @@ export default function IncidentInfos({
         <Select
           className="my-4"
           label={"ernst incident"}
-          name="select12"
-          id="select12"
-          value={values.select12 || ""}
+          name="severity_of_incident"
+          id="severity_of_incident"
+          value={values.severity_of_incident || ""}
           required={true}
           options={SEVERITY_OF_INCIDENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.select10 && errors.select10}
+          error={
+            touched.use_prohibited_substances &&
+            errors.use_prohibited_substances
+          }
         />
         <Textarea
           className="mb-4"
           rows={2}
-          id={"textArea1"}
+          id={"incident_explanation"}
           required={true}
           label={"Toelichting op het incident"}
-          value={values.textArea1 || ""}
+          value={values.incident_explanation || ""}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.textArea1 && errors.textArea1}
+          error={touched.incident_explanation && errors.incident_explanation}
         />
         <Select
           className="mb-4"
           label={"Is er risico op herhaling?"}
-          name="select11"
-          id="select11"
-          value={values.select13 || ""}
+          name="recurrence_risk"
+          id="recurrence_risk"
+          value={values.recurrence_risk || ""}
           required={true}
           options={RISK_OF_RECURRENCE_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.select11 && errors.select11}
+          error={touched.recurrence_risk && errors.recurrence_risk}
         />
 
         <Textarea
           className="mb-4"
           rows={2}
-          id={"textArea2"}
+          id={"incident_prevent_steps"}
           required={true}
           label={"Welke stappen zijin ondernomen om het incident te voorkomen"}
-          value={values.textArea2 || ""}
+          value={values.incident_prevent_steps || ""}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.textArea2 && errors.textArea2}
+          error={
+            touched.incident_prevent_steps && errors.incident_prevent_steps
+          }
         />
 
         <Textarea
           className="mb-4"
           rows={2}
-          id={"textArea3"}
+          id={"incident_taken_measures"}
           required={true}
           label={
             "Welke maatregelen zijn genomen na het plaatsvinden van het incident"
           }
-          value={values.textArea3 || ""}
+          value={values.incident_taken_measures || ""}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.textArea3 && errors.textArea3}
+          error={
+            touched.incident_taken_measures && errors.incident_taken_measures
+          }
         />
       </div>
     </Panel>

@@ -7,34 +7,32 @@ import * as Yup from "yup";
 import Panel from "../Panel";
 
 export const GeneralInfosInitial = {
-  employeeName: "",
-  employeePosition: "",
-  healthcarePosition: "",
-  delete_involvement: "",
-  date_of_incident2: "",
-  runtimeIncident: "",
+  employee_fullname: "",
+  employee_position: "",
+  location: "",
+  reporter_involvement: "",
+  incident_date: "",
+  runtime_incident: "",
 };
 
 export const GeneralInfosShema = {
-  employeeName: Yup.string().required(
+  employee_fullname: Yup.string().required(
     "Geef alstublieft de gerapporteerde datum."
   ),
-  employeePosition: Yup.string().required(
+  employee_position: Yup.string().required(
     "Geef alstublieft het tijdstip van het incident."
   ),
-  healthcarePosition: Yup.string().required(
-    "Geef alstublieft de gerapporteerde datum."
-  ),
-  delete_involvement: Yup.string().required(
+  location: Yup.string().required("Geef alstublieft de gerapporteerde datum."),
+  reporter_involvement: Yup.string().required(
     "Selecteer minstens één betrokken kind."
   ),
   follow_up_required: Yup.boolean().required(
     "Geef aan of er een Met maatregel:  is."
   ),
-  runtimeIncident: Yup.string().required(
+  runtime_incident: Yup.string().required(
     "Geef alstublieft de locatie van het incident111111"
   ),
-  date_of_incident2: Yup.string().required(
+  incident_date: Yup.string().required(
     "Geef alstublieft de locatie van het incident2222"
   ),
 };
@@ -51,52 +49,52 @@ export default function GeneralInfos({
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
         <InputField
           className={"w-full"}
-          id={"employeeName"}
+          id={"employee_fullname"}
           required={true}
           label={"Naam betrokken medewerker(s)"}
           placeholder=""
           type={"text"}
-          value={values.employeeName}
+          value={values.employee_fullname}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.employeeName && errors.employeeName}
+          error={touched.employee_fullname && errors.employee_fullname}
         />
         <InputField
           className={"w-full"}
-          id={"employeePosition"}
+          id={"employee_position"}
           required={true}
           label={"functie betrokken medewerker(s)"}
           placeholder=""
           type={"text"}
-          value={values.employeePosition}
+          value={values.employee_position}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.employeePosition && errors.employeePosition}
+          error={touched.employee_position && errors.employee_position}
         />
         <InputField
           className={"w-full"}
-          id={"healthcarePosition"}
+          id={"location"}
           required={true}
           label={"Locatie zorgorganistie"}
           placeholder=""
           type={"text"}
-          value={values.healthcarePosition}
+          value={values.location}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.healthcarePosition && errors.healthcarePosition}
+          error={touched.location && errors.location}
         />
 
         <Select
           label={"Betrokenheid melder"}
-          name="delete_involvement"
-          id="delete_involvement"
-          value={values.delete_involvement}
+          name="reporter_involvement"
+          id="reporter_involvement"
+          value={values.reporter_involvement}
           className="w-full"
           required={true}
           options={REPORTER_INVOLVEMENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.delete_involvement && errors.delete_involvement}
+          error={touched.reporter_involvement && errors.reporter_involvement}
         />
         <div className="flex flex-col ">
           <label className="mb-4 block text-black dark:text-white">
@@ -177,26 +175,26 @@ export default function GeneralInfos({
         </div>
         <InputField
           className={"w-full"}
-          id={"date_of_incident2"}
+          id={"incident_date"}
           required={true}
           label={"Datum ontstaan incident"}
           type={"date"}
-          value={values.date_of_incident2}
+          value={values.incident_date}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.date_of_incident2 && errors.date_of_incident2}
+          error={touched.incident_date && errors.incident_date}
         />
         <InputField
           className={"w-full"}
-          id={"runtimeIncident"}
+          id={"runtime_incident"}
           required={true}
           label={"Runtime incident"}
           placeholder=""
           type={"text"}
-          value={values.runtimeIncident}
+          value={values.runtime_incident}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.runtimeIncident && errors.runtimeIncident}
+          error={touched.runtime_incident && errors.runtime_incident}
         />
       </div>
     </Panel>

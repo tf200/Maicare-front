@@ -93,22 +93,22 @@ export const SEVERITY_OF_INCIDENT_OPTIONS = [
   { label: "Selecter status", value: "" },
   {
     label: "Bijna incident: Geen gevolgen voor de cliënt / medewerker",
-    value: "yes",
+    value: "near_incident",
   },
   {
     label:
       "Minder ernstig: beinvloedt de cliënt / medewerker en/of vervolgprocessen",
-    value: "yes",
+    value: "less_serious",
   },
   {
     label:
       "Ernstig: tijdelijke gevolgen voor de cliënt / medewerker Zeer ernstig: blijvende gevolgen voor de client / medewerker",
-    value: "yes",
+    value: "serious",
   },
   {
     label:
       "Fataal: Overlijden van de client / medewerker als gevolg van het incident",
-    value: "yes",
+    value: "fatal",
   },
 ];
 
@@ -117,28 +117,28 @@ export const RISK_OF_RECURRENCE_OPTIONS = [
   {
     label:
       "Zeer laag: het zal niet vaker dan 1 x per 5 jaar gebeuren Laag: het zal mogelijk binnen enkele maanden weer gebeuren",
-    value: "yes",
+    value: "very_low",
   },
   {
     label: "Middel: het zal mogelijk binnen enkele weken weer gebeuren",
-    value: "yes",
+    value: "means",
   },
   {
     label: "Hoog: het zal waarschijnlijk binnen enkele dagen weer gebeuren",
-    value: "yes",
+    value: "high",
   },
   {
     label: "Zeer hoog: het zal waarschijnlijk binnen 24 uur weer gebeuren",
-    value: "yes",
+    value: "very_high",
   },
 ];
 
 export const REPORTER_INVOLVEMENT_OPTIONS = [
   { label: "Selecter status", value: "" },
-  { label: "Direct betrokken", value: "direct betrokken" },
-  { label: "Getuige", value: "getuige" },
-  { label: "Achteraf aangetroffen", value: "achteraf" },
-  { label: "Gealarmeerd", value: "gealarmeerd" },
+  { label: "Direct betrokken", value: "directly_involved" },
+  { label: "Getuige", value: "witness" },
+  { label: "Achteraf aangetroffen", value: "found_afterwards" },
+  { label: "Gealarmeerd", value: "alarmed" },
 ];
 export const YES_NO_OPTIONS = [
   { label: "Selecter status", value: "" },

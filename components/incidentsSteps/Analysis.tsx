@@ -6,8 +6,8 @@ import Textarea from "../FormFields/Textarea";
 import * as Yup from "yup";
 
 export const AnalysisShema = {
-  employeeName: Yup.string().required("Selecteer minstens één betrokken kind."),
-  textArea2: Yup.string().required("Selecteer minstens één betrokken kind."),
+  other: Yup.string().required("Selecteer minstens één betrokken kind."),
+  other_desc: Yup.string().required("Selecteer minstens één betrokken kind."),
 };
 
 export default function Analysis({
@@ -540,26 +540,26 @@ export default function Analysis({
 
         <InputField
           className={"col-span-2"}
-          id={"employeeName"}
+          id={"other"}
           required={true}
           label={"Overig"}
           placeholder=""
           type={"text"}
-          value={values.employeeName || ""}
+          value={values.other || ""}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.employeeName && errors.employeeName}
+          error={touched.other && errors.other}
         />
         <Textarea
           className="mb-4 col-span-2"
           rows={2}
-          id={"textArea2"}
+          id={"other_desc"}
           required={true}
           label={"Toelichting op de oorzaak/oorzaken"}
           value={values.textArea || ""}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.textArea2 && errors.textArea2}
+          error={touched.other_desc && errors.other_desc}
         />
       </div>
     </Panel>
