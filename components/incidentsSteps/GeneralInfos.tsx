@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "../FormFields/InputField";
 import Select from "../FormFields/Select";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
-import { REPORTER_INVOLVEMENT_OPTIONS } from "@/consts";
+import { INFORM_WHO_OPTIONS, REPORTER_INVOLVEMENT_OPTIONS } from "@/consts";
 import * as Yup from "yup";
 import Panel from "../Panel";
 import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
@@ -98,72 +98,12 @@ export default function GeneralInfos({
           error={touched.reporter_involvement && errors.reporter_involvement}
         />
         <div className="flex flex-col ">
-          <MultiCheckBoxInputField label="Wie moet geinformeerd worden?" selected={[1]} options={["label1", "label2", "label3"]} />
-
-          {/* 
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: jeugdreclasseerder"}
-            className="mb-3"
-            name={"checkbox2"}
-            id={"checkbox2"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox2 || false}
+          <MultiCheckBoxInputField
+            label="Wie moet geinformeerd worden?"
+            selected={[]}
+            options={INFORM_WHO_OPTIONS}
+            name="inform_who"
           />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: voogd"}
-            className="mb-3"
-            name={"checkbox3"}
-            id={"checkbox3"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox3 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: gezaghebbende ouders"}
-            className="mb-3"
-            name={"checkbox4"}
-            id={"checkbox4"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox4 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: ouders"}
-            className="mb-3"
-            name={"checkbox5"}
-            id={"checkbox5"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox5 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: mentor"}
-            className="mb-3"
-            name={"checkbox6"}
-            id={"checkbox6"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox6 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: PGB vertegenwoordiger"}
-            className="mb-3"
-            name={"checkbox7"}
-            id={"checkbox7"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox7 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Met maatregel: niemad (ZIN / 18+)."}
-            className="mb-3"
-            name={"checkbox8"}
-            id={"checkbox8"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox8 || false}
-          /> */}
         </div>
         <InputField
           className={"w-full"}

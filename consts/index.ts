@@ -133,6 +133,92 @@ export const RISK_OF_RECURRENCE_OPTIONS = [
   },
 ];
 
+export const INFORM_WHO_OPTIONS = [
+  "Met maatregel: jeugdbeschermer",
+  "Met maatregel: jeugdreclasseerder",
+  "Met maatregel: voogd",
+  "Met maatregel: gezaghebbende ouders",
+  "Met maatregel: ouders",
+  "Met maatregel: mentor",
+  "Met maatregel: PGB vertegenwoordiger",
+  "Met maatregel: niemad (ZIN / 18+).",
+];
+
+export const ORGANIZATIONAL_OPTIONS = [
+  "Budget/management prioriteiten",
+  "Cultuur / werkplek",
+  "Formatie / bezetting",
+  "Kennis / deskundigheid niet aanwezig",
+  "Logistiek",
+  "Onderbewetting / Onvoldoende ingewerkt / begeleid",
+  "Overdracht",
+  "Overleg",
+  "Planning",
+  "Protocol / afspraak niet aanwezig of onduidelijk",
+  "Taken, bevoegdheden en verantwoordelijkheden",
+];
+
+export const TECHNICAL_OPTIONS = [
+  "Accomodatie / terrein",
+  "Alarmering",
+  "Apparatuur",
+  "Bediening / onjuist gebruik",
+  "Gebouw-gebonden",
+  "Handleidingen",
+  "Hulpmiddelen",
+  "ICT",
+  "Instructie",
+  "Materiaal defect",
+  "Onderhoud",
+  "Onduidelijke instructie",
+  "Stolen / sleutels",
+];
+export const MESE_WORKER_OPTIONS = [
+  "Afgeleid",
+  "Conditie",
+  "Deskundigheid",
+  "Ervaring",
+  "Fysieke belasting",
+  "Bekwaamheid / bevoegdheid",
+  "Ingewerkt zijn",
+  "Oplettendheid / vergissen",
+  "Protocol / instructie niet nageleefd",
+  "Teamsfeer",
+  "Veiligheidsbewustzijn",
+  "Werkdruk",
+  "Zorgvuldigheid",
+  "Invalmedewerker niet goed op de hoogte",
+  "Persoonlijke omstandigheden medewerker",
+];
+
+export const CLIENT_OPTIONS = [
+  "Alcohol en drugs",
+  "Conditie / fysieke toestand",
+  "Culturele achtergrond",
+  "Gedrag van cliënt",
+  "Groepssamenstelling",
+  "Juridische status",
+  "Medicatie",
+  "Onbekende risici?s",
+  "Psychische toestand cliënt",
+  " Therapietrouw / motivatie",
+  "Familie van de cliënt",
+  "Waarden en normen",
+  "Ziektebeeld",
+  "Taalproblematiek",
+  "De wijwe waarop de zorg uitgevoerd moet worden is niet haalbaar",
+  "Niet opvolgen huisregels",
+];
+
+export const SUCCESSION_OPTIONS = [
+  "Besproken met betrokken medewerker(s)",
+  "Besproken in teamvergadering",
+  "Besproken met betrokken client",
+  "Terugkoppeling gedaan naar melder",
+  "Besproken met MT",
+  "Besproken met overige betrokkenen, nl.:",
+];
+
 export const REPORTER_INVOLVEMENT_OPTIONS = [
   { label: "Selecter status", value: "" },
   { label: "Direct betrokken", value: "directly_involved" },

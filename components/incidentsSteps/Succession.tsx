@@ -2,9 +2,10 @@ import React from "react";
 import Panel from "../Panel";
 import InputField from "../FormFields/InputField";
 import Select from "../FormFields/Select";
-import { EMPLOYEE_ABSENTEEISM_OPTIONS } from "@/consts";
+import { EMPLOYEE_ABSENTEEISM_OPTIONS, ORGANIZATIONAL_OPTIONS } from "@/consts";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import Textarea from "../FormFields/Textarea";
+import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
 
 export default function Succession({
   handleChange,
@@ -17,116 +18,66 @@ export default function Succession({
     <Panel title={"5. Opvolging"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
         <div className="flex flex-col ">
-          <label className="mb-4 block text-black dark:text-white">
-            Opvolging
-          </label>
-          <CheckBoxInputFieldThin
-            label={"Besproken met betrokken medewerker(s)"}
-            className="mb-3"
-            name={"checkbox1"}
-            id={"checkbox1"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox1 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Besproken in teamvergadering"}
-            className="mb-3"
-            name={"checkbox2"}
-            id={"checkbox2"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox2 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Besproken met betrokken client"}
-            className="mb-3"
-            name={"checkbox3"}
-            id={"checkbox3"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox3 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Terugkoppeling gedaan naar melder"}
-            className="mb-3"
-            name={"checkbox4"}
-            id={"checkbox4"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox4 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Besproken met MT"}
-            className="mb-3"
-            name={"checkbox5"}
-            id={"checkbox5"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox5 || false}
-          />
-          <CheckBoxInputFieldThin
-            label={"Besproken met overige betrokkenen, nl.:"}
-            className="mb-3"
-            name={"checkbox6"}
-            id={"checkbox6"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            defaultChecked={values.checkbox6 || false}
+          <MultiCheckBoxInputField
+            label="Opvolging"
+            options={ORGANIZATIONAL_OPTIONS}
+            name="succession"
           />
           <InputField
             className={"w-full"}
-            id={"runtimeIncident"}
+            id={"succession_desc"}
             required={true}
             placeholder=""
             type={"text"}
-            value={values.runtimeIncident}
+            value={values.succession_desc}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.runtimeIncident && errors.runtimeIncident}
+            error={touched.succession_desc && errors.succession_desc}
           />
           <CheckBoxInputFieldThin
             label={"overige, nL."}
             className="my-3"
-            name={"checkbox7"}
-            id={"checkbox7"}
+            name={"other"}
+            id={"other"}
             onChange={handleChange}
             onBlur={handleBlur}
-            defaultChecked={values.checkbox7 || false}
+            defaultChecked={values.other || false}
           />
           <InputField
             className={"w-full"}
-            id={"runtimeIncident"}
+            id={"other_desc"}
             required={true}
             placeholder=""
             type={"text"}
-            value={values.runtimeIncident}
+            value={values.other_desc}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.runtimeIncident && errors.runtimeIncident}
+            error={touched.other_desc && errors.other_desc}
           />
           <Textarea
             className="mb-4 col-span-2"
             rows={2}
-            id={"textArea2"}
+            id={"additional_appointments"}
             required={true}
             label={"Aanvullende afspraken"}
-            value={values.textArea || ""}
+            value={values.additional_appointments || ""}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.textArea2 && errors.textArea2}
+            error={
+              touched.additional_appointments && errors.additional_appointments
+            }
           />
           <Select
             label={"Ziekteverzuim medewerker antwoord wissen"}
-            name="delete_involvement"
-            id="delete_involvement"
-            value={values.delete_involvement || ""}
+            name="employee_absenteeism"
+            id="employee_absenteeism"
+            value={values.employee_absenteeism || ""}
             className="w-full"
             required={true}
             options={EMPLOYEE_ABSENTEEISM_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.delete_involvement && errors.delete_involvement}
+            error={touched.employee_absenteeism && errors.employee_absenteeism}
           />
         </div>
       </div>
