@@ -17,8 +17,9 @@ export function MultiCheckBoxInputField({
     name
 }: MultiCheckBoxInputFieldType)
 {
-    const [selectedOptions, setSelectedOptions] = useState(selected)
     const [field, meta, helpers] = useField(name)
+    const [selectedOptions, setSelectedOptions] = useState(
+        selected && (Array.isArray(field.value) && ["string", "integer"].includes(typeof field.value)) ? field.value : [])
 
     useEffect(() => {
         // set the values selectedOptions to the formik field
