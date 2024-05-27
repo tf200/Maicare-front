@@ -11,22 +11,20 @@ type MultiCheckBoxInputFieldType = {
 
 export function MultiCheckBoxInputField({
   label,
-  selected,
+  selected = [],
   options,
   name,
 }: MultiCheckBoxInputFieldType) {
-  const [field, meta, helpers] = useField(name);
+  const [field, meta, helpers] = useField<(number | string)[]>(name);
   const { setValue } = helpers;
   const [selectedOptions, setSelectedOptions] = useState(
-    selected && Array.isArray(field.value) && ["string", "integer"].includes(typeof field.value)
-      ? field.value
-      : []
+    field.value.length ? field.value : selected
   );
 
   useEffect(() => {
     // set the values selectedOptions to the formik field
     setValue(selectedOptions);
-  }, [selectedOptions]);
+  }, [selectedOptions, field.value]);
 
   return (
     <>

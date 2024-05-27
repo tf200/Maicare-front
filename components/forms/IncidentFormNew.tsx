@@ -6,8 +6,6 @@ import { Formik } from "formik";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
 import { useCreateIncident } from "@/utils/new-incident/useCreateIncident";
-import { useEmployeesList } from "@/utils/employees/getEmployeesList";
-import { useGetIncident } from "@/utils/incident/getIncident";
 import { usePatchIncident } from "@/utils/incident/patchIncident";
 import GeneralInfos, {
   GeneralInfosInitial,
@@ -23,7 +21,8 @@ import ClientConsequences, {
   ClientConsequencesShema,
 } from "../incidentsSteps/ClientConsequences";
 import Succession, { SuccessionInitital, SuccessionShema } from "../incidentsSteps/Succession";
-import { NewIncidentReqDto } from "@/types/incidents";
+import { NewIncidentType } from "@/types/incidents";
+import { useGetIncident } from "@/utils/new-incident/useGetSingleIncident";
 
 const formShema = Yup.object().shape({
   ...GeneralInfosShema,
@@ -41,29 +40,20 @@ type Props = {
 
 const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) => {
   const router = useRouter();
-  const initialValues: NewIncidentReqDto = {
+  const initialValues: NewIncidentType = {
     ...SuccessionInitital,
     ...AnalysisInitial,
     ...GeneralInfosInitial,
     ...ClientConsequencesInitial,
     ...IncidentInfosInitial,
   };
-  const [errorOptionMessage, setErrorOptionMessage] = useState(null);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [searchedKey, setSearchedKey] = useState(null);
 
-  // const { data: EmployeeData, isLoading: isSearching } = useEmployeesList({
-  //   search: searchedKey,
-  //   out_of_service: false,
-  // });
-
-  const { data, isLoading: isDataLoading, isError } = useGetIncident(incidentId, clientId);
-
+  const { data: singleIncident, isLoading: isDataLoading } = useGetIncident(incidentId, clientId);
   const { mutate: create, isLoading: isCreating } = useCreateIncident(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchIncident(clientId);
 
   const onSubmit = useCallback(
-    (values: NewIncidentReqDto) => {
+    (values: NewIncidentType) => {
       if (mode === "edit") {
         update(
           {
@@ -87,12 +77,6 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
     [create, update]
   );
 
-  if (mode == "edit") {
-    if (!selectedEmployee) {
-      setSelectedEmployee({ ...selectedEmployee, id: data?.reported_by });
-    }
-  }
-
   const FORMS = [
     { name: "GeneralInfos", component: GeneralInfos },
     { name: "IncidentInfos", component: IncidentInfos },
@@ -101,22 +85,20 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
     { name: "Succession", component: Succession },
   ];
 
+  if (mode == "edit" && isDataLoading) return <div className="mt-5">Loading...</div>;
+
   return (
     <Formik
       enableReinitialize={true}
       initialValues={
-        mode == "edit" ? (data ? data : initialValues) : { ...initialValues, client_id: clientId }
+        mode == "edit"
+          ? singleIncident
+            ? singleIncident
+            : initialValues
+          : { ...initialValues, client_id: clientId }
       }
-      onSubmit={(values: NewIncidentReqDto) => {
-        // if (!selectedEmployee) {
-        //   setErrorOptionMessage("Geef alstublieft de melder.");
-        //   return;
-        // } else {
-        setErrorOptionMessage("");
-        // let data = values;
-        // data.reported_by = selectedEmployee?.id;
+      onSubmit={(values: NewIncidentType) => {
         onSubmit(values);
-        // }
       }}
       validationSchema={formShema}
     >
@@ -138,15 +120,10 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
 
             <Button
               type={"submit"}
-              disabled={isCreating || isPatching}
-              isLoading={isCreating || isPatching}
+              disabled={isCreating || isPatching || isDataLoading}
+              isLoading={isCreating || isPatching || isDataLoading}
               formNoValidate={true}
               loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
-              onClick={() => {
-                if (!selectedEmployee) {
-                  setErrorOptionMessage("Geef alstublieft de melder.");
-                }
-              }}
             >
               {mode === "edit" ? "Update Incident" : "Create Incident"}
             </Button>

@@ -1,4 +1,4 @@
-export type NewIncidentReqDto = {
+export type NewIncidentType = {
   id?: number;
   employee_fullname: string;
   employee_position: string;
@@ -40,4 +40,6 @@ export type NewIncidentReqDto = {
   other_desc: string;
   additional_appointments?: string;
   employee_absenteeism: string;
+  updated?: string;
+  created?: string;
 };

@@ -5,6 +5,7 @@ import {
   RISK_OF_RECURRENCE_OPTIONS,
   SEVERITY_OF_INCIDENT_OPTIONS,
   TYPES_INCIDENT_OPTIONS,
+  EMPTY_STRING,
 } from "@/consts";
 import * as Yup from "yup";
 import Panel from "../Panel";
@@ -40,9 +41,18 @@ export const IncidentInfosShema = {
   organization: Yup.string().required("shouldn't be empty"),
   use_prohibited_substances: Yup.string().required("shouldn't be empty"),
   other_notifications: Yup.string().required("shouldn't be empty"),
+  recurrence_risk: Yup.string().required("shouldn't be empty"),
 };
 
 export default function IncidentInfos({ handleChange, values, handleBlur, touched, errors }) {
+  const convertBooleanType = (value: boolean | string): string => {
+    if (value === "") {
+      return "";
+    }
+    if (typeof value === "boolean") {
+      return value ? "yes" : "no";
+    }
+  };
   return (
     <Panel title={"2. Infromatie over het incident"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -62,7 +72,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Overlijden"}
             name="passing_away"
             id="passing_away"
-            value={values.passing_away}
+            value={convertBooleanType(values.passing_away)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -73,7 +83,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Zelfbeschadiging"}
             name="self_harm"
             id="self_harm"
-            value={values.self_harm}
+            value={convertBooleanType(values.self_harm)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -87,7 +97,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Agressie/geweld"}
             name="violence"
             id="violence"
-            value={values.violence}
+            value={convertBooleanType(values.violence)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -98,7 +108,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Brand- en waterschade"}
             name="fire_water_damage"
             id="fire_water_damage"
-            value={values.fire_water_damage}
+            value={convertBooleanType(values.fire_water_damage)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -111,7 +121,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Ongevallen"}
             name="accident"
             id="accident"
-            value={values.accident}
+            value={convertBooleanType(values.accident)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -122,7 +132,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Afwezigheid client"}
             name="client_absence"
             id="client_absence"
-            value={values.client_absence}
+            value={convertBooleanType(values.client_absence)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -135,7 +145,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Medicijnen"}
             name="medicines"
             id="medicines"
-            value={values.medicines}
+            value={convertBooleanType(values.medicines)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -146,7 +156,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Organisatie"}
             name="organization"
             id="organization"
-            value={values.organization}
+            value={convertBooleanType(values.organization)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -158,7 +168,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Gebruik verboden middelen"}
             name="use_prohibited_substances"
             id="use_prohibited_substances"
-            value={values.use_prohibited_substances}
+            value={convertBooleanType(values.use_prohibited_substances)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}
@@ -170,7 +180,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             label={"Overige meldingen"}
             name="other_notifications"
             id="other_notifications"
-            value={values.other_notifications}
+            value={convertBooleanType(values.other_notifications)}
             required={true}
             options={YES_NO_OPTIONS}
             onChange={handleChange}

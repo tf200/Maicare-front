@@ -1,9 +1,9 @@
-import { NewIncidentReqDto } from "@/types/incidents/";
+import { NewIncidentType } from "@/types/incidents/";
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-export const createIncidentFunc = async (params: NewIncidentReqDto) => {
-  const response = await api.post("/clients/incidents/add", params);
+export const createIncidentFunc = async (params: NewIncidentType): Promise<NewIncidentType> => {
+  const response = await api.post<NewIncidentType>("/clients/incidents/add", params);
   return response.data;
 };
 

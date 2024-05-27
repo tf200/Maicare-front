@@ -1,15 +1,15 @@
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-const PatchIncident = async (data: any) => {
-  const response = await api.post(`clients/incidents/${data.id}/update`, data);
+async function deleteIncident(dataId: number) {
+  const response = await api.delete(`clients/incidents/${dataId}/delete`);
   return response.data;
-};
+}
 
-export const usePatchIncident = (clientId: number) => {
+export const useDeleteIncident = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: PatchIncident,
+    mutationFn: deleteIncident,
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "incidents"]);
     },
