@@ -5,18 +5,29 @@ import { EMPTY_STRING, INFORM_WHO_OPTIONS, REPORTER_INVOLVEMENT_OPTIONS } from "
 import * as Yup from "yup";
 import Panel from "../Panel";
 import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
+import { useLocations } from "@/utils/locations";
+
+export const GeneralInfosInitial = {
+  employee_fullname: "",
+  employee_position: "",
+  location_id: "",
+  reporter_involvement: "",
+  runtime_incident: "",
+  incident_date: "",
+  inform_who: [],
+};
 
 export const GeneralInfosShema = {
   employee_fullname: Yup.string().required("shouldn t be empty"),
   employee_position: Yup.string().required("shouldn t be empty"),
-  location: Yup.string().required("shouldn t be empty"),
+  location_id: Yup.string().required("shouldn t be empty"),
   reporter_involvement: Yup.string().required("shouldn t be empty"),
-  follow_up_required: Yup.boolean().required("shouldn t be empty"),
   runtime_incident: Yup.string().required("shouldn t be empty"),
   incident_date: Yup.string().required("shouldn t be empty"),
 };
 
 export default function GeneralInfos({ handleChange, values, handleBlur, touched, errors }) {
+  // const a = useLocations();
   return (
     <Panel title={"1. Algemene informatie"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -42,18 +53,18 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           onBlur={handleBlur}
           error={errors.employee_position}
         />
-        <InputField
-          className={"w-full"}
-          id={"location"}
-          required={true}
+        <Select
           label={"Locatie zorgorganistie"}
-          type={"text"}
-          value={values.location}
+          name="location_id"
+          id={"location_id"}
+          value={values.location_id}
+          className="w-full"
+          required={true}
+          options={REPORTER_INVOLVEMENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.location}
+          error={errors.location_id}
         />
-
         <Select
           label={"Betrokenheid melder"}
           name="reporter_involvement"

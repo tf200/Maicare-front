@@ -12,6 +12,15 @@ import {
   TECHNICAL_OPTIONS,
 } from "@/consts";
 
+export const AnalysisInitial = {
+  other_cause: "",
+  technical: [],
+  organizational: [],
+  mese_worker: [],
+  client_options: [],
+  cause_explanation: "",
+};
+
 export const AnalysisShema = {
   other_cause: Yup.string().required("Selecteer minstens één betrokken kind."),
 };

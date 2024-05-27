@@ -5,12 +5,27 @@ import {
   RISK_OF_RECURRENCE_OPTIONS,
   SEVERITY_OF_INCIDENT_OPTIONS,
   TYPES_INCIDENT_OPTIONS,
-  EMPTY_STRING,
 } from "@/consts";
 import * as Yup from "yup";
 import Panel from "../Panel";
 import Textarea from "../FormFields/Textarea";
 
+export const IncidentInfosInitial = {
+  incident_type: "",
+  passing_away: "",
+  self_harm: "",
+  violence: "",
+  fire_water_damage: "",
+  accident: "",
+  client_absence: "",
+  medicines: "",
+  organization: "",
+  use_prohibited_substances: "",
+  other_notifications: "",
+  incident_explanation: "",
+  incident_prevent_steps: "",
+  incident_taken_measures: "",
+};
 export const IncidentInfosShema = {
   incident_type: Yup.string().required("shouldn't be empty"),
   passing_away: Yup.string().required("shouldn't be empty"),
@@ -181,7 +196,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           rows={2}
           id={"incident_explanation"}
           label={"Toelichting op het incident"}
-          value={values.incident_explanation || EMPTY_STRING}
+          value={values.incident_explanation}
           onChange={handleChange}
           onBlur={handleBlur}
           error={errors.incident_explanation}
@@ -204,7 +219,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           rows={2}
           id={"incident_prevent_steps"}
           label={"Welke stappen zijin ondernomen om het incident te voorkomen"}
-          value={values.incident_prevent_steps || EMPTY_STRING}
+          value={values.incident_prevent_steps}
           onChange={handleChange}
           onBlur={handleBlur}
           error={errors.incident_prevent_steps}
@@ -215,7 +230,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           rows={2}
           id={"incident_taken_measures"}
           label={"Welke maatregelen zijn genomen na het plaatsvinden van het incident"}
-          value={values.incident_taken_measures || EMPTY_STRING}
+          value={values.incident_taken_measures}
           onChange={handleChange}
           onBlur={handleBlur}
           error={errors.incident_taken_measures}

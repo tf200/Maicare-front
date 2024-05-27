@@ -6,15 +6,24 @@ import { Formik } from "formik";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
 import { IncidentsFormType } from "@/types/incidents/incidents-form-type";
-import { useCreateIncident } from "@/utils/incident/createIncident";
+import { useCreateIncident } from "@/utils/new-incident/useCreateIncident";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useGetIncident } from "@/utils/incident/getIncident";
 import { usePatchIncident } from "@/utils/incident/patchIncident";
-import GeneralInfos, { GeneralInfosShema } from "../incidentsSteps/GeneralInfos";
-import IncidentInfos, { IncidentInfosShema } from "../incidentsSteps/IncidenetInfos";
-import Analysis, { AnalysisShema } from "../incidentsSteps/Analysis";
-import ClientConsequences, { ClientConsequencesShema } from "../incidentsSteps/ClientConsequences";
-import Succession, { SuccessionShema } from "../incidentsSteps/Succession";
+import GeneralInfos, {
+  GeneralInfosInitial,
+  GeneralInfosShema,
+} from "../incidentsSteps/GeneralInfos";
+import IncidentInfos, {
+  IncidentInfosInitial,
+  IncidentInfosShema,
+} from "../incidentsSteps/IncidenetInfos";
+import Analysis, { AnalysisInitial, AnalysisShema } from "../incidentsSteps/Analysis";
+import ClientConsequences, {
+  ClientConsequencesInitial,
+  ClientConsequencesShema,
+} from "../incidentsSteps/ClientConsequences";
+import Succession, { SuccessionInitital, SuccessionShema } from "../incidentsSteps/Succession";
 
 const formShema = Yup.object().shape({
   ...GeneralInfosShema,
@@ -32,7 +41,13 @@ type Props = {
 
 const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) => {
   const router = useRouter();
-  const initialValues = {};
+  const initialValues = {
+    ...SuccessionInitital,
+    ...AnalysisInitial,
+    ...GeneralInfosInitial,
+    ...ClientConsequencesInitial,
+    ...IncidentInfosInitial,
+  };
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchedKey, setSearchedKey] = useState(null);
@@ -95,26 +110,23 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
     <Formik
       enableReinitialize={true}
       initialValues={
-        mode == "edit"
-          ? data
-            ? data
-            : initialValues
-          : { ...initialValues, involved_children: [clientId] }
+        mode == "edit" ? (data ? data : initialValues) : { ...initialValues, client_id: clientId }
       }
       onSubmit={(values: IncidentsFormType) => {
-        if (!selectedEmployee) {
-          setErrorOptionMessage("Geef alstublieft de melder.");
-          return;
-        } else {
-          setErrorOptionMessage("");
-          let data = values;
-          data.reported_by = selectedEmployee?.id;
-          onSubmit(values);
-        }
+        // if (!selectedEmployee) {
+        //   setErrorOptionMessage("Geef alstublieft de melder.");
+        //   return;
+        // } else {
+        setErrorOptionMessage("");
+        let data = values;
+        data.reported_by = selectedEmployee?.id;
+        onSubmit(values);
+        // }
       }}
       validationSchema={formShema}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => {
+        console.log(values);
         return (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4 mb-4">

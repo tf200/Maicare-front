@@ -9,6 +9,13 @@ import {
 import * as Yup from "yup";
 import Panel from "../Panel";
 
+export const ClientConsequencesInitial = {
+  physical_injury_desc: "",
+  psychological_damage: "",
+  physical_injury: "",
+  psychological_damage_desc: "",
+  needed_consultation: "",
+};
 export const ClientConsequencesShema = {
   physical_injury_desc: Yup.string().required("shouldnt be empty "),
   physical_injury: Yup.string().required("shouldnt be empty"),

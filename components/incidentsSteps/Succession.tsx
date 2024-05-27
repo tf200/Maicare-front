@@ -2,17 +2,20 @@ import React from "react";
 import Panel from "../Panel";
 import InputField from "../FormFields/InputField";
 import Select from "../FormFields/Select";
-import {
-  EMPLOYEE_ABSENTEEISM_OPTIONS,
-  EMPTY_STRING,
-  FALSE,
-  ORGANIZATIONAL_OPTIONS,
-} from "@/consts";
+import { EMPLOYEE_ABSENTEEISM_OPTIONS, ORGANIZATIONAL_OPTIONS } from "@/consts";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import Textarea from "../FormFields/Textarea";
 import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
 import * as Yup from "yup";
 
+export const SuccessionInitital = {
+  succession: [],
+  succession_desc: "",
+  other: false,
+  other_desc: "",
+  additional_appointments: "",
+  employee_absenteeism: "",
+};
 export const SuccessionShema = {
   succession_desc: Yup.string().required("Shouldn't be empty"),
   other_desc: Yup.string().required("Shouldn't be empty"),
@@ -46,7 +49,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
             id={"other"}
             onChange={handleChange}
             onBlur={handleBlur}
-            defaultChecked={values.other || FALSE}
+            defaultChecked={values.other}
           />
           <InputField
             className={"w-full"}
@@ -63,7 +66,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
             rows={2}
             id={"additional_appointments"}
             label={"Aanvullende afspraken"}
-            value={values.additional_appointments || EMPTY_STRING}
+            value={values.additional_appointments}
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.additional_appointments}
