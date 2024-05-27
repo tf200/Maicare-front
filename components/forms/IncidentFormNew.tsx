@@ -10,27 +10,18 @@ import { useCreateIncident } from "@/utils/incident/createIncident";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useGetIncident } from "@/utils/incident/getIncident";
 import { usePatchIncident } from "@/utils/incident/patchIncident";
-import GeneralInfos, {
-  GeneralInfosInitial,
-  GeneralInfosShema,
-} from "../incidentsSteps/GeneralInfos";
-import IncidentInfos, {
-  IncidentInfosShema,
-} from "../incidentsSteps/IncidenetInfos";
+import GeneralInfos, { GeneralInfosShema } from "../incidentsSteps/GeneralInfos";
+import IncidentInfos, { IncidentInfosShema } from "../incidentsSteps/IncidenetInfos";
 import Analysis, { AnalysisShema } from "../incidentsSteps/Analysis";
-import ClientConsequences, {
-  ClientConsequencesShema,
-} from "../incidentsSteps/ClientConsequences";
-import Succession from "../incidentsSteps/Succession";
+import ClientConsequences, { ClientConsequencesShema } from "../incidentsSteps/ClientConsequences";
+import Succession, { SuccessionShema } from "../incidentsSteps/Succession";
 
-const initialValues = {
-  ...GeneralInfosInitial,
-};
 const formShema = Yup.object().shape({
   ...GeneralInfosShema,
   ...IncidentInfosShema,
   ...AnalysisShema,
   ...ClientConsequencesShema,
+  ...SuccessionShema,
 });
 
 type Props = {
@@ -39,13 +30,9 @@ type Props = {
   mode: string;
 };
 
-const EpisodeForm: FunctionComponent<Props> = ({
-  clientId,
-  incidentId,
-  mode,
-}) => {
+const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) => {
   const router = useRouter();
-
+  const initialValues = {};
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchedKey, setSearchedKey] = useState(null);
@@ -55,11 +42,7 @@ const EpisodeForm: FunctionComponent<Props> = ({
     out_of_service: false,
   });
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetIncident(incidentId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetIncident(incidentId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateIncident(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchIncident(clientId);
@@ -131,15 +114,7 @@ const EpisodeForm: FunctionComponent<Props> = ({
       }}
       validationSchema={formShema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => {
-        console.log(values);
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => {
         return (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4 mb-4">

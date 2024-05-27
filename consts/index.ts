@@ -8,15 +8,15 @@ import { PaginationParams } from "@/types/pagination-params";
 import Draft from "draft-js";
 import { CarePlanStatus } from "@/types/care-plan";
 import { BadgeType } from "@/types/badge-type";
-import {
-  CareType,
-  ContractStatus,
-} from "@/types/contracts/new-contract-req.dto";
+import { CareType, ContractStatus } from "@/types/contracts/new-contract-req.dto";
 import { RateType } from "@/types/rate-type";
 import { MaturityLevelType } from "@/types/MatruityLevelType";
 import { PERMISSIONS_EDIT, SETTINGS_VIEW } from "@/consts/permissions";
 
 export const MIN_CHARACTERS_TO_ENHANCE = 75;
+
+export const EMPTY_STRING = "";
+export const FALSE = false;
 
 export const DIAGNOSIS_SEVERITY_ARRAY = ["Mild", "Moderate", "Severe"] as const;
 export const ALLERGY_TYPE_ARRAY = [
@@ -29,20 +29,9 @@ export const ALLERGY_TYPE_ARRAY = [
   "Pollen",
   "Overig",
 ] as const;
-export const RATE_TYPE_ARRAY = [
-  "daily",
-  "minute",
-  "hourly",
-  "weekly",
-  "monthly",
-] as const;
+export const RATE_TYPE_ARRAY = ["daily", "minute", "hourly", "weekly", "monthly"] as const;
 
-export const APPOINTMENT_TYPE_ARRAY = [
-  "meeting",
-  "other",
-  "work",
-  "home_care",
-] as const;
+export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work", "home_care"] as const;
 
 export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Type", value: "" },
@@ -96,8 +85,7 @@ export const SEVERITY_OF_INCIDENT_OPTIONS = [
     value: "near_incident",
   },
   {
-    label:
-      "Minder ernstig: beinvloedt de cliënt / medewerker en/of vervolgprocessen",
+    label: "Minder ernstig: beinvloedt de cliënt / medewerker en/of vervolgprocessen",
     value: "less_serious",
   },
   {
@@ -106,8 +94,7 @@ export const SEVERITY_OF_INCIDENT_OPTIONS = [
     value: "serious",
   },
   {
-    label:
-      "Fataal: Overlijden van de client / medewerker als gevolg van het incident",
+    label: "Fataal: Overlijden van de client / medewerker als gevolg van het incident",
     value: "fatal",
   },
 ];
@@ -555,12 +542,11 @@ export const CONTRACT_STATUS_VARIANT_DICT: Record<ContractStatus, BadgeType> = {
   terminated: "Dark",
 };
 
-export const CONTRACT_STATUS_TRANSLATION_DICT: Record<ContractStatus, string> =
-  {
-    draft: "Concept",
-    approved: "Goedgekeurd",
-    terminated: "Beëindigd",
-  };
+export const CONTRACT_STATUS_TRANSLATION_DICT: Record<ContractStatus, string> = {
+  draft: "Concept",
+  approved: "Goedgekeurd",
+  terminated: "Beëindigd",
+};
 
 export const FINANCING_LAW_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Financieringswet", value: "" },
