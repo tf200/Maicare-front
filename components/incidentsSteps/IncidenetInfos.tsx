@@ -25,6 +25,8 @@ export const IncidentInfosInitial = {
   incident_explanation: "",
   incident_prevent_steps: "",
   incident_taken_measures: "",
+  severity_of_incident: "",
+  recurrence_risk: "",
 };
 export const IncidentInfosShema = {
   incident_type: Yup.string().required("shouldn't be empty"),

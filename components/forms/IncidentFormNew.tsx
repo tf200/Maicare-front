@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "next/navigation";
-import { IncidentsFormType } from "@/types/incidents/incidents-form-type";
 import { useCreateIncident } from "@/utils/new-incident/useCreateIncident";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useGetIncident } from "@/utils/incident/getIncident";
@@ -24,6 +23,7 @@ import ClientConsequences, {
   ClientConsequencesShema,
 } from "../incidentsSteps/ClientConsequences";
 import Succession, { SuccessionInitital, SuccessionShema } from "../incidentsSteps/Succession";
+import { NewIncidentReqDto } from "@/types/incidents";
 
 const formShema = Yup.object().shape({
   ...GeneralInfosShema,
@@ -41,7 +41,7 @@ type Props = {
 
 const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) => {
   const router = useRouter();
-  const initialValues = {
+  const initialValues: NewIncidentReqDto = {
     ...SuccessionInitital,
     ...AnalysisInitial,
     ...GeneralInfosInitial,
@@ -52,10 +52,10 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchedKey, setSearchedKey] = useState(null);
 
-  const { data: EmployeeData, isLoading: isSearching } = useEmployeesList({
-    search: searchedKey,
-    out_of_service: false,
-  });
+  // const { data: EmployeeData, isLoading: isSearching } = useEmployeesList({
+  //   search: searchedKey,
+  //   out_of_service: false,
+  // });
 
   const { data, isLoading: isDataLoading, isError } = useGetIncident(incidentId, clientId);
 
@@ -63,7 +63,7 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
   const { mutate: update, isLoading: isPatching } = usePatchIncident(clientId);
 
   const onSubmit = useCallback(
-    (values: IncidentsFormType) => {
+    (values: NewIncidentReqDto) => {
       if (mode === "edit") {
         update(
           {
@@ -77,16 +77,11 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
           }
         );
       } else if (mode === "new") {
-        create(
-          {
-            ...values,
+        create(values, {
+          onSuccess: () => {
+            router.push(`/clients/${clientId}/incidents`);
           },
-          {
-            onSuccess: () => {
-              router.push(`/clients/${clientId}/incidents`);
-            },
-          }
-        );
+        });
       }
     },
     [create, update]
@@ -112,14 +107,14 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
       initialValues={
         mode == "edit" ? (data ? data : initialValues) : { ...initialValues, client_id: clientId }
       }
-      onSubmit={(values: IncidentsFormType) => {
+      onSubmit={(values: NewIncidentReqDto) => {
         // if (!selectedEmployee) {
         //   setErrorOptionMessage("Geef alstublieft de melder.");
         //   return;
         // } else {
         setErrorOptionMessage("");
-        let data = values;
-        data.reported_by = selectedEmployee?.id;
+        // let data = values;
+        // data.reported_by = selectedEmployee?.id;
         onSubmit(values);
         // }
       }}
