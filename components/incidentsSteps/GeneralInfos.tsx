@@ -18,16 +18,16 @@ export const GeneralInfosInitial = {
 };
 
 export const GeneralInfosShema = {
-  employee_fullname: Yup.string().required("shouldn t be empty"),
-  employee_position: Yup.string().required("shouldn t be empty"),
-  location_id: Yup.string().required("shouldn t be empty"),
-  reporter_involvement: Yup.string().required("shouldn t be empty"),
-  runtime_incident: Yup.string().required("shouldn t be empty"),
-  incident_date: Yup.string().required("shouldn t be empty"),
+  employee_fullname: Yup.string().required("Geef alstublieft de gerapporteerde datum."),
+  employee_position: Yup.string().required("Geef alstublieft het tijdstip van het incident."),
+  location: Yup.string().required("Geef alstublieft de gerapporteerde datum."),
+  reporter_involvement: Yup.string().required("Selecteer minstens één betrokken kind."),
+  follow_up_required: Yup.boolean().required("Geef aan of er een Met maatregel:  is."),
+  runtime_incident: Yup.string().required("Geef alstublieft de locatie van het incident111111"),
+  incident_date: Yup.string().required("Geef alstublieft de locatie van het incident2222"),
 };
 
 export default function GeneralInfos({ handleChange, values, handleBlur, touched, errors }) {
-  // const a = useLocations();
   return (
     <Panel title={"1. Algemene informatie"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
