@@ -15,13 +15,13 @@ const CheckBoxInputFieldThin: FunctionComponent<CheckBoxInputFieldType> = ({
 }) => {
   return (
     <div className={className}>
-      <label className="flex items-center cursor-pointer">
+      <label className="flex-1 items-center cursor-pointer">
         <input
           type="checkbox"
           {...props}
           id={id}
           required={required}
-          className="w-[19px] h-[19px] mx-2 cursor-pointer"
+          className="w-5 h-5 mx-2 cursor-pointer"
         />
         {label}
       </label>

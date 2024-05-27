@@ -2,7 +2,7 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 const PatchIncident = async (data: any) => {
-  const response = await api.post(`clients/incidents/${data.id}/update`, data);
+  const response = await api.patch(`/clients/incidents/${data.id}/update`, data);
   return response.data;
 };
 
