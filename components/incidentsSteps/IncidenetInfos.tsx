@@ -53,7 +53,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           options={TYPES_INCIDENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.incident_type}
+          error={touched.incident_type && errors.incident_type}
         />
         <div className="grid grid-cols-2 gap-4">
           <Select
@@ -65,7 +65,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.passing_away}
+            error={touched.passing_away && errors.passing_away}
           />
           <Select
             label={"Zelfbeschadiging"}
@@ -76,7 +76,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.self_harm}
+            error={touched.self_harm && errors.self_harm}
           />
         </div>
 
@@ -90,7 +90,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.violence}
+            error={touched.violence && errors.violence}
           />
           <Select
             label={"Brand- en waterschade"}
@@ -101,7 +101,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.fire_water_damage}
+            error={touched.fire_water_damage && errors.fire_water_damage}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -114,7 +114,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.accident}
+            error={touched.accident && errors.accident}
           />
           <Select
             label={"Afwezigheid client"}
@@ -125,7 +125,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.client_absence}
+            error={touched.client_absence && errors.client_absence}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -138,7 +138,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.medicines}
+            error={touched.medicines && errors.medicines}
           />
           <Select
             label={"Organisatie"}
@@ -149,7 +149,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.organization}
+            error={touched.organization && errors.organization}
           />
           <Select
             className="my-4"
@@ -161,7 +161,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.use_prohibited_substances}
+            error={touched.use_prohibited_substances && errors.use_prohibited_substances}
           />
           <Select
             className="my-4"
@@ -173,7 +173,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
             options={YES_NO_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.other_notifications}
+            error={touched.other_notifications && errors.other_notifications}
           />
         </div>
       </div>
@@ -189,7 +189,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           options={SEVERITY_OF_INCIDENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.use_prohibited_substances}
+          error={touched.severity_of_incident && errors.use_prohibited_substances}
         />
         <Textarea
           className="mb-4"
@@ -211,7 +211,7 @@ export default function IncidentInfos({ handleChange, values, handleBlur, touche
           options={RISK_OF_RECURRENCE_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.recurrence_risk}
+          error={touched.recurrence_risk && errors.recurrence_risk}
         />
 
         <Textarea

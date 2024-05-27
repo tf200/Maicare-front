@@ -126,7 +126,6 @@ const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) =
       validationSchema={formShema}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => {
-        console.log(values);
         return (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4 mb-4">

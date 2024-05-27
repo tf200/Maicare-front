@@ -55,7 +55,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           value={values.employee_fullname}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.employee_fullname}
+          error={touched.employee_fullname && errors.employee_fullname}
         />
         <InputField
           className={"w-full"}
@@ -66,7 +66,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           value={values.employee_position}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.employee_position}
+          error={touched.employee_position && errors.employee_position}
         />
         <Select
           label={"Locatie zorgorganistie"}
@@ -78,7 +78,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           options={locationOptions}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.location_id}
+          error={touched.location_id && errors.location_id}
         />
         <Select
           label={"Betrokenheid melder"}
@@ -90,7 +90,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           options={REPORTER_INVOLVEMENT_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.reporter_involvement}
+          error={touched.reporter_involvement && errors.reporter_involvement}
         />
         <div className="flex flex-col ">
           <MultiCheckBoxInputField
@@ -108,7 +108,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           value={values.incident_date}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.incident_date}
+          error={touched.incident_date && errors.incident_date}
         />
         <InputField
           className={"w-full"}
@@ -119,7 +119,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           value={values.runtime_incident}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.runtime_incident}
+          error={touched.runtime_incident && errors.runtime_incident}
         />
       </div>
     </Panel>

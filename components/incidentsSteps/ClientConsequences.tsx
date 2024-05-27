@@ -39,7 +39,7 @@ export default function ClientConsequences({ handleChange, values, handleBlur, t
           options={INJURY_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.physical_injury}
+          error={touched.physical_injury && errors.physical_injury}
         />
         <InputField
           className={"w-full"}
@@ -49,7 +49,7 @@ export default function ClientConsequences({ handleChange, values, handleBlur, t
           value={values.physical_injury_desc}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.physical_injury_desc}
+          error={touched.physical_injury_desc && errors.physical_injury_desc}
         />
         <Select
           label={"Psychische schade"}
@@ -61,7 +61,7 @@ export default function ClientConsequences({ handleChange, values, handleBlur, t
           options={PSYCHOLOGICAL_DAMAGE_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.psychological_damage}
+          error={touched.psychological_damage && errors.psychological_damage}
         />
         <InputField
           className={"w-full"}
@@ -71,7 +71,7 @@ export default function ClientConsequences({ handleChange, values, handleBlur, t
           value={values.psychological_damage_desc}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.psychological_damage_desc}
+          error={touched.psychological_damage_desc && errors.psychological_damage_desc}
         />
         <Select
           label={"Consult nodig"}
@@ -83,7 +83,7 @@ export default function ClientConsequences({ handleChange, values, handleBlur, t
           options={CONSULTATION_NEEDED_OPTIONS}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.needed_consultation}
+          error={touched.needed_consultation && errors.needed_consultation}
         />
       </div>
     </Panel>

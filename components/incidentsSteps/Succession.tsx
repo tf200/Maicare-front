@@ -40,7 +40,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
             value={values.succession_desc}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.succession_desc}
+            error={touched.succession_desc && errors.succession_desc}
           />
           <CheckBoxInputFieldThin
             label={"overige, nL."}
@@ -59,7 +59,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
             value={values.other_desc}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.other_desc}
+            error={touched.other_desc && errors.other_desc}
           />
           <Textarea
             className="mb-4 col-span-2"
@@ -81,7 +81,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
             options={EMPLOYEE_ABSENTEEISM_OPTIONS}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.employee_absenteeism}
+            error={touched.employee_absenteeism && errors.employee_absenteeism}
           />
         </div>
       </div>

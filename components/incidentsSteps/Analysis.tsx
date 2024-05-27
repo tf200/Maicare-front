@@ -58,7 +58,7 @@ export default function Analysis({ handleChange, values, handleBlur, touched, er
           value={values.other_cause}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.other_cause}
+          error={touched.other_cause && errors.other_cause}
         />
         <Textarea
           className="mb-4 col-span-2"
