@@ -83,6 +83,7 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               </Link>
 
               <IconButton
+                className="bg-red"
                 onClick={() =>
                   open({
                     onConfirm: () => {
@@ -104,7 +105,7 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     <Panel
       title={"Incidenten"}
       sideActions={
-        <LinkButton text={"Add New Incident"} href={"./incidents/add"} className="ml-auto" />
+        <LinkButton text="Nieuw incident toevoegen" href={"./incidents/add"} className="ml-auto" />
       }
     >
       {isLoading && <Loader />}

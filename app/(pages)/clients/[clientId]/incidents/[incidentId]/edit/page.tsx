@@ -13,13 +13,11 @@ const UpdateEpisodePage: FunctionComponent = ({
     <>
       <Breadcrumb pageName="Bijwerken aflevering" />
       <div className="grid grid-cols-1 gap-9">
-        <Panel title={"Bijwerken aflevering"}>
-          <IncidentForm
-            mode={"edit"}
-            incidentId={params.incidentId}
-            clientId={parseInt(params.clientId)}
-          />
-        </Panel>
+        <IncidentForm
+          mode={"edit"}
+          incidentId={params.incidentId}
+          clientId={parseInt(params.clientId)}
+        />
       </div>
     </>
   );
