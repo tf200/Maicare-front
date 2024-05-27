@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../FormFields/InputField";
 import Select from "../FormFields/Select";
 import { EMPTY_STRING, INFORM_WHO_OPTIONS, REPORTER_INVOLVEMENT_OPTIONS } from "@/consts";
@@ -20,14 +20,29 @@ export const GeneralInfosInitial = {
 export const GeneralInfosShema = {
   employee_fullname: Yup.string().required("shouldn t be empty"),
   employee_position: Yup.string().required("shouldn t be empty"),
-  location_id: Yup.string().required("shouldn t be empty"),
+  location_id: Yup.number().required("shouldn t be empty"),
   reporter_involvement: Yup.string().required("shouldn t be empty"),
   runtime_incident: Yup.string().required("shouldn t be empty"),
   incident_date: Yup.string().required("shouldn t be empty"),
 };
 
 export default function GeneralInfos({ handleChange, values, handleBlur, touched, errors }) {
-  // const a = useLocations();
+  const { data: locationLists, isLoading } = useLocations();
+  const [locationOptions, setlocationOptions] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading && locationLists) {
+      const _options = [{ label: "Selecter locatie", value: "" }];
+      locationLists.results.map((location) =>
+        _options.push({
+          label: `${location.name} - ${location.address}`,
+          value: `${location.id}`,
+        })
+      );
+      setlocationOptions(_options);
+    }
+  }, [isLoading]);
+
   return (
     <Panel title={"1. Algemene informatie"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -60,7 +75,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
           value={values.location_id}
           className="w-full"
           required={true}
-          options={REPORTER_INVOLVEMENT_OPTIONS}
+          options={locationOptions}
           onChange={handleChange}
           onBlur={handleBlur}
           error={errors.location_id}
