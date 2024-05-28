@@ -16,14 +16,9 @@ type QuestionnaireMenu = {
 
 const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
   {
-    label: "Samenwerkingsovereenkomst",
+    label: "Samenwerkingsafspraken",
     urlKey: "collaboration-agreement",
-    desc: "Dignissimos obcaecat Molestiae",
-  },
-  {
-    label: "Risicobeoordeling",
-    urlKey: "risk-assessments",
-    desc: "Molestiae voluptas t Vitae ea qui et temp",
+    desc: "nieuwe samenwerkingsovereenkomst maken voor deze klant",
   },
 ];
 
@@ -40,7 +35,7 @@ const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) =
               href={`./questionnaire/${item.urlKey}`}
               className="w-full h-full flex flex-col justify-center p-4"
             >
-              <p className="font-bold mb-4 ">{item.label}</p>
+              <p className="font-bold mb-2 ">{item.label}</p>
               <span>{item.desc}</span>
             </Link>
           </div>

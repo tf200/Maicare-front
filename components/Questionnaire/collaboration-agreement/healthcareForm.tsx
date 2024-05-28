@@ -1,4 +1,5 @@
 import InputField from "@/components/FormFields/InputField";
+import Textarea from "@/components/FormFields/Textarea";
 import Panel from "@/components/Panel";
 import React from "react";
 import * as Yup from "yup";
@@ -44,6 +45,29 @@ export default function HealthForm({ handleChange, values, handleBlur, touched, 
               touched.healthcare_institution_organization &&
               errors.healthcare_institution_organization
             }
+          />
+          <InputField
+            label="Functie"
+            className={"w-full"}
+            id={"healthcare_institution_function"}
+            required={true}
+            type={"text"}
+            value={values.healthcare_institution_function}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={
+              touched.healthcare_institution_function && errors.healthcare_institution_function
+            }
+          />
+          <Textarea
+            label="contactafspraken"
+            className={"w-full"}
+            id={"contact_agreements"}
+            required={true}
+            value={values.contact_agreements}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.contact_agreements && errors.contact_agreements}
           />
           <InputField
             label="Telefoonummer"

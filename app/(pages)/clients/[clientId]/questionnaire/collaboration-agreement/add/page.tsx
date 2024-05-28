@@ -11,7 +11,7 @@ type Props = {
 const NewCollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
-      <Breadcrumb pageName="New Incident" />
+      <Breadcrumb pageName="Nieuwe samenwerkingsovereenkomst" />
       <div className="grid grid-cols-1 gap-9">
         <CollaborationAgreementForm clientId={parseInt(clientId)} mode={"new"} />
       </div>

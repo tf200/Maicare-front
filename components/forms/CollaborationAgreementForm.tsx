@@ -17,12 +17,18 @@ import ProbationForm, {
 } from "../Questionnaire/collaboration-agreement/probationForm";
 import AttentionRisksForm, {
   AttentionRisksInitialValue,
-  AttentionRisksShema,
+  AttentionRisksSchema,
 } from "../Questionnaire/collaboration-agreement/attentionRisksForm";
+
+import { useRouter } from "next/navigation";
+import { useCreateCollabAgreement } from "@/utils/questionnairs/collabration-agreement/useAddCollaborationAgreement";
+import { useGetSingleColab } from "@/utils/questionnairs/collabration-agreement/useGetSingleCollab";
+import { useUpdateCollab } from "@/utils/questionnairs/collabration-agreement/useUpdateCollaboration";
 
 type Props = {
   clientId: number;
   mode?: string;
+  collabId?: number;
 };
 
 const initialValues = {
@@ -36,7 +42,7 @@ const formSchema = Yup.object().shape({
   ...clientShema,
   ...ProbationShema,
   ...HealthShema,
-  ...AttentionRisksShema,
+  ...AttentionRisksSchema,
 });
 
 const FORMS = [
@@ -46,22 +52,32 @@ const FORMS = [
   { name: "Attention risks", component: AttentionRisksForm },
 ];
 
-const CollaborationAgreementForm: React.FC<Props> = ({ clientId, mode }) => {
-  const onSubmit = useCallback((values) => {
-    console.log(values);
-  }, []);
+const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode }) => {
+  const router = useRouter();
+  const { mutate: createCollab, isLoading: isCreating } = useCreateCollabAgreement(clientId);
+  const { data: singleCollab, isLoading: isSingleColab } = useGetSingleColab(collabId, clientId);
+  const { mutate: updateCollab, isLoading: isUpdating } = useUpdateCollab(clientId);
+  const isLoading = isUpdating || isCreating;
 
+  const onSubmit = (values) => {
+    const payload = { client_id: clientId, ...values };
+    const onSuccess = () => {
+      router.push(`/clients/${clientId}/questionnaire/collaboration-agreement`);
+    };
+    if (!singleCollab) return createCollab(payload, { onSuccess });
+    return updateCollab(payload, { onSuccess });
+  };
+  if (isSingleColab) return <p>Loading...</p>;
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={initialValues}
+      initialValues={singleCollab ?? initialValues}
       validationSchema={formSchema}
       onSubmit={onSubmit}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {" "}
             {FORMS.map(({ name, component: Component }) => (
               <Component
                 key={name}
@@ -75,10 +91,12 @@ const CollaborationAgreementForm: React.FC<Props> = ({ clientId, mode }) => {
           </div>
           <Button
             type={"submit"}
+            disabled={isLoading}
+            isLoading={isLoading}
             formNoValidate={true}
             loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
           >
-            {mode === "edit" ? "Update " : "Create "}
+            {mode === "edit" ? "Update Collaboration" : "Create Collaboration"}
           </Button>
         </form>
       )}

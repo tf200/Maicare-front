@@ -13,24 +13,25 @@ import DeleteIcon from "@/components/icons/DeleteIcon";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration-agreement";
-import { useGetCollborationList } from "@/utils/questionnairs/useGetAllQuestionnaires";
+import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
+import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
 
 type Props = {
   params: { clientId: string };
 };
 
 const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  // const { mutate: deleteIncident } = useDeleteIncident(parseInt(clientId));
+  const { mutate: deleteCollab } = useDeleteCollab(parseInt(clientId));
   const { data, pagination, isError, isLoading, isFetching } = useGetCollborationList(
     parseInt(clientId)
   );
 
-  // const { open } = useModal(
-  //   getDangerActionConfirmationModal({
-  //     msg: "Weet u zeker dat u dit incident wilt verwijderen?",
-  //     title: "Incident verwijderen",
-  //   })
-  // );
+  const { open } = useModal(
+    getDangerActionConfirmationModal({
+      msg: "Weet je zeker dat je deze samenwerking wilt verwijderen?",
+      title: "Samenwerking verwijderen",
+    })
+  );
 
   const columnDef = useMemo<ColumnDef<CollaborationAgreementsType>[]>(() => {
     return [
@@ -62,11 +63,13 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
       },
       {
         accessorKey: "action",
-        header: "Actions",
+        header: "Acties",
         cell: (info) => {
           return (
             <div className="flex gap-3">
-              <Link href={`/clients/${clientId}/incidents/${info.row.id}/edit`}>
+              <Link
+                href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}
+              >
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
@@ -74,14 +77,13 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
 
               <IconButton
                 className="bg-red"
-                onClick={
-                  () => <></>
-                  // open({
-                  //   onConfirm: () => {
-                  //     deleteIncident(parseInt(info.row.id));
-                  //   },
-                  // })
-                }
+                onClick={() => {
+                  return open({
+                    onConfirm: () => {
+                      deleteCollab(parseInt(info.row.id));
+                    },
+                  });
+                }}
               >
                 <DeleteIcon className="w-5 h-5" />
               </IconButton>
