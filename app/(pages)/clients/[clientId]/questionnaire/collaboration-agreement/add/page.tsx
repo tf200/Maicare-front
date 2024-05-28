@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import IncidentForm from "@/components/forms/IncidentFormNew";
+import CollaborationAgreementForm from "@/components/forms/CollaborationAgreementForm";
 
 type Props = {
   params: {
@@ -8,15 +8,15 @@ type Props = {
   };
 };
 
-const NewIncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+const NewCollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <Breadcrumb pageName="New Incident" />
       <div className="grid grid-cols-1 gap-9">
-        <IncidentForm mode={"new"} clientId={parseInt(clientId)} />
+        <CollaborationAgreementForm clientId={parseInt(clientId)} mode={"new"} />
       </div>
     </>
   );
 };
 
-export default NewIncidentsPage;
+export default NewCollaborationAgreement;

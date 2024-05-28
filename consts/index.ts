@@ -213,6 +213,20 @@ export const REPORTER_INVOLVEMENT_OPTIONS = [
   { label: "Achteraf aangetroffen", value: "found_afterwards" },
   { label: "Gealarmeerd", value: "alarmed" },
 ];
+export const ATTENTION_RISKS_OPTIONS = [
+  { label: "Selecter status", value: "" },
+  { label: "Wonen", value: "living" },
+  { label: "Dagbesteding", value: "datetime" },
+  { label: "Verslaving/Middelen-Gebruik", value: "addiction_resources_use" },
+  { label: "Financiën", value: "finances" },
+  { label: "Gedrag", value: "behaviour" },
+  { label: "Pstychische Gezondheid", value: "psychic_health" },
+  { label: "Lichamelijke Gezondheid", value: "physical_health" },
+  { label: "Familie", value: "family" },
+  { label: "Partner/Kinderen", value: "partner_children" },
+  { label: "Vrienden", value: "friends" },
+];
+
 export const YES_NO_OPTIONS = [
   { label: "Selecter status", value: "" },
   { label: "Nee", value: "yes" },

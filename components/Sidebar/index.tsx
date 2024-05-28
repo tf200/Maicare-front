@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { FunctionComponent, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -59,11 +53,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
-      if (
-        !sidebarOpen ||
-        sidebar.current.contains(target) ||
-        trigger.current.contains(target)
-      )
+      if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target))
         return;
       setSidebarOpen(false);
     };
@@ -91,15 +81,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, [sidebarExpanded]);
 
   const Sidebar = useMemo(() => {
-    if (
-      pathname.startsWith("/clients/") &&
-      !pathname.startsWith("/clients/new")
-    ) {
+    if (pathname.startsWith("/clients/") && !pathname.startsWith("/clients/new")) {
       return <ClientMenu />;
-    } else if (
-      pathname.startsWith("/employees/") &&
-      !pathname.startsWith("/employees/new")
-    ) {
+    } else if (pathname.startsWith("/employees/") && !pathname.startsWith("/employees/new")) {
       return <EmployeeMenu />;
     } else {
       return <GlobalMenu />;
@@ -107,15 +91,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, [pathname]);
 
   const classNames = useMemo(() => {
-    if (
-      pathname.startsWith("/clients/") &&
-      !pathname.startsWith("/clients/new")
-    ) {
+    if (pathname.startsWith("/clients/") && !pathname.startsWith("/clients/new")) {
       return styles.clientBg;
-    } else if (
-      pathname.startsWith("/employees/") &&
-      !pathname.startsWith("/employees/new")
-    ) {
+    } else if (pathname.startsWith("/employees/") && !pathname.startsWith("/employees/new")) {
       return styles.employeeBg;
     } else {
       return "bg-black dark:bg-boxdark";
@@ -135,12 +113,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/" className="px-4 flex items-center">
-          <Image
-            width={56}
-            height={56}
-            src={"/images/logo/logo.png"}
-            alt="Logo"
-          />
+          <Image width={56} height={56} src={"/images/logo/logo.png"} alt="Logo" />
           <p className="pl-2 text-[24px] text-white">
             MAI<span className="font-bold">Care</span>
           </p>
@@ -300,9 +273,7 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
       <nav className="px-4 py-4 mt-5 lg:mt-9 lg:px-6">
         {/* <!-- Menu Group --> */}
         <div>
-          <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-            {title}
-          </h3>
+          <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">{title}</h3>
 
           <ul className="mb-6 flex flex-col gap-1.5">
             {/* <!-- Menu Item Dashboard --> */}
@@ -516,6 +487,12 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/goals`,
             icon: <GoalIcon height={18} width={18} />,
             children: "Doelen",
+            permission: consts.CLIENT_VIEW,
+          },
+          {
+            completeHref: `/clients/${clientId}/questionnaire`,
+            icon: <DocumentIcon className={"w-4.5 h-4.5"} />,
+            children: "vragenlijst",
             permission: consts.CLIENT_VIEW,
           },
           {
