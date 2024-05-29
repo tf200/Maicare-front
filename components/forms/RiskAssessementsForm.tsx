@@ -37,7 +37,10 @@ import Conclusion, {
   ConclusionInitialValue,
   ConclusionShema,
 } from "../Questionnaire/risk-assessements/Conclusion";
-import Evaluation, { EvaluationShema } from "../Questionnaire/risk-assessements/Evaluation";
+import Evaluation, {
+  EvaluationInitialValue,
+  EvaluationShema,
+} from "../Questionnaire/risk-assessements/Evaluation";
 
 type Props = {
   clientId: number;
@@ -54,7 +57,7 @@ const initialValues = {
   ...ProtectiveFactorsInitialValue,
   ...NeedsInitialValue,
   ...ConclusionInitialValue,
-  ...EvaluationShema,
+  ...EvaluationInitialValue,
 };
 
 const formSchema = Yup.object().shape({
@@ -94,7 +97,9 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
+    console.log("values");
     const payload = { client_id: clientId, ...values };
+
     const onSuccess = () => {
       router.push(`/clients/${clientId}/questionnaire/risk-assessements`);
     };
@@ -109,31 +114,34 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
       validationSchema={formSchema}
       onSubmit={onSubmit}
     >
-      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            {FORMS.map(({ name, component: Component }) => (
-              <Component
-                key={name}
-                handleChange={handleChange}
-                values={values}
-                handleBlur={handleBlur}
-                touched={touched}
-                errors={errors}
-              />
-            ))}
-          </div>
-          <Button
-            type={"submit"}
-            disabled={isLoading}
-            isLoading={isLoading}
-            formNoValidate={true}
-            loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
-          >
-            {mode === "edit" ? "Risicobeoordeling bijwerken" : "Risicobeoordeling maken"}
-          </Button>
-        </form>
-      )}
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => {
+        console.log(errors);
+        return (
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              {FORMS.map(({ name, component: Component }) => (
+                <Component
+                  key={name}
+                  handleChange={handleChange}
+                  values={values}
+                  handleBlur={handleBlur}
+                  touched={touched}
+                  errors={errors}
+                />
+              ))}
+            </div>
+            <Button
+              type={"submit"}
+              disabled={isLoading}
+              isLoading={isLoading}
+              formNoValidate={true}
+              loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
+            >
+              {mode === "edit" ? "Risicobeoordeling bijwerken" : "Risicobeoordeling maken"}
+            </Button>
+          </form>
+        );
+      }}
     </Formik>
   );
 };

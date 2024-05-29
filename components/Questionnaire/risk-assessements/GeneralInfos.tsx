@@ -20,6 +20,7 @@ export const GeneralInfosShema = {
 };
 
 export default function GeneralInfos({ handleChange, values, handleBlur, touched, errors }) {
+  console.log(values);
   return (
     <Panel title={"1. Algemene Informatie"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -41,7 +42,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
               className={"w-1/2"}
               id={"date_of_birth"}
               required={true}
-              type={"text"}
+              type={"date"}
               value={values.date_of_birth}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -64,7 +65,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
             className={"w-full"}
             id={"date_of_intake"}
             required={true}
-            type={"text"}
+            type={"datetime-local"}
             value={values.date_of_intake}
             onChange={handleChange}
             onBlur={handleBlur}

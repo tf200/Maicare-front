@@ -60,13 +60,13 @@ export default function RiskFactors({ handleChange, values, handleBlur, touched,
           <InputField
             label="Risico op middelenmisbruik"
             className={"w-full"}
-            id={"date_of_intake"}
+            id={"abuse_substance_risk"}
             required={true}
             type={"text"}
-            value={values.date_of_intake}
+            value={values.abuse_substance_risk}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.date_of_intake && errors.date_of_intake}
+            error={touched.abuse_substance_risk && errors.abuse_substance_risk}
           />
         </div>
       </div>

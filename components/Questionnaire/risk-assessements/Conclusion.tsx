@@ -75,7 +75,7 @@ export default function Conclusion({ handleChange, values, handleBlur, touched, 
             className={"w-full"}
             id={"report_date"}
             required={true}
-            type={"text"}
+            type={"date"}
             value={values.report_date}
             onChange={handleChange}
             onBlur={handleBlur}

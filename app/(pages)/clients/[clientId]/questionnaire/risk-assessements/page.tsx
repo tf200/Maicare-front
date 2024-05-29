@@ -67,7 +67,7 @@ const RiskAssessements: FunctionComponent<Props> = ({ params: { clientId } }) =>
           return (
             <div className="flex gap-3">
               <Link
-                href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}
+                href={`/clients/${clientId}/questionnaire/risk-assessements/${info.row.id}/edit`}
               >
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />

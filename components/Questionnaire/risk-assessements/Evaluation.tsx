@@ -4,15 +4,15 @@ import React from "react";
 import * as Yup from "yup";
 
 export const EvaluationInitialValue = {
-  youngster_name: "",
-  date_of_birth: "",
-  intaker_position_name: "",
+  regular_evaluation_plan: "",
+  success_criteria: "",
+  time_table: "",
 };
 
 export const EvaluationShema = {
-  youngster_name: Yup.string().required("moet dit veld invullen"),
-  date_of_birth: Yup.string().required("moet dit veld invullen"),
-  intaker_position_name: Yup.string().required("moet dit veld invullen"),
+  regular_evaluation_plan: Yup.string().required("moet dit veld invullen"),
+  success_criteria: Yup.string().required("moet dit veld invullen"),
+  time_table: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function Evaluation({ handleChange, values, handleBlur, touched, errors }) {
@@ -23,35 +23,35 @@ export default function Evaluation({ handleChange, values, handleBlur, touched, 
           <InputField
             label="Plan voor regelmatige evaluatie van de jongere"
             className={"w-full"}
-            id={"youngster_name"}
+            id={"regular_evaluation_plan"}
             required={true}
             type={"text"}
-            value={values.youngster_name}
+            value={values.regular_evaluation_plan}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.youngster_name && errors.youngster_name}
+            error={touched.regular_evaluation_plan && errors.regular_evaluation_plan}
           />
           <InputField
             label="Criteria voor succes en voortgangsmetingen"
             className={"w-full"}
-            id={"date_of_intake"}
+            id={"success_criteria"}
             required={true}
             type={"text"}
-            value={values.date_of_intake}
+            value={values.success_criteria}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.date_of_intake && errors.date_of_intake}
+            error={touched.success_criteria && errors.success_criteria}
           />
           <InputField
             label="Tijdschema voor evaluatiegesprekken"
             className={"w-full"}
-            id={"intaker_position_name"}
+            id={"time_table"}
             required={true}
             type={"text"}
-            value={values.intaker_position_name}
+            value={values.time_table}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.intaker_position_name && errors.intaker_position_name}
+            error={touched.time_table && errors.time_table}
           />
         </div>
       </div>
