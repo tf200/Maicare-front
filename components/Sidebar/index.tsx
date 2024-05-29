@@ -492,7 +492,7 @@ const ClientMenu: FunctionComponent = () => {
           {
             completeHref: `/clients/${clientId}/questionnaire`,
             icon: <DocumentIcon className={"w-4.5 h-4.5"} />,
-            children: "vragenlijst",
+            children: "Vragenlijsten",
             permission: consts.CLIENT_VIEW,
           },
           {
