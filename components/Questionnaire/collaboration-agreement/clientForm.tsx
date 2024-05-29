@@ -11,10 +11,10 @@ export const clientInitialValue = {
 };
 
 export const clientShema = {
-  client_full_name: Yup.string().required("shouldn't be empty"),
-  client_SKN: Yup.string().required("shouldn't be empty"),
-  client_number: Yup.string().required("shouldn't be empty"),
-  client_phone: Yup.string().required("shouldn't be empty"),
+  client_full_name: Yup.string().required("moet dit veld invullen"),
+  client_SKN: Yup.string().required("moet dit veld invullen"),
+  client_number: Yup.string().required("moet dit veld invullen"),
+  client_phone: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function ClientForm({ handleChange, values, handleBlur, touched, errors }) {

@@ -111,15 +111,16 @@ export default function AttentionRisksForm({ handleChange, values, handleBlur, t
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-
-                    <Button
-                      type="button"
-                      className="bg-red w-1/4"
-                      onClick={() => field.remove(index)}
-                      disabled={values.attention_risks.length === 1}
-                    >
-                      Delete
-                    </Button>
+                    {values.attention_risks.length > 1 && (
+                      <Button
+                        type="button"
+                        className="bg-red w-1/4"
+                        onClick={() => field.remove(index)}
+                        disabled={values.attention_risks.length === 1}
+                      >
+                        Verwijderen
+                      </Button>
+                    )}
                   </div>
                 ))}
 
@@ -137,7 +138,7 @@ export default function AttentionRisksForm({ handleChange, values, handleBlur, t
                   })
                 }
               >
-                Add new risk type
+                Nieuw risicotype toevoegen
               </Button>
             </div>
           );

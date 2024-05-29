@@ -11,9 +11,9 @@ export const HealthInitialValue = {
 };
 
 export const HealthShema = {
-  healthcare_institution_name: Yup.string().required("shouldn't be empty"),
-  healthcare_institution_organization: Yup.string().required("shouldn't be empty"),
-  healthcare_institution_phone: Yup.string().required("shouldn't be empty"),
+  healthcare_institution_name: Yup.string().required("moet dit veld invullen"),
+  healthcare_institution_organization: Yup.string().required("moet dit veld invullen"),
+  healthcare_institution_phone: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function HealthForm({ handleChange, values, handleBlur, touched, errors }) {

@@ -1,4 +1,4 @@
-type RiskAssessementType = {
+export type RiskAssessementType = {
   gender: string;
   client_id?: number;
   id?: number;

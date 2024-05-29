@@ -10,9 +10,9 @@ export const ProbationInitialValue = {
 };
 
 export const ProbationShema = {
-  probation_full_name: Yup.string().required("shouldn't be empty"),
-  probation_organization: Yup.string().required("shouldn't be empty"),
-  probation_phone: Yup.string().required("shouldn't be empty"),
+  probation_full_name: Yup.string().required("moet dit veld invullen"),
+  probation_organization: Yup.string().required("moet dit veld invullen"),
+  probation_phone: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function ProbationForm({ handleChange, values, handleBlur, touched, errors }) {

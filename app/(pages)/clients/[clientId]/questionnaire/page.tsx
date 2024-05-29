@@ -20,6 +20,11 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "collaboration-agreement",
     desc: "nieuwe samenwerkingsovereenkomst maken voor deze klant",
   },
+  {
+    label: "risicobeoordelingen",
+    urlKey: "risk-assessements",
+    desc: "nieuwe risicobeoordelingen voor deze klant",
+  },
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {

@@ -96,7 +96,7 @@ const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode 
             formNoValidate={true}
             loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
           >
-            {mode === "edit" ? "Update Collaboration" : "Create Collaboration"}
+            {mode === "edit" ? "Samenwerking bijwerken" : "Creëer samenwerking"}
           </Button>
         </form>
       )}

@@ -1,60 +1,59 @@
 "use client";
-import React, { FunctionComponent, useMemo } from "react";
-import { ColumnDef } from "@tanstack/table-core";
+import IconButton from "@/components/buttons/IconButton";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
-import PaginatedTable from "@/components/PaginatedTable";
-import { fullDateFormat } from "@/utils/timeFormatting";
-import Panel from "@/components/Panel";
-import Link from "next/link";
-import IconButton from "@/components/buttons/IconButton";
-import PencilSquare from "@/components/icons/PencilSquare";
 import DeleteIcon from "@/components/icons/DeleteIcon";
-import { useModal } from "@/components/providers/ModalProvider";
+import PencilSquare from "@/components/icons/PencilSquare";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
-import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration-agreement";
-import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
-import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
+import PaginatedTable from "@/components/PaginatedTable";
+import Panel from "@/components/Panel";
+import { useModal } from "@/components/providers/ModalProvider";
+import { RiskAssessementType } from "@/types/questionnaire/risk-assessments-type";
+import { useDeleteRiskAssessements } from "@/utils/questionnairs/risk-assessements/useDeleteRiskAssessemets";
+import { useGetRiskAssessemets } from "@/utils/questionnairs/risk-assessements/useGetAllRiskAssessemets";
+import { fullDateFormat } from "@/utils/timeFormatting";
+import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import React, { FunctionComponent, useMemo } from "react";
 
 type Props = {
   params: { clientId: string };
 };
-
-const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { mutate: deleteCollab } = useDeleteCollab(parseInt(clientId));
-  const { data, pagination, isError, isLoading, isFetching } = useGetCollborationList(
+const RiskAssessements: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { mutate: deleteRiskAssessements } = useDeleteRiskAssessements(parseInt(clientId));
+  const { data, pagination, isError, isLoading, isFetching } = useGetRiskAssessemets(
     parseInt(clientId)
   );
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
-      msg: "Weet je zeker dat je deze samenwerking wilt verwijderen?",
-      title: "Samenwerking verwijderen",
+      msg: "Weet u zeker dat u deze risicobeoordeling wilt verwijderen?",
+      title: "Risicobeoordeling verwijderen",
     })
   );
 
-  const columnDef = useMemo<ColumnDef<CollaborationAgreementsType>[]>(() => {
+  const columnDef = useMemo<ColumnDef<RiskAssessementType>[]>(() => {
     return [
       {
-        accessorKey: "client_full_name",
-        header: "volledige naam van de klant",
+        accessorKey: "intaker_position_name",
+        header: "Intaker positie naam",
       },
       {
-        accessorKey: "client_number",
-        header: "client nummer",
+        accessorKey: "family_situation",
+        header: "familie situatie",
       },
 
       {
-        accessorKey: "healthcare_institution_function",
-        header: "Functie van zorginstellingen",
+        accessorKey: "education_work",
+        header: "onderwijs werk",
       },
       {
-        accessorKey: "probation_full_name",
-        header: "Volledige naam proeftijd",
+        accessorKey: "current_living_situation",
+        header: "huidige woonsituatie",
       },
       {
-        accessorKey: "probation_organization",
-        header: "Reclassering organisatie ",
+        accessorKey: "personal_risk_factors",
+        header: "persoonlijke risicofactoren ",
       },
       {
         accessorKey: "created",
@@ -80,7 +79,7 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                 onClick={() => {
                   return open({
                     onConfirm: () => {
-                      deleteCollab(parseInt(info.row.id));
+                      deleteRiskAssessements(parseInt(info.row.id));
                     },
                   });
                 }}
@@ -96,11 +95,11 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
 
   return (
     <Panel
-      title={"Samenwerkingsovereenkomst"}
+      title={"Risicobeoordelingen"}
       sideActions={
         <LinkButton
-          text="nieuwe samenwerkingsovereenkomst toevoegen"
-          href={"./collaboration-agreement/add"}
+          text="nieuwe risicobeoordelingen toevoegen"
+          href={"./risk-assessements/add"}
           className="ml-auto"
         />
       }
@@ -125,5 +124,4 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
     </Panel>
   );
 };
-
-export default CollaborationAgreement;
+export default RiskAssessements;

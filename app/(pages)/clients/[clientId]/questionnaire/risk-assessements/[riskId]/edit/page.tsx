@@ -1,19 +1,20 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CollaborationAgreementForm from "@/components/forms/CollaborationAgreementForm";
+import RiskAssessementsForm from "@/components/forms/RiskAssessementsForm";
 
 const UpdateEpisodePage: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string; collabId: number };
+  params: { clientId: string; riskId: number };
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Update samenwerkingsovereenkomst" />
+      <Breadcrumb pageName="Risicobeoordeling bijwerken" />
       <div className="grid grid-cols-1 gap-9">
-        <CollaborationAgreementForm
+        <RiskAssessementsForm
           mode={"edit"}
-          collabId={params.collabId}
+          riskId={params.riskId}
           clientId={parseInt(params.clientId)}
         />
       </div>
