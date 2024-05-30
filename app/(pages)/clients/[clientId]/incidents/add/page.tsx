@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import Panel from "@/components/Panel";
 import IncidentForm from "@/components/forms/IncidentFormNew";
 
 type Props = {
@@ -9,9 +8,7 @@ type Props = {
   };
 };
 
-const NewIncidentsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
+const NewIncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <Breadcrumb pageName="New Incident" />

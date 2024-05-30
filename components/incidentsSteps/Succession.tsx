@@ -17,9 +17,9 @@ export const SuccessionInitital = {
   employee_absenteeism: "",
 };
 export const SuccessionShema = {
-  succession_desc: Yup.string().required("Shouldn't be empty"),
-  other_desc: Yup.string().required("Shouldn't be empty"),
-  employee_absenteeism: Yup.string().required("Shouldn't be empty"),
+  succession_desc: Yup.string().required("moet dit veld invullen"),
+  other_desc: Yup.string().required("moet dit veld invullen"),
+  employee_absenteeism: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function Succession({ handleChange, values, handleBlur, touched, errors }) {

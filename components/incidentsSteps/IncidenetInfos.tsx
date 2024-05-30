@@ -30,18 +30,18 @@ export const IncidentInfosInitial = {
   recurrence_risk: "",
 };
 export const IncidentInfosShema = {
-  incident_type: Yup.string().required("shouldn't be empty"),
-  passing_away: Yup.string().required("shouldn't be empty"),
-  self_harm: Yup.string().required("shouldn't be empty"),
-  violence: Yup.string().required("shouldn't be empty"),
-  fire_water_damage: Yup.string().required("shouldn't be empty"),
-  accident: Yup.string().required("shouldn't be empty"),
-  client_absence: Yup.string().required("shouldn't be empty"),
-  medicines: Yup.string().required("shouldn't be empty"),
-  organization: Yup.string().required("shouldn't be empty"),
-  use_prohibited_substances: Yup.string().required("shouldn't be empty"),
-  other_notifications: Yup.string().required("shouldn't be empty"),
-  recurrence_risk: Yup.string().required("shouldn't be empty"),
+  incident_type: Yup.string().required("moet dit veld invullen"),
+  passing_away: Yup.string().required("moet dit veld invullen"),
+  self_harm: Yup.string().required("moet dit veld invullen"),
+  violence: Yup.string().required("moet dit veld invullen"),
+  fire_water_damage: Yup.string().required("moet dit veld invullen"),
+  accident: Yup.string().required("moet dit veld invullen"),
+  client_absence: Yup.string().required("moet dit veld invullen"),
+  medicines: Yup.string().required("moet dit veld invullen"),
+  organization: Yup.string().required("moet dit veld invullen"),
+  use_prohibited_substances: Yup.string().required("moet dit veld invullen"),
+  other_notifications: Yup.string().required("moet dit veld invullen"),
+  recurrence_risk: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function IncidentInfos({ handleChange, values, handleBlur, touched, errors }) {
