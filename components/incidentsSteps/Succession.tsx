@@ -2,7 +2,7 @@ import React from "react";
 import Panel from "../Panel";
 import InputField from "../FormFields/InputField";
 import Select from "../FormFields/Select";
-import { EMPLOYEE_ABSENTEEISM_OPTIONS, ORGANIZATIONAL_OPTIONS } from "@/consts";
+import { EMPLOYEE_ABSENTEEISM_OPTIONS, SUCCESSION_OPTIONS } from "@/consts";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
 import Textarea from "../FormFields/Textarea";
 import { MultiCheckBoxInputField } from "../FormFields/MultiCheckBoxInputField";
@@ -29,7 +29,7 @@ export default function Succession({ handleChange, values, handleBlur, touched, 
         <div className="flex flex-col ">
           <MultiCheckBoxInputField
             label="Opvolging"
-            options={ORGANIZATIONAL_OPTIONS}
+            options={SUCCESSION_OPTIONS}
             name="succession"
           />
           <InputField
