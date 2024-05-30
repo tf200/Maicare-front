@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-export default function Home() {
+export default function Home(props) {
   redirect("/signin");
 }
