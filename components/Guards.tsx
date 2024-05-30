@@ -83,13 +83,11 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     if (typeof localStorage !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
         redirect("/dashboard");
+      } else if (PublicRoutes.includes(pathName) || pathName.startsWith("/protected-email/")) {
+        setIsAllowed(true);
       } else if (localStorage.getItem("a")) {
         verify();
-      } else if (
-        pathName.startsWith("/signin") ||
-        PublicRoutes.includes(pathName) ||
-        pathName.startsWith("/protected-email/")
-      ) {
+      } else if (pathName.startsWith("/signin")) {
         setIsAllowed(true);
       } else {
         redirect("/signin");
