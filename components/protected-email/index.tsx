@@ -5,12 +5,16 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import Button from "../buttons/Button";
 import { cn } from "@/utils/cn";
+import IncidentEmail from "./IncidentEmail";
+import ProgressReportEmail from "./ProgressReportEmail";
+import { INCIDENT_TYPE } from "@/consts";
 
 export default function ProtectedEmail({ emailId }) {
   const router = useRouter();
   const initialValues = { passkey: "" };
 
   const [wrongPassKey, setwrongPassKey] = useState(null);
+  const [emailContent, setEmailContent] = useState(null);
 
   const validationSchema = Yup.object({
     passkey: Yup.string().required("Wachtwoord is vereist"),
@@ -22,9 +26,9 @@ export default function ProtectedEmail({ emailId }) {
     getProtectedEmail(
       { uuid: emailId, passkey: values.passkey },
       {
-        onSuccess(_) {
+        onSuccess(data) {
           setwrongPassKey(null);
-          router.push(`./${_.uuid}/${_.email_type}`);
+          setEmailContent(data);
         },
         onError(error: any) {
           setwrongPassKey(error.response.data.message);
@@ -32,6 +36,15 @@ export default function ProtectedEmail({ emailId }) {
       }
     );
   };
+
+  if (emailContent) {
+    return emailContent.email_type === INCIDENT_TYPE ? (
+      <IncidentEmail emailContent={emailContent} />
+    ) : (
+      <ProgressReportEmail emailContent={emailContent} />
+    );
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen ">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-xl">
