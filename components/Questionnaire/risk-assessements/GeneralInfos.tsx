@@ -1,6 +1,7 @@
 import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
-import React from "react";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 
 export const GeneralInfosInitialValue = {
@@ -19,8 +20,25 @@ export const GeneralInfosShema = {
   intaker_position_name: Yup.string().required("moet dit veld invullen"),
 };
 
-export default function GeneralInfos({ handleChange, values, handleBlur, touched, errors }) {
-  console.log(values);
+export default function GeneralInfos({
+  handleChange,
+  values,
+  handleBlur,
+  touched,
+  errors,
+  client_id,
+  setFieldValue,
+}) {
+  const { data, isLoading } = useClientDetails(client_id);
+  useEffect(() => {
+    if (data) {
+      setFieldValue("youngster_name", `${data.first_name} ${data.last_name}`);
+      setFieldValue("gender", `${data.gender}`);
+      setFieldValue("date_of_birth", `${data.date_of_birth}`);
+    }
+  }, [data]);
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <Panel title={"1. Algemene Informatie"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -32,6 +50,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
             required={true}
             type={"text"}
             value={values.youngster_name}
+            disabled
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.youngster_name && errors.youngster_name}
@@ -41,6 +60,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
               label="Geboortedatum"
               className={"w-1/2"}
               id={"date_of_birth"}
+              disabled
               required={true}
               type={"date"}
               value={values.date_of_birth}
@@ -52,6 +72,7 @@ export default function GeneralInfos({ handleChange, values, handleBlur, touched
               label="Geslacht"
               className={"w-1/2"}
               id={"gender"}
+              disabled
               required={true}
               type={"text"}
               value={values.gender}

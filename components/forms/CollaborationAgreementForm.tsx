@@ -45,14 +45,14 @@ const formSchema = Yup.object().shape({
   ...AttentionRisksSchema,
 });
 
-const FORMS = [
-  { name: "Client", component: ClientForm },
-  { name: "Probation", component: ProbationForm },
-  { name: "Health", component: HealthForm },
-  { name: "Attention risks", component: AttentionRisksForm },
-];
-
 const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode }) => {
+  const FORMS = [
+    { name: "Client", component: ClientForm, clientId },
+    { name: "Probation", component: ProbationForm },
+    { name: "Health", component: HealthForm },
+    { name: "Attention risks", component: AttentionRisksForm },
+  ];
+
   const router = useRouter();
   const { mutate: createCollab, isLoading: isCreating } = useCreateCollabAgreement(clientId);
   const { data: singleCollab, isLoading: isSingleColab } = useGetSingleColab(collabId, clientId);
@@ -75,10 +75,10 @@ const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode 
       validationSchema={formSchema}
       onSubmit={onSubmit}
     >
-      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => (
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {FORMS.map(({ name, component: Component }) => (
+            {FORMS.map(({ name, component: Component, clientId }) => (
               <Component
                 key={name}
                 handleChange={handleChange}
@@ -86,6 +86,8 @@ const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode 
                 handleBlur={handleBlur}
                 touched={touched}
                 errors={errors}
+                client_id={clientId}
+                setFieldValue={setFieldValue}
               />
             ))}
           </div>

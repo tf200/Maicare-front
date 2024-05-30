@@ -21,7 +21,7 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     desc: "nieuwe samenwerkingsovereenkomst maken voor deze klant",
   },
   {
-    label: "risicobeoordelingen",
+    label: "Risicobeoordelingen",
     urlKey: "risk-assessements",
     desc: "nieuwe risicobeoordelingen voor deze klant",
   },
