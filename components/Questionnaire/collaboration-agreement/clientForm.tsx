@@ -1,6 +1,7 @@
 import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
-import React from "react";
+import { useClientDetails } from "@/utils/clients/getClientDetails";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 
 export const clientInitialValue = {
@@ -17,7 +18,29 @@ export const clientShema = {
   client_phone: Yup.string().required("moet dit veld invullen"),
 };
 
-export default function ClientForm({ handleChange, values, handleBlur, touched, errors }) {
+export default function ClientForm({
+  handleChange,
+  values,
+  handleBlur,
+  touched,
+  errors,
+  client_id,
+  setFieldValue,
+}) {
+  const { data, isLoading } = useClientDetails(client_id);
+
+  console.log(values);
+
+  useEffect(() => {
+    if (data) {
+      setFieldValue("client_full_name", `${data.first_name} ${data.last_name}`);
+      setFieldValue("client_number", `${data.filenumber}`);
+      setFieldValue("client_phone", data.phone_number);
+    }
+  }, [data]);
+
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <Panel title={"1. Cliënt"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
@@ -31,6 +54,7 @@ export default function ClientForm({ handleChange, values, handleBlur, touched, 
             value={values.client_full_name}
             onChange={handleChange}
             onBlur={handleBlur}
+            disabled
             error={touched.client_full_name && errors.client_full_name}
           />
           <div className="flex  gap-4">
@@ -51,6 +75,7 @@ export default function ClientForm({ handleChange, values, handleBlur, touched, 
               id={"client_number"}
               required={true}
               type={"text"}
+              disabled
               value={values.client_number}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -63,6 +88,7 @@ export default function ClientForm({ handleChange, values, handleBlur, touched, 
             id={"client_phone"}
             required={true}
             type={"text"}
+            disabled
             value={values.client_phone}
             onChange={handleChange}
             onBlur={handleBlur}

@@ -75,7 +75,7 @@ export default function HealthForm({ handleChange, values, handleBlur, touched, 
             id={"healthcare_institution_phone"}
             required={true}
             type={"text"}
-            value={values.string}
+            value={values.healthcare_institution_phone}
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.healthcare_institution_phone && errors.healthcare_institution_phone}

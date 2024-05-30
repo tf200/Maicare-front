@@ -48,7 +48,7 @@ export default function ProbationForm({ handleChange, values, handleBlur, touche
             id={"probation_phone"}
             required={true}
             type={"text"}
-            value={values.string}
+            value={values.probation_phone}
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.probation_phone && errors.probation_phone}

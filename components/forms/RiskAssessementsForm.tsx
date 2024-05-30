@@ -72,19 +72,19 @@ const formSchema = Yup.object().shape({
   ...ConclusionShema,
 });
 
-const FORMS = [
-  { name: "GeneralInfos", component: GeneralInfos },
-  { name: "Background", component: Background },
-  { name: "BehaviorStatus", component: BehaviorStatus },
-  { name: "BehaviorOffensive", component: BehaviorOffensive },
-  { name: "RiskFactors", component: RiskFactors },
-  { name: "ProtectiveFactors", component: ProtectiveFactors },
-  { name: "Needs", component: Needs },
-  { name: "Conclusion", component: Conclusion },
-  { name: "Evaluation", component: Evaluation },
-];
-
 const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
+  const FORMS = [
+    { name: "GeneralInfos", component: GeneralInfos, clientId },
+    { name: "Background", component: Background },
+    { name: "BehaviorStatus", component: BehaviorStatus },
+    { name: "BehaviorOffensive", component: BehaviorOffensive },
+    { name: "RiskFactors", component: RiskFactors },
+    { name: "ProtectiveFactors", component: ProtectiveFactors },
+    { name: "Needs", component: Needs },
+    { name: "Conclusion", component: Conclusion },
+    { name: "Evaluation", component: Evaluation },
+  ];
+
   const router = useRouter();
   const { mutate: createRiskAssessements, isLoading: isCreating } =
     useCreateRiskAssessements(clientId);
@@ -114,7 +114,7 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
       validationSchema={formSchema}
       onSubmit={onSubmit}
     >
-      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => {
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => {
         console.log(errors);
         return (
           <form onSubmit={handleSubmit}>
@@ -127,6 +127,8 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
                   handleBlur={handleBlur}
                   touched={touched}
                   errors={errors}
+                  client_id={clientId}
+                  setFieldValue={setFieldValue}
                 />
               ))}
             </div>
