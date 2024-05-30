@@ -18,7 +18,14 @@ export const clientShema = {
   client_phone: Yup.string().required("moet dit veld invullen"),
 };
 
-export default function ClientForm({ handleChange, values, handleBlur, touched, errors }) {
+export default function ClientForm({
+  handleChange,
+  values,
+  handleBlur,
+  touched,
+  errors,
+  client_id,
+  setFieldValue,
 }) {
   const { data, isLoading } = useClientDetails(client_id);
 
