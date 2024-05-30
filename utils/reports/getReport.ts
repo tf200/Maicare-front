@@ -2,9 +2,7 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 
 const fetchReport = (dataId: number) => async () => {
-  const response = await api.get(
-    `employee/progress_report/retrieve/${dataId}/`
-  );
+  const response = await api.get(`employee/progress_report/retrieve/${dataId}/`);
   return response.data;
 };
 

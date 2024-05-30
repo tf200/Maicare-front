@@ -67,6 +67,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isActive, fetchPermissions } = useGuardIsActive();
   const router = useRouter();
   const [isAllowed, setIsAllowed] = useState(false);
+  const PublicRoutes = [""];
 
   const { refetch } = useMyInfo(false);
 
@@ -84,7 +85,11 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         redirect("/dashboard");
       } else if (localStorage.getItem("a")) {
         verify();
-      } else if (pathName.startsWith("/signin")) {
+      } else if (
+        pathName.startsWith("/signin") ||
+        PublicRoutes.includes(pathName) ||
+        pathName.startsWith("/protected-email/")
+      ) {
         setIsAllowed(true);
       } else {
         redirect("/signin");
@@ -113,8 +118,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         >
           <LogoutIcon />
-          Als u niet wordt omgeleid, klik hier om uit te loggen en opnieuw in te
-          loggen...
+          Als u niet wordt omgeleid, klik hier om uit te loggen en opnieuw in te loggen...
         </button>
       )}
     </div>
