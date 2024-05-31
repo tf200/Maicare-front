@@ -18,13 +18,10 @@ type Props = {
   params: { clientId: string };
 };
 
-const EmergencyContactPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
-  const { pagination, isFetching, isLoading, isError, data } =
-    useEmergencyContactList(+clientId);
+const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { pagination, isFetching, isLoading, isError, data } = useEmergencyContactList(+clientId);
 
-  const { data: relationships, isLoading: isLoadingRelationships } = useRelationshipList()
+  const { data: relationships, isLoading: isLoadingRelationships } = useRelationshipList();
 
   const {
     mutate: deleteEmergency,
@@ -45,79 +42,80 @@ const EmergencyContactPage: FunctionComponent<Props> = ({
 
   const getRelationshipName = (id: number) => {
     return relationships?.find((relationship) => relationship.id == id)?.name;
-  }
+  };
 
   const columnDef = [
-      {
-        accessorKey: "first_name",
-        header: () => "Voornaam",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "last_name",
-        header: () => "Achternaam",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "email",
-        header: () => "E-mailadres",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "phone_number",
-        header: () => "Telefoonnummer",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "relationship",
-        header: () => "Relatie",
-        cell: (info) => getRelationshipName(info.getValue()) || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "relation_status",
-        header: () => "Afstand",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "address",
-        header: () => "Adres",
-        cell: (info) => info.getValue() || "Niet Beschikbaar",
-      },
-      {
-        accessorKey: "id",
-        header: () => "",
-        cell: (info) => (
-          <div className="flex justify-center gap-4">
-            <IconButton
-              buttonType="Danger"
-              onClick={() => {
-                open({
-                  onConfirm: () => {
-                    deleteEmergency(info.getValue());
-                  },
-                });
-              }}
-              disabled={isDeleted}
-              isLoading={isDeleting}
-            >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
-            </IconButton>
-            <Link
-              href={`/clients/${clientId}/emergency/${info.getValue() as number}/edit`}
-            >
-              <IconButton>
-                <PencilSquare className="w-5 h-5" />
-              </IconButton>
-            </Link>
-          </div>
+    {
+      accessorKey: "first_name",
+      header: () => "Voornaam",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "last_name",
+      header: () => "Achternaam",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "email",
+      header: () => "E-mailadres",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "phone_number",
+      header: () => "Telefoonnummer",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "relationship",
+      header: () => "Relatie",
+      cell: (info) => getRelationshipName(info.getValue()) || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "relation_status",
+      header: () => "Afstand",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "is_verified",
+      header: () => "Wordt geverifieerd",
+      cell: (info) =>
+        info.getValue() == false ? (
+          <p className="text-warning font-semibold">niet geverifieerd</p>
+        ) : (
+          <p className="text-success font-semibold">Geverifieerd</p>
         ),
-      },
-    ];
-
+    },
+    {
+      accessorKey: "address",
+      header: () => "Adres",
+      cell: (info) => info.getValue() || "Niet Beschikbaar",
+    },
+    {
+      accessorKey: "id",
+      header: () => "",
+      cell: (info) => (
+        <div className="flex justify-center gap-4">
+          <IconButton
+            buttonType="Danger"
+            onClick={() => {
+              open({
+                onConfirm: () => {
+                  deleteEmergency(info.getValue());
+                },
+              });
+            }}
+          >
+            <TrashIcon className="w-5 h-5" />
+          </IconButton>
+          <Link href={`/clients/${clientId}/emergency/${info.getValue() as number}/edit`}>
+            <IconButton>
+              <PencilSquare className="w-5 h-5" />
+            </IconButton>
+          </Link>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Panel
