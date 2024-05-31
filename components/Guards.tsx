@@ -67,7 +67,6 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isActive, fetchPermissions } = useGuardIsActive();
   const router = useRouter();
   const [isAllowed, setIsAllowed] = useState(false);
-  const PublicRoutes = [""];
 
   const { refetch } = useMyInfo(false);
 
@@ -79,11 +78,22 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [isActive, pathName]);
 
+  const PublicRoutes = ["/protected-email", "/verify-email"];
+
+  const isPublicRoute = (pathName) => {
+    for (const route of PublicRoutes) {
+      if (pathName === route || pathName.startsWith(`${route}`)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
     if (typeof localStorage !== "undefined") {
       if (localStorage.getItem("a") && pathName.startsWith("/signin")) {
         redirect("/dashboard");
-      } else if (PublicRoutes.includes(pathName) || pathName.startsWith("/protected-email/")) {
+      } else if (isPublicRoute(pathName)) {
         setIsAllowed(true);
       } else if (localStorage.getItem("a")) {
         verify();
