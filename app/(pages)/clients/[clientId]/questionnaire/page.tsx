@@ -25,6 +25,11 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "risk-assessements",
     desc: "nieuwe risicobeoordelingen voor deze klant",
   },
+  {
+    label: "Toestemmingsverklaring",
+    urlKey: "consent-declaration",
+    desc: "nieuwe toestemmingsverklaring voor deze klant",
+  },
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {

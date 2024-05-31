@@ -77,7 +77,7 @@ const CollaborationAgreementForm: React.FC<Props> = ({ clientId, collabId, mode 
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => (
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols lg:grid-cols-2 gap-4 mb-4">
             {FORMS.map(({ name, component: Component, clientId }) => (
               <Component
                 key={name}

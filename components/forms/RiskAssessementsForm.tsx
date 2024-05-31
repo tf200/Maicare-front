@@ -7,7 +7,7 @@ import Button from "../buttons/Button";
 import { useRouter } from "next/navigation";
 import { useCreateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useAddRiskAssessemets";
 import { useGetSingleRiskAssessements } from "@/utils/questionnairs/risk-assessements/useGetSingleRiskAssessemets";
-import { useUpdateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useUpdateRiskAssessemets";
+
 import GeneralInfos, {
   GeneralInfosInitialValue,
   GeneralInfosShema,
@@ -41,6 +41,7 @@ import Evaluation, {
   EvaluationInitialValue,
   EvaluationShema,
 } from "../Questionnaire/risk-assessements/Evaluation";
+import { useUpdateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useUpdateRiskAssessemets";
 
 type Props = {
   clientId: number;
@@ -118,7 +119,7 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
         console.log(errors);
         return (
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols lg:grid-cols-2 gap-4 mb-4">
               {FORMS.map(({ name, component: Component }) => (
                 <Component
                   key={name}
