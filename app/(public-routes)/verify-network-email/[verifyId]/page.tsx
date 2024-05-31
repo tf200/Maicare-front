@@ -32,24 +32,23 @@ export default function VerifyEmailPage({ params }) {
               ></path>
             </svg>
             <p className="text-lg font-semibold" style={{ color: "#333" }}>
-              Wacht even, we zijn uw e-mailadres aan het verifiëren!
+              Even geduld, we verifiëren uw e-mailadres!
             </p>
             <p className="text-sm" style={{ color: "#555" }}>
-              Dit zal niet lang duren. Wij zorgen ervoor dat alles voor u klaarstaat.
+              Dit zal niet lang duren. We zorgen ervoor dat alles voor u klaarstaat.
             </p>
           </div>
         ) : isError ? (
-          <div className="bg-red-100 px-4 py-3 rounded relative" role="alert">
+          <div className="text-red px-4 py-3 rounded relative" role="alert">
             <strong className="font-bold">Oh Oh!</strong>
             <br />
             <span className="block text-sm">
-              Er is iets misgegaan bij het verifiëren van uw e-mailadres. Probeer het opnieuw of
-              neem contact op met de ondersteuning als het probleem zich blijft voordoen.
+              Deze link is ongeldig of verlopen. Vraag indien nodig een nieuwe verificatielink aan.
             </span>
           </div>
         ) : (
-          <div className="   px-4 py-3 rounded relative " role="alert">
-            <strong className="font-bold">Gefeliciteerd!</strong> <br />
+          <div className="px-4 py-3 rounded relative " role="alert">
+            <h1 className="font-bold pb-5 text-2xl text-success">Gefeliciteerd!</h1>
             <span className="block sm:inline">
               Uw e-mailadres is succesvol geverifieerd. Welkom aan boord!{" "}
             </span>

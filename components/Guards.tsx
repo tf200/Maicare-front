@@ -78,7 +78,7 @@ const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [isActive, pathName]);
 
-  const PublicRoutes = ["/protected-email", "/verify-email"];
+  const PublicRoutes = ["/protected-email", "/verify-network-email"] as const;
 
   const isPublicRoute = (pathName) => {
     for (const route of PublicRoutes) {
