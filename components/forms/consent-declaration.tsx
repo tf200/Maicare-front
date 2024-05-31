@@ -62,7 +62,7 @@ const ConsentDeclarationForm: React.FC<Props> = ({ clientId, consentId, mode }) 
         console.log(errors);
         return (
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 mb-4 mx-16">
+            <div className="grid grid-cols-2 gap-4 mb-4">
               {FORMS.map(({ name, component: Component }) => (
                 <Component
                   key={name}
