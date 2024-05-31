@@ -41,7 +41,6 @@ const ConsentDeclarationForm: React.FC<Props> = ({ clientId, consentId, mode }) 
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
-    console.log("values");
     const payload = { client_id: clientId, ...values };
 
     const onSuccess = () => {
@@ -59,10 +58,9 @@ const ConsentDeclarationForm: React.FC<Props> = ({ clientId, consentId, mode }) 
       onSubmit={onSubmit}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => {
-        console.log(errors);
         return (
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
               {FORMS.map(({ name, component: Component }) => (
                 <Component
                   key={name}
