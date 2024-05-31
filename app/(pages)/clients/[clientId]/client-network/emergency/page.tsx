@@ -80,9 +80,9 @@ const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }
       header: () => "Wordt geverifieerd",
       cell: (info) =>
         info.getValue() == false ? (
-          <p className="text-red font-semibold">niet geverifieerd</p>
+          <p className="text-warning font-semibold">niet geverifieerd</p>
         ) : (
-          <p className="text-green font-semibold">Geverifieerd</p>
+          <p className="text-success font-semibold">Geverifieerd</p>
         ),
     },
     {
