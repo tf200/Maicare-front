@@ -34,6 +34,13 @@ export const RATE_TYPE_ARRAY = ["daily", "minute", "hourly", "weekly", "monthly"
 
 export const APPOINTMENT_TYPE_ARRAY = ["meeting", "other", "work", "home_care"] as const;
 
+export const CONSENT_DECLARATION_CONTENT = {
+  description_of_proposed_assistence:
+    "Hier wordt gedetailleerd beschreven welke hulpverlening, behandeling, of actie wordt voorgesteld, inclusief de aard, doelen, en duur van de interventie.",
+  legal_representative:
+    "Hierbij geef ik, [Naam ouder/voogd], als wettelijk vertegenwoordiger van [Naam jeugdige], toestemming voor de voorgestelde hulpverlening, behandeling, of actie zoals hierboven beschreven. Ik heb uitleg gekregen over de aard en doelen van de hulpverlening, de mogelijke risico's en voordelen, en alternatieve opties. Ik begrijp wat de voorgestelde hulpverlening inhoudt en ga akkoord met de uitvoering ervan. Ik begrijp dat ik op elk moment mijn instemming kan intrekken of vragen kan stellen over de voortgang van de hulpverlening. Ik ben geïnformeerd over mijn recht om een kopie van deze instemmingsverklaring te ontvangen en te bewaren.",
+};
+
 export const APPOINTMENT_TYPE_OPTIONS: SelectionOption[] = [
   { label: "Selecteer Type", value: "" },
   { label: "Werk", value: "work" },

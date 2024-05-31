@@ -7,7 +7,7 @@ import Button from "../buttons/Button";
 import { useRouter } from "next/navigation";
 import { useCreateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useAddRiskAssessemets";
 import { useGetSingleRiskAssessements } from "@/utils/questionnairs/risk-assessements/useGetSingleRiskAssessemets";
-import { useUpdateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useUpdateRiskAssessemets";
+
 import GeneralInfos, {
   GeneralInfosInitialValue,
   GeneralInfosShema,
@@ -41,6 +41,7 @@ import Evaluation, {
   EvaluationInitialValue,
   EvaluationShema,
 } from "../Questionnaire/risk-assessements/Evaluation";
+import { useUpdateRiskAssessements } from "@/utils/questionnairs/risk-assessements/useUpdateRiskAssessemets";
 
 type Props = {
   clientId: number;

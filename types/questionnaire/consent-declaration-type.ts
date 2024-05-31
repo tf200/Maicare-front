@@ -1,0 +1,21 @@
+export type ConsentDeclarationType = {
+  client_id?: number;
+  id?: number;
+  youth_name: string;
+  date_of_birth: string;
+  parent_guardian_name: string;
+  address: string;
+  youth_care_institution: string;
+  proposed_assistance_description: string;
+  statement_by_representative: string;
+  parent_guardian_signature_date: string;
+  juvenile_name: string;
+  juvenile_signature_date: string;
+  representative_name: string;
+  representative_signature_date: string;
+  contact_person_name: string;
+  contact_phone_number: string;
+  contact_email: string;
+  updated?: string;
+  created?: string;
+};
