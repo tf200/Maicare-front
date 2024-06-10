@@ -66,11 +66,11 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => {
           return (
             <div className="flex gap-3">
-              {/* <Link href={`/clients/${clientId}/questionnaire/data-shring/${info.row.id}/edit`}>
+              <Link href={`/clients/${clientId}/questionnaire/data-sharing/${info.row.id}/edit`}>
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
-              </Link> */}
+              </Link>
 
               <IconButton
                 className="bg-red"
@@ -94,13 +94,13 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <Panel
       title={"Verklaring over het delen van gegevens"}
-      // sideActions={
-      //   <LinkButton
-      //     text="nieuwe verklaring over gegevensuitwisseling"
-      //     href={"./data-sharing/add"}
-      //     className="ml-auto"
-      //   />
-      // }
+      sideActions={
+        <LinkButton
+          text="nieuwe verklaring over gegevensuitwisseling"
+          href={"./data-sharing/add"}
+          className="ml-auto"
+        />
+      }
     >
       {isLoading && <Loader />}
       {data && (
