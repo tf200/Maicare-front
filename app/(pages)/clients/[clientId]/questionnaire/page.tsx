@@ -18,17 +18,22 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
   {
     label: "Samenwerkingsafspraken",
     urlKey: "collaboration-agreement",
-    desc: "nieuwe samenwerkingsovereenkomst maken voor deze klant",
+    desc: "Nieuwe samenwerkingsovereenkomst maken voor deze klant",
   },
   {
     label: "Risicobeoordelingen",
     urlKey: "risk-assessements",
-    desc: "nieuwe risicobeoordelingen voor deze klant",
+    desc: "Nieuwe risicobeoordelingen voor deze klant",
   },
   {
     label: "Toestemmingsverklaring",
     urlKey: "consent-declaration",
-    desc: "nieuwe toestemmingsverklaring voor deze klant",
+    desc: "Nieuwe toestemmingsverklaring voor deze klant",
+  },
+  {
+    label: "Verklaring over het delen van gegevens",
+    urlKey: "data-sharing",
+    desc: "Nieuwe verklaring voor het delen van gegevens voor deze klant",
   },
 ];
 

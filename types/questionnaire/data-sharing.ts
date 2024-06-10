@@ -1,0 +1,26 @@
+export type DataSharingType = {
+  client_id?: number;
+  id?: number;
+  youth_name: string;
+  date_of_birth: string;
+  parent_guardian_name: string;
+  address: string;
+  youth_care_institution: string;
+  data_description: string;
+  data_purpose: string;
+  third_party_names: string;
+  statement: string;
+  parent_guardian_signature_name: string;
+  parent_guardian_signature: string;
+  parent_guardian_signature_date: string;
+  juvenile_name: string;
+  juvenile_signature_date: string;
+  institution_representative_name: string;
+  institution_representative_signature: string;
+  institution_representative_signature_date: string;
+  contact_person_name: string;
+  contact_phone_number: string;
+  contact_email: string;
+  updated?: string;
+  created?: string;
+};
