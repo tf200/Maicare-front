@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import ConsentDeclarationForm from "@/components/forms/consent-declaration";
+import DataSharingForm from "@/components/forms/DataSharingForm";
 
 type Props = {
   params: {
@@ -13,7 +13,7 @@ const NewConsentDeclaration: FunctionComponent<Props> = ({ params: { clientId } 
     <>
       <Breadcrumb pageName="Nieuwe risicobeoordeling" />
       <div className="grid grid-cols-1 gap-9">
-        <ConsentDeclarationForm clientId={parseInt(clientId)} mode={"new"} />
+        <DataSharingForm clientId={parseInt(clientId)} mode={"new"} />
       </div>
     </>
   );

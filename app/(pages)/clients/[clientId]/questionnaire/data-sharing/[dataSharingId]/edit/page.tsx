@@ -1,19 +1,19 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import ConsentDeclarationForm from "@/components/forms/consent-declaration";
+import DataSharingForm from "@/components/forms/DataSharingForm";
 
 const UpdateEpisodePage: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string; consentId: number };
+  params: { clientId: string; dataSharingId: number };
 }) => {
   return (
     <>
       <Breadcrumb pageName="Update samenwerkingsovereenkomst" />
       <div className="grid grid-cols-1 gap-9">
-        <ConsentDeclarationForm
+        <DataSharingForm
           mode={"edit"}
-          consentId={params.consentId}
+          dataSharingId={params.dataSharingId}
           clientId={parseInt(params.clientId)}
         />
       </div>
