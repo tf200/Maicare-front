@@ -26,10 +26,7 @@ interface EmployeeDetailsProps {
   showAsProfile?: boolean;
 }
 
-const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
-  employeeId,
-  showAsProfile = false,
-}) => {
+const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({ employeeId, showAsProfile = false }) => {
   const router = useRouter();
 
   const {
@@ -134,20 +131,19 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
         >
           <EmployeeExperiencesSummary employeeId={employeeId} />
         </Panel>
-        {!showAsProfile && (
-          <Panel
-            title={"Rollen"}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton
-                text={"Volledige Rollijst"}
-                href={`/employees/${employeeId}/teams`}
-              />
-            }
-          >
-            <EmployeeRolesSummary employeeId={employeeId} />
-          </Panel>
-        )}
+        <SecureFragment permission={consts.VIEW_EMPLOYEE_RIGHTS}>
+          {!showAsProfile && (
+            <Panel
+              title={"Rollen"}
+              containerClassName="px-7 py-4"
+              sideActions={
+                <LinkButton text={"Volledige Rollijst"} href={`/employees/${employeeId}/teams`} />
+              }
+            >
+              <EmployeeRolesSummary employeeId={employeeId} />
+            </Panel>
+          )}
+        </SecureFragment>
         {showAsProfile && (
           <Panel title={"Reset Password"} containerClassName={"px-7 py-4"}>
             <ChangePasswordForm />

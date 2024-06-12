@@ -1,7 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, { FunctionComponent, useCallback, useMemo } from "react";
+import React, { FunctionComponent, useCallback, useEffect, useMemo } from "react";
 import Panel from "@/components/Panel";
 import { Formik, FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
@@ -11,7 +11,7 @@ import { NewClientsRequest } from "@/types/clients/new-clients-request";
 import Button from "../buttons/Button";
 import { useRouter } from "next/navigation";
 import Select from "@/components/FormFields/Select";
-import { GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
+import { CLIENT_IDENTITY_EDIT, GENDER_OPTIONS, SOURCE_OPTIONS } from "@/consts";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import FormikRadioGroup from "../FormFields/FormikRadioGroup";
 import { usePatchClient } from "@/utils/clients/patchClient";
@@ -22,6 +22,10 @@ import FormikLocation from "@/components/FormFields/FormikLocation";
 import { omit } from "@/utils/omit";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
+import { useMyPermissions, usePermissions } from "../SecureWrapper";
+import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
+import { useEmployeeDetails } from "@/utils/employees/getEmployeeDetails";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
 
 const initialValues: ClientFormType = {
   first_name: "",
@@ -46,54 +50,50 @@ const initialValues: ClientFormType = {
   removed_identity_documents: [],
 };
 
-export const clientsSchema: Yup.ObjectSchema<ClientFormType> =
-  Yup.object().shape({
-    id: Yup.number(),
-    first_name: Yup.string().required("Geef alstublieft een voornaam op"),
-    last_name: Yup.string().required("Geef alstublieft een achternaam op"),
-    email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
-    phone_number: Yup.string().required(
-      "Geef alstublieft een telefoonnummer op"
-    ),
-    departement: Yup.string(),
-    filenumber: Yup.string(),
-    location: Yup.string(),
-    birthplace: Yup.string(),
-    date_of_birth: Yup.string().required(
-      "Geef alstublieft een geboortedatum op"
-    ),
-    organisation: Yup.string(),
-    gender: Yup.string(),
-    city: Yup.string(),
-    Zipcode: Yup.string(),
-    infix: Yup.string(),
-    streetname: Yup.string(),
-    street_number: Yup.string(),
-    bsn: Yup.string().required("Geef alstublieft een BSN op"),
-    source: Yup.string().required("Geef alstublieft een bron op"),
-    added_identity_documents: Yup.array(),
-    removed_identity_documents: Yup.array(),
-    departure_reason: Yup.string().optional().nullable(),
-    departure_report: Yup.string().optional().nullable(),
-  });
+export const clientsSchema: Yup.ObjectSchema<ClientFormType> = Yup.object().shape({
+  id: Yup.number(),
+  first_name: Yup.string().required("Geef alstublieft een voornaam op"),
+  last_name: Yup.string().required("Geef alstublieft een achternaam op"),
+  email: Yup.string().required("Geef alstublieft uw e-mailadres op"),
+  phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
+  departement: Yup.string(),
+  filenumber: Yup.string(),
+  location: Yup.string(),
+  birthplace: Yup.string(),
+  date_of_birth: Yup.string().required("Geef alstublieft een geboortedatum op"),
+  organisation: Yup.string(),
+  gender: Yup.string(),
+  city: Yup.string(),
+  Zipcode: Yup.string(),
+  infix: Yup.string(),
+  streetname: Yup.string(),
+  street_number: Yup.string(),
+  bsn: Yup.string().required("Geef alstublieft een BSN op"),
+  source: Yup.string().required("Geef alstublieft een bron op"),
+  added_identity_documents: Yup.array(),
+  removed_identity_documents: Yup.array(),
+  departure_reason: Yup.string().optional().nullable(),
+  departure_report: Yup.string().optional().nullable(),
+});
 
 type PropsType = {
   clientId?: number;
   mode: string;
 };
 
-export const ClientsForm: FunctionComponent<PropsType> = ({
-  clientId,
-  mode,
-}) => {
+export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) => {
+  const { permissionData } = useMyPermissions();
+  const canUseIdentity = useMemo(
+    () => permissionData?.some((item) => item === CLIENT_IDENTITY_EDIT),
+    [permissionData]
+  );
+
+  console.log(canUseIdentity);
+
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useClientDetails(clientId);
+  const { data, isLoading: isDataLoading, isError } = useClientDetails(clientId);
   const initialData = useMemo(() => {
     if (data) {
       return {
@@ -113,10 +113,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
       if (mode === "edit") {
         update(
           {
-            ...omit(values, [
-              "added_identity_documents",
-              "removed_identity_documents",
-            ]),
+            ...omit(values, ["added_identity_documents", "removed_identity_documents"]),
             location: parseInt(values.location),
             filenumber: parseInt(values.filenumber),
             identity_attachment_ids: data?.attachments
@@ -134,10 +131,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
       } else if (mode === "new") {
         create(
           {
-            ...omit(values, [
-              "added_identity_documents",
-              "removed_identity_documents",
-            ]),
+            ...omit(values, ["added_identity_documents", "removed_identity_documents"]),
             location: parseInt(values.location),
             filenumber: parseInt(values.filenumber),
             identity_attachment_ids: values.added_identity_documents,
@@ -161,8 +155,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
     validationSchema: clientsSchema,
   });
 
-  const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
-    formik;
+  const { values, handleChange, handleBlur, touched, handleSubmit, errors } = formik;
 
   return (
     <>
@@ -170,10 +163,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
             <div className="flex flex-col gap-9">
-              <Panel
-                containerClassName="p-6.5 pb-5"
-                title={"Persoonlijke Gegevens"}
-              >
+              <Panel containerClassName="p-6.5 pb-5" title={"Persoonlijke Gegevens"}>
                 <div className="mb-4.5 py-4 flex flex-col gap-6 xl:flex-row">
                   <InputField
                     type={"text"}
@@ -240,9 +230,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                   error={touched.infix && errors.infix}
                 />
                 <div className="flex flex-col mb-4.5">
-                  <h3 className="font-medium text-black dark:text-white mb-2.5">
-                    Geslacht
-                  </h3>
+                  <h3 className="font-medium text-black dark:text-white mb-2.5">Geslacht</h3>
                   <FormikRadioGroup
                     picked={values.gender}
                     options={GENDER_OPTIONS}
@@ -259,16 +247,10 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                   className="w-full mb-4.5"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={
-                    touched.date_of_birth &&
-                    errors.date_of_birth &&
-                    errors.date_of_birth + ""
-                  }
+                  error={touched.date_of_birth && errors.date_of_birth && errors.date_of_birth + ""}
                 />
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Dossiernummer
-                  </label>
+                  <label className="mb-2.5 block text-black dark:text-white">Dossiernummer</label>
 
                   <input
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -282,10 +264,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                 </div>
               </Panel>
 
-              <Panel
-                containerClassName="p-6.5 pb-5"
-                title={"Identiteitsgegevens"}
-              >
+              <Panel containerClassName="p-6.5 pb-5" title={"Identiteitsgegevens"}>
                 <InputField
                   label={"BSN"}
                   id={"bsn"}
@@ -297,6 +276,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                   onBlur={handleBlur}
                   error={touched.bsn && errors.bsn}
                   required={true}
+                  disabled={!canUseIdentity}
                 />
                 <Select
                   label={"Bron"}
@@ -309,6 +289,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({
                   onBlur={handleBlur}
                   error={touched.source && errors.source}
                   required={true}
+                  disabled={!canUseIdentity}
                 />
                 {/* identity documents */}
                 <FilesUploader
