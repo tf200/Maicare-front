@@ -13,6 +13,14 @@ type ResetPasswordFormType = {
   confirm_password: string;
 };
 
+type ErrorResponse = {
+  response: {
+    data: {
+      [key: string]: string[];
+    };
+  };
+};
+
 const validationSchema: Yup.ObjectSchema<ResetPasswordFormType> = Yup.object({
   current_password: Yup.string().required("Password is required"),
   new_password: Yup.string().required("New Password is required"),
@@ -40,7 +48,7 @@ const useChangePassword = () => {
 };
 
 const ChangePasswordForm: FunctionComponent = (props) => {
-  const { mutate: changePassword, isLoading } = useChangePassword();
+  const { mutate: changePassword, isLoading, error: passwordError } = useChangePassword();
   const formik = useFormik<ResetPasswordFormType>({
     initialValues: {
       current_password: "",
@@ -56,10 +64,28 @@ const ChangePasswordForm: FunctionComponent = (props) => {
       });
     },
   });
+
+  const renderPasswordError = () => {
+    if (passwordError && (passwordError as ErrorResponse).response) {
+      const errorResponse = passwordError as ErrorResponse;
+      const { current_password, new_password } = errorResponse.response.data;
+      const errorMessages = current_password || new_password || [];
+
+      return errorMessages.map((item, index) => (
+        <p key={index} className="text-red">
+          • {item}
+        </p>
+      ));
+    }
+    return null;
+  };
+
   const { handleSubmit, handleChange, values, errors, touched } = formik;
+
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {renderPasswordError()}
         <InputField
           name="current_password"
           type="password"
