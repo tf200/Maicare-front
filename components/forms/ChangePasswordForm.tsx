@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
@@ -48,7 +48,13 @@ const useChangePassword = () => {
 };
 
 const ChangePasswordForm: FunctionComponent = (props) => {
-  const { mutate: changePassword, isLoading, error: passwordError } = useChangePassword();
+  const [sucessMessage, setSucessMessage] = useState(null);
+  const {
+    mutate: changePassword,
+    isLoading,
+    error: passwordError,
+    isSuccess,
+  } = useChangePassword();
   const formik = useFormik<ResetPasswordFormType>({
     initialValues: {
       current_password: "",
@@ -58,7 +64,8 @@ const ChangePasswordForm: FunctionComponent = (props) => {
     validationSchema,
     onSubmit: (values, { resetForm }) => {
       changePassword(omit(values, ["confirm_password"]), {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          setSucessMessage(data.message);
           resetForm();
         },
       });
@@ -86,6 +93,7 @@ const ChangePasswordForm: FunctionComponent = (props) => {
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {renderPasswordError()}
+        {sucessMessage && <p className="text-green-500">{sucessMessage}</p>}
         <InputField
           name="current_password"
           type="password"
