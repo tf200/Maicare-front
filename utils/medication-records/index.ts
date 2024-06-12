@@ -10,10 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { PaginationParams } from "@/types/pagination-params";
 import { cleanQueryParams } from "@/utils/cleanQueryParams";
 
-async function getMedicationRecords(
-  medicationId: number,
-  params: PaginationParams
-) {
+async function getMedicationRecords(medicationId: number, params: PaginationParams) {
   const response = await api.get<MedicationRecords>(
     `/clients/medications/${medicationId}/records`,
     {
@@ -36,32 +33,29 @@ export const useMedicationRecords = (medicationId: number) => {
   };
 };
 
+export const usePatchMedicationRecord = (recordId: number) => {
+  return useMutation((data: PatchMedicationRecordDto) => patchMedicationRecord(recordId, data), {
+    onSuccess: () => {
+      window.location.reload();
+    },
+  });
+};
+
 async function getClientMedicationRecords(
   clientId: number,
   params: PaginationParams & MedicationRecordParams
 ) {
-  const response = await api.get<MedicationRecords>(
-    `/clients/${clientId}/medications/records`,
-    {
-      params: cleanQueryParams(params),
-    }
-  );
+  const response = await api.get<MedicationRecords>(`/clients/${clientId}/medications/records`, {
+    params: cleanQueryParams(params),
+  });
   return response.data;
 }
 
-export const useClientMedicationRecords = (
-  clientId: number,
-  params?: MedicationRecordParams
-) => {
+export const useClientMedicationRecords = (clientId: number, params?: MedicationRecordParams) => {
   const pagination = usePaginationParams();
   const query = useQuery({
-    queryKey: [
-      "client-medication-records",
-      clientId,
-      { ...pagination.params, ...params },
-    ],
-    queryFn: () =>
-      getClientMedicationRecords(clientId, { ...pagination.params, ...params }),
+    queryKey: ["client-medication-records", clientId, { ...pagination.params, ...params }],
+    queryFn: () => getClientMedicationRecords(clientId, { ...pagination.params, ...params }),
   });
 
   return {
@@ -70,10 +64,7 @@ export const useClientMedicationRecords = (
   };
 };
 
-async function patchMedicationRecord(
-  recordId: number,
-  data: PatchMedicationRecordDto
-) {
+async function patchMedicationRecord(recordId: number, data: PatchMedicationRecordDto) {
   const response = await api.patch<MedicationRecord>(
     `/clients/medications/records/${recordId}`,
     data
@@ -81,22 +72,8 @@ async function patchMedicationRecord(
   return response.data;
 }
 
-export const usePatchMedicationRecord = (recordId: number) => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    (data: PatchMedicationRecordDto) => patchMedicationRecord(recordId, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["medication-records", recordId]);
-      },
-    }
-  );
-};
-
 export async function getMedicationRecord(recordId: number) {
-  const response = await api.get<MedicationRecord>(
-    `/clients/medications/records/${recordId}`
-  );
+  const response = await api.get<MedicationRecord>(`/clients/medications/records/${recordId}`);
   return response.data;
 }
 
@@ -105,9 +82,8 @@ export const useMedicationRecordFetcher = () => {
 
   return {
     fetch: async (recordId: number) => {
-      return await queryClient.fetchQuery(
-        ["medication-record-details", recordId],
-        () => getMedicationRecord(recordId)
+      return await queryClient.fetchQuery(["medication-record-details", recordId], () =>
+        getMedicationRecord(recordId)
       );
     },
   };
