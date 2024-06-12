@@ -21,11 +21,7 @@ const DropdownUser = () => {
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      )
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target))
         return;
       setDropdownOpen(false);
     };
@@ -61,10 +57,7 @@ const DropdownUser = () => {
               </span>
               <span className="block text-xs capitalize">
                 {groups
-                  .map(
-                    ({ group_name }) =>
-                      ORGANIGRAM_TRANSLATE[group_name] ?? group_name
-                  )
+                  .map(({ group_name }) => ORGANIGRAM_TRANSLATE[group_name] ?? group_name)
                   .join(" | ")}
               </span>
             </span>
@@ -155,7 +148,7 @@ const DropdownUser = () => {
           {/*    /!* My Contacts *!/*/}
           {/*  </Link>*/}
           {/*</li>*/}
-          <li>
+          {/* <li>
             <Link
               href="/pages/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -177,10 +170,10 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Accountinstellingen
-              {/* Account Settings */}
-            </Link>
-          </li>
+              Accountinstellingen */}
+          {/* Account Settings */}
+          {/* </Link>
+          </li> */}
         </ul>
         <button
           onClick={() => {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
@@ -11,6 +11,14 @@ type ResetPasswordFormType = {
   current_password: string;
   new_password: string;
   confirm_password: string;
+};
+
+type ErrorResponse = {
+  response: {
+    data: {
+      [key: string]: string[];
+    };
+  };
 };
 
 const validationSchema: Yup.ObjectSchema<ResetPasswordFormType> = Yup.object({
@@ -40,7 +48,13 @@ const useChangePassword = () => {
 };
 
 const ChangePasswordForm: FunctionComponent = (props) => {
-  const { mutate: changePassword, isLoading } = useChangePassword();
+  const [sucessMessage, setSucessMessage] = useState(null);
+  const {
+    mutate: changePassword,
+    isLoading,
+    error: passwordError,
+    isSuccess,
+  } = useChangePassword();
   const formik = useFormik<ResetPasswordFormType>({
     initialValues: {
       current_password: "",
@@ -50,16 +64,36 @@ const ChangePasswordForm: FunctionComponent = (props) => {
     validationSchema,
     onSubmit: (values, { resetForm }) => {
       changePassword(omit(values, ["confirm_password"]), {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          setSucessMessage(data.message);
           resetForm();
         },
       });
     },
   });
+
+  const renderPasswordError = () => {
+    if (passwordError && (passwordError as ErrorResponse).response) {
+      const errorResponse = passwordError as ErrorResponse;
+      const { current_password, new_password } = errorResponse.response.data;
+      const errorMessages = current_password || new_password || [];
+
+      return errorMessages.map((item, index) => (
+        <p key={index} className="text-red">
+          • {item}
+        </p>
+      ));
+    }
+    return null;
+  };
+
   const { handleSubmit, handleChange, values, errors, touched } = formik;
+
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {renderPasswordError()}
+        {sucessMessage && <p className="text-green-500">{sucessMessage}</p>}
         <InputField
           name="current_password"
           type="password"

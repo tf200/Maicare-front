@@ -25,11 +25,10 @@ type Props = {
   params: { clientId: string };
 };
 
-const MedicationsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
-  const { data, pagination, isLoading, isFetching, isError } =
-    useMedicationsList(parseInt(clientId));
+const MedicationsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { data, pagination, isLoading, isFetching, isError } = useMedicationsList(
+    parseInt(clientId)
+  );
 
   const columnDef = useMemo<ColumnDef<MedicationsResDto>[]>(() => {
     return [
@@ -57,7 +56,7 @@ const MedicationsPage: FunctionComponent<Props> = ({
       {
         accessorKey: "administered_by_name",
         header: "Beheerd door",
-        cell: (info) => info.getValue() as string || "iedereen",
+        cell: (info) => (info.getValue() as string) || "iedereen",
       },
       {
         accessorKey: "start_date",
@@ -138,7 +137,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
     mutate: deleteMedication,
     isLoading: isDeleting,
     isSuccess: isDeleted,
-  } = useDeleteMedication(data.client);
+  } = useDeleteMedication(clientId);
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
@@ -153,11 +152,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
       <DetailCell label={"Dosering"} value={data.dosage} />
       <DetailCell label={"Startdatum"} value={data.start_date} />
       <DetailCell label={"Einddatum"} value={data.end_date} />
-      <DetailCell
-        className={"col-span-3"}
-        label={"Notities"}
-        value={data.notes}
-      />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
       <div className="flex gap-4 items-center col-span-3">
         <LinkButton
           href={`/clients/${clientId}/medications/${data.id}/records`}
@@ -176,11 +171,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
             disabled={isDeleted}
             isLoading={isDeleting}
           >
-            {isDeleted ? (
-              <CheckIcon className="w-5 h-5" />
-            ) : (
-              <TrashIcon className="w-5 h-5" />
-            )}
+            {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
           </IconButton>
         </div>
         <Link href={`/clients/${clientId}/medications/${data.id}/edit`}>
