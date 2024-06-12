@@ -87,9 +87,6 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
     () => permissionData?.some((item) => item === CLIENT_IDENTITY_EDIT),
     [permissionData]
   );
-
-  console.log(canUseIdentity);
-
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
 
