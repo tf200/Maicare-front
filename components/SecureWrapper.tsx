@@ -11,7 +11,7 @@ import {
 } from "react";
 import jwt from "jsonwebtoken";
 import { Permission, Role } from "@/types/permissions";
-import { DASHBOARD_VIEW, PERMISSION_CONFIGURATIONS } from "@/consts";
+import { DASHBOARD_VIEW, PERMISSION_CONFIGURATIONS, PermissionType } from "@/consts";
 import { useQuery } from "react-query";
 import api from "@/utils/api";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
@@ -47,7 +47,10 @@ export const useMyPermissions = () => {
   const { data: myInfos } = useMyInfo();
   const { data: permissionData } = usePermissions(myInfos.id);
 
-  return { permissionData };
+  const hasPerm = (permission: PermissionType) => {
+    return permissionData?.some((item) => item === permission);
+  };
+  return { permissionData, hasPerm };
 };
 
 export const useIsActive = () => {

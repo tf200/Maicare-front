@@ -22,10 +22,7 @@ import FormikLocation from "@/components/FormFields/FormikLocation";
 import { omit } from "@/utils/omit";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
-import { useMyPermissions, usePermissions } from "../SecureWrapper";
-import { useEmployees } from "@/utils/involved-employees/getEmployeesData";
-import { useEmployeeDetails } from "@/utils/employees/getEmployeeDetails";
-import { useMyInfo } from "@/utils/user-info/getUserInfo";
+import { useMyPermissions } from "../SecureWrapper";
 
 const initialValues: ClientFormType = {
   first_name: "",
@@ -82,11 +79,8 @@ type PropsType = {
 };
 
 export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) => {
-  const { permissionData } = useMyPermissions();
-  const canUseIdentity = useMemo(
-    () => permissionData?.some((item) => item === CLIENT_IDENTITY_EDIT),
-    [permissionData]
-  );
+  const { hasPerm } = useMyPermissions();
+
   const { mutate: create, isLoading: isCreating } = useCreateClients();
   const { mutate: update, isLoading: isPatching } = usePatchClient(clientId);
 
@@ -273,7 +267,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
                   onBlur={handleBlur}
                   error={touched.bsn && errors.bsn}
                   required={true}
-                  disabled={!canUseIdentity}
+                  disabled={!hasPerm(CLIENT_IDENTITY_EDIT)}
                 />
                 <Select
                   label={"Bron"}
@@ -286,7 +280,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
                   onBlur={handleBlur}
                   error={touched.source && errors.source}
                   required={true}
-                  disabled={!canUseIdentity}
+                  disabled={!hasPerm(CLIENT_IDENTITY_EDIT)}
                 />
                 {/* identity documents */}
                 <FilesUploader

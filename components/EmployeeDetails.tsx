@@ -17,7 +17,7 @@ import IconButton from "@/components/buttons/IconButton";
 import PencilSquare from "@/components/icons/PencilSquare";
 import TrashIcon from "@/components/icons/TrashIcon";
 import CheckIcon from "@/components/icons/CheckIcon";
-import { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment, useMyPermissions } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
 
@@ -28,6 +28,7 @@ interface EmployeeDetailsProps {
 
 const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({ employeeId, showAsProfile = false }) => {
   const router = useRouter();
+  const { hasPerm } = useMyPermissions();
 
   const {
     mutate: deleteEmployee,
@@ -131,13 +132,15 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({ employeeId, showAsPro
         >
           <EmployeeExperiencesSummary employeeId={employeeId} />
         </Panel>
-        <SecureFragment permission={consts.VIEW_EMPLOYEE_RIGHTS}>
+        <SecureFragment permission={consts.EMPLOYEE_PERMISSIONS_VIEW}>
           {!showAsProfile && (
             <Panel
               title={"Rollen"}
               containerClassName="px-7 py-4"
               sideActions={
-                <LinkButton text={"Volledige Rollijst"} href={`/employees/${employeeId}/teams`} />
+                hasPerm(consts.EMPLOYEE_PERMISSIONS_EDIT) && (
+                  <LinkButton text={"Volledige Rollijst"} href={`/employees/${employeeId}/teams`} />
+                )
               }
             >
               <EmployeeRolesSummary employeeId={employeeId} />

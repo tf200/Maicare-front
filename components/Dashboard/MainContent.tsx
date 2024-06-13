@@ -2,25 +2,27 @@
 import React from "react";
 import DashboardOverview from "@/components/DataStats/DashboardOverview";
 import Panel from "@/components/Panel";
-import {
-  useAutomaticReports,
-  useGenerateAutomaticReports,
-} from "@/utils/automatic-reports";
+import { useAutomaticReports, useGenerateAutomaticReports } from "@/utils/automatic-reports";
 import { dateFormat } from "@/utils/timeFormatting";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import InflowOutflow from "@/components/Charts/InflowOutflow";
 import TopCareTypes from "@/components/Charts/TopCareTypes";
 import Analytics from "@/components/DataStats/Analytics";
+import { SecureFragment, useMyPermissions } from "../SecureWrapper";
+import { DASHBOARD_VIEW } from "@/consts";
 
 const MainContent: React.FC = () => {
+  const { hasPerm } = useMyPermissions();
   return (
     <>
       <DashboardOverview />
       <div>
-        <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
-          Statistieken
-        </h2>
-        <Analytics />
+        {hasPerm(DASHBOARD_VIEW) && (
+          <>
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Statistieken</h2>
+            <Analytics />
+          </>
+        )}
       </div>
       {/*<FinancesOverview />*/}
       {/*<CareTypeRevenue />*/}

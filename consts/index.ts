@@ -717,12 +717,12 @@ export const PERMISSION_TRANS = {
   "care_plan.edit": "Bewerk zorgplan",
   "care_plan.delete": "Verwijder zorgplan",
   "care_plan.create": "Maak zorgplan aan",
-  "location.view": "Bekijk locatie",
+  "location.view": "locaties beheren",
   "view.own.profile": "Bekijk eigen profiel",
   "notifications.view": "Bekijk notificaties",
   "dashboard.view": "Bekijk dashboard",
-  "finance.view": "Bekijk financiën",
-  "care_coordination.view": "Bekijk zorgcoördinatie",
+  "finance.view": "Beheer financiën",
+  "care_coordination.view": "Beheer zorgcoördinatie",
   "contacts.view": "Bekijk contacten",
   "contracts.view": "Bekijk contracten",
   "care_plans.view": "Bekijk zorgplannen",
@@ -735,6 +735,8 @@ export const PERMISSION_TRANS = {
   "activity_logs.view": "Activiteitenlogboeken bekijken",
   "medication.notifications.receive": "Medische meldingen ontvangen",
 };
+
+export type PermissionType = keyof typeof PERMISSION_TRANS;
 
 export const EMOTIONAL_STATE_OPTIONS = [
   { label: "Selecteer Emotionele Staat", value: "" },
