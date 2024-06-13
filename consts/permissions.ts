@@ -18,6 +18,7 @@ export const CONTACT_VIEW = "contact.view";
 export const CONTACT_EDIT = "contact.edit";
 export const CONTACT_DELETE = "contact.delete";
 export const CONTACT_CREATE = "contact.create";
+export const VIEW_EMPLOYEE_RIGHTS = "employee.permissions.view";
 
 export const CONTRACT_VIEW = "contract.view";
 export const CONTRACT_EDIT = "contract.edit";

@@ -25,7 +25,7 @@ import ClientSidebarBriefing from "../ClientSidebarBriefing";
 import { cn } from "@/utils/cn";
 import ChevronDown from "@/components/icons/ChevronDown";
 import { Permission } from "@/types/permissions";
-import { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment, useMyPermissions } from "@/components/SecureWrapper";
 import * as consts from "@/consts";
 import BellAlertIcon from "../svg/BellAlertIcon";
 import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
@@ -300,6 +300,7 @@ const SidebarMenu: FunctionComponent<SidebarMenuProps> = ({ items, title }) => {
 };
 
 const GlobalMenu: FunctionComponent = () => {
+  const { hasPerm } = useMyPermissions();
   return (
     <SidebarMenu
       items={[
@@ -394,19 +395,19 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Instellingen",
           permission: consts.SETTINGS_VIEW,
           subItems: [
-            {
+            hasPerm(consts.PERMISSIONS_EDIT) && {
               completeHref: "/permissions",
               icon: <RoleIcon width={18} height={18} />,
               children: "Permissies",
               permission: consts.PERMISSIONS_EDIT,
             },
-            {
+            hasPerm(consts.ACTIVITY_LOGS_VIEW) && {
               completeHref: "/activity_logs",
               icon: <></>,
               children: "Activiteitenlogs",
               permission: consts.ACTIVITY_LOGS_VIEW,
             },
-          ],
+          ].filter(Boolean) as SidebarLinkProps[],
         },
       ]}
       title={"MENU"}
@@ -481,7 +482,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/care-plans`,
             icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
             children: "Zorgplannen",
-            permission: consts.CLIENT_VIEW,
+            permission: consts.CARE_PLANS_VIEW,
           },
           {
             completeHref: `/clients/${clientId}/goals`,

@@ -7,6 +7,8 @@ import { useLocations } from "@/utils/locations";
 import { useClientsList } from "@/utils/clients/getClientsList";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useLocationStats } from "@/utils/locations/getLocationStats";
+import { SecureFragment, useMyPermissions } from "../SecureWrapper";
+import { DASHBOARD_VIEW } from "@/consts";
 
 function greeting() {
   const time = new Date().getHours();
@@ -22,8 +24,9 @@ function greeting() {
 const DashboardOverview: React.FC = () => {
   const { data: profile } = useMyInfo();
 
-  const { data: locationStats, isLoading: locationStatsLoading } =
-    useLocationStats();
+  const { hasPerm } = useMyPermissions();
+
+  const { data: locationStats, isLoading: locationStatsLoading } = useLocationStats();
 
   if (locationStatsLoading) return <span>Loading...</span>;
 
@@ -37,29 +40,31 @@ const DashboardOverview: React.FC = () => {
           </h1>
         </div>
       </div>
+      {hasPerm(DASHBOARD_VIEW) && (
+        <>
+          <h2 className="text-title-sm font-bold text-black dark:text-white mb-6">
+            Overzicht van locaties
+          </h2>
 
-      <h2 className="text-title-sm font-bold text-black dark:text-white mb-6">
-        Overzicht van locaties
-      </h2>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-        {locationStats.map((locationStat, i) => (
-          <LocationWidget
-            key={i}
-            title={locationStat.location_name}
-            clients={locationStat.total_clients}
-            employees={locationStat.total_employees}
-            percentage={Math.min(
-              100 *
-                (locationStat.total_clients / locationStat.location_capacity),
-              100
-            )}
-            capacity={locationStat.location_capacity}
-            expenses={locationStat.total_expenses}
-            revenue={locationStat.total_revenue}
-          />
-        ))}
-      </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
+            {locationStats.map((locationStat, i) => (
+              <LocationWidget
+                key={i}
+                title={locationStat.location_name}
+                clients={locationStat.total_clients}
+                employees={locationStat.total_employees}
+                percentage={Math.min(
+                  100 * (locationStat.total_clients / locationStat.location_capacity),
+                  100
+                )}
+                capacity={locationStat.location_capacity}
+                expenses={locationStat.total_expenses}
+                revenue={locationStat.total_revenue}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -80,22 +85,12 @@ const LocationWidget: FunctionComponent<{
   capacity?: number;
   expenses?: number;
   revenue?: number;
-}> = ({
-  title,
-  clients,
-  employees,
-  percentage,
-  capacity,
-  expenses,
-  revenue,
-}) => {
+}> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
         <div>
-          <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">
-            {title}
-          </h3>
+          <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">{title}</h3>
           <p className="font-medium">
             <strong>Capaciteit:</strong>
             {capacity}
@@ -139,9 +134,7 @@ const LocationWidget: FunctionComponent<{
               className="text-primary"
               strokeWidth="10"
               strokeDasharray={30 * 2 * Math.PI}
-              strokeDashoffset={
-                30 * 2 * Math.PI - (percentage / 100) * 30 * 2 * Math.PI
-              }
+              strokeDashoffset={30 * 2 * Math.PI - (percentage / 100) * 30 * 2 * Math.PI}
               stroke="currentColor"
               fill="transparent"
               r="30"

@@ -10,6 +10,9 @@ import LinkButton from "@/components/buttons/LinkButton";
 import { useCarePlanDelete, useClientCarePlans } from "@/utils/care-plans";
 import Link from "next/link";
 import {
+  CARE_PLAN_CREATE,
+  CARE_PLAN_DELETE,
+  CARE_PLAN_EDIT,
   CARE_PLAN_STATUS_TRANSLATION,
   CARE_PLAN_STATUS_VARIANT,
 } from "@/consts";
@@ -19,6 +22,7 @@ import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { useMyPermissions } from "@/components/SecureWrapper";
 
 const Page: FunctionComponent<{
   params: {
@@ -26,6 +30,7 @@ const Page: FunctionComponent<{
   };
 }> = ({ params: { clientId } }) => {
   const { data, pagination } = useClientCarePlans(+clientId);
+  const { hasPerm } = useMyPermissions();
   const router = useRouter();
   const columnDefs = useMemo<ColumnDef<CarePlanListItem>[]>(() => {
     return [
@@ -64,9 +69,7 @@ const Page: FunctionComponent<{
         cell: (ctx) => {
           return (
             <StatusBadge
-              type={
-                CARE_PLAN_STATUS_VARIANT[ctx.row.original.status] || "Outline"
-              }
+              type={CARE_PLAN_STATUS_VARIANT[ctx.row.original.status] || "Outline"}
               text={CARE_PLAN_STATUS_TRANSLATION[ctx.row.original.status]}
             />
           );
@@ -86,11 +89,13 @@ const Page: FunctionComponent<{
     <Panel
       title={"Zorgplannen"}
       sideActions={
-        <LinkButton
-          href={`/clients/${clientId}/care-plans/new`}
-          className={"mt-2"}
-          text={"Nieuw zorgplan"}
-        />
+        hasPerm(CARE_PLAN_CREATE) && (
+          <LinkButton
+            href={`/clients/${clientId}/care-plans/new`}
+            className={"mt-2"}
+            text={"Nieuw zorgplan"}
+          />
+        )
       }
     >
       {data && (
@@ -114,6 +119,7 @@ const Page: FunctionComponent<{
                         },
                       });
                     }}
+                    visible={[hasPerm(CARE_PLAN_EDIT), hasPerm(CARE_PLAN_DELETE)]}
                   />
                 </div>
                 <div

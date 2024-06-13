@@ -7,10 +7,11 @@ import {
   FunctionComponent,
   PropsWithChildren,
   useCallback,
+  useMemo,
 } from "react";
 import jwt from "jsonwebtoken";
 import { Permission, Role } from "@/types/permissions";
-import { DASHBOARD_VIEW, PERMISSION_CONFIGURATIONS } from "@/consts";
+import { DASHBOARD_VIEW, PERMISSION_CONFIGURATIONS, PermissionType } from "@/consts";
 import { useQuery } from "react-query";
 import api from "@/utils/api";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
@@ -28,27 +29,28 @@ const useRoles = () => {
 };
 
 async function getPermissions(employeeId: number) {
-  const response = await api.get<Permission[]>(
-    `/system/administration/permissions/${employeeId}`
-  );
+  const response = await api.get<Permission[]>(`/system/administration/permissions/${employeeId}`);
 
   return response.data;
 }
 
-export const usePermissions = (
-  employeeId?: number,
-  enabled: boolean = true
-) => {
-  return useQuery(
-    ["permissions", employeeId],
-    () => getPermissions(employeeId),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!employeeId || enabled,
-      cacheTime: Infinity,
-      staleTime: Infinity,
-    }
-  );
+export const usePermissions = (employeeId?: number, enabled: boolean = true) => {
+  return useQuery(["permissions", employeeId], () => getPermissions(employeeId), {
+    refetchOnWindowFocus: false,
+    enabled: !!employeeId || enabled,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+  });
+};
+
+export const useMyPermissions = () => {
+  const { data: myInfos } = useMyInfo();
+  const { data: permissionData } = usePermissions(myInfos.id);
+
+  const hasPerm = (permission: PermissionType) => {
+    return permissionData?.some((item) => item === permission);
+  };
+  return { permissionData, hasPerm };
 };
 
 export const useIsActive = () => {
@@ -67,10 +69,7 @@ export const useIsActive = () => {
 
 export const useGuardIsActive = () => {
   const { data: myInfo, refetch: fetchInfo } = useMyInfo(false);
-  const { data: permissions, refetch: fetchPermissions } = usePermissions(
-    myInfo?.id,
-    false
-  );
+  const { data: permissions, refetch: fetchPermissions } = usePermissions(myInfo?.id, false);
   const isActive = useCallback(
     (permission: Permission) => {
       if (permission === DASHBOARD_VIEW) {

@@ -17,7 +17,7 @@ import IconButton from "@/components/buttons/IconButton";
 import PencilSquare from "@/components/icons/PencilSquare";
 import TrashIcon from "@/components/icons/TrashIcon";
 import CheckIcon from "@/components/icons/CheckIcon";
-import { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment, useMyPermissions } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import ChangePasswordForm from "@/components/forms/ChangePasswordForm";
 
@@ -26,11 +26,9 @@ interface EmployeeDetailsProps {
   showAsProfile?: boolean;
 }
 
-const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
-  employeeId,
-  showAsProfile = false,
-}) => {
+const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({ employeeId, showAsProfile = false }) => {
   const router = useRouter();
+  const { hasPerm } = useMyPermissions();
 
   const {
     mutate: deleteEmployee,
@@ -134,20 +132,21 @@ const EmployeeDetails: React.FC<EmployeeDetailsProps> = ({
         >
           <EmployeeExperiencesSummary employeeId={employeeId} />
         </Panel>
-        {!showAsProfile && (
-          <Panel
-            title={"Rollen"}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton
-                text={"Volledige Rollijst"}
-                href={`/employees/${employeeId}/teams`}
-              />
-            }
-          >
-            <EmployeeRolesSummary employeeId={employeeId} />
-          </Panel>
-        )}
+        <SecureFragment permission={consts.EMPLOYEE_PERMISSIONS_VIEW}>
+          {!showAsProfile && (
+            <Panel
+              title={"Rollen"}
+              containerClassName="px-7 py-4"
+              sideActions={
+                hasPerm(consts.EMPLOYEE_PERMISSIONS_EDIT) && (
+                  <LinkButton text={"Volledige Rollijst"} href={`/employees/${employeeId}/teams`} />
+                )
+              }
+            >
+              <EmployeeRolesSummary employeeId={employeeId} />
+            </Panel>
+          )}
+        </SecureFragment>
         {showAsProfile && (
           <Panel title={"Reset Password"} containerClassName={"px-7 py-4"}>
             <ChangePasswordForm />
