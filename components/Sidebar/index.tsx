@@ -368,7 +368,7 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Zorgplannen",
               permission: consts.CARE_PLANS_VIEW,
             },
-          ],
+          ].filter(Boolean) as SidebarLinkProps[],
         },
         {
           completeHref: "/locations",
