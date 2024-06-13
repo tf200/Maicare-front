@@ -481,7 +481,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/care-plans`,
             icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
             children: "Zorgplannen",
-            permission: consts.CLIENT_VIEW,
+            permission: consts.CARE_PLANS_VIEW,
           },
           {
             completeHref: `/clients/${clientId}/goals`,
