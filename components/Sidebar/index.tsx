@@ -350,19 +350,19 @@ const GlobalMenu: FunctionComponent = () => {
           children: "Zorgcoördinatie",
           permission: consts.CARE_COORDINATION_VIEW,
           subItems: [
-            {
+            hasPerm(consts.CONTACTS_VIEW) && {
               completeHref: "/contacts",
               icon: <BuildingIcon className={"w-4.5 h-5"} />,
               children: "Opdrachtgevers",
               permission: consts.CONTACTS_VIEW,
             },
-            {
+            hasPerm(consts.CONTRACTS_VIEW) && {
               completeHref: "/contracts",
               icon: <InvoiceIcon className={"w-4.5 h-5"} />,
               children: "Contracten",
               permission: consts.CONTRACTS_VIEW,
             },
-            {
+            hasPerm(consts.CARE_PLANS_VIEW) && {
               completeHref: "/care-plans",
               icon: <HeartIcon width={18} height={18} />,
               children: "Zorgplannen",
@@ -465,6 +465,12 @@ const ClientMenu: FunctionComponent = () => {
                 pathname.startsWith(`/clients/${clientId}/involved-employees`)
               );
             },
+          },
+          {
+            completeHref: `/clients/${clientId}/contracts`,
+            icon: <InvoiceIcon width={18} height={18} />,
+            children: "Contracten",
+            permission: consts.CONTRACT_VIEW,
           },
           {
             completeHref: `/clients/${clientId}/reports`,

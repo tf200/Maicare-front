@@ -5,6 +5,8 @@ import { useClientContractsList } from "@/utils/contracts/getClientContractsList
 import ContractsList from "@/components/ContractsList";
 import LinkButton from "@/components/buttons/LinkButton";
 import Panel from "@/components/Panel";
+import { useMyPermissions } from "@/components/SecureWrapper";
+import { CONTRACT_CREATE, CONTRACT_VIEW } from "@/consts";
 
 type Props = {
   params: { clientId: string };
@@ -12,12 +14,14 @@ type Props = {
 
 const ContractsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const queryResult = useClientContractsList(parseInt(clientId));
-
+  const { hasPerm } = useMyPermissions();
   return (
     <Panel
       title={"Contractenlijst"}
       sideActions={
-        <LinkButton text={"Nieuw contract toevoegen"} href={`contracts/new`} />
+        hasPerm(CONTRACT_CREATE) && (
+          <LinkButton text={"Nieuw contract toevoegen"} href={`contracts/new`} />
+        )
       }
     >
       <ContractsList queryResult={queryResult} />

@@ -148,15 +148,19 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
           </SecureFragment>
           <InvolvedEmployeesSummary clientId={parseInt(clientId)} />
           <ContactSummary clientId={parseInt(clientId)} />
-          <Panel
-            title={"Contracten"}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton text={"Bekijk Cliëntcontracten"} href={`${clientId}/contracts`} />
-            }
-          >
-            <ContractsSummary clientId={parseInt(clientId)} />
-          </Panel>
+          <SecureFragment permission={consts.CONTRACT_VIEW}>
+            <Panel
+              title={"Contracten"}
+              containerClassName="px-7 py-4"
+              sideActions={
+                hasPerm(consts.CONTRACT_EDIT) && (
+                  <LinkButton text={"Bekijk Cliëntcontracten"} href={`${clientId}/contracts`} />
+                )
+              }
+            ></Panel>
+          </SecureFragment>
+
+          <ContractsSummary clientId={parseInt(clientId)} />
           <Panel
             title={`Documenten (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
             containerClassName="px-7 py-4"

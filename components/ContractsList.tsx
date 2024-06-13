@@ -10,13 +10,12 @@ import DropdownDefault from "@/components/Dropdowns/DropdownDefault";
 import Loader from "@/components/common/Loader";
 import PaginatedTable from "@/components/PaginatedTable";
 import { UseQueryResult } from "react-query";
-import {
-  ContractItem,
-  ContractsListDto,
-} from "@/types/contracts/contracts-list.dto";
+import { ContractItem, ContractsListDto } from "@/types/contracts/contracts-list.dto";
 import { WithPaginationResult } from "@/types/pagination-result";
 import {
   careTypeDict,
+  CONTRACT_DELETE,
+  CONTRACT_EDIT,
   CONTRACT_STATUS_TRANSLATION_DICT,
   CONTRACT_STATUS_VARIANT_DICT,
 } from "@/consts";
@@ -24,6 +23,7 @@ import MonthsBetween from "@/components/MonthsBetween";
 import { ContractStatus } from "@/types/contracts/new-contract-req.dto";
 import { BadgeType } from "@/types/badge-type";
 import StatusBadge from "@/components/StatusBadge";
+import { useMyPermissions } from "./SecureWrapper";
 
 type Props = {
   queryResult: WithPaginationResult<UseQueryResult<ContractsListDto>>;
@@ -32,6 +32,7 @@ type Props = {
 const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
   const { data, pagination, isLoading, isFetching } = queryResult;
   const router = useRouter();
+  const { hasPerm } = useMyPermissions();
 
   const { mutate: deleteContract } = useDeleteContract(0);
 
@@ -52,10 +53,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
         header: "Cliënt",
         cell: ({
           row: {
-            original: {
-              client_first_name: firstName,
-              client_last_name: lastName,
-            },
+            original: { client_first_name: firstName, client_last_name: lastName },
           },
         }) => `${firstName} ${lastName}`,
       },
@@ -125,6 +123,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
                   `/clients/${info.row.original.client_id}/contracts/${info.row.original.id}/edit`
                 );
               }}
+              visible={[hasPerm(CONTRACT_EDIT), hasPerm(CONTRACT_DELETE)]}
             />
           </div>
         ),
@@ -142,9 +141,7 @@ const ContractsList: FunctionComponent<Props> = ({ queryResult }) => {
           page={pagination.page ?? 1}
           isFetching={isFetching}
           onPageChange={(page) => pagination.setPage(page)}
-          onRowClick={(row) =>
-            router.push(`/clients/${row.client_id}/contracts/${row.id}`)
-          }
+          onRowClick={(row) => router.push(`/clients/${row.client_id}/contracts/${row.id}`)}
         />
       )}
     </>
