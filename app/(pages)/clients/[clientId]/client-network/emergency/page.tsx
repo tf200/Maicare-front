@@ -14,13 +14,15 @@ import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 import PencilSquare from "@/components/icons/PencilSquare";
 import { useRelationshipList } from "@/utils/emergency/EmergencyRelationship";
+import { useMyPermissions } from "@/components/SecureWrapper";
+import { CONTACT_CREATE, CONTACT_DELETE, CONTACT_EDIT } from "@/consts";
 type Props = {
   params: { clientId: string };
 };
 
 const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const { pagination, isFetching, isLoading, isError, data } = useEmergencyContactList(+clientId);
-
+  const { hasPerm } = useMyPermissions();
   const { data: relationships, isLoading: isLoadingRelationships } = useRelationshipList();
 
   const {
@@ -95,23 +97,27 @@ const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }
       header: () => "",
       cell: (info) => (
         <div className="flex justify-center gap-4">
-          <IconButton
-            buttonType="Danger"
-            onClick={() => {
-              open({
-                onConfirm: () => {
-                  deleteEmergency(info.getValue());
-                },
-              });
-            }}
-          >
-            <TrashIcon className="w-5 h-5" />
-          </IconButton>
-          <Link href={`/clients/${clientId}/emergency/${info.getValue() as number}/edit`}>
-            <IconButton>
-              <PencilSquare className="w-5 h-5" />
+          {hasPerm(CONTACT_EDIT) && (
+            <IconButton
+              buttonType="Danger"
+              onClick={() => {
+                open({
+                  onConfirm: () => {
+                    deleteEmergency(info.getValue());
+                  },
+                });
+              }}
+            >
+              <TrashIcon className="w-5 h-5" />
             </IconButton>
-          </Link>
+          )}
+          {hasPerm(CONTACT_DELETE) && (
+            <Link href={`/clients/${clientId}/emergency/${info.getValue() as number}/edit`}>
+              <IconButton>
+                <PencilSquare className="w-5 h-5" />
+              </IconButton>
+            </Link>
+          )}
         </div>
       ),
     },
@@ -121,10 +127,12 @@ const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }
     <Panel
       title={"Lijst met Noodcontacten"}
       sideActions={
-        <LinkButton
-          text={"Nieuw noodcontact toevoegen"}
-          href={`/clients/${clientId}/emergency/new`}
-        />
+        hasPerm(CONTACT_CREATE) && (
+          <LinkButton
+            text={"Nieuw noodcontact toevoegen"}
+            href={`/clients/${clientId}/emergency/new`}
+          />
+        )
       }
     >
       {isLoading && <div className="p-4 sm:p-6 xl:p-7.5">Loading...</div>}

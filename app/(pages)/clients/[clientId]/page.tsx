@@ -22,7 +22,7 @@ import { useDeleteClient } from "@/utils/clients/deleteClient";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { useRouter } from "next/navigation";
 import ContactSummary from "@/components/clientDetails/ContactSummary";
-import { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment, useMyPermissions } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
 import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory";
@@ -37,16 +37,11 @@ type Props = {
   params: { clientId: string };
 };
 
-const ClientDetailsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
+const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const router = useRouter();
+  const { hasPerm } = useMyPermissions();
 
-  const {
-    mutate: deleteClient,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteClient();
+  const { mutate: deleteClient, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteClient();
 
   const {
     pagination,
@@ -135,28 +130,29 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
           <Panel title={"Locatiegegevens"} containerClassName="px-7 py-4">
             <LocationDetails clientId={parseInt(clientId)} />
           </Panel>
-          <Panel
-            title={"Noodcontacten"}
-            containerClassName="px-7 py-4"
-            sideActions={
-              <LinkButton
-                text={"Volledige Contactenlijst"}
-                href={`/clients/${clientId}/emergency`}
-              />
-            }
-          >
-            <EmergencyContactsSummary clientId={parseInt(clientId)} />
-          </Panel>
+          <SecureFragment permission={consts.CONTACT_VIEW}>
+            <Panel
+              title={"Noodcontacten"}
+              containerClassName="px-7 py-4"
+              sideActions={
+                hasPerm(consts.CONTACT_EDIT) && (
+                  <LinkButton
+                    text={"Volledige Contactenlijst"}
+                    href={`/clients/${clientId}/emergency`}
+                  />
+                )
+              }
+            >
+              <EmergencyContactsSummary clientId={parseInt(clientId)} />
+            </Panel>
+          </SecureFragment>
           <InvolvedEmployeesSummary clientId={parseInt(clientId)} />
           <ContactSummary clientId={parseInt(clientId)} />
           <Panel
             title={"Contracten"}
             containerClassName="px-7 py-4"
             sideActions={
-              <LinkButton
-                text={"Bekijk Cliëntcontracten"}
-                href={`${clientId}/contracts`}
-              />
+              <LinkButton text={"Bekijk Cliëntcontracten"} href={`${clientId}/contracts`} />
             }
           >
             <ContractsSummary clientId={parseInt(clientId)} />
@@ -212,10 +208,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({
             title={"Medisch Dossier"}
             containerClassName="px-7 py-4"
             sideActions={
-              <LinkButton
-                text={"Volledig Medisch Dossier"}
-                href={`${clientId}/medical-record`}
-              />
+              <LinkButton text={"Volledig Medisch Dossier"} href={`${clientId}/medical-record`} />
             }
           >
             <MedicalRecordSummary clientId={parseInt(clientId)} />

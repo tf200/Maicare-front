@@ -457,7 +457,7 @@ const ClientMenu: FunctionComponent = () => {
             completeHref: `/clients/${clientId}/client-network`,
             icon: <GroupIcon width={18} height={18} />,
             children: "Cliëntennetwerk",
-            permission: consts.CLIENT_VIEW,
+            permission: consts.CONTACT_VIEW,
             getIsActive: (pathname) => {
               return (
                 pathname.startsWith(`/clients/${clientId}/client-network`) ||
