@@ -726,7 +726,7 @@ export const PERMISSION_TRANS = {
   "contacts.view": "Bekijk contacten",
   "contracts.view": "Bekijk contracten",
   "care_plans.view": "Bekijk zorgplannen",
-  "tasks.view": "Bekijk taken",
+  "tasks.view": "Beheer taken",
   "conversation.view": "Bekijk conversaties",
   "manage.domain.levels": "Beheer domein niveaus",
   "approve.goals": "Keur doelen goed",
