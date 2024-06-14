@@ -10,11 +10,7 @@ import React, {
 import Panel from "@/components/Panel";
 import { FormikProvider, useField, useFormik, useFormikContext } from "formik";
 import Button from "@/components/buttons/Button";
-import {
-  INVOICE_STATUS_GRAPH,
-  PAYMENT_TYPE_OPTIONS,
-  PAYMENT_TYPE_RECORD,
-} from "@/consts";
+import { INVOICE_STATUS_GRAPH, PAYMENT_TYPE_OPTIONS, PAYMENT_TYPE_RECORD } from "@/consts";
 import Select from "@/components/FormFields/Select";
 import DetailCell from "@/components/DetailCell";
 import InputField from "@/components/FormFields/InputField";
@@ -27,11 +23,7 @@ import {
   usePatchInvoice,
   useUpdateInvoice,
 } from "@/utils/invoices";
-import {
-  InvoiceDetailsDto,
-  InvoiceFormType,
-  UpdateInvoiceDto,
-} from "@/types/invoices";
+import { InvoiceDetailsDto, InvoiceFormType, UpdateInvoiceDto } from "@/types/invoices";
 import Loader from "@/components/common/Loader";
 import { useClientDetails } from "@/utils/clients/getClientDetails";
 import { useClientContact } from "@/components/clientDetails/ContactSummary";
@@ -70,8 +62,7 @@ function formToDto(values: InvoiceFormType): UpdateInvoiceDto {
       contract_id: item.contract,
       used_tax: Number(item.vat_rate),
       item_desc: item.care_type,
-      contract_amount:
-        Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100),
+      contract_amount: Number(item.pre_vat_total) * (1 + Number(item.vat_rate) / 100),
       contract_amount_without_tax: Number(item.pre_vat_total),
     })),
   };
@@ -110,10 +101,7 @@ const Page: FunctionComponent<{
     }, 0);
     formik.setFieldValue("pre_vat_total", preVatTotal.toFixed(2));
     const total = values.items.reduce((acc, item) => {
-      return (
-        acc +
-        Number(item.pre_vat_total ?? 0) * (1 + Number(item.vat_rate ?? 0) / 100)
-      );
+      return acc + Number(item.pre_vat_total ?? 0) * (1 + Number(item.vat_rate ?? 0) / 100);
     }, 0);
     formik.setFieldValue("total_amount", total.toFixed(2));
   }, [values.items]);
@@ -123,6 +111,7 @@ const Page: FunctionComponent<{
     data: generatedInvoice,
     refetch: generate,
     isLoading: isGenerating,
+    isFetching,
   } = useInvoiceDownloadLink(data?.id);
 
   if (isLoadingInvoices) {
@@ -177,7 +166,7 @@ const Page: FunctionComponent<{
                 formNoValidate={true}
                 type="submit"
               >
-                Verzenden
+                Redden
               </Button>
             </div>
           )}
@@ -188,30 +177,26 @@ const Page: FunctionComponent<{
           <InvoiceHistory history={data.history} />
         </div>
       )}
-      <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark w-full">
-        <Button
-          onClick={() => {
-            generate();
-          }}
-          isLoading={isGenerating}
-          className="flex gap-4 items-center ml-auto"
-        >
-          {generatedInvoice ? (
-            <span>Factuur gegenereerd</span>
-          ) : (
-            <span>Genereer factuur</span>
-          )}
-        </Button>
+      <div className="flex px-6 py-4 border-t-1 mt-6 border-stroke dark:border-strokedark gap-4 justify-end">
         {generatedInvoice && (
           <Link
             href={generatedInvoice.download_link}
             target={"_blank"}
-            className="flex gap-4 items-center ml-auto bg-primary text-white px-4 py-3 rounded-md hover:bg-primary-dark"
+            className="flex gap-4 items-center  bg-primary text-white px-4 py-3 rounded-md hover:bg-primary-dark"
           >
             <DownloadIcon />
             <span>Download factuur</span>
           </Link>
         )}
+        <Button
+          onClick={() => {
+            generate();
+          }}
+          isLoading={isGenerating || isFetching}
+          className="flex gap-4 items-center "
+        >
+          {generatedInvoice ? <span>Factuur gegenereerd</span> : <span>Genereer factuur</span>}
+        </Button>
       </div>
     </Panel>
   );
@@ -222,9 +207,7 @@ const InvoiceHistory: FunctionComponent<{
 }> = ({ history }) => {
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-6">
-        Betalingsgeschiedenis van facturen:
-      </h3>
+      <h3 className="text-lg font-semibold mb-6">Betalingsgeschiedenis van facturen:</h3>
       <div className="grid grid-cols-3 gap-y-4">
         {history.map((item) => (
           <div key={item.id} className="contents">
@@ -259,67 +242,62 @@ const UpdateStatus: FunctionComponent<{
 }> = ({ invoice, onSuccess }) => {
   const { mutate: updateStatus, isLoading } = usePatchInvoice(invoice.id);
   const { mutate: addPaymentHistory } = useAddPaymentHistory(invoice.id);
-  const { handleSubmit, handleChange, touched, errors, handleBlur, values } =
-    useFormik({
-      initialValues: {
-        status: "",
-        payment_method: "",
-        amount: "",
-      },
-      validationSchema: Yup.object().shape({
-        status: Yup.string().required(),
-        payment_method: Yup.string().when("status", (value, schema) => {
-          if (
-            value[0] === "partially_paid" ||
-            value[0] === "overpaid" ||
-            value[0] === "paid"
-          ) {
-            return schema.required("Dit veld is verplicht");
-          }
-          return schema;
-        }),
-        amount: Yup.string().when("status", (value, schema) => {
-          if (value[0] === "partially_paid" || value[0] === "overpaid") {
-            return schema.required("Dit veld is verplicht");
-          }
-          return schema;
-        }),
-      }),
-      enableReinitialize: true,
-      onSubmit: (values, { resetForm }) => {
-        if (
-          values.status === "partially_paid" ||
-          values.status === "overpaid" ||
-          values.status === "paid"
-        ) {
-          addPaymentHistory(
-            {
-              payment_method: values.payment_method,
-              amount: Number(values.amount),
-              invoice_status: values.status as InvoiceType,
-            },
-            {
-              onSuccess: () => {
-                resetForm();
-                onSuccess?.();
-              },
-            }
-          );
-        } else {
-          updateStatus(
-            {
-              status: values.status as InvoiceType,
-            },
-            {
-              onSuccess: () => {
-                resetForm();
-                onSuccess?.();
-              },
-            }
-          );
+  const { handleSubmit, handleChange, touched, errors, handleBlur, values } = useFormik({
+    initialValues: {
+      status: "",
+      payment_method: "",
+      amount: "",
+    },
+    validationSchema: Yup.object().shape({
+      status: Yup.string().required(),
+      payment_method: Yup.string().when("status", (value, schema) => {
+        if (value[0] === "partially_paid" || value[0] === "overpaid" || value[0] === "paid") {
+          return schema.required("Dit veld is verplicht");
         }
-      },
-    });
+        return schema;
+      }),
+      amount: Yup.string().when("status", (value, schema) => {
+        if (value[0] === "partially_paid" || value[0] === "overpaid") {
+          return schema.required("Dit veld is verplicht");
+        }
+        return schema;
+      }),
+    }),
+    enableReinitialize: true,
+    onSubmit: (values, { resetForm }) => {
+      if (
+        values.status === "partially_paid" ||
+        values.status === "overpaid" ||
+        values.status === "paid"
+      ) {
+        addPaymentHistory(
+          {
+            payment_method: values.payment_method,
+            amount: Number(values.amount),
+            invoice_status: values.status as InvoiceType,
+          },
+          {
+            onSuccess: () => {
+              resetForm();
+              onSuccess?.();
+            },
+          }
+        );
+      } else {
+        updateStatus(
+          {
+            status: values.status as InvoiceType,
+          },
+          {
+            onSuccess: () => {
+              resetForm();
+              onSuccess?.();
+            },
+          }
+        );
+      }
+    },
+  });
   return (
     <form onSubmit={handleSubmit} className={"flex flex-col"}>
       <DetailCell
@@ -344,6 +322,9 @@ const UpdateStatus: FunctionComponent<{
               onBlur={handleBlur}
               error={touched.status && errors.status}
             />
+            <p className="mt-6 text-white italic text-sm">
+              • Outstanding invoices will be sent the automatically to client sender.
+            </p>
           </div>
         }
       />
@@ -369,11 +350,7 @@ const UpdateStatus: FunctionComponent<{
           type={"number"}
           step={"0.01"}
           isPrice={true}
-          max={
-            values.status === "partially_paid"
-              ? invoice.total_amount
-              : undefined
-          }
+          max={values.status === "partially_paid" ? invoice.total_amount : undefined}
           min={values.status === "overpaid" ? invoice.total_amount : 0}
           label={"Betaald bedrag"}
           placeholder={"Betaald bedrag"}
@@ -384,22 +361,14 @@ const UpdateStatus: FunctionComponent<{
           error={touched.amount && errors.amount}
         />
       )}
-      <Button
-        type="submit"
-        formNoValidate={true}
-        className="mt-8"
-        isLoading={isLoading}
-      >
+      <Button type="submit" formNoValidate={true} className="mt-8" isLoading={isLoading}>
         Status bijwerken
       </Button>
     </form>
   );
 };
 
-const ManageStatusModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const ManageStatusModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   return (
     <FormModal {...props} title={"Status bijwerken"}>
       <UpdateStatus
@@ -415,11 +384,9 @@ const ManageStatusModal: FunctionComponent<ModalProps> = ({
 const ClientDetails: FunctionComponent<{
   clientId: number;
 }> = ({ clientId }) => {
-  const { data: client, isLoading: isLoadingClient } =
-    useClientDetails(clientId);
+  const { data: client, isLoading: isLoadingClient } = useClientDetails(clientId);
 
-  const { data: contact, isLoading: isLoadingContact } =
-    useClientContact(clientId);
+  const { data: contact, isLoading: isLoadingContact } = useClientContact(clientId);
   return (
     <div className="flex flex-wrap justify-between">
       {isLoadingClient ? (
@@ -428,16 +395,9 @@ const ClientDetails: FunctionComponent<{
         <GrayBox>
           <h3 className="text-l font-bold mb-4">Cliënt</h3>
           <div className="flex gap-2.5">
-            <DetailCell
-              label={"Naam"}
-              value={`${client?.first_name} ${client?.last_name}`}
-            />
+            <DetailCell label={"Naam"} value={`${client?.first_name} ${client?.last_name}`} />
             <DetailCell label={"Email"} value={client?.email} type={"email"} />
-            <DetailCell
-              label={"Telefoon"}
-              value={client?.phone_number}
-              type={"phone"}
-            />
+            <DetailCell label={"Telefoon"} value={client?.phone_number} type={"phone"} />
           </div>
         </GrayBox>
       )}
