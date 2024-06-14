@@ -1,27 +1,13 @@
 "use client";
 
-import React, {
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import {
-  Calendar,
-  dayjsLocalizer,
-  Formats,
-  SlotInfo,
-  View,
-  Views,
-} from "react-big-calendar";
+import React, { FunctionComponent, useCallback, useMemo, useState } from "react";
+import { Calendar, dayjsLocalizer, Formats, SlotInfo, View, Views } from "react-big-calendar";
 
 import Panel from "@/components/Panel";
 import Toolbar from "@/components/calendarComponents/Toolbar";
 import AppointmentFormModal from "@/components/Modals/AppointmentFormModal";
 import { useModal } from "@/components/providers/ModalProvider";
-import withDragAndDrop, {
-  EventInteractionArgs,
-} from "react-big-calendar/lib/addons/dragAndDrop";
+import withDragAndDrop, { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
 import { useAppointmentsList } from "@/utils/appointments/listAppointments";
 
 import dayjs from "dayjs";
@@ -52,8 +38,7 @@ const Page: FunctionComponent = (props) => {
   const formats: Formats = useMemo(
     () => ({
       dayFormat: "D",
-      weekdayFormat: (date, culture, dateLocalizer) =>
-        dateLocalizer.format(date, "dddd", culture),
+      weekdayFormat: (date, culture, dateLocalizer) => dateLocalizer.format(date, "dddd", culture),
     }),
     []
   );
@@ -61,10 +46,7 @@ const Page: FunctionComponent = (props) => {
   const [view, setView] = useState<View>(Views.WEEK);
   const queryClient = useQueryClient();
 
-  const onNavigate = useCallback(
-    (newDate: Date) => setDate(newDate),
-    [setDate]
-  );
+  const onNavigate = useCallback((newDate: Date) => setDate(newDate), [setDate]);
   const onView = useCallback((newView: View) => setView(newView), [setView]);
   const { open } = useModal(AppointmentFormModal);
   const { mutate: updateAppointment } = useUpdateAppointment();
@@ -115,23 +97,20 @@ const Page: FunctionComponent = (props) => {
 
   const updateEventTime = useCallback(
     (interaction: EventInteractionArgs<CalendarEvent>) => {
-      queryClient.setQueryData<AppointmentListResDto>(
-        ["appointments", filters],
-        (data) => {
-          return data.map((appointment) => {
-            if (appointment.id === interaction.event.id) {
-              const newAppointment = {
-                ...appointment,
-                start_time: dayjs(interaction.start).format("YYYY-MM-DDTHH:mm"),
-                end_time: dayjs(interaction.end).format("YYYY-MM-DDTHH:mm"),
-              };
-              updateAppointment(newAppointment);
-              return newAppointment;
-            }
-            return appointment;
-          });
-        }
-      );
+      queryClient.setQueryData<AppointmentListResDto>(["appointments", filters], (data) => {
+        return data.map((appointment) => {
+          if (appointment.id === interaction.event.id) {
+            const newAppointment = {
+              ...appointment,
+              start_time: dayjs(interaction.start).format("YYYY-MM-DDTHH:mm"),
+              end_time: dayjs(interaction.end).format("YYYY-MM-DDTHH:mm"),
+            };
+            updateAppointment(newAppointment);
+            return newAppointment;
+          }
+          return appointment;
+        });
+      });
       queryClient.setQueryDefaults(["appointments"], { enabled: true });
     },
     [queryClient, filters]
@@ -161,7 +140,9 @@ const Page: FunctionComponent = (props) => {
           <h2 className="text-2xl font-bold">Kalender</h2>
           <LocationSelect
             value={filters.location}
-            onChange={(e) => setFilter({ location: Number(e.target.value) })}
+            onChange={(e) =>
+              setFilter(e.target.value != "" ? { location: Number(e.target.value) } : {})
+            }
             className="min-w-75"
             label=""
           />
