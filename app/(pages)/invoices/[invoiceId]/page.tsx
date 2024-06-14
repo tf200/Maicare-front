@@ -166,7 +166,7 @@ const Page: FunctionComponent<{
                 formNoValidate={true}
                 type="submit"
               >
-                Redden
+                opslaan
               </Button>
             </div>
           )}
@@ -322,8 +322,8 @@ const UpdateStatus: FunctionComponent<{
               onBlur={handleBlur}
               error={touched.status && errors.status}
             />
-            <p className="mt-6 text-white italic text-sm">
-              • Outstanding invoices will be sent the automatically to client sender.
+            <p className="mt-6 text-red font-bold text-sm">
+              📌 Openstaande facturen worden automatisch naar de afzender van de cliënten gestuurd.
             </p>
           </div>
         }
