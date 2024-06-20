@@ -44,9 +44,11 @@ const FilesUploader: FunctionComponent<Props> = ({
   });
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [uploadedFiles, setUploadedFiles] = React.useState<string[]>([]);
+
   useEffect(() => {
     helpers.setValue(uploadedFiles);
   }, [uploadedFiles]);
+
   const selectFiles = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const files = event.currentTarget.files;
@@ -56,10 +58,7 @@ const FilesUploader: FunctionComponent<Props> = ({
   );
   return (
     <div>
-      <label
-        htmlFor={props.id}
-        className="mb-2.5 block text-black dark:text-white"
-      >
+      <label htmlFor={props.id} className="mb-2.5 block text-black dark:text-white">
         {label} {props.required && <span className="text-meta-1">*</span>}
       </label>
       <div>
@@ -115,12 +114,7 @@ const FileUploader: FunctionComponent<{
   tagOptions?: SelectionOption[];
   tagLabel?: string;
 }> = ({ file, onRemove, onUploaded, endpoint, tagOptions, tagLabel }) => {
-  const {
-    mutate: upload,
-    isLoading: isUploading,
-    isSuccess,
-    isError,
-  } = useUploadFile(endpoint);
+  const { mutate: upload, isLoading: isUploading, isSuccess, isError } = useUploadFile(endpoint);
   const [fileId, setFileId] = React.useState<string | null>(null);
   const [url, setUrl] = React.useState<string | null>(null);
   const uploadFile = useCallback(() => {

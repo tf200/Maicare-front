@@ -10,11 +10,7 @@ import {
   useUpdateExpense,
 } from "@/utils/expenses";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  ExpenseFormType,
-  ExpenseResDto,
-  ExpensesSearchParams,
-} from "@/types/expenses";
+import { ExpenseFormType, ExpenseResDto, ExpensesSearchParams } from "@/types/expenses";
 import { dateFormat } from "@/utils/timeFormatting";
 import PaginatedTable from "@/components/PaginatedTable";
 import Loader from "@/components/common/Loader";
@@ -34,9 +30,7 @@ import dayjs from "dayjs";
 import { omit } from "@/utils/omit";
 import DetailCell from "@/components/DetailCell";
 import DownloadFile from "@/components/DownloadFile";
-import FormikLocation, {
-  LocationSelect,
-} from "@/components/FormFields/FormikLocation";
+import FormikLocation, { LocationSelect } from "@/components/FormFields/FormikLocation";
 
 const Page: FunctionComponent = (props) => {
   const { open } = useModal(ExpenseModal);
@@ -60,9 +54,7 @@ const Page: FunctionComponent = (props) => {
           label={""}
           className="lg:max-w-70 w-full"
           value={filters.location ? filters.location.toString() : ""}
-          onChange={({ target: { value } }) =>
-            setFilters({ location: value ? +value : undefined })
-          }
+          onChange={({ target: { value } }) => setFilters({ location: value ? +value : undefined })}
         />
       </div>
       <ExpensesList filters={filters} />
@@ -111,8 +103,7 @@ const ExpensesList: FunctionComponent<{
                 <span className="text-sm font-bold">Beldrag incl. BTW</span>{" "}
                 <span>
                   {formatPrice(
-                    parseFloat(expense.amount + "") +
-                      (expense.tax / 100) * expense.amount
+                    parseFloat(expense.amount + "") + (expense.tax / 100) * expense.amount
                   )}
                 </span>
               </div>
@@ -181,26 +172,12 @@ const ExpensesList: FunctionComponent<{
   }
 };
 
-const ExpenseDetails: FunctionComponent<{ data: ExpenseResDto }> = ({
-  data,
-}) => {
+const ExpenseDetails: FunctionComponent<{ data: ExpenseResDto }> = ({ data }) => {
   return (
     <div className="grid gap-4 grid-cols-3">
-      <DetailCell
-        label={"Datum"}
-        value={dateFormat(data.created)}
-        ignoreIfEmpty={true}
-      />
-      <DetailCell
-        label={"Omschrijving"}
-        value={data.desc}
-        ignoreIfEmpty={true}
-      />
-      <DetailCell
-        label={"Bedrag"}
-        value={formatPrice(data.amount)}
-        ignoreIfEmpty={true}
-      />
+      <DetailCell label={"Datum"} value={dateFormat(data.created)} ignoreIfEmpty={true} />
+      <DetailCell label={"Omschrijving"} value={data.desc} ignoreIfEmpty={true} />
+      <DetailCell label={"Bedrag"} value={formatPrice(data.amount)} ignoreIfEmpty={true} />
       {data.attachments?.length > 0 && (
         <div className={"col-span-3"}>
           <h3 className="text-lg font-semibold mb-2">{"Bijlagen"}</h3>
@@ -215,15 +192,10 @@ const ExpenseDetails: FunctionComponent<{ data: ExpenseResDto }> = ({
   );
 };
 
-const ExpenseModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const ExpenseModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const initialData: ExpenseResDto = additionalProps?.data;
   const { mutate: createExpense, isLoading: isCreating } = useCreateExpense();
-  const { mutate: updateExpense, isLoading: isUpdating } = useUpdateExpense(
-    initialData?.id
-  );
+  const { mutate: updateExpense, isLoading: isUpdating } = useUpdateExpense(initialData?.id);
 
   const initialValues = useMemo(() => {
     return initialData
@@ -271,13 +243,9 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
       );
     },
   });
-  const { handleSubmit, handleBlur, errors, touched, values, handleChange } =
-    formik;
+  const { handleSubmit, handleBlur, errors, touched, values, handleChange } = formik;
   return (
-    <FormModal
-      {...props}
-      title={initialData ? "Uitgave bewerken" : "Nieuwe uitgave"}
-    >
+    <FormModal {...props} title={initialData ? "Uitgave bewerken" : "Nieuwe uitgave"}>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <InputField
@@ -328,11 +296,7 @@ const ExpenseModal: FunctionComponent<ModalProps> = ({
             min={0}
           />
           <section>
-            <FilesUploader
-              label={"Bijlagen"}
-              endpoint={"global_v2"}
-              name={"added_attachments"}
-            />
+            <FilesUploader label={"Bijlagen"} endpoint={"global_v2"} name={"added_attachments"} />
             {initialData && (
               <FilesDeleter
                 id={"removed_attachments"}
