@@ -30,32 +30,31 @@ const initialValues: AppointmentFormType = {
   clients: [],
 };
 
-const validationSchema: Yup.ObjectSchema<AppointmentFormType> =
-  Yup.object().shape({
-    title: Yup.string().required("Onderwerp is verplicht"),
-    appointment_type: Yup.string()
-      .oneOf(APPOINTMENT_TYPE_ARRAY, "Afspraak type is verplicht")
-      .required("Afspraak type is verplicht"),
-    start_time: Yup.string().required("Van datum tijd is verplicht"),
-    end_time: Yup.string()
-      .required("Tot datum tijd is verplicht")
-      .test(
-        "is-greater",
-        "Tot datum tijd moet groter zijn dan van datum tijd",
-        function (value, context) {
-          const { start_time } = context.parent;
-          if (start_time && value) {
-            return new Date(start_time) < new Date(value);
-          }
-          return true;
+const validationSchema: Yup.ObjectSchema<AppointmentFormType> = Yup.object().shape({
+  title: Yup.string().required("Onderwerp is verplicht"),
+  appointment_type: Yup.string()
+    .oneOf(APPOINTMENT_TYPE_ARRAY, "Afspraak type is verplicht")
+    .required("Afspraak type is verplicht"),
+  start_time: Yup.string().required("Van datum tijd is verplicht"),
+  end_time: Yup.string()
+    .required("Tot datum tijd is verplicht")
+    .test(
+      "is-greater",
+      "Tot datum tijd moet groter zijn dan van datum tijd",
+      function (value, context) {
+        const { start_time } = context.parent;
+        if (start_time && value) {
+          return new Date(start_time) < new Date(value);
         }
-      ),
-    description: Yup.string(),
-    employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
-    clients: Yup.array(),
-    temporary_file_ids: Yup.array(),
-    location: Yup.string().required("Locatie is verplicht"),
-  });
+        return true;
+      }
+    ),
+  description: Yup.string(),
+  employees: Yup.array().min(1, "Minimaal 1 medewerker is verplicht"),
+  clients: Yup.array(),
+  temporary_file_ids: Yup.array(),
+  location: Yup.string().required("Locatie is verplicht"),
+});
 
 export type AppointmentFormProps =
   | {
@@ -80,12 +79,10 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
   initialSlot,
   mode = "create",
 }) => {
-  const { mutate: createAppointment, isLoading: isCreating } =
-    useCreateAppointment();
-  const { mutate: updateAppointment, isLoading: isUpdating } =
-    useUpdateAppointment();
-  const { mutate: deleteAppointment, isLoading: isDeleting } =
-    useDeleteAppointment();
+  const { mutate: createAppointment, isLoading: isCreating } = useCreateAppointment();
+  const { mutate: updateAppointment, isLoading: isUpdating } = useUpdateAppointment();
+  const { mutate: deleteAppointment, isLoading: isDeleting } = useDeleteAppointment();
+
   const parsedInitialData = useMemo(() => {
     if (mode === "create" && initialSlot) {
       return {
@@ -104,6 +101,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
       return initialValues;
     }
   }, [initialData, initialSlot]);
+
   const formik = useFormik({
     initialValues: parsedInitialData,
     validationSchema,
@@ -125,8 +123,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
       }
     },
   });
-  const { handleChange, values, handleBlur, handleSubmit, dirty, touched } =
-    formik;
+  const { handleChange, values, handleBlur, handleSubmit, dirty, touched } = formik;
   return (
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
@@ -224,7 +221,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
           onChange={handleChange}
           onBlur={handleBlur}
           multiple={true}
-          endpoint={"appointment"}
+          endpoint="global_v2"
         />
         {mode === "edit" && initialData?.attachments && (
           <FilesDeleter
@@ -254,11 +251,7 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
             </ModalActionButton>
           )}
           {mode === "create" && (
-            <ModalActionButton
-              actionType="CANCEL-2"
-              className="grow"
-              onClick={onCancel}
-            >
+            <ModalActionButton actionType="CANCEL-2" className="grow" onClick={onCancel}>
               Annuleren
             </ModalActionButton>
           )}
