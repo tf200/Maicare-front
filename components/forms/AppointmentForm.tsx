@@ -106,6 +106,8 @@ const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
     initialValues: parsedInitialData,
     validationSchema,
     onSubmit: (data) => {
+      data.attachment_ids_to_delete = [];
+
       if (mode === "create") {
         createAppointment(data, {
           onSuccess: onSuccessfulSubmit,
