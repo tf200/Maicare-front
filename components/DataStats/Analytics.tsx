@@ -27,8 +27,7 @@ const Analytics: FunctionComponent = (props) => {
               <strong>Uit zorg:</strong> {data?.users.total_out_of_care_users}
             </div>
             <div>
-              <strong>Op wachtlijst:</strong>{" "}
-              {data?.users.total_on_waiting_list_users}
+              <strong>Op wachtlijst:</strong> {data?.users.total_on_waiting_list_users}
             </div>
           </div>
         </div>
@@ -55,18 +54,20 @@ const Analytics: FunctionComponent = (props) => {
         </div>
       </DataCard>
 
-      <DataCard title={`Voltooide documentprofielen (${data?.users.total_users - data?.users.total_missing_documents_profiles}/${data?.users.total_users} profielen)`}>
+      <DataCard
+        title={`Voltooide documentprofielen (${data?.users.total_users - data?.users.total_missing_documents_profiles}/${data?.users.total_users} profielen)`}
+      >
         <div className="mt-4 flex gap-6">
           <ReactApexChart
             options={{
               labels: [
-                `ingevulde profielen (${data?.users.total_users - data?.users.total_missing_documents_profiles})`,
                 `onvolledige documentprofielen (${data?.users.total_missing_documents_profiles})`,
+                `ingevulde profielen (${data?.users.total_users - data?.users.total_missing_documents_profiles})`,
               ],
             }}
             series={[
-              data?.users.total_users - data?.users.total_missing_documents_profiles,
               data?.users.total_missing_documents_profiles,
+              data?.users.total_users - data?.users.total_missing_documents_profiles,
             ]}
             type="donut"
             width={450}
@@ -81,24 +82,19 @@ const Analytics: FunctionComponent = (props) => {
           </div>
           <div>
             <div>
-              <strong>Accommodatie:</strong>{" "}
-              {data?.contracts.total_accommodation_contracts}
+              <strong>Accommodatie:</strong> {data?.contracts.total_accommodation_contracts}
             </div>
             <div>
-              <strong>Ambulant:</strong>{" "}
-              {data?.contracts.total_ambulante_contracts}
+              <strong>Ambulant:</strong> {data?.contracts.total_ambulante_contracts}
             </div>
             <div>
-              <strong>Goedgekeurd:</strong>{" "}
-              {data?.contracts.total_approved_contracts}
+              <strong>Goedgekeurd:</strong> {data?.contracts.total_approved_contracts}
             </div>
             <div>
-              <strong>Gestopt:</strong>{" "}
-              {data?.contracts.total_stopped_contracts}
+              <strong>Gestopt:</strong> {data?.contracts.total_stopped_contracts}
             </div>
             <div>
-              <strong>Beëindigd:</strong>{" "}
-              {data?.contracts.total_terminated_contracts}
+              <strong>Beëindigd:</strong> {data?.contracts.total_terminated_contracts}
             </div>
           </div>
         </div>
@@ -136,16 +132,13 @@ const Analytics: FunctionComponent = (props) => {
           </div>
           <div>
             <div>
-              <strong>Totaal medicijnen:</strong>{" "}
-              {data?.medications.total_medications}
+              <strong>Totaal medicijnen:</strong> {data?.medications.total_medications}
             </div>
             <div>
-              <strong>Kritieke medicijnen:</strong>{" "}
-              {data?.medications.total_critical_medications}
+              <strong>Kritieke medicijnen:</strong> {data?.medications.total_critical_medications}
             </div>
             <div>
-              <strong>Totaal medicijnrecords:</strong>{" "}
-              {data?.medications.total_medication_records}
+              <strong>Totaal medicijnrecords:</strong> {data?.medications.total_medication_records}
             </div>
             <div>
               <strong>Genomen medicijnrecords:</strong>{" "}
@@ -197,20 +190,17 @@ const Analytics: FunctionComponent = (props) => {
           </div>
           <div>
             <div>
-              <strong>Betaalde facturen:</strong>{" "}
-              {data?.invoices.total_paid_invoices}
+              <strong>Betaalde facturen:</strong> {data?.invoices.total_paid_invoices}
             </div>
             <div>
               <strong>Deels betaalde facturen:</strong>{" "}
               {data?.invoices.total_partially_paid_invoices}
             </div>
             <div>
-              <strong>Openstaande facturen:</strong>{" "}
-              {data?.invoices.total_outstanding_invoices}
+              <strong>Openstaande facturen:</strong> {data?.invoices.total_outstanding_invoices}
             </div>
             <div>
-              <strong>Teveel betaalde facturen:</strong>{" "}
-              {data?.invoices.total_overpaid_invoices}
+              <strong>Teveel betaalde facturen:</strong> {data?.invoices.total_overpaid_invoices}
             </div>
           </div>
         </div>
@@ -246,28 +236,21 @@ const Analytics: FunctionComponent = (props) => {
           </div>
           <div>
             <div>
-              <strong>Totaal betaald:</strong>{" "}
-              {formatPrice(+data?.finance.total_paid_amount)}
+              <strong>Totaal betaald:</strong> {formatPrice(+data?.finance.total_paid_amount)}
             </div>
             <div>
-              <strong>Totaal uitgaven:</strong>{" "}
-              {formatPrice(+data?.finance.total_expenses)}
+              <strong>Totaal uitgaven:</strong> {formatPrice(+data?.finance.total_expenses)}
             </div>
             <div>
               <strong>Totale winst:</strong>{" "}
               <span
                 className={cn([
-                  +data?.finance.total_paid_amount -
-                    +data?.finance.total_expenses >
-                  0
+                  +data?.finance.total_paid_amount - +data?.finance.total_expenses > 0
                     ? "text-green-600"
                     : "text-pink-500",
                 ])}
               >
-                {formatPrice(
-                  +data?.finance.total_paid_amount -
-                    +data?.finance.total_expenses
-                )}
+                {formatPrice(+data?.finance.total_paid_amount - +data?.finance.total_expenses)}
               </span>
             </div>
           </div>
@@ -287,9 +270,7 @@ type Props = {
 const DataCard: FunctionComponent<Props> = ({ title, children }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h2 className="text-title-md font-bold text-black dark:text-white">
-        {title}
-      </h2>
+      <h2 className="text-title-md font-bold text-black dark:text-white">{title}</h2>
       {children}
     </div>
   );
