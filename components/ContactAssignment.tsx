@@ -23,15 +23,26 @@ const ContactAssignment: FunctionComponent<{
             {text ?? "Maak een contracten voor de gegeven opdrachtgever"}
           </h2>
           <div className="flex flex-wrap gap-8">
-            <DetailCell
-              label={"Soort opdrachtgever"}
-              value={OpClientTypeRecord[data.types]}
-            />
+            <DetailCell label={"Soort opdrachtgever"} value={OpClientTypeRecord[data.types]} />
             <DetailCell label={"Naam"} value={data.name} />
+            <DetailCell label={"Telefoonnummer"} type={"phone"} value={data.phone_number} />
             <DetailCell
-              label={"Telefoonnummer"}
-              type={"phone"}
-              value={data.phone_number}
+              label={"Contacts"}
+              value={
+                <>
+                  {data.contacts.map((contact) => (
+                    <div key={contact.name} className="flex gap-4">
+                      <DetailCell label={"Naam"} value={`♦ ${contact.name}`} />
+                      <DetailCell
+                        label={"Telefoonnummer"}
+                        type={"phone"}
+                        value={contact.phone_number}
+                      />
+                      <DetailCell label={"Email"} type={"email"} value={contact.email} />
+                    </div>
+                  ))}
+                </>
+              }
             />
           </div>
         </div>
@@ -39,12 +50,9 @@ const ContactAssignment: FunctionComponent<{
       {unassigned && (
         <div className="mb-6 flex flex-col p-4  info-box">
           <h2 className="text-l font-bold mb-4">
-            <InfoIcon className="inline-block relative -top-0.5" /> Geen
-            opdrachtgever toegewezen
+            <InfoIcon className="inline-block relative -top-0.5" /> Geen opdrachtgever toegewezen
           </h2>
-          <p>
-            Deze cliënt heeft geen opdrachtgever toegewezen, wijs er een toe
-          </p>
+          <p>Deze cliënt heeft geen opdrachtgever toegewezen, wijs er een toe</p>
           <Button
             className={"py-2 gap-2 self-center flex items-center px-6 mt-4"}
             onClick={() => {

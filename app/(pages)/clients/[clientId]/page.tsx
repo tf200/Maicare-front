@@ -157,10 +157,11 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
                   <LinkButton text={"Bekijk Cliëntcontracten"} href={`${clientId}/contracts`} />
                 )
               }
-            ></Panel>
+            >
+              <ContractsSummary clientId={parseInt(clientId)} />
+            </Panel>
           </SecureFragment>
 
-          <ContractsSummary clientId={parseInt(clientId)} />
           <Panel
             title={`Documenten (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
             containerClassName="px-7 py-4"
