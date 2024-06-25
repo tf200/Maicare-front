@@ -7,14 +7,10 @@ const fetchReport = (dataId: number) => async () => {
 };
 
 export const useGetReport = (dataId: number, clientId: number) => {
-  const query = useQuery({
+  return useQuery({
     queryKey: [clientId, "reports", dataId],
     queryFn: fetchReport(dataId),
     keepPreviousData: true,
     enabled: !!dataId,
   });
-
-  return {
-    ...query,
-  };
 };

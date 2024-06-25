@@ -5,10 +5,7 @@ import React, { FC, FunctionComponent, useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Select from "@/components/FormFields/Select";
-import {
-  EMERGENCY_DISTANCE_OPTIONS,
-  EMERGENCY_RELATION_OPTIONS,
-} from "@/consts";
+import { EMERGENCY_DISTANCE_OPTIONS, EMERGENCY_RELATION_OPTIONS } from "@/consts";
 import { useCreateEmergencyContact } from "@/utils/emergency/createEmergencyContact";
 import Button from "@/components/buttons/Button";
 import CheckBoxInputFieldThin from "../FormFields/CheckBoxInputThin";
@@ -18,7 +15,11 @@ import { useGetEmergency } from "@/utils/emergency/getEmergency";
 import { useModal } from "../providers/ModalProvider";
 import FormModal from "../Modals/FormModal";
 import { ModalProps } from "@/types/modal-props";
-import { useCreateRelationship, useRelationshipList, useDeleteRelationship } from "@/utils/emergency/EmergencyRelationship";
+import {
+  useCreateRelationship,
+  useRelationshipList,
+  useDeleteRelationship,
+} from "@/utils/emergency/EmergencyRelationship";
 import { SelectionOption } from "@/types/selection-option";
 
 type PropsType = {
@@ -60,20 +61,14 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
 }) => {
   const router = useRouter();
   // use a Modal to add a new relationship
-  const { open } = useModal(NewRelationShip)
+  const { open } = useModal(NewRelationShip);
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetEmergency(emergencyId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetEmergency(emergencyId, clientId);
 
-  const { isLoading: isLoadingRelationships, data: relationships } = useRelationshipList()
+  const { isLoading: isLoadingRelationships, data: relationships } = useRelationshipList();
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateEmergencyContact(clientId);
-  const { mutate: update, isLoading: isPatching } =
-    usePatchEmergencyContact(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateEmergencyContact(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchEmergencyContact(clientId);
 
   const onSubmit = useCallback(
     (values: FormTypes, { resetForm }) => {
@@ -104,15 +99,12 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
 
   const formik = useFormik<FormTypes>({
     enableReinitialize: true,
-    initialValues:
-      mode == "edit" ? (data ? data : initialValues) : initialValues,
+    initialValues: mode == "edit" ? (data ? data : initialValues) : initialValues,
     validationSchema: Yup.object({
       first_name: Yup.string().required("Geef alstublieft een voornaam op"),
       last_name: Yup.string().required("Geef alstublieft een achternaam op"),
       email: Yup.string().required("Geef alstublieft een e-mailadres op"),
-      phone_number: Yup.string().required(
-        "Geef alstublieft een telefoonnummer op"
-      ),
+      phone_number: Yup.string().required("Geef alstublieft een telefoonnummer op"),
       relationship: Yup.string().required("Geef alstublieft een relatie op"),
       relation_status: Yup.string().required("Geef alstublieft een afstand op"),
       address: Yup.string().required("Geef alstublieft een adres op"),
@@ -124,13 +116,13 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
   });
 
   if (isDataLoading || isLoadingRelationships) return <div className="p-5">Loading...</div>;
-  
+
   const EMERGENCY_RELATIONSHIP_OPTIONS: SelectionOption[] = relationships.map((relationship) => {
     return {
       label: relationship.name,
       value: relationship.id.toString(),
     };
-  })
+  });
 
   return (
     <form onSubmit={formik.handleSubmit} className="p-6.5">
@@ -144,9 +136,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           value={formik.values.first_name}
           className="w-full xl:w-1/2"
           error={
-            formik.touched.first_name && formik.errors.first_name
-              ? formik.errors.first_name
-              : null
+            formik.touched.first_name && formik.errors.first_name ? formik.errors.first_name : null
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -160,9 +150,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
           value={formik.values.last_name}
           placeholder={"Voer Achternaam in"}
           error={
-            formik.touched.last_name && formik.errors.last_name
-              ? formik.errors.last_name
-              : null
+            formik.touched.last_name && formik.errors.last_name ? formik.errors.last_name : null
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -176,11 +164,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         type={"text"}
         value={formik.values.email}
         placeholder={"Voer e-mailadres in"}
-        error={
-          formik.touched.email && formik.errors.email
-            ? formik.errors.email
-            : null
-        }
+        error={formik.touched.email && formik.errors.email ? formik.errors.email : null}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />{" "}
@@ -233,9 +217,10 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         />
       </div>
       <div className="mb-5 pl-2">
-        <span className="text-sm font-bold cursor-pointer" onClick={open}>Een nieuwe relatie aanmaken?</span>
+        <span className="text-sm font-bold cursor-pointer" onClick={open}>
+          Een nieuwe relatie aanmaken?
+        </span>
       </div>
-
       <InputField
         required={true}
         className={"w-full mb-4.5"}
@@ -244,11 +229,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
         type={"text"}
         value={formik.values.address}
         placeholder={"Voer adres in"}
-        error={
-          formik.touched.address && formik.errors.address
-            ? formik.errors.address
-            : null
-        }
+        error={formik.touched.address && formik.errors.address ? formik.errors.address : null}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
@@ -262,7 +243,7 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
       />
       <CheckBoxInputFieldThin
         className={"w-full mb-4.5"}
-        label={"Voortgangsrapporten automatisch versturen?"}
+        label={"Voortgangsrapporten automatisch versturen (wekelijks)?"}
         name={"goals_reports"}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -291,13 +272,12 @@ export const EmergencyContactForm: FunctionComponent<PropsType> = ({
 
 export default EmergencyContactForm;
 
-
 const NewRelationShip: FC<ModalProps> = ({ additionalProps, ...props }) => {
-  const { isLoading, data: relationships } = useRelationshipList()
-  const { mutate: createRelationship, isLoading: isCreating } = useCreateRelationship()
-  const { mutate: deleteRelationship, isLoading: isLoadingDeletion } = useDeleteRelationship()
+  const { isLoading, data: relationships } = useRelationshipList();
+  const { mutate: createRelationship, isLoading: isCreating } = useCreateRelationship();
+  const { mutate: deleteRelationship, isLoading: isLoadingDeletion } = useDeleteRelationship();
 
-  if (isLoading) return <div className="p-5">Loading...</div>
+  if (isLoading) return <div className="p-5">Loading...</div>;
 
   return (
     <FormModal {...props} title={"Nieuwe relatie"}>
@@ -310,12 +290,7 @@ const NewRelationShip: FC<ModalProps> = ({ additionalProps, ...props }) => {
           // props.onClose();
         }}
       >
-        <InputField
-          required={true}
-          label={"Naam"}
-          name={"name"}
-          placeholder={"Naam"}
-        />
+        <InputField required={true} label={"Naam"} name={"name"} placeholder={"Naam"} />
         <div className="flex gap-4 mt-6 justify-center">
           <Button buttonType={"Outline"} onClick={props.onClose}>
             Annuleren
@@ -327,24 +302,30 @@ const NewRelationShip: FC<ModalProps> = ({ additionalProps, ...props }) => {
 
         <div className="my-5 py-5">
           <h4 className="font-bold mb-5">Beschikbare relaties</h4>
-          
+
           <div className="max-h-[400px] overflow-y-auto">
             <table className="table-auto rounded-lg w-full bg-white border-collapse">
               {relationships.map((relationship, i) => {
                 return (
                   <tr key={i} className="border-y-1 border-gray">
                     <td className="p-5">{relationship.name}</td>
-                    <td><span className="cursor-pointer" title="delete" onClick={(e) => {
-                      deleteRelationship(relationship.id)
-                    }}>❌</span></td>
+                    <td>
+                      <span
+                        className="cursor-pointer"
+                        title="delete"
+                        onClick={(e) => {
+                          deleteRelationship(relationship.id);
+                        }}
+                      >
+                        ❌
+                      </span>
+                    </td>
                   </tr>
-                )
+                );
               })}
             </table>
-          
           </div>
         </div>
-
       </form>
     </FormModal>
   );
