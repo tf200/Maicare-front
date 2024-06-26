@@ -15,32 +15,29 @@ import {
   OpClientType,
   OpOrgContactFormType,
 } from "@/types/op-contact/contact-form-type";
-import { useCreateOpOrgContact } from "@/utils/contacts/createContact";
+import { useCreateOpOrgContact, useUpdateOpOrgContact } from "@/utils/contacts/createContact";
 
-const OpOrgContactFormSchema: Yup.ObjectSchema<OpOrgContactFormType> =
-  Yup.object().shape({
-    types: Yup.string().oneOf(OP_CLIENT_TYPE).required(),
-    name: Yup.string().required("Naam is verplicht"),
-    address: Yup.string().required("Adres is verplicht"),
-    postal_code: Yup.string().required("Postcode is verplicht"),
-    place: Yup.string().required("Plaats is verplicht"),
-    land: Yup.string().required("Land is verplicht"),
-    contacts: Yup.array()
-      .of(
-        Yup.object().shape({
-          name: Yup.string().required("Naam is verplicht"),
-          email: Yup.string()
-            .email("Email is niet geldig")
-            .required("Email is verplicht"),
-          phone_number: Yup.string().required("Telefoonnummer is verplicht"),
-        })
-      )
-      .required("Contacten zijn verplicht"),
-    KVKnumber: Yup.string().required("KvK nummer is verplicht"),
-    BTWnumber: Yup.string().required("BTW nummer is verplicht"),
-    phone_number: Yup.string().required("Telefoonnummer is verplicht"),
-    client_number: Yup.string().required("Clientnummer is verplicht"),
-  });
+const OpOrgContactFormSchema: Yup.ObjectSchema<OpOrgContactFormType> = Yup.object().shape({
+  types: Yup.string().oneOf(OP_CLIENT_TYPE).required(),
+  name: Yup.string().required("Naam is verplicht"),
+  address: Yup.string().required("Adres is verplicht"),
+  postal_code: Yup.string().required("Postcode is verplicht"),
+  place: Yup.string().required("Plaats is verplicht"),
+  land: Yup.string().required("Land is verplicht"),
+  contacts: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required("Naam is verplicht"),
+        email: Yup.string().email("Email is niet geldig").required("Email is verplicht"),
+        phone_number: Yup.string().required("Telefoonnummer is verplicht"),
+      })
+    )
+    .required("Contacten zijn verplicht"),
+  KVKnumber: Yup.string().required("KvK nummer is verplicht"),
+  BTWnumber: Yup.string().required("BTW nummer is verplicht"),
+  phone_number: Yup.string().required("Telefoonnummer is verplicht"),
+  client_number: Yup.string().required("Clientnummer is verplicht"),
+});
 
 const contactInitialValues: ContactType = {
   name: "",
@@ -79,31 +76,36 @@ export const OpClientTypeRecord: Record<OpClientType, string> = {
 
 type Props = FormProps<OpOrgContactFormType>;
 
-const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
+const OpContactForm: FunctionComponent<Props> = ({ mode, onSuccess, initialData }) => {
   const { mutate: createNew, isLoading } = useCreateOpOrgContact();
+  const { mutate: updateContact, isLoading: isUpdating } = useUpdateOpOrgContact();
 
   const formik = useFormik({
-    initialValues,
+    initialValues: initialData || initialValues,
     validationSchema: OpOrgContactFormSchema,
+    enableReinitialize: true,
     onSubmit: (values, formikHelpers) => {
-      createNew(values, {
-        onSuccess: () => {
-          formikHelpers.resetForm();
-          onSuccess();
-        },
-      });
+      console.log("values", values);
+
+      if (mode === "add") {
+        createNew(values, {
+          onSuccess: () => {
+            formikHelpers.resetForm();
+            onSuccess();
+          },
+        });
+      } else if (mode === "update") {
+        updateContact(values, {
+          onSuccess: () => {
+            formikHelpers.resetForm();
+            onSuccess();
+          },
+        });
+      }
     },
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    errors,
-    touched,
-    setValues,
-  } = formik;
+  const { values, handleSubmit, handleChange, handleBlur, errors, touched, setValues } = formik;
 
   const removeItem = useCallback(
     (index: number) => () => {
@@ -130,6 +132,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
       contacts: [...current.contacts, contactInitialValues],
     }));
   }, [setValues]);
+
   return (
     <FormikProvider value={formik}>
       <form className="p-4" onSubmit={handleSubmit}>
@@ -142,6 +145,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           required={true}
           onChange={handleChange}
           onBlur={handleBlur}
+          {...formik.getFieldProps("types")}
           error={touched.types && errors.types}
         />
         <InputField
@@ -151,16 +155,13 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           required={true}
           onChange={handleChange}
           onBlur={handleBlur}
+          {...formik.getFieldProps("name")}
           placeholder={"Naam"}
           error={touched.name && errors.name}
         />
         <h3 className="text-lg font-semibold mb-6">Contactpersonen</h3>
         {values.contacts.map((_, index) => (
-          <ContactItemFields
-            order={index}
-            key={index}
-            onRemove={removeItem(index)}
-          />
+          <ContactItemFields order={index} key={index} onRemove={removeItem(index)} />
         ))}
         <Button className={"mb-5 px-6"} onClick={addItem}>
           + Voeg contact toe
@@ -173,6 +174,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={"Adres"}
+          {...formik.getFieldProps("address")}
           error={touched.address && errors.address}
         />
         <h3 className="text-lg font-semibold mb-6">Coördinaten</h3>
@@ -185,6 +187,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"Postcode"}
+            {...formik.getFieldProps("postal_code")}
             error={touched.postal_code && errors.postal_code}
           />
           <InputField
@@ -195,6 +198,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"Plaats"}
+            {...formik.getFieldProps("place")}
             error={touched.place && errors.place}
           />
           <InputField
@@ -205,6 +209,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"Land"}
+            {...formik.getFieldProps("land")}
             error={touched.land && errors.land}
           />
         </div>
@@ -217,6 +222,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"KvK nummer"}
+            {...formik.getFieldProps("KVKnumber")}
             error={touched.KVKnumber && errors.KVKnumber}
           />
           <InputField
@@ -227,6 +233,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"BTW nummer"}
+            {...formik.getFieldProps("BTWnumber")}
             error={touched.BTWnumber && errors.BTWnumber}
           />
           <InputField
@@ -237,6 +244,7 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={"Telefoonnummer"}
+            {...formik.getFieldProps("phone_number")}
             error={touched.phone_number && errors.phone_number}
           />
         </div>
@@ -248,17 +256,28 @@ const OpContactForm: FunctionComponent<Props> = ({ onSuccess }) => {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={"Clientnummer"}
+          {...formik.getFieldProps("client_number")}
           error={touched.client_number && errors.client_number}
         />
-
-        <Button
-          isLoading={isLoading}
-          loadingText={"Opdrachtgever wordt opgeslagen..."}
-          type={"submit"}
-          formNoValidate={true}
-        >
-          Een nieuwe opdrachtgever toevoegen
-        </Button>
+        {mode === "add" ? (
+          <Button
+            isLoading={isLoading}
+            loadingText={"Opdrachtgever wordt opgeslagen..."}
+            type={"submit"}
+            formNoValidate={true}
+          >
+            Een nieuwe opdrachtgever toevoegen
+          </Button>
+        ) : (
+          <Button
+            isLoading={isUpdating}
+            loadingText={"Opdrachtgever wordt bijgewerkt..."}
+            type={"submit"}
+            formNoValidate={true}
+          >
+            Bijwerken
+          </Button>
+        )}
       </form>
     </FormikProvider>
   );

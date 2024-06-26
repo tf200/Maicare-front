@@ -4,10 +4,7 @@ import api from "@/utils/api";
 import { ContactResDto } from "@/types/op-contact/contact-res.dto";
 
 async function createOpOrgContact(values: NewContactReqDto) {
-  const response = await api.post<ContactResDto>(
-    "client/sender_create/",
-    values
-  );
+  const response = await api.post<ContactResDto>("client/sender_create/", values);
   return response.data;
 }
 
@@ -20,3 +17,18 @@ export const useCreateOpOrgContact = () => {
     },
   });
 };
+
+async function updateOpOrgContact(values: NewContactReqDto) {
+  const response = await api.put<ContactResDto>("client/sender_update/", values);
+  return response.data;
+}
+
+export function useUpdateOpOrgContact() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateOpOrgContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["contacts"]);
+    },
+  });
+}
