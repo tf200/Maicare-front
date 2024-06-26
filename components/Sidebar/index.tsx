@@ -368,6 +368,12 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Zorgplannen",
               permission: consts.CARE_PLANS_VIEW,
             },
+            hasPerm(consts.INCIDENT_OVERVIEW_VIEW) && {
+              completeHref: "/incident-overview",
+              icon: <></>,
+              children: "Incidenten overzicht",
+              permission: consts.INCIDENT_OVERVIEW_VIEW,
+            },
           ].filter(Boolean) as SidebarLinkProps[],
         },
         {

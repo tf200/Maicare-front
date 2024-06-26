@@ -19,6 +19,13 @@ export const getIncidentList = async (clientId: number, params: PaginationParams
   return response.data;
 };
 
+export const getAllIncident = async (params: PaginationParams) => {
+  const response = await api.get<IncidentListType>("/clients/incidents", {
+    params,
+  });
+  return response.data;
+};
+
 export const useGetIncidentList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
@@ -26,6 +33,41 @@ export const useGetIncidentList = (clientId: number, params?: PaginationParams) 
   const query = useQuery({
     queryKey: [clientId, "incidents", params ?? parsedParams],
     queryFn: () => getIncidentList(clientId, params ?? parsedParams),
+    keepPreviousData: true,
+  });
+
+  return {
+    ...query,
+    pagination,
+  };
+};
+
+export const useGetAllIncidents = (params?: PaginationParams) => {
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
+
+  const query = useQuery({
+    queryKey: ["incidents", params ?? parsedParams],
+    queryFn: () => getAllIncident(params ?? parsedParams),
+    keepPreviousData: true,
+  });
+
+  return {
+    ...query,
+    pagination,
+  };
+};
+
+export const useGetClientIncidentsOrAll = (clientId: number, params?: PaginationParams) => {
+  const pagination = usePaginationParams();
+  const parsedParams = pagination.params;
+
+  const query = useQuery({
+    queryKey: ["incidents", clientId, params ?? parsedParams],
+    queryFn: () =>
+      clientId
+        ? getIncidentList(clientId, params ?? parsedParams)
+        : getAllIncident(params ?? parsedParams),
     keepPreviousData: true,
   });
 

@@ -2,11 +2,7 @@ import React, { FunctionComponent } from "react";
 import { ContractFilterFormType } from "@/types/contracts";
 import { FormikProvider, useFormik } from "formik";
 import Select from "@/components/FormFields/Select";
-import {
-  CARE_TYPE_OPTIONS,
-  CONTRACT_STATUS_OPTIONS,
-  STATUS_OPTIONS,
-} from "@/consts";
+import { CARE_TYPE_OPTIONS, CONTRACT_STATUS_OPTIONS, STATUS_OPTIONS } from "@/consts";
 import Button from "@/components/buttons/Button";
 import ClientSelector from "@/components/FormFields/comboboxes/ClientSelector";
 import ContactSelector from "@/components/FormFields/comboboxes/ContactSelector";
@@ -23,20 +19,10 @@ const ContractFilters: FunctionComponent<{
     },
     onSubmit: props.onSubmit,
   });
-  const {
-    handleSubmit,
-    handleReset,
-    submitForm,
-    handleChange,
-    values,
-    handleBlur,
-  } = formik;
+  const { handleSubmit, handleReset, submitForm, handleChange, values, handleBlur } = formik;
   return (
     <FormikProvider value={formik}>
-      <form
-        className="flex flex-wrap items-end gap-4 px-7 py-4"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex flex-wrap items-end gap-4 px-7 py-4" onSubmit={handleSubmit}>
         <ClientSelector name={"client"} />
         <ContactSelector name={"sender"} />
         <Select

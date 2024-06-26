@@ -734,6 +734,7 @@ export const PERMISSION_TRANS = {
   "permissions.edit": "Bewerk rechten",
   "activity_logs.view": "Activiteitenlogboeken bekijken",
   "medication.notifications.receive": "Medische meldingen ontvangen",
+  "incident_overview.view": "Incidentoverzicht bekijken",
 };
 
 export type PermissionType = keyof typeof PERMISSION_TRANS;

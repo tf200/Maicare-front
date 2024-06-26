@@ -36,6 +36,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/care-plans")) {
     return consts.CARE_PLANS_VIEW;
   }
+  if (pathname.startsWith("/incident-overview")) {
+    return consts.INCIDENT_OVERVIEW_VIEW;
+  }
   if (pathname.startsWith("/tasks")) {
     return consts.TASKS_VIEW;
   }

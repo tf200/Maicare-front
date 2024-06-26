@@ -46,7 +46,7 @@ export const CARE_COORDINATION_VIEW = "care_coordination.view";
 export const CONTACTS_VIEW = "contacts.view";
 export const CONTRACTS_VIEW = "contracts.view";
 export const CARE_PLANS_VIEW = "care_plans.view";
-
+export const INCIDENT_OVERVIEW_VIEW = "incident_overview.view";
 export const TASKS_VIEW = "tasks.view";
 
 export const CONVERSATION_VIEW = "conversation.view";
@@ -119,6 +119,8 @@ export const PERMISSIONS = [
   SETTINGS_VIEW,
   PERMISSIONS_EDIT,
   ACTIVITY_LOGS_VIEW,
+
+  INCIDENT_OVERVIEW_VIEW,
 ] as const;
 
 export const ADMIN = "ADMIN";
@@ -247,6 +249,7 @@ export const PERMISSION_CONFIGURATIONS: Record<
     CLIENT_IDENTITY_EDIT,
     CLIENT_IDENTITY_VIEW,
     APPROVE_GOALS,
+    INCIDENT_OVERVIEW_VIEW,
   ],
 };
 export const ORGANIGRAM_TRANSLATE = {
