@@ -18,15 +18,16 @@ export const useCreateOpOrgContact = () => {
   });
 };
 
-async function updateOpOrgContact(values: NewContactReqDto) {
-  const response = await api.put<ContactResDto>("client/sender_update/", values);
+async function updateOpOrgContact(id: number, values: NewContactReqDto) {
+  const response = await api.post<ContactResDto>(`client/sender_update/${id}/`, values);
   return response.data;
 }
 
 export function useUpdateOpOrgContact() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: updateOpOrgContact,
+    mutationFn: ({ id, values }: { id: number; values: NewContactReqDto }) =>
+      updateOpOrgContact(id, values),
     onSuccess: () => {
       queryClient.invalidateQueries(["contacts"]);
     },

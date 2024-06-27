@@ -74,9 +74,11 @@ export const OpClientTypeRecord: Record<OpClientType, string> = {
   healthcare_institution: "Zorginstelling",
 };
 
-type Props = FormProps<OpOrgContactFormType>;
+type Props = FormProps<OpOrgContactFormType> & {
+  id?: number;
+};
 
-const OpContactForm: FunctionComponent<Props> = ({ mode, onSuccess, initialData }) => {
+const OpContactForm: FunctionComponent<Props> = ({ mode = "add", onSuccess, initialData, id }) => {
   const { mutate: createNew, isLoading } = useCreateOpOrgContact();
   const { mutate: updateContact, isLoading: isUpdating } = useUpdateOpOrgContact();
 
@@ -85,8 +87,6 @@ const OpContactForm: FunctionComponent<Props> = ({ mode, onSuccess, initialData 
     validationSchema: OpOrgContactFormSchema,
     enableReinitialize: true,
     onSubmit: (values, formikHelpers) => {
-      console.log("values", values);
-
       if (mode === "add") {
         createNew(values, {
           onSuccess: () => {
@@ -95,12 +95,15 @@ const OpContactForm: FunctionComponent<Props> = ({ mode, onSuccess, initialData 
           },
         });
       } else if (mode === "update") {
-        updateContact(values, {
-          onSuccess: () => {
-            formikHelpers.resetForm();
-            onSuccess();
-          },
-        });
+        updateContact(
+          { id, values },
+          {
+            onSuccess: () => {
+              formikHelpers.resetForm();
+              onSuccess();
+            },
+          }
+        );
       }
     },
   });

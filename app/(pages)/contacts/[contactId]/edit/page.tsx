@@ -24,6 +24,7 @@ const Page: FunctionComponent = ({ params }: { params: { contactId: number } }) 
             <OpContactForm
               mode={"update"}
               initialData={data}
+              id={data?.id}
               onSuccess={() => {
                 router.replace("/contacts");
               }}

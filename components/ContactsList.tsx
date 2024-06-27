@@ -86,8 +86,8 @@ const ContactsList: FunctionComponent = (props) => {
             const contacts = row.original.contacts;
             const senderId = row.original.id;
 
-            return contacts.map((contact, index) => (
-              <div key={index} className="flex">
+            return (
+              <div className="flex">
                 <table className="w-full">
                   <thead>
                     <tr>
@@ -97,11 +97,13 @@ const ContactsList: FunctionComponent = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>{contact.name}</td>
-                      <td>{contact.email}</td>
-                      <td>{contact.phone_number}</td>
-                    </tr>
+                    {contacts?.map((contact, index) => (
+                      <tr key={index}>
+                        <td>{contact.name}</td>
+                        <td>{contact.email}</td>
+                        <td>{contact.phone_number}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
                 <Link href={`contacts/${senderId}/edit`}>
@@ -110,7 +112,7 @@ const ContactsList: FunctionComponent = (props) => {
                   </IconButton>
                 </Link>
               </div>
-            ));
+            );
           }}
         />
       )}
