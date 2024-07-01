@@ -21,7 +21,13 @@ type MLevel = {
 type ClientMaturityMatrixProps = {
   clientId: number;
   onDomainLevelsChange?: (domainLevels: SetDomainLevelReqDto[]) => void;
-  onChange?: (selectedDomains: SetDomainLevelReqDto) => void;
+  onChange?: ({
+    selectedDomains,
+    isNew,
+  }: {
+    selectedDomains: SetDomainLevelReqDto;
+    isNew: boolean;
+  }) => void;
 };
 
 const M_LEVELS = [
@@ -72,17 +78,15 @@ export default function ClientMaturityMatrix({
       setSelectedDomains((prev) => {
         // Not undefined
         if (prev) {
-          // if (isClientLevelSelected(prev, domain.id, level.level)) {
-          //   return prev.filter(
-          //     (clientLevel) =>
-          //       !(clientLevel.domain_id === domain.id && clientLevel.level === level.level)
-          //   );
-          // }
-
+          const isNew: boolean =
+            prev.filter((domainLevel) => domainLevel.domain_id === domain.id).length === 0;
           // Remove the old level if it exists for the same domain
           prev = prev.filter((domainLevel) => domainLevel.domain_id !== domain.id);
 
-          onChange?.(selectedDomainLevel);
+          onChange?.({
+            selectedDomains: selectedDomainLevel,
+            isNew: isNew,
+          });
 
           return [...prev, selectedDomainLevel];
         }
@@ -197,7 +201,7 @@ function MatrixItem({
       className={cn(
         " p-2 min-h-[250px] cursor-pointer relative",
         selected &&
-          "border-2 border-dashed bg-purple-100 border-purple-500 text-black cursor-default",
+          "border-2 rounded-md border-dashed bg-purple-100 border-purple-500 text-black cursor-default",
         !selected && "hover:bg-gray"
       )}
       onClick={() =>
