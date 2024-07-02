@@ -1,9 +1,18 @@
+"useClient";
+
 import { cn } from "@/utils/cn";
 import { useClientLevels, useDomains } from "@/utils/domains";
 import { DomainLevel, DomainLevels, MDomain } from "@/types/domains";
 import { useCallback, useEffect, useState } from "react";
 import { SetDomainLevelReqDto } from "@/types/goals";
 import Icon from "../Icon";
+import { useRouter } from "next/navigation";
+import { useModal } from "../providers/ModalProvider";
+import { on } from "events";
+import { getDangerActionConfirmationModal } from "../Modals/DangerActionConfirmation";
+import Modal from "../Modals/Modal";
+import { ModalProps } from "@/types/modal-props";
+import SmartFormula from "../SmartFormula";
 
 const GRADIENT_COLORS = [
   "bg-meta-7/[0.4]",
@@ -11,7 +20,7 @@ const GRADIENT_COLORS = [
   "bg-meta-8/[0.2]",
   "bg-meta-3/[0.2]",
   "bg-meta-3/[0.4]",
-];
+] as const;
 
 type MLevel = {
   level: number;
@@ -147,6 +156,7 @@ export default function ClientMaturityMatrix({
               >
                 <MatrixItem
                   selected={isClientLevelSelected(selectedDomains, domain.id, level.level)}
+                  clientId={clientId}
                   domainId={domain.id}
                   levelId={level.level}
                   onRemove={(selectedDomainLevel) =>
@@ -184,22 +194,32 @@ function parseAssessments(assessments: string) {
 function MatrixItem({
   children,
   selected = false,
+  clientId,
   domainId,
   levelId,
   onClick,
   onRemove,
 }: {
   children: React.ReactNode;
+  clientId: number;
   domainId: number;
   levelId: number;
   selected?: boolean;
   onClick: (selectedDomainLevel: SetDomainLevelReqDto) => void;
   onRemove?: (selectedDomainLevel: SetDomainLevelReqDto) => void;
 }) {
+  const router = useRouter();
+  const { open: openSmartFormulaModal } = useModal(
+    SmartFormulaGeneratorModal({
+      children: <SmartFormula clientId={clientId} domainId={domainId} levelId={levelId} />,
+      modalTitle: "Smart Formula Generator",
+    })
+  );
+
   return (
     <div
       className={cn(
-        " p-2 min-h-[250px] cursor-pointer relative",
+        " p-2 min-h-[250px] cursor-pointer relative group overflow-hidden",
         selected &&
           "border-2 rounded-md border-dashed bg-purple-100 border-purple-500 text-black cursor-default",
         !selected && "hover:bg-gray"
@@ -218,7 +238,7 @@ function MatrixItem({
         </span>
       )}
 
-      {selected && (
+      {/* {selected && (
         <span
           className="absolute right-2 top-2 rounded-full hover:bg-purple-300 text-purple-500 cursor-pointer"
           onClick={() =>
@@ -230,6 +250,35 @@ function MatrixItem({
         >
           <Icon name="x" size={23} />
         </span>
+      )} */}
+
+      {selected && (
+        <div className="invisible absolute group-hover:visible transition transform translate-y-8 group-hover:translate-y-0 ease-in-out bg-purple-300 w-full right-0 left-0 top-0 bottom-0 z-0 p-2 flex flex-col justify-center">
+          <span
+            className="absolute right-2 top-2 rounded-full hover:bg-purple-200 text-purple-500 cursor-pointer"
+            onClick={() =>
+              onRemove({
+                domain_id: domainId,
+                level: levelId,
+              })
+            }
+          >
+            <Icon name="x" size={23} className="block" />
+          </span>
+
+          <button
+            className="px-10 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
+            onClick={() => {
+              // router.push(`/clients/${clientId}/goals/${domainId}`);
+              openSmartFormulaModal({});
+            }}
+          >
+            <span>
+              <Icon name="flag-triangle-right" size={20} />
+            </span>
+            Goals
+          </button>
+        </div>
       )}
     </div>
   );
@@ -244,4 +293,8 @@ function isClientLevelSelected(
     (clientLevel: DomainLevel) =>
       clientLevel.domain_id === domainId && clientLevel.level === levelId
   );
+}
+
+function SmartFormulaGeneratorModal(props: { children: React.ReactNode; modalTitle: string }) {
+  return (modalProps: ModalProps) => <Modal {...modalProps} {...props} className="overflow-auto" />;
 }

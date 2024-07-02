@@ -45,3 +45,31 @@ export function useUpdateMaturityMatrixDomains(clientId: number) {
     },
   });
 }
+
+export type Objective = {
+  specific: string;
+  measurable: string;
+  achievable: string;
+  relevant: string;
+  time_bound: string;
+};
+
+export type SmartFormulaGoal = {
+  goal_name: string;
+  objectives: Objective[];
+};
+
+export type SmartFormulaResponse = {
+  goals: SmartFormulaGoal[];
+};
+
+async function getSmartFormula(clientId: number, domainId: number, levelId: number) {
+  const response = await api.post<SmartFormulaResponse>(`ai/smart-formula/${domainId}/${levelId}`);
+  return response.data?.goals;
+}
+
+export function useSmartFormula(clientId: number, domainId: number, levelId: number) {
+  return {
+    generateSmartFormula: async () => await getSmartFormula(clientId, domainId, levelId),
+  };
+}
