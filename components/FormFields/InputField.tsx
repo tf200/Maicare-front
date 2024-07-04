@@ -1,8 +1,8 @@
-import React, { FunctionComponent, InputHTMLAttributes } from "react";
+import React, { FunctionComponent, InputHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
-  label?: string;
+  label?: string | ReactNode;
   error?: any;
   isPrice?: boolean;
   unit?: string;
@@ -29,16 +29,12 @@ const InputField: FunctionComponent<InputFieldType> = ({
       <div className="relative">
         {isPrice && (
           <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
-            <span className="text-graydark font-bold text-xl dark:text-white">
-              €
-            </span>
+            <span className="text-graydark font-bold text-xl dark:text-white">€</span>
           </span>
         )}
         {unit && (
           <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
-            <span className="text-graydark/70 font-bold text-lg dark:text-white">
-              {unit}
-            </span>
+            <span className="text-graydark/70 font-bold text-lg dark:text-white">{unit}</span>
           </span>
         )}
         <input
@@ -46,7 +42,7 @@ const InputField: FunctionComponent<InputFieldType> = ({
           id={id}
           data-is-price={!!(isPrice || unit)}
           required={required}
-          aria-label={label || props.placeholder}
+          aria-label={(typeof label === "string" && label) || props.placeholder}
           className={clsx(
             "w-full rounded border-[1.5px] border-stroke bg-white py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           )}

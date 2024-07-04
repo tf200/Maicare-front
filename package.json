@@ -46,6 +46,7 @@
     "react-leaflet": "^4.2.1",
     "react-query": "^3.39.3",
     "react-table": "^7.8.0",
+    "react-toastify": "^10.0.5",
     "sort-by": "^0.0.2",
     "swiper": "^10.0.4",
     "tailwind-merge": "^2.2.1",

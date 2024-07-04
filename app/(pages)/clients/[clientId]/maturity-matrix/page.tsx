@@ -8,6 +8,7 @@ import { useClientLevels } from "@/utils/domains";
 import { useSetDomainLevel, useUpdateDomainLevel } from "@/utils/goal";
 import { useUpdateMaturityMatrixDomains } from "@/utils/maturity_matrix";
 import { useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function MaturityMatrixPage({ params: { clientId } }) {
   const [selectedDomainLevels, setSelectedDomainLevels] = useState<SetDomainLevelReqDto[]>([]);
@@ -41,6 +42,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                 // Reset Values
                 setIsSaving(false);
                 setSelectedDomainLevels([]); // reset changedDomains
+                toast.success("Saved successfully");
               },
             });
           }}

@@ -16,7 +16,7 @@ export default memo(function Icon({ name, className, ...props }: IconProps) {
 
   return (
     <Suspense fallback={null}>
-      <LucideIcon {...props} className={cn("inline-block", className)} />
+      <LucideIcon {...props} className={cn("inline-block mx-1", className)} />
     </Suspense>
   );
 });

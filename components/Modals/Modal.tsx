@@ -26,7 +26,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
       open={open}
       onClose={onClose}
       className={cn(
-        `fixed top-0 left-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`
+        `fixed top-0 left-0 z-99 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`
       )}
     >
       <Dialog.Panel

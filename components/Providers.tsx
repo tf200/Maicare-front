@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import ModalProvider from "@/components/providers/ModalProvider";
 import WSProvider from "@/components/providers/WSProvider";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -25,6 +28,18 @@ const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
       <WSProvider>
         <ModalProvider>{children}</ModalProvider>
       </WSProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="colored"
+      />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

@@ -13,6 +13,8 @@ import { getDangerActionConfirmationModal } from "../Modals/DangerActionConfirma
 import Modal from "../Modals/Modal";
 import { ModalProps } from "@/types/modal-props";
 import SmartFormula from "../SmartFormula";
+import FormModal from "../Modals/FormModal";
+import { useGetSmartFormula } from "@/utils/maturity_matrix";
 
 const GRADIENT_COLORS = [
   "bg-meta-7/[0.4]",
@@ -155,6 +157,7 @@ export default function ClientMaturityMatrix({
                 className="align-top w-1/6 border border-stroke whitespace-pre-wrap"
               >
                 <MatrixItem
+                  key={`${domain.id}-${level.level}`}
                   selected={isClientLevelSelected(selectedDomains, domain.id, level.level)}
                   clientId={clientId}
                   domainId={domain.id}
@@ -209,12 +212,16 @@ function MatrixItem({
   onRemove?: (selectedDomainLevel: SetDomainLevelReqDto) => void;
 }) {
   const router = useRouter();
-  const { open: openSmartFormulaModal } = useModal(
-    SmartFormulaGeneratorModal({
-      children: <SmartFormula clientId={clientId} domainId={domainId} levelId={levelId} />,
-      modalTitle: "Smart Formula Generator",
-    })
-  );
+  const { data: smartFormulaGoals, isLoading } = useGetSmartFormula(clientId, domainId, levelId);
+  const { open: openSmartFormulaModal } = useModal((modelProps: ModalProps) => {
+    return (
+      <SmartFormulaGeneratorModal {...modelProps}>
+        <SmartFormula clientId={clientId} domainId={domainId} levelId={levelId} />
+      </SmartFormulaGeneratorModal>
+    );
+  });
+
+  if (selected) console.log("smartFormulaGoals:", domainId, levelId, smartFormulaGoals);
 
   return (
     <div
@@ -266,18 +273,27 @@ function MatrixItem({
             <Icon name="x" size={23} className="block" />
           </span>
 
-          <button
-            className="px-10 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
-            onClick={() => {
-              // router.push(`/clients/${clientId}/goals/${domainId}`);
-              openSmartFormulaModal({});
-            }}
-          >
-            <span>
-              <Icon name="flag-triangle-right" size={20} />
-            </span>
-            Goals
-          </button>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : smartFormulaGoals.length ? (
+            <button
+              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
+              onClick={() => {
+                router.push(`/clients/${clientId}/goals/${domainId}`);
+              }}
+            >
+              <Icon name="flag-triangle-right" /> {smartFormulaGoals.length} Goals
+            </button>
+          ) : (
+            <button
+              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
+              onClick={() => {
+                openSmartFormulaModal({});
+              }}
+            >
+              <Icon name="sparkles" /> Smart Formula
+            </button>
+          )}
         </div>
       )}
     </div>
@@ -295,6 +311,21 @@ function isClientLevelSelected(
   );
 }
 
-function SmartFormulaGeneratorModal(props: { children: React.ReactNode; modalTitle: string }) {
-  return (modalProps: ModalProps) => <Modal {...modalProps} {...props} className="overflow-auto" />;
+export function SmartFormulaGeneratorModal({
+  children,
+  ...props
+}: ModalProps & { children: React.ReactNode }) {
+  return (
+    <FormModal
+      title={
+        <div>
+          <Icon name="sparkles" className="mr-2" />
+          <span>Smart Formula Generator</span>
+        </div>
+      }
+      {...props}
+    >
+      {children}
+    </FormModal>
+  );
 }

@@ -12,19 +12,11 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal: React.FC<
   ConfirmationModalProps & { setModalOpen: Function; action: Function }
-> = ({
-  title,
-  message,
-  buttonMessage,
-  modalOpen,
-  setModalOpen,
-  action,
-  isLoading,
-}) => {
+> = ({ title, message, buttonMessage, modalOpen, setModalOpen, action, isLoading }) => {
   return (
     <div>
       <div
-        className={`fixed top-0 left-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
+        className={`fixed top-0 left-0 z-98 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
           modalOpen ? "block" : "hidden"
         }`}
       >
