@@ -2,7 +2,7 @@
 
 import Panel from "@/components/Panel";
 import Button from "@/components/buttons/Button";
-import ClientMaturityMatrix from "@/components/maturity_matrix";
+import MaturityMatrixTable from "@/components/maturity_matrix";
 import { SetDomainLevelReqDto } from "@/types/goals";
 import { useClientLevels } from "@/utils/domains";
 import { useSetDomainLevel, useUpdateDomainLevel } from "@/utils/goal";
@@ -52,7 +52,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
       }
     >
       <div className="p-5">
-        <ClientMaturityMatrix
+        <MaturityMatrixTable
           clientId={clientId}
           onDomainLevelsChange={(domainLevels) => {
             setSelectedDomainLevels(domainLevels);

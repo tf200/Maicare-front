@@ -29,7 +29,7 @@ type MLevel = {
   assessments: string;
 };
 
-type ClientMaturityMatrixProps = {
+type MaturityMatrixTableProps = {
   clientId: number;
   onDomainLevelsChange?: (domainLevels: SetDomainLevelReqDto[]) => void;
   onChange?: ({
@@ -49,11 +49,11 @@ const M_LEVELS = [
   "5 Volledig zelfredzaam",
 ] as const;
 
-export default function ClientMaturityMatrix({
+export default function MaturityMatrixTable({
   clientId,
   onDomainLevelsChange,
   onChange,
-}: ClientMaturityMatrixProps) {
+}: MaturityMatrixTableProps) {
   const { data: domains, isLoading } = useDomains();
   const { data: clientLevels, isLoading: isLoadingClientLevels } = useClientLevels(clientId);
 
