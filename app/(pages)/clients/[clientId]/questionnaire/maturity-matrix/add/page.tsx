@@ -2,6 +2,7 @@
 import DateTimePicker from "@/components/FormFields/DateTimePicker";
 import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
+import Button from "@/components/buttons/Button";
 import AdvancedMaturityMatrixField from "@/components/maturity_matrix/AdvancedMaturityMatrixField";
 import { Formik, FormikProvider, useFormik } from "formik";
 
@@ -20,15 +21,27 @@ export default function AddMaturityMatrixPage({
       end_date: "",
       maturity_matrix: [],
     },
-    onSubmit: () => {
-      console.log("submited");
+    onSubmit: (values) => {
+      console.log("submited:", values);
     },
   });
 
   const { values, handleChange, handleBlur, touched, errors } = formik;
 
   return (
-    <Panel title="Nieuwe volwassenheidsmatrix">
+    <Panel
+      title="Nieuwe volwassenheidsmatrix"
+      sideActions={
+        <Button
+          onClick={() => formik.handleSubmit()}
+          type="button"
+          form="add-maturity-matrix-form"
+          className="btn btn-primary"
+        >
+          Opslaan
+        </Button>
+      }
+    >
       <div className="p-5">
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>

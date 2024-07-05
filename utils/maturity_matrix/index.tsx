@@ -88,7 +88,8 @@ async function _saveSmartFormula(
   levelId: number,
   payload: { goals: EditedSmartFormulaGoal[] }
 ) {
-  const response = await api.post(
+  const response = await api.post<number[]>(
+    // Register Smart formula as Domain Goals
     `/clients/${clientId}/smart-formula/${domainId}/${levelId}/add`,
     payload
   );
@@ -108,8 +109,9 @@ export function useSmartFormula(clientId: number, domainId: number, levelId: num
   const generateSmartFormula = async () => await _generateSmartFormula(clientId, domainId, levelId);
 
   const saveSmartFormula = async (payload: { goals: EditedSmartFormulaGoal[] }) => {
-    await _saveSmartFormula(clientId, domainId, levelId, payload),
-      queryClient.invalidateQueries(["smart-formula", clientId, domainId, levelId]);
+    const goal_ids = await _saveSmartFormula(clientId, domainId, levelId, payload);
+    queryClient.invalidateQueries(["smart-formula", clientId, domainId, levelId]);
+    return goal_ids;
   };
 
   const getSmartFormula = async () => await _getSmartFormula(clientId, domainId, levelId);

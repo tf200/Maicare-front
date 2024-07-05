@@ -14,6 +14,7 @@ type SmpartFormulaProps = {
   clientId: number;
   domainId: number;
   levelId: number;
+  onSave?: (goal_ids: number[], edited_smart_formula_goals: EditedSmartFormulaGoal[]) => void;
 };
 
 const editableSmartFormulaGoalsYupSchema = Yup.object().shape({
@@ -36,8 +37,10 @@ const editableSmartFormulaGoalsYupSchema = Yup.object().shape({
   // .required(),
 });
 
-export default function SmartFormula({ clientId, domainId, levelId }: SmpartFormulaProps) {
+export default function SmartFormula({ clientId, domainId, levelId, onSave }: SmpartFormulaProps) {
   const { data: domains, isLoading } = useDomains();
+  const [goalIds, setGoalIds] = useState<number[]>([]);
+
   const { data: clientLevels, isLoading: isLoadingClientLevels } = useClientLevels(clientId);
   const [smartFormulaGoals, setSmartFormulaGoals] = useState<SmartFormulaGoal[]>([]);
   const { generateSmartFormula, saveSmartFormula, getSmartFormula } = useSmartFormula(
@@ -108,11 +111,15 @@ export default function SmartFormula({ clientId, domainId, levelId }: SmpartForm
         goals: editableSmartFormulaGoals,
       });
       // save validated data
-      await saveSmartFormula(validated as { goals: EditedSmartFormulaGoal[] });
+      const goal_ids = await saveSmartFormula(validated as { goals: EditedSmartFormulaGoal[] });
+      setGoalIds(goal_ids);
       setIsSaving(false);
       toast.success("Smart Formula for goals and objective saved successfully");
+
+      if (typeof onSave === "function") {
+        onSave(goal_ids, editableSmartFormulaGoals);
+      }
     } catch (error) {
-      console.error(error.message);
       toast.error(error.message);
     }
   };
