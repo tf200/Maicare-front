@@ -304,12 +304,7 @@ function MatrixItem({
         <div className="invisible absolute group-hover:visible transition transform translate-y-8 group-hover:translate-y-0 ease-in-out bg-purple-300 w-full right-0 left-0 top-0 bottom-0 z-0 p-2 flex flex-col justify-center">
           <span
             className="absolute right-2 top-2 rounded-full hover:bg-purple-200 text-purple-500 cursor-pointer"
-            onClick={() =>
-              onRemove({
-                domain_id: domainId,
-                level: levelId,
-              })
-            }
+            onClick={() => onRemove(assessment)}
           >
             <Icon name="x" size={23} className="block" />
           </span>
