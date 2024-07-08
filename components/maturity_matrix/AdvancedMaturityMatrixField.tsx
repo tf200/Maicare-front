@@ -1,9 +1,8 @@
 import { useField } from "formik";
 import MaturityMatrixTable from ".";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
-import { SetDomainLevelReqDto } from "@/types/goals";
 import { selectedAssessment } from "@/utils/domains";
+import { toast } from "react-toastify";
 
 type AdvancedMaturityMatrixFieldProps = {
   name: string;
@@ -18,14 +17,23 @@ export default function AdvancedMaturityMatrixField({
 }: AdvancedMaturityMatrixFieldProps) {
   const [field, meta, helper] = useField<selectedAssessment[]>(name);
 
+  // // Toast errors if form submitted
+  // if (meta.error && meta.touched) {
+  //   toast.error(meta.error);
+  // }
+
   return (
     <div className={cn("py-5", className)}>
       <MaturityMatrixTable
         clientId={clientId}
         selectedMatrixAssessments={field.value}
-        onDomainLevelsChange={(domainLevels) => {
+        onChange={(selectedAssessment) => {
+          console.log("on Change:", selectedAssessment);
+        }}
+        onSelectedAssessment={(selectedAssessments) => {
           // setSelectedAssessments(domainLevels);
-          helper.setValue(domainLevels);
+          console.log("onDomainLevelsChange:", selectedAssessments);
+          helper.setValue(selectedAssessments);
         }}
       />
     </div>

@@ -7,14 +7,10 @@ type Props = {
   href: string;
   className?: string;
   target?: string;
+  icon?: React.ReactNode;
 };
 
-const LinkButton: FunctionComponent<Props> = ({
-  text,
-  href,
-  target,
-  className,
-}) => {
+const LinkButton: FunctionComponent<Props> = ({ text, href, target, className, icon }) => {
   return (
     <Link
       href={href}
@@ -24,7 +20,7 @@ const LinkButton: FunctionComponent<Props> = ({
         className
       )}
     >
-      {text}
+      {icon} {text}
     </Link>
   );
 };

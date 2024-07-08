@@ -37,12 +37,12 @@ type MLevel = {
 
 type MaturityMatrixTableProps = {
   clientId: number;
-  onDomainLevelsChange?: (domainLevels: selectedAssessment[]) => void;
+  onSelectedAssessment?: (assessments: selectedAssessment[]) => void;
   onChange?: ({
-    selectedAssessments,
+    selectedAssessment,
     isNew,
   }: {
-    selectedAssessments: selectedAssessment;
+    selectedAssessment: selectedAssessment;
     isNew: boolean;
   }) => void;
   selectedMatrixAssessments?: selectedAssessment[];
@@ -58,7 +58,7 @@ const M_LEVELS = [
 
 export default function MaturityMatrixTable({
   clientId,
-  onDomainLevelsChange,
+  onSelectedAssessment,
   onChange,
   selectedMatrixAssessments,
 }: MaturityMatrixTableProps) {
@@ -88,8 +88,8 @@ export default function MaturityMatrixTable({
   // }, [clientLevels]);
 
   useEffect(() => {
-    if (selectedAssessments && onDomainLevelsChange) {
-      onDomainLevelsChange(selectedAssessments);
+    if (selectedAssessments && onSelectedAssessment) {
+      onSelectedAssessment(selectedAssessments);
     }
   }, [selectedAssessments]);
 
@@ -104,9 +104,11 @@ export default function MaturityMatrixTable({
           prev = prev.filter((domainLevel) => domainLevel.domain_id !== domain.id);
 
           onChange?.({
-            selectedAssessments: selectedAssessment,
+            selectedAssessment: selectedAssessment,
             isNew: isNew,
           });
+
+          //onSelectedAssessment?.([...prev, selectedAssessment]);
 
           return [...prev, selectedAssessment];
         }
@@ -254,6 +256,7 @@ function MatrixItem({
   // if (selected) console.log("smartFormulaGoals:", domainId, levelId, smartFormulaGoals);
 
   // console.log(clientSelectedAssessment);
+  //if (selected) console.log("assessment:", assessment);
 
   return (
     <div
@@ -281,8 +284,9 @@ function MatrixItem({
     >
       {children}
       {selected && (
-        <span className="absolute right-2 bottom-2">
-          <Icon name="flag" size={23} className="text-purple-500" />
+        <span className="absolute right-2 bottom-2 text-purple-500">
+          {assessment.goal_ids.length}
+          <Icon name="flag-triangle-right" size={23} />
         </span>
       )}
 
@@ -309,19 +313,19 @@ function MatrixItem({
             <Icon name="x" size={23} className="block" />
           </span>
 
-          {/* {isLoading ? (
-            <div>Loading...</div>
-          ) : smartFormulaGoals.length ? (
+          {assessment.goal_ids.length ? (
             <button
-              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
+              type="button"
+              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
               onClick={() => {
                 router.push(`/clients/${clientId}/goals/${domainId}`);
               }}
             >
-              <Icon name="flag-triangle-right" /> {smartFormulaGoals.length} Goals
+              <Icon name="flag-triangle-right" /> {assessment.goal_ids.length} Goals
             </button>
           ) : (
             <button
+              type="button"
               className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
               onClick={() => {
                 openSmartFormulaModal({});
@@ -329,16 +333,7 @@ function MatrixItem({
             >
               <Icon name="sparkles" /> Smart Formula
             </button>
-          )} */}
-
-          <button
-            className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
-            onClick={() => {
-              openSmartFormulaModal({});
-            }}
-          >
-            <Icon name="sparkles" /> Smart Formula
-          </button>
+          )}
         </div>
       )}
     </div>
