@@ -4,53 +4,59 @@ import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
 import Button from "@/components/buttons/Button";
 import AdvancedMaturityMatrixField from "@/components/maturity_matrix/AdvancedMaturityMatrixField";
-import { MaturityMatrixPayload, useCreateMaturityMatrix } from "@/utils/domains";
+import {
+  MaturityMatrixPayload,
+  useCreateMaturityMatrix,
+  useMaturityMatrixDetails,
+} from "@/utils/domains";
 import axios from "axios";
 import { Formik, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-type AddMaturityMatrixPageProps = {
+type EditMaturityMatrixPageProps = {
   params: {
     clientId: number;
+    matrixId: number;
   };
 };
 
-export default function AddMaturityMatrixPage({
-  params: { clientId },
-}: AddMaturityMatrixPageProps) {
+export default function EditMaturityMatrixPage({
+  params: { clientId, matrixId },
+}: EditMaturityMatrixPageProps) {
   const router = useRouter();
 
-  const {
-    mutate: createMaturityMatrix,
-    isLoading: isCreating,
-    isError,
-    error,
-  } = useCreateMaturityMatrix();
-
-  const formik = useFormik<MaturityMatrixPayload>({
-    initialValues: {
-      client_id: clientId,
-      start_date: "",
-      end_date: "",
-      maturity_matrix: [],
-    },
-    validationSchema: Yup.object({
-      start_date: Yup.string().required("Start date is required"),
-      end_date: Yup.string().required("End date is required"),
-      maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
-    }),
-    onSubmit: (values) => {
-      console.log("submited:", values);
-      createMaturityMatrix(values, {
-        onSuccess() {
-          toast.success("Maturity matrix created successfully!");
-          router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
-        },
-      });
-    },
-  });
+  const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(matrixId);
+  console.log(matrixDetails);
+  const formik = useFormik<MaturityMatrixPayload>(
+    !isLoading && {
+      initialValues: {
+        client_id: clientId,
+        start_date: matrixDetails.start_date,
+        end_date: matrixDetails.end_date,
+        maturity_matrix: matrixDetails.selected_assessments.map((assessment) => ({
+          domain_id: assessment.goals[0].domain_id,
+          level: 1, // TODO: this needs to be a real level (from DB)
+          goal_ids: assessment.goals.map((goal) => goal.id),
+        })),
+      },
+      validationSchema: Yup.object({
+        start_date: Yup.string().required("Start date is required"),
+        end_date: Yup.string().required("End date is required"),
+        maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
+      }),
+      onSubmit: (values) => {
+        console.log("submited:", values);
+        // updateMaturityMatrix(values, {
+        //   onSuccess() {
+        //     toast.success("Maturity matrix created successfully!");
+        //     router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
+        //   },
+        // });
+      },
+    }
+  );
 
   const { values, handleChange, handleBlur, touched, errors } = formik;
 
@@ -76,7 +82,7 @@ export default function AddMaturityMatrixPage({
           form="add-maturity-matrix-form"
           className="btn btn-primary"
         >
-          {isCreating ? "Opslaan..." : "Opslaan"}
+          {isLoading ? "Updating..." : "Update"}
         </Button>
       }
     >
