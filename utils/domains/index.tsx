@@ -133,6 +133,8 @@ Maturity Mattrix Response
     "selected_assessments": [
         {
             "assessment_id": 226,
+            "domain_id": 53,
+            "level": 1,
             "maturitymatrix_id": 7,
             "goals": [
                 {
@@ -199,7 +201,10 @@ Maturity Mattrix Response
 
 // There is a difference between "SelectedAssessmentDto" and "selectedAssessmentDto"
 export type SelectedAssessmentDto = {
+  id: number;
   assessment_id: number;
+  domain_id: number;
+  level: number;
   maturitymatrix_id: number;
   goals: {
     domain_id: number;
@@ -213,7 +218,6 @@ export type SelectedAssessmentDto = {
     title: string;
     desc: string;
   }[];
-  id: number;
 };
 
 // Response Dto type

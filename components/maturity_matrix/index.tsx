@@ -37,7 +37,7 @@ type MLevel = {
 
 type MaturityMatrixTableProps = {
   clientId: number;
-  onSelectedAssessment?: (assessments: selectedAssessment[]) => void;
+  onSelectedAssessmentsChange?: (assessments: selectedAssessment[]) => void;
   onChange?: ({
     selectedAssessment,
     isNew,
@@ -45,7 +45,8 @@ type MaturityMatrixTableProps = {
     selectedAssessment: selectedAssessment;
     isNew: boolean;
   }) => void;
-  selectedMatrixAssessments?: selectedAssessment[];
+  selectedAssessments?: selectedAssessment[];
+  // setSelectedAssessments: (prev: selectedAssessment[]) => selectedAssessment[];
 };
 
 const M_LEVELS = [
@@ -58,22 +59,16 @@ const M_LEVELS = [
 
 export default function MaturityMatrixTable({
   clientId,
-  onSelectedAssessment,
+  onSelectedAssessmentsChange,
   onChange,
-  selectedMatrixAssessments,
+  selectedAssessments,
+  // setSelectedAssessments,
 }: MaturityMatrixTableProps) {
   const { data: domains, isLoading } = useDomains();
   // const { data: clientLevels, isLoading: isLoadingClientLevels } = useClientLevels(clientId);
 
-  const [selectedAssessments, setSelectedAssessments] = useState<selectedAssessment[]>(
-    // clientLevels
-    //   ? clientLevels.map((domainLevel) => ({
-    //       domain_id: domainLevel.domain_id,
-    //       level: domainLevel.level,
-    //     }))
-    //   : []
-    selectedMatrixAssessments || []
-  );
+  // const [selectedAssessments, ] =
+  //   useState<selectedAssessment[]>(selectedAssessments);
 
   // useEffect(() => {
   //   if (clientLevels) {
@@ -87,48 +82,52 @@ export default function MaturityMatrixTable({
   //   }
   // }, [clientLevels]);
 
-  useEffect(() => {
-    if (selectedAssessments && onSelectedAssessment) {
-      onSelectedAssessment(selectedAssessments);
-    }
-  }, [selectedAssessments]);
+  // useEffect(() => {
+  //   if (selectedAssessments && onSelectedAssessmentsChange) {
+  //     onSelectedAssessmentsChange(selectedAssessments);
+  //   }
+  // }, [selectedAssessments]);
 
-  const handleDomainLevelChange = useCallback(
+  const handleSelectedAssessmentsChange = useCallback(
     (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
-      setSelectedAssessments((prev) => {
-        // Not undefined
-        if (prev) {
-          const isNew: boolean =
-            prev.filter((domainLevel) => domainLevel.domain_id === domain.id).length === 0;
-          // Remove the old level if it exists for the same domain
-          prev = prev.filter((domainLevel) => domainLevel.domain_id !== domain.id);
+      let prev = selectedAssessments;
+      // Not undefined
+      if (prev) {
+        const isNew: boolean =
+          prev.filter((assessment) => assessment.domain_id === domain.id).length === 0;
+        // Remove the old level if it exists for the same domain
+        prev = prev.filter((assessment) => assessment.domain_id !== domain.id);
 
-          onChange?.({
-            selectedAssessment: selectedAssessment,
-            isNew: isNew,
-          });
+        onChange?.({
+          selectedAssessment: selectedAssessment,
+          isNew: isNew,
+        });
 
-          //onSelectedAssessment?.([...prev, selectedAssessment]);
-
-          return [...prev, selectedAssessment];
-        }
-      });
+        onSelectedAssessmentsChange?.([...prev, selectedAssessment]);
+      }
     },
-    []
+    [selectedAssessments]
   );
 
   const handleDomainLevelRemove = useCallback(
-    (selectedDomainLevel: selectedAssessment, domain: MDomain, level: MLevel) => {
-      setSelectedAssessments((prev) => {
-        if (prev) {
-          return prev.filter(
-            (clientLevel) =>
-              !(clientLevel.domain_id === domain.id && clientLevel.level === level.level)
-          );
-        }
-      });
+    (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
+      let prev = selectedAssessments;
+
+      if (prev) {
+        const filteredAssessments = prev.filter(
+          (clientLevel) =>
+            !(clientLevel.domain_id === domain.id && clientLevel.level === level.level)
+        );
+
+        onChange?.({
+          selectedAssessment: selectedAssessment,
+          isNew: false,
+        });
+
+        onSelectedAssessmentsChange?.(filteredAssessments);
+      }
     },
-    []
+    [selectedAssessments]
   );
 
   if (isLoading /*|| isLoadingClientLevels || selectedAssessments === undefined*/) {
@@ -174,16 +173,13 @@ export default function MaturityMatrixTable({
                     level.level
                   )}
                   setAssessment={(assessment) => {
-                    handleDomainLevelChange(assessment, domain, level);
+                    handleSelectedAssessmentsChange(assessment, domain, level);
                   }}
-                  onRemove={(selectedDomainLevel) =>
-                    handleDomainLevelRemove(selectedDomainLevel, domain, level)
-                  }
+                  onRemove={(assessment) => handleDomainLevelRemove(assessment, domain, level)}
                   onClick={
                     isClientLevelSelected(selectedAssessments, domain.id, level.level)
                       ? () => {}
-                      : (selectedDomainLevel) =>
-                          handleDomainLevelChange(selectedDomainLevel, domain, level)
+                      : (assessment) => handleSelectedAssessmentsChange(assessment, domain, level)
                   }
                 >
                   {parseAssessments(level.assessments).map((goal, index) => {
@@ -341,13 +337,12 @@ function MatrixItem({
 }
 
 function isClientLevelSelected(
-  clientLevels: DomainLevels | SetDomainLevelReqDto[],
+  selectedAssessments: DomainLevels | SetDomainLevelReqDto[] | selectedAssessment[],
   domainId: number,
   levelId: number
 ) {
-  return clientLevels.some(
-    (clientLevel: DomainLevel) =>
-      clientLevel.domain_id === domainId && clientLevel.level === levelId
+  return selectedAssessments.some(
+    (clientLevel) => clientLevel.domain_id === domainId && clientLevel.level === levelId
   );
 }
 

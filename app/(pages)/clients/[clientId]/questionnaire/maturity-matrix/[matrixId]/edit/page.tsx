@@ -28,37 +28,45 @@ export default function EditMaturityMatrixPage({
   const router = useRouter();
 
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(matrixId);
-  console.log(matrixDetails);
-  const formik = useFormik<MaturityMatrixPayload>(
-    !isLoading && {
-      initialValues: {
-        client_id: clientId,
-        start_date: matrixDetails.start_date,
-        end_date: matrixDetails.end_date,
-        maturity_matrix: matrixDetails.selected_assessments.map((assessment) => ({
-          domain_id: assessment.goals[0].domain_id,
-          level: 1, // TODO: this needs to be a real level (from DB)
-          goal_ids: assessment.goals.map((goal) => goal.id),
-        })),
-      },
-      validationSchema: Yup.object({
-        start_date: Yup.string().required("Start date is required"),
-        end_date: Yup.string().required("End date is required"),
-        maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
-      }),
-      onSubmit: (values) => {
-        console.log("submited:", values);
-        // updateMaturityMatrix(values, {
-        //   onSuccess() {
-        //     toast.success("Maturity matrix created successfully!");
-        //     router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
-        //   },
-        // });
-      },
-    }
-  );
+
+  const formik = useFormik<MaturityMatrixPayload>({
+    initialValues: !isLoading
+      ? {
+          client_id: clientId,
+          start_date: matrixDetails.start_date,
+          end_date: matrixDetails.end_date,
+          maturity_matrix: matrixDetails.selected_assessments.map((assessment) => ({
+            domain_id: assessment.domain_id,
+            level: assessment.level,
+            goal_ids: assessment.goals.map((goal) => goal.id),
+          })),
+        }
+      : {
+          client_id: clientId,
+          start_date: "",
+          end_date: "",
+          maturity_matrix: [],
+        },
+    enableReinitialize: true,
+    validationSchema: Yup.object({
+      start_date: Yup.string().required("Start date is required"),
+      end_date: Yup.string().required("End date is required"),
+      maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
+    }),
+    onSubmit: (values) => {
+      console.log("submited:", values);
+      // updateMaturityMatrix(values, {
+      //   onSuccess() {
+      //     toast.success("Maturity matrix created successfully!");
+      //     router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
+      //   },
+      // });
+    },
+  });
 
   const { values, handleChange, handleBlur, touched, errors } = formik;
+
+  console.log("data:", values);
 
   if (isError && axios.isAxiosError(error)) {
     toast.error(error.message);
@@ -87,35 +95,39 @@ export default function EditMaturityMatrixPage({
       }
     >
       <div className="p-5">
-        <FormikProvider value={formik}>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-2 gap-5">
-              <InputField
-                label={"Start datum"}
-                name={"start_date"}
-                type={"date"}
-                className="lg:basis-1/2"
-                required={true}
-                value={values.start_date}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.start_date && errors.start_date}
-              />
-              <InputField
-                label={"Eind datum"}
-                name={"end_date"}
-                type={"date"}
-                className="lg:basis-1/2"
-                required={true}
-                value={values.end_date}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.end_date && errors.end_date}
-              />
-            </div>
-            <AdvancedMaturityMatrixField clientId={clientId} name="maturity_matrix" />
-          </form>
-        </FormikProvider>
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <FormikProvider value={formik}>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-2 gap-5">
+                <InputField
+                  label={"Start datum"}
+                  name={"start_date"}
+                  type={"date"}
+                  className="lg:basis-1/2"
+                  required={true}
+                  value={values.start_date}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.start_date && errors.start_date}
+                />
+                <InputField
+                  label={"Eind datum"}
+                  name={"end_date"}
+                  type={"date"}
+                  className="lg:basis-1/2"
+                  required={true}
+                  value={values.end_date}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.end_date && errors.end_date}
+                />
+              </div>
+              <AdvancedMaturityMatrixField clientId={clientId} name="maturity_matrix" />
+            </form>
+          </FormikProvider>
+        )}
       </div>
     </Panel>
   );

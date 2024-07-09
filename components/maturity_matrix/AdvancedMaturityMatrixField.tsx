@@ -22,17 +22,20 @@ export default function AdvancedMaturityMatrixField({
   //   toast.error(meta.error);
   // }
 
+  console.log("Value:", field.value);
+
   return (
     <div className={cn("py-5", className)}>
       <MaturityMatrixTable
         clientId={clientId}
-        selectedMatrixAssessments={field.value}
-        onChange={(selectedAssessment) => {
+        selectedAssessments={field.value}
+        // setSelectedAssessments={(selectedAssessments) => helper.setValue(selectedAssessments)}
+        onChange={({ selectedAssessment, isNew }) => {
           console.log("on Change:", selectedAssessment);
         }}
-        onSelectedAssessment={(selectedAssessments) => {
+        onSelectedAssessmentsChange={(selectedAssessments) => {
           // setSelectedAssessments(domainLevels);
-          console.log("onDomainLevelsChange:", selectedAssessments);
+          console.log("onSelectedAssessmentsChange:", selectedAssessments);
           helper.setValue(selectedAssessments);
         }}
       />
