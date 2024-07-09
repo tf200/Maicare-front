@@ -14,6 +14,8 @@ type SmpartFormulaProps = {
   clientId: number;
   domainId: number;
   levelId: number;
+  startDate?: string;
+  endDate?: string;
   onSave?: (goal_ids: number[], edited_smart_formula_goals: EditedSmartFormulaGoal[]) => void;
 };
 
@@ -37,7 +39,14 @@ const editableSmartFormulaGoalsYupSchema = Yup.object().shape({
   // .required(),
 });
 
-export default function SmartFormula({ clientId, domainId, levelId, onSave }: SmpartFormulaProps) {
+export default function SmartFormula({
+  clientId,
+  domainId,
+  levelId,
+  onSave,
+  startDate,
+  endDate,
+}: SmpartFormulaProps) {
   const { data: domains, isLoading } = useDomains();
   const [goalIds, setGoalIds] = useState<number[]>([]);
 
@@ -97,7 +106,10 @@ export default function SmartFormula({ clientId, domainId, levelId, onSave }: Sm
 
   const handleClick = async () => {
     setIsGenerating(true);
-    const goals = await generateSmartFormula();
+    const goals = await generateSmartFormula({
+      startDate,
+      endDate,
+    });
     setSmartFormulaGoals(goals);
     setIsGenerating(false);
   };
@@ -106,6 +118,7 @@ export default function SmartFormula({ clientId, domainId, levelId, onSave }: Sm
     setIsSaving(true);
     // save editableSmartFormulaGoals
     // Validate editableSmartFormulaGoals
+
     try {
       const validated = await editableSmartFormulaGoalsYupSchema.validate({
         goals: editableSmartFormulaGoals,
@@ -126,33 +139,38 @@ export default function SmartFormula({ clientId, domainId, levelId, onSave }: Sm
 
   return (
     <div className="text-left overflow-y-auto">
+      <i>
+        <Icon name="info" /> Generate Goals & Objectives for this period:{" "}
+        <b>
+          {startDate} - {endDate}
+        </b>
+      </i>
       {editableSmartFormulaGoals.map((goal, goal_index) => {
         return (
           <div key={goal_index}>
             <h2 className="font-bold text-xl mb-3 mt-3 text-black">
-              <Icon name="flag-triangle-right" /> {capitalizeFirstLetter(goal.title)}
+              {/* <Icon name="flag-triangle-right" /> {capitalizeFirstLetter(goal.title)} */}
+              <InputField
+                label={
+                  <>
+                    <Icon name="flag-triangle-right" /> Goal {goal_index + 1}
+                  </>
+                }
+                placeholder="Goal title"
+                value={goal.title}
+                onChange={(e) => {
+                  // update the goal title in editableSmartFormulaGoals
+                  const newEditableSmartFormulaGoals = [...editableSmartFormulaGoals];
+                  newEditableSmartFormulaGoals[goal_index].title = e.target.value;
+                  setEditableSmartFormulaGoals(newEditableSmartFormulaGoals);
+                }}
+              />
             </h2>
             {goal.objectives.map((objective, index) => (
               <div
                 key={`key-${goal_index}-${index}`}
                 className="relative mb-5 border-1 p-3 rounded-lg border-dashed bg-white"
               >
-                {/* <h3 className="font-bold mb-2">
-                  <Icon name="minus" /> {capitalizeFirstLetter(objective.specific)}
-                </h3>
-                <p>
-                  <b>Measurable:</b> {objective.measurable}
-                </p>
-                <p>
-                  <b>Achievable:</b> {objective.achievable}
-                </p>
-                <p>
-                  <b>Relevant:</b> {objective.relevant}
-                </p>
-                <p>
-                  <b>Time_bound:</b> {objective.time_bound}
-                </p> */}
-
                 <InputField
                   label={
                     <>
@@ -214,7 +232,6 @@ export default function SmartFormula({ clientId, domainId, levelId, onSave }: Sm
           </div>
         );
       })}
-
       <div
         className={cn(
           "flex gap-3",

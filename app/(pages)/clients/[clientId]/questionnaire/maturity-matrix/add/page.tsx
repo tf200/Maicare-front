@@ -106,7 +106,13 @@ export default function AddMaturityMatrixPage({
                 error={touched.end_date && errors.end_date}
               />
             </div>
-            <AdvancedMaturityMatrixField clientId={clientId} name="maturity_matrix" />
+            <AdvancedMaturityMatrixField
+              clientId={clientId}
+              name="maturity_matrix"
+              // Dates are useful for Smart Formula
+              startDate={values.start_date}
+              endDate={values.end_date}
+            />
           </form>
         </FormikProvider>
       </div>

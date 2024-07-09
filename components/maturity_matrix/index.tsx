@@ -30,6 +30,8 @@ const GRADIENT_COLORS = [
   "bg-meta-3/[0.4]",
 ] as const;
 
+export type ModeType = "create" | "edit";
+
 type MLevel = {
   level: number;
   assessments: string;
@@ -46,7 +48,9 @@ type MaturityMatrixTableProps = {
     isNew: boolean;
   }) => void;
   selectedAssessments?: selectedAssessment[];
-  // setSelectedAssessments: (prev: selectedAssessment[]) => selectedAssessment[];
+  mode?: ModeType;
+  startDate?: string;
+  endDate?: string;
 };
 
 const M_LEVELS = [
@@ -62,31 +66,11 @@ export default function MaturityMatrixTable({
   onSelectedAssessmentsChange,
   onChange,
   selectedAssessments,
-  // setSelectedAssessments,
+  mode = "create",
+  startDate,
+  endDate,
 }: MaturityMatrixTableProps) {
   const { data: domains, isLoading } = useDomains();
-  // const { data: clientLevels, isLoading: isLoadingClientLevels } = useClientLevels(clientId);
-
-  // const [selectedAssessments, ] =
-  //   useState<selectedAssessment[]>(selectedAssessments);
-
-  // useEffect(() => {
-  //   if (clientLevels) {
-  //     setSelectedAssessments(
-  //       // parse domain levels to SetDomainLevelReqDto
-  //       clientLevels.map((domainLevel) => ({
-  //         domain_id: domainLevel.domain_id,
-  //         level: domainLevel.level,
-  //       }))
-  //     );
-  //   }
-  // }, [clientLevels]);
-
-  // useEffect(() => {
-  //   if (selectedAssessments && onSelectedAssessmentsChange) {
-  //     onSelectedAssessmentsChange(selectedAssessments);
-  //   }
-  // }, [selectedAssessments]);
 
   const handleSelectedAssessmentsChange = useCallback(
     (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
@@ -130,7 +114,7 @@ export default function MaturityMatrixTable({
     [selectedAssessments]
   );
 
-  if (isLoading /*|| isLoadingClientLevels || selectedAssessments === undefined*/) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -164,9 +148,12 @@ export default function MaturityMatrixTable({
                 className="align-top w-1/6 border border-stroke whitespace-pre-wrap"
               >
                 <MatrixItem
+                  mode={mode}
                   key={`${domain.id}-${level.level}`}
                   selected={isClientLevelSelected(selectedAssessments, domain.id, level.level)}
                   clientId={clientId}
+                  startDate={startDate}
+                  endDate={endDate}
                   assessment={getClientSelectedAssessment(
                     selectedAssessments,
                     domain.id,
@@ -212,6 +199,9 @@ function MatrixItem({
   setAssessment,
   onClick,
   onRemove,
+  mode = "create",
+  startDate,
+  endDate,
 }: {
   children: React.ReactNode;
   clientId: number;
@@ -220,6 +210,9 @@ function MatrixItem({
   selected?: boolean;
   onClick?: (assessment: selectedAssessment) => void;
   onRemove?: (assessment: selectedAssessment) => void;
+  mode?: ModeType;
+  startDate?: string;
+  endDate?: string;
 }) {
   const router = useRouter();
   const { domain_id: domainId, level: levelId } = assessment; // for backward compatibility
@@ -232,6 +225,8 @@ function MatrixItem({
             clientId={clientId}
             domainId={domainId}
             levelId={levelId}
+            startDate={startDate}
+            endDate={endDate}
             onSave={(goal_ids, edited_smart_formula_goals) => {
               // set the assessment
               setAssessment({
@@ -251,26 +246,20 @@ function MatrixItem({
   return (
     <div
       className={cn(
-        " p-2 min-h-[250px] cursor-pointer relative group overflow-hidden",
-        selected &&
-          "border-2 rounded-md border-dashed bg-purple-100 border-purple-500 text-black cursor-default",
-        !selected && "hover:bg-gray"
+        " p-2 min-h-[250px] relative group overflow-hidden",
+        selected && "border-2 rounded-md bg-purple-100 border-purple-500 text-black cursor-default",
+        !selected && mode === "create" && "hover:bg-gray",
+        mode === "create" ? "border-dashed cursor-pointer" : "border-solid cursor-default"
       )}
-      onClick={
-        () =>
+      onClick={() => {
+        if (mode === "create") {
           onClick({
             domain_id: domainId,
             level: levelId,
             goal_ids: [],
-          })
-        /*
-        Pass the selected Assessment to the parent
-        {
-          "assessment_id": number,
-          "maturitymatrix_id": number
+          });
         }
-        */
-      }
+      }}
     >
       {children}
       {selected && (
@@ -296,12 +285,14 @@ function MatrixItem({
 
       {selected && (
         <div className="invisible absolute group-hover:visible transition transform translate-y-8 group-hover:translate-y-0 ease-in-out bg-purple-300 w-full right-0 left-0 top-0 bottom-0 z-0 p-2 flex flex-col justify-center">
-          <span
-            className="absolute right-2 top-2 rounded-full hover:bg-purple-200 text-purple-500 cursor-pointer"
-            onClick={() => onRemove(assessment)}
-          >
-            <Icon name="x" size={23} className="block" />
-          </span>
+          {mode !== "edit" && (
+            <span
+              className="absolute right-2 top-2 rounded-full hover:bg-purple-200 text-purple-500 cursor-pointer"
+              onClick={() => onRemove(assessment)}
+            >
+              <Icon name="x" size={23} className="block" />
+            </span>
+          )}
 
           {assessment.goal_ids.length ? (
             <button

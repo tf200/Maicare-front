@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import MaturityMatrixTable from ".";
+import MaturityMatrixTable, { ModeType } from ".";
 import { cn } from "@/utils/cn";
 import { selectedAssessment } from "@/utils/domains";
 
@@ -7,12 +7,17 @@ type AdvancedMaturityMatrixFieldProps = {
   name: string;
   clientId: number;
   className?: string;
+  mode?: ModeType;
+  startDate?: string;
+  endDate?: string;
 };
 
 export default function AdvancedMaturityMatrixField({
   name,
   clientId,
   className = "",
+  mode = "create",
+  ...rest
 }: AdvancedMaturityMatrixFieldProps) {
   const [field, meta, helper] = useField<selectedAssessment[]>(name);
 
@@ -24,6 +29,7 @@ export default function AdvancedMaturityMatrixField({
   return (
     <div className={cn("py-5", className)}>
       <MaturityMatrixTable
+        mode={mode}
         clientId={clientId}
         selectedAssessments={field.value}
         // onChange={({ selectedAssessment, isNew }) => {
@@ -33,6 +39,7 @@ export default function AdvancedMaturityMatrixField({
           // setSelectedAssessments(domainLevels);
           helper.setValue(selectedAssessments);
         }}
+        {...rest}
       />
     </div>
   );

@@ -77,8 +77,17 @@ export type EditedSmartFormulaGoal = {
   objectives: EditedSmartFormulaObjective[];
 };
 
-async function _generateSmartFormula(clientId: number, domainId: number, levelId: number) {
-  const response = await api.post<SmartFormulaResponse>(`ai/smart-formula/${domainId}/${levelId}`);
+async function _generateSmartFormula(
+  clientId: number,
+  domainId: number,
+  levelId: number,
+  startDate: string,
+  endDate: string
+) {
+  const response = await api.post<SmartFormulaResponse>(`ai/smart-formula/${domainId}/${levelId}`, {
+    start_date: startDate,
+    end_date: endDate,
+  });
   return response.data?.goals;
 }
 
@@ -106,7 +115,13 @@ async function _getSmartFormula(clientId: number, domainId: number, levelId: num
 export function useSmartFormula(clientId: number, domainId: number, levelId: number) {
   const queryClient = useQueryClient();
 
-  const generateSmartFormula = async () => await _generateSmartFormula(clientId, domainId, levelId);
+  const generateSmartFormula = async ({
+    startDate,
+    endDate,
+  }: {
+    startDate: string;
+    endDate: string;
+  }) => await _generateSmartFormula(clientId, domainId, levelId, startDate, endDate);
 
   const saveSmartFormula = async (payload: { goals: EditedSmartFormulaGoal[] }) => {
     const goal_ids = await _saveSmartFormula(clientId, domainId, levelId, payload);
