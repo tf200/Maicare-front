@@ -120,9 +120,11 @@ async function createMaturityMatrix(payload: MaturityMatrixPayload) {
 }
 
 export function useCreateMaturityMatrix() {
-  // TODO: invalidate cache
+  const queryClient = useQueryClient();
   return useMutation(createMaturityMatrix, {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries(["maturity_matrix_list"]);
+    },
   });
 }
 
@@ -252,4 +254,22 @@ async function getMaturityMatrixDetails(matrixId: number) {
 
 export function useMaturityMatrixDetails(matrixId: number) {
   return useQuery(["maturity_matrix_details", matrixId], () => getMaturityMatrixDetails(matrixId));
+}
+
+async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPayload) {
+  const response = await api.put<MaturityMatrixDto>(
+    `/clients/questionnaires/maturity-matrices/${matrixId}/update`,
+    payload
+  );
+  return response.data;
+}
+
+export function useUpdateMaturityMatrix(matrixId: number) {
+  const queryClient = useQueryClient();
+  return useMutation((payload: MaturityMatrixPayload) => updateMaturityMatrix(matrixId, payload), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["maturity_matrix_list"]);
+      queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
+    },
+  });
 }

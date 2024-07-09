@@ -42,7 +42,6 @@ export default function AddMaturityMatrixPage({
       maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
     }),
     onSubmit: (values) => {
-      console.log("submited:", values);
       createMaturityMatrix(values, {
         onSuccess() {
           toast.success("Maturity matrix created successfully!");

@@ -8,6 +8,7 @@ import {
   MaturityMatrixPayload,
   useCreateMaturityMatrix,
   useMaturityMatrixDetails,
+  useUpdateMaturityMatrix,
 } from "@/utils/domains";
 import axios from "axios";
 import { Formik, FormikProvider, useFormik } from "formik";
@@ -26,7 +27,7 @@ export default function EditMaturityMatrixPage({
   params: { clientId, matrixId },
 }: EditMaturityMatrixPageProps) {
   const router = useRouter();
-
+  const { mutate: updateMaturityMatrix, isLoading: isUpdating } = useUpdateMaturityMatrix(matrixId);
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(matrixId);
 
   const formik = useFormik<MaturityMatrixPayload>({
@@ -54,19 +55,16 @@ export default function EditMaturityMatrixPage({
       maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
     }),
     onSubmit: (values) => {
-      console.log("submited:", values);
-      // updateMaturityMatrix(values, {
-      //   onSuccess() {
-      //     toast.success("Maturity matrix created successfully!");
-      //     router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
-      //   },
-      // });
+      updateMaturityMatrix(values, {
+        onSuccess() {
+          toast.success("Maturity matrix successfully updated!");
+          router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
+        },
+      });
     },
   });
 
   const { values, handleChange, handleBlur, touched, errors } = formik;
-
-  console.log("data:", values);
 
   if (isError && axios.isAxiosError(error)) {
     toast.error(error.message);
@@ -82,7 +80,7 @@ export default function EditMaturityMatrixPage({
 
   return (
     <Panel
-      title="Nieuwe volwassenheidsmatrix"
+      title="Volwassenheidsmatrix bijwerken"
       sideActions={
         <Button
           onClick={() => formik.handleSubmit()}
@@ -90,7 +88,7 @@ export default function EditMaturityMatrixPage({
           form="add-maturity-matrix-form"
           className="btn btn-primary"
         >
-          {isLoading ? "Updating..." : "Update"}
+          {isUpdating ? "Updating..." : "Update"}
         </Button>
       }
     >

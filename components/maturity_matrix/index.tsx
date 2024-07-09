@@ -223,36 +223,30 @@ function MatrixItem({
 }) {
   const router = useRouter();
   const { domain_id: domainId, level: levelId } = assessment; // for backward compatibility
-  // const { data: clientSelectedAssessment, isLoading } = useClientSelectedAssessments(
-  //   domainId,
-  //   levelId
-  // );
 
-  // const { data: smartFormulaGoals, isLoading } = useGetSmartFormula(clientId, domainId, levelId);
-  const { open: openSmartFormulaModal } = useModal((modelProps: ModalProps) => {
-    return (
-      <SmartFormulaGeneratorModal {...modelProps}>
-        <SmartFormula
-          clientId={clientId}
-          domainId={domainId}
-          levelId={levelId}
-          onSave={(goal_ids, edited_smart_formula_goals) => {
-            // set the assessment
-            setAssessment({
-              domain_id: domainId,
-              level: levelId,
-              goal_ids: goal_ids,
-            });
-          }}
-        />
-      </SmartFormulaGeneratorModal>
-    );
-  });
+  const { open: openSmartFormulaModal, close: closeSmartFormulaModal } = useModal(
+    (modelProps: ModalProps) => {
+      return (
+        <SmartFormulaGeneratorModal {...modelProps}>
+          <SmartFormula
+            clientId={clientId}
+            domainId={domainId}
+            levelId={levelId}
+            onSave={(goal_ids, edited_smart_formula_goals) => {
+              // set the assessment
+              setAssessment({
+                domain_id: domainId,
+                level: levelId,
+                goal_ids: goal_ids,
+              });
 
-  // if (selected) console.log("smartFormulaGoals:", domainId, levelId, smartFormulaGoals);
-
-  // console.log(clientSelectedAssessment);
-  //if (selected) console.log("assessment:", assessment);
+              closeSmartFormulaModal();
+            }}
+          />
+        </SmartFormulaGeneratorModal>
+      );
+    }
+  );
 
   return (
     <div
