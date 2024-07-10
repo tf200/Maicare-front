@@ -9,8 +9,6 @@ import Link from "next/link";
 export default function MaturityMatrixPage({ params: { clientId } }) {
   const { data: maturity_matrix_list, isLoading } = useMaturityMatrixList(clientId);
 
-  console.log("maturity_matrix_list", maturity_matrix_list);
-
   return (
     <Panel
       title="Volwassenheidsmatrices"

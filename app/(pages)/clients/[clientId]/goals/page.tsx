@@ -11,7 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
-import { useGetDomain } from "@/utils/domains";
+import { useGetDomain, useGetSelectedAssessmentByGoalId } from "@/utils/domains";
 import GoalProgressModal from "@/components/goals/GoalProgressModal";
 import DomainLevels from "@/components/goals/DomainLevels";
 import DetailCell from "@/components/DetailCell";
@@ -21,24 +21,31 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
+import { capitalizeFirstLetter, parseGoalIds } from "@/utils";
+import Icon from "@/components/Icon";
 
 type Props = {
   params: { clientId: string };
 };
 
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const { data: assessment, isLoading } = useGetSelectedAssessmentByGoalId(
+    parseInt(searchParams.get("goal_id"))
+  );
+
   const {
     pagination,
     isFetching,
     isLoading: isListLoading,
     isError,
     data,
-  } = useGoalsList(parseInt(clientId));
+  } = useGoalsList(parseInt(clientId), {
+    selected_assessment_id: assessment?.id,
+  });
 
-  const { open: openGoalProgressModal } = useModal(GoalProgressModal);
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(
-    parseInt(clientId)
-  );
+  // const { open: openGoalProgressModal } = useModal(GoalProgressModal);
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -50,7 +57,9 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             <div>
               <h3 className="font-bold flex text-lg mb-6 justify-between">
                 <div className="block">
-                  <div>{goal.title}</div>
+                  <div>
+                    <Icon name="flag-triangle-right" /> {capitalizeFirstLetter(goal.title)}
+                  </div>
                   <Domain id={goal.domain_id} />
                 </div>
                 <button
@@ -67,14 +76,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               </h3>
               <p>{goal.desc}</p>
               <div className="mb-6 mt-6 flex gap-4">
-                <DetailCell
-                  value={goal.created_by_name}
-                  label={"Aangemaakt door"}
-                />
-                <DetailCell
-                  value={goal.reviewed_by_name}
-                  label={"Goedgekeurd door"}
-                />
+                <DetailCell value={goal.created_by_name} label={"Aangemaakt door"} />
+                <DetailCell value={goal.reviewed_by_name} label={"Goedgekeurd door"} />
                 {!goal.is_approved && (
                   <SecureFragment permission={APPROVE_GOALS}>
                     <Button
@@ -83,10 +86,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                         approveGoal(goal.id);
                       }}
                       isLoading={isApprovingGoal}
-                      className={cn(
-                        "ml-auto self-center flex items-center gap-4",
-                        styles.button
-                      )}
+                      className={cn("ml-auto self-center flex items-center gap-4", styles.button)}
                     >
                       <CheckIcon /> <div>keurt dit doel</div>
                     </Button>
@@ -106,23 +106,23 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     ];
   }, []);
 
-  const { open: openGoalModal } = useModal(NewGoalModal);
+  // const { open: openGoalModal } = useModal(NewGoalModal);
 
   return (
     <>
-      <DomainLevels clientId={+clientId} />
+      {/* <DomainLevels clientId={+clientId} /> */}
       <Panel
         className="w-full"
         title={"Doelenlijst"}
-        sideActions={
-          <Button
-            onClick={() => {
-              openGoalModal({ clientId });
-            }}
-          >
-            Nieuw Doel Toevoegen
-          </Button>
-        }
+        // sideActions={
+        //   <Button
+        //     onClick={() => {
+        //       openGoalModal({ clientId });
+        //     }}
+        //   >
+        //     Nieuw Doel Toevoegen
+        //   </Button>
+        // }
       >
         {isListLoading && (
           <div className="p-4 sm:p-6 xl:p-7.5">

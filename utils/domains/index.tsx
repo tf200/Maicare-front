@@ -4,6 +4,7 @@ import { QueryClient, useMutation, useQueries, useQuery, useQueryClient } from "
 import { useCallback, useMemo } from "react";
 import { SetDomainLevelReqDto } from "@/types/goals";
 import { Prettify } from "@/types";
+import { get } from "http";
 
 async function createDomain(domain: MDomainFormType) {
   const response = await api.post<MDomain>("/assessments/domains/add", domain);
@@ -272,4 +273,15 @@ export function useUpdateMaturityMatrix(matrixId: number) {
       queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
     },
   });
+}
+
+async function getSelectedAssessmentByGoalId(goalId: number) {
+  const response = await api.get<SelectedAssessmentDto>(
+    `/clients/questionnaires/maturity-matrices/selected-assessments-by-goal-id/${goalId}`
+  );
+  return response.data;
+}
+
+export function useGetSelectedAssessmentByGoalId(goalId: number) {
+  return useQuery(["selected_assessment", goalId], () => getSelectedAssessmentByGoalId(goalId));
 }
