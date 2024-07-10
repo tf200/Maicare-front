@@ -299,7 +299,7 @@ function MatrixItem({
               type="button"
               className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
               onClick={() => {
-                router.push(`/clients/${clientId}/goals/${domainId}`);
+                router.push(`/clients/${clientId}/goals/${domainId}/${levelId}`);
               }}
             >
               <Icon name="flag-triangle-right" /> {assessment.goal_ids.length} Goals
