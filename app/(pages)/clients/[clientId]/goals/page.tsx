@@ -111,19 +111,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       {/* <DomainLevels clientId={+clientId} /> */}
-      <Panel
-        className="w-full"
-        title={"Doelenlijst"}
-        // sideActions={
-        //   <Button
-        //     onClick={() => {
-        //       openGoalModal({ clientId });
-        //     }}
-        //   >
-        //     Nieuw Doel Toevoegen
-        //   </Button>
-        // }
-      >
+      <Panel className="w-full" title={"Doelenlijst"}>
         {isListLoading && (
           <div className="p-4 sm:p-6 xl:p-7.5">
             <Loader />

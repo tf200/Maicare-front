@@ -13,6 +13,8 @@ import UpdateObjectiveModal from "@/components/goals/UpdateObjectiveModal";
 import UpdateGoalModal from "@/components/goals/UpdateGoalModal";
 import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
+import Icon from "../Icon";
+import { cn } from "@/utils/cn";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -57,21 +59,15 @@ const GoalDetails: FunctionComponent<{
           {goal.objectives.map((objective) => (
             <li
               key={objective.id}
-              className="flex bg-white px-4 py-2 rounded shadow items-center"
+              className={cn(
+                "flex px-4 py-2 rounded-lg shadow items-center border-dashed border-1 bg-white"
+              )}
             >
-              <button
-                onClick={() => {
-                  openObjectiveModal({
-                    objective,
-                    goalId: goal.id,
-                    clientId: goal.client_id,
-                  });
-                }}
-                className="text-left flex flex-grow justify-between items-center"
-              >
-                <div>{objective.title}</div>
-                <button
-                  type={"button"}
+              <div className="font-bold flex-grow">
+                <Icon name="move-right" /> {objective.title}
+              </div>
+              <div className="mr-2">
+                <IconButton
                   onClick={(e) => {
                     e.stopPropagation();
                     openObjectiveProgressModal({
@@ -81,11 +77,41 @@ const GoalDetails: FunctionComponent<{
                       clientId: goal.client_id,
                     });
                   }}
-                  className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
+                  className={cn(
+                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1"
+                  )}
                 >
-                  {objective.rating}
-                </button>
-              </button>
+                  <Icon name="line-chart" />
+                </IconButton>
+              </div>
+              <div className="mr-2">
+                <IconButton
+                  onClick={() => {
+                    openObjectiveModal({
+                      objective,
+                      goalId: goal.id,
+                      clientId: goal.client_id,
+                    });
+                  }}
+                  className="text-left flex flex-grow justify-between items-center"
+                >
+                  <PencilSquare className="w-5 h-5" />
+                </IconButton>
+              </div>
+              <div
+                // onClick={(e) => {
+                //   e.stopPropagation();
+                //   openObjectiveProgressModal({
+                //     objectiveId: objective.id,
+                //     objectiveTitle: objective.title,
+                //     objective,
+                //     clientId: goal.client_id,
+                //   });
+                // }}
+                className="border border-stroke rounded-full w-10 h-10 text-center leading-10 bg-meta-5/10 font-bold hover:bg-meta-5/40"
+              >
+                {objective.rating}
+              </div>
             </li>
           ))}
         </ul>
@@ -104,11 +130,7 @@ const GoalDetails: FunctionComponent<{
           disabled={isDeleted}
           isLoading={isDeleting}
         >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
+          {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
         <IconButton
           onClick={(e) => {

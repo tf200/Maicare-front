@@ -295,16 +295,24 @@ function MatrixItem({
           )}
 
           {assessment.goal_ids.length ? (
-            <button
-              type="button"
-              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
-              onClick={() => {
-                // This should have been Accessment ID instead of goal_ids
-                router.push(`/clients/${clientId}/goals?goal_id=${assessment.goal_ids[0]}`);
-              }}
-            >
-              <Icon name="flag-triangle-right" /> {assessment.goal_ids.length} Goals
-            </button>
+            mode === "edit" ? (
+              <button
+                type="button"
+                className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
+                onClick={() => {
+                  // This should have been Accessment ID instead of goal_ids
+                  router.push(`/clients/${clientId}/goals?goal_id=${assessment.goal_ids[0]}`);
+                }}
+              >
+                <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
+                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+              </button>
+            ) : (
+              <div className="font-bold text-center">
+                <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
+                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+              </div>
+            )
           ) : (
             <button
               type="button"
