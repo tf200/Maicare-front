@@ -1,9 +1,26 @@
+"useClient";
+
 import { cn } from "@/utils/cn";
-import { useClientLevels, useDomains } from "@/utils/domains";
+import {
+  selectedAssessment,
+  useClientLevels,
+  useClientSelectedAssessments,
+  useDomains,
+} from "@/utils/domains";
 import { DomainLevel, DomainLevels, MDomain } from "@/types/domains";
 import { useCallback, useEffect, useState } from "react";
 import { SetDomainLevelReqDto } from "@/types/goals";
 import Icon from "../Icon";
+import { useRouter } from "next/navigation";
+import { useModal } from "../providers/ModalProvider";
+import { on } from "events";
+import { getDangerActionConfirmationModal } from "../Modals/DangerActionConfirmation";
+import Modal from "../Modals/Modal";
+import { ModalProps } from "@/types/modal-props";
+import SmartFormula from "../SmartFormula";
+import FormModal from "../Modals/FormModal";
+import { useGetSmartFormula } from "@/utils/maturity_matrix";
+import { Prettify } from "@/types";
 
 const GRADIENT_COLORS = [
   "bg-meta-7/[0.4]",
@@ -11,23 +28,29 @@ const GRADIENT_COLORS = [
   "bg-meta-8/[0.2]",
   "bg-meta-3/[0.2]",
   "bg-meta-3/[0.4]",
-];
+] as const;
+
+export type ModeType = "create" | "edit";
 
 type MLevel = {
   level: number;
   assessments: string;
 };
 
-type ClientMaturityMatrixProps = {
+type MaturityMatrixTableProps = {
   clientId: number;
-  onDomainLevelsChange?: (domainLevels: SetDomainLevelReqDto[]) => void;
+  onSelectedAssessmentsChange?: (assessments: selectedAssessment[]) => void;
   onChange?: ({
-    selectedDomains,
+    selectedAssessment,
     isNew,
   }: {
-    selectedDomains: SetDomainLevelReqDto;
+    selectedAssessment: selectedAssessment;
     isNew: boolean;
   }) => void;
+  selectedAssessments?: selectedAssessment[];
+  mode?: ModeType;
+  startDate?: string;
+  endDate?: string;
 };
 
 const M_LEVELS = [
@@ -38,83 +61,62 @@ const M_LEVELS = [
   "5 Volledig zelfredzaam",
 ] as const;
 
-export default function ClientMaturityMatrix({
+export default function MaturityMatrixTable({
   clientId,
-  onDomainLevelsChange,
+  onSelectedAssessmentsChange,
   onChange,
-}: ClientMaturityMatrixProps) {
+  selectedAssessments,
+  mode = "create",
+  startDate,
+  endDate,
+}: MaturityMatrixTableProps) {
   const { data: domains, isLoading } = useDomains();
-  const { data: clientLevels, isLoading: isLoadingClientLevels } = useClientLevels(clientId);
 
-  const [selectedDomains, setSelectedDomains] = useState<SetDomainLevelReqDto[]>(
-    clientLevels
-      ? clientLevels.map((domainLevel) => ({
-          domain_id: domainLevel.domain_id,
-          level: domainLevel.level,
-        }))
-      : []
-  );
+  const handleSelectedAssessmentsChange = useCallback(
+    (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
+      let prev = selectedAssessments;
+      // Not undefined
+      if (prev) {
+        const isNew: boolean =
+          prev.filter((assessment) => assessment.domain_id === domain.id).length === 0;
+        // Remove the old level if it exists for the same domain
+        prev = prev.filter((assessment) => assessment.domain_id !== domain.id);
 
-  useEffect(() => {
-    if (clientLevels) {
-      setSelectedDomains(
-        // parse domain levels to SetDomainLevelReqDto
-        clientLevels.map((domainLevel) => ({
-          domain_id: domainLevel.domain_id,
-          level: domainLevel.level,
-        }))
-      );
-    }
-  }, [clientLevels]);
+        onChange?.({
+          selectedAssessment: selectedAssessment,
+          isNew: isNew,
+        });
 
-  useEffect(() => {
-    if (selectedDomains && onDomainLevelsChange) {
-      onDomainLevelsChange(selectedDomains);
-    }
-  }, [selectedDomains]);
-
-  const handleDomainLevelChange = useCallback(
-    (selectedDomainLevel: SetDomainLevelReqDto, domain: MDomain, level: MLevel) => {
-      setSelectedDomains((prev) => {
-        // Not undefined
-        if (prev) {
-          const isNew: boolean =
-            prev.filter((domainLevel) => domainLevel.domain_id === domain.id).length === 0;
-          // Remove the old level if it exists for the same domain
-          prev = prev.filter((domainLevel) => domainLevel.domain_id !== domain.id);
-
-          onChange?.({
-            selectedDomains: selectedDomainLevel,
-            isNew: isNew,
-          });
-
-          return [...prev, selectedDomainLevel];
-        }
-      });
+        onSelectedAssessmentsChange?.([...prev, selectedAssessment]);
+      }
     },
-    []
+    [selectedAssessments]
   );
 
   const handleDomainLevelRemove = useCallback(
-    (selectedDomainLevel: SetDomainLevelReqDto, domain: MDomain, level: MLevel) => {
-      setSelectedDomains((prev) => {
-        if (prev) {
-          return prev.filter(
-            (clientLevel) =>
-              !(clientLevel.domain_id === domain.id && clientLevel.level === level.level)
-          );
-        }
-      });
+    (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
+      let prev = selectedAssessments;
+
+      if (prev) {
+        const filteredAssessments = prev.filter(
+          (clientLevel) =>
+            !(clientLevel.domain_id === domain.id && clientLevel.level === level.level)
+        );
+
+        onChange?.({
+          selectedAssessment: selectedAssessment,
+          isNew: false,
+        });
+
+        onSelectedAssessmentsChange?.(filteredAssessments);
+      }
     },
-    []
+    [selectedAssessments]
   );
 
-  if (isLoading || isLoadingClientLevels || selectedDomains === undefined) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  // const DOMAIN_NAMES = domains.map((domain) => domain.name);
-  // const DOMAIN_IDS = domains.map((domain) => domain.id);
 
   return (
     <table className="table-fixed w-full">
@@ -146,17 +148,25 @@ export default function ClientMaturityMatrix({
                 className="align-top w-1/6 border border-stroke whitespace-pre-wrap"
               >
                 <MatrixItem
-                  selected={isClientLevelSelected(selectedDomains, domain.id, level.level)}
-                  domainId={domain.id}
-                  levelId={level.level}
-                  onRemove={(selectedDomainLevel) =>
-                    handleDomainLevelRemove(selectedDomainLevel, domain, level)
-                  }
+                  mode={mode}
+                  key={`${domain.id}-${level.level}`}
+                  selected={isClientLevelSelected(selectedAssessments, domain.id, level.level)}
+                  clientId={clientId}
+                  startDate={startDate}
+                  endDate={endDate}
+                  assessment={getClientSelectedAssessment(
+                    selectedAssessments,
+                    domain.id,
+                    level.level
+                  )}
+                  setAssessment={(assessment) => {
+                    handleSelectedAssessmentsChange(assessment, domain, level);
+                  }}
+                  onRemove={(assessment) => handleDomainLevelRemove(assessment, domain, level)}
                   onClick={
-                    isClientLevelSelected(selectedDomains, domain.id, level.level)
+                    isClientLevelSelected(selectedAssessments, domain.id, level.level)
                       ? () => {}
-                      : (selectedDomainLevel) =>
-                          handleDomainLevelChange(selectedDomainLevel, domain, level)
+                      : (assessment) => handleSelectedAssessmentsChange(assessment, domain, level)
                   }
                 >
                   {parseAssessments(level.assessments).map((goal, index) => {
@@ -184,41 +194,82 @@ function parseAssessments(assessments: string) {
 function MatrixItem({
   children,
   selected = false,
-  domainId,
-  levelId,
+  clientId,
+  assessment,
+  setAssessment,
   onClick,
   onRemove,
+  mode = "create",
+  startDate,
+  endDate,
 }: {
   children: React.ReactNode;
-  domainId: number;
-  levelId: number;
+  clientId: number;
+  assessment: selectedAssessment;
+  setAssessment: (assessment: selectedAssessment) => void;
   selected?: boolean;
-  onClick: (selectedDomainLevel: SetDomainLevelReqDto) => void;
-  onRemove?: (selectedDomainLevel: SetDomainLevelReqDto) => void;
+  onClick?: (assessment: selectedAssessment) => void;
+  onRemove?: (assessment: selectedAssessment) => void;
+  mode?: ModeType;
+  startDate?: string;
+  endDate?: string;
 }) {
+  const router = useRouter();
+  const { domain_id: domainId, level: levelId } = assessment; // for backward compatibility
+
+  const { open: openSmartFormulaModal, close: closeSmartFormulaModal } = useModal(
+    (modelProps: ModalProps) => {
+      return (
+        <SmartFormulaGeneratorModal {...modelProps}>
+          <SmartFormula
+            clientId={clientId}
+            domainId={domainId}
+            levelId={levelId}
+            startDate={startDate}
+            endDate={endDate}
+            onSave={(goal_ids, edited_smart_formula_goals) => {
+              // set the assessment
+              setAssessment({
+                domain_id: domainId,
+                level: levelId,
+                goal_ids: goal_ids,
+              });
+
+              closeSmartFormulaModal();
+            }}
+          />
+        </SmartFormulaGeneratorModal>
+      );
+    }
+  );
+
   return (
     <div
       className={cn(
-        " p-2 min-h-[250px] cursor-pointer relative",
-        selected &&
-          "border-2 rounded-md border-dashed bg-purple-100 border-purple-500 text-black cursor-default",
-        !selected && "hover:bg-gray"
+        " p-2 min-h-[250px] relative group overflow-hidden",
+        selected && "border-2 rounded-md bg-purple-100 border-purple-500 text-black cursor-default",
+        !selected && mode === "create" && "hover:bg-gray",
+        mode === "create" ? "border-dashed cursor-pointer" : "border-solid cursor-default"
       )}
-      onClick={() =>
-        onClick({
-          domain_id: domainId,
-          level: levelId,
-        })
-      }
+      onClick={() => {
+        if (mode === "create") {
+          onClick({
+            domain_id: domainId,
+            level: levelId,
+            goal_ids: [],
+          });
+        }
+      }}
     >
       {children}
       {selected && (
-        <span className="absolute right-2 bottom-2">
-          <Icon name="flag" size={23} className="text-purple-500" />
+        <span className="absolute right-2 bottom-2 text-purple-500">
+          {assessment.goal_ids.length}
+          <Icon name="flag-triangle-right" size={23} />
         </span>
       )}
 
-      {selected && (
+      {/* {selected && (
         <span
           className="absolute right-2 top-2 rounded-full hover:bg-purple-300 text-purple-500 cursor-pointer"
           onClick={() =>
@@ -230,18 +281,103 @@ function MatrixItem({
         >
           <Icon name="x" size={23} />
         </span>
+      )} */}
+
+      {selected && (
+        <div className="invisible absolute group-hover:visible transition transform translate-y-8 group-hover:translate-y-0 ease-in-out bg-purple-300 w-full right-0 left-0 top-0 bottom-0 z-0 p-2 flex flex-col justify-center">
+          {mode !== "edit" && (
+            <span
+              className="absolute right-2 top-2 rounded-full hover:bg-purple-200 text-purple-500 cursor-pointer"
+              onClick={() => onRemove(assessment)}
+            >
+              <Icon name="x" size={23} className="block" />
+            </span>
+          )}
+
+          {assessment.goal_ids.length ? (
+            mode === "edit" ? (
+              <button
+                type="button"
+                className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
+                onClick={() => {
+                  // This should have been Accessment ID instead of goal_ids
+                  router.push(`/clients/${clientId}/goals?goal_id=${assessment.goal_ids[0]}`);
+                }}
+              >
+                <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
+                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+              </button>
+            ) : (
+              <div className="font-bold text-center">
+                <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
+                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+              </div>
+            )
+          ) : (
+            <button
+              type="button"
+              className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
+              onClick={() => {
+                openSmartFormulaModal({});
+              }}
+            >
+              <Icon name="sparkles" /> Smart Formula
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
 }
 
 function isClientLevelSelected(
-  clientLevels: DomainLevels | SetDomainLevelReqDto[],
+  selectedAssessments: DomainLevels | SetDomainLevelReqDto[] | selectedAssessment[],
   domainId: number,
   levelId: number
 ) {
-  return clientLevels.some(
-    (clientLevel: DomainLevel) =>
-      clientLevel.domain_id === domainId && clientLevel.level === levelId
+  return selectedAssessments.some(
+    (clientLevel) => clientLevel.domain_id === domainId && clientLevel.level === levelId
+  );
+}
+
+function getClientSelectedAssessment(
+  assessments: selectedAssessment[],
+  domainId: number,
+  levelId: number
+) {
+  const found_assessment = assessments.find(
+    (assessment: selectedAssessment) =>
+      assessment.domain_id === domainId && assessment.level === levelId
+  );
+
+  if (found_assessment) {
+    return found_assessment;
+  } else {
+    return {
+      domain_id: domainId,
+      level: levelId,
+      goal_ids: [],
+    };
+  }
+}
+
+export function SmartFormulaGeneratorModal({
+  children,
+  additionalProps,
+  ...props
+}: ModalProps & { children: React.ReactNode }) {
+  return (
+    <FormModal
+      title={
+        <div>
+          <Icon name="sparkles" className="mr-2" />
+          <span>Smart Formula Generator</span>
+        </div>
+      }
+      {...props}
+      {...additionalProps}
+    >
+      {children}
+    </FormModal>
   );
 }

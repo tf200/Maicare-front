@@ -18,9 +18,9 @@ const ModalContext = React.createContext({
 });
 
 const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
-  const [OpenedModal, setOpenedModal] =
-    useState<FunctionComponent<ModalProps>>(null);
+  const [OpenedModal, setOpenedModal] = useState<FunctionComponent<ModalProps>>(null);
   const [modals, setModals] = useState<FunctionComponent<ModalProps>[]>([]);
+
   const push = useCallback(
     (modal: FunctionComponent) => {
       setModals((modals) => [...modals, modal]);
@@ -28,6 +28,7 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
     },
     [setModals, setOpenedModal]
   );
+
   const pop = useCallback(() => {
     setModals((modals) => {
       const newModals = modals.slice(0, modals.length - 1);
@@ -39,6 +40,7 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
       return newModals;
     });
   }, [setModals, setOpenedModal]);
+
   const removeModal = useCallback(
     (modal: FunctionComponent) => {
       setModals((modals) => {
@@ -53,6 +55,7 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
     },
     [setModals]
   );
+
   return (
     <ModalContext.Provider
       value={{
@@ -74,7 +77,8 @@ const ModalProvider: FunctionComponent<PropsWithChildren> = (props) => {
 export default ModalProvider;
 
 export function useModal(Modal: FunctionComponent<ModalProps>) {
-  const { push, removeModal } = useContext(ModalContext);
+  const { push, removeModal, pop } = useContext(ModalContext);
+
   return {
     open: (additionalProps: { [key: string]: any }) => {
       const Component: FunctionComponent<ModalProps> = (props) => (
@@ -82,6 +86,9 @@ export function useModal(Modal: FunctionComponent<ModalProps>) {
       );
       push(Component);
       return () => removeModal(Component);
+    },
+    close: () => {
+      pop();
     },
   };
 }

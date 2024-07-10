@@ -1,15 +1,18 @@
+import { cn } from "@/utils/cn";
 import React, { FunctionComponent, TextareaHTMLAttributes } from "react";
 
 type Props = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   placeholder?: string;
+  inputClassName?: string;
   error?: any;
 };
 
 const Textarea: FunctionComponent<Props> = ({
   label,
   id,
-  className,
+  className = "",
+  inputClassName = "",
   required,
   error,
   ...props
@@ -23,7 +26,10 @@ const Textarea: FunctionComponent<Props> = ({
         {...props}
         required={required}
         id={id}
-        className="w-full rounded bg-white border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+        className={cn(
+          `w-full rounded border-[1.5px] border-stroke py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary bg-white`,
+          inputClassName
+        )}
       ></textarea>
       {error && (
         <p role="alert" className="pt-1 text-red">
