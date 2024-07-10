@@ -15,6 +15,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration-agreement";
 import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
 import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
+import Icon from "@/components/Icon";
 
 type Props = {
   params: { clientId: string };
@@ -32,6 +33,9 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
       title: "Samenwerking verwijderen",
     })
   );
+  const handlePrintQuestionnaire = (questionnaireId: string) => {
+    alert("print : " + questionnaireId);
+  };
 
   const columnDef = useMemo<ColumnDef<CollaborationAgreementsType>[]>(() => {
     return [
@@ -75,6 +79,10 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                 </IconButton>
               </Link>
 
+              <IconButton className="bg-green-500" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
+                <Icon name="printer" className="w-5 h-5" />
+              </IconButton>
+
               <IconButton
                 className="bg-red"
                 onClick={() => {
@@ -87,6 +95,7 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
               >
                 <DeleteIcon className="w-5 h-5" />
               </IconButton>
+              
             </div>
           );
         },
