@@ -66,7 +66,7 @@ export default function SmartFormula({
   useEffect(() => {
     getSmartFormula()
       .then((goals) => {
-        console.log("Fetched smart formula goals: ", goals);
+        //console.log("Fetched smart formula goals: ", goals);
         //setSmartFormulaGoals(goals);
       })
       .catch((err) => {
