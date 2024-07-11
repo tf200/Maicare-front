@@ -27,7 +27,7 @@ const Textarea: FunctionComponent<Props> = ({
         required={required}
         id={id}
         className={cn(
-          `w-full rounded border-[1.5px] border-stroke py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary bg-white`,
+          `w-full rounded-lg border-[1.5px] border-stroke py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary bg-white`,
           inputClassName
         )}
       ></textarea>

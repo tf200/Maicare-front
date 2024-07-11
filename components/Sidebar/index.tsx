@@ -221,7 +221,7 @@ const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
     <>
       <button
         className={clsx(
-          "group relative w-full flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
+          "group relative w-full flex items-center gap-2.5 rounded-lg py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
           {
             [styles.active]: inferOpen,
           }

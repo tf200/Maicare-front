@@ -26,7 +26,7 @@ const Select: FunctionComponent<SelectProps> = ({
         <select
           id={id}
           required={required}
-          className="relative bg-white z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+          className="relative bg-white z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent py-2 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           {...props}
         >
           {options.map((option) => {
