@@ -139,12 +139,14 @@ export default function SmartFormula({
 
   return (
     <div className="text-left overflow-y-auto">
-      <i>
-        <Icon name="info" /> Genereer doelen en doelstellingen voor deze periode:{" "}
-        <b>
-          {startDate} - {endDate}
-        </b>
-      </i>
+      <div className="mb-3">
+        <i>
+          <Icon name="info" /> Genereer doelen en doelstellingen voor deze periode:{" "}
+          <b>
+            {startDate} - {endDate}
+          </b>
+        </i>
+      </div>
       {editableSmartFormulaGoals.map((goal, goal_index) => {
         return (
           <div key={goal_index}>

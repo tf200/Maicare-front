@@ -24,7 +24,7 @@ const FormModal: FunctionComponent<Props> = ({
     >
       <Dialog.Panel
         className={cn(
-          "flex flex-col relative m-auto w-full max-w-180 rounded-sm border border-stroke bg-gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5",
+          "flex flex-col relative m-auto w-full max-w-180 rounded-lg border border-stroke bg-gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5",
           panelClassName
         )}
       >
