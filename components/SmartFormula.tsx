@@ -140,7 +140,7 @@ export default function SmartFormula({
   return (
     <div className="text-left overflow-y-auto">
       <i>
-        <Icon name="info" /> Generate Goals & Objectives for this period:{" "}
+        <Icon name="info" /> Genereer doelen en doelstellingen voor deze periode:{" "}
         <b>
           {startDate} - {endDate}
         </b>
@@ -240,11 +240,15 @@ export default function SmartFormula({
       >
         <Button onClick={handleClick}>
           <Icon name="sparkles" />
-          {smartFormulaGoals.length ? "Regenerate Smart Formula again" : "Generate Smart Formula"}
+          {smartFormulaGoals.length
+            ? "Regenereer Smart Formula opnieuw"
+            : "Genereer slimme formule"}
         </Button>
 
         {!!editableSmartFormulaGoals.length && (
-          <Button onClick={handleSubmit}>{isSaving ? "Saving..." : "Save Smart Formula"}</Button>
+          <Button onClick={handleSubmit}>
+            {isSaving ? "Opslaan..." : "Bewaar slimme formule"}
+          </Button>
         )}
       </div>
     </div>

@@ -36,9 +36,9 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     desc: "Nieuwe verklaring voor het delen van gegevens voor deze klant",
   },
   {
-    label: "Volwassenheidsmatrix",
+    label: "Zelfduurzaamheidsmatrix",
     urlKey: "maturity-matrix",
-    desc: "Nieuwe volwassenheidsmatrix voor deze klant",
+    desc: "Nieuwe Zelfduurzaamheidsmatrix voor deze klant",
   },
 ];
 
