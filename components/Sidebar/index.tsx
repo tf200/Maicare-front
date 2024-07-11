@@ -183,7 +183,7 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
     <Link
       href={completeHref}
       className={clsx(
-        "group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out",
+        "group relative flex items-center gap-2.5 rounded-lg py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out",
         {
           [styles.active]: getIsActive
             ? getIsActive(pathname, completeHref)
@@ -362,12 +362,12 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Contracten",
               permission: consts.CONTRACTS_VIEW,
             },
-            hasPerm(consts.CARE_PLANS_VIEW) && {
-              completeHref: "/care-plans",
-              icon: <HeartIcon width={18} height={18} />,
-              children: "Zorgplannen",
-              permission: consts.CARE_PLANS_VIEW,
-            },
+            // hasPerm(consts.CARE_PLANS_VIEW) && {
+            //   completeHref: "/care-plans",
+            //   icon: <HeartIcon width={18} height={18} />,
+            //   children: "Zorgplannen",
+            //   permission: consts.CARE_PLANS_VIEW,
+            // },
             hasPerm(consts.INCIDENT_OVERVIEW_VIEW) && {
               completeHref: "/incident-overview",
               icon: <></>,
@@ -490,18 +490,18 @@ const ClientMenu: FunctionComponent = () => {
             children: "Documenten",
             permission: consts.CLIENT_VIEW,
           },
-          {
-            completeHref: `/clients/${clientId}/care-plans`,
-            icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
-            children: "Zorgplannen",
-            permission: consts.CARE_PLANS_VIEW,
-          },
-          {
-            completeHref: `/clients/${clientId}/goals`,
-            icon: <GoalIcon height={18} width={18} />,
-            children: "Doelen",
-            permission: consts.CLIENT_VIEW,
-          },
+          // {
+          //   completeHref: `/clients/${clientId}/care-plans`,
+          //   icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
+          //   children: "Zorgplannen",
+          //   permission: consts.CARE_PLANS_VIEW,
+          // },
+          // {
+          //   completeHref: `/clients/${clientId}/goals`,
+          //   icon: <GoalIcon height={18} width={18} />,
+          //   children: "Doelen",
+          //   permission: consts.CLIENT_VIEW,
+          // },
           {
             completeHref: `/clients/${clientId}/questionnaire`,
             icon: <DocumentIcon className={"w-4.5 h-4.5"} />,

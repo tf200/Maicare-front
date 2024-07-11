@@ -21,6 +21,7 @@ import SmartFormula from "../SmartFormula";
 import FormModal from "../Modals/FormModal";
 import { useGetSmartFormula } from "@/utils/maturity_matrix";
 import { Prettify } from "@/types";
+import { toast } from "react-toastify";
 
 const GRADIENT_COLORS = [
   "bg-meta-7/[0.4]",
@@ -305,12 +306,12 @@ function MatrixItem({
                 }}
               >
                 <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
-                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+                {assessment.goal_ids.length > 1 ? "Doelen" : "Doel"}
               </button>
             ) : (
               <div className="font-bold text-center">
                 <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
-                {assessment.goal_ids.length > 1 ? "Goals" : "Goal"}
+                {assessment.goal_ids.length > 1 ? "Doelen" : "Doel"}
               </div>
             )
           ) : (
@@ -318,7 +319,11 @@ function MatrixItem({
               type="button"
               className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold"
               onClick={() => {
-                openSmartFormulaModal({});
+                if (!startDate || !endDate) {
+                  toast.warning("Selecteer eerst de start- en einddatum.");
+                } else {
+                  openSmartFormulaModal({});
+                }
               }}
             >
               <Icon name="sparkles" /> Smart Formula

@@ -67,7 +67,7 @@ export default function AddMaturityMatrixPage({
 
   return (
     <Panel
-      title="Nieuwe volwassenheidsmatrix"
+      title="Nieuwe Zelfduurzaamheidsmatrix"
       sideActions={
         <Button
           onClick={() => formik.handleSubmit()}

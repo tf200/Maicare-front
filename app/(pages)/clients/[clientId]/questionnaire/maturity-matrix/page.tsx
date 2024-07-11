@@ -11,10 +11,10 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
 
   return (
     <Panel
-      title="Volwassenheidsmatrices"
+      title="Zelfduurzaamheidsmatrixlijst"
       sideActions={
         <LinkButton
-          text="Nieuwe volwassenheidsmatrix creëren"
+          text="Nieuwe Zelfduurzaamheidsmatrix creëren"
           href={"./maturity-matrix/add"}
           className="ml-auto"
         />
@@ -39,7 +39,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                 <tr key={matrix.id}>
                   <td className="py-5">
                     <Link href={`./maturity-matrix/${matrix.id}/edit`}>
-                      <b>Maturity Matrix (#{matrix.id})</b>
+                      <b>Zelfduurzaamheidsmatrix (#{matrix.id})</b>
                     </Link>
                   </td>
                   <td>{matrix.start_date}</td>
