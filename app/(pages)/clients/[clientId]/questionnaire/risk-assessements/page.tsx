@@ -8,6 +8,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import PaginatedTable from "@/components/PaginatedTable";
 import Panel from "@/components/Panel";
 import { useModal } from "@/components/providers/ModalProvider";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 import { RiskAssessementType } from "@/types/questionnaire/risk-assessments-type";
 import { useDeleteRiskAssessements } from "@/utils/questionnairs/risk-assessements/useDeleteRiskAssessemets";
 import { useGetRiskAssessemets } from "@/utils/questionnairs/risk-assessements/useGetAllRiskAssessemets";
@@ -73,7 +74,7 @@ const RiskAssessements: FunctionComponent<Props> = ({ params: { clientId } }) =>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
+              <QuestionnaireDownloadButton type="risk_assessment" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() => {

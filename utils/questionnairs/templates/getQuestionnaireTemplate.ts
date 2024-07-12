@@ -1,19 +1,19 @@
+import { TemplateType } from "@/components/QuestionnaireDownloadButton";
 import axios from "axios";
 
 
-type TemplateType = "risk_assessment" | "collaboration_agreement" | "consent_declaration";
 
-type QuestionnaireTemplateParams = { questionnaireId: string, templateType: TemplateType };
+type QuestionnaireTemplateParams = { questionnaireId: string | number, templateType: TemplateType };
 type QuestionnaireTemplateResDto = { link: string };
 
-export const getQuestionnaireTemplate = async (params: QuestionnaireTemplateParams) => {
+export const getQuestionnaireTemplate = async ({ questionnaireId, templateType }: QuestionnaireTemplateParams) => {
 
-    if(!params.questionnaireId || !params.templateType){
-        throw("questionnaireId and templateType are required");
+    if (!questionnaireId || !templateType) {
+        throw ("questionnaireId and templateType are required");
     }
 
     try {
-        const response = await axios.post<QuestionnaireTemplateResDto>(`/api/questionnaire/${ params.questionnaireId }/template`, { template_type: params.templateType });
+        const response = await axios.post<QuestionnaireTemplateResDto>(`/questionnaires/generate-document-link`, { id: questionnaireId, type: templateType });
         return response.data;
     } catch (error) {
         console.error(error);

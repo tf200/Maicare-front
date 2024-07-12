@@ -15,9 +15,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration-agreement";
 import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
 import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
-import Icon from "@/components/Icon";
-import { getQuestionnaireTemplate } from "@/utils/questionnairs/templates/getQuestionnaireTemplate";
-import { Download, LoaderCircle, Printer } from "lucide-react";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 
 type Props = {
   params: { clientId: string };
@@ -35,9 +33,6 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
       title: "Samenwerking verwijderen",
     })
   );
-
-
-  
 
   const columnDef = useMemo<ColumnDef<CollaborationAgreementsType>[]>(() => {
     return [
@@ -71,50 +66,14 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
         accessorKey: "action",
         header: "Acties",
         cell: (info) => {
-
-          const [isPrintTemplateLoading, setIsPrintTemplateLoading] = useState(false);
-          const [pdfTemplate, setPdfTemplate] = useState<string|null>();
-
-          const handlePrintQuestionnaire = (questionnaireId: string) => {
-            setIsPrintTemplateLoading(true);
-            setTimeout(() => {
-              setPdfTemplate("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
-              setIsPrintTemplateLoading(false);
-            }, 4000);
-
-            getQuestionnaireTemplate({questionnaireId, templateType: "collaboration_agreement" })
-            .then(({ link }) => {
-              window.open(link, "_blank");
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-          };
-        
           return (
             <div className="flex gap-3">
-              <Link
-                href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}
-              >
+              <Link href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}>
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-                { !pdfTemplate && !isPrintTemplateLoading &&
-                  <IconButton className="bg-strokedark" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
-                    <Printer className="w-5 h-5" />
-                  </IconButton>
-                }
-                { !pdfTemplate && isPrintTemplateLoading &&
-                  <IconButton className="bg-strokedark">
-                    <LoaderCircle className="w-5 h-5 animate-spin" />
-                  </IconButton>
-                }
-                { pdfTemplate && 
-                  <IconButton className="bg-strokedark" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
-                    <Download className="w-5 h-5" />
-                  </IconButton>
-                }
+              <QuestionnaireDownloadButton type="collaboration_agreement" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() => {
@@ -125,9 +84,8 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                   });
                 }}
               >
-                <DeleteIcon className="w-5 h-5" />
+              <DeleteIcon className="w-5 h-5" />
               </IconButton>
-              
             </div>
           );
         },
