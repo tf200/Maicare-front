@@ -1,6 +1,5 @@
 import { TemplateType } from "@/components/QuestionnaireDownloadButton";
-import axios from "axios";
-
+import api from "@/utils/api";
 
 
 type QuestionnaireTemplateParams = { questionnaireId: string | number, templateType: TemplateType };
@@ -13,7 +12,7 @@ export const getQuestionnaireTemplate = async ({ questionnaireId, templateType }
     }
 
     try {
-        const response = await axios.post<QuestionnaireTemplateResDto>(`/questionnaires/generate-document-link`, { id: questionnaireId, type: templateType });
+        const response = await api.post<QuestionnaireTemplateResDto>(`/clients/questionnaires/generate-document-link`, { id: questionnaireId, type: templateType });
         return response.data;
     } catch (error) {
         console.error(error);
