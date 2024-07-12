@@ -1,0 +1,16 @@
+.table.table {
+  thead {
+    @apply hidden;
+  }
+  & > tbody > tr > td {
+    vertical-align: top;
+  }
+  td:last-child:not([colspan]),
+  th:last-child {
+    @apply w-15 pl-0;
+  }
+}
+
+.button {
+  @apply px-4 py-1 text-sm;
+}

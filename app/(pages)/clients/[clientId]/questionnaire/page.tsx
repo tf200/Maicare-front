@@ -35,11 +35,16 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "data-sharing",
     desc: "Nieuwe verklaring voor het delen van gegevens voor deze klant",
   },
+  {
+    label: "Zelfduurzaamheidsmatrix",
+    urlKey: "maturity-matrix",
+    desc: "Nieuwe Zelfduurzaamheidsmatrix voor deze klant",
+  },
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
-    <div className="p-8 flex gap-4 ">
+    <div className="p-8 flex gap-4 flex-wrap">
       {StaticQuestionnaireMenu.map((item) => {
         return (
           <div

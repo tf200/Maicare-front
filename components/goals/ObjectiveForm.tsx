@@ -5,11 +5,7 @@ import * as Yup from "yup";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 import Textarea from "@/components/FormFields/Textarea";
-import {
-  useCreateObjective,
-  useDeleteObjective,
-  useUpdateObjective,
-} from "@/utils/goal";
+import { useCreateObjective, useDeleteObjective, useUpdateObjective } from "@/utils/goal";
 import RatingStars from "@/components/FormFields/RatingStars";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
@@ -19,12 +15,10 @@ const initialValues: ObjectiveFormType = {
   desc: "",
 };
 
-const objectiveSchema: Yup.ObjectSchema<ObjectiveFormType> = Yup.object().shape(
-  {
-    title: Yup.string().required("Geef alstublieft een titel"),
-    desc: Yup.string().required("Geef alstublieft een omschrijving"),
-  }
-);
+const objectiveSchema: Yup.ObjectSchema<ObjectiveFormType> = Yup.object().shape({
+  title: Yup.string().required("Geef alstublieft een titel"),
+  desc: Yup.string().required("Geef alstublieft een omschrijving"),
+});
 
 const ObjectiveForm: FunctionComponent<{
   goalId: number;
@@ -33,14 +27,8 @@ const ObjectiveForm: FunctionComponent<{
   mode?: "edit" | "create";
   initialData?: ObjectiveItem;
 }> = ({ clientId, goalId, onSuccess, mode = "create", initialData }) => {
-  const { mutate: create, isLoading: isCreating } = useCreateObjective(
-    clientId,
-    goalId
-  );
-  const { mutate: update, isLoading: isUpdating } = useUpdateObjective(
-    clientId,
-    initialData?.id
-  );
+  const { mutate: create, isLoading: isCreating } = useCreateObjective(clientId, goalId);
+  const { mutate: update, isLoading: isUpdating } = useUpdateObjective(clientId, initialData?.id);
   const { mutate: deleteObjective } = useDeleteObjective(clientId);
 
   const formik = useFormik({
@@ -61,8 +49,7 @@ const ObjectiveForm: FunctionComponent<{
       );
     },
   });
-  const { values, handleChange, handleBlur, errors, touched, handleSubmit } =
-    formik;
+  const { values, handleChange, handleBlur, errors, touched, handleSubmit } = formik;
 
   const { open: deleteObjectiveModal } = useModal(
     getDangerActionConfirmationModal({
@@ -92,6 +79,7 @@ const ObjectiveForm: FunctionComponent<{
           rows={6}
           name="desc"
           className={"mb-4"}
+          inputClassName="h-[500px]"
           value={values.desc}
           onChange={handleChange}
           onBlur={handleBlur}

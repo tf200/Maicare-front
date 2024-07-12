@@ -9,15 +9,8 @@ import {
 import api from "@/utils/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-async function createObjective(
-  clientId: number,
-  goalId: number,
-  data: NewObjectiveReqDto
-) {
-  const response = await api.post(
-    `/clients/${clientId}/goals/${goalId}/objective/add`,
-    data
-  );
+async function createObjective(clientId: number, goalId: number, data: NewObjectiveReqDto) {
+  const response = await api.post(`/clients/${clientId}/goals/${goalId}/objective/add`, data);
   return response.data;
 }
 
@@ -34,10 +27,7 @@ export const useCreateObjective = (clientId: number, goalId: number) => {
 };
 
 async function updateObjective(objectId: number, data: UpdateObjectiveReqDto) {
-  const response = await api.patch(
-    `/clients/goals/objective/${objectId}/update`,
-    data
-  );
+  const response = await api.patch(`/clients/goals/objective/${objectId}/update`, data);
   return response.data;
 }
 
@@ -68,9 +58,7 @@ export const useDeleteObjective = (clientId: number) => {
 };
 
 async function getObjectiveHistory(objectiveId: number) {
-  const response = await api.get<RatingHistory>(
-    `/clients/goals/objectives/${objectiveId}/history`
-  );
+  const response = await api.get<RatingHistory>(`/clients/goals/objectives/${objectiveId}/history`);
   return response.data;
 }
 
@@ -82,9 +70,7 @@ export const useObjectiveHistory = (objectiveId: number) => {
 };
 
 async function getGoalHistory(goalId: number) {
-  const response = await api.get<RatingHistory>(
-    `/clients/goals/${goalId}/history`
-  );
+  const response = await api.get<RatingHistory>(`/clients/goals/${goalId}/history`);
   return response.data;
 }
 
@@ -137,21 +123,12 @@ export const useUpdateDomainLevel = (clientId: number) => {
   });
 };
 
-async function addObjectiveReport(
-  objectiveId: number,
-  report: ObjectiveReportReqDto
-) {
-  const response = await api.post(
-    `/clients/goals/objectives/${objectiveId}/history/add`,
-    report
-  );
+async function addObjectiveReport(objectiveId: number, report: ObjectiveReportReqDto) {
+  const response = await api.post(`/clients/goals/objectives/${objectiveId}/history/add`, report);
   return response.data;
 }
 
-export const useAddObjectiveReport = (
-  clientId: number,
-  objectiveId: number
-) => {
+export const useAddObjectiveReport = (clientId: number, objectiveId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (report: ObjectiveReportReqDto) => {
@@ -164,14 +141,8 @@ export const useAddObjectiveReport = (
   });
 };
 
-async function updateObjectiveReport(
-  reportId: number,
-  report: UpdateObjectiveReportReqDto
-) {
-  const response = await api.patch(
-    `/clients/goals/objectives/report/${reportId}/update`,
-    report
-  );
+async function updateObjectiveReport(reportId: number, report: UpdateObjectiveReportReqDto) {
+  const response = await api.patch(`/clients/goals/objectives/report/${reportId}/update`, report);
   return response.data;
 }
 
@@ -195,10 +166,7 @@ async function deleteObjectiveReport(reportId: number) {
   await api.delete(`/clients/goals/objectives/history/${reportId}/delete`);
 }
 
-export const useDeleteObjectiveReport = (
-  clientId: number,
-  objectiveId: number
-) => {
+export const useDeleteObjectiveReport = (clientId: number, objectiveId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteObjectiveReport,
