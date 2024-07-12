@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/table-core";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
@@ -16,6 +16,8 @@ import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration
 import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
 import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
 import Icon from "@/components/Icon";
+import { getQuestionnaireTemplate } from "@/utils/questionnairs/templates/getQuestionnaireTemplate";
+import { Download, LoaderCircle, Printer } from "lucide-react";
 
 type Props = {
   params: { clientId: string };
@@ -33,9 +35,9 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
       title: "Samenwerking verwijderen",
     })
   );
-  const handlePrintQuestionnaire = (questionnaireId: string) => {
-    alert("print : " + questionnaireId);
-  };
+
+
+  
 
   const columnDef = useMemo<ColumnDef<CollaborationAgreementsType>[]>(() => {
     return [
@@ -69,6 +71,26 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
         accessorKey: "action",
         header: "Acties",
         cell: (info) => {
+
+          const [isPrintTemplateLoading, setIsPrintTemplateLoading] = useState(false);
+          const [pdfTemplate, setPdfTemplate] = useState<string|null>();
+
+          const handlePrintQuestionnaire = (questionnaireId: string) => {
+            setIsPrintTemplateLoading(true);
+            setTimeout(() => {
+              setPdfTemplate("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+              setIsPrintTemplateLoading(false);
+            }, 4000);
+
+            getQuestionnaireTemplate({questionnaireId, templateType: "collaboration_agreement" })
+            .then(({ link }) => {
+              window.open(link, "_blank");
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          };
+        
           return (
             <div className="flex gap-3">
               <Link
@@ -78,11 +100,21 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
-              <IconButton className="bg-green-500" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
-                <Icon name="printer" className="w-5 h-5" />
-              </IconButton>
-
+                { !pdfTemplate && !isPrintTemplateLoading &&
+                  <IconButton className="bg-strokedark" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
+                    <Printer className="w-5 h-5" />
+                  </IconButton>
+                }
+                { !pdfTemplate && isPrintTemplateLoading &&
+                  <IconButton className="bg-strokedark">
+                    <LoaderCircle className="w-5 h-5 animate-spin" />
+                  </IconButton>
+                }
+                { pdfTemplate && 
+                  <IconButton className="bg-strokedark" onClick={()=>{ handlePrintQuestionnaire(info.row.id) }}>
+                    <Download className="w-5 h-5" />
+                  </IconButton>
+                }
               <IconButton
                 className="bg-red"
                 onClick={() => {
