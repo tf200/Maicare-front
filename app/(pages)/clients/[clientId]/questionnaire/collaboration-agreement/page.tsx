@@ -1,5 +1,5 @@
 "use client";
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/table-core";
 import LinkButton from "@/components/buttons/LinkButton";
 import Loader from "@/components/common/Loader";
@@ -15,6 +15,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import { CollaborationAgreementsType } from "@/types/questionnaire/collaboration-agreement";
 import { useGetCollborationList } from "@/utils/questionnairs/collabration-agreement/useGetAllCollabrotionAgreement";
 import { useDeleteCollab } from "@/utils/questionnairs/collabration-agreement/useDeleteCollaboration";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 
 type Props = {
   params: { clientId: string };
@@ -67,14 +68,12 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
         cell: (info) => {
           return (
             <div className="flex gap-3">
-              <Link
-                href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}
-              >
+              <Link href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}>
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
+              <QuestionnaireDownloadButton type="collaboration_agreement" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() => {
@@ -85,7 +84,7 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                   });
                 }}
               >
-                <DeleteIcon className="w-5 h-5" />
+              <DeleteIcon className="w-5 h-5" />
               </IconButton>
             </div>
           );

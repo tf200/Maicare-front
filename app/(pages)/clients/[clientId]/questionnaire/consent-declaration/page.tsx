@@ -8,6 +8,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import PaginatedTable from "@/components/PaginatedTable";
 import Panel from "@/components/Panel";
 import { useModal } from "@/components/providers/ModalProvider";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 import { ConsentDeclarationType } from "@/types/questionnaire/consent-declaration-type";
 import { useDeleteConsentDeclaration } from "@/utils/questionnairs/consent-declaration/useDeleteConsentDeclaration";
 import { useGetAllConsentDeclaration } from "@/utils/questionnairs/consent-declaration/useGetAllConsentDeclaration";
@@ -74,7 +75,7 @@ const ConsentDeclaration: FunctionComponent<Props> = ({ params: { clientId } }) 
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
+              <QuestionnaireDownloadButton type="consent_declaration" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() => {
