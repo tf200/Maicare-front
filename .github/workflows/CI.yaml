@@ -12,7 +12,8 @@ on:
       - "*"
 
 jobs:
-  Build:
+  build:
+    name: Build and push Docker image to AWS ECR
     runs-on: ubuntu-latest
 
     steps:
@@ -41,4 +42,5 @@ jobs:
       - name: Push the image to ECR Hub
         run: |
           docker tag maicare-frontend:${{ github.ref_name }} ${{ env.ECR_REGISTRY }}/maicare-frontend:${{ github.ref_name }}
+          docker tag maicare-frontend:${{ github.ref_name }} ${{ env.ECR_REGISTRY }}/maicare-frontend:latest
           docker push ${{ env.ECR_REGISTRY }}/maicare-frontend:${{ github.ref_name }}
