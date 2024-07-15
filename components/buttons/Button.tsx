@@ -23,9 +23,8 @@ const Button: FunctionComponent<ButtonProps> = ({
       type={type}
       {...props}
       className={cn(
-        "flex justify-center px-10 py-3 font-medium rounded hover:bg-opacity-100 bg-opacity-90 cursor-pointer",
-        BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ??
-          BUTTON_CLASS_NAMES.Primary,
+        "flex justify-center px-10 py-2 font-medium rounded-lg hover:bg-opacity-100 bg-opacity-90 cursor-pointer",
+        BUTTON_CLASS_NAMES[buttonType ?? "Primary"] ?? BUTTON_CLASS_NAMES.Primary,
         props.className
         // (props.disabled && "bg-gray-300"),
       )}

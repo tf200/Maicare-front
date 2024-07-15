@@ -27,7 +27,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
     <Dialog
       open={open}
       onClose={onClose}
-      className="fixed top-0 left-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5"
+      className="fixed top-0 left-0 z-99 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5"
     >
       <Dialog.Panel className="w-full max-w-142.5 rounded-lg bg-white py-12 px-8 text-center dark:bg-boxdark md:py-15 md:px-17.5">
         <span className="mx-auto inline-block">

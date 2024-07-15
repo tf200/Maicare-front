@@ -104,7 +104,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       className={cn(
-        `absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
+        `absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden duration-300 ease-linear lg:static lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`,
         classNames
@@ -183,7 +183,7 @@ const SidebarLink: FunctionComponent<SidebarLinkProps> = ({
     <Link
       href={completeHref}
       className={clsx(
-        "group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out",
+        "group relative flex items-center gap-2.5 rounded-lg py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out",
         {
           [styles.active]: getIsActive
             ? getIsActive(pathname, completeHref)
@@ -221,7 +221,7 @@ const SidebarDropdown: FunctionComponent<SidebarDropdownProps> = ({
     <>
       <button
         className={clsx(
-          "group relative w-full flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
+          "group relative w-full flex items-center gap-2.5 rounded-lg py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4",
           {
             [styles.active]: inferOpen,
           }
@@ -362,12 +362,12 @@ const GlobalMenu: FunctionComponent = () => {
               children: "Contracten",
               permission: consts.CONTRACTS_VIEW,
             },
-            hasPerm(consts.CARE_PLANS_VIEW) && {
-              completeHref: "/care-plans",
-              icon: <HeartIcon width={18} height={18} />,
-              children: "Zorgplannen",
-              permission: consts.CARE_PLANS_VIEW,
-            },
+            // hasPerm(consts.CARE_PLANS_VIEW) && {
+            //   completeHref: "/care-plans",
+            //   icon: <HeartIcon width={18} height={18} />,
+            //   children: "Zorgplannen",
+            //   permission: consts.CARE_PLANS_VIEW,
+            // },
             hasPerm(consts.INCIDENT_OVERVIEW_VIEW) && {
               completeHref: "/incident-overview",
               icon: <></>,
@@ -490,18 +490,18 @@ const ClientMenu: FunctionComponent = () => {
             children: "Documenten",
             permission: consts.CLIENT_VIEW,
           },
-          {
-            completeHref: `/clients/${clientId}/care-plans`,
-            icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
-            children: "Zorgplannen",
-            permission: consts.CARE_PLANS_VIEW,
-          },
-          {
-            completeHref: `/clients/${clientId}/goals`,
-            icon: <GoalIcon height={18} width={18} />,
-            children: "Doelen",
-            permission: consts.CLIENT_VIEW,
-          },
+          // {
+          //   completeHref: `/clients/${clientId}/care-plans`,
+          //   icon: <ClipBoardDocsIcon className={"w-4.5 h-4.5"} />,
+          //   children: "Zorgplannen",
+          //   permission: consts.CARE_PLANS_VIEW,
+          // },
+          // {
+          //   completeHref: `/clients/${clientId}/goals`,
+          //   icon: <GoalIcon height={18} width={18} />,
+          //   children: "Doelen",
+          //   permission: consts.CLIENT_VIEW,
+          // },
           {
             completeHref: `/clients/${clientId}/questionnaire`,
             icon: <DocumentIcon className={"w-4.5 h-4.5"} />,

@@ -50,10 +50,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
   const router = useRouter();
 
   const { mutate: create, isLoading: isCreating } = useCreateGoal(clientId);
-  const { mutate: update, isLoading: isPatching } = usePatchGoal(
-    clientId,
-    initialData?.id
-  );
+  const { mutate: update, isLoading: isPatching } = usePatchGoal(clientId, initialData?.id);
 
   const onSubmit = useCallback(
     (values: GoalsFormType, { resetForm }: FormikHelpers<GoalsFormType>) => {
@@ -67,7 +64,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
         {
           onSuccess: () => {
             resetForm;
-            router.push(`/clients/${clientId}/goals`);
+            router.refresh();
             onSuccess?.();
           },
         }
@@ -76,8 +73,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
     [create, update]
   );
 
-  const { data: domains, isLoading: isLoadingDomains } =
-    useClientDomains(clientId);
+  const { data: domains, isLoading: isLoadingDomains } = useClientDomains(clientId);
   const options = useMemo(() => {
     if (!domains)
       return [
@@ -102,26 +98,15 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
     <Formik
       enableReinitialize={true}
       initialValues={
-        mode == "edit"
-          ? initialData
-            ? dtoToForm(initialData)
-            : initialValues
-          : initialValues
+        mode == "edit" ? (initialData ? dtoToForm(initialData) : initialValues) : initialValues
       }
       onSubmit={onSubmit}
       validationSchema={goalsSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className={className}>
           <div className="p-6.5">
-            <Select
+            {/* <Select
               className="mb-4.5"
               label={"Domain"}
               id={"domain_id"}
@@ -132,7 +117,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               error={touched.domain_id && errors.domain_id}
-            />
+            /> */}
 
             <InputField
               className={"w-full mb-4.5"}
