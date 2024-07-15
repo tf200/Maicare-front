@@ -45,8 +45,8 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
 
       {
-        accessorKey: "data_description",
-        header: "Gegevensbeschrijving",
+        accessorKey: "youth_care_institution",
+        header: "Jeugdzorginstelling",
       },
       {
         accessorKey: "parent_guardian_signature_name",
