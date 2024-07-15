@@ -41,6 +41,10 @@ jobs:
 
       - name: Push the image to ECR Hub
         run: |
+          # Tag the image
           docker tag maicare-frontend:${{ github.ref_name }} ${{ env.ECR_REGISTRY }}/maicare-frontend:${{ github.ref_name }}
           docker tag maicare-frontend:${{ github.ref_name }} ${{ env.ECR_REGISTRY }}/maicare-frontend:latest
+
+          # Push the image to ECR
           docker push ${{ env.ECR_REGISTRY }}/maicare-frontend:${{ github.ref_name }}
+          docker push ${{ env.ECR_REGISTRY }}/maicare-frontend:latest
