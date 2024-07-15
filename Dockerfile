@@ -4,6 +4,9 @@ ENV PORT=3000
 
 WORKDIR /app
 
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh curl
+
 COPY package*.json ./
 
 # Install dependencies
