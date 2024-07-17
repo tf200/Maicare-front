@@ -83,8 +83,8 @@ const ChartTen: React.FC = () => {
 
       markers: {
         radius: 99,
-        width: 16,
-        height: 16,
+        // width: 16,
+        // height: 16,
       },
     },
     // yaxis: {
@@ -118,14 +118,10 @@ const ChartTen: React.FC = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex flex-col gap-2 p-4 sm:flex-row sm:justify-between md:p-6 xl:p-7.5">
         <div>
-          <h2 className="text-title-md2 font-bold text-black dark:text-white">
-            Activity Chart
-          </h2>
+          <h2 className="text-title-md2 font-bold text-black dark:text-white">Activity Chart</h2>
         </div>
         <div className="flex items-center">
-          <p className="font-medium uppercase text-black dark:text-white">
-            Short by:
-          </p>
+          <p className="font-medium uppercase text-black dark:text-white">Short by:</p>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -155,12 +151,7 @@ const ChartTen: React.FC = () => {
 
       <div className="px-7.5">
         <div id="chartTen" className="-ml-5">
-          <ApexCharts
-            options={options}
-            series={state.series}
-            type="bar"
-            height={318}
-          />
+          <ApexCharts options={options} series={state.series} type="bar" height={318} />
         </div>
       </div>
     </div>

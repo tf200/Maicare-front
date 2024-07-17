@@ -1,7 +1,15 @@
 "use client";
 
 import React, { FunctionComponent, useCallback, useMemo, useState } from "react";
-import { Calendar, dayjsLocalizer, Formats, SlotInfo, View, Views } from "react-big-calendar";
+import {
+  Calendar,
+  dayjsLocalizer,
+  Formats,
+  SlotInfo,
+  ToolbarProps,
+  View,
+  Views,
+} from "react-big-calendar";
 
 import Panel from "@/components/Panel";
 import Toolbar from "@/components/calendarComponents/Toolbar";

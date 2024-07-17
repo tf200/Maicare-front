@@ -8,6 +8,7 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 import PaginatedTable from "@/components/PaginatedTable";
 import Panel from "@/components/Panel";
 import { useModal } from "@/components/providers/ModalProvider";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 import { DataSharingType } from "@/types/questionnaire/data-sharing";
 import { useDeleteDataSharing } from "@/utils/questionnairs/data-sharing/useDeleteDataSharing";
 import { useGetAllDataSharing } from "@/utils/questionnairs/data-sharing/useGetAllDataSharing";
@@ -44,8 +45,8 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
 
       {
-        accessorKey: "data_description",
-        header: "Gegevensbeschrijving",
+        accessorKey: "youth_care_institution",
+        header: "Jeugdzorginstelling",
       },
       {
         accessorKey: "parent_guardian_signature_name",
@@ -71,7 +72,7 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
+              <QuestionnaireDownloadButton type="data_sharing_statement" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() => {

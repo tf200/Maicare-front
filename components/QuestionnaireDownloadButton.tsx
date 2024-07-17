@@ -3,7 +3,7 @@ import IconButton from "./buttons/IconButton";
 import { Download, LoaderCircle, Printer } from "lucide-react";
 import { getQuestionnaireTemplate } from "@/utils/questionnairs/templates/getQuestionnaireTemplate";
 
-export type TemplateType = "risk_assessment" | "collaboration_agreement" | "consent_declaration";
+export type TemplateType = "risk_assessment" | "collaboration_agreement" | "consent_declaration" | "data_sharing_statement";
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;
