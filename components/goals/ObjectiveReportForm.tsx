@@ -1,22 +1,25 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useMemo, useState } from "react";
 import { FormProps } from "@/types/form-props";
 import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
+import dayjs from "dayjs"
 import {
   ObjectiveItem,
   ObjectiveReportFormType,
   ObjectiveReportResDto,
 } from "@/types/goals";
-import { useAddObjectiveReport, useUpdateObjectiveReport } from "@/utils/goal";
+import { useAddObjectiveReport, useObjectiveHistory, useUpdateObjectiveReport } from "@/utils/goal";
 import RatingStars from "@/components/FormFields/RatingStars";
 import Textarea from "@/components/FormFields/Textarea";
 import Button from "@/components/buttons/Button";
 import { maxWeekNumber, weekNumberRange } from "@/utils/weekHelpers";
-import { dateFormat, fullDateFormat } from "@/utils/timeFormatting";
+import { dateFormat } from "@/utils/timeFormatting";
+import { useMaturityMatrixDetails } from "@/utils/domains";
 
 type Props = FormProps<ObjectiveReportResDto> & {
   clientId: number;
   objective: ObjectiveItem;
+  maturityMatrixId: string;
 };
 
 const ObjectiveReportForm: FunctionComponent<Props> = ({
@@ -26,6 +29,7 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
   onCancel,
   mode = "add",
   initialData,
+  maturityMatrixId,
 }) => {
   const {
     mutate: create,
@@ -38,19 +42,39 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
     objective.id,
     initialData?.id
   );
+  const [week, setWeek] = useState<string>('');
+
+  const { data: maturityMatrixDetail, isLoading } = useMaturityMatrixDetails(parseInt(maturityMatrixId));
+  // evaluation with objective.id
+  const { data: objectiveHistory } = useObjectiveHistory(objective.id);
+
+  if(maturityMatrixDetail && objectiveHistory && !week) {
+    let sortedObjectiveHistory = objectiveHistory.sort((a, b) => a.week - b.week);
+    const totalWeeks = sortedObjectiveHistory.length;
+
+    const date1 = dayjs(maturityMatrixDetail.start_date);
+    const date2 = dayjs(maturityMatrixDetail.end_date);
+
+    const differenceInWeeks = date2.diff(date1, 'day')/7;
+    if(totalWeeks < differenceInWeeks) {
+      setWeek((totalWeeks + 1).toString());
+    }
+  }
 
   const formik = useFormik<ObjectiveReportFormType>({
     initialValues: {
-      week: "",
+      week: week,
       content: "",
       rating: 0,
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
       const method = mode === "add" ? create : update;
       method(
         {
           ...values,
-          week: parseInt(values.week),
+          rating: values.rating,
+          week: parseInt(week),
         },
         {
           onSuccess: () => {
@@ -86,16 +110,17 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
           unit={"Week"}
           onChange={handleChange}
           className={"mb-6"}
-          value={values.week}
+          value={week}
           error={touched.week && errors.week}
           min={1}
           max={maxWeekDiff ? maxWeekDiff + 1 : 1}
+          disabled={true}
         />
-        {values.week && range && (
+        {week && range && (
           <section
             className={"flex gap-4 mb-6 bg-gray-3 rounded dark:bg-gray-2 p-4"}
           >
-            <strong>Week #{values.week}:</strong>
+            <strong>Week #{week}:</strong>
             <div>Van: {dateFormat(range.start)}</div>
             <div>Tot: {dateFormat(range.end)}</div>
           </section>

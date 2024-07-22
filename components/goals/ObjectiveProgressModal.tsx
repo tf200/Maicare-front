@@ -60,6 +60,7 @@ const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({
               clientId: additionalProps.clientId,
               objectiveId: objective.id,
               objective,
+              maturityMatrixId: additionalProps.maturityMatrixId,
             });
           }}
         >

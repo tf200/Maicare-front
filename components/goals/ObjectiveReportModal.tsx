@@ -18,6 +18,7 @@ const ObjectiveReportModal: FunctionComponent<ModalProps> = ({
         onCancel={props.onClose}
         clientId={clientId}
         objective={objective}
+        maturityMatrixId={additionalProps.maturityMatrixId}
       />
     </FormModal>
   );

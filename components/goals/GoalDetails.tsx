@@ -18,7 +18,8 @@ import { cn } from "@/utils/cn";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
-}> = ({ goal }) => {
+  maturityMatrixId: string;
+}> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,
     isLoading: isDeleting,
@@ -75,6 +76,7 @@ const GoalDetails: FunctionComponent<{
                       objectiveTitle: objective.title,
                       objective,
                       clientId: goal.client_id,
+                      maturityMatrixId,
                     });
                   }}
                   className={cn(
