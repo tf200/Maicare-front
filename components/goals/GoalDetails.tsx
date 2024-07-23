@@ -18,12 +18,14 @@ import { cn } from "@/utils/cn";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
-}> = ({ goal }) => {
+  maturityMatrixId?: string;
+}> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,
     isLoading: isDeleting,
     isSuccess: isDeleted,
   } = useDeleteGoal(goal.client_id);
+
 
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
@@ -75,6 +77,7 @@ const GoalDetails: FunctionComponent<{
                       objectiveTitle: objective.title,
                       objective,
                       clientId: goal.client_id,
+                      maturityMatrixId,
                     });
                   }}
                   className={cn(

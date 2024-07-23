@@ -61,6 +61,7 @@ const Rating: React.FC<RatingProps> = ({
             onClick={() => {
               handleClick(index);
             }}
+            key={index}
           >
             <StarIconComponent
               key={index}
