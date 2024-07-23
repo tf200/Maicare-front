@@ -15,7 +15,7 @@ import { useMaturityMatrixDetails } from "@/utils/domains";
 type Props = FormProps<ObjectiveReportResDto> & {
   clientId: number;
   objective: ObjectiveItem;
-  maturityMatrixId: string;
+  maturityMatrixId?: string;
 };
 
 const ObjectiveReportForm: FunctionComponent<Props> = ({
