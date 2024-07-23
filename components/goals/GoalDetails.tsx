@@ -26,6 +26,7 @@ const GoalDetails: FunctionComponent<{
     isSuccess: isDeleted,
   } = useDeleteGoal(goal.client_id);
 
+
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
   const { open: newObjectiveModal } = useModal(NewObjectiveModal);
