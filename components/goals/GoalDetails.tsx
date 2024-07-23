@@ -18,7 +18,7 @@ import { cn } from "@/utils/cn";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
-  maturityMatrixId: string;
+  maturityMatrixId?: string;
 }> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,

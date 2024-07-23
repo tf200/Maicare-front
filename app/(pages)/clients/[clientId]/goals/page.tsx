@@ -124,7 +124,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             columns={columnDef}
             page={pagination.page ?? 1}
             isFetching={isFetching}
-            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={assessment.maturitymatrix_id} />}
+            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={assessment.maturitymatrix_id?.toString()} />}
             onPageChange={(page) => pagination.setPage(page)}
           />
         )}
