@@ -15,6 +15,7 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
+import QuestionnaireDownloadButton from "../QuestionnaireDownloadButton";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -132,6 +133,7 @@ const GoalDetails: FunctionComponent<{
         >
           {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
+        <QuestionnaireDownloadButton type="goals_and_objectives_content" questId={+maturityMatrixId} />
         <IconButton
           onClick={(e) => {
             e.stopPropagation();

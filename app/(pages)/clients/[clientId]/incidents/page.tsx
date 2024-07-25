@@ -17,6 +17,7 @@ import DeleteIcon from "@/components/icons/DeleteIcon";
 import { useDeleteIncident } from "@/utils/new-incident/useDeleteIncident";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 
 type Props = {
   params: { clientId: string };
@@ -81,7 +82,7 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-
+              <QuestionnaireDownloadButton type="incident_report" questId={+info.row.id} />
               <IconButton
                 className="bg-red"
                 onClick={() =>

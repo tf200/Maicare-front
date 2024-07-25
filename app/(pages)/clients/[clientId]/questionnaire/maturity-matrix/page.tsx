@@ -1,6 +1,7 @@
 "use client";
 import Icon from "@/components/Icon";
 import Panel from "@/components/Panel";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 import IconButton from "@/components/buttons/IconButton";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useMaturityMatrixList } from "@/utils/domains";
@@ -45,10 +46,11 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                   <td>{matrix.start_date}</td>
                   <td>{matrix.end_date}</td>
                   {/* <td>{matrix.is_approved ? "Ja" : "Nee"}</td> */}
-                  <td>
+                  <td style={{ display: "flex", justifyItems: "center", justifyContent: "center", gap: "10px" }}>
+                    <QuestionnaireDownloadButton type="maturity_matrix" questId={+matrix.id} />
                     <Link href={`./maturity-matrix/${matrix.id}/edit`}>
                       <IconButton>
-                        <Icon name="pencil" className="w-4 h-6" />
+                        <Icon name="pencil" className="!w-5 !h-5" />
                       </IconButton>
                     </Link>
                   </td>
