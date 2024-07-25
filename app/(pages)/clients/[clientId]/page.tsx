@@ -32,6 +32,7 @@ import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicke
 import ClientDeparture from "@/components/clientDetails/ClientDeparture";
 import { useDocumentList } from "@/utils/document/getDocumentList";
 import { DOCUMENT_LABELS, DOCUMENT_LABEL_OPTIONS } from "@/consts";
+import QuestionnaireDownloadButton from "../../../../components/QuestionnaireDownloadButton";
 
 type Props = {
   params: { clientId: string };
@@ -101,7 +102,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
                     </IconButton>
                   </Link>
                 </SecureFragment>
-
+                <QuestionnaireDownloadButton type="client_details" questId={+clientId} />
                 <SecureFragment permission={consts.CLIENT_DELETE}>
                   <IconButton
                     buttonType="Danger"
