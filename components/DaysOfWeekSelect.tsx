@@ -4,11 +4,12 @@ import { useField } from "formik";
 type DaysOfWeekSelectProps = {
   name: string;
   label?: string;
+  className?: string;
 };
 
 const DAYS_OF_WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
-export function DaysOfWeekSelect({ name, label = "" }: DaysOfWeekSelectProps) {
+export function DaysOfWeekSelect({ name, label, className = "" }: DaysOfWeekSelectProps) {
   const [field, meta, helpers] = useField<number[]>(name);
 
   const handleChange = (day: number) => {
@@ -20,8 +21,8 @@ export function DaysOfWeekSelect({ name, label = "" }: DaysOfWeekSelectProps) {
   };
 
   return (
-    <div>
-      <label className="block font-medium text-gray-700 mb-3">{label}</label>
+    <div className={className}>
+      {label && <label className="block font-medium text-gray-700 mb-3">{label}</label>}
       {DAYS_OF_WEEK.map((day, i) => {
         return (
           <DayButton
