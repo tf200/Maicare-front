@@ -49,7 +49,7 @@ export function DaysOfWeekSelect({
   );
 
   return (
-    <div className={className}>
+    <div className={cn("mb-5", className)}>
       {label && <label className="block font-medium text-gray-700 mb-3">{label}</label>}
       {DAYS_OF_WEEK.map((day, i) => {
         return (

@@ -33,7 +33,7 @@ export default function WorkingHoursField({
   );
 
   return (
-    <div className={cn("w-[600px]", className)}>
+    <div className={cn("w-[600px] mb-5", className)}>
       {label && <label className="block font-medium text-gray-700 mb-3">{label}</label>}
       {meta.touched && meta.error && <div className="text-red text-sm my-2">{meta.error}</div>}
 
@@ -111,7 +111,7 @@ function TimePeriod({
   }, []);
 
   return (
-    <div className="flex gap-2 mb-2">
+    <div className="flex gap-2 mb-3">
       <InputField
         type="time"
         className="w-1/2 cursor-pointer"
