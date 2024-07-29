@@ -26,10 +26,7 @@ function DropDownPrintButton({ questId }: DropDownPrintButtonProps) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      document.body.removeChild(link);
-      setTimeout(() => {
-        setPdfTemplate(null);
-      }, 1000);
+      
     }else{
       toast.error("Pdf template not found", {
         position: "top-right",
@@ -40,6 +37,9 @@ function DropDownPrintButton({ questId }: DropDownPrintButtonProps) {
         draggable: true,
       });
     }
+    setTimeout(() => {
+      setPdfTemplate(null);
+    }, 1000);
   };
 
   const handleGenerateSmartFormulaTemplate = () => {

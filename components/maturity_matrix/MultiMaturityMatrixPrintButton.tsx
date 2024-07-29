@@ -72,7 +72,6 @@ function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintBu
       setIsPrintTemplateLoading(false);
     });
   };
-  console.log(questIds);
   
 
   if(!questIds || questIds.length === 0) {
