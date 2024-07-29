@@ -91,11 +91,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                       gap: "10px",
                     }}
                   >
-<<<<<<< HEAD
-                    <QuestionnaireDownloadButton type="maturity_matrix" questId={+matrix.id} />
-=======
                     <DropDownPrintButton questId={+matrix.id} />
->>>>>>> b69b516 (re create button for exporting templates as a pdf)
                     <Link href={`./maturity-matrix/${matrix.id}/edit`}>
                       <IconButton className="bg-blue-700">
                         <Pencil className="w-5 h-5" />
