@@ -46,7 +46,14 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                   <td>{matrix.start_date}</td>
                   <td>{matrix.end_date}</td>
                   {/* <td>{matrix.is_approved ? "Ja" : "Nee"}</td> */}
-                  <td style={{ display: "flex", justifyItems: "center", justifyContent: "center", gap: "10px" }}>
+                  <td
+                    style={{
+                      display: "flex",
+                      justifyItems: "center",
+                      justifyContent: "center",
+                      gap: "10px",
+                    }}
+                  >
                     <QuestionnaireDownloadButton type="maturity_matrix" questId={+matrix.id} />
                     <Link href={`./maturity-matrix/${matrix.id}/edit`}>
                       <IconButton>

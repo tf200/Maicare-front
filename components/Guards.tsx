@@ -63,6 +63,9 @@ const getPermissionByPathname = (pathname: string): Permission => {
   if (pathname.startsWith("/activity_logs")) {
     return consts.ACTIVITY_LOGS_VIEW;
   }
+  if (pathname.startsWith("/tests")) {
+    return consts.ACTIVITY_LOGS_VIEW; // This is a working temporary solution for "tests" page.
+  }
 };
 
 const Guards: React.FC<{ children: React.ReactNode }> = ({ children }) => {
