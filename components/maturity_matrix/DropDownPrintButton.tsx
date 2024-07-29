@@ -89,7 +89,7 @@ function DropDownPrintButton({ questId }: DropDownPrintButtonProps) {
       {!pdfTemplate && !isPrintTemplateLoading && (
         <DropDownButton items={[
           {
-            title: "matrix voor zelfbehoud",
+            title: "matrix voor zelfredzaamheid en volwassenheid",
             onClickHandler: () => {
               handleGenerateSmartFormulaTemplate();
             },
