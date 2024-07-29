@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn";
 import { useField } from "formik";
 import { useCallback } from "react";
 
-type DaysOfWeekSelectProps = {
+type DaysOfWeekFieldProps = {
   name: string;
   label?: string;
   className?: string;
@@ -14,13 +14,13 @@ export type WeekDayType = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 const DAYS_OF_WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
-export function DaysOfWeekSelect({
+export default function DaysOfWeekField({
   name,
   label,
   className = "",
   disabled = false,
   required = false,
-}: DaysOfWeekSelectProps) {
+}: DaysOfWeekFieldProps) {
   const [field, meta, helpers] = useField<WeekDayType[]>(name);
 
   const handleChange = useCallback(
