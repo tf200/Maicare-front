@@ -1,6 +1,6 @@
 "use client";
 
-import { DaysOfWeekSelect } from "@/components/DaysOfWeekSelect";
+import DaysOfWeekField from "@/components/DaysOfWeekField";
 import Panel from "@/components/Panel";
 import WorkingHoursField from "@/components/WorkingHoursField";
 import Button from "@/components/buttons/Button";
@@ -25,7 +25,7 @@ export default function TestPage() {
       <div className="p-5">
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <DaysOfWeekSelect name="days_of_week" label="Days of Week" required />
+            <DaysOfWeekField name="days_of_week" label="Days of Week" required />
 
             <WorkingHoursField name="working_hours" label="Working Hours" />
 
