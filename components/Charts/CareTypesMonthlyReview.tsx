@@ -95,14 +95,10 @@ const CareTypesMonthlyReview: React.FC = () => {
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex flex-col gap-2 border-b border-stroke py-5 px-6 dark:border-strokedark sm:flex-row sm:justify-between">
         <div>
-          <h2 className="text-title-md2 font-bold text-black dark:text-white">
-            Campaigns
-          </h2>
+          <h2 className="text-title-md2 font-bold text-slate-800  dark:text-white">Campaigns</h2>
         </div>
         <div className="flex items-center">
-          <p className="font-medium uppercase text-black dark:text-white">
-            Short by:
-          </p>
+          <p className="font-medium uppercase text-slate-800  dark:text-white">Short by:</p>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -132,12 +128,7 @@ const CareTypesMonthlyReview: React.FC = () => {
 
       <div className="px-6 pt-4">
         <div id="chartNine" className="-ml-5">
-          <ApexCharts
-            options={options}
-            series={series}
-            type="bar"
-            height={250}
-          />
+          <ApexCharts options={options} series={series} type="bar" height={250} />
         </div>
       </div>
     </div>

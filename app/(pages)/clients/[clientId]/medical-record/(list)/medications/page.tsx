@@ -87,8 +87,8 @@ const MedicationsPage: FunctionComponent<Props> = ({ params: { clientId } }) => 
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        <div className="font-bold text-red flex items-center gap-2">
-          <div className="w-8 h-8 flex items-center justify-center rounded bg-red text-white">
+        <div className="font-bold text-c_red flex items-center gap-2">
+          <div className="w-8 h-8 flex items-center justify-center rounded bg-c_red text-white">
             <WarningIcon />
           </div>
           <div>Kritische medicijnen zijn rood gemarkeerd</div>
@@ -117,7 +117,7 @@ const MedicationsPage: FunctionComponent<Props> = ({ params: { clientId } }) => 
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de medicatielijst te laden.
         </p>
       )}

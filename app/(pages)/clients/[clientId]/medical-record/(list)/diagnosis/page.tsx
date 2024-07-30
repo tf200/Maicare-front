@@ -24,9 +24,7 @@ type Props = {
 };
 
 const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { pagination, isFetching, isLoading, isError, data } = useDiagnosisList(
-    parseInt(clientId)
-  );
+  const { pagination, isFetching, isLoading, isError, data } = useDiagnosisList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<DiagnosisListItem>[]>(() => {
     const columnHelper = createColumnHelper<DiagnosisListItem>();
@@ -45,9 +43,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         header: () => "Diagnosecode",
       },
       columnHelper.accessor("severity", {
-        header: (Header) => (
-          <div className="flex justify-center w-full">Ernst</div>
-        ),
+        header: (Header) => <div className="flex justify-center w-full">Ernst</div>,
         cell: (info) => (
           <div className="flex justify-center w-full">
             <Severity severity={info.getValue()} />
@@ -65,11 +61,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        <LinkButton
-          text={"Diagnose Toevoegen"}
-          href={"../diagnosis/new"}
-          className="ml-auto"
-        />
+        <LinkButton text={"Diagnose Toevoegen"} href={"../diagnosis/new"} className="ml-auto" />
       </div>
       {isLoading && <Loader />}
       {data && (
@@ -86,7 +78,7 @@ const DiagnosisPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       )}
       <div className="flex flex-wrap items-center justify-between p-4"></div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de diagnoselijst te laden.
         </p>
       )}
@@ -129,15 +121,8 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
         }
       />
       <DetailCell label={"Status"} value={data.status} />
-      <DetailCell
-        label={"Diagnose van een arts"}
-        value={data.diagnosing_clinician}
-      />
-      <DetailCell
-        className={"col-span-3"}
-        label={"Notities"}
-        value={data.notes}
-      />
+      <DetailCell label={"Diagnose van een arts"} value={data.diagnosing_clinician} />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
       <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
@@ -151,11 +136,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
           disabled={isDeleted}
           isLoading={isDeleting}
         >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
+          {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
         <Link href={`/clients/${clientId}/diagnosis/${data.id}/edit`}>
           <IconButton>

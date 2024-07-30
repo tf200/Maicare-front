@@ -36,9 +36,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   } = useGoalsList(parseInt(clientId));
 
   const { open: openGoalProgressModal } = useModal(GoalProgressModal);
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(
-    parseInt(clientId)
-  );
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -67,14 +65,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               </h3>
               <p>{goal.desc}</p>
               <div className="mb-6 mt-6 flex gap-4">
-                <DetailCell
-                  value={goal.created_by_name}
-                  label={"Aangemaakt door"}
-                />
-                <DetailCell
-                  value={goal.reviewed_by_name}
-                  label={"Goedgekeurd door"}
-                />
+                <DetailCell value={goal.created_by_name} label={"Aangemaakt door"} />
+                <DetailCell value={goal.reviewed_by_name} label={"Goedgekeurd door"} />
                 {!goal.is_approved && (
                   <SecureFragment permission={APPROVE_GOALS}>
                     <Button
@@ -83,10 +75,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                         approveGoal(goal.id);
                       }}
                       isLoading={isApprovingGoal}
-                      className={cn(
-                        "ml-auto self-center flex items-center gap-4",
-                        styles.button
-                      )}
+                      className={cn("ml-auto self-center flex items-center gap-4", styles.button)}
                     >
                       <CheckIcon /> <div>keurt dit doel</div>
                     </Button>
@@ -141,7 +130,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           />
         )}
         {isError && (
-          <p role="alert" className="p-7 text-red">
+          <p role="alert" className="p-7 text-red-600">
             Er is een fout opgetreden.
           </p>
         )}

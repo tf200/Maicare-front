@@ -19,7 +19,7 @@ const MainContent: React.FC = () => {
       <div>
         {hasPerm(DASHBOARD_VIEW) && (
           <>
-            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Statistieken</h2>
+            <h2 className=" font-bold text-slate-900 dark:text-white mb-4">Statistieken</h2>
             <Analytics />
           </>
         )}

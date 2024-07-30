@@ -33,7 +33,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
         <span className="mx-auto inline-block">
           <AlertIcon />
         </span>
-        <Dialog.Title className="mt-5.5 pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
+        <Dialog.Title className="mt-5.5 pb-2 text-xl font-bold text-slate-800  dark:text-white sm:text-2xl">
           {modalTitle}
         </Dialog.Title>
         <div className="mb-10">{children}</div>

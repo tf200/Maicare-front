@@ -101,15 +101,13 @@ const ChartFive: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
       <div className="flex justify-between border-b border-stroke py-5 px-6 dark:border-strokedark">
         <div>
-          <h2 className="mb-1.5 text-title-md2 font-bold text-black dark:text-white">
+          <h2 className="mb-1.5 text-title-md2 font-bold text-slate-800  dark:text-white">
             Campaign Visitors
           </h2>
           <p className="text-sm font-medium">Last Campaign Performance</p>
         </div>
         <div>
-          <h3 className="mb-1.5 text-title-md2 font-bold text-black dark:text-white">
-            784k
-          </h3>
+          <h3 className="mb-1.5 text-title-md2 font-bold text-slate-800  dark:text-white">784k</h3>
           <p className="flex items-center justify-end gap-1 text-right">
             <svg
               width="14"
@@ -123,19 +121,14 @@ const ChartFive: React.FC = () => {
                 fill="#FB5454"
               />
             </svg>
-            <span className="text-sm font-medium text-red">-1.5%</span>
+            <span className="text-sm font-medium text-red-600">-1.5%</span>
           </p>
         </div>
       </div>
 
       <div className="py-7.5 px-6">
         <div id="chartFive" className="-ml-5">
-          <ApexCharts
-            options={options}
-            series={state.series}
-            type="bar"
-            height={350}
-          />
+          <ApexCharts options={options} series={state.series} type="bar" height={350} />
         </div>
       </div>
     </div>

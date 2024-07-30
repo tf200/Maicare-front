@@ -24,11 +24,11 @@ const FormModal: FunctionComponent<Props> = ({
     >
       <Dialog.Panel
         className={cn(
-          "flex flex-col relative m-auto w-full max-w-180 rounded-lg border border-stroke bg-gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5",
+          "flex flex-col relative m-auto w-full max-w-180 rounded-lg border border-stroke bg-c_gray p-4 pt-1 shadow-default dark:border-strokedark dark:bg-meta-4 sm:p-8 sm:pt-3 xl:p-10 xl:pt-5",
           panelClassName
         )}
       >
-        <Dialog.Title className="pb-2 text-xl mb-10 font-bold text-black dark:text-white sm:text-2xl">
+        <Dialog.Title className="pb-2 text-xl mb-10 font-bold text-slate-800  dark:text-white sm:text-2xl">
           {title}
         </Dialog.Title>
         <button onClick={onClose} className="absolute right-1 top-1 sm:right-5 sm:top-5">

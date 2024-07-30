@@ -41,9 +41,7 @@ const Feedback: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6">
       <div className="flex items-start justify-between border-b border-stroke py-5 px-6 dark:border-strokedark">
         <div>
-          <h2 className="text-title-md2 font-bold text-black dark:text-white">
-            Feedback
-          </h2>
+          <h2 className="text-title-md2 font-bold text-slate-800  dark:text-white">Feedback</h2>
         </div>
         <DropdownDefault />
       </div>
@@ -53,28 +51,18 @@ const Feedback: React.FC = () => {
           {feedbackData.map((feedback, key) => (
             <div className="relative z-1 flex gap-5.5" key={key}>
               <div className="h-16 w-full max-w-16 rounded-full border-[3px] border-stroke dark:border-strokedark">
-                <Image
-                  width={64}
-                  height={64}
-                  src={feedback.avatar}
-                  alt="User"
-                />
+                <Image width={64} height={64} src={feedback.avatar} alt="User" />
               </div>
 
               <div>
-                <p className="text-black dark:text-white">
+                <p className="text-slate-800  dark:text-white">
                   <span className="font-medium">{feedback.name}</span>
                   <span className="px-1">Commented on Cloud</span>
 
                   <span className="font-medium">{feedback.name2}</span>
                 </p>
-                <span className="mt-1 block text-sm">
-                  {" "}
-                  {feedback.time} hour ago
-                </span>
-                <p className="mt-2.5 text-black dark:text-white">
-                  {feedback.feedback}
-                </p>
+                <span className="mt-1 block text-sm"> {feedback.time} hour ago</span>
+                <p className="mt-2.5 text-slate-800  dark:text-white">{feedback.feedback}</p>
               </div>
 
               {key === 0 && (

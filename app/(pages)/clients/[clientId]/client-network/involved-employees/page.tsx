@@ -23,11 +23,10 @@ type Props = {
   params: { clientId: string };
 };
 
-const InvolvedEmployeesPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
-  const { pagination, isFetching, isLoading, isError, data } =
-    useInvolvedEmployeesList(parseInt(clientId));
+const InvolvedEmployeesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { pagination, isFetching, isLoading, isError, data } = useInvolvedEmployeesList(
+    parseInt(clientId)
+  );
 
   const {
     mutate: deleteInvolved,
@@ -52,15 +51,12 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
       {
         accessorKey: "role",
         header: () => "Relatie",
-        cell: (info) =>
-          EMPLOYEE_ASSIGNMENT_RECORD[info.getValue() as string] ||
-          "Niet Beschikbaar",
+        cell: (info) => EMPLOYEE_ASSIGNMENT_RECORD[info.getValue() as string] || "Niet Beschikbaar",
       },
       {
         accessorKey: "start_date",
         header: () => "Startdatum",
-        cell: (info) =>
-          dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
+        cell: (info) => dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
       },
       {
         accessorKey: "id",
@@ -79,11 +75,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
             <Link
               href={`/clients/${clientId}/involved-employees/${info.getValue() as number}/edit`}
@@ -119,7 +111,7 @@ const InvolvedEmployeesPage: FunctionComponent<Props> = ({
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Er is een fout opgetreden.
         </p>
       )}

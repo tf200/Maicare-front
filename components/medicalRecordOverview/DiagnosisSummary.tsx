@@ -15,11 +15,7 @@ const DiagnosisSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   const { data, isLoading, isError } = useLatestDiagnosis(clientId, count || 5);
   if (isLoading) return <Loader />;
   if (isError)
-    return (
-      <div className="text-red">
-        Een fout heeft ons verhinderd gegevens te laden.
-      </div>
-    );
+    return <div className="text-red-600">Een fout heeft ons verhinderd gegevens te laden.</div>;
   if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0) return <div>Geen diagnose gevonden</div>;
   return (
@@ -37,9 +33,7 @@ type DiagnosisItemProps = {
   diagnosis: DiagnosisListItem;
 };
 
-const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({
-  diagnosis,
-}) => {
+const DiagnosisItem: FunctionComponent<DiagnosisItemProps> = ({ diagnosis }) => {
   return (
     <li className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl">
       <div>{diagnosis.title}</div>

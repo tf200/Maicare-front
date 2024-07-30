@@ -43,9 +43,7 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
   const onePerWeek = true;
 
   // get maturity matrix details for the start and end date
-  const { data: maturityMatrixDetail } = useMaturityMatrixDetails(
-    parseInt(maturityMatrixId)
-  );
+  const { data: maturityMatrixDetail } = useMaturityMatrixDetails(parseInt(maturityMatrixId));
   // get objective history for knowing the week numbers
   const { data: objectiveHistory } = useObjectiveHistory(objective.id);
 
@@ -57,25 +55,24 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
       const totalWeeks = sortedObjectiveHistory.length;
       const date1 = dayjs(maturityMatrixDetail.start_date);
       const date2 = dayjs(maturityMatrixDetail.end_date);
-  
+
       const differenceInWeeks = date2.diff(date1, "day") / 7;
       if (totalWeeks < differenceInWeeks) {
         setWeek((totalWeeks + 1).toString());
       } else {
         // set the error to the formik page that all weeks are filled and also shows more details like start and end date and the id of the maturity matrix
         return setError(
-            "Je hebt alle weken van de zelf duurzaamheidsmatrix van id " +
+          "Je hebt alle weken van de zelf duurzaamheidsmatrix van id " +
             maturityMatrixId +
             " al ingevuld vanaf " +
             maturityMatrixDetail.start_date +
             " tot en met " +
             maturityMatrixDetail.end_date +
-            " ",
+            " "
         );
       }
     }
   }, [objectiveHistory, maturityMatrixDetail]);
-  
 
   const formik = useFormik<ObjectiveReportFormType>({
     initialValues: {
@@ -126,8 +123,6 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
   });
   const { handleSubmit, handleBlur, handleChange, touched, errors, values } = formik;
 
-  
-
   const range = useMemo(() => {
     if (!values.week) return;
     return weekNumberRange(objective.created, parseInt(values.week) - 1);
@@ -139,7 +134,7 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
 
   return (
     <>
-      <div className="text-red">{error}</div>
+      <div className="text-red-600">{error}</div>
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit}>
           <InputField
@@ -185,7 +180,7 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
           />
           {cantCreate && (
             <section className="mb-6 -mt-4">
-              <p className="text-red">***Kan geen rapport toevoegen</p>
+              <p className="text-red-600">***Kan geen rapport toevoegen</p>
             </section>
           )}
           <div className="flex gap-4">

@@ -146,7 +146,7 @@ const EmergencyContactPage: FunctionComponent<Props> = ({ params: { clientId } }
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Er is een fout opgetreden.
         </p>
       )}

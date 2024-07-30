@@ -28,9 +28,7 @@ type Props = {
 };
 
 const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { data, pagination, isError, isLoading, isFetching } = useEpisodesList(
-    parseInt(clientId)
-  );
+  const { data, pagination, isError, isLoading, isFetching } = useEpisodesList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<EpisodesResDto>[]>(() => {
     const columnHelper = createColumnHelper<EpisodesResDto>();
@@ -42,9 +40,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         cell: (info) => fullDateTimeFormat(info.getValue() as string),
       },
       columnHelper.accessor("intensity", {
-        header: (Header) => (
-          <div className="flex justify-center w-full">Intensiteit</div>
-        ),
+        header: (Header) => <div className="flex justify-center w-full">Intensiteit</div>,
         cell: (info) => (
           <div className="flex justify-center w-full">
             <Severity severity={convertIntensityToSeverity(info.getValue())} />
@@ -83,7 +79,7 @@ const EpisodesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de episodelijst te laden.
         </p>
       )}
@@ -114,10 +110,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
 
   return (
     <div className={"grid grid-cols-2 gap-2"}>
-      <DetailCell
-        label={"Geregistreerde Datum"}
-        value={fullDateTimeFormat(data.date)}
-      />
+      <DetailCell label={"Geregistreerde Datum"} value={fullDateTimeFormat(data.date)} />
       <DetailCell
         label={"Intensiteit"}
         value={
@@ -144,11 +137,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
           disabled={isDeleted}
           isLoading={isDeleting}
         >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
+          {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
         <Link href={`/clients/${clientId}/episodes/${data.id}/edit`}>
           <IconButton>

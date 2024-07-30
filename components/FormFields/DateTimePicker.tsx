@@ -28,23 +28,16 @@ const DateTimePicker: FunctionComponent<{
   const { open } = useModal(TimesModal);
   return (
     <div className="mb-6">
-      <div className="mb-2.5 block text-black dark:text-white">
+      <div className="mb-2.5 block text-slate-800  dark:text-white">
         {props.label} {props.required && <span className="text-meta-1">*</span>}
       </div>
       <DatePicker
         onChange={async (date) => {
           open({
-            selected: inputProps.value.some(
-              ({ date: d }) => d === date.toISOString()
-            ),
-            times: inputProps.value.find(
-              ({ date: d }) => d === date.toISOString()
-            )?.times,
+            selected: inputProps.value.some(({ date: d }) => d === date.toISOString()),
+            times: inputProps.value.find(({ date: d }) => d === date.toISOString())?.times,
             onSubmit: async ({ times, selected }) => {
-              if (
-                selected &&
-                inputProps.value.find((d) => d.date === date.toISOString())
-              ) {
+              if (selected && inputProps.value.find((d) => d.date === date.toISOString())) {
                 await helperProps.setValue(
                   inputProps.value.map((d) =>
                     d.date === date.toISOString() ? { date: d.date, times } : d
@@ -90,7 +83,7 @@ const DateTimePicker: FunctionComponent<{
         }}
       />
       {props.error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {props.error}
         </p>
       )}
@@ -115,10 +108,7 @@ const validationSchema = Yup.object().shape({
   selected: Yup.boolean(),
 });
 
-const TimesModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...rest
-}) => {
+const TimesModal: FunctionComponent<ModalProps> = ({ additionalProps, ...rest }) => {
   const [confirmApplyToAll, setConfirmApplyToAll] = useState(false);
   return (
     <FormModal {...rest} title={"Selecteer tijden"}>
@@ -136,11 +126,7 @@ const TimesModal: FunctionComponent<ModalProps> = ({
         {({ handleSubmit, values, errors, touched }) => (
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
-              <FormikCheckboxItem
-                label={"Selecteer deze dag"}
-                id={"selected"}
-                name={"selected"}
-              />
+              <FormikCheckboxItem label={"Selecteer deze dag"} id={"selected"} name={"selected"} />
             </div>
             <div className="mb-6">
               {values.selected && (
@@ -153,18 +139,16 @@ const TimesModal: FunctionComponent<ModalProps> = ({
               )}
             </div>
             <div className="flex justify-center gap-4">
-              {!confirmApplyToAll &&
-                additionalProps.onApplyToAll &&
-                values.selected && (
-                  <Button
-                    buttonType={"Outline"}
-                    onClick={() => {
-                      setConfirmApplyToAll(true);
-                    }}
-                  >
-                    Pas toe op alle dagen
-                  </Button>
-                )}
+              {!confirmApplyToAll && additionalProps.onApplyToAll && values.selected && (
+                <Button
+                  buttonType={"Outline"}
+                  onClick={() => {
+                    setConfirmApplyToAll(true);
+                  }}
+                >
+                  Pas toe op alle dagen
+                </Button>
+              )}
               {!confirmApplyToAll && <Button type="submit">Opslaan</Button>}
               {confirmApplyToAll && (
                 <>

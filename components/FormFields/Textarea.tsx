@@ -19,7 +19,7 @@ const Textarea: FunctionComponent<Props> = ({
 }) => {
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-2.5 block text-black dark:text-white">
+      <label htmlFor={id} className="mb-2.5 block text-slate-800  dark:text-white">
         {label} {required && <span className="text-meta-1">*</span>}
       </label>
       <textarea
@@ -32,7 +32,7 @@ const Textarea: FunctionComponent<Props> = ({
         )}
       ></textarea>
       {error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {error}
         </p>
       )}

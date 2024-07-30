@@ -75,7 +75,7 @@ export default function ProtectedEmail({ emailId }) {
                 <ErrorMessage
                   name="passkey"
                   component="div"
-                  className={"mt-2 text-sm text-red font-semibold"}
+                  className={"mt-2 text-sm text-c_red font-semibold"}
                 />
               </div>
               <div>
@@ -90,7 +90,7 @@ export default function ProtectedEmail({ emailId }) {
                   Ontvang mijn e-mail
                 </Button>
               </div>
-              <p className="mt-2 text-m text-red text-center font-semibold">
+              <p className="mt-2 text-m text-c_red text-center font-semibold">
                 {wrongPassKey && !isLoading ? wrongPassKey : ""}
               </p>
             </Form>

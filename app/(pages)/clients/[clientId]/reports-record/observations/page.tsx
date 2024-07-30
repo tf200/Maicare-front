@@ -23,11 +23,10 @@ type Props = {
   params: { clientId: string };
 };
 
-const ObservationsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
-  const { data, pagination, isLoading, isFetching, isError } =
-    useObservationsList(parseInt(clientId));
+const ObservationsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { data, pagination, isLoading, isFetching, isError } = useObservationsList(
+    parseInt(clientId)
+  );
 
   const {
     mutate: deleteObservation,
@@ -76,15 +75,9 @@ const ObservationsPage: FunctionComponent<Props> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
-            <Link
-              href={`/clients/${clientId}/observations/${info.getValue() as number}/edit`}
-            >
+            <Link href={`/clients/${clientId}/observations/${info.getValue() as number}/edit`}>
               <IconButton>
                 <PencilSquare className="w-5 h-5" />
               </IconButton>
@@ -115,7 +108,7 @@ const ObservationsPage: FunctionComponent<Props> = ({
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de medicatielijst te laden.
         </p>
       )}

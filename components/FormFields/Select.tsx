@@ -19,7 +19,7 @@ const Select: FunctionComponent<SelectProps> = ({
 }) => {
   return (
     <div className={className}>
-      <label className="mb-2.5 block text-black dark:text-white" htmlFor={id}>
+      <label className="mb-2.5 block text-slate-800  dark:text-white" htmlFor={id}>
         {label} {required && <span className="text-meta-1">*</span>}
       </label>
       <div className="relative z-20 bg-transparent dark:bg-form-input">
@@ -42,7 +42,7 @@ const Select: FunctionComponent<SelectProps> = ({
         </span>
       </div>
       {error && (
-        <p role="alert" className="text-red pt-1">
+        <p role="alert" className="text-c_red pt-1">
           {error}
         </p>
       )}

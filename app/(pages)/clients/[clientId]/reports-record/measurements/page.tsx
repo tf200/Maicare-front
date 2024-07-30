@@ -20,11 +20,10 @@ type Props = {
   params: { clientId: string };
 };
 
-const MeasurementsPage: FunctionComponent<Props> = ({
-  params: { clientId },
-}) => {
-  const { pagination, data, isError, isLoading, isFetching } =
-    useMeasurementList(parseInt(clientId));
+const MeasurementsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { pagination, data, isError, isLoading, isFetching } = useMeasurementList(
+    parseInt(clientId)
+  );
 
   const {
     mutate: deleteMeasurement,
@@ -70,15 +69,9 @@ const MeasurementsPage: FunctionComponent<Props> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
-            <Link
-              href={`/clients/${clientId}/measurements/${info.getValue() as number}/edit`}
-            >
+            <Link href={`/clients/${clientId}/measurements/${info.getValue() as number}/edit`}>
               <IconButton>
                 <PencilSquare className="w-5 h-5" />
               </IconButton>
@@ -109,7 +102,7 @@ const MeasurementsPage: FunctionComponent<Props> = ({
         />
       )}{" "}
       {isError && (
-        <p role="alert" className="text-red p-2">
+        <p role="alert" className="text-c_red p-2">
           Sorry, een fout heeft ons verhinderd de allergielijst te laden.
         </p>
       )}

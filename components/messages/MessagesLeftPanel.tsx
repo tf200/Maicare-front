@@ -36,10 +36,10 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
       <div className="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">
-        <h3 className="text-lg font-medium text-black dark:text-white 2xl:text-xl">
+        <h3 className="text-lg font-medium text-slate-800  dark:text-white 2xl:text-xl">
           Active Conversations
           {conversations && (
-            <span className="rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-black dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4">
+            <span className="rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-slate-800  dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4">
               {conversations.results.length}
             </span>
           )}
@@ -51,12 +51,7 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
         </form>
         <div className="no-scrollbar max-h-full space-y-2.5 overflow-auto">
           {conversations?.results.map((conversation, item) => {
-            return (
-              <ConversationItem
-                key={conversation.id}
-                conversation={conversation}
-              />
-            );
+            return <ConversationItem key={conversation.id} conversation={conversation} />;
           })}
         </div>
       </div>
@@ -70,23 +65,13 @@ type ConversationItemProps = {
   conversation: ConversationItem;
 };
 
-const ConversationItem: FunctionComponent<ConversationItemProps> = ({
-  conversation,
-}) => {
+const ConversationItem: FunctionComponent<ConversationItemProps> = ({ conversation }) => {
   const { data: user } = useMyInfo();
   const otherParticipant = useMemo(
-    () =>
-      conversation.involved_details?.find(
-        (profile) => profile.id !== user?.user
-      ),
+    () => conversation.involved_details?.find((profile) => profile.id !== user?.user),
     [user, conversation]
   );
-  return (
-    <ChatProfile
-      conversationId={conversation.id}
-      participant={otherParticipant}
-    />
-  );
+  return <ChatProfile conversationId={conversation.id} participant={otherParticipant} />;
 };
 
 type Props = {
@@ -94,10 +79,7 @@ type Props = {
   conversationId: number;
 };
 
-const ChatProfile: FunctionComponent<Props> = ({
-  participant,
-  conversationId,
-}) => {
+const ChatProfile: FunctionComponent<Props> = ({ participant, conversationId }) => {
   const isOnline = true;
   const lastSeen = "2021-10-10T10:10:10";
   const lastSentMessage = "Hello, how are you?";
@@ -116,12 +98,10 @@ const ChatProfile: FunctionComponent<Props> = ({
         <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"></span>
       </div>
       <div className="w-full">
-        <h5 className="text-sm font-medium text-black dark:text-white">
+        <h5 className="text-sm font-medium text-slate-800  dark:text-white">
           {participant.first_name} {participant.last_name}
         </h5>
-        {lastSeen && !isOnline && (
-          <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>
-        )}
+        {lastSeen && !isOnline && <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>}
         {lastSentMessage && <p className="text-sm">{lastSentMessage}</p>}
       </div>
     </Link>

@@ -8,10 +8,7 @@ import InputField from "@/components/FormFields/InputField";
 import Textarea from "@/components/FormFields/Textarea";
 import Button from "@/components/buttons/Button";
 
-const TerminationModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const TerminationModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const formik = useFormik<DepartureEntries>({
     initialValues: {
       departure_reason: "",
@@ -24,11 +21,8 @@ const TerminationModal: FunctionComponent<ModalProps> = ({
   });
   const { handleSubmit, handleBlur, handleChange, values } = formik;
   return (
-    <FormModal
-      {...props}
-      title={additionalProps.title ?? "Cliëntdossier beëindigen"}
-    >
-      <p className="mb-6 bg-meta-8/20 p-4 rounded-xl text-black dark:text-white">
+    <FormModal {...props} title={additionalProps.title ?? "Cliëntdossier beëindigen"}>
+      <p className="mb-6 bg-meta-8/20 p-4 rounded-xl text-slate-800  dark:text-white">
         <WarningIcon className="inline" />{" "}
         {additionalProps.msg ??
           "Weet u zeker dat u de status van deze cliënt wilt wijzigen in 'Uit zorg'? bevestigen door een afsluitend rapport in te dienen."}

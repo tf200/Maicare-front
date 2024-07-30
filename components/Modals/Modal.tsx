@@ -35,7 +35,7 @@ const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
           className
         )}
       >
-        <Dialog.Title className="pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
+        <Dialog.Title className="pb-2 text-xl font-bold text-slate-800  dark:text-white sm:text-2xl">
           {modalTitle}
         </Dialog.Title>
         <span className="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"></span>

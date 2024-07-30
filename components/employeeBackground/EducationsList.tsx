@@ -38,9 +38,7 @@ type EducationItemProps = {
   education: EducationResDto;
 };
 
-const EducationItem: FunctionComponent<EducationItemProps> = ({
-  education,
-}) => {
+const EducationItem: FunctionComponent<EducationItemProps> = ({ education }) => {
   const [isEdit, setIsEdit] = useState(false);
   const {
     mutate: deleteEduction,
@@ -59,26 +57,18 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
         <td>
           <DetailCell
             label={"Periode"}
-            value={
-              dateFormat(education.start_date) +
-              " - " +
-              dateFormat(education.end_date)
-            }
+            value={dateFormat(education.start_date) + " - " + dateFormat(education.end_date)}
           />
         </td>
         <td>
-          <DetailCell
-            label={"Naam Instituut"}
-            value={education.institution_name}
-          />
+          <DetailCell label={"Naam Instituut"} value={education.institution_name} />
         </td>
         <td>
           <DetailCell
             label={"Diploma"}
             value={
               <div>
-                <strong>{education.degree}</strong> |{" "}
-                <span>{education.field_of_study}</span>
+                <strong>{education.degree}</strong> | <span>{education.field_of_study}</span>
               </div>
             }
           />
@@ -100,21 +90,14 @@ const EducationItem: FunctionComponent<EducationItemProps> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
           </div>
         </td>
       </tr>
       {isEdit && (
         <tr>
-          <td
-            colSpan={4}
-            className={clsx("bg-gray dark:bg-graydark p-8", styles.formTd)}
-          >
+          <td colSpan={4} className={clsx("bg-c_gray dark:bg-graydark p-8", styles.formTd)}>
             <EducationForm
               mode="update"
               initialData={education}

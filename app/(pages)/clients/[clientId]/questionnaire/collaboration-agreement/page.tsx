@@ -68,14 +68,16 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
         cell: (info) => {
           return (
             <div className="flex gap-3">
-              <Link href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}>
+              <Link
+                href={`/clients/${clientId}/questionnaire/collaboration-agreement/${info.row.id}/edit`}
+              >
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
               <QuestionnaireDownloadButton type="collaboration_agreement" questId={+info.row.id} />
               <IconButton
-                className="bg-red"
+                className="bg-red-600"
                 onClick={() => {
                   return open({
                     onConfirm: () => {
@@ -84,7 +86,7 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
                   });
                 }}
               >
-              <DeleteIcon className="w-5 h-5" />
+                <DeleteIcon className="w-5 h-5" />
               </IconButton>
             </div>
           );
@@ -117,7 +119,7 @@ const CollaborationAgreement: FunctionComponent<Props> = ({ params: { clientId }
       )}
       <div className="flex flex-wrap justify-between items-center p-4"></div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, er is een fout opgetreden waardoor we dit niet konden laden.
         </p>
       )}

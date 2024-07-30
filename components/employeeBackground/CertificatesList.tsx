@@ -38,9 +38,7 @@ type CertificationItemProps = {
   certificate: CertifResDto;
 };
 
-const CertificationItem: FunctionComponent<CertificationItemProps> = ({
-  certificate,
-}) => {
+const CertificationItem: FunctionComponent<CertificationItemProps> = ({ certificate }) => {
   const [isEdit, setIsEdit] = useState(false);
   const {
     mutate: deleteCert,
@@ -63,10 +61,7 @@ const CertificationItem: FunctionComponent<CertificationItemProps> = ({
           <DetailCell label={"Uitgegeven Door"} value={certificate.issued_by} />
         </td>
         <td>
-          <DetailCell
-            label={"Datum Uitgegeven"}
-            value={fullDateFormat(certificate.date_issued)}
-          />
+          <DetailCell label={"Datum Uitgegeven"} value={fullDateFormat(certificate.date_issued)} />
         </td>
         <td className="flex justify-end">
           <div className="flex items-center gap-4">
@@ -85,21 +80,14 @@ const CertificationItem: FunctionComponent<CertificationItemProps> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
           </div>
         </td>
       </tr>
       {isEdit && (
         <tr>
-          <td
-            colSpan={4}
-            className={clsx("bg-gray dark:bg-graydark p-8", styles.formTd)}
-          >
+          <td colSpan={4} className={clsx("bg-c_gray dark:bg-graydark p-8", styles.formTd)}>
             <CertificationForm
               mode="update"
               initialData={certificate}
