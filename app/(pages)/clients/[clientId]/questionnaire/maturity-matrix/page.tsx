@@ -49,7 +49,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
         </div>
       }
     >
-      <div className="p-5">
+      <div className="p-5 overflow-x-auto">
         {isLoading ? (
           "Loading..."
         ) : (

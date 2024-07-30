@@ -72,112 +72,114 @@ function Table<T>({
     getIsRowExpanded: (row) => row.id === showRowDetails?.id,
   });
   return (
-    <table
+    <div className="w-full overflow-x-auto">
+      <table
       className={clsx(
         "w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8 yyyyyyy",
         className
       )}
-    >
-      <thead className="px-4 border-separate">
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr className="border-t border-stroke" key={headerGroup.id}>
-            {headerGroup.headers.map((header, i) => {
-              return (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  className={
-                    "className" in header.column.columnDef &&
-                    (header.column.columnDef.className as string)
-                  }
-                >
-                  {header.isPlaceholder ? null : (
-                    <div
-                      {...{
-                        className:
-                          "flex items-center relative " +
-                          (header.column.getCanSort()
-                            ? "cursor-pointer select-none"
-                            : ""),
-                        onClick: header.column.getToggleSortingHandler(),
-                      }}
-                    >
-                      <div className="w-full">
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                      </div>
-                      <div className="absolute top-0 right-0 w-6 ml-auto">
-                        {{
-                          asc: (
-                            <div className="rotate-180 z-1">
-                              <ChevronDown />
-                            </div>
-                          ),
-                          desc: (
-                            <div>
-                              <ChevronDown />
-                            </div>
-                          ),
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                    </div>
-                  )}
-                </th>
-              );
-            })}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => {
-          return (
-            <Fragment key={row.id}>
-              <tr
-                onClick={() => {
-                  onRowClick?.(row.original);
-                  setShowRowDetails((r) => {
-                    if (!row.getCanExpand()) {
-                      return r;
+      >
+        <thead className="px-4 border-separate">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr className="border-t border-stroke" key={headerGroup.id}>
+              {headerGroup.headers.map((header, i) => {
+                return (
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className={
+                      "className" in header.column.columnDef &&
+                      (header.column.columnDef.className as string)
                     }
-                    if (r?.id === row.id) {
-                      return undefined;
-                    }
-                    return row;
-                  });
-                }}
-                className={cn(
-                  "px-2 py-2 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl",
-                  rowClassName?.(row)
-                )}
-              >
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-              {row.getCanExpand() && row.getIsExpanded() && (
-                <tr>
-                  <td
-                    colSpan={row.getVisibleCells().length}
-                    className="border-t-2 bg-gray-3 border-stroke"
                   >
-                    {renderRowDetails?.(row)}
-                  </td>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        {...{
+                          className:
+                            "flex items-center relative " +
+                            (header.column.getCanSort()
+                              ? "cursor-pointer select-none"
+                              : ""),
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        <div className="w-full">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                        </div>
+                        <div className="absolute top-0 right-0 w-6 ml-auto">
+                          {{
+                            asc: (
+                              <div className="rotate-180 z-1">
+                                <ChevronDown />
+                              </div>
+                            ),
+                            desc: (
+                              <div>
+                                <ChevronDown />
+                              </div>
+                            ),
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      </div>
+                    )}
+                  </th>
+                );
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <Fragment key={row.id}>
+                <tr
+                  onClick={() => {
+                    onRowClick?.(row.original);
+                    setShowRowDetails((r) => {
+                      if (!row.getCanExpand()) {
+                        return r;
+                      }
+                      if (r?.id === row.id) {
+                        return undefined;
+                      }
+                      return row;
+                    });
+                  }}
+                  className={cn(
+                    "px-2 py-2 border-t cursor-pointer border-stroke hover:bg-gray-3 rounded-2xl",
+                    rowClassName?.(row)
+                  )}
+                >
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <td key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
-              )}
-            </Fragment>
-          );
-        })}
-      </tbody>
-    </table>
+                {row.getCanExpand() && row.getIsExpanded() && (
+                  <tr>
+                    <td
+                      colSpan={row.getVisibleCells().length}
+                      className="border-t-2 bg-gray-3 border-stroke"
+                    >
+                      {renderRowDetails?.(row)}
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

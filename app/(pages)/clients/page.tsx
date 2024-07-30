@@ -102,7 +102,7 @@ const ClientsPage: FunctionComponent = () => {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <>
       <Panel
         title={"Clients List"}
         header={
@@ -153,7 +153,7 @@ const ClientsPage: FunctionComponent = () => {
           />
         )}
       </Panel>
-    </div>
+    </>
   );
 };
 
