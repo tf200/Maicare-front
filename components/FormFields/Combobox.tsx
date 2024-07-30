@@ -60,19 +60,16 @@ function FormikCombobox<T extends BaseObject>({
       }}
       value={fieldProps.value}
     >
-      <Combobox.Label
-        className="mb-2.5 block text-slate-800  dark:text-white"
-        htmlFor={inputProps.id}
-      >
+      <Combobox.Label className="mb-2.5 block text-black dark:text-white" htmlFor={inputProps.id}>
         {label} {inputProps.required && <span className="text-meta-1">*</span>}
       </Combobox.Label>
       <Combobox.Input
         displayValue={getDisplayValue}
-        className="w-full rounded border-[1.5px] border-stroke bg-white py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+        className="w-full rounded-lg border-[1.5px] border-stroke bg-white py-2 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
         {...inputProps}
         onChange={handleQueryChange}
       />
-      <Combobox.Options className="shadow absolute bg-white dark:bg-form-input z-40 left-0 rounded max-h-select overflow-y-auto flex flex-col w-full">
+      <Combobox.Options className="shadow absolute bg-white dark:bg-form-input z-40 left-0 rounded-lg max-h-select overflow-y-auto flex flex-col w-full">
         {options.map((option) => (
           <Combobox.Option
             className="cursor-pointer border-stroke border-b last:border-b-0 dark:border-form-strokedark leading-6 p-3 pl-3 flex items-center ui-disabled:bg-whiter ui-disabled:text-graydark dark:ui-disabled:form-strokedark ui-active:bg-primary ui-active:text-white"

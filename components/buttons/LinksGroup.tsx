@@ -18,21 +18,23 @@ const ButtonsGroup: FunctionComponent<Props> = ({ options }) => {
   }
   return (
     <div className="flex items-center">
-      {options.map((option) => (
-        <Link
-          key={option.href}
-          href={option.href}
-          className={clsx(
-            "inline-flex border py-1 px-2 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary sm:py-3 sm:px-6",
-            {
-              "border-primary bg-primary text-white": isActive(option),
-              "border-stroke text-slate-800  bg-white": !isActive(option),
-            }
-          )}
-        >
-          {option.label}
-        </Link>
-      ))}
+      <div className="flex gap-2 rounded-xl p-3 bg-white shadow overflow-hidden">
+        {options.map((option) => (
+          <Link
+            key={option.href}
+            href={option.href}
+            className={clsx(
+              "inline-flex border rounded-lg py-1 px-2 sm:py-2 sm:px-5 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary",
+              {
+                "border-primary bg-primary text-white": isActive(option),
+                "text-black bg-white border-none": !isActive(option),
+              }
+            )}
+          >
+            {option.label}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
