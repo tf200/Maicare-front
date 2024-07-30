@@ -34,7 +34,7 @@ const MessageEditor: FunctionComponent<Props> = ({ onSubmit: onSubmitCallback, d
           type="text"
           id="message-editor"
           placeholder="Type something here"
-          className="h-13 w-full rounded-md border border-stroke bg-c_gray pl-5 pr-19 text-c_black placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white"
+          className="h-13 w-full rounded-md border border-stroke bg-c_gray pl-5 pr-19 text-slate-800  placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white"
         />
         <div className="absolute right-5 top-1/2 inline-flex -translate-y-1/2 items-center justify-end space-x-4">
           <button type="button" className="hover:text-primary">

@@ -6,7 +6,7 @@ const DataStatsTwo: React.FC = () => {
     <div>
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <h2 className="mb-1.5 text-title-md2 font-bold text-c_black dark:text-white">
+          <h2 className="mb-1.5 text-title-md2 font-bold text-slate-800  dark:text-white">
             Highlights
           </h2>
           <p className="font-medium">Latest social statistics</p>
@@ -29,7 +29,7 @@ const DataStatsTwo: React.FC = () => {
             />
           </svg>
           <h4 className="mt-5 mb-2 font-medium">Avg. Client Rating</h4>
-          <h3 className="mb-2 text-title-md font-bold text-c_black dark:text-white">7.8/10</h3>
+          <h3 className="mb-2 text-title-md font-bold text-slate-800  dark:text-white">7.8/10</h3>
           <p className="flex items-center gap-1 text-sm font-medium">
             <svg
               width="14"
@@ -71,7 +71,7 @@ const DataStatsTwo: React.FC = () => {
           </svg>
 
           <h4 className="mt-5 mb-2 font-medium">Instagram Followers</h4>
-          <h3 className="mb-2 text-title-md font-bold text-c_black dark:text-white">7.8/10</h3>
+          <h3 className="mb-2 text-title-md font-bold text-slate-800  dark:text-white">7.8/10</h3>
           <p className="flex items-center gap-1 text-sm font-medium">
             <svg
               width="14"
@@ -133,7 +133,7 @@ const DataStatsTwo: React.FC = () => {
           </svg>
 
           <h4 className="mt-5 mb-2 font-medium">Avg. Client Rating</h4>
-          <h3 className="mb-2 text-title-md font-bold text-c_black dark:text-white">$5.03</h3>
+          <h3 className="mb-2 text-title-md font-bold text-slate-800  dark:text-white">$5.03</h3>
           <p className="flex items-center gap-1 text-sm font-medium">
             <svg
               width="14"

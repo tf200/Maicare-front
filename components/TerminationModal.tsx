@@ -22,7 +22,7 @@ const TerminationModal: FunctionComponent<ModalProps> = ({ additionalProps, ...p
   const { handleSubmit, handleBlur, handleChange, values } = formik;
   return (
     <FormModal {...props} title={additionalProps.title ?? "Cliëntdossier beëindigen"}>
-      <p className="mb-6 bg-meta-8/20 p-4 rounded-xl text-c_black dark:text-white">
+      <p className="mb-6 bg-meta-8/20 p-4 rounded-xl text-slate-800  dark:text-white">
         <WarningIcon className="inline" />{" "}
         {additionalProps.msg ??
           "Weet u zeker dat u de status van deze cliënt wilt wijzigen in 'Uit zorg'? bevestigen door een afsluitend rapport in te dienen."}

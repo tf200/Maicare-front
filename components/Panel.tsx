@@ -27,7 +27,7 @@ const Panel: FunctionComponent<PropsWithChildren<Props>> = ({
       <div className="border-b border-stroke px-7 py-4 dark:border-strokedark flex justify-between items-center">
         {header || (
           <>
-            <h3 className="font-medium text-c_black dark:text-white">{title}</h3>
+            <h3 className="font-medium text-slate-800  dark:text-white">{title}</h3>
             <div>{sideActions}</div>
           </>
         )}

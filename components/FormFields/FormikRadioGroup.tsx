@@ -30,7 +30,7 @@ const FormikRadioGroup: FunctionComponent<Props> = ({
           return (
             <label
               key={option.value}
-              className="relative flex cursor-pointer select-none items-center gap-2 text-sm font-medium text-c_black dark:text-white"
+              className="relative flex cursor-pointer select-none items-center gap-2 text-sm font-medium text-slate-800  dark:text-white"
             >
               <Field className="sr-only" type="radio" name={name} value={option.value} />
               <span

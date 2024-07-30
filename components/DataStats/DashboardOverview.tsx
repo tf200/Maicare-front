@@ -35,14 +35,14 @@ const DashboardOverview: React.FC = () => {
     <div className="mb-6">
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-title-lg font-bold text-c_black dark:text-white">
+          <h1 className="text-title-lg font-bold text-slate-800 dark:text-white">
             {greeting() + ", " + profile?.first_name + " " + profile?.last_name}
           </h1>
         </div>
       </div>
       {hasPerm(DASHBOARD_VIEW) && (
         <>
-          <h2 className="text-title-sm font-bold text-c_black dark:text-white mb-6">
+          <h2 className="text-title-sm font-bold text-slate-800  dark:text-white mb-6">
             Overzicht van locaties
           </h2>
 
@@ -90,7 +90,7 @@ const LocationWidget: FunctionComponent<{
     <div className="rounded-lg border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
         <div>
-          <h3 className="mb-4 text-title-lg font-bold text-c_black dark:text-white">{title}</h3>
+          <h3 className="mb-4 text-title-lg font-bold text-slate-800  dark:text-white">{title}</h3>
           <p className="font-medium">
             <strong>Capaciteit:</strong>
             {capacity}

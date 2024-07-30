@@ -16,7 +16,7 @@ const MultipleTimePicker: FunctionComponent<{
   });
   return (
     <div className="mb-6">
-      <div className="mb-2.5 block text-c_black dark:text-white">
+      <div className="mb-2.5 block text-slate-800  dark:text-white">
         {props.label} {props.required && <span className="text-meta-1">*</span>}
       </div>
       <div>

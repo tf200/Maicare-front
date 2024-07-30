@@ -82,8 +82,8 @@ function ClientData(props: { clientData: ClientDetailsResDto; contractData: Cont
     <div className="flex flex-col-reverse gap-5 xl:flex-row xl:justify-between">
       <div className="flex flex-col gap-4 sm:flex-row xl:gap-9">
         <div>
-          <p className="mb-1.5 text-lg font-medium text-c_black dark:text-white">Cliënt</p>
-          <h4 className="mb-4 text-2xl font-semibold text-c_black dark:text-white">
+          <p className="mb-1.5 text-lg font-medium text-slate-800  dark:text-white">Cliënt</p>
+          <h4 className="mb-4 text-2xl font-semibold text-slate-800  dark:text-white">
             {props.clientData.first_name} {props.clientData.last_name}
           </h4>
           <a href={`mailto:${props.clientData.email}`} className="block">
@@ -95,7 +95,7 @@ function ClientData(props: { clientData: ClientDetailsResDto; contractData: Cont
         </div>
       </div>
       <div className="flex flex-col items-end w-full max-w-142.5">
-        <h3 className="text-2xl mb-10 font-semibold text-c_black dark:text-white">
+        <h3 className="text-2xl mb-10 font-semibold text-slate-800  dark:text-white">
           Contract #{props.contractData.id}
         </h3>
         {props.contractData.status === "draft" && (
@@ -154,11 +154,15 @@ function ClientData(props: { clientData: ClientDetailsResDto; contractData: Cont
             </div>
             <div>
               <p className="text-sm font-bold">Reden van beëindiging:</p>
-              <p className="text-c_black dark:text-white">{props.contractData.departure_reason}</p>
+              <p className="text-slate-800  dark:text-white">
+                {props.contractData.departure_reason}
+              </p>
             </div>
             <div>
               <p className="text-sm font-bold">Afsluitend rapport:</p>
-              <p className="text-c_black dark:text-white">{props.contractData.departure_report}</p>
+              <p className="text-slate-800  dark:text-white">
+                {props.contractData.departure_report}
+              </p>
             </div>
           </div>
         )}
@@ -173,7 +177,7 @@ function ContractData(props: { contractData: ContractResDto }) {
       <div className="items-center sm:flex">
         <div className="w-full items-center justify-between md:flex">
           <div className="mb-3 md:mb-0">
-            <span className="inline-block font-medium text-c_black hover:text-primary dark:text-white">
+            <span className="inline-block font-medium text-slate-800  hover:text-primary dark:text-white">
               {props.contractData.care_name} ({careTypeDict[props.contractData.care_type]})
             </span>
             <p className="flex text-sm font-medium">
@@ -190,10 +194,10 @@ function ContractData(props: { contractData: ContractResDto }) {
             </p>
           </div>
           <div className="flex items-center md:justify-end">
-            <p className="mr-20 font-semibold text-c_black dark:text-white">
+            <p className="mr-20 font-semibold text-slate-800  dark:text-white">
               Rate: {rateType(props.contractData)}
             </p>
-            <p className="mr-5 font-semibold text-c_black dark:text-white">
+            <p className="mr-5 font-semibold text-slate-800  dark:text-white">
               {getRate(props.contractData)}
             </p>
           </div>
@@ -208,7 +212,7 @@ function PaymentDetails(props: { item: ContractResDto }) {
     <div className="-mx-4 flex flex-wrap">
       <div className="w-full px-4 sm:w-1/2 xl:w-3/12">
         <div className="mb-10">
-          <h4 className="mb-4 text-xl font-semibold text-c_black dark:text-white md:text-2xl">
+          <h4 className="mb-4 text-xl font-semibold text-slate-800  dark:text-white md:text-2xl">
             Total Payed
           </h4>
           <p>{formatPrice(0)}</p>
@@ -216,7 +220,7 @@ function PaymentDetails(props: { item: ContractResDto }) {
       </div>
       <div className="w-full px-4 sm:w-1/2 xl:w-3/12">
         <div className="mb-10">
-          <h4 className="mb-4 text-xl font-semibold text-c_black dark:text-white md:text-2xl">
+          <h4 className="mb-4 text-xl font-semibold text-slate-800  dark:text-white md:text-2xl">
             Left to Pay
           </h4>
           <p>{calculateTotalRate(props.item)}</p>
@@ -225,15 +229,15 @@ function PaymentDetails(props: { item: ContractResDto }) {
       <div className="w-full px-4 xl:w-6/12">
         <div className="mr-10 text-right md:ml-auto">
           <div className="ml-auto sm:w-1/2">
-            <p className="mb-4 flex justify-between font-medium text-c_black dark:text-white">
+            <p className="mb-4 flex justify-between font-medium text-slate-800  dark:text-white">
               <span> Subtotal </span>
               <span> {calculateTotalRate(props.item)} </span>
             </p>
-            <p className="mb-4 flex justify-between font-medium text-c_black dark:text-white">
+            <p className="mb-4 flex justify-between font-medium text-slate-800  dark:text-white">
               <span> Insurance (-) </span>
               <span> {formatPrice(0)} </span>
             </p>
-            <p className="mb-4 mt-2 flex justify-between border-t border-stroke pt-6 font-medium text-c_black dark:border-strokedark dark:text-white">
+            <p className="mb-4 mt-2 flex justify-between border-t border-stroke pt-6 font-medium text-slate-800  dark:border-strokedark dark:text-white">
               <span> Total Payable </span>
               <span> {calculateTotalRate(props.item)} </span>
             </p>

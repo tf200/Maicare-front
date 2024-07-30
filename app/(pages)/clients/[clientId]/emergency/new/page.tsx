@@ -11,7 +11,7 @@ const NewEmergencyContact: FunctionComponent = ({ params }: { params: { clientId
         <div className="flex flex-col gap-9">
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-c_black dark:text-white">
+              <h3 className="font-medium text-slate-800  dark:text-white">
                 Creëer een Nieuw Noodcontact
               </h3>
             </div>

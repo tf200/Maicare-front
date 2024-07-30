@@ -47,7 +47,7 @@ const brandData: BRAND[] = [
 const TableOne = () => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-c_black dark:text-white">Top Channels</h4>
+      <h4 className="mb-6 text-xl font-semibold text-slate-800  dark:text-white">Top Channels</h4>
 
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
@@ -79,11 +79,11 @@ const TableOne = () => {
               <div className="flex-shrink-0">
                 <Image src={brand.logo} alt="Brand" width={48} height={48} />
               </div>
-              <p className="hidden text-c_black dark:text-white sm:block">{brand.name}</p>
+              <p className="hidden text-slate-800  dark:text-white sm:block">{brand.name}</p>
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-c_black dark:text-white">{brand.visitors}K</p>
+              <p className="text-slate-800  dark:text-white">{brand.visitors}K</p>
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
@@ -91,7 +91,7 @@ const TableOne = () => {
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-c_black dark:text-white">{brand.sales}</p>
+              <p className="text-slate-800  dark:text-white">{brand.sales}</p>
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

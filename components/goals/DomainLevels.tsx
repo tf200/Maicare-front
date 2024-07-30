@@ -39,7 +39,7 @@ const DomainLevels: FunctionComponent<{
   return (
     <SecureFragment permission={MANAGE_DOMAIN_LEVELS}>
       <div className="mb-6">
-        <h2 className="px-4 py-2 text-xl text-c_black font-bold">Domeinen</h2>
+        <h2 className="px-4 py-2 text-xl text-slate-800  font-bold">Domeinen</h2>
         <div className="flex flex-wrap gap-4">
           {domains.map((domain) => (
             <DataCard title={domain.name} key={domain.id}>

@@ -67,7 +67,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                   </div>
 
                   <div className="group">
-                    <p className="text-c_black dark:text-white flex gap-4">
+                    <p className="text-slate-800  dark:text-white flex gap-4">
                       <div>
                         <span className="font-medium">Report #{post.id}</span>
                         <span className="px-1">Geschreven door</span>
@@ -93,7 +93,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       {getLocateDatetime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
                     </span>
                     <span className="">{showEmojies(post.emotional_state)}</span>
-                    <p className="mt-2.5 text-c_black dark:text-white">{post.report_text}</p>
+                    <p className="mt-2.5 text-slate-800  dark:text-white">{post.report_text}</p>
                   </div>
                 </div>
               ))}

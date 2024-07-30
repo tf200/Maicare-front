@@ -26,7 +26,7 @@ const ButtonsGroup: FunctionComponent<Props> = ({ options }) => {
             "inline-flex border py-1 px-2 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary sm:py-3 sm:px-6",
             {
               "border-primary bg-primary text-white": isActive(option),
-              "border-stroke text-c_black bg-white": !isActive(option),
+              "border-stroke text-slate-800  bg-white": !isActive(option),
             }
           )}
         >

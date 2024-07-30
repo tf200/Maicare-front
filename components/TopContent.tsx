@@ -6,7 +6,7 @@ const TopContent: React.FC = () => {
     <div className="mb-4 rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:mb-6 md:p-6 xl:p-7.5 2xl:mb-7.5">
       <div className="mb-7 flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-semibold text-c_black dark:text-white">Top Content</h3>
+          <h3 className="text-xl font-semibold text-slate-800  dark:text-white">Top Content</h3>
         </div>
 
         <div>

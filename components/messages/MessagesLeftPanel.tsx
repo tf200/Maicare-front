@@ -36,10 +36,10 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
       <div className="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">
-        <h3 className="text-lg font-medium text-c_black dark:text-white 2xl:text-xl">
+        <h3 className="text-lg font-medium text-slate-800  dark:text-white 2xl:text-xl">
           Active Conversations
           {conversations && (
-            <span className="rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-c_black dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4">
+            <span className="rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-slate-800  dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4">
               {conversations.results.length}
             </span>
           )}
@@ -98,7 +98,7 @@ const ChatProfile: FunctionComponent<Props> = ({ participant, conversationId }) 
         <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"></span>
       </div>
       <div className="w-full">
-        <h5 className="text-sm font-medium text-c_black dark:text-white">
+        <h5 className="text-sm font-medium text-slate-800  dark:text-white">
           {participant.first_name} {participant.last_name}
         </h5>
         {lastSeen && !isOnline && <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>}

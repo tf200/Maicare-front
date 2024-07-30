@@ -18,7 +18,7 @@ const CardsItemOne: React.FC<CardItemProps> = ({
           <Image width={40} height={40} src={imageSrc || ""} alt="User" />
         </div>
         <div>
-          <h4 className="font-medium text-c_black dark:text-white">{name}</h4>
+          <h4 className="font-medium text-slate-800  dark:text-white">{name}</h4>
           <p className="text-sm">{role}</p>
         </div>
       </div>
@@ -28,7 +28,7 @@ const CardsItemOne: React.FC<CardItemProps> = ({
       </Link>
 
       <div className="p-6">
-        <h4 className="mb-3 text-xl font-semibold text-c_black hover:text-primary dark:text-white dark:hover:text-primary">
+        <h4 className="mb-3 text-xl font-semibold text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
           <Link href="#">{cardTitle}</Link>
         </h4>
         <p>{cardContent}</p>

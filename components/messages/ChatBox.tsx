@@ -105,7 +105,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
               />
             </div>
             <div>
-              <h5 className="font-medium text-c_black dark:text-white">{recipientFullName}</h5>
+              <h5 className="font-medium text-slate-800  dark:text-white">{recipientFullName}</h5>
               <p className="text-sm">Reply to message</p>
             </div>
           </div>

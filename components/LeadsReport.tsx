@@ -52,7 +52,7 @@ const LeadsReport: React.FC = () => {
         <div className="p-4 md:p-6 xl:p-7.5">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-title-sm2 font-bold text-c_black dark:text-white">
+              <h2 className="text-title-sm2 font-bold text-slate-800  dark:text-white">
                 Leads Report
               </h2>
             </div>

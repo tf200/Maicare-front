@@ -28,7 +28,7 @@ const FormModal: FunctionComponent<Props> = ({
           panelClassName
         )}
       >
-        <Dialog.Title className="pb-2 text-xl mb-10 font-bold text-c_black dark:text-white sm:text-2xl">
+        <Dialog.Title className="pb-2 text-xl mb-10 font-bold text-slate-800  dark:text-white sm:text-2xl">
           {title}
         </Dialog.Title>
         <button onClick={onClose} className="absolute right-1 top-1 sm:right-5 sm:top-5">

@@ -32,7 +32,9 @@ const ToDoList: React.FC = () => {
         <div className="border-b border-stroke px-4 py-4 dark:border-strokedark md:px-6 md:py-6 xl:px-7.5">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-title-sm2 font-bold text-c_black dark:text-white">To Do List</h2>
+              <h2 className="text-title-sm2 font-bold text-slate-800  dark:text-white">
+                To Do List
+              </h2>
             </div>
             <DropdownDefault />
           </div>
@@ -49,7 +51,9 @@ const ToDoList: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="mb-2 font-medium text-c_black dark:text-white">{todo.title}</h4>
+                    <h4 className="mb-2 font-medium text-slate-800  dark:text-white">
+                      {todo.title}
+                    </h4>
 
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
                       <span className="flex items-center gap-1.5">

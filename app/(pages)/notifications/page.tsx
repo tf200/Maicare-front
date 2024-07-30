@@ -45,7 +45,7 @@ const Page: FunctionComponent = (props) => {
       header={
         <h2 className="flex items-center gap-2">
           <BellIcon className="inline-block" />
-          <span className="inline-block font-medium text-c_black dark:text-white">
+          <span className="inline-block font-medium text-slate-800  dark:text-white">
             Notifications
           </span>
         </h2>

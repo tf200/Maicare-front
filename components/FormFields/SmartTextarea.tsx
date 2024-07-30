@@ -38,7 +38,7 @@ const SmartTextarea: FunctionComponent<Props> = ({
   });
   return (
     <div className={className}>
-      <label htmlFor={props.id} className="mb-2.5 block text-c_black dark:text-white">
+      <label htmlFor={props.id} className="mb-2.5 block text-slate-800  dark:text-white">
         {label} {props.required && <span className="text-meta-1">*</span>}
       </label>
       <div className="relative w-full h-fit rounded bg-white border-[1.5px] border-stroke transition focus-within:border-primary active:border-primary group-disabled:cursor-default group-disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus-within:border-primary">

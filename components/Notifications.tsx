@@ -25,7 +25,7 @@ const Notifications: FunctionComponent<Props> = ({ notifications }) => {
             href="/notifications"
             className="flex flex-col border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
           >
-            <p className="text-sm mb-0 text-c_black dark:text-white font-bold text-center">
+            <p className="text-sm mb-0 text-slate-800  dark:text-white font-bold text-center">
               View all
             </p>
           </Link>
@@ -58,7 +58,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({ notificati
         className="flex flex-col border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
         href="#"
       >
-        <p className="text-sm mb-0 text-c_black dark:text-white">{notification.title}</p>
+        <p className="text-sm mb-0 text-slate-800  dark:text-white">{notification.title}</p>
         <p className="text-sm mb-2.5 max-h-20 overflow-hidden line-clamp-4 text-ellipsis">
           {notification.content}
         </p>

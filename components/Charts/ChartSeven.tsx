@@ -155,12 +155,12 @@ const ChartSeven: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h4 className="text-title-sm2 font-bold text-c_black dark:text-white">
+          <h4 className="text-title-sm2 font-bold text-slate-800  dark:text-white">
             Payments Overview
           </h4>
         </div>
         <div className="flex items-center">
-          <p className="font-medium uppercase text-c_black dark:text-white">Short by:</p>
+          <p className="font-medium uppercase text-slate-800  dark:text-white">Short by:</p>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -202,11 +202,15 @@ const ChartSeven: React.FC = () => {
       <div className="flex flex-col text-center xsm:flex-row">
         <div className="border-stroke py-2 dark:border-strokedark xsm:w-1/2 xsm:border-r">
           <p className="font-medium">Received Amount</p>
-          <h4 className="mt-1 text-title-sm font-bold text-c_black dark:text-white">$45,070.00</h4>
+          <h4 className="mt-1 text-title-sm font-bold text-slate-800  dark:text-white">
+            $45,070.00
+          </h4>
         </div>
         <div className="py-2 xsm:w-1/2">
           <p className="font-medium">Due Amount</p>
-          <h4 className="mt-1 text-title-sm font-bold text-c_black dark:text-white">$32,400.00</h4>
+          <h4 className="mt-1 text-title-sm font-bold text-slate-800  dark:text-white">
+            $32,400.00
+          </h4>
         </div>
       </div>
     </div>

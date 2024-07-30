@@ -56,7 +56,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(props.page - 1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-slate-800  hover:bg-primary hover:text-white"
               >
                 Vorige
                 {/* Previous */}
@@ -67,7 +67,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-slate-800  hover:bg-primary hover:text-white"
               >
                 1
               </button>
@@ -89,7 +89,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
                     className={`inline-flex items-center px-3 py-1.5 rounded-md ${
                       page === props.page
                         ? "bg-primary text-white"
-                        : "bg-[#EDEFF1] text-c_black hover:bg-primary hover:text-white"
+                        : "bg-[#EDEFF1] text-slate-800  hover:bg-primary hover:text-white"
                     } text-xs font-medium`}
                   >
                     {page}
@@ -110,7 +110,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(pages.length)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-slate-800  hover:bg-primary hover:text-white"
               >
                 {pages.length}
               </button>
@@ -125,7 +125,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(props.page + 1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-slate-800  hover:bg-primary hover:text-white"
               >
                 Volgende
                 {/* Next */}

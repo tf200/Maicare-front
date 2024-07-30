@@ -17,7 +17,7 @@ export const InputFieldBig: FunctionComponent<InputFieldType> = ({
 }) => {
   return (
     <div className={cn("mb-4", className)}>
-      <label htmlFor={id} className="mb-2.5 block font-medium text-c_black dark:text-white">
+      <label htmlFor={id} className="mb-2.5 block font-medium text-slate-800  dark:text-white">
         {label}
       </label>
       <div className="relative">

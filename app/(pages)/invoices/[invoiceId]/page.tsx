@@ -127,7 +127,7 @@ const Page: FunctionComponent<{
       title={"Factuur"}
       header={
         <div className="flex items-center w-full gap-4">
-          <h2 className="font-medium text-c_black dark:text-white">
+          <h2 className="font-medium text-slate-800  dark:text-white">
             Factuur #{data?.invoice_number}{" "}
           </h2>
           <InvoiceStatus status={data.status} />

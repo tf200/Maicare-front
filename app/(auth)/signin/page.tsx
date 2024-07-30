@@ -42,7 +42,7 @@ const SignIn: React.FC = () => {
           MAI<span className="font-bold">Care</span>
         </p>
       </div>
-      <h2 className="text-2xl font-bold text-c_black mb-9 dark:text-white sm:text-title-xl2">
+      <h2 className="text-2xl font-bold text-slate-800  mb-9 dark:text-white sm:text-title-xl2">
         Sign In to the website
       </h2>
 

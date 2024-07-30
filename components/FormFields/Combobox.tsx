@@ -60,7 +60,10 @@ function FormikCombobox<T extends BaseObject>({
       }}
       value={fieldProps.value}
     >
-      <Combobox.Label className="mb-2.5 block text-c_black dark:text-white" htmlFor={inputProps.id}>
+      <Combobox.Label
+        className="mb-2.5 block text-slate-800  dark:text-white"
+        htmlFor={inputProps.id}
+      >
         {label} {inputProps.required && <span className="text-meta-1">*</span>}
       </Combobox.Label>
       <Combobox.Input

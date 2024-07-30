@@ -72,7 +72,7 @@ const MapTwo: React.FC = () => {
       <div className="p-4 md:p-6 xl:p-7.5">
         <div className="mb-7.5 justify-between sm:flex">
           <div className="mb-2">
-            <h3 className="text-xl font-semibold text-c_black dark:text-white">
+            <h3 className="text-xl font-semibold text-slate-800  dark:text-white">
               Sessions by country
             </h3>
           </div>
@@ -118,7 +118,7 @@ const MapTwo: React.FC = () => {
           <div className="items-center sm:flex" key={key}>
             <div className="flex w-full max-w-42.5 items-center gap-3.5">
               <Image width={20} height={13} src={country.flag} alt="usa" />
-              <p className="font-medium text-c_black dark:text-white">{country.name}</p>
+              <p className="font-medium text-slate-800  dark:text-white">{country.name}</p>
             </div>
             <div className="relative block h-4.5 w-full rounded bg-meta-9 dark:bg-meta-4">
               <div

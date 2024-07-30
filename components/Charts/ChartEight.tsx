@@ -68,10 +68,10 @@ const ChartEight: React.FC = () => {
     <div className="rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
-          <h4 className="text-title-sm2 font-bold text-c_black dark:text-white">Used Devices</h4>
+          <h4 className="text-title-sm2 font-bold text-slate-800  dark:text-white">Used Devices</h4>
         </div>
         <div className="mt-2 flex items-center sm:mt-0">
-          <p className="font-medium uppercase text-c_black dark:text-white">Short by:</p>
+          <p className="font-medium uppercase text-slate-800  dark:text-white">Short by:</p>
           <div className="relative z-20 inline-block">
             <select
               name="#"

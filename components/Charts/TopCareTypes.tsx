@@ -128,7 +128,7 @@ const Label: FunctionComponent<{
     <div className="w-full px-8 sm:w-1/2">
       <div className="flex w-full items-center">
         <span className={cn(`mr-2 block h-3 w-full max-w-3 rounded-full bg-[${color}]`)}></span>
-        <p className="flex w-full justify-between text-sm font-medium text-c_black dark:text-white">
+        <p className="flex w-full justify-between text-sm font-medium text-slate-800  dark:text-white">
           <span> {label} </span>
         </p>
       </div>

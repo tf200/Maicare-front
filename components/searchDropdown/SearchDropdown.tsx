@@ -30,7 +30,7 @@ function SearchDropdown<TData extends BaseObject>({
     <Combobox as="section" className={className} onChange={onSelectItem} onBlur={onBlur}>
       {label && (
         <Combobox.Label
-          className="mb-2.5 block text-c_black dark:text-white"
+          className="mb-2.5 block text-slate-800  dark:text-white"
           htmlFor={inputProps.id}
         >
           {label} {inputProps.required && <span className="text-meta-1">*</span>}

@@ -51,7 +51,9 @@ const TableFour: React.FC = () => {
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="mb-6 flex justify-between">
           <div>
-            <h4 className="text-title-sm2 font-bold text-c_black dark:text-white">Top Channels</h4>
+            <h4 className="text-title-sm2 font-bold text-slate-800  dark:text-white">
+              Top Channels
+            </h4>
           </div>
           <DropdownDefault />
         </div>
@@ -83,13 +85,13 @@ const TableFour: React.FC = () => {
                 <div className="h-9 w-full max-w-9 flex-shrink-0">
                   <Image src={brand.logo} width={60} height={50} alt="Brand" />
                 </div>
-                <p className="hidden font-medium text-c_black dark:text-white sm:block">
+                <p className="hidden font-medium text-slate-800  dark:text-white sm:block">
                   {brand.name}
                 </p>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="font-medium text-c_black dark:text-white">{brand.visitors}K</p>
+                <p className="font-medium text-slate-800  dark:text-white">{brand.visitors}K</p>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">

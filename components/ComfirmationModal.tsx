@@ -28,7 +28,7 @@ const ConfirmationModal: React.FC<
           <span className="mx-auto inline-block">
             <AlertIcon />
           </span>
-          <h3 className="mt-5.5 pb-2 text-xl font-bold text-c_black dark:text-white sm:text-2xl">
+          <h3 className="mt-5.5 pb-2 text-xl font-bold text-slate-800  dark:text-white sm:text-2xl">
             {title}
           </h3>
           <p className="mb-10">{message}</p>
@@ -37,7 +37,7 @@ const ConfirmationModal: React.FC<
               <button
                 disabled={isLoading}
                 onClick={() => setModalOpen(false)}
-                className="block w-full rounded border border-stroke bg-c_gray p-3 text-center font-medium text-c_black transition hover:border-c_black hover:bg-c_black hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-c_black dark:hover:bg-black"
+                className="block w-full rounded border border-stroke bg-c_gray p-3 text-center font-medium text-slate-800  transition hover:border-slate-800  hover:bg-slate-800  hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-slate-800  dark:hover:bg-black"
               >
                 Annuleren
               </button>

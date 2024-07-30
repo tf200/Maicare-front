@@ -246,7 +246,7 @@ span.flatpickr-weekday,
   @apply sm:flex-row-reverse sm:items-center sm:justify-between gap-4 border-b border-stroke py-4.5 px-7.5 dark:border-strokedark flex-col flex sm:gap-x-4 sm:gap-y-0 after:hidden;
 }
 .data-table-common .datatable-dropdown label {
-  @apply inline-flex items-center gap-2.5 font-medium capitalize text-c_black dark:text-white;
+  @apply inline-flex items-center gap-2.5 font-medium capitalize text-slate-800  dark:text-white;
 }
 .datatable-table .datatable-sorter {
   @apply after:hidden before:hidden;

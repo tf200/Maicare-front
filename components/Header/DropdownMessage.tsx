@@ -101,7 +101,9 @@ const DropdownMessage = () => {
               </div>
 
               <div>
-                <h6 className="text-sm font-medium text-c_black dark:text-white">Mariya Desoja</h6>
+                <h6 className="text-sm font-medium text-slate-800  dark:text-white">
+                  Mariya Desoja
+                </h6>
                 <p className="text-sm">I like your confidence 💪</p>
                 <p className="text-xs">2min ago</p>
               </div>
@@ -117,7 +119,7 @@ const DropdownMessage = () => {
               </div>
 
               <div>
-                <h6 className="text-sm font-medium text-c_black dark:text-white">Robert Jhon</h6>
+                <h6 className="text-sm font-medium text-slate-800  dark:text-white">Robert Jhon</h6>
                 <p className="text-sm">Can you share your offer?</p>
                 <p className="text-xs">10min ago</p>
               </div>
@@ -133,7 +135,7 @@ const DropdownMessage = () => {
               </div>
 
               <div>
-                <h6 className="text-sm font-medium text-c_black dark:text-white">Henry Dholi</h6>
+                <h6 className="text-sm font-medium text-slate-800  dark:text-white">Henry Dholi</h6>
                 <p className="text-sm">I cam across your profile and...</p>
                 <p className="text-xs">1day ago</p>
               </div>
@@ -149,7 +151,7 @@ const DropdownMessage = () => {
               </div>
 
               <div>
-                <h6 className="text-sm font-medium text-c_black dark:text-white">Cody Fisher</h6>
+                <h6 className="text-sm font-medium text-slate-800  dark:text-white">Cody Fisher</h6>
                 <p className="text-sm">I’m waiting for you response!</p>
                 <p className="text-xs">5days ago</p>
               </div>
@@ -165,7 +167,9 @@ const DropdownMessage = () => {
               </div>
 
               <div>
-                <h6 className="text-sm font-medium text-c_black dark:text-white">Mariya Desoja</h6>
+                <h6 className="text-sm font-medium text-slate-800  dark:text-white">
+                  Mariya Desoja
+                </h6>
                 <p className="text-sm">I like your confidence 💪</p>
                 <p className="text-xs">2min ago</p>
               </div>
