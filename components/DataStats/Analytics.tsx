@@ -13,9 +13,9 @@ const Analytics: FunctionComponent = (props) => {
   if (isLoading) return <Loader />;
   if (!data) return null;
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mb-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mb-6 ">
       <DataCard title={`Cliënten (${data?.users.total_users})`}>
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex  gap-6">
           <div className="bg-meta-5/20 w-15 h-15 flex items-center justify-center text-meta-5 rounded-xl">
             <IndividualIcons width={30} height={30} />
           </div>
@@ -34,7 +34,7 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Cliënten (${data?.users.total_users})`}>
-        <div className="mt-4 flex flex-col items-center w-full">
+        <div className="mt-4 flex flex-col justify-center items-center w-full">
           <ReactApexChart
             options={{
               labels: [
@@ -42,29 +42,36 @@ const Analytics: FunctionComponent = (props) => {
                 `Uit zorg (${data?.users.total_out_of_care_users})`,
                 `Op wachtlijst (${data?.users.total_on_waiting_list_users})`,
               ],
+              chart: {
+                type: 'donut',
+                width: '100%',
+                height: '100%',
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: '60%', // Increase the donut size
+                  },
+                },
+              },
               dataLabels: {
+                enabled: true, // Ensure data labels are visible
                 style: {
-                  colors: ['#FFFFFF'],
+                  fontSize: '16px', // Adjust font size for better readability
+                  colors: ['#fff'], // Adjust text color for visibility
+                },
+              },
+
+              tooltip: {
+                y: {
+                  formatter: (val) => `${val} contracts`, // Customize tooltip text
                 },
               },
               legend: {
-                labels: {
-                  colors: '#FFFFFF', 
-                },
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 0,
               },
-              responsive: [
-                {
-                  breakpoint: 600,
-                  options: {
-                    chart: {
-                      width: '100%', 
-                    },
-                    legend: {
-                      position: 'bottom',
-                    },
-                  },
-                },
-              ],
             }}
             series={[
               data?.users.total_in_care_users,
@@ -80,13 +87,43 @@ const Analytics: FunctionComponent = (props) => {
       <DataCard
         title={`Voltooide documentprofielen (${data?.users.total_users - data?.users.total_missing_documents_profiles}/${data?.users.total_users} profielen)`}
       >
-        <div className="mt-4 flex flex-row gap-4 items-center w-full">
+        <div className="mt-4 flex flex-row justify-center items-center gap-4 content-center  w-full">
           <ReactApexChart
             options={{
               labels: [
                 `onvolledige documentprofielen (${data?.users.total_missing_documents_profiles})`,
                 `ingevulde profielen (${data?.users.total_users - data?.users.total_missing_documents_profiles})`,
               ],
+              chart: {
+                type: 'donut',
+                width: '100%',
+                height: '100%',
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: '60%', // Increase the donut size
+                  },
+                },
+              },
+              dataLabels: {
+                enabled: true, // Ensure data labels are visible
+                style: {
+                  fontSize: '16px', // Adjust font size for better readability
+                  colors: ['#fff'], // Adjust text color for visibility
+                },
+              },
+
+              tooltip: {
+                y: {
+                  formatter: (val) => `${val} contracts`, // Customize tooltip text
+                },
+              },
+              legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 0,
+              },
             }}
             series={[
               data?.users.total_missing_documents_profiles,
@@ -124,7 +161,7 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Contracten (${data?.contracts.total_contracts})`}>
-        <div className="mt-4 flex flex-col items-center w-full">
+        <div className="mt-4 flex flex-col items-center w-full" style={{ maxWidth: '600px', height: '400px' }}>
           <ReactApexChart
             options={{
               labels: [
@@ -134,6 +171,36 @@ const Analytics: FunctionComponent = (props) => {
                 `Gestopt (${data?.contracts.total_stopped_contracts})`,
                 `Beëindigd (${data?.contracts.total_terminated_contracts})`,
               ],
+              chart: {
+                type: 'donut',
+                width: '100%',
+                height: '100%',
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: '60%', // Increase the donut size
+                  },
+                },
+              },
+              dataLabels: {
+                enabled: true, // Ensure data labels are visible
+                style: {
+                  fontSize: '16px', // Adjust font size for better readability
+                  colors: ['#fff'], // Adjust text color for visibility
+                },
+              },
+
+              tooltip: {
+                y: {
+                  formatter: (val) => `${val} contracts`, // Customize tooltip text
+                },
+              },
+              legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 0,
+              },
             }}
             series={[
               data?.contracts.total_accommodation_contracts,
@@ -144,9 +211,11 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
+            height="100%"
           />
         </div>
       </DataCard>
+
 
       <DataCard title={`Medicatie (${data?.medications.total_attachments})`}>
         <div className="mt-4 flex gap-6">
@@ -180,17 +249,53 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Medicatie (${data?.medications.total_attachments})`}>
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex justify-center items-center" style={{ width: '100%', height: '400px' }}>
           <ReactApexChart
             options={{
               labels: [
-                `Totaal medicijnen (${data?.medications.total_medications})`,
-                `Kritieke medicijnen (${data?.medications.total_critical_medications})`,
-                `Totaal medicijnrecords (${data?.medications.total_medication_records})`,
-                `Genomen medicijnrecords (${data?.medications.total_taken_medication_records})`,
-                `Niet genomen medicijnrecords (${data?.medications.total_not_taken_medication_records})`,
-                `Wachtende medicijnrecords (${data?.medications.total_waiting_medication_records})`,
+                `Totaal (${data?.medications.total_medications})`,
+                `Kritieke (${data?.medications.total_critical_medications})`,
+                `Medicijnrecords (${data?.medications.total_medication_records})`,
+                `Genomen (${data?.medications.total_taken_medication_records})`,
+                `Niet Genomen (${data?.medications.total_not_taken_medication_records})`,
+                `Wachtende (${data?.medications.total_waiting_medication_records})`,
               ],
+              chart: {
+                type: 'donut',
+                width: '100%',
+                height: '100%',
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: '60%', // Increase the donut size for better content visibility
+                  },
+                },
+              },
+              dataLabels: {
+                enabled: true, 
+                style: {
+                  fontSize: '12px', 
+                },
+                dropShadow: {
+                  enabled: true,
+                  top: 1,
+                  left: 1,
+                  blur: 1,
+                  opacity: 0.75,
+                },
+
+              },
+              tooltip: {
+                y: {
+                  formatter: (val) => `${val} records`, 
+                },
+              },
+              legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 0,
+              },
             }}
             series={[
               data?.medications.total_medications,
@@ -205,6 +310,7 @@ const Analytics: FunctionComponent = (props) => {
           />
         </div>
       </DataCard>
+
 
       <DataCard title={`Facturen (${data?.invoices.total_invoices})`}>
         <div className="mt-4 flex gap-6">
@@ -239,6 +345,42 @@ const Analytics: FunctionComponent = (props) => {
                 `Openstaande facturen (${data?.invoices.total_outstanding_invoices})`,
                 `Teveel betaalde facturen (${data?.invoices.total_overpaid_invoices})`,
               ],
+              chart: {
+                type: 'donut',
+                width: '100%',
+                height: '100%',
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: '60%', // Increase the donut size for better content visibility
+                  },
+                },
+              },
+              dataLabels: {
+                enabled: true, 
+                style: {
+                  fontSize: '12px', 
+                },
+                dropShadow: {
+                  enabled: true,
+                  top: 1,
+                  left: 1,
+                  blur: 1,
+                  opacity: 0.75,
+                },
+
+              },
+              tooltip: {
+                y: {
+                  formatter: (val) => `${val} records`, 
+                },
+              },
+              legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                offsetY: 0,
+              },
             }}
             series={[
               data?.invoices.total_paid_invoices,
@@ -292,8 +434,8 @@ type Props = {
 
 const DataCard: FunctionComponent<Props> = ({ title, children }) => {
   return (
-    <div className="rounded-lg border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark ">
-      <h3 className="text-title-md font-bold text-slate-800 dark:text-white">{title}</h3>
+    <div className="rounded-lg border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark min-h-96">
+      <h2 className="text- font-bold text-slate-800 dark:text-white">{title}</h2>
       {children}
     </div>
   );
