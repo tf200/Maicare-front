@@ -38,7 +38,9 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
       title="Zelfduurzaamheidsmatrixlijst"
       sideActions={
         <div className="flex gap-2">
-          <MultiMaturityMatrixPrintButton questIds={items.filter((item) => item.checked).map((item) => item.id)} />
+          <MultiMaturityMatrixPrintButton
+            questIds={items.filter((item) => item.checked).map((item) => item.id)}
+          />
           <LinkButton
             text="Nieuwe Zelfduurzaamheidsmatrix creëren"
             href={"./maturity-matrix/add"}
@@ -104,7 +106,6 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
           </table>
         )}
       </div>
-      
     </Panel>
   );
 }
