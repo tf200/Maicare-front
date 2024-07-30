@@ -80,6 +80,8 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
+            height={380}
+
           />
         </div>
       </DataCard>
@@ -131,6 +133,8 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
+            height={380}
+
           />
         </div>
       </DataCard>
@@ -211,7 +215,8 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
-            height="100%"
+            height={380}
+
           />
         </div>
       </DataCard>
@@ -307,6 +312,8 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
+            height={380}
+
           />
         </div>
       </DataCard>
@@ -390,6 +397,7 @@ const Analytics: FunctionComponent = (props) => {
             ]}
             type="donut"
             width="100%"
+            height={380}
           />
         </div>
       </DataCard>
