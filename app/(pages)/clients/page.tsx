@@ -102,7 +102,7 @@ const ClientsPage: FunctionComponent = () => {
   };
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Panel
         title={"Clients List"}
         header={
@@ -133,7 +133,7 @@ const ClientsPage: FunctionComponent = () => {
             onRowClick={handleRowClick}
             data={data.results}
             columns={columnDef}
-            className={styles.table}
+            className={styles.table+"min-w-[500px]"}
           />
         )}
 
@@ -153,7 +153,7 @@ const ClientsPage: FunctionComponent = () => {
           />
         )}
       </Panel>
-    </>
+    </div>
   );
 };
 
