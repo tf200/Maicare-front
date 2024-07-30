@@ -79,7 +79,7 @@ const ChangePasswordForm: FunctionComponent = (props) => {
       const errorMessages = current_password || new_password || [];
 
       return errorMessages.map((item, index) => (
-        <p key={index} className="text-red">
+        <p key={index} className="text-red-600">
           • {item}
         </p>
       ));

@@ -121,7 +121,7 @@ const ChartFive: React.FC = () => {
                 fill="#FB5454"
               />
             </svg>
-            <span className="text-sm font-medium text-red">-1.5%</span>
+            <span className="text-sm font-medium text-red-600">-1.5%</span>
           </p>
         </div>
       </div>

@@ -74,7 +74,7 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
               </Link>
               <QuestionnaireDownloadButton type="data_sharing_statement" questId={+info.row.id} />
               <IconButton
-                className="bg-red"
+                className="bg-red-600"
                 onClick={() => {
                   return open({
                     onConfirm: () => {
@@ -116,7 +116,7 @@ const DataSharing: FunctionComponent<Props> = ({ params: { clientId } }) => {
       )}
       <div className="flex flex-wrap justify-between items-center p-4"></div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, er is een fout opgetreden waardoor we dit niet konden laden.
         </p>
       )}

@@ -69,7 +69,7 @@ const SmartTextarea: FunctionComponent<Props> = ({
         )}
       </div>
       {error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {error}
         </p>
       )}
@@ -138,7 +138,7 @@ const TextEnhancingModal: FunctionComponent<ModalProps> = ({ additionalProps, ..
         </div>
       )}
       {isError && (
-        <div className="rounded-xl bg-white p-5 mb-10 text-red">
+        <div className="rounded-xl bg-white p-5 mb-10 text-red-600">
           Er is een fout opgetreden bij het verbeteren van de tekst.
           <Button
             onClick={() => {

@@ -145,7 +145,7 @@ export default function AttentionRisksForm({ handleChange, values, handleBlur, t
         }}
       </FieldArray>
 
-      <p className="text-red">{touched.attention_risks && errors.attention_risks}</p>
+      <p className="text-red-600">{touched.attention_risks && errors.attention_risks}</p>
     </Panel>
   );
 }

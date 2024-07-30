@@ -85,7 +85,7 @@ const SignIn: React.FC = () => {
         {alertState[0] != "" && (
           <h5
             style={{ color: alertState[1] }}
-            className="w-full mb-3 font-semibold text-center text-md text-red"
+            className="w-full mb-3 font-semibold text-center text-md text-red-600"
           >
             {alertState[0]}
           </h5>

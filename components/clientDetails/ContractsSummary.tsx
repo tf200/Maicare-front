@@ -21,14 +21,9 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
   });
   if (isLoading) return <Loader />;
   if (isError)
-    return (
-      <div className="text-red">
-        Sorry! Het is ons niet gelukt om contracten te laden
-      </div>
-    );
+    return <div className="text-red-600">Sorry! Het is ons niet gelukt om contracten te laden</div>;
   if (!data) return <div>Geen gegevens opgehaald.</div>;
-  if (data.results?.length === 0)
-    return <div>Geen contracten gevonden voor huidige cliënt!</div>;
+  if (data.results?.length === 0) return <div>Geen contracten gevonden voor huidige cliënt!</div>;
   return (
     <section className="grid grid-cols-3 gap-2">
       {data.results?.map((item) => (
@@ -36,12 +31,7 @@ const ContractsSummary: FunctionComponent<Props> = ({ clientId }) => {
           <DetailCell label={"Soort Hulpverlening"} value={item.care_type} />
           <DetailCell
             label={"Zorgperiode"}
-            value={
-              <MonthsBetween
-                startDate={item.start_date}
-                endDate={item.end_date}
-              />
-            }
+            value={<MonthsBetween startDate={item.start_date} endDate={item.end_date} />}
           />
           <DetailCell label={rateString(item)} value={getRate(item)} />
         </div>

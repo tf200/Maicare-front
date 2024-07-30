@@ -32,7 +32,7 @@ const Textarea: FunctionComponent<Props> = ({
         )}
       ></textarea>
       {error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {error}
         </p>
       )}

@@ -45,7 +45,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         <LinkButton text={"Rapporten Toevoegen"} href={"../reports/new"} className="ml-auto" />
       </div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de lijst te laden.
         </p>
       )}

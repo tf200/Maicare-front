@@ -108,7 +108,7 @@ const LeadsReport: React.FC = () => {
                   <span
                     className={`inline-block rounded  py-0.5 px-2.5 text-sm font-medium ${
                       lead.status === "lost"
-                        ? "bg-red/[0.08] text-red"
+                        ? "bg-red-600/[0.08] text-red-600"
                         : "text-meta-3 bg-meta-3/[0.08]"
                     } `}
                   >

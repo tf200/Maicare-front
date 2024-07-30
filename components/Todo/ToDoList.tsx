@@ -105,7 +105,7 @@ const ToDoList: React.FC = () => {
                       ? "bg-meta-3/[0.08] text-meta-3"
                       : todo.status === "Upcoming"
                         ? "bg-primary/[0.08] text-primary"
-                        : "bg-red/[0.08] text-red"
+                        : "bg-red-600/[0.08] text-red-600"
                   } `}
                 >
                   {todo.status}

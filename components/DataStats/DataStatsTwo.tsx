@@ -85,7 +85,7 @@ const DataStatsTwo: React.FC = () => {
                 fill="#FB5454"
               />
             </svg>
-            <span className="text-red">-1.5%</span>
+            <span className="text-red-600">-1.5%</span>
             <span>than last Week</span>
           </p>
         </div>

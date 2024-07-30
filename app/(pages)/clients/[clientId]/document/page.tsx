@@ -156,7 +156,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 : "Upload een Nieuw Document"
             }
             href={`/clients/${clientId}/document/new`}
-            className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
+            className={NOT_UPLOADED_DOCUMENTS.length && "bg-red-600"}
           />
         }
       >
@@ -183,7 +183,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           </>
         )}
         {isError && (
-          <p role="alert" className="text-red">
+          <p role="alert" className="text-red-600">
             Er is een fout opgetreden.
           </p>
         )}

@@ -78,7 +78,7 @@ function FormikTagInput<T extends BaseObject>({
         ))}
       </ul>
       {metaProps.touched && metaProps.error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {metaProps.error}
         </p>
       )}

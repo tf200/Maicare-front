@@ -117,7 +117,7 @@ const MedicationsPage: FunctionComponent<Props> = ({ params: { clientId } }) => 
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de medicatielijst te laden.
         </p>
       )}

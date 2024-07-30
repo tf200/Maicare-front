@@ -83,7 +83,7 @@ const DateTimePicker: FunctionComponent<{
         }}
       />
       {props.error && (
-        <p role="alert" className="pt-1 text-red">
+        <p role="alert" className="pt-1 text-red-600">
           {props.error}
         </p>
       )}

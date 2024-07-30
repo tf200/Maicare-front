@@ -124,12 +124,17 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             columns={columnDef}
             page={pagination.page ?? 1}
             isFetching={isFetching}
-            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={assessment.maturitymatrix_id?.toString()} />}
+            renderRowDetails={(row) => (
+              <GoalDetails
+                goal={row.original}
+                maturityMatrixId={assessment.maturitymatrix_id?.toString()}
+              />
+            )}
             onPageChange={(page) => pagination.setPage(page)}
           />
         )}
         {isError && (
-          <p role="alert" className="p-7 text-red">
+          <p role="alert" className="p-7 text-red-600">
             Er is een fout opgetreden.
           </p>
         )}

@@ -17,11 +17,7 @@ const ReportsSummary: FunctionComponent<Props> = ({ clientId }) => {
 
   if (isLoading) return <Loader />;
   if (isError)
-    return (
-      <div className="text-red">
-        Een fout heeft ons verhinderd gegevens te laden.
-      </div>
-    );
+    return <div className="text-red-600">Een fout heeft ons verhinderd gegevens te laden.</div>;
   if (!data) return <div>Geen gegevens opgehaald.</div>;
 
   if (data?.length === 0) return <div>Nog geen rapporten</div>;
@@ -48,12 +44,8 @@ const ReportsItem: FunctionComponent<ReportsItemProps> = ({ reports }) => {
 
   return (
     <li className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl">
-      <div className="font-medium text-gray-600">
-        {shortDateTimeFormat(reports.date)}
-      </div>
-      <div className="col-span-2 text-gray-600 truncate">
-        {reports.report_text}
-      </div>
+      <div className="font-medium text-gray-600">{shortDateTimeFormat(reports.date)}</div>
+      <div className="col-span-2 text-gray-600 truncate">{reports.report_text}</div>
     </li>
   );
 };

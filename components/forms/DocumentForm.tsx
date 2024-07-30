@@ -144,7 +144,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
         </div>
       </div>
       {error != "" && (
-        <p role="alert" className="pb-3 text-red">
+        <p role="alert" className="pb-3 text-red-600">
           {error}
         </p>
       )}

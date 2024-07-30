@@ -174,7 +174,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
                     : "Volledige Documenten"
                 }
                 href={`${clientId}/document`}
-                className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
+                className={NOT_UPLOADED_DOCUMENTS.length && "bg-red-600"}
               />
             }
           >

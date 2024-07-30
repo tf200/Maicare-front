@@ -26,8 +26,7 @@ import Loader from "@/components/common/Loader";
 const ClientsPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<ClientsSearchParams>();
   const debouncedParams = useDebounce(filters, 500);
-  const { page, setPage, data, isError, isFetching, isLoading } =
-    useClientsList(debouncedParams);
+  const { page, setPage, data, isError, isFetching, isLoading } = useClientsList(debouncedParams);
 
   const router = useRouter();
 
@@ -56,15 +55,12 @@ const ClientsPage: FunctionComponent = () => {
         accessorKey: "date_of_birth",
         header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue()
-            ? getAge(info.getValue() as string)
-            : "Niet gespecificeerd",
+          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) =>
-          mappingGender[info.getValue() as string] || "Niet gespecificeerd",
+        cell: (info) => mappingGender[info.getValue() as string] || "Niet gespecificeerd",
       },
       {
         accessorKey: "status",
@@ -75,14 +71,14 @@ const ClientsPage: FunctionComponent = () => {
         accessorKey: "document_info",
         header: () => "Documenten",
         cell: (info) => {
-          let missing_documents = info.getValue()["not_uploaded_document_labels"]?.length
+          let missing_documents = info.getValue()["not_uploaded_document_labels"]?.length;
 
           return missing_documents > 0 ? (
-            <span className="text-red">{missing_documents} missende documenten</span>
+            <span className="text-red-600">{missing_documents} missende documenten</span>
           ) : (
             <span className="text-green">✅ voltooid</span>
-          )
-        }
+          );
+        },
       },
     ];
   }, []);
@@ -119,10 +115,7 @@ const ClientsPage: FunctionComponent = () => {
             />
             <SecureFragment permission={consts.CLIENT_CREATE}>
               <Link href={`/clients/new`}>
-                <LinkButton
-                  text={"Nieuwe Cliënten Toevoegen"}
-                  href={`/clients/new`}
-                />
+                <LinkButton text={"Nieuwe Cliënten Toevoegen"} href={`/clients/new`} />
               </Link>
             </SecureFragment>
           </div>
@@ -147,9 +140,7 @@ const ClientsPage: FunctionComponent = () => {
         {data && data.results.length === 0 && (
           <LargeAlertMessage
             firstLine={"Oops!"}
-            secondLine={
-              "Het lijkt erop dat er geen cliënten zijn die aan uw zoekcriteria voldoen."
-            }
+            secondLine={"Het lijkt erop dat er geen cliënten zijn die aan uw zoekcriteria voldoen."}
           />
         )}
 
@@ -158,9 +149,7 @@ const ClientsPage: FunctionComponent = () => {
         {isError && (
           <LargeAlertMessage
             firstLine={"Oops!"}
-            secondLine={
-              "Een fout heeft ons verhinderd de cliëntenlijst op te halen."
-            }
+            secondLine={"Een fout heeft ons verhinderd de cliëntenlijst op te halen."}
           />
         )}
       </Panel>
