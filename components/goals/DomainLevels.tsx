@@ -24,10 +24,8 @@ const GRADIENT_COLORS = [
 const DomainLevels: FunctionComponent<{
   clientId: number;
 }> = ({ clientId }) => {
-  const { data: domains, isLoading: isLoadingDomains } =
-    useClientDomains(clientId);
-  const { data: levels, isLoading: isLoadingLevels } =
-    useClientLevels(clientId);
+  const { data: domains, isLoading: isLoadingDomains } = useClientDomains(clientId);
+  const { data: levels, isLoading: isLoadingLevels } = useClientLevels(clientId);
   const getLevelByDomain = (domainId: number) => {
     return levels.find((level) => level.domain_id === domainId);
   };
@@ -41,7 +39,7 @@ const DomainLevels: FunctionComponent<{
   return (
     <SecureFragment permission={MANAGE_DOMAIN_LEVELS}>
       <div className="mb-6">
-        <h2 className="px-4 py-2 text-xl text-black font-bold">Domeinen</h2>
+        <h2 className="px-4 py-2 text-xl text-slate-800  font-bold">Domeinen</h2>
         <div className="flex flex-wrap gap-4">
           {domains.map((domain) => (
             <DataCard title={domain.name} key={domain.id}>
@@ -71,10 +69,7 @@ const DomainLevels: FunctionComponent<{
 
 export default DomainLevels;
 
-const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const currentLevel: DomainLevel = additionalProps?.currentLevel;
   const currentDomain: MDomain = additionalProps?.currentDomain;
   const [level, setLevel] = useState<number>(currentLevel?.level);
@@ -103,9 +98,7 @@ const UpdateDomainLevelModal: FunctionComponent<ModalProps> = ({
             onClick={() => setLevel(index + 1)}
           >
             <div>{MLevels[index]}</div>
-            {level === index + 1 && (
-              <div className="text-primary">(geselecteerd)</div>
-            )}
+            {level === index + 1 && <div className="text-primary">(geselecteerd)</div>}
             <ChevronDown
               className={cn("ml-auto", {
                 "transform rotate-180": level === index + 1,

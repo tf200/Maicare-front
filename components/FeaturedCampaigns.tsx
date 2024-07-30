@@ -11,7 +11,7 @@ const FeaturedCampaigns: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6">
       <div className="flex items-start justify-between border-b border-stroke py-5 px-6 dark:border-strokedark">
         <div>
-          <h2 className="mb-1.5 text-title-md2 font-bold text-black dark:text-white">
+          <h2 className="mb-1.5 text-title-md2 font-bold text-slate-800  dark:text-white">
             Featured Campaigns
           </h2>
           <p className="text-sm font-medium">75% activity growth</p>
@@ -194,23 +194,17 @@ const FeaturedCampaigns: React.FC = () => {
               <h4 className="text-sm font-medium uppercase">STATUS</h4>
             </div>
             <div className="xsm:col-span-2 sm:col-span-1">
-              <h4 className="text-sm font-medium uppercase xsm:text-right">
-                CONVERSION
-              </h4>
+              <h4 className="text-sm font-medium uppercase xsm:text-right">CONVERSION</h4>
             </div>
           </div>
           {/* <!-- Featured Table Titles --> */}
 
           {/* <!-- Featured Tab Content One --> */}
-          <div
-            className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 1 ? "block" : "hidden"
-            }`}
-          >
+          <div className={`mt-4.5 flex flex-col gap-6 ${openTab === 1 ? "block" : "hidden"}`}>
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Best Headsets Giveaway
                 </h5>
               </div>
@@ -220,7 +214,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0%(0)
                 </span>
               </div>
@@ -229,7 +223,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   iPhone 14 Plus Giveaway
                 </h5>
               </div>
@@ -239,7 +233,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   37%(247)
                 </span>
               </div>
@@ -248,7 +242,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Macbook Pro M1 Giveaway
                 </h5>
               </div>
@@ -258,7 +252,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   18%(6.4k)
                 </span>
               </div>
@@ -267,7 +261,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Affiliation Program
                 </h5>
               </div>
@@ -277,7 +271,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   12%(2.6K)
                 </span>
               </div>
@@ -286,7 +280,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Google AdSense
                 </h5>
               </div>
@@ -296,7 +290,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0.01%(1)
                 </span>
               </div>
@@ -305,15 +299,11 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content One --> */}
 
           {/* <!-- Featured Tab Content Two --> */}
-          <div
-            className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 2 ? "block" : "hidden"
-            }`}
-          >
+          <div className={`mt-4.5 flex flex-col gap-6 ${openTab === 2 ? "block" : "hidden"}`}>
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   iPhone 14 Plus Giveaway
                 </h5>
               </div>
@@ -323,7 +313,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   37%(247)
                 </span>
               </div>
@@ -332,7 +322,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Macbook Pro M1 Giveaway
                 </h5>
               </div>
@@ -342,7 +332,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   18%(6.4k)
                 </span>
               </div>
@@ -351,7 +341,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Best Headsets Giveaway
                 </h5>
               </div>
@@ -361,7 +351,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0%(0)
                 </span>
               </div>
@@ -370,7 +360,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Google AdSense
                 </h5>
               </div>
@@ -380,7 +370,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0.01%(1)
                 </span>
               </div>
@@ -389,7 +379,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Affiliation Program
                 </h5>
               </div>
@@ -399,7 +389,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   12%(2.6K)
                 </span>
               </div>
@@ -408,15 +398,11 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content Two --> */}
 
           {/* <!-- Featured Tab Content Three --> */}
-          <div
-            className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 3 ? "block" : "hidden"
-            }`}
-          >
+          <div className={`mt-4.5 flex flex-col gap-6 ${openTab === 3 ? "block" : "hidden"}`}>
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Best Headsets Giveaway
                 </h5>
               </div>
@@ -426,7 +412,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0%(0)
                 </span>
               </div>
@@ -435,7 +421,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Affiliation Program
                 </h5>
               </div>
@@ -445,7 +431,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   12%(2.6K)
                 </span>
               </div>
@@ -454,7 +440,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Macbook Pro M1 Giveaway
                 </h5>
               </div>
@@ -464,7 +450,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   18%(6.4k)
                 </span>
               </div>
@@ -473,7 +459,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Google AdSense
                 </h5>
               </div>
@@ -483,7 +469,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0.01%(1)
                 </span>
               </div>
@@ -492,7 +478,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   iPhone 14 Plus Giveaway
                 </h5>
               </div>
@@ -502,7 +488,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   37%(247)
                 </span>
               </div>
@@ -511,15 +497,11 @@ const FeaturedCampaigns: React.FC = () => {
           {/* <!-- Featured Tab Content Three --> */}
 
           {/* <!-- Featured Tab Content Four --> */}
-          <div
-            className={`mt-4.5 flex flex-col gap-6 ${
-              openTab === 4 ? "block" : "hidden"
-            }`}
-          >
+          <div className={`mt-4.5 flex flex-col gap-6 ${openTab === 4 ? "block" : "hidden"}`}>
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   iPhone 14 Plus Giveaway
                 </h5>
               </div>
@@ -529,7 +511,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   37%(247)
                 </span>
               </div>
@@ -538,7 +520,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Best Headsets Giveaway
                 </h5>
               </div>
@@ -548,7 +530,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0%(0)
                 </span>
               </div>
@@ -557,7 +539,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Google AdSense
                 </h5>
               </div>
@@ -567,7 +549,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   0.01%(1)
                 </span>
               </div>
@@ -576,7 +558,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Affiliation Program
                 </h5>
               </div>
@@ -586,7 +568,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   12%(2.6K)
                 </span>
               </div>
@@ -595,7 +577,7 @@ const FeaturedCampaigns: React.FC = () => {
             {/* <!-- Featured Tab Content Item --> */}
             <div className="grid gap-1 px-4.5 xsm:grid-cols-7 sm:grid-cols-5">
               <div className="xsm:col-span-3">
-                <h5 className="cursor-pointer text-sm font-medium text-black hover:text-primary dark:text-white dark:hover:text-primary">
+                <h5 className="cursor-pointer text-sm font-medium text-slate-800  hover:text-primary dark:text-white dark:hover:text-primary">
                   Macbook Pro M1 Giveaway
                 </h5>
               </div>
@@ -605,7 +587,7 @@ const FeaturedCampaigns: React.FC = () => {
                 </span>
               </div>
               <div className="xsm:col-span-2 xsm:text-right sm:col-span-1">
-                <span className="inline-block text-sm font-medium text-black dark:text-white">
+                <span className="inline-block text-sm font-medium text-slate-800  dark:text-white">
                   18%(6.4k)
                 </span>
               </div>

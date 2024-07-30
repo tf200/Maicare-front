@@ -1,8 +1,4 @@
-import React, {
-  FunctionComponent,
-  InputHTMLAttributes,
-  ReactNode,
-} from "react";
+import React, { FunctionComponent, InputHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
 type InputFieldType = InputHTMLAttributes<HTMLInputElement> & {
@@ -21,10 +17,7 @@ export const InputFieldBig: FunctionComponent<InputFieldType> = ({
 }) => {
   return (
     <div className={cn("mb-4", className)}>
-      <label
-        htmlFor={id}
-        className="mb-2.5 block font-medium text-black dark:text-white"
-      >
+      <label htmlFor={id} className="mb-2.5 block font-medium text-slate-800  dark:text-white">
         {label}
       </label>
       <div className="relative">
@@ -35,7 +28,7 @@ export const InputFieldBig: FunctionComponent<InputFieldType> = ({
         />
         {icon && <span className="absolute right-4 top-4">{icon}</span>}
       </div>
-      {error ? <p className="text-red pt-1">{error}</p> : <></>}
+      {error ? <p className="text-c_red pt-1">{error}</p> : <></>}
     </div>
   );
 };

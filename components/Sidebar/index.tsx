@@ -96,7 +96,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     } else if (pathname.startsWith("/employees/") && !pathname.startsWith("/employees/new")) {
       return styles.employeeBg;
     } else {
-      return "bg-black dark:bg-boxdark";
+      return "bg-slate-800 dark:bg-boxdark";
     }
   }, [pathname]);
 

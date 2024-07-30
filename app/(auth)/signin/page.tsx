@@ -11,8 +11,7 @@ import { InputFieldBig } from "@/components/FormFields/InputFieldBig";
 const SignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const initialAlertState: [string, string] = ["", ""];
-  const [alertState, setAlertState] =
-    useState<[string, string]>(initialAlertState);
+  const [alertState, setAlertState] = useState<[string, string]>(initialAlertState);
 
   const requiredMessage = "This field is required.";
   const formik = useFormik({
@@ -43,7 +42,7 @@ const SignIn: React.FC = () => {
           MAI<span className="font-bold">Care</span>
         </p>
       </div>
-      <h2 className="text-2xl font-bold text-black mb-9 dark:text-white sm:text-title-xl2">
+      <h2 className="text-2xl font-bold text-slate-800  mb-9 dark:text-white sm:text-title-xl2">
         Sign In to the website
       </h2>
 
@@ -54,11 +53,7 @@ const SignIn: React.FC = () => {
           name="username"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.username && formik.errors.username
-              ? formik.errors.username
-              : null
-          }
+          error={formik.touched.username && formik.errors.username ? formik.errors.username : null}
           placeholder="Enter your user name"
           icon={<MailIcon />}
         />
@@ -69,11 +64,7 @@ const SignIn: React.FC = () => {
           name="password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : null
-          }
+          error={formik.touched.password && formik.errors.password ? formik.errors.password : null}
           placeholder="6+ Characters, 1 Capital letter"
           className="mb-8"
           icon={<LockIcon />}
@@ -94,7 +85,7 @@ const SignIn: React.FC = () => {
         {alertState[0] != "" && (
           <h5
             style={{ color: alertState[1] }}
-            className="w-full mb-3 font-semibold text-center text-md text-red"
+            className="w-full mb-3 font-semibold text-center text-md text-red-600"
           >
             {alertState[0]}
           </h5>

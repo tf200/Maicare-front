@@ -1,9 +1,4 @@
-import React, {
-  FormEvent,
-  FunctionComponent,
-  useCallback,
-  useRef,
-} from "react";
+import React, { FormEvent, FunctionComponent, useCallback, useRef } from "react";
 import ClipIcon from "@/components/icons/ClipIcon";
 import SendIcon from "@/components/icons/SendIcon";
 import Button from "@/components/buttons/Button";
@@ -13,10 +8,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const MessageEditor: FunctionComponent<Props> = ({
-  onSubmit: onSubmitCallback,
-  disabled,
-}) => {
+const MessageEditor: FunctionComponent<Props> = ({ onSubmit: onSubmitCallback, disabled }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const messageEditorRef = useRef<HTMLInputElement>(null);
   const onSubmit = useCallback(
@@ -42,7 +34,7 @@ const MessageEditor: FunctionComponent<Props> = ({
           type="text"
           id="message-editor"
           placeholder="Type something here"
-          className="h-13 w-full rounded-md border border-stroke bg-gray pl-5 pr-19 text-black placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white"
+          className="h-13 w-full rounded-md border border-stroke bg-c_gray pl-5 pr-19 text-slate-800  placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white"
         />
         <div className="absolute right-5 top-1/2 inline-flex -translate-y-1/2 items-center justify-end space-x-4">
           <button type="button" className="hover:text-primary">

@@ -17,11 +17,7 @@ const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useDocumentList(clientId.toString());
   if (isLoading) return <Loader />;
   if (isError)
-    return (
-      <div className="text-red">
-        Een fout heeft ons verhinderd gegevens te laden.
-      </div>
-    );
+    return <div className="text-red-600">Een fout heeft ons verhinderd gegevens te laden.</div>;
   if (!data) return <div>Geen gegevens opgehaald.</div>;
   if (data.results?.length === 0) return <div>Geen documenten gevonden</div>;
   return (

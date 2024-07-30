@@ -123,7 +123,7 @@ export default function MaturityMatrixTable({
     <table className="table-fixed w-full">
       <thead>
         <tr>
-          <th className="border border-stroke bg-yellow-400 text-black text-lg">Domein</th>
+          <th className="border border-stroke bg-yellow-400 text-slate-800  text-lg">Domein</th>
           {M_LEVELS.map((level, index) => (
             <th
               className={cn(
@@ -140,7 +140,7 @@ export default function MaturityMatrixTable({
       <tbody>
         {domains.map((domain, index) => (
           <tr key={domain.name}>
-            <td className="w-1/8 align-top border border-stroke p-2 font-bold bg-yellow-400 text-black text-lg">
+            <td className="w-1/8 align-top border border-stroke p-2 font-bold bg-yellow-400 text-slate-800  text-lg">
               {domain.name}
             </td>
             {domain.levels.map((level) => (
@@ -248,7 +248,8 @@ function MatrixItem({
     <div
       className={cn(
         " p-2 min-h-[250px] relative group overflow-hidden",
-        selected && "border-2 rounded-md bg-purple-100 border-purple-500 text-black cursor-default",
+        selected &&
+          "border-2 rounded-md bg-purple-100 border-purple-500 text-slate-800  cursor-default",
         !selected && mode === "create" && "hover:bg-gray",
         mode === "create" ? "border-dashed cursor-pointer" : "border-solid cursor-default"
       )}

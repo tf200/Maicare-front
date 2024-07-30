@@ -7,7 +7,7 @@ const ExternalLink: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
       <div className="flex items-start justify-between border-b border-stroke py-5 px-6 dark:border-strokedark">
         <div>
-          <h2 className="mb-1.5 text-title-md2 font-bold text-black dark:text-white">
+          <h2 className="mb-1.5 text-title-md2 font-bold text-slate-800  dark:text-white">
             External Links
           </h2>
           <p className="text-sm font-medium">Most used resources</p>
@@ -40,7 +40,7 @@ const ExternalLink: React.FC = () => {
             </svg>
 
             <Link href="#">
-              <h4 className="font-medium text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary">
+              <h4 className="font-medium text-slate-800  group-hover:text-primary dark:text-white dark:group-hover:text-primary">
                 Google Analytics
               </h4>
             </Link>
@@ -93,7 +93,7 @@ const ExternalLink: React.FC = () => {
             </svg>
 
             <Link href="#">
-              <h4 className="font-medium text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary">
+              <h4 className="font-medium text-slate-800  group-hover:text-primary dark:text-white dark:group-hover:text-primary">
                 Facebook Ads
               </h4>
             </Link>
@@ -139,7 +139,7 @@ const ExternalLink: React.FC = () => {
             </svg>
 
             <Link href="#">
-              <h4 className="font-medium text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary">
+              <h4 className="font-medium text-slate-800  group-hover:text-primary dark:text-white dark:group-hover:text-primary">
                 Seranking
               </h4>
             </Link>
@@ -242,7 +242,7 @@ const ExternalLink: React.FC = () => {
             </svg>
 
             <Link href="">
-              <h4 className="font-medium text-black group-hover:text-primary dark:text-white dark:group-hover:text-primary">
+              <h4 className="font-medium text-slate-800  group-hover:text-primary dark:text-white dark:group-hover:text-primary">
                 Instagram Ads
               </h4>
             </Link>

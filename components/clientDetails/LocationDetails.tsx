@@ -12,8 +12,7 @@ type Props = {
 const LocationDetails: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useClientDetails(clientId);
   if (isLoading) return <Loader />;
-  if (isError)
-    return <div className="text-red">We failed to load client details</div>;
+  if (isError) return <div className="text-red-600">We failed to load client details</div>;
   if (data) {
     return (
       <div className="grid grid-cols-2 gap-4">

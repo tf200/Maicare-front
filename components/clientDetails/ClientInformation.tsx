@@ -21,8 +21,7 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useClientDetails(clientId);
   const { open } = useModal(ClientProfilePictureModal);
   if (isLoading) return <Loader />;
-  if (isError)
-    return <div className="text-red">We failed to load client data</div>;
+  if (isError) return <div className="text-red-600">We failed to load client data</div>;
   if (data) {
     return (
       <div className="grid grid-cols-2 gap-4">
@@ -44,9 +43,7 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
         <DetailCell
           ignoreIfEmpty={true}
           label={"Volledige Naam"}
-          value={
-            `${data.first_name} ${data.last_name}` || "Niet gespecificeerd"
-          }
+          value={`${data.first_name} ${data.last_name}` || "Niet gespecificeerd"}
         />
         <DetailCell
           ignoreIfEmpty={true}

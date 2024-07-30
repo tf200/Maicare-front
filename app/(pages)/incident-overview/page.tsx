@@ -89,7 +89,7 @@ const IncidentsPage: FunctionComponent<Props> = () => {
       )}
       <div className="flex flex-wrap justify-between items-center p-4"></div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, er is een fout opgetreden waardoor we dit niet konden laden.
         </p>
       )}

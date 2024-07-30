@@ -23,9 +23,7 @@ type Props = {
 };
 
 const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { data, pagination, isError, isLoading, isFetching } = useAllergiesList(
-    parseInt(clientId)
-  );
+  const { data, pagination, isError, isLoading, isFetching } = useAllergiesList(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<AllergiesResDto>[]>(() => {
     const columnHelper = createColumnHelper<AllergiesResDto>();
@@ -40,9 +38,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         header: "Reactie",
       },
       columnHelper.accessor("severity", {
-        header: (Header) => (
-          <div className="flex justify-center w-full">Ernst</div>
-        ),
+        header: (Header) => <div className="flex justify-center w-full">Ernst</div>,
         cell: (info) => (
           <div className="flex justify-center w-full">
             <Severity severity={info.getValue()} />
@@ -78,7 +74,7 @@ const AllergiesPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       )}
       <div className="flex flex-wrap justify-between items-center p-4"></div>
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de allergielijst te laden.
         </p>
       )}
@@ -119,11 +115,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
           </div>
         }
       />
-      <DetailCell
-        className={"col-span-3"}
-        label={"Notities"}
-        value={data.notes}
-      />
+      <DetailCell className={"col-span-3"} label={"Notities"} value={data.notes} />
       <div className="flex gap-4">
         <IconButton
           buttonType="Danger"
@@ -137,11 +129,7 @@ const RowDetails: FunctionComponent<RowDetailsProps> = ({ data, clientId }) => {
           disabled={isDeleted}
           isLoading={isDeleting}
         >
-          {isDeleted ? (
-            <CheckIcon className="w-5 h-5" />
-          ) : (
-            <TrashIcon className="w-5 h-5" />
-          )}
+          {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
         <Link href={`/clients/${clientId}/allergies/${data.id}/edit`}>
           <IconButton>

@@ -17,7 +17,7 @@ const ContactAssignment: FunctionComponent<{
   return (
     <>
       {data && (
-        <div className="mb-6 bg-gray rounded-md p-4 dark:bg-graydark dark:text-white">
+        <div className="mb-6 bg-c_gray rounded-md p-4 dark:bg-graydark dark:text-white">
           <h2 className="text-l font-bold mb-4">
             <InfoIcon className="inline-block relative -top-0.5" />{" "}
             {text ?? "Maak een contracten voor de gegeven opdrachtgever"}

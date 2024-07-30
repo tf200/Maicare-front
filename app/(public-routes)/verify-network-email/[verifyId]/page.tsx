@@ -39,7 +39,7 @@ export default function VerifyEmailPage({ params }) {
             </p>
           </div>
         ) : isError ? (
-          <div className="text-red px-4 py-3 rounded relative" role="alert">
+          <div className="text-c_red px-4 py-3 rounded relative" role="alert">
             <strong className="font-bold">Oh Oh!</strong>
             <br />
             <span className="block text-sm">

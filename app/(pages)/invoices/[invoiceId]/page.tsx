@@ -127,7 +127,7 @@ const Page: FunctionComponent<{
       title={"Factuur"}
       header={
         <div className="flex items-center w-full gap-4">
-          <h2 className="font-medium text-black dark:text-white">
+          <h2 className="font-medium text-slate-800  dark:text-white">
             Factuur #{data?.invoice_number}{" "}
           </h2>
           <InvoiceStatus status={data.status} />
@@ -214,17 +214,17 @@ const InvoiceHistory: FunctionComponent<{
             <DetailCell
               value={fullDateTimeFormat(item.created)}
               label={"Datum"}
-              className="border-b-1 border-gray pb-5"
+              className="border-b-1 border-c_gray pb-5"
               ignoreIfEmpty={true}
             />
             <DetailCell
-              className="border-b-1 border-gray pb-5"
+              className="border-b-1 border-c_gray pb-5"
               value={PAYMENT_TYPE_RECORD[item.payment_method]}
               label={"Betaalmethode"}
               ignoreIfEmpty={true}
             />
             <DetailCell
-              className="border-b-1 border-gray pb-5"
+              className="border-b-1 border-c_gray pb-5"
               value={formatPrice(item.amount)}
               label={"Betaald bedrag"}
               ignoreIfEmpty={true}
@@ -322,7 +322,7 @@ const UpdateStatus: FunctionComponent<{
               onBlur={handleBlur}
               error={touched.status && errors.status}
             />
-            <p className="mt-6 text-red font-bold text-sm">
+            <p className="mt-6 text-c_red font-bold text-sm">
               📌 Openstaande facturen worden automatisch naar de afzender van de cliënten gestuurd.
             </p>
           </div>
@@ -564,7 +564,7 @@ const ActionButton: FunctionComponent<ActionButtonProps> = (props) => {
     <button
       {...props}
       type={props.type ?? "button"}
-      className="flex h-12.5 w-12.5 disabled:bg-gray items-center justify-center rounded-sm border border-stroke bg-white p-4 hover:text-primary dark:border-strokedark dark:bg-boxdark"
+      className="flex h-12.5 w-12.5 disabled:bg-c_gray items-center justify-center rounded-sm border border-stroke bg-white p-4 hover:text-primary dark:border-strokedark dark:bg-boxdark"
     >
       {props.children}
     </button>

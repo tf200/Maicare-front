@@ -28,12 +28,7 @@ const StarIconComponent: React.FC<{
   );
 };
 
-const Rating: React.FC<RatingProps> = ({
-  label,
-  name,
-  required,
-  className,
-}) => {
+const Rating: React.FC<RatingProps> = ({ label, name, required, className }) => {
   const [fieldInput, meta, helpers] = useField<number>({
     name,
   });
@@ -46,10 +41,7 @@ const Rating: React.FC<RatingProps> = ({
   return (
     <div className={cn(className, "pb-3 w-fit")}>
       {label && (
-        <label
-          htmlFor={"rate"}
-          className="mb-2.5 block text-black dark:text-white"
-        >
+        <label htmlFor={"rate"} className="mb-2.5 block text-slate-800  dark:text-white">
           {label} {required && <span className="text-meta-1">*</span>}
         </label>
       )}

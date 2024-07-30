@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef } from "react";
 import ProfilePicture from "@/components/ProfilePicture";
 import { useMyInfo, useUserInfo } from "@/utils/user-info/getUserInfo";
 import { cn } from "@/utils/cn";
@@ -38,13 +32,10 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
   const { data: conversation } = useConversation(conversationId);
 
   const otherParticipant = useMemo(
-    () =>
-      conversation?.involved?.find((profile) => profile.id !== myInfo?.user),
+    () => conversation?.involved?.find((profile) => profile.id !== myInfo?.user),
     [myInfo, conversation]
   );
-  const { data: recipientInfo } = useUserInfo(
-    recipientId || otherParticipant?.id
-  );
+  const { data: recipientInfo } = useUserInfo(recipientId || otherParticipant?.id);
   const recipientFullName = useMemo(() => {
     if (!recipientInfo) {
       return "";
@@ -70,10 +61,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
         });
       } else if (conversationId) {
         unsubscribe = ws?.onMessageDelivery((data) => {
-          queryClient.invalidateQueries([
-            "conversation-details",
-            conversationId,
-          ]);
+          queryClient.invalidateQueries(["conversation-details", conversationId]);
         });
       }
       ws?.send(newMessage);
@@ -81,16 +69,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
         unsubscribe?.();
       };
     },
-    [
-      isConnected,
-      ws,
-      recipientInfo,
-      recipientId,
-      myInfo,
-      router,
-      queryClient,
-      conversationId,
-    ]
+    [isConnected, ws, recipientInfo, recipientId, myInfo, router, queryClient, conversationId]
   );
 
   useEffect(() => {
@@ -106,8 +85,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
 
   useEffect(() => {
     if (messagesContainer.current) {
-      messagesContainer.current.scrollTop =
-        messagesContainer.current.scrollHeight;
+      messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
     }
   }, [conversation]);
   return (
@@ -127,9 +105,7 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
               />
             </div>
             <div>
-              <h5 className="font-medium text-black dark:text-white">
-                {recipientFullName}
-              </h5>
+              <h5 className="font-medium text-slate-800  dark:text-white">{recipientFullName}</h5>
               <p className="text-sm">Reply to message</p>
             </div>
           </div>
@@ -139,19 +115,14 @@ const ChatBox: FunctionComponent<ChatBoxProps> = (props) => {
         (recipientId && !conversationId && (
           <SendMessage
             firstLine={"Start a conversation with " + recipientFullName}
-            secondLine={
-              "Send your first message to start a conversation with " +
-              recipientFullName
-            }
+            secondLine={"Send your first message to start a conversation with " + recipientFullName}
           />
         ))}
       <div
         ref={messagesContainer}
         className="flex flex-1 flex-col-reverse no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5"
       >
-        {conversation?.results.map((message) => (
-          <Message key={message.id} message={message} />
-        ))}
+        {conversation?.results.map((message) => <Message key={message.id} message={message} />)}
       </div>
       <div className="sticky bottom-0 border-t border-stroke bg-white py-5 px-6 dark:border-strokedark dark:bg-boxdark">
         <MessageEditor onSubmit={sendMessage} disabled={!isConnected} />
@@ -168,10 +139,7 @@ type MessageProps = {
 
 const Message: FunctionComponent<MessageProps> = ({ message }) => {
   const { data: userInfo } = useMyInfo();
-  const isCurrentUser = useMemo(
-    () => message.sender === userInfo.user,
-    [message, userInfo]
-  );
+  const isCurrentUser = useMemo(() => message.sender === userInfo.user, [message, userInfo]);
 
   const { data: senderInfo } = useUserInfo(message.sender);
   const recipientFullName = useMemo(() => {
@@ -185,7 +153,7 @@ const Message: FunctionComponent<MessageProps> = ({ message }) => {
       <p className="mb-2.5 text-sm font-medium">{recipientFullName}</p>
       <div
         className={cn("mb-2.5 rounded-2xl py-3 px-5", {
-          "rounded-tl-none bg-gray dark:bg-boxdark-2": !isCurrentUser,
+          "rounded-tl-none bg-c_gray dark:bg-boxdark-2": !isCurrentUser,
           "rounded-br-none bg-primary text-white": isCurrentUser,
         })}
       >

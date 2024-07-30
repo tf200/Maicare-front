@@ -1,10 +1,5 @@
 "use client";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Table from "@/components/Table";
 import Pagination from "@/components/Pagination";
@@ -39,9 +34,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [documentId, setDocumentId] = useState<number>(null);
 
-  const { mutate, isLoading: isDeleteLoading } = useDeleteDocument(
-    parseInt(clientId)
-  );
+  const { mutate, isLoading: isDeleteLoading } = useDeleteDocument(parseInt(clientId));
   const onSubmit = useCallback(
     (documentId: number) => {
       mutate(documentId, {
@@ -74,8 +67,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "file_size",
         header: () => "Bestandsgrootte",
-        cell: (info) =>
-          bytesToSize(parseInt(info.getValue())) || "Niet Beschikbaar",
+        cell: (info) => bytesToSize(parseInt(info.getValue())) || "Niet Beschikbaar",
         className: "w-[150px]",
       },
       {
@@ -91,8 +83,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {
         accessorKey: "uploaded_at",
         header: () => "Geüpload Op",
-        cell: (info) =>
-          dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
+        cell: (info) => dayjs(info.getValue()).format("DD MMM, YYYY") || "Niet Beschikbaar",
       },
       {
         accessorKey: "documents",
@@ -165,7 +156,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 : "Upload een Nieuw Document"
             }
             href={`/clients/${clientId}/document/new`}
-            className={NOT_UPLOADED_DOCUMENTS.length && "bg-red"}
+            className={NOT_UPLOADED_DOCUMENTS.length && "bg-red-600"}
           />
         }
       >
@@ -173,7 +164,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         {data && (
           <>
             {NOT_UPLOADED_DOCUMENTS.length > 0 && (
-              <div className="p-5 bg-red text-white font-bold rounded-lg m-5">
+              <div className="p-5 bg-c_red text-white font-bold rounded-lg m-5">
                 Zorg ervoor dat u de rest van de documenttypen uploadt:
                 <ul>
                   {NOT_UPLOADED_DOCUMENTS.map((doc) => (
@@ -192,7 +183,7 @@ const DocumentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           </>
         )}
         {isError && (
-          <p role="alert" className="text-red">
+          <p role="alert" className="text-red-600">
             Er is een fout opgetreden.
           </p>
         )}

@@ -35,7 +35,7 @@ export default function WorkingHoursField({
   return (
     <div className={cn("w-[600px] mb-5", className)}>
       {label && <label className="block font-medium text-gray-700 mb-3">{label}</label>}
-      {meta.touched && meta.error && <div className="text-red text-sm my-2">{meta.error}</div>}
+      {meta.touched && meta.error && <div className="text-c_red text-sm my-2">{meta.error}</div>}
 
       {new Array(totalTimePeriods).fill(0).map((_, i) => {
         return (
@@ -128,7 +128,7 @@ function TimePeriod({
         disabled={disabled}
       />
       {deletable && !disabled && (
-        <Icon name="trash" className="w-5 h-5 mt-3 text-red cursor-pointer" onClick={onDelete} />
+        <Icon name="trash" className="w-5 h-5 mt-3 text-c_red cursor-pointer" onClick={onDelete} />
       )}
     </div>
   );

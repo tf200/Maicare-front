@@ -174,7 +174,7 @@ const Page: FunctionComponent = (props) => {
           height: "calc(100vh - 250px)",
         }}
         components={{
-          toolbar: Toolbar,
+          toolbar: Toolbar 
         }}
         eventPropGetter={classNameByAppointmentType}
         handleDragStart={deactivateQuery}

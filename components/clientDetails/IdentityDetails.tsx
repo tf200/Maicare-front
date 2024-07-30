@@ -13,8 +13,7 @@ type Props = {
 const IdentityDetails: FunctionComponent<Props> = ({ clientId }) => {
   const { data, isLoading, isError } = useClientDetails(clientId);
   if (isLoading) return <Loader />;
-  if (isError)
-    return <div className="text-red">We failed to load client identity</div>;
+  if (isError) return <div className="text-red-600">We failed to load client identity</div>;
   if (data) {
     return (
       <div className="grid grid-cols-2 gap-4">
@@ -23,11 +22,7 @@ const IdentityDetails: FunctionComponent<Props> = ({ clientId }) => {
           label={"Identiteit"}
           value={data.identity ? "Geverifieerd" : "Niet geverifieerd"}
         />
-        <DetailCell
-          ignoreIfEmpty={true}
-          label={"Bsn"}
-          value={data.bsn || "Niet gespecificeerd"}
-        />
+        <DetailCell ignoreIfEmpty={true} label={"Bsn"} value={data.bsn || "Niet gespecificeerd"} />
         <DetailCell
           ignoreIfEmpty={true}
           label={"Bron"}

@@ -49,7 +49,7 @@ const DropdownNotification = () => {
             setDropdownOpen((isOpen) => !isOpen);
           }}
           href="#"
-          className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
+          className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-c_gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
         >
           <Ping className="absolute -top-0.5 right-0 z-1" pinging={hasUnread} />
           <BellIcon />

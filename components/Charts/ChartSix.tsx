@@ -139,11 +139,11 @@ const ChartSix: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <h4 className="text-title-sm2 font-bold text-black dark:text-white">
+          <h4 className="text-title-sm2 font-bold text-slate-800  dark:text-white">
             Campaign Visitors
           </h4>
           <div className="mt-2.5 flex gap-2.5">
-            <h3 className="mb-1.5 text-title-lg font-bold text-black dark:text-white">
+            <h3 className="mb-1.5 text-title-lg font-bold text-slate-800  dark:text-white">
               $560.93
             </h3>
             <span className="flex items-center gap-1 text-sm font-medium text-meta-3">
@@ -174,20 +174,13 @@ const ChartSix: React.FC = () => {
               +2.5%
             </span>
           </div>
-          <span className="mt-1 block font-medium">
-            Average cost per interaction
-          </span>
+          <span className="mt-1 block font-medium">Average cost per interaction</span>
         </div>
         <DropdownDefault />
       </div>
       <div>
         <div id="chartSix" className="-ml-5">
-          <ApexCharts
-            options={options}
-            series={state.series}
-            type="area"
-            height={200}
-          />
+          <ApexCharts options={options} series={state.series} type="area" height={200} />
         </div>
       </div>
     </div>

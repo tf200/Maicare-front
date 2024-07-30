@@ -63,7 +63,7 @@ export default function DaysOfWeekField({
         );
       })}
 
-      {meta.error && <div className="text-red text-sm my-2">{meta.error}</div>}
+      {meta.error && <div className="text-c_red text-sm my-2">{meta.error}</div>}
     </div>
   );
 }

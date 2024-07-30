@@ -114,7 +114,7 @@ export default function AttentionRisksForm({ handleChange, values, handleBlur, t
                     {values.attention_risks.length > 1 && (
                       <Button
                         type="button"
-                        className="bg-red w-1/4"
+                        className="bg-c_red w-1/4"
                         onClick={() => field.remove(index)}
                         disabled={values.attention_risks.length === 1}
                       >
@@ -145,7 +145,7 @@ export default function AttentionRisksForm({ handleChange, values, handleBlur, t
         }}
       </FieldArray>
 
-      <p className="text-red">{touched.attention_risks && errors.attention_risks}</p>
+      <p className="text-red-600">{touched.attention_risks && errors.attention_risks}</p>
     </Panel>
   );
 }

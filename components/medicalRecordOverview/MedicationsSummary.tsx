@@ -18,14 +18,9 @@ const MedicationsSummary: FunctionComponent<Props> = ({ clientId, count }) => {
   });
   if (isLoading) return <Loader />;
   if (isError)
-    return (
-      <div className="text-red">
-        Een fout heeft ons verhinderd gegevens te laden.
-      </div>
-    );
+    return <div className="text-red-600">Een fout heeft ons verhinderd gegevens te laden.</div>;
   if (!data) return <div>Geen gegevens opgehaald.</div>;
-  if (data.results?.length === 0)
-    return <div>Geen medicatie geregistreerd voor cliënt</div>;
+  if (data.results?.length === 0) return <div>Geen medicatie geregistreerd voor cliënt</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((medication) => {
@@ -41,23 +36,17 @@ type MedicationItemProps = {
   medication: MedicationsResDto;
 };
 
-const MedicationItem: FunctionComponent<MedicationItemProps> = ({
-  medication,
-}) => {
+const MedicationItem: FunctionComponent<MedicationItemProps> = ({ medication }) => {
   return (
     <li className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl">
       <div>
         <div>
           <strong className="text-sm inline-block w-13">Van: </strong>{" "}
-          <span className="inline-block">
-            {dateFormat(medication.start_date)}
-          </span>
+          <span className="inline-block">{dateFormat(medication.start_date)}</span>
         </div>{" "}
         <div>
           <strong className="text-sm inline-block w-13">tot: </strong>
-          <span className="inline-block">
-            {dateFormat(medication.end_date)}
-          </span>
+          <span className="inline-block">{dateFormat(medication.end_date)}</span>
         </div>
       </div>
       <div>{medication.name}</div>

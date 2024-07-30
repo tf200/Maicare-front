@@ -24,9 +24,7 @@ type Props = {
 };
 
 const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const { pagination, isFetching, isLoading, isError, data } = useFeedbackList(
-    parseInt(clientId)
-  );
+  const { pagination, isFetching, isLoading, isError, data } = useFeedbackList(parseInt(clientId));
 
   const {
     mutate: deleteFeedback,
@@ -72,15 +70,9 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
-            <Link
-              href={`/clients/${clientId}/feedback/${info.getValue() as number}/edit`}
-            >
+            <Link href={`/clients/${clientId}/feedback/${info.getValue() as number}/edit`}>
               <IconButton>
                 <PencilSquare className="w-5 h-5" />
               </IconButton>
@@ -94,11 +86,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
       <div className="flex flex-wrap items-center p-4">
-        <LinkButton
-          text={"Feedback Toevoegen"}
-          href={"../feedback/new"}
-          className="ml-auto"
-        />
+        <LinkButton text={"Feedback Toevoegen"} href={"../feedback/new"} className="ml-auto" />
       </div>
       {isLoading && <Loader />}
       {data && (
@@ -111,7 +99,7 @@ const FeedbackPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
         />
       )}
       {isError && (
-        <p role="alert" className="text-red">
+        <p role="alert" className="text-red-600">
           Sorry, een fout heeft ons verhinderd de diagnoselijst te laden.
         </p>
       )}

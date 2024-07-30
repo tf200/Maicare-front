@@ -1,10 +1,4 @@
-import {
-  FunctionComponent,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, MouseEventHandler, useEffect, useRef, useState } from "react";
 import DotsIcon from "@/components/icons/DotsIcon";
 import DeleteIcon from "@/components/icons/DeleteIcon";
 import EditIcon from "@/components/icons/EditIcon";
@@ -31,11 +25,7 @@ const DropdownDefault: FunctionComponent<Props> = ({
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      )
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target))
         return;
       setDropdownOpen(false);
     };
@@ -81,7 +71,7 @@ const DropdownDefault: FunctionComponent<Props> = ({
               onEdit?.(e);
             }}
             type="button"
-            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-c_gray dark:hover:bg-meta-4"
           >
             <EditIcon />
             Bewerking
@@ -93,7 +83,7 @@ const DropdownDefault: FunctionComponent<Props> = ({
               onDelete?.(e);
             }}
             type="button"
-            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4"
+            className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-c_gray dark:hover:bg-meta-4"
           >
             <DeleteIcon />
             Verwijderen
