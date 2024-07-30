@@ -6,9 +6,7 @@ const TopChannels: React.FC = () => {
     <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="mb-7 flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-semibold text-black dark:text-white">
-            Top Channels
-          </h3>
+          <h3 className="text-xl font-semibold text-c_black dark:text-white">Top Channels</h3>
         </div>
         <div>
           <DropdownDefault />
@@ -29,7 +27,7 @@ const TopChannels: React.FC = () => {
         </div>
 
         <div className="relative z-1 grid grid-cols-10 py-2">
-          <span className="absolute left-0 top-0 -z-1 h-full w-[74%] rounded bg-gray dark:bg-meta-4"></span>
+          <span className="absolute left-0 top-0 -z-1 h-full w-[74%] rounded bg-c_gray dark:bg-meta-4"></span>
           <div className="col-span-6 pl-3.5">
             <p className="text-sm">Google</p>
           </div>
@@ -41,7 +39,7 @@ const TopChannels: React.FC = () => {
           </div>
         </div>
         <div className="relative z-1 grid grid-cols-10 py-2">
-          <span className="absolute left-0 top-0 -z-1 h-full w-[66%] rounded bg-gray dark:bg-meta-4"></span>
+          <span className="absolute left-0 top-0 -z-1 h-full w-[66%] rounded bg-c_gray dark:bg-meta-4"></span>
           <div className="col-span-6 pl-3.5">
             <p className="text-sm">Github</p>
           </div>
@@ -53,7 +51,7 @@ const TopChannels: React.FC = () => {
           </div>
         </div>
         <div className="relative z-1 grid grid-cols-10 py-2">
-          <span className="absolute left-0 top-0 -z-1 h-full w-[58%] rounded bg-gray dark:bg-meta-4"></span>
+          <span className="absolute left-0 top-0 -z-1 h-full w-[58%] rounded bg-c_gray dark:bg-meta-4"></span>
           <div className="col-span-6 pl-3.5">
             <p className="text-sm">Producthunt</p>
           </div>
@@ -65,7 +63,7 @@ const TopChannels: React.FC = () => {
           </div>
         </div>
         <div className="relative z-1 grid grid-cols-10 py-2">
-          <span className="absolute left-0 top-0 -z-1 h-full w-[48%] rounded bg-gray dark:bg-meta-4"></span>
+          <span className="absolute left-0 top-0 -z-1 h-full w-[48%] rounded bg-c_gray dark:bg-meta-4"></span>
           <div className="col-span-6 pl-3.5">
             <p className="text-sm">Facebook</p>
           </div>
@@ -77,7 +75,7 @@ const TopChannels: React.FC = () => {
           </div>
         </div>
         <div className="relative z-1 grid grid-cols-10 py-2">
-          <span className="absolute left-0 top-0 -z-1 h-full w-[39%] rounded bg-gray dark:bg-meta-4"></span>
+          <span className="absolute left-0 top-0 -z-1 h-full w-[39%] rounded bg-c_gray dark:bg-meta-4"></span>
           <div className="col-span-6 pl-3.5">
             <p className="text-sm">Twitter</p>
           </div>

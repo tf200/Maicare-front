@@ -4,17 +4,16 @@ import { ComboboxOption } from "@/types/selection-option";
 import { BaseObject } from "@/types/base-object";
 import MagnifierIcon from "@/components/icons/MagnifierIcon";
 
-type Props<TData extends BaseObject> =
-  React.InputHTMLAttributes<HTMLInputElement> & {
-    options: ComboboxOption<TData>[];
-    handleQueryChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    renderOption?: (option: ComboboxOption<TData>) => React.ReactNode;
-    className?: string;
-    onSelectItem?: (value: TData) => void;
-    label?: string;
-    onBlur?: () => void;
-    selectedIDs?: TData["id"][];
-  };
+type Props<TData extends BaseObject> = React.InputHTMLAttributes<HTMLInputElement> & {
+  options: ComboboxOption<TData>[];
+  handleQueryChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  renderOption?: (option: ComboboxOption<TData>) => React.ReactNode;
+  className?: string;
+  onSelectItem?: (value: TData) => void;
+  label?: string;
+  onBlur?: () => void;
+  selectedIDs?: TData["id"][];
+};
 
 function SearchDropdown<TData extends BaseObject>({
   options,
@@ -28,19 +27,13 @@ function SearchDropdown<TData extends BaseObject>({
   ...inputProps
 }: Props<TData>) {
   return (
-    <Combobox
-      as="section"
-      className={className}
-      onChange={onSelectItem}
-      onBlur={onBlur}
-    >
+    <Combobox as="section" className={className} onChange={onSelectItem} onBlur={onBlur}>
       {label && (
         <Combobox.Label
-          className="mb-2.5 block text-black dark:text-white"
+          className="mb-2.5 block text-c_black dark:text-white"
           htmlFor={inputProps.id}
         >
-          {label}{" "}
-          {inputProps.required && <span className="text-meta-1">*</span>}
+          {label} {inputProps.required && <span className="text-meta-1">*</span>}
         </Combobox.Label>
       )}
       <div className="relative">

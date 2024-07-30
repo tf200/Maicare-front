@@ -52,7 +52,7 @@ const LeadsReport: React.FC = () => {
         <div className="p-4 md:p-6 xl:p-7.5">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-title-sm2 font-bold text-black dark:text-white">
+              <h2 className="text-title-sm2 font-bold text-c_black dark:text-white">
                 Leads Report
               </h2>
             </div>
@@ -90,16 +90,9 @@ const LeadsReport: React.FC = () => {
                 <div className="w-2/12 xl:w-3/12">
                   <div className="flex items-center gap-4">
                     <div className="2xsm:h-11 2xsm:w-full 2xsm:max-w-11 2xsm:rounded-full">
-                      <Image
-                        src={lead.avatar}
-                        alt="User"
-                        width={44}
-                        height={44}
-                      />
+                      <Image src={lead.avatar} alt="User" width={44} height={44} />
                     </div>
-                    <span className="hidden font-medium xl:block">
-                      {lead.name}
-                    </span>
+                    <span className="hidden font-medium xl:block">{lead.name}</span>
                   </div>
                 </div>
                 <div className="w-6/12 2xsm:w-5/12 md:w-3/12">

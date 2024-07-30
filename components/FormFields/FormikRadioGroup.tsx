@@ -25,23 +25,14 @@ const FormikRadioGroup: FunctionComponent<Props> = ({
       <div id={id} className="mb-2.5">
         {label}
       </div>
-      <div
-        role="group"
-        className="flex items-center gap-5.5"
-        aria-labelledby={id}
-      >
+      <div role="group" className="flex items-center gap-5.5" aria-labelledby={id}>
         {options.map((option) => {
           return (
             <label
               key={option.value}
-              className="relative flex cursor-pointer select-none items-center gap-2 text-sm font-medium text-black dark:text-white"
+              className="relative flex cursor-pointer select-none items-center gap-2 text-sm font-medium text-c_black dark:text-white"
             >
-              <Field
-                className="sr-only"
-                type="radio"
-                name={name}
-                value={option.value}
-              />
+              <Field className="sr-only" type="radio" name={name} value={option.value} />
               <span
                 className={clsx(
                   "flex h-5 w-5 items-center justify-center rounded-full border border-primary",

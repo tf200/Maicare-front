@@ -12,9 +12,8 @@ const ChartFour: React.FC = () => {
     series: [
       {
         data: [
-          168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112, 123, 212,
-          270, 190, 310, 115, 90, 380, 112, 223, 292, 170, 290, 110, 115, 290,
-          380, 312,
+          168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112, 123, 212, 270, 190, 310, 115,
+          90, 380, 112, 223, 292, 170, 290, 110, 115, 290, 380, 312,
         ],
       },
     ],
@@ -134,19 +133,12 @@ const ChartFour: React.FC = () => {
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
       <div>
-        <h3 className="text-xl font-semibold text-black dark:text-white">
-          Visitors Analytics
-        </h3>
+        <h3 className="text-xl font-semibold text-c_black dark:text-white">Visitors Analytics</h3>
       </div>
 
       <div className="mb-2">
         <div id="chartFour" className="-ml-5">
-          <ApexCharts
-            options={options}
-            series={state.series}
-            type="bar"
-            height={350}
-          />
+          <ApexCharts options={options} series={state.series} type="bar" height={350} />
         </div>
       </div>
     </div>

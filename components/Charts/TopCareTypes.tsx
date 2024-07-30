@@ -74,12 +74,7 @@ const TopCareTypes: FunctionComponent = (props) => {
   }, [data]);
   return (
     <div>
-      <ReactApexChart
-        options={optionsWithLabels}
-        series={series}
-        type="donut"
-        height={300}
-      />
+      <ReactApexChart options={optionsWithLabels} series={series} type="donut" height={300} />
       <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
         {data?.map((item, index) => (
           <Label
@@ -109,12 +104,7 @@ export const PieChart: FunctionComponent<{
   }, []);
   return (
     <div>
-      <ReactApexChart
-        options={optionsWithLabels}
-        series={series}
-        type="donut"
-        height={300}
-      />
+      <ReactApexChart options={optionsWithLabels} series={series} type="donut" height={300} />
       <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
         {labels?.map((item, index) => (
           <Label
@@ -137,12 +127,8 @@ const Label: FunctionComponent<{
   return (
     <div className="w-full px-8 sm:w-1/2">
       <div className="flex w-full items-center">
-        <span
-          className={cn(
-            `mr-2 block h-3 w-full max-w-3 rounded-full bg-[${color}]`
-          )}
-        ></span>
-        <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+        <span className={cn(`mr-2 block h-3 w-full max-w-3 rounded-full bg-[${color}]`)}></span>
+        <p className="flex w-full justify-between text-sm font-medium text-c_black dark:text-white">
           <span> {label} </span>
         </p>
       </div>

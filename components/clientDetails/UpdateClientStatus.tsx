@@ -15,9 +15,7 @@ const UpdateClientStatus: FunctionComponent<{
   clientId: number;
 }> = (props) => {
   const { open: openTerminationModal } = useModal(TerminationModal);
-  const { data, isLoading: isLoadingClientDetails } = useClientDetails(
-    props.clientId
-  );
+  const { data, isLoading: isLoadingClientDetails } = useClientDetails(props.clientId);
   const { mutate, isLoading } = usePatchClient(props.clientId);
   const formik = useFormik({
     initialValues: {
@@ -43,10 +41,7 @@ const UpdateClientStatus: FunctionComponent<{
   });
 
   const showTerminationWarning = useMemo(() => {
-    return (
-      (contracts?.results.length > 0 && values.status === "Out Of Care") ||
-      !contracts
-    );
+    return (contracts?.results.length > 0 && values.status === "Out Of Care") || !contracts;
   }, [contracts, values.status]);
   return (
     <FormikProvider value={formik}>
@@ -58,18 +53,15 @@ const UpdateClientStatus: FunctionComponent<{
           name={"status"}
           className="mb-4"
         />
-        {showTerminationWarning &&
-          !isLoadingContracts &&
-          !isLoadingClientDetails && (
-            <div className="text-sm text-red p-2">
-              <p>
-                <WarningIcon className="inline-block" /> Er zijn nog{" "}
-                {contracts?.results.length} contracten actief voor deze cliënt.
-                Pas de status van deze contracten aan voordat u de status van de
-                cliënt wijzigt.
-              </p>
-            </div>
-          )}
+        {showTerminationWarning && !isLoadingContracts && !isLoadingClientDetails && (
+          <div className="text-sm text-c_red p-2">
+            <p>
+              <WarningIcon className="inline-block" /> Er zijn nog {contracts?.results.length}{" "}
+              contracten actief voor deze cliënt. Pas de status van deze contracten aan voordat u de
+              status van de cliënt wijzigt.
+            </p>
+          </div>
+        )}
         {dirty && (
           <Button type="submit" disabled={isLoading} isLoading={isLoading}>
             Bijwerken

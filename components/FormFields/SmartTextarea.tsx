@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  TextareaHTMLAttributes,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { FunctionComponent, TextareaHTMLAttributes, useEffect, useMemo } from "react";
 import IconButton from "@/components/buttons/IconButton";
 import Sparkles from "@/components/icons/Sparkles";
 import { ModalProps } from "@/types/modal-props";
@@ -43,10 +38,7 @@ const SmartTextarea: FunctionComponent<Props> = ({
   });
   return (
     <div className={className}>
-      <label
-        htmlFor={props.id}
-        className="mb-2.5 block text-black dark:text-white"
-      >
+      <label htmlFor={props.id} className="mb-2.5 block text-c_black dark:text-white">
         {label} {props.required && <span className="text-meta-1">*</span>}
       </label>
       <div className="relative w-full h-fit rounded bg-white border-[1.5px] border-stroke transition focus-within:border-primary active:border-primary group-disabled:cursor-default group-disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus-within:border-primary">
@@ -87,10 +79,7 @@ const SmartTextarea: FunctionComponent<Props> = ({
 
 export default SmartTextarea;
 
-const TextEnhancingModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const TextEnhancingModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const { mutate: enhance, isError, isLoading } = useEnhanceReport();
   const { data: enhancedReport } = useEnhancedReport();
   const clear = useClearEnhancedReport();
@@ -116,9 +105,7 @@ const TextEnhancingModal: FunctionComponent<ModalProps> = ({
     <FormModal {...props} title={additionalProps.title}>
       <div className="font-bold mb-2">Originele tekst:</div>
       {!enhancedReport && (
-        <div className="rounded-xl bg-white p-5 mb-6">
-          {additionalProps.content}
-        </div>
+        <div className="rounded-xl bg-white p-5 mb-6">{additionalProps.content}</div>
       )}
       {enhancedReport && (
         <div className="rounded-xl bg-white p-5 mb-6">

@@ -11,11 +11,7 @@ export type PaginationProps = {
 };
 
 const usePagination = (props: PaginationProps) => {
-  const {
-    page,
-    totalPages,
-    adjacentPagesShown = DEFAULT_ADJACENT_PAGES_SHOWN,
-  } = props;
+  const { page, totalPages, adjacentPagesShown = DEFAULT_ADJACENT_PAGES_SHOWN } = props;
   const isFirstPage = page === 1;
   const isLastPage = page === totalPages;
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -60,7 +56,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(props.page - 1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
               >
                 Vorige
                 {/* Previous */}
@@ -71,7 +67,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
               >
                 1
               </button>
@@ -85,10 +81,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             </li>
           )}
           {pages.map((page) => {
-            if (
-              Math.abs(page - props.page) <= adjacentPagesShown ||
-              page === props.page
-            ) {
+            if (Math.abs(page - props.page) <= adjacentPagesShown || page === props.page) {
               return (
                 <li key={page}>
                   <button
@@ -96,7 +89,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
                     className={`inline-flex items-center px-3 py-1.5 rounded-md ${
                       page === props.page
                         ? "bg-primary text-white"
-                        : "bg-[#EDEFF1] text-black hover:bg-primary hover:text-white"
+                        : "bg-[#EDEFF1] text-c_black hover:bg-primary hover:text-white"
                     } text-xs font-medium`}
                   >
                     {page}
@@ -117,7 +110,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(pages.length)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
               >
                 {pages.length}
               </button>
@@ -132,7 +125,7 @@ const Pagination: FunctionComponent<PaginationProps> = (props) => {
             <li>
               <button
                 onClick={() => onClick(props.page + 1)}
-                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-black hover:bg-primary hover:text-white"
+                className="inline-flex items-center px-3 py-1.5 rounded-md bg-[#EDEFF1] text-xs font-medium text-c_black hover:bg-primary hover:text-white"
               >
                 Volgende
                 {/* Next */}

@@ -221,7 +221,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
                   error={touched.infix && errors.infix}
                 />
                 <div className="flex flex-col mb-4.5">
-                  <h3 className="font-medium text-black dark:text-white mb-2.5">Geslacht</h3>
+                  <h3 className="font-medium text-c_black dark:text-white mb-2.5">Geslacht</h3>
                   <FormikRadioGroup
                     picked={values.gender}
                     options={GENDER_OPTIONS}
@@ -241,7 +241,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
                   error={touched.date_of_birth && errors.date_of_birth && errors.date_of_birth + ""}
                 />
                 <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">Dossiernummer</label>
+                  <label className="mb-2.5 block text-c_black dark:text-white">Dossiernummer</label>
 
                   <input
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"

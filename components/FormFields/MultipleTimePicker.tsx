@@ -16,7 +16,7 @@ const MultipleTimePicker: FunctionComponent<{
   });
   return (
     <div className="mb-6">
-      <div className="mb-2.5 block text-black dark:text-white">
+      <div className="mb-2.5 block text-c_black dark:text-white">
         {props.label} {props.required && <span className="text-meta-1">*</span>}
       </div>
       <div>
@@ -40,9 +40,7 @@ const MultipleTimePicker: FunctionComponent<{
                 className="px-4"
                 onClick={async () => {
                   await helperProps.setTouched(true);
-                  await helperProps.setValue(
-                    inputProps.value.filter((_, i) => i !== index)
-                  );
+                  await helperProps.setValue(inputProps.value.filter((_, i) => i !== index));
                 }}
               >
                 <MinusIcon className="h-7.5" />
@@ -61,9 +59,7 @@ const MultipleTimePicker: FunctionComponent<{
           </div>
         </div>
       </div>
-      {props.error && (
-        <div className="text-red mt-2 text-sm">{props.error}</div>
-      )}
+      {props.error && <div className="text-c_red mt-2 text-sm">{props.error}</div>}
     </div>
   );
 };

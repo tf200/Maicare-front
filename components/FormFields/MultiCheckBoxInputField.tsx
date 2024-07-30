@@ -28,8 +28,8 @@ export function MultiCheckBoxInputField({
 
   return (
     <>
-      <label className="mb-4 block text-black dark:text-white">{label}</label>
-      {/* {meta.error && meta.touched && <p role="alert" className="text-red pt-1">{meta.error}</p>} */}
+      <label className="mb-4 block text-c_black dark:text-white">{label}</label>
+      {/* {meta.error && meta.touched && <p role="alert" className="text-c_red pt-1">{meta.error}</p>} */}
       {options.map((option_label, i) => (
         <CheckBoxInputFieldThin
           key={i}

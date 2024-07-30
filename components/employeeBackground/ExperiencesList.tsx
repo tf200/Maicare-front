@@ -38,9 +38,7 @@ type ExperienceItemProps = {
   experience: ExpResDto;
 };
 
-const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
-  experience,
-}) => {
+const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({ experience }) => {
   const [isEdit, setIsEdit] = useState(false);
   const {
     mutate: deleteExp,
@@ -65,11 +63,7 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
         <td>
           <DetailCell
             label={"Periode"}
-            value={
-              dateFormat(experience.start_date) +
-              " - " +
-              dateFormat(experience.end_date)
-            }
+            value={dateFormat(experience.start_date) + " - " + dateFormat(experience.end_date)}
           />
         </td>
         <td className="flex justify-end">
@@ -89,21 +83,14 @@ const ExperienceItem: FunctionComponent<ExperienceItemProps> = ({
               disabled={isDeleted}
               isLoading={isDeleting}
             >
-              {isDeleted ? (
-                <CheckIcon className="w-5 h-5" />
-              ) : (
-                <TrashIcon className="w-5 h-5" />
-              )}
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
             </IconButton>
           </div>
         </td>
       </tr>
       {isEdit && (
         <tr>
-          <td
-            colSpan={4}
-            className={clsx("bg-gray dark:bg-graydark p-8", styles.formTd)}
-          >
+          <td colSpan={4} className={clsx("bg-c_gray dark:bg-graydark p-8", styles.formTd)}>
             <ExperienceForm
               mode="update"
               initialData={experience}

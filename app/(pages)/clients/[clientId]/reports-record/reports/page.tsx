@@ -24,9 +24,7 @@ type Props = {
 const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const router = useRouter();
 
-  const { data, isError, hasNextPage, fetchNextPage } = useReportsInfiniteList(
-    parseInt(clientId)
-  );
+  const { data, isError, hasNextPage, fetchNextPage } = useReportsInfiniteList(parseInt(clientId));
 
   const { open } = useModal(
     getDangerActionConfirmationModal({
@@ -44,11 +42,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <div>
       <div className="flex flex-wrap items-center p-4">
-        <LinkButton
-          text={"Rapporten Toevoegen"}
-          href={"../reports/new"}
-          className="ml-auto"
-        />
+        <LinkButton text={"Rapporten Toevoegen"} href={"../reports/new"} className="ml-auto" />
       </div>
       {isError && (
         <p role="alert" className="text-red">
@@ -67,23 +61,13 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
           {data?.pages.map((page, i) => (
             <Fragment key={i}>
               {page?.results.map((post, key) => (
-                <div
-                  className={clsx(
-                    "relative z-1 flex gap-5.5",
-                    styles.withTrail
-                  )}
-                  key={key}
-                >
+                <div className={clsx("relative z-1 flex gap-5.5", styles.withTrail)} key={key}>
                   <div className="h-16 w-full max-w-16 rounded-full border-[2px] border-stroke dark:border-strokedark">
-                    <ProfilePicture
-                      width={60}
-                      height={60}
-                      profilePicture={post.profile_picture}
-                    />
+                    <ProfilePicture width={60} height={60} profilePicture={post.profile_picture} />
                   </div>
 
                   <div className="group">
-                    <p className="text-black dark:text-white flex gap-4">
+                    <p className="text-c_black dark:text-white flex gap-4">
                       <div>
                         <span className="font-medium">Report #{post.id}</span>
                         <span className="px-1">Geschreven door</span>
@@ -93,9 +77,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       <span className="hidden group-hover:block">
                         <DropdownDefault
                           onEdit={() => {
-                            router.push(
-                              `/clients/${clientId}/reports/${post.id}/edit`
-                            );
+                            router.push(`/clients/${clientId}/reports/${post.id}/edit`);
                           }}
                           onDelete={() => {
                             open({
@@ -108,15 +90,10 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                       </span>
                     </p>
                     <span className="mt-1 block text-sm">
-                      {getLocateDatetime(post.created)} -{" "}
-                      {REPORT_TYPE_RECORD[post.type]}
+                      {getLocateDatetime(post.created)} - {REPORT_TYPE_RECORD[post.type]}
                     </span>
-                    <span className="">
-                      {showEmojies(post.emotional_state)}
-                    </span>
-                    <p className="mt-2.5 text-black dark:text-white">
-                      {post.report_text}
-                    </p>
+                    <span className="">{showEmojies(post.emotional_state)}</span>
+                    <p className="mt-2.5 text-c_black dark:text-white">{post.report_text}</p>
                   </div>
                 </div>
               ))}

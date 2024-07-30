@@ -55,7 +55,7 @@ const DropdownUser = () => {
         {userData && (
           <>
             <span className="hidden text-right lg:block">
-              <span className="block text-sm font-medium text-black dark:text-white">
+              <span className="block text-sm font-medium text-c_black dark:text-white">
                 {userData.first_name} {userData.last_name}
               </span>
               <span className="block text-xs capitalize">

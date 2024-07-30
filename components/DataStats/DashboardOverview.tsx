@@ -35,14 +35,14 @@ const DashboardOverview: React.FC = () => {
     <div className="mb-6">
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-title-lg font-bold text-black dark:text-white">
+          <h1 className="text-title-lg font-bold text-c_black dark:text-white">
             {greeting() + ", " + profile?.first_name + " " + profile?.last_name}
           </h1>
         </div>
       </div>
       {hasPerm(DASHBOARD_VIEW) && (
         <>
-          <h2 className="text-title-sm font-bold text-black dark:text-white mb-6">
+          <h2 className="text-title-sm font-bold text-c_black dark:text-white mb-6">
             Overzicht van locaties
           </h2>
 
@@ -87,10 +87,10 @@ const LocationWidget: FunctionComponent<{
   revenue?: number;
 }> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
+    <div className="rounded-lg border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
         <div>
-          <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">{title}</h3>
+          <h3 className="mb-4 text-title-lg font-bold text-c_black dark:text-white">{title}</h3>
           <p className="font-medium">
             <strong>Capaciteit:</strong>
             {capacity}
@@ -112,7 +112,7 @@ const LocationWidget: FunctionComponent<{
           </p> */}
           {percentage >= 100 && (
             <span className="mt-2 flex items-center gap-2">
-              <span className="flex items-center gap-1 rounded-md bg-red p-1 text-xs font-medium text-white">
+              <span className="flex items-center gap-1 rounded-md bg-c_red p-1 text-xs font-medium text-white">
                 <span>Locatie is vol</span>
               </span>
             </span>

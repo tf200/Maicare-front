@@ -58,7 +58,7 @@ const FilesUploader: FunctionComponent<Props> = ({
   );
   return (
     <div>
-      <label htmlFor={props.id} className="mb-2.5 block text-black dark:text-white">
+      <label htmlFor={props.id} className="mb-2.5 block text-c_black dark:text-white">
         {label} {props.required && <span className="text-meta-1">*</span>}
       </label>
       <div>

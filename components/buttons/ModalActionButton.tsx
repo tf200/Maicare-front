@@ -19,18 +19,14 @@ const ModalActionButton: FunctionComponent<Props> = ({
       {...props}
       type={type}
       className={clsx(
-        "flex justify-center rounded px-12.5 py-3  text-center font-medium transition disabled:bg-graydark disabled:dark:bg-whiter disabled:dark:text-black disabled:cursor-not-allowed",
+        "flex justify-center rounded px-12.5 py-3  text-center font-medium transition disabled:bg-graydark disabled:dark:bg-whiter disabled:dark:text-c_black disabled:cursor-not-allowed",
         {
-          "border-meta-1 text-white bg-meta-1 hover:bg-opacity-90":
-            actionType === "DANGER",
+          "border-meta-1 text-white bg-meta-1 hover:bg-opacity-90": actionType === "DANGER",
           "border bg-primary text-white hover:bg-white hover:text-primary":
             actionType === "ACKNOWLEDGE",
-          "border-primary bg-primary text-white hover:bg-opacity-90":
-            actionType === "CONFIRM",
-          "bg-gray text-black hover:bg-meta-1 hover:text-white":
-            actionType === "CANCEL",
-          "bg-gray-2 text-black hover:bg-meta-1 hover:text-white":
-            actionType === "CANCEL-2",
+          "border-primary bg-primary text-white hover:bg-opacity-90": actionType === "CONFIRM",
+          "bg-c_gray text-c_black hover:bg-meta-1 hover:text-white": actionType === "CANCEL",
+          "bg-gray-2 text-c_black hover:bg-meta-1 hover:text-white": actionType === "CANCEL-2",
         },
         className
       )}

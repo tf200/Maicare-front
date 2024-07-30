@@ -19,9 +19,7 @@ const SendMessage: FunctionComponent<Props> = ({ firstLine, secondLine }) => {
         />
 
         <div className="mt-7.5 text-center">
-          <h2 className="mb-3 text-2xl font-bold text-black dark:text-white">
-            {firstLine}
-          </h2>
+          <h2 className="mb-3 text-2xl font-bold text-c_black dark:text-white">{firstLine}</h2>
           <p className="font-medium">{secondLine}</p>
         </div>
       </div>

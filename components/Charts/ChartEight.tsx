@@ -68,14 +68,10 @@ const ChartEight: React.FC = () => {
     <div className="rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
-          <h4 className="text-title-sm2 font-bold text-black dark:text-white">
-            Used Devices
-          </h4>
+          <h4 className="text-title-sm2 font-bold text-c_black dark:text-white">Used Devices</h4>
         </div>
         <div className="mt-2 flex items-center sm:mt-0">
-          <p className="font-medium uppercase text-black dark:text-white">
-            Short by:
-          </p>
+          <p className="font-medium uppercase text-c_black dark:text-white">Short by:</p>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -112,9 +108,7 @@ const ChartEight: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="block h-4 w-4 rounded-full border-4 border-primary"></span>
-            <span className="font-medium text-black-2 dark:text-white">
-              Mobile
-            </span>
+            <span className="font-medium text-black-2 dark:text-white">Mobile</span>
           </div>
 
           <span className="inline-block rounded-md bg-primary py-0.5 px-1.5 text-xs font-medium text-white">
@@ -125,9 +119,7 @@ const ChartEight: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="block h-4 w-4 rounded-full border-4 border-secondary"></span>
-            <span className="font-medium text-black-2 dark:text-white">
-              Tablet
-            </span>
+            <span className="font-medium text-black-2 dark:text-white">Tablet</span>
           </div>
 
           <span className="inline-block rounded-md bg-secondary py-0.5 px-1.5 text-xs font-medium text-white">
@@ -138,9 +130,7 @@ const ChartEight: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="block h-4 w-4 rounded-full border-4 border-meta-10"></span>
-            <span className="font-medium text-black-2 dark:text-white">
-              Desktop
-            </span>
+            <span className="font-medium text-black-2 dark:text-white">Desktop</span>
           </div>
 
           <span className="inline-block rounded-md bg-meta-10 py-0.5 px-1.5 text-xs font-medium text-white">

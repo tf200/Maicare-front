@@ -99,7 +99,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
       {file ? <div className=" pb-4.5"> {file.name} </div> : <></>}
       <div
         id="FileUpload"
-        className="relative mb-4 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
+        className="relative mb-4 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-c_gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
       >
         <input
           type="file"
@@ -137,8 +137,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
             </svg>
           </span>
           <p className="text-center">
-            <span className="text-primary">Klik om te uploaden</span> of sleep
-            het bestand hierheen
+            <span className="text-primary">Klik om te uploaden</span> of sleep het bestand hierheen
           </p>
           <p className="mt-1.5">PDF, DOCX or TXT</p>
           <p>(maximaal, 20mb)</p>
@@ -151,12 +150,7 @@ export const DocumentForm: FunctionComponent<PropsType> = ({ clientId }) => {
       )}
 
       <div className="flex justify-end gap-4.5">
-        <Button
-          type={"submit"}
-          disabled={isLoading}
-          isLoading={isLoading}
-          formNoValidate={true}
-        >
+        <Button type={"submit"} disabled={isLoading} isLoading={isLoading} formNoValidate={true}>
           Document Indienen
         </Button>
       </div>

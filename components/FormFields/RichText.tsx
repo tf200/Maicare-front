@@ -16,9 +16,7 @@ const RichText: FunctionComponent<{
   });
   return (
     <div className={props.className}>
-      <span className="block mb-2.5 text-black dark:text-white">
-        {props.label}
-      </span>
+      <span className="block mb-2.5 text-c_black dark:text-white">{props.label}</span>
       <Editor
         wrapperClassName={
           "rounded border-[1.5px] border-stroke bg-white py-3 px-5 font-medium outline-none transition focus-within:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"

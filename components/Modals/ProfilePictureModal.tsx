@@ -42,10 +42,9 @@ export const ClientProfilePictureModal: FunctionComponent<Props> = ({
   );
 };
 
-const pictureSchema: Yup.ObjectSchema<{ profile_picture: string }> =
-  Yup.object().shape({
-    profile_picture: Yup.string(),
-  });
+const pictureSchema: Yup.ObjectSchema<{ profile_picture: string }> = Yup.object().shape({
+  profile_picture: Yup.string(),
+});
 
 type UpdatePicModalFormProps = {
   onUpdated: () => void;
@@ -87,15 +86,9 @@ const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
   );
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={pictureSchema}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={pictureSchema}>
       {({ setFieldValue, handleSubmit }) => {
-        const handleFileChange = async (
-          event: React.ChangeEvent<HTMLInputElement>
-        ) => {
+        const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
           if (event.target.files) {
             const fileUrl = URL.createObjectURL(event.target.files[0]);
             setImagePreviewUrl(fileUrl);
@@ -104,17 +97,10 @@ const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
         };
 
         return (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-center"
-          >
+          <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
             <div className="relative drop-shadow-2 w-full mx-auto rounded-full max-w-30 bg-white/20 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
               <div className="w-40 h-40">
-                <ProfilePicture
-                  width={160}
-                  height={160}
-                  profilePicture={imagePreviewUrl}
-                />
+                <ProfilePicture width={160} height={160} profilePicture={imagePreviewUrl} />
               </div>
               <label
                 htmlFor="profile_picture"
@@ -132,9 +118,7 @@ const UpdatePicModalForm: FunctionComponent<UpdatePicModalFormProps> = ({
               </label>
             </div>
 
-            {errorMessage && (
-              <div className="text-red text-center">{errorMessage}</div>
-            )}
+            {errorMessage && <div className="text-c_red text-center">{errorMessage}</div>}
 
             <ModalActionButton
               className="mt-7"

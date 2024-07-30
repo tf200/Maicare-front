@@ -21,7 +21,7 @@ const Select: FunctionComponent<SelectProps> = ({
   return (
     <label
       className={cn(
-        "relative flex gap-2 bg-gray dark:bg-graydark dark:text-white z-20 w-full rounded-0 border border-stroke py-1 pl-5 transition focus-within:border-primary group-active:border-primary dark:border-form-strokedark dark:focus:border-primary",
+        "relative flex gap-2 bg-c_gray dark:bg-graydark dark:text-white z-20 w-full rounded-0 border border-stroke py-1 pl-5 transition focus-within:border-primary group-active:border-primary dark:border-form-strokedark dark:focus:border-primary",
         className
       )}
       htmlFor={id}

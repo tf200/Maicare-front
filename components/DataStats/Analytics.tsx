@@ -34,13 +34,36 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Cliënten (${data?.users.total_users})`}>
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex flex-col items-center w-full">
           <ReactApexChart
             options={{
               labels: [
                 `In zorg (${data?.users.total_in_care_users})`,
                 `Uit zorg (${data?.users.total_out_of_care_users})`,
                 `Op wachtlijst (${data?.users.total_on_waiting_list_users})`,
+              ],
+              dataLabels: {
+                style: {
+                  colors: ['#FFFFFF'],
+                },
+              },
+              legend: {
+                labels: {
+                  colors: '#FFFFFF', 
+                },
+              },
+              responsive: [
+                {
+                  breakpoint: 600,
+                  options: {
+                    chart: {
+                      width: '100%', 
+                    },
+                    legend: {
+                      position: 'bottom',
+                    },
+                  },
+                },
               ],
             }}
             series={[
@@ -49,7 +72,7 @@ const Analytics: FunctionComponent = (props) => {
               data?.users.total_on_waiting_list_users,
             ]}
             type="donut"
-            width={380}
+            width="100%"
           />
         </div>
       </DataCard>
@@ -57,7 +80,7 @@ const Analytics: FunctionComponent = (props) => {
       <DataCard
         title={`Voltooide documentprofielen (${data?.users.total_users - data?.users.total_missing_documents_profiles}/${data?.users.total_users} profielen)`}
       >
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex flex-row gap-4 items-center w-full">
           <ReactApexChart
             options={{
               labels: [
@@ -70,7 +93,7 @@ const Analytics: FunctionComponent = (props) => {
               data?.users.total_users - data?.users.total_missing_documents_profiles,
             ]}
             type="donut"
-            width={450}
+            width="100%"
           />
         </div>
       </DataCard>
@@ -101,7 +124,7 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Contracten (${data?.contracts.total_contracts})`}>
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex flex-col items-center w-full">
           <ReactApexChart
             options={{
               labels: [
@@ -120,7 +143,7 @@ const Analytics: FunctionComponent = (props) => {
               data?.contracts.total_terminated_contracts,
             ]}
             type="donut"
-            width={380}
+            width="100%"
           />
         </div>
       </DataCard>
@@ -178,7 +201,7 @@ const Analytics: FunctionComponent = (props) => {
               data?.medications.total_waiting_medication_records,
             ]}
             type="donut"
-            width={450}
+            width="100%"
           />
         </div>
       </DataCard>
@@ -207,7 +230,7 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Facturen (${data?.invoices.total_invoices})`}>
-        <div className="mt-4 flex gap-6">
+        <div className="mt-4 flex flex-col items-center w-full">
           <ReactApexChart
             options={{
               labels: [
@@ -224,7 +247,7 @@ const Analytics: FunctionComponent = (props) => {
               data?.invoices.total_overpaid_invoices,
             ]}
             type="donut"
-            width={400}
+            width="100%"
           />
         </div>
       </DataCard>
@@ -269,8 +292,8 @@ type Props = {
 
 const DataCard: FunctionComponent<Props> = ({ title, children }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h2 className="text-title-md font-bold text-black dark:text-white">{title}</h2>
+    <div className="rounded-lg border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark ">
+      <h3 className="text-title-md font-bold text-slate-800 dark:text-white">{title}</h3>
       {children}
     </div>
   );

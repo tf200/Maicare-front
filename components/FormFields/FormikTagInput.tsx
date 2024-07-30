@@ -40,12 +40,8 @@ function FormikTagInput<T extends BaseObject>({
         helpers.setTouched(true);
       }}
     >
-      <Combobox.Label
-        className="mb-2.5 block text-black dark:text-white"
-        htmlFor={inputProps.id}
-      >
-        {inputProps.label}{" "}
-        {inputProps.required && <span className="text-meta-1">*</span>}
+      <Combobox.Label className="mb-2.5 block text-c_black dark:text-white" htmlFor={inputProps.id}>
+        {inputProps.label} {inputProps.required && <span className="text-meta-1">*</span>}
       </Combobox.Label>
       <Combobox.Input
         className="w-full rounded border-[1.5px] mb-2.5 border-stroke bg-white py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"

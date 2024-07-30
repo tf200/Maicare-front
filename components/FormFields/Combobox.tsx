@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  InputHTMLAttributes,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { ChangeEvent, InputHTMLAttributes, useCallback, useMemo } from "react";
 import { Combobox } from "@headlessui/react";
 import { BaseObject } from "@/types/base-object";
 import { useField } from "formik";
@@ -65,10 +60,7 @@ function FormikCombobox<T extends BaseObject>({
       }}
       value={fieldProps.value}
     >
-      <Combobox.Label
-        className="mb-2.5 block text-black dark:text-white"
-        htmlFor={inputProps.id}
-      >
+      <Combobox.Label className="mb-2.5 block text-c_black dark:text-white" htmlFor={inputProps.id}>
         {label} {inputProps.required && <span className="text-meta-1">*</span>}
       </Combobox.Label>
       <Combobox.Input
