@@ -136,7 +136,7 @@ const GoalDetails: FunctionComponent<{
         >
           {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
         </IconButton>
-        <QuestionnaireDownloadButton type="goals_and_objectives_content" questId={+maturityMatrixId} />
+        {/* <QuestionnaireDownloadButton type="goals_and_objectives_content" questId={+maturityMatrixId} /> */}
         <IconButton
           onClick={(e) => {
             e.stopPropagation();

@@ -37,32 +37,35 @@ export default function AddMaturityMatrixPage({
       maturity_matrix: [],
     },
     validationSchema: Yup.object({
-      start_date: Yup.string().required("Start date is required"),
-      end_date: Yup.string().required("End date is required"),
-      maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
+      start_date: Yup.string().required("Startdatum is verplicht"),
+      end_date: Yup.string().required("Einddatum is verplicht"),
+      maturity_matrix: Yup.array().min(1, "Selecteer minimaal één domein om aan te werken!").required("Dit veld is verplicht"),
     }),
     onSubmit: (values) => {
+      console.log("values : ", values);
+      const maturityMatrixes = values.maturity_matrix;
+      console.log("maturityMatrix : ", maturityMatrixes);
+
+      for (let index = 0; index < maturityMatrixes.length; index++) {
+        const domain = maturityMatrixes[index];
+        if (domain.goal_ids.length === 0) {
+          toast.error("Selecteer ten minste één doel voor elk domein!");
+          return;
+        }
+      }
       createMaturityMatrix(values, {
         onSuccess() {
-          toast.success("Maturity matrix created successfully!");
+          toast.success("Zelfduurzaamheidsmatrix succesvol aangemaakt!");
           router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
         },
       });
     },
   });
 
-  const { values, handleChange, handleBlur, touched, errors } = formik;
+  const { values, handleChange, handleBlur, touched, errors, handleSubmit } = formik;
 
   if (isError && axios.isAxiosError(error)) {
     toast.error(error.message);
-  }
-
-  // Show formik errors
-  if (formik.errors) {
-    // Object.keys(formik.errors).forEach((key) => {
-    //   toast.error(formik.errors[key]);
-    // });
-    console.log(formik.errors);
   }
 
   return (
@@ -70,7 +73,7 @@ export default function AddMaturityMatrixPage({
       title="Nieuwe Zelfduurzaamheidsmatrix"
       sideActions={
         <Button
-          onClick={() => formik.handleSubmit()}
+          onClick={() => handleSubmit()}
           type="button"
           form="add-maturity-matrix-form"
           className="btn btn-primary"
@@ -81,10 +84,10 @@ export default function AddMaturityMatrixPage({
     >
       <div className="p-5">
         <FormikProvider value={formik}>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit} id="add-maturity-matrix-form">
             <div className="grid grid-cols-2 gap-5">
               <InputField
-                label={"Start datum"}
+                label={"Startdatum"}
                 name={"start_date"}
                 type={"date"}
                 className="lg:basis-1/2"
@@ -95,7 +98,7 @@ export default function AddMaturityMatrixPage({
                 error={touched.start_date && errors.start_date}
               />
               <InputField
-                label={"Eind datum"}
+                label={"Einddatum"}
                 name={"end_date"}
                 type={"date"}
                 className="lg:basis-1/2"
