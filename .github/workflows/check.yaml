@@ -1,0 +1,16 @@
+name: Check (Linting, Type Checking, Building)
+
+on:
+  push: # means for every push/commit/merge/branch
+  pull_request: # means for every pull request
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The dockerfile uses Node js 20.x
+      - name: Build a Docker image
+        run: docker build .
