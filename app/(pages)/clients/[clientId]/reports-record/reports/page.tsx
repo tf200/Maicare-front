@@ -63,7 +63,7 @@ const ReportsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               {page?.results.map((post, key) => (
                 <div className={clsx("relative z-1 flex gap-5.5", styles.withTrail)} key={key}>
                   <div className="h-16 w-full max-w-16 rounded-full border-[2px] border-stroke dark:border-strokedark">
-                    <ProfilePicture width={60} height={60} profilePicture={post.profile_picture} />
+                    <ProfilePicture width={60} height={60} className="min-w-[60px]" profilePicture={post.profile_picture} />
                   </div>
 
                   <div className="group">

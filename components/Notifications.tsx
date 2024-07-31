@@ -16,7 +16,7 @@ const Notifications: FunctionComponent<Props> = ({ notifications }) => {
         <h5 className="font-medium text-bodydark2">Meldingen</h5>
         <Link
             href="/notifications"
-            className="flex flex-col px-3 py-1 hover:bg-gray-100 rounded-2xl border "
+            className="flex flex-col px-3 py-1 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-2xl border  "
           >
               Bekijk alles
           </Link>

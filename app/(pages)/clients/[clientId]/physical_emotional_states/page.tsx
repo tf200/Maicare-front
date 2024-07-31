@@ -27,6 +27,7 @@ import PencilSquare from "@/components/icons/PencilSquare";
 import dayjs from "dayjs";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
+import { Trash } from "lucide-react";
 
 type StateType = "physical" | "emotional";
 
@@ -83,8 +84,8 @@ const Page: FunctionComponent<{
             >
               <PencilSquare className={"w-4.5 h-4.5"} />
             </IconButton>
-            <IconButton
-              buttonType={"Outline"}
+            <IconButton 
+              className="bg-red-500"
               onClick={() => {
                 openDeleteConfirmation({
                   onConfirm: () => {
@@ -93,7 +94,7 @@ const Page: FunctionComponent<{
                 });
               }}
             >
-              <TrashIcon className={"w-4.5 h-4.5"} />
+              <Trash className={"w-5 h-5" } />
             </IconButton>
           </div>
         ),

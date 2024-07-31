@@ -6,7 +6,7 @@ const ProfilePicturePlaceholder: FunctionComponent<IconProps> = ({
   height = 24,
 }) => {
   return (
-    <div className="bg-slate-200/50  flex items-center justify-center text-slate-600 rounded-full p-3 overflow-hidden" style={{
+    <div className="bg-slate-200/50  flex items-center justify-center text-slate-600 dark:text-slate-50 dark:bg-slate-700 rounded-full p-3 overflow-hidden" style={{
       width: `${width}px`,
       height: `${height}px`,
     }}>
