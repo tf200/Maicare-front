@@ -13,8 +13,8 @@ type Props = {
 const ProfilePicture: FunctionComponent<Props> = ({
   profilePicture,
   className,
-  width = 64,
-  height = 64,
+  width = 100,
+  height = 100,
 }) => {
   return profilePicture ? (
     <Image

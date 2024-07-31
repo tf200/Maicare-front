@@ -35,6 +35,7 @@ const ClientInformation: FunctionComponent<Props> = ({ clientId }) => {
             className="relative w-fit cursor-pointer"
           >
             <ProfilePicture profilePicture={data.profile_picture} />
+
             <IconButton className="p-[5px] absolute right-1 bottom-1">
               <CameraIcon className="w-3 h-3" />
             </IconButton>
