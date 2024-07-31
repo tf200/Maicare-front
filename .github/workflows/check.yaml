@@ -1,4 +1,4 @@
-name: Check (Linting, Type Checking, Building)
+name: Check
 
 on:
   push: # means for every push/commit/merge/branch
@@ -6,6 +6,7 @@ on:
 
 jobs:
   check:
+    name: Check (Linting, Type Checking, Building)
     runs-on: ubuntu-latest
 
     steps:
