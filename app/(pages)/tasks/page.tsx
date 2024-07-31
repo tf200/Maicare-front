@@ -157,30 +157,33 @@ const Page: FunctionComponent = (props) => {
         </div>
       }
     >
+    <div className="overflow-x-auto">
       <DnDCalendar
-        localizer={localizer}
-        events={events}
-        formats={formats}
-        onView={onView}
-        view={view}
-        onNavigate={onNavigate}
-        date={date}
-        views={[Views.DAY, Views.WEEK, Views.MONTH]}
-        onSelectSlot={showCreateModal}
-        onSelectEvent={showUpdateModal}
-        selectable
-        resizable
-        style={{
-          height: "calc(100vh - 250px)",
-        }}
-        components={{
-          toolbar: Toolbar 
-        }}
-        eventPropGetter={classNameByAppointmentType}
-        handleDragStart={deactivateQuery}
-        onEventDrop={updateEventTime}
-        onEventResize={updateEventTime}
-      />
+          localizer={localizer}
+          events={events}
+          formats={formats}
+          onView={onView}
+          view={view}
+          onNavigate={onNavigate}
+          date={date}
+          views={[Views.DAY, Views.WEEK, Views.MONTH]}
+          onSelectSlot={showCreateModal}
+          onSelectEvent={showUpdateModal}
+          selectable
+          resizable
+          style={{
+            height: "calc(100vh - 250px)",
+          }}
+          components={{
+            toolbar: Toolbar 
+          }}
+          className="min-w-[700px]"
+          eventPropGetter={classNameByAppointmentType}
+          handleDragStart={deactivateQuery}
+          onEventDrop={updateEventTime}
+          onEventResize={updateEventTime}
+        />
+    </div>
     </Panel>
   );
 };
