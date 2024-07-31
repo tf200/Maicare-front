@@ -59,7 +59,7 @@ const GroupsList: FC = (props) => {
     return null;
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 overflow-x-auto">
       {groups.map((group) => (
         <GroupItem key={group.id} group={group} />
       ))}
@@ -84,7 +84,8 @@ const GroupItem: FC<{ group: GroupDetailsResDto }> = ({ group }) => {
         "flex flex-col gap-1 border border-stroke p-4 rounded-lg dark:border-strokedark",
         {
           "bg-meta-3 text-white": selected,
-        }
+        },
+        "min-w-[280px]"
       )}
     >
       <div className="text-xl font-bold flex items-center justify-between">
