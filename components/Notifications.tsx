@@ -18,7 +18,7 @@ const Notifications: FunctionComponent<Props> = ({ notifications }) => {
             href="/notifications"
             className="flex flex-col px-3 py-1 hover:bg-gray-100 rounded-2xl border "
           >
-              View all
+              Bekijk alles
           </Link>
       </div>
 
