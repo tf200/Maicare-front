@@ -1,14 +1,12 @@
 "use client";
 import Panel from "@/components/Panel";
-import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
 import IconButton from "@/components/buttons/IconButton";
-import LinkButton from "@/components/buttons/LinkButton";
 import { useMaturityMatrixList } from "@/utils/domains";
 import Link from "next/link";
 import DropDownPrintButton from "@/components/maturity_matrix/DropDownPrintButton";
-import { Pencil } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import ReactTooltip, { Tooltip } from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import MultiMaturityMatrixPrintButton from "@/components/maturity_matrix/MultiMaturityMatrixPrintButton";
 
 export default function MaturityMatrixPage({ params: { clientId } }) {
@@ -41,11 +39,10 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
           <MultiMaturityMatrixPrintButton
             questIds={items.filter((item) => item.checked).map((item) => item.id)}
           />
-          <LinkButton
-            text="Nieuwe Zelfduurzaamheidsmatrix creëren"
-            href={"./maturity-matrix/add"}
-            className="ml-auto"
-          />
+          <Link href={"./maturity-matrix/add"} className="flex justify-center items-center bg-primary w-10  rounded-full text-white" data-tooltip-id="createNewMaturityMatrix">
+            <Plus className="w-6 h-6" />
+          </Link>
+          <Tooltip id="createNewMaturityMatrix" place="left" content="Nieuwe Zelfduurzaamheidsmatrix creëren"/>
         </div>
       }
     >
