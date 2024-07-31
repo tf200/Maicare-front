@@ -82,7 +82,7 @@ export default function AddMaturityMatrixPage({
         </Button>
       }
     >
-      <div className="p-5">
+      <div className="p-5 overflow-hidden">
         <FormikProvider value={formik}>
           <form onSubmit={handleSubmit} id="add-maturity-matrix-form">
             <div className="grid grid-cols-2 gap-5">
@@ -112,6 +112,7 @@ export default function AddMaturityMatrixPage({
             <AdvancedMaturityMatrixField
               clientId={clientId}
               name="maturity_matrix"
+              className="overflow-x-auto"
               // Dates are useful for Smart Formula
               startDate={values.start_date}
               endDate={values.end_date}
