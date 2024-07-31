@@ -42,7 +42,7 @@ const DashboardOverview: React.FC = () => {
       </div>
       {hasPerm(DASHBOARD_VIEW) && (
         <>
-          <h2 className="text-title-sm font-bold text-black dark:text-white mb-6">
+          <h2 className=" font-bold text-slate-800 dark:text-white mb-6">
             Overzicht van locaties
           </h2>
 
@@ -87,7 +87,7 @@ const LocationWidget: FunctionComponent<{
   revenue?: number;
 }> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
+    <div className="rounded-2xl border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
       <div className="flex items-end justify-between">
         <div>
           <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">{title}</h3>
