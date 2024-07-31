@@ -11,7 +11,7 @@ type Props = {
 const NewConsentDeclaration: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
-      <Breadcrumb pageName="Nieuwe risicobeoordeling" />
+      <Breadcrumb pageName="nieuwe toestemmingsverklaring" />
       <div className="grid grid-cols-1 gap-9">
         <ConsentDeclarationForm clientId={parseInt(clientId)} mode={"new"} />
       </div>
