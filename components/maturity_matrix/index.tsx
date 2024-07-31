@@ -120,7 +120,7 @@ export default function MaturityMatrixTable({
   }
 
   return (
-    <table className="table-fixed w-full">
+    <table className="table-fixed w-full min-w-[900px]">
       <thead>
         <tr>
           <th className="border border-stroke bg-yellow-400 text-slate-800  text-lg">Domein</th>

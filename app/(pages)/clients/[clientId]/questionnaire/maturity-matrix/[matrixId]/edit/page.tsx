@@ -122,7 +122,7 @@ export default function EditMaturityMatrixPage({
                   error={touched.end_date && errors.end_date}
                 />
               </div>
-              <AdvancedMaturityMatrixField mode="edit" clientId={clientId} name="maturity_matrix" />
+              <AdvancedMaturityMatrixField mode="edit" clientId={clientId} name="maturity_matrix" className="overflow-x-auto" />
             </form>
           </FormikProvider>
         )}

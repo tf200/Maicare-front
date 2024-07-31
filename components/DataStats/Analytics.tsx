@@ -442,7 +442,7 @@ type Props = {
 
 const DataCard: FunctionComponent<Props> = ({ title, children }) => {
   return (
-    <div className="rounded-lg border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark min-h-96">
+    <div className="rounded-2xl border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark min-h-96">
       <h2 className="text- font-bold text-slate-800 dark:text-white">{title}</h2>
       {children}
     </div>
