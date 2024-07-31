@@ -49,7 +49,7 @@ const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) =
         return (
           <div
             key={item.urlKey}
-            className="bg-white w-[350px] h-[120px] rounded-lg shadow-md hover:bg-primary hover:text-white "
+            className="bg-white w-[350px] h-[120px] rounded-lg shadow-md hover:bg-primary hover:text-white  dark:bg-slate-700 dark:hover:bg-primary dark:hover:text-white"
           >
             <Link
               href={`./questionnaire/${item.urlKey}`}

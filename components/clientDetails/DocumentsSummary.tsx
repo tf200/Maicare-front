@@ -26,7 +26,7 @@ const DocumentsSummary: FunctionComponent<Props> = ({ clientId }) => {
         return (
           <li
             key={document.id}
-            className="grid grid-cols-3 hover:bg-gray-3 p-2 cursor-pointer rounded-xl"
+            className="grid grid-cols-3 hover:bg-gray-3 dark:hover:bg-slate-700 p-4 cursor-pointer rounded-xl"
           >
             <DetailCell
               className="flex items-center"

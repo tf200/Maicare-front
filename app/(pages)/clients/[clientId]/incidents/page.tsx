@@ -112,7 +112,6 @@ const IncidentsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       {isLoading && <Loader />}
       {data && (
         <PaginatedTable
-          className="bg-white"
           data={data}
           columns={columnDef}
           page={pagination.page ?? 1}

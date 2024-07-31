@@ -40,7 +40,7 @@ const EpisodesItem: FunctionComponent<EmotionalStateItemProps> = ({
   episode,
 }) => {
   return (
-    <li className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 rounded-2xl">
+    <li className="grid grid-cols-3 px-4 py-4 cursor-pointer hover:bg-gray-3 dark:hover:bg-slate-700 items-center rounded-2xl">
       <div>{dateFormat(episode.date)}</div>
       <div className="flex items-center justify-center">
         <Severity severity={convertIntensityToSeverity(episode.intensity)} />
