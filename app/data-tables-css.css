@@ -25,6 +25,7 @@
   text-align: left;
   padding: 20px;
   background-color: #f9fafb;
+  @apply dark:bg-gray-800;
 }
 
 .datatable-table > tfoot > tr > th {
@@ -45,6 +46,10 @@
 
 .datatable-table tbody tr:hover {
   background: #f8fbff;
+}
+.datatable-table tbody tr {
+  @apply dark:hover:bg-gray-700;
+
 }
 
 .datatable-sorter,
