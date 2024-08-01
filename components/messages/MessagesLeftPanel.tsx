@@ -9,6 +9,22 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import { useRouter } from "next/navigation";
+import { create } from 'zustand'
+
+
+// define a store
+type Store = {
+  conversations: ConversationItem []
+  currentConversation: ConversationItem | null
+  setCurrentConversation: (conversation: ConversationItem) => void
+}
+
+const useChatConversation = create<Store>((set) => ({
+  conversations: [],
+  currentConversation: null,
+  setCurrentConversation: (conversation) => set({ currentConversation: conversation }),
+}))
+
 
 type ConversationItem = {
   id: number;
