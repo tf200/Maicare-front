@@ -16,7 +16,7 @@ import { useConversation } from "@/utils/conversations/getConversation";
 
 type ChatBoxProps =
   | {
-      conversationId: number;
+      conversationId: string;
     }
   | {
       recipientId: number;
