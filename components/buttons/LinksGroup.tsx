@@ -18,7 +18,7 @@ const ButtonsGroup: FunctionComponent<Props> = ({ options }) => {
   }
   return (
     <div className="flex items-center">
-      <div className="flex gap-2 rounded-xl p-3 bg-white shadow overflow-hidden">
+      <div className="flex gap-2 rounded-xl p-3 bg-white dark:bg-slate-700 shadow overflow-hidden">
         {options.map((option) => (
           <Link
             key={option.href}
@@ -27,7 +27,7 @@ const ButtonsGroup: FunctionComponent<Props> = ({ options }) => {
               "inline-flex border rounded-lg py-1 px-2 sm:py-2 sm:px-5 font-medium hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary",
               {
                 "border-primary bg-primary text-white": isActive(option),
-                "text-black bg-white border-none": !isActive(option),
+                "text-black bg-white border-none dark:bg-slate-800 dark:text-slate-100": !isActive(option),
               }
             )}
           >

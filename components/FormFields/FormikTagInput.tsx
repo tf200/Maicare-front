@@ -101,7 +101,7 @@ function Tag<T>({ id, renderTag, propsGetter, onClose }: TagProps<T>) {
     <div
       className={clsx(
         props.className,
-        "my-1.5 gap-2 flex items-center justify-center rounded border-[.5px] border-stroke bg-white px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30"
+        "my-1.5 gap-2 flex items-center justify-center rounded border-[.5px] border-stroke bg-white  px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30 dark:text-white"
       )}
     >
       <span>{renderTag(id)}</span>

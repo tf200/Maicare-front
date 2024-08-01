@@ -111,7 +111,7 @@ const RolesList: FunctionComponent<RolesListProps> = ({
       {roles.length > 0 && (
         <table className="datatable-table">
           <thead>
-            <tr>
+            <tr >
               {/* Role */}
               <th>Rol</th>
               {/* Period */}
@@ -121,7 +121,7 @@ const RolesList: FunctionComponent<RolesListProps> = ({
           </thead>
           <tbody>
             {roles.map((role) => (
-              <tr key={role.id}>
+              <tr key={role.id} className="dark:hover-bg-slate-700">
                 <td>
                   {ORGANIGRAM_TRANSLATE[role.group_name] ?? role.group_name}
                 </td>

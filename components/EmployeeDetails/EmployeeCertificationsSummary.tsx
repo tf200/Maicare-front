@@ -26,7 +26,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
           <li
             key={certificate.id}
             onClick={() => router.push(`/employees/${employeeId}/certificates`)}
-            className="grid grid-cols-3 hover:bg-gray-3 p-2 cursor-pointer rounded-xl"
+            className="grid grid-cols-3 hover:bg-gray-3 p-4 dark:hover:bg-slate-700 cursor-pointer rounded-xl"
           >
             <DetailCell
               ignoreIfEmpty={true}
