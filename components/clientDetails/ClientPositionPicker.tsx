@@ -80,7 +80,8 @@ const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({
     <Panel title={"Locatie"} sideActions={
       <button
         onClick={handleClientUpdatePosition}
-        className="dark:bg-slate-900 px-4 py-2 rounded-lg bg-gray-3 dark:text-white text-slate-800 "
+        className="px-4 py-2 rounded-lg bg-primary font-medium text-white disabled:bg-blue-400 disabled:opacity-55"
+        disabled={(position?.length && clientDetails?.gps_position.length &&  ((position[0] !== parseFloat(clientDetails.gps_position[0])) || (position[1] !== parseFloat(clientDetails.gps_position[1])))) ? false : true }
       >
         Opslaan
       </button>
