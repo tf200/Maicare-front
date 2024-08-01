@@ -10,10 +10,7 @@ import {
 } from "@/types/invoices";
 
 async function generateInvoice(req: GenerateInvoiceReqDto) {
-  const response = await api.post<InvoiceResDto>(
-    "/client/generate-invoice/",
-    req
-  );
+  const response = await api.post<InvoiceResDto>("/client/generate-invoice/", req);
   return response.data;
 }
 
@@ -67,22 +64,15 @@ export const useInvoice = (id: number) => {
   return useQuery(["invoices", id], () => getInvoice(id));
 };
 
-async function addPaymentHistory(
-  invoiceId: number,
-  data: AddPaymentHistoryDto
-) {
-  const response = await api.post(
-    `/clients/invoices/${invoiceId}/history/add`,
-    data
-  );
+async function addPaymentHistory(invoiceId: number, data: AddPaymentHistoryDto) {
+  const response = await api.post(`/clients/invoices/${invoiceId}/history/add`, data);
   return response.data;
 }
 
 export const useAddPaymentHistory = (invoiceId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: AddPaymentHistoryDto) =>
-      addPaymentHistory(invoiceId, data),
+    mutationFn: (data: AddPaymentHistoryDto) => addPaymentHistory(invoiceId, data),
     onSuccess: () => {
       queryClient.invalidateQueries(["invoices", invoiceId]);
     },
@@ -90,18 +80,12 @@ export const useAddPaymentHistory = (invoiceId: number) => {
 };
 
 const generateInvoiceV2 = async (id: number) => {
-  const response = await api.get<GeneratedInvoiceDto>(
-    `/clients/invoices/${id}/download-link`
-  );
+  const response = await api.get<GeneratedInvoiceDto>(`/clients/invoices/${id}/download-link`);
   return response.data;
 };
 
 export const useInvoiceDownloadLink = (invoiceId: number) => {
-  return useQuery(
-    ["generated_invoice", invoiceId],
-    () => generateInvoiceV2(invoiceId),
-    {
-      enabled: false,
-    }
-  );
+  return useQuery(["generated_invoice", invoiceId], () => generateInvoiceV2(invoiceId), {
+    enabled: false,
+  });
 };

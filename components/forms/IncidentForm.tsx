@@ -33,32 +33,17 @@ const initialValues: IncidentsFormType = {
 };
 
 const incidentSchema: Yup.ObjectSchema<IncidentsFormType> = Yup.object().shape({
-  date_reported: Yup.string().required(
-    "Geef alstublieft de gerapporteerde datum."
-  ),
-  date_of_incident: Yup.string().required(
-    "Geef alstublieft het tijdstip van het incident."
-  ),
+  date_reported: Yup.string().required("Geef alstublieft de gerapporteerde datum."),
+  date_of_incident: Yup.string().required("Geef alstublieft het tijdstip van het incident."),
   reported_by: Yup.number(),
   reported_by_name: Yup.string(),
-  involved_children: Yup.array().min(
-    1,
-    "Selecteer minstens één betrokken kind."
-  ),
+  involved_children: Yup.array().min(1, "Selecteer minstens één betrokken kind."),
   involved_children_name: Yup.array(),
-  location: Yup.string().required(
-    "Geef alstublieft de locatie van het incident."
-  ),
-  description: Yup.string().required(
-    "Geef alstublieft een beschrijving van het incident."
-  ),
+  location: Yup.string().required("Geef alstublieft de locatie van het incident."),
+  description: Yup.string().required("Geef alstublieft een beschrijving van het incident."),
   action_taken: Yup.string().required("Geef alstublieft de ondernomen actie."),
-  follow_up_required: Yup.boolean().required(
-    "Geef aan of er een follow-up vereist is."
-  ),
-  follow_up_date: Yup.string().required(
-    "Geef alstublieft de datum voor de follow-up."
-  ),
+  follow_up_required: Yup.boolean().required("Geef aan of er een follow-up vereist is."),
+  follow_up_date: Yup.string().required("Geef alstublieft de datum voor de follow-up."),
   notes: Yup.string().required("Geef alstublieft notities."),
   status: Yup.string().required("Geef alstublieft de status."),
 });
@@ -69,11 +54,7 @@ type Props = {
   mode: string;
 };
 
-const EpisodeForm: FunctionComponent<Props> = ({
-  clientId,
-  incidentId,
-  mode,
-}) => {
+const EpisodeForm: FunctionComponent<Props> = ({ clientId, incidentId, mode }) => {
   const router = useRouter();
 
   const [errorOptionMessage, setErrorOptionMessage] = useState(null);
@@ -85,11 +66,7 @@ const EpisodeForm: FunctionComponent<Props> = ({
     out_of_service: false,
   });
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetIncident(incidentId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetIncident(incidentId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateIncident(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchIncident(clientId);
@@ -153,14 +130,7 @@ const EpisodeForm: FunctionComponent<Props> = ({
       }}
       validationSchema={incidentSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <InputField

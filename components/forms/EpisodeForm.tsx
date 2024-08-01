@@ -21,12 +21,8 @@ const initialValues: EpisodeFormType = {
 
 const episodeSchema: Yup.ObjectSchema<EpisodeFormType> = Yup.object().shape({
   date: Yup.string().required("Geef alstublieft een datum voor de episode"),
-  state_description: Yup.string().required(
-    "Geef alstublieft een beschrijving voor de episode"
-  ),
-  intensity: Yup.number().required(
-    "Geef alstublieft de intensiteit van de episode van 1 tot 10"
-  ),
+  state_description: Yup.string().required("Geef alstublieft een beschrijving voor de episode"),
+  intensity: Yup.number().required("Geef alstublieft de intensiteit van de episode van 1 tot 10"),
 });
 
 type Props = {
@@ -35,27 +31,16 @@ type Props = {
   mode: string;
 };
 
-const EpisodeForm: FunctionComponent<Props> = ({
-  clientId,
-  episodeId,
-  mode,
-}) => {
+const EpisodeForm: FunctionComponent<Props> = ({ clientId, episodeId, mode }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetEpisode(episodeId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetEpisode(episodeId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateEpisode(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchEpisode(clientId);
 
   const onSubmit = useCallback(
-    (
-      values: EpisodeFormType,
-      { resetForm }: FormikHelpers<EpisodeFormType>
-    ) => {
+    (values: EpisodeFormType, { resetForm }: FormikHelpers<EpisodeFormType>) => {
       if (mode === "edit") {
         update(
           {
@@ -90,20 +75,11 @@ const EpisodeForm: FunctionComponent<Props> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={episodeSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <InputField

@@ -1,10 +1,6 @@
 "use client";
 
-import React, {
-  createContext,
-  FunctionComponent,
-  PropsWithChildren,
-} from "react";
+import React, { createContext, FunctionComponent, PropsWithChildren } from "react";
 import { useWs, WebSocketService } from "@/utils/ws";
 
 type WSContextType = {

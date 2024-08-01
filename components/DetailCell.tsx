@@ -8,26 +8,18 @@ type StrategyProps = {
 
 const Strategies: Record<ValueType, FunctionComponent<StrategyProps>> = {
   text: ({ value }) => (
-    <div className="mt-1 text-sm text-gray-900 dark:text-gray-100 truncate">
-      {value}
-    </div>
+    <div className="mt-1 text-sm text-gray-900 dark:text-gray-100 truncate">{value}</div>
   ),
   email: ({ value }) => (
     <div className="mt-1 text-sm text-gray-900 truncate dark:text-gray-100">
-      <a
-        href={`mailto:${value}`}
-        className="text-primary underline hover:opacity-80"
-      >
+      <a href={`mailto:${value}`} className="text-primary underline hover:opacity-80">
         {value}
       </a>
     </div>
   ),
   phone: ({ value }) => (
     <div className="mt-1 text-sm text-gray-900 truncate dark:text-gray-100">
-      <a
-        href={`tel:${value}`}
-        className="text-primary underline hover:opacity-80"
-      >
+      <a href={`tel:${value}`} className="text-primary underline hover:opacity-80">
         {value}
       </a>
     </div>
@@ -53,8 +45,7 @@ const DetailCell: FunctionComponent<Props> = ({
 }) => {
   const Strategy = useMemo(() => Strategies[type], [type]);
 
-  if (!ignoreIfEmpty && (value === null || value === undefined || value === ""))
-    return null;
+  if (!ignoreIfEmpty && (value === null || value === undefined || value === "")) return null;
   return (
     <div className={className}>
       {typeof label === "string" ? (
@@ -66,9 +57,7 @@ const DetailCell: FunctionComponent<Props> = ({
       )}
       {typeof value === "string" ? <Strategy value={value} /> : value}
       {typeof additionalInfo === "string" && (
-        <div className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          {additionalInfo}
-        </div>
+        <div className="mt-1 text-sm text-gray-500 dark:text-gray-400">{additionalInfo}</div>
       )}
     </div>
   );

@@ -31,9 +31,7 @@ const EmployeeRolesSummary: FunctionComponent<Props> = ({ employeeId }) => {
               ignoreIfEmpty={true}
               label={"Rol"}
               value={
-                ORGANIGRAM_TRANSLATE[role.group_name] ??
-                role.group_name ??
-                "Niet gespecificeerd"
+                ORGANIGRAM_TRANSLATE[role.group_name] ?? role.group_name ?? "Niet gespecificeerd"
               }
             />
 

@@ -8,11 +8,7 @@ type Props = {
   onChange: (selected: SelectionOption["value"][]) => void;
 };
 
-const ControlledCheckboxGroup: FunctionComponent<Props> = ({
-  options,
-  selected,
-  onChange,
-}) => {
+const ControlledCheckboxGroup: FunctionComponent<Props> = ({ options, selected, onChange }) => {
   function getOnClick(value: SelectionOption["value"]) {
     return () => {
       if (selected.includes(value)) {

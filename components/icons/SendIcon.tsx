@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const SendIcon: FunctionComponent<IconProps> = ({
-  width = 24,
-  height = 24,
-}) => {
+const SendIcon: FunctionComponent<IconProps> = ({ width = 24, height = 24 }) => {
   return (
     <svg
       width={width}

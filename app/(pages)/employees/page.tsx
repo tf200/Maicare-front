@@ -26,15 +26,8 @@ import Loader from "@/components/common/Loader";
 const EmployeesPage: FunctionComponent = () => {
   const [filters, setFilters] = useState<EmployeesSearchParams>();
   const debouncedParams = useDebounce(filters, 500);
-  const {
-    page,
-    setPage,
-    isPreviousData,
-    data,
-    isError,
-    isFetching,
-    isLoading,
-  } = useEmployeesList(debouncedParams);
+  const { page, setPage, isPreviousData, data, isError, isFetching, isLoading } =
+    useEmployeesList(debouncedParams);
 
   const router = useRouter();
 
@@ -56,22 +49,18 @@ const EmployeesPage: FunctionComponent = () => {
       {
         id: "full_name",
         header: () => "Volledige naam",
-        accessorFn: (employee) =>
-          `${employee.first_name} ${employee.last_name}`,
+        accessorFn: (employee) => `${employee.first_name} ${employee.last_name}`,
       },
       {
         accessorKey: "date_of_birth",
         header: () => "Leeftijd",
         cell: (info) =>
-          info.getValue()
-            ? getAge(info.getValue() as string)
-            : "Niet gespecificeerd",
+          info.getValue() ? getAge(info.getValue() as string) : "Niet gespecificeerd",
       },
       {
         accessorKey: "gender",
         header: () => "Geslacht",
-        cell: (info) =>
-          mappingGender[info.getValue() as string] || "Niet gespecificeerd",
+        cell: (info) => mappingGender[info.getValue() as string] || "Niet gespecificeerd",
       },
       {
         accessorKey: "work_phone_number",
@@ -115,10 +104,7 @@ const EmployeesPage: FunctionComponent = () => {
             }}
           />
           <SecureFragment permission={consts.EMPLOYEE_CREATE}>
-            <LinkButton
-              text={"Nieuwe Medewerker Toevoegen"}
-              href={`/employees/new`}
-            />
+            <LinkButton text={"Nieuwe Medewerker Toevoegen"} href={`/employees/new`} />
           </SecureFragment>
         </div>
       }
@@ -155,9 +141,7 @@ const EmployeesPage: FunctionComponent = () => {
       {isError && (
         <LargeAlertMessage
           firstLine={"Oops!"}
-          secondLine={
-            "Een fout heeft ons verhinderd de medewerkerslijst op te halen."
-          }
+          secondLine={"Een fout heeft ons verhinderd de medewerkerslijst op te halen."}
         />
       )}
     </Panel>

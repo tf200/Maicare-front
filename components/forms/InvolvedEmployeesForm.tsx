@@ -45,10 +45,8 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
     isError,
   } = useGetInvolved(involvedId, clientId);
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateInvolvedEmployee(clientId);
-  const { mutate: update, isLoading: isPatching } =
-    usePatchInvolvedEmployee(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateInvolvedEmployee(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchInvolvedEmployee(clientId);
 
   const onSubmit = useCallback(
     (values, { resetForm }) => {
@@ -61,9 +59,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           {
             onSuccess: () => {
               resetForm;
-              router.push(
-                `/clients/${clientId}/client-network/involved-employees`
-              );
+              router.push(`/clients/${clientId}/client-network/involved-employees`);
             },
           }
         );
@@ -76,9 +72,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           {
             onSuccess: () => {
               resetForm;
-              router.push(
-                `/clients/${clientId}/client-network/involved-employees`
-              );
+              router.push(`/clients/${clientId}/client-network/involved-employees`);
             },
           }
         );
@@ -89,18 +83,11 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
 
   const formik = useFormik<FormTypes>({
     enableReinitialize: true,
-    initialValues:
-      mode == "edit"
-        ? involvedData
-          ? involvedData
-          : initialValues
-        : initialValues,
+    initialValues: mode == "edit" ? (involvedData ? involvedData : initialValues) : initialValues,
     validationSchema: Yup.object({
       role: Yup.string().required("Geef alstublieft een relatie op"),
       start_date: Yup.string().required("Geef alstublieft een datum op"),
-      employee: Yup.number()
-        .required("Geef alstublieft een medewerker op")
-        .nullable(),
+      employee: Yup.number().required("Geef alstublieft een medewerker op").nullable(),
     }),
     onSubmit: onSubmit,
   });
@@ -117,11 +104,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           options={EMPLOYEE_ASSIGNMENT_OPTIONS}
           value={formik.values.role}
           placeholder={"Voer relatie in"}
-          error={
-            formik.touched.role && formik.errors.role
-              ? formik.errors.role
-              : null
-          }
+          error={formik.touched.role && formik.errors.role ? formik.errors.role : null}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
@@ -133,9 +116,7 @@ export const InvolvedEmployeesForm: FunctionComponent<PropsType> = ({
           className="w-full mb-4.5"
           value={(formik.values.start_date ?? "") + ""}
           error={
-            formik.touched.start_date && formik.errors.start_date
-              ? formik.errors.start_date
-              : null
+            formik.touched.start_date && formik.errors.start_date ? formik.errors.start_date : null
           }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

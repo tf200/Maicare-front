@@ -9,11 +9,7 @@ const CreateOpContactModal: FunctionComponent<ModalProps> = ({
   additionalProps,
 }) => {
   return (
-    <FormModal
-      open={open}
-      onClose={onClose}
-      title={"Maak een nieuwe opdrachtgever aan"}
-    >
+    <FormModal open={open} onClose={onClose} title={"Maak een nieuwe opdrachtgever aan"}>
       <OpContactForm
         mode={"add"}
         onSuccess={() => {

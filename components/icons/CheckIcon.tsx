@@ -3,11 +3,7 @@ import { IconProps } from "@/types/IconProps";
 import clsx from "clsx";
 import { className } from "postcss-selector-parser";
 
-const CheckIcon: FunctionComponent<IconProps> = ({
-  width = 10,
-  height = 7,
-  className,
-}) => {
+const CheckIcon: FunctionComponent<IconProps> = ({ width = 10, height = 7, className }) => {
   return (
     <svg
       className={clsx("fill-current", className)}

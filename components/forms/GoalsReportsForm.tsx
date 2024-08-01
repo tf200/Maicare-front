@@ -38,15 +38,10 @@ type PropsType = {
   className?: string;
 };
 
-export const GoalsForm: FunctionComponent<PropsType> = ({
-  clientId,
-  goalId,
-  className,
-}) => {
+export const GoalsForm: FunctionComponent<PropsType> = ({ clientId, goalId, className }) => {
   const router = useRouter();
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateGoalReport(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateGoalReport(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
@@ -68,15 +63,7 @@ export const GoalsForm: FunctionComponent<PropsType> = ({
       onSubmit={onSubmit}
       validationSchema={goalsSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, setFieldValue, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className={className}>
           <div className="p-6.5">
             <InputField

@@ -3,9 +3,7 @@ import api from "../api";
 import { useQuery } from "react-query";
 
 async function fetchLocationStats() {
-  const res = await api.get<LocationStatsDto[]>(
-    `system/dashboard/analytics/locations`
-  );
+  const res = await api.get<LocationStatsDto[]>(`system/dashboard/analytics/locations`);
   return res.data;
 }
 

@@ -3,9 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { FeedbackFormType } from "@/components/forms/FeedbackForm";
 import { NewFeedbackReqDto } from "@/types/feedback/new-feedback-req-dto";
 
-async function createFeedback(
-  data: NewFeedbackReqDto
-): Promise<NewFeedbackReqDto> {
+async function createFeedback(data: NewFeedbackReqDto): Promise<NewFeedbackReqDto> {
   const res = await api.post<NewFeedbackReqDto>("employee/feedback_cl/", data);
   return res.data;
 }

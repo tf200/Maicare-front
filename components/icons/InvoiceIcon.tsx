@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const InvoiceIcon: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 19,
-}) => {
+const InvoiceIcon: FunctionComponent<IconProps> = ({ width = 18, height = 19 }) => {
   return (
     <svg
       className="fill-current"
@@ -46,12 +43,7 @@ const InvoiceIcon: FunctionComponent<IconProps> = ({
       </g>
       <defs>
         <clipPath id="clip0_130_9787">
-          <rect
-            width="18"
-            height="18"
-            fill="white"
-            transform="translate(0 0.052124)"
-          />
+          <rect width="18" height="18" fill="white" transform="translate(0 0.052124)" />
         </clipPath>
       </defs>
     </svg>

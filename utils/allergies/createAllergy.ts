@@ -3,13 +3,8 @@ import { AllergiesResDto } from "@/types/allergies/allergies-res-dto";
 import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
-async function createAllergy(
-  allergy: NewAllergyReqDto
-): Promise<AllergiesResDto> {
-  const response = await api.post<AllergiesResDto>(
-    "client/allergy_create/",
-    allergy
-  );
+async function createAllergy(allergy: NewAllergyReqDto): Promise<AllergiesResDto> {
+  const response = await api.post<AllergiesResDto>("client/allergy_create/", allergy);
   return response.data;
 }
 

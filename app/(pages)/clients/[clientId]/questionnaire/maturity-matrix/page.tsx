@@ -39,10 +39,18 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
           <MultiMaturityMatrixPrintButton
             questIds={items.filter((item) => item.checked).map((item) => item.id)}
           />
-          <Link href={"./maturity-matrix/add"} className="flex justify-center items-center bg-primary w-10  rounded-full text-white" data-tooltip-id="createNewMaturityMatrix">
+          <Link
+            href={"./maturity-matrix/add"}
+            className="flex justify-center items-center bg-primary w-10  rounded-full text-white"
+            data-tooltip-id="createNewMaturityMatrix"
+          >
             <Plus className="w-6 h-6" />
           </Link>
-          <Tooltip id="createNewMaturityMatrix" place="left" content="Nieuwe Zelfduurzaamheidsmatrix creëren"/>
+          <Tooltip
+            id="createNewMaturityMatrix"
+            place="left"
+            content="Nieuwe Zelfduurzaamheidsmatrix creëren"
+          />
         </div>
       }
     >

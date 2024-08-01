@@ -1,8 +1,5 @@
 import React, { FunctionComponent, useMemo } from "react";
-import {
-  useCreateContractWorkingHours,
-  useGetContractWorkingHours,
-} from "@/utils/contracts";
+import { useCreateContractWorkingHours, useGetContractWorkingHours } from "@/utils/contracts";
 import Button from "@/components/buttons/Button";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
@@ -28,8 +25,7 @@ const WorkingHours: FunctionComponent<{
       {
         header: "Datum",
         accessorKey: "datetime",
-        cell: ({ getValue }) =>
-          dayjs(getValue() as string).format("DD-MM-YYYY HH:mm"),
+        cell: ({ getValue }) => dayjs(getValue() as string).format("DD-MM-YYYY HH:mm"),
       },
       {
         header: "Notities",
@@ -51,9 +47,7 @@ const WorkingHours: FunctionComponent<{
       <div className="mt-8 border-t-1 border-stroke">
         <h2 className="text-xl px-7 py-4 font-semibold">Werkuren</h2>
         {data?.count === 0 && (
-          <p className="mt-2 px-7 py-4 text-sm text-gray-600">
-            Er zijn geen werkuren ingepland.
-          </p>
+          <p className="mt-2 px-7 py-4 text-sm text-gray-600">Er zijn geen werkuren ingepland.</p>
         )}
         {isLoading && <Loader />}
         {data && data.count > 0 && (
@@ -83,12 +77,10 @@ const WorkingHours: FunctionComponent<{
 
 export default WorkingHours;
 
-const AddWorkingHoursModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
-  const { mutate: createWorkingHours, isLoading: isCreating } =
-    useCreateContractWorkingHours(additionalProps.contractId);
+const AddWorkingHoursModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
+  const { mutate: createWorkingHours, isLoading: isCreating } = useCreateContractWorkingHours(
+    additionalProps.contractId
+  );
   const formik = useFormik<WorkingHoursFormType>({
     initialValues: {
       datetime: dayjs().format("YYYY-MM-DDTHH:mm"),
@@ -102,8 +94,7 @@ const AddWorkingHoursModal: FunctionComponent<ModalProps> = ({
         {
           notes: formValues.notes,
           datetime: formValues.datetime,
-          minutes:
-            parseInt(formValues.hours) * 60 + parseInt(formValues.minutes),
+          minutes: parseInt(formValues.hours) * 60 + parseInt(formValues.minutes),
         },
         {
           onSuccess: () => {
@@ -113,8 +104,7 @@ const AddWorkingHoursModal: FunctionComponent<ModalProps> = ({
       );
     },
   });
-  const { handleSubmit, handleChange, touched, errors, handleBlur, values } =
-    formik;
+  const { handleSubmit, handleChange, touched, errors, handleBlur, values } = formik;
   return (
     <FormModal {...props} title={"Werkuren toevoegen"}>
       <FormikProvider value={formik}>

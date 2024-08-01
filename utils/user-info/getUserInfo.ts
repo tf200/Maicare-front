@@ -24,9 +24,7 @@ async function getMyInfo() {
 }
 
 async function getUserInfo(userId: number) {
-  const response = await api.get<UserInfoResDto>(
-    `/employee/convfilter/${userId}/`
-  );
+  const response = await api.get<UserInfoResDto>(`/employee/convfilter/${userId}/`);
 
   return response.data;
 }

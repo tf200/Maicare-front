@@ -43,22 +43,22 @@ const Analytics: FunctionComponent = (props) => {
                 `Op wachtlijst (${data?.users.total_on_waiting_list_users})`,
               ],
               chart: {
-                type: 'donut',
-                width: '100%',
-                height: '100%',
+                type: "donut",
+                width: "100%",
+                height: "100%",
               },
               plotOptions: {
                 pie: {
                   donut: {
-                    size: '60%', // Increase the donut size
+                    size: "60%", // Increase the donut size
                   },
                 },
               },
               dataLabels: {
                 enabled: true, // Ensure data labels are visible
                 style: {
-                  fontSize: '16px', // Adjust font size for better readability
-                  colors: ['#fff'], // Adjust text color for visibility
+                  fontSize: "16px", // Adjust font size for better readability
+                  colors: ["#fff"], // Adjust text color for visibility
                 },
               },
 
@@ -68,8 +68,8 @@ const Analytics: FunctionComponent = (props) => {
                 },
               },
               legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
+                position: "bottom",
+                horizontalAlign: "center",
                 offsetY: 0,
               },
             }}
@@ -81,7 +81,6 @@ const Analytics: FunctionComponent = (props) => {
             type="donut"
             width="100%"
             height={380}
-
           />
         </div>
       </DataCard>
@@ -97,22 +96,22 @@ const Analytics: FunctionComponent = (props) => {
                 `ingevulde profielen (${data?.users.total_users - data?.users.total_missing_documents_profiles})`,
               ],
               chart: {
-                type: 'donut',
-                width: '100%',
-                height: '100%',
+                type: "donut",
+                width: "100%",
+                height: "100%",
               },
               plotOptions: {
                 pie: {
                   donut: {
-                    size: '60%', // Increase the donut size
+                    size: "60%", // Increase the donut size
                   },
                 },
               },
               dataLabels: {
                 enabled: true, // Ensure data labels are visible
                 style: {
-                  fontSize: '16px', // Adjust font size for better readability
-                  colors: ['#fff'], // Adjust text color for visibility
+                  fontSize: "16px", // Adjust font size for better readability
+                  colors: ["#fff"], // Adjust text color for visibility
                 },
               },
 
@@ -122,8 +121,8 @@ const Analytics: FunctionComponent = (props) => {
                 },
               },
               legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
+                position: "bottom",
+                horizontalAlign: "center",
                 offsetY: 0,
               },
             }}
@@ -134,7 +133,6 @@ const Analytics: FunctionComponent = (props) => {
             type="donut"
             width="100%"
             height={380}
-
           />
         </div>
       </DataCard>
@@ -165,7 +163,10 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Contracten (${data?.contracts.total_contracts})`}>
-        <div className="mt-4 flex flex-col items-center w-full" style={{ maxWidth: '600px', height: '400px' }}>
+        <div
+          className="mt-4 flex flex-col items-center w-full"
+          style={{ maxWidth: "600px", height: "400px" }}
+        >
           <ReactApexChart
             options={{
               labels: [
@@ -176,22 +177,22 @@ const Analytics: FunctionComponent = (props) => {
                 `Beëindigd (${data?.contracts.total_terminated_contracts})`,
               ],
               chart: {
-                type: 'donut',
-                width: '100%',
-                height: '100%',
+                type: "donut",
+                width: "100%",
+                height: "100%",
               },
               plotOptions: {
                 pie: {
                   donut: {
-                    size: '60%', // Increase the donut size
+                    size: "60%", // Increase the donut size
                   },
                 },
               },
               dataLabels: {
                 enabled: true, // Ensure data labels are visible
                 style: {
-                  fontSize: '16px', // Adjust font size for better readability
-                  colors: ['#fff'], // Adjust text color for visibility
+                  fontSize: "16px", // Adjust font size for better readability
+                  colors: ["#fff"], // Adjust text color for visibility
                 },
               },
 
@@ -201,8 +202,8 @@ const Analytics: FunctionComponent = (props) => {
                 },
               },
               legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
+                position: "bottom",
+                horizontalAlign: "center",
                 offsetY: 0,
               },
             }}
@@ -216,11 +217,9 @@ const Analytics: FunctionComponent = (props) => {
             type="donut"
             width="100%"
             height={380}
-
           />
         </div>
       </DataCard>
-
 
       <DataCard title={`Medicatie (${data?.medications.total_attachments})`}>
         <div className="mt-4 flex gap-6">
@@ -254,7 +253,10 @@ const Analytics: FunctionComponent = (props) => {
       </DataCard>
 
       <DataCard title={`Medicatie (${data?.medications.total_attachments})`}>
-        <div className="mt-4 flex justify-center items-center" style={{ width: '100%', height: '400px' }}>
+        <div
+          className="mt-4 flex justify-center items-center"
+          style={{ width: "100%", height: "400px" }}
+        >
           <ReactApexChart
             options={{
               labels: [
@@ -266,21 +268,21 @@ const Analytics: FunctionComponent = (props) => {
                 `Wachtende (${data?.medications.total_waiting_medication_records})`,
               ],
               chart: {
-                type: 'donut',
-                width: '100%',
-                height: '100%',
+                type: "donut",
+                width: "100%",
+                height: "100%",
               },
               plotOptions: {
                 pie: {
                   donut: {
-                    size: '60%', // Increase the donut size for better content visibility
+                    size: "60%", // Increase the donut size for better content visibility
                   },
                 },
               },
               dataLabels: {
-                enabled: true, 
+                enabled: true,
                 style: {
-                  fontSize: '12px', 
+                  fontSize: "12px",
                 },
                 dropShadow: {
                   enabled: true,
@@ -289,16 +291,15 @@ const Analytics: FunctionComponent = (props) => {
                   blur: 1,
                   opacity: 0.75,
                 },
-
               },
               tooltip: {
                 y: {
-                  formatter: (val) => `${val} records`, 
+                  formatter: (val) => `${val} records`,
                 },
               },
               legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
+                position: "bottom",
+                horizontalAlign: "center",
                 offsetY: 0,
               },
             }}
@@ -313,11 +314,9 @@ const Analytics: FunctionComponent = (props) => {
             type="donut"
             width="100%"
             height={380}
-
           />
         </div>
       </DataCard>
-
 
       <DataCard title={`Facturen (${data?.invoices.total_invoices})`}>
         <div className="mt-4 flex gap-6">
@@ -353,21 +352,21 @@ const Analytics: FunctionComponent = (props) => {
                 `Teveel betaalde facturen (${data?.invoices.total_overpaid_invoices})`,
               ],
               chart: {
-                type: 'donut',
-                width: '100%',
-                height: '100%',
+                type: "donut",
+                width: "100%",
+                height: "100%",
               },
               plotOptions: {
                 pie: {
                   donut: {
-                    size: '60%', // Increase the donut size for better content visibility
+                    size: "60%", // Increase the donut size for better content visibility
                   },
                 },
               },
               dataLabels: {
-                enabled: true, 
+                enabled: true,
                 style: {
-                  fontSize: '12px', 
+                  fontSize: "12px",
                 },
                 dropShadow: {
                   enabled: true,
@@ -376,16 +375,15 @@ const Analytics: FunctionComponent = (props) => {
                   blur: 1,
                   opacity: 0.75,
                 },
-
               },
               tooltip: {
                 y: {
-                  formatter: (val) => `${val} records`, 
+                  formatter: (val) => `${val} records`,
                 },
               },
               legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
+                position: "bottom",
+                horizontalAlign: "center",
                 offsetY: 0,
               },
             }}

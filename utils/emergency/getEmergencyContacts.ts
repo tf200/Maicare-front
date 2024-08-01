@@ -15,10 +15,7 @@ async function getEmergencyContacts(clientId: number, numberOfItems: number) {
   return response.data;
 }
 
-export const useEmergencyContacts = (
-  clientId: number,
-  numberOfItems: number = 3
-) => {
+export const useEmergencyContacts = (clientId: number, numberOfItems: number = 3) => {
   return useQuery({
     queryFn: () => getEmergencyContacts(clientId, numberOfItems),
     queryKey: [clientId, "emergency_contacts"],

@@ -4,23 +4,14 @@ import { useQuery } from "react-query";
 import { PaginationParams } from "@/types/pagination-params";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 
-async function fetchMedicationsList(
-  clientId: number,
-  params: PaginationParams
-) {
-  const response = await api.get<MedicationsListResDto>(
-    `/clients/${clientId}/medications`,
-    {
-      params,
-    }
-  );
+async function fetchMedicationsList(clientId: number, params: PaginationParams) {
+  const response = await api.get<MedicationsListResDto>(`/clients/${clientId}/medications`, {
+    params,
+  });
   return response.data;
 }
 
-export const useMedicationsList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useMedicationsList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

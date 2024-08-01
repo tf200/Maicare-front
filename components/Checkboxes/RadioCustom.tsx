@@ -7,22 +7,9 @@ const RadioCustom = ({ id, label, type, name, value }) => {
 
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="flex items-center cursor-pointer select-none"
-      >
-        <div
-          className="relative "
-          role="group"
-          aria-labelledby="my-radio-group"
-        >
-          <Field
-            id={id}
-            type={type}
-            name={name}
-            value={value}
-            className="sr-only"
-          />
+      <label htmlFor={id} className="flex items-center cursor-pointer select-none">
+        <div className="relative " role="group" aria-labelledby="my-radio-group">
+          <Field id={id} type={type} name={name} value={value} className="sr-only" />
 
           <div
             className={`mr-4 flex h-5 w-5 items-center justify-center rounded-full border ${isChecked ? "border-primary" : ""}`}

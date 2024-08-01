@@ -3,13 +3,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { NewMeasurmentReqDto } from "@/types/measurment/new-measurment-req-dto";
 import { MeasurementFormType } from "@/components/forms/MeasurementsForm";
 
-async function createMeasurement(
-  data: NewMeasurmentReqDto
-): Promise<NewMeasurmentReqDto> {
-  const res = await api.post<NewMeasurmentReqDto>(
-    "employee/measurment_cl/",
-    data
-  );
+async function createMeasurement(data: NewMeasurmentReqDto): Promise<NewMeasurmentReqDto> {
+  const res = await api.post<NewMeasurmentReqDto>("employee/measurment_cl/", data);
   return res.data;
 }
 

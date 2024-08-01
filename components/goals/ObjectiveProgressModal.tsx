@@ -29,13 +29,8 @@ const OPTIONS: {
   },
 ];
 
-const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
-  const [selectedOption, setSelectedOption] = useState<OptionType>(
-    OPTIONS[0].value
-  );
+const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
+  const [selectedOption, setSelectedOption] = useState<OptionType>(OPTIONS[0].value);
   const { data, isLoading } = useObjectiveHistory(additionalProps.objectiveId);
   const { open: openReportModal } = useModal(ObjectiveReportModal);
   const objective: ObjectiveItem = additionalProps.objective;

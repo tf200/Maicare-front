@@ -52,7 +52,7 @@
   @apply !text-body dark:!text-bodydark;
 }
 .apexcharts-text {
-  @apply !fill-white ;
+  @apply !fill-white;
 }
 .apexcharts-xcrosshairs {
   @apply !fill-stroke dark:!fill-strokedark;

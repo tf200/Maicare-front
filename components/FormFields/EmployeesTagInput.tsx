@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  InputHTMLAttributes,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, InputHTMLAttributes, useMemo, useState } from "react";
 import FormikTagInput from "@/components/FormFields/FormikTagInput";
 import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -32,9 +27,5 @@ export default EmployeesTagInput;
 
 const EmployeeTag: FunctionComponent<{ id: number }> = ({ id }) => {
   const { data, isLoading } = useEmployeeDetails(id);
-  return (
-    <div>
-      {isLoading ? "Loading..." : data?.first_name + " " + data?.last_name}
-    </div>
-  );
+  return <div>{isLoading ? "Loading..." : data?.first_name + " " + data?.last_name}</div>;
 };

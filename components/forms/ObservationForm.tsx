@@ -1,12 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
@@ -48,16 +43,10 @@ export const ObservationForm: FunctionComponent<PropsType> = ({
 }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetObservation(observationId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetObservation(observationId, clientId);
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateObservation(clientId);
-  const { mutate: update, isLoading: isPatching } =
-    usePatchObservation(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateObservation(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchObservation(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
@@ -89,20 +78,11 @@ export const ObservationForm: FunctionComponent<PropsType> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={feedbackSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <Textarea

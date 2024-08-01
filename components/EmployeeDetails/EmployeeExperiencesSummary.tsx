@@ -11,9 +11,7 @@ type Props = {
   employeeId: number;
 };
 
-const EmployeeExperiencesSummary: FunctionComponent<Props> = ({
-  employeeId,
-}) => {
+const EmployeeExperiencesSummary: FunctionComponent<Props> = ({ employeeId }) => {
   const { data, isLoading } = useListExperiences(employeeId);
   const router = useRouter();
   if (isLoading) return <Loader />;

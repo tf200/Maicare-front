@@ -1,11 +1,5 @@
 import React, { FunctionComponent } from "react";
-import {
-  Navigate,
-  NavigateAction,
-  ToolbarProps,
-  View,
-  Views,
-} from "react-big-calendar";
+import { Navigate, NavigateAction, ToolbarProps, View, Views } from "react-big-calendar";
 import ToolbarButtonsGroup from "@/components/buttons/ToolbarButtonsGroup";
 
 const Toolbar: FunctionComponent<ToolbarProps> = (props) => {
@@ -26,9 +20,7 @@ const Toolbar: FunctionComponent<ToolbarProps> = (props) => {
             value: Navigate.NEXT,
           },
         ]}
-        onOptionClicked={(option) =>
-          props.onNavigate(option.value as NavigateAction)
-        }
+        onOptionClicked={(option) => props.onNavigate(option.value as NavigateAction)}
       />
       {props.label}
       <ToolbarButtonsGroup

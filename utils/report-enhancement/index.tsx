@@ -1,15 +1,9 @@
-import {
-  EnhanceReportReqDto,
-  EnhanceReportResDto,
-} from "@/types/report-enhancement";
+import { EnhanceReportReqDto, EnhanceReportResDto } from "@/types/report-enhancement";
 import api from "@/utils/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 async function enhanceReport(data: EnhanceReportReqDto) {
-  const response = await api.post<EnhanceReportResDto>(
-    "/ai/enhance-report",
-    data
-  );
+  const response = await api.post<EnhanceReportResDto>("/ai/enhance-report", data);
   return response.data;
 }
 

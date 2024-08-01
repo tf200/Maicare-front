@@ -6,10 +6,7 @@ import { ExpResDto } from "@/types/experiences/exp-res.dto";
 import { AxiosResponse } from "axios";
 
 async function updateExperience(data: UpdateExpDto) {
-  const response = await api.patch<ExpResDto>(
-    `employee/experiencesRUD/${data.id}/`,
-    data
-  );
+  const response = await api.patch<ExpResDto>(`employee/experiencesRUD/${data.id}/`, data);
   return response.data;
 }
 
@@ -18,11 +15,7 @@ export const useUpdateExperience = () => {
   return useMutation({
     mutationFn: updateExperience,
     onSuccess: (response) => {
-      queryClient.invalidateQueries([
-        "employees",
-        response.employee,
-        "experiences",
-      ]);
+      queryClient.invalidateQueries(["employees", response.employee, "experiences"]);
     },
   });
 };

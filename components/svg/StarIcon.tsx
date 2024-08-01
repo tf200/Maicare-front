@@ -1,11 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const StarIcon: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 18,
-  color = "gray",
-}) => {
+const StarIcon: FunctionComponent<IconProps> = ({ width = 18, height = 18, color = "gray" }) => {
   return (
     <svg
       style={{ color: color }}

@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 import { CertifListDto } from "@/types/certificates/certif-list.dto";
 
 async function listCertificates(employeeId: number) {
-  const response = await api.get<CertifListDto>(
-    `employee/certifications/${employeeId}/`
-  );
+  const response = await api.get<CertifListDto>(`employee/certifications/${employeeId}/`);
   return response.data;
 }
 

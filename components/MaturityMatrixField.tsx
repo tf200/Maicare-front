@@ -50,9 +50,7 @@ const MaturityMatrixField: FunctionComponent = () => {
                 visible={[false, true]}
                 onDelete={() => {
                   setDomains((ds) => ds.filter((d) => d.id !== domain.id));
-                  helperProps.setValue(
-                    domains.map((d) => d.id).filter((id) => id !== domain.id)
-                  );
+                  helperProps.setValue(domains.map((d) => d.id).filter((id) => id !== domain.id));
                 }}
               />
             </td>
@@ -68,10 +66,7 @@ const MaturityMatrixField: FunctionComponent = () => {
                       open({
                         onSelected: (created: MDomain) => {
                           setDomains([...domains, created]);
-                          helperProps.setValue([
-                            ...domains.map((d) => d.id),
-                            created.id,
-                          ]);
+                          helperProps.setValue([...domains.map((d) => d.id), created.id]);
                         },
                       });
                     }}
@@ -91,9 +86,7 @@ const MaturityMatrixField: FunctionComponent = () => {
 
 export default MaturityMatrixField;
 
-export const MaturityMatrix: FunctionComponent<{ ids: number[] }> = ({
-  ids,
-}) => {
+export const MaturityMatrix: FunctionComponent<{ ids: number[] }> = ({ ids }) => {
   const [domains, setDomains] = React.useState<MDomain[]>([]);
   const queryClient = useQueryClient();
   const { planId } = useParams();
@@ -117,10 +110,7 @@ const MatrixView: FunctionComponent<{
           <th className="border border-stroke">Domein</th>
           {MLevels.map((level, index) => (
             <th
-              className={cn(
-                GRADIENT_COLORS[index],
-                "px-5 py-2 border border-stroke"
-              )}
+              className={cn(GRADIENT_COLORS[index], "px-5 py-2 border border-stroke")}
               key={level}
             >
               {level}
@@ -132,9 +122,7 @@ const MatrixView: FunctionComponent<{
       <tbody>
         {domains.map((domain, index) => (
           <tr key={domain.name}>
-            <td className="w-1/8 align-top border border-stroke p-2">
-              {domain.name}
-            </td>
+            <td className="w-1/8 align-top border border-stroke p-2">{domain.name}</td>
             {domain.levels.map((level) => (
               <td
                 key={level.level}
@@ -152,10 +140,7 @@ const MatrixView: FunctionComponent<{
   );
 };
 
-const DomainFormModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const DomainFormModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const { mutate: create, isLoading: isCreating } = useCreateDomain();
   const formik = useFormik({
     initialValues: {
@@ -176,8 +161,7 @@ const DomainFormModal: FunctionComponent<ModalProps> = ({
       });
     },
   });
-  const { values, touched, handleBlur, errors, handleChange, handleSubmit } =
-    formik;
+  const { values, touched, handleBlur, errors, handleChange, handleSubmit } = formik;
 
   return (
     <FormModal {...props} title={"Domein bewerken"}>
@@ -223,10 +207,7 @@ const selectDomainVSchema = Yup.object({
   domain: Yup.string().required("Domein is verplicht"),
 });
 
-const SelectDomainModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const SelectDomainModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const { data: domains } = useDomains();
   const options = useMemo(() => {
     if (!domains)
@@ -248,27 +229,20 @@ const SelectDomainModal: FunctionComponent<ModalProps> = ({
     ];
   }, [domains]);
 
-  const { handleChange, handleSubmit, handleBlur, values, errors, touched } =
-    useFormik({
-      initialValues: {
-        domain: "",
-      },
-      validationSchema: selectDomainVSchema,
-      onSubmit: (values) => {
-        additionalProps.onSelected(
-          domains?.find((d) => d.id === +values.domain)
-        );
-        props.onClose();
-      },
-    });
+  const { handleChange, handleSubmit, handleBlur, values, errors, touched } = useFormik({
+    initialValues: {
+      domain: "",
+    },
+    validationSchema: selectDomainVSchema,
+    onSubmit: (values) => {
+      additionalProps.onSelected(domains?.find((d) => d.id === +values.domain));
+      props.onClose();
+    },
+  });
 
   const { open: openCreateModal } = useModal(DomainFormModal);
   return (
-    <FormModal
-      {...props}
-      title={"Selecteer domein"}
-      panelClassName={"min-h-100"}
-    >
+    <FormModal {...props} title={"Selecteer domein"} panelClassName={"min-h-100"}>
       <form onSubmit={handleSubmit} className="flex flex-col grow">
         <Select
           className="mb-6"

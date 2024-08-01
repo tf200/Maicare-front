@@ -23,9 +23,7 @@ export function rateType(item: ContractResDto | ContractItem) {
   return rateDict[item.price_frequency];
 }
 
-export function getRateUnit(
-  item: ContractResDto | ContractItem
-): QUnitType | OpUnitType {
+export function getRateUnit(item: ContractResDto | ContractItem): QUnitType | OpUnitType {
   return unitDict[item.price_frequency];
 }
 

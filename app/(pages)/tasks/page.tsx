@@ -157,8 +157,8 @@ const Page: FunctionComponent = (props) => {
         </div>
       }
     >
-    <div className="overflow-x-auto">
-      <DnDCalendar
+      <div className="overflow-x-auto">
+        <DnDCalendar
           localizer={localizer}
           events={events}
           formats={formats}
@@ -175,7 +175,7 @@ const Page: FunctionComponent = (props) => {
             height: "calc(100vh - 250px)",
           }}
           components={{
-            toolbar: Toolbar 
+            toolbar: Toolbar,
           }}
           className="min-w-[700px]"
           eventPropGetter={classNameByAppointmentType}
@@ -183,7 +183,7 @@ const Page: FunctionComponent = (props) => {
           onEventDrop={updateEventTime}
           onEventResize={updateEventTime}
         />
-    </div>
+      </div>
     </Panel>
   );
 };

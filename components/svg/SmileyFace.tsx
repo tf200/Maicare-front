@@ -2,13 +2,7 @@ import React, { FunctionComponent } from "react";
 
 const SmileyFace: FunctionComponent = (props) => {
   return (
-    <svg
-      width="78"
-      height="78"
-      viewBox="0 0 78 78"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect opacity="0.1" width="78" height="78" rx="37" fill="white" />
       <path
         d="M39.6114 16.8999C27.0342 16.8999 16.8984 27.0357 16.8984 39.6129C16.8984 52.1901 27.0342 62.3999 39.6114 62.3999C52.1887 62.3999 62.3984 52.1901 62.3984 39.6129C62.3984 27.0357 52.1887 16.8999 39.6114 16.8999ZM39.6114 59.8105C28.5139 59.8105 19.4879 50.7105 19.4879 39.6129C19.4879 28.5154 28.5139 19.4893 39.6114 19.4893C50.709 19.4893 59.809 28.5154 59.809 39.6129C59.809 50.7105 50.709 59.8105 39.6114 59.8105Z"

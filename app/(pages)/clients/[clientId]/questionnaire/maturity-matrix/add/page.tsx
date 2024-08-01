@@ -39,7 +39,9 @@ export default function AddMaturityMatrixPage({
     validationSchema: Yup.object({
       start_date: Yup.string().required("Startdatum is verplicht"),
       end_date: Yup.string().required("Einddatum is verplicht"),
-      maturity_matrix: Yup.array().min(1, "Selecteer minimaal één domein om aan te werken!").required("Dit veld is verplicht"),
+      maturity_matrix: Yup.array()
+        .min(1, "Selecteer minimaal één domein om aan te werken!")
+        .required("Dit veld is verplicht"),
     }),
     onSubmit: (values) => {
       console.log("values : ", values);

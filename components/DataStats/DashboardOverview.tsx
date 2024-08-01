@@ -42,9 +42,7 @@ const DashboardOverview: React.FC = () => {
       </div>
       {hasPerm(DASHBOARD_VIEW) && (
         <>
-          <h2 className=" font-bold text-slate-800 dark:text-white mb-6">
-            Overzicht van locaties
-          </h2>
+          <h2 className=" font-bold text-slate-800 dark:text-white mb-6">Overzicht van locaties</h2>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
             {locationStats.map((locationStat, i) => (

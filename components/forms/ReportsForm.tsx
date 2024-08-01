@@ -15,11 +15,7 @@ import SmartTextarea from "@/components/FormFields/SmartTextarea";
 import { useClientMedicationRecords } from "@/utils/medication-records";
 import Link from "next/link";
 import dayjs from "dayjs";
-import {
-  DAILY_REPORT_TYPES,
-  DAILY_REPORT_TYPES_OPTIONS,
-  EMOTIONAL_STATE_OPTIONS,
-} from "@/consts";
+import { DAILY_REPORT_TYPES, DAILY_REPORT_TYPES_OPTIONS, EMOTIONAL_STATE_OPTIONS } from "@/consts";
 import Select from "@/components/FormFields/Select";
 
 type FormType = NewReportsReqDto;
@@ -41,9 +37,7 @@ export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
   created: Yup.string().required("Gelieve de datum en tijd op te geven."),
   type: Yup.string().oneOf(DAILY_REPORT_TYPES),
-  emotional_state: Yup.string().required(
-    "Gelieve de emotionele toestand op te geven."
-  ),
+  emotional_state: Yup.string().required("Gelieve de emotionele toestand op te geven."),
 });
 
 type PropsType = {
@@ -61,11 +55,7 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
 }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetReport(reportsId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetReport(reportsId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateReports(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchReport(clientId);
@@ -99,14 +89,12 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues:
-      mode == "edit" ? (data ? data : initialValues) : initialValues,
+    initialValues: mode == "edit" ? (data ? data : initialValues) : initialValues,
     onSubmit: onSubmit,
     validationSchema: diagnosisSchema,
   });
 
-  const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
-    formik;
+  const { values, handleChange, handleBlur, touched, handleSubmit, errors } = formik;
 
   const { data: medicationRecords } = useClientMedicationRecords(clientId, {
     status: "awaiting",
@@ -123,9 +111,8 @@ export const ReportsForm: FunctionComponent<PropsType> = ({
         {medicationRecords?.count > 0 && (
           <div className="p-6.5 bg-meta-6/20">
             <p>
-              Er zijn nog medicatie records die nog niet zijn gerapporteerd.
-              Gelieve eerst de medicatie records te rapporteren voordat u een
-              rapport indient.{" "}
+              Er zijn nog medicatie records die nog niet zijn gerapporteerd. Gelieve eerst de
+              medicatie records te rapporteren voordat u een rapport indient.{" "}
               <Link
                 className="underline text-primary"
                 href={`/clients/${clientId}/medical-record/medications`}

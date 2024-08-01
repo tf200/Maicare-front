@@ -29,10 +29,7 @@ const ClientNetworkTabs: FunctionComponent = () => {
           href: `/clients/${clientId}/client-network/involved-employees`,
         },
       ]}
-      title={
-        `Cliëntennetwerk` +
-        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
-      }
+      title={`Cliëntennetwerk` + (data ? ` voor ${data.first_name} ${data.last_name}` : "")}
     />
   );
 };

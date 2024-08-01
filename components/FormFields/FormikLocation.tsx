@@ -10,8 +10,7 @@ const FormikLocation: FunctionComponent<{
   className?: string;
   required?: boolean;
 }> = ({ className, required }) => {
-  const { values, touched, errors, handleChange, handleBlur } =
-    useFormikContext<ClientFormType>();
+  const { values, touched, errors, handleChange, handleBlur } = useFormikContext<ClientFormType>();
   return (
     <LocationSelect
       id={"location"}
@@ -30,9 +29,7 @@ const FormikLocation: FunctionComponent<{
 
 export default FormikLocation;
 
-export const LocationSelect: FunctionComponent<Omit<SelectProps, "options">> = (
-  props
-) => {
+export const LocationSelect: FunctionComponent<Omit<SelectProps, "options">> = (props) => {
   const locationQuery = useLocations();
   const locationOptions = useMemo<SelectionOption[]>(() => {
     if (locationQuery.data) {

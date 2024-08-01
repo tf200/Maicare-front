@@ -3,10 +3,7 @@ import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
 import ObjectiveForm from "@/components/goals/ObjectiveForm";
 
-const NewObjectiveModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const NewObjectiveModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   return (
     <FormModal {...props} title={"Nieuw Objectief"}>
       <ObjectiveForm

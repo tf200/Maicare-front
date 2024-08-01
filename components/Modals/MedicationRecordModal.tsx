@@ -27,48 +27,39 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-const MedicationRecordModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...reset
-}) => {
+const MedicationRecordModal: FunctionComponent<ModalProps> = ({ additionalProps, ...reset }) => {
   const record: MedicationRecord = additionalProps.record;
   const { mutate: patch, isLoading } = usePatchMedicationRecord(record.id);
   const { data: medication, isLoading: isLoadingMedication } = useGetMedication(
     record?.client_medication_id
   );
-  const { data: client, isLoading: isLoadingClient } = useClientDetails(
-    medication?.client
-  );
-  const { values, handleBlur, handleChange, errors, touched, handleSubmit } =
-    useFormik({
-      initialValues: {
-        status: "",
-        reason: "",
-      },
-      onSubmit: (values) => {
-        patch(
-          {
-            status: values.status as "not_taken" | "taken",
-            reason: values.reason,
+  const { data: client, isLoading: isLoadingClient } = useClientDetails(medication?.client);
+  const { values, handleBlur, handleChange, errors, touched, handleSubmit } = useFormik({
+    initialValues: {
+      status: "",
+      reason: "",
+    },
+    onSubmit: (values) => {
+      patch(
+        {
+          status: values.status as "not_taken" | "taken",
+          reason: values.reason,
+        },
+        {
+          onSuccess: () => {
+            reset.onClose();
           },
-          {
-            onSuccess: () => {
-              reset.onClose();
-            },
-          }
-        );
-      },
-      validationSchema,
-    });
+        }
+      );
+    },
+    validationSchema,
+  });
   return (
     <FormModal {...reset} title="Medicatie record">
       {client && (
         <div className="flex items-center gap-4 mb-6 border border-stroke p-6 bg-white">
           <ProfilePicture profilePicture={client.profile_picture} />
-          <DetailCell
-            label={"Naam"}
-            value={`${client.first_name} ${client.last_name}`}
-          />
+          <DetailCell label={"Naam"} value={`${client.first_name} ${client.last_name}`} />
           <DetailCell
             label={"Geboortedatum"}
             value={

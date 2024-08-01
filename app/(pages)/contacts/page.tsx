@@ -10,9 +10,7 @@ const Page: FunctionComponent = () => {
       <Breadcrumb pageName={"Opdrachtgevers"} />
       <Panel
         title={"Opdrachtgevers"}
-        sideActions={
-          <LinkButton href={"/contacts/new"} text={"Nieuw Opdrachtgever"} />
-        }
+        sideActions={<LinkButton href={"/contacts/new"} text={"Nieuw Opdrachtgever"} />}
       >
         <ContactsList />
       </Panel>

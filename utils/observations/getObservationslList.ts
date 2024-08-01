@@ -18,10 +18,7 @@ async function fetchObservationsList(
   return response.data;
 }
 
-export const useObservationsList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useObservationsList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

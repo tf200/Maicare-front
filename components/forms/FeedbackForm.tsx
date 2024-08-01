@@ -1,12 +1,7 @@
 "use client";
 
 import * as Yup from "yup";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import Button from "@/components/buttons/Button";
@@ -38,18 +33,10 @@ type PropsType = {
   mode: string;
 };
 
-export const FeedbackForm: FunctionComponent<PropsType> = ({
-  clientId,
-  feedbackId,
-  mode,
-}) => {
+export const FeedbackForm: FunctionComponent<PropsType> = ({ clientId, feedbackId, mode }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetFeedback(feedbackId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetFeedback(feedbackId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateFeedback(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchFeedback(clientId);
@@ -84,20 +71,11 @@ export const FeedbackForm: FunctionComponent<PropsType> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={feedbackSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <Textarea

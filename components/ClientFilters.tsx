@@ -3,9 +3,7 @@ import InputField from "@/components/FormFields/InputField";
 import ControlledCheckboxGroup from "@/components/icons/ControlledCheckboxGroup";
 import { SelectionOption } from "@/types/selection-option";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
-import FormikLocation, {
-  LocationSelect,
-} from "@/components/FormFields/FormikLocation";
+import FormikLocation, { LocationSelect } from "@/components/FormFields/FormikLocation";
 import { STATUS_OPTIONS } from "@/consts";
 
 type Props = {

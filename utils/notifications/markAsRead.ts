@@ -2,9 +2,7 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 async function markAsRead(notificationId: number) {
-  const response = await api.post(
-    `/system/notifications/${notificationId}/read`
-  );
+  const response = await api.post(`/system/notifications/${notificationId}/read`);
   return response.data;
 }
 

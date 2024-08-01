@@ -9,19 +9,13 @@ async function getClientContractsList(
   clientId: number,
   params: PaginationParams = DEFAULT_PAGINATION_PARAMS
 ): Promise<ContractsListDto> {
-  const response = await api.get<ContractsListDto>(
-    `/clients/${clientId}/contracts`,
-    {
-      params,
-    }
-  );
+  const response = await api.get<ContractsListDto>(`/clients/${clientId}/contracts`, {
+    params,
+  });
   return response.data;
 }
 
-export const useClientContractsList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useClientContractsList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

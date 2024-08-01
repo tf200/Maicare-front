@@ -10,10 +10,7 @@ import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { PaginationParams } from "@/types/pagination-params";
 
 async function createCarePlan(data: CreateCarePlanReqDto) {
-  const response = await api.post<CarePlanResDto>(
-    "client/careplan_create/",
-    data
-  );
+  const response = await api.post<CarePlanResDto>("client/careplan_create/", data);
   return response.data;
 }
 
@@ -28,12 +25,9 @@ export const useCarePlanCreate = () => {
 };
 
 async function getClientCarePlans(clientId: number, params: PaginationParams) {
-  const response = await api.get<CarePlanListResDto>(
-    `client/careplan_list/${clientId}`,
-    {
-      params,
-    }
-  );
+  const response = await api.get<CarePlanListResDto>(`client/careplan_list/${clientId}`, {
+    params,
+  });
   return response.data;
 }
 
@@ -53,9 +47,7 @@ export const useClientCarePlans = (clientId: number) => {
 };
 
 async function getCarePlan(planId: number) {
-  const response = await api.get<CarePlanResDto>(
-    `client/careplan_rud/${planId}/`
-  );
+  const response = await api.get<CarePlanResDto>(`client/careplan_rud/${planId}/`);
   return response.data;
 }
 
@@ -64,10 +56,7 @@ export const useCarePlan = (planId: number) => {
 };
 
 async function patchCarePlan(planId: number, data: UpdateCarePlanReqDto) {
-  const response = await api.patch<CarePlanResDto>(
-    `client/careplan_rud/${planId}/`,
-    data
-  );
+  const response = await api.patch<CarePlanResDto>(`client/careplan_rud/${planId}/`, data);
   return response.data;
 }
 

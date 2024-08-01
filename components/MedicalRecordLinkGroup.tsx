@@ -19,18 +19,10 @@ const MedicalRecordLinkGroup: FunctionComponent = () => {
           href: `/clients/${clientId}/medical-record/diagnosis`,
           getIsActive: (pathname) => {
             return (
-              pathname.startsWith(
-                `/clients/${clientId}/medical-record/diagnosis`
-              ) ||
-              pathname.startsWith(
-                `/clients/${clientId}/medical-record/medications`
-              ) ||
-              pathname.startsWith(
-                `/clients/${clientId}/medical-record/allergies`
-              ) ||
-              pathname.startsWith(
-                `/clients/${clientId}/medical-record/episodes`
-              )
+              pathname.startsWith(`/clients/${clientId}/medical-record/diagnosis`) ||
+              pathname.startsWith(`/clients/${clientId}/medical-record/medications`) ||
+              pathname.startsWith(`/clients/${clientId}/medical-record/allergies`) ||
+              pathname.startsWith(`/clients/${clientId}/medical-record/episodes`)
             );
           },
         },

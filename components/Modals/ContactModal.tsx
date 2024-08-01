@@ -15,10 +15,7 @@ type AssignClientContactReqDto = {
   sender: ContactResDto["id"];
 };
 
-const patchClientContact = async (
-  clientId: number,
-  data: AssignClientContactReqDto
-) => {
+const patchClientContact = async (clientId: number, data: AssignClientContactReqDto) => {
   const response = await api.patch(`/client/client_update/${clientId}/`, data);
   return response.data;
 };
@@ -26,8 +23,7 @@ const patchClientContact = async (
 const usePatchClientContact = (clientId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: AssignClientContactReqDto) =>
-      patchClientContact(clientId, req),
+    mutationFn: (req: AssignClientContactReqDto) => patchClientContact(clientId, req),
     onSuccess: () => {
       queryClient.invalidateQueries([clientId]);
       queryClient.invalidateQueries(["clients", clientId]);
@@ -43,11 +39,7 @@ const initialValues: AssignmentFormType = {
   selected: null,
 };
 
-const ContactModal: FunctionComponent<ModalProps> = ({
-  open,
-  onClose,
-  additionalProps,
-}) => {
+const ContactModal: FunctionComponent<ModalProps> = ({ open, onClose, additionalProps }) => {
   const { mutate: assign, isLoading } = usePatchClientContact(
     additionalProps.clientId || additionalProps.client
   );
@@ -87,9 +79,7 @@ const ContactModal: FunctionComponent<ModalProps> = ({
             className="flex items-baseline gap-1 font-bold mb-10"
           >
             <InfoIcon className="w-5 h-5 relative bottom-[-0.3rem]" />
-            <div className="text-sm text-gray-400">
-              Wil je een nieuwe opdrachtgever aanmaken?
-            </div>
+            <div className="text-sm text-gray-400">Wil je een nieuwe opdrachtgever aanmaken?</div>
           </button>
           <Button isLoading={isLoading} type="submit" className="mt-auto">
             Voeg toe

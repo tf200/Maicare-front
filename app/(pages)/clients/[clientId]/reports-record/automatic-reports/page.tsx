@@ -4,15 +4,9 @@ import React, { FunctionComponent, useMemo } from "react";
 import Button from "@/components/buttons/Button";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import {
-  useAutomaticReports,
-  useGenerateAutomaticReports,
-} from "@/utils/automatic-reports";
+import { useAutomaticReports, useGenerateAutomaticReports } from "@/utils/automatic-reports";
 import { FormikProvider, useFormik } from "formik";
-import {
-  AutomaticReportFormType,
-  AutomaticReportItem,
-} from "@/types/automatic-reports";
+import { AutomaticReportFormType, AutomaticReportItem } from "@/types/automatic-reports";
 import InputField from "@/components/FormFields/InputField";
 import { useModal } from "@/components/providers/ModalProvider";
 import dayjs from "dayjs";
@@ -51,8 +45,7 @@ const Page: FunctionComponent<{
 export default Page;
 
 const ReportsList: FunctionComponent<{ clientId: number }> = ({ clientId }) => {
-  const { data, isLoading, isFetching, pagination } =
-    useAutomaticReports(clientId);
+  const { data, isLoading, isFetching, pagination } = useAutomaticReports(clientId);
   const columnDef = useMemo<ColumnDef<AutomaticReportItem>[]>(() => {
     return [
       {
@@ -61,8 +54,7 @@ const ReportsList: FunctionComponent<{ clientId: number }> = ({ clientId }) => {
         cell: ({ row: { original } }) => (
           <div>
             <div className="italic text-xs">
-              {dateFormat(original.start_date)} -{" "}
-              {dateFormat(original.end_date)}
+              {dateFormat(original.start_date)} - {dateFormat(original.end_date)}
             </div>
             <div className="text-sm font-bold">{original.title}</div>
             <div className="">{original.content}</div>
@@ -91,8 +83,7 @@ const GenerateAutomaticReportModal: FunctionComponent<ModalProps> = ({
   ...props
 }) => {
   const clientId: number = additionalProps.clientId;
-  const { mutate: generate, isLoading: isCreating } =
-    useGenerateAutomaticReports(clientId);
+  const { mutate: generate, isLoading: isCreating } = useGenerateAutomaticReports(clientId);
   const formik = useFormik<AutomaticReportFormType>({
     initialValues: {
       from: "",

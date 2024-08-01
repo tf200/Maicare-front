@@ -2,10 +2,7 @@
 
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
-import {
-  CreateLocationReqDto,
-  LocationItem,
-} from "@/types/locations/location.dto";
+import { CreateLocationReqDto, LocationItem } from "@/types/locations/location.dto";
 import { ColumnDef } from "@tanstack/react-table";
 import Loader from "@/components/common/Loader";
 import Table from "@/components/Table";
@@ -43,39 +40,32 @@ const validationSchema: yup.ObjectSchema<CreateLocationReqDto> = yup.object({
     .positive("Capaciteit moet positief zijn"),
 });
 
-const LocationFormModal: FunctionComponent<ModalProps> = ({
-  onClose,
-  open,
-  additionalProps,
-}) => {
+const LocationFormModal: FunctionComponent<ModalProps> = ({ onClose, open, additionalProps }) => {
   const { mutate: createLocation, isLoading: isCreating } = useCreateLocation();
-  const { mutate: updateLocation, isLoading: isUpdating } = useUpdateLocation(
-    additionalProps.id
-  );
+  const { mutate: updateLocation, isLoading: isUpdating } = useUpdateLocation(additionalProps.id);
   const { data: initialData } = useLocation(additionalProps.id);
-  const { handleSubmit, values, errors, touched, handleChange, handleBlur } =
-    useFormik({
-      initialValues: initialData ?? initialValues,
-      validationSchema,
-      enableReinitialize: true,
-      onSubmit: (values) => {
-        if (additionalProps.mode === "edit") {
-          updateLocation(values, {
-            onSuccess: () => {
-              onClose();
-              additionalProps?.onSuccess?.();
-            },
-          });
-        } else {
-          createLocation(values, {
-            onSuccess: () => {
-              onClose();
-              additionalProps?.onSuccess?.();
-            },
-          });
-        }
-      },
-    });
+  const { handleSubmit, values, errors, touched, handleChange, handleBlur } = useFormik({
+    initialValues: initialData ?? initialValues,
+    validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      if (additionalProps.mode === "edit") {
+        updateLocation(values, {
+          onSuccess: () => {
+            onClose();
+            additionalProps?.onSuccess?.();
+          },
+        });
+      } else {
+        createLocation(values, {
+          onSuccess: () => {
+            onClose();
+            additionalProps?.onSuccess?.();
+          },
+        });
+      }
+    },
+  });
   return (
     <FormModal open={open} onClose={onClose} title={"Nieuwe locatie"}>
       <form onSubmit={handleSubmit}>

@@ -42,16 +42,10 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
 }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetMeasurement(measurementsId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetMeasurement(measurementsId, clientId);
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateMeasurement(clientId);
-  const { mutate: update, isLoading: isPatching } =
-    usePatchMeasurement(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateMeasurement(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchMeasurement(clientId);
 
   const onSubmit = useCallback(
     (values: FormType, { resetForm }: FormikHelpers<FormType>) => {
@@ -83,20 +77,11 @@ export const MeasurementsForm: FunctionComponent<PropsType> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <InputField

@@ -16,11 +16,9 @@ const InvolvedEmployeesContent: FunctionComponent<{
   });
 
   if (isLoading) return <Loader />;
-  if (isError)
-    return <div>Er is een fout opgetreden bij het ophalen van de gegevens</div>;
+  if (isError) return <div>Er is een fout opgetreden bij het ophalen van de gegevens</div>;
   if (!data) return <div>Geen gegevens opgehaald</div>;
-  if (data.results?.length === 0)
-    return <div>Geen betrokken medewerkers gevonden</div>;
+  if (data.results?.length === 0) return <div>Geen betrokken medewerkers gevonden</div>;
 
   return (
     <ul className="flex flex-col gap-2">
@@ -35,10 +33,7 @@ const InvolvedEmployeesContent: FunctionComponent<{
               label={employee.employee_name}
               value={EMPLOYEE_ASSIGNMENT_RECORD[employee.role]}
             />
-            <DetailCell
-              label={"Startdatum"}
-              value={dateFormat(employee.start_date)}
-            />
+            <DetailCell label={"Startdatum"} value={dateFormat(employee.start_date)} />
           </li>
         );
       })}
@@ -46,9 +41,7 @@ const InvolvedEmployeesContent: FunctionComponent<{
   );
 };
 
-const InvolvedEmployeesSummary: FunctionComponent<{ clientId: number }> = ({
-  clientId,
-}) => {
+const InvolvedEmployeesSummary: FunctionComponent<{ clientId: number }> = ({ clientId }) => {
   return (
     <Panel
       title={"Betrokken medewerkers"}

@@ -33,28 +33,19 @@ const initialValues: CarePlanFormType = {
   attachment_ids_to_delete: [],
 };
 
-const validationSchema: Yup.ObjectSchema<CarePlanFormType> = Yup.object().shape(
-  {
-    description: Yup.mixed(),
-    domain_ids: Yup.array().of(Yup.number()),
-    start_date: Yup.string().required("Dit veld is verplicht"),
-    end_date: Yup.string().required("Dit veld is verplicht"),
-    temporary_file_ids: Yup.array()
-      .of(Yup.string())
-      .required("Dit veld is verplicht"),
-    attachment_ids_to_delete: Yup.array().of(Yup.string()),
-  }
-);
+const validationSchema: Yup.ObjectSchema<CarePlanFormType> = Yup.object().shape({
+  description: Yup.mixed(),
+  domain_ids: Yup.array().of(Yup.number()),
+  start_date: Yup.string().required("Dit veld is verplicht"),
+  end_date: Yup.string().required("Dit veld is verplicht"),
+  temporary_file_ids: Yup.array().of(Yup.string()).required("Dit veld is verplicht"),
+  attachment_ids_to_delete: Yup.array().of(Yup.string()),
+});
 
-function mapFormToCreateDTO(
-  values: CarePlanFormType,
-  clientId: number
-): CreateCarePlanReqDto {
+function mapFormToCreateDTO(values: CarePlanFormType, clientId: number): CreateCarePlanReqDto {
   return {
     client: clientId,
-    description: draftToHtml(
-      convertToRaw(values.description.getCurrentContent())
-    ),
+    description: draftToHtml(convertToRaw(values.description.getCurrentContent())),
     domain_ids: values.domain_ids,
     start_date: values.start_date,
     end_date: values.end_date,
@@ -63,15 +54,10 @@ function mapFormToCreateDTO(
   };
 }
 
-function mapFormToUpdateDTO(
-  values: CarePlanFormType,
-  clientId: number
-): UpdateCarePlanReqDto {
+function mapFormToUpdateDTO(values: CarePlanFormType, clientId: number): UpdateCarePlanReqDto {
   return {
     client: clientId,
-    description: draftToHtml(
-      convertToRaw(values.description.getCurrentContent())
-    ),
+    description: draftToHtml(convertToRaw(values.description.getCurrentContent())),
     start_date: values.start_date,
     end_date: values.end_date,
     temporary_file_ids: values.temporary_file_ids,
@@ -85,9 +71,7 @@ function mapValuesToForm(values: Partial<CarePlanResDto>): CarePlanFormType {
   let editorState = EditorState.createEmpty();
   const contentBlock = htmlToDraft(values.description);
   if (contentBlock) {
-    const contentState = ContentState.createFromBlockArray(
-      contentBlock.contentBlocks
-    );
+    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
     editorState = EditorState.createWithContent(contentState);
   }
   return {
@@ -103,13 +87,10 @@ function mapValuesToForm(values: Partial<CarePlanResDto>): CarePlanFormType {
 const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
   const { mode, initialData, clientId } = props;
   const { mutate: create, isLoading: isCreating } = useCarePlanCreate();
-  const { mutate: update, isLoading: isUpdating } = useCarePlanPatch(
-    initialData?.id
-  );
+  const { mutate: update, isLoading: isUpdating } = useCarePlanPatch(initialData?.id);
   const router = useRouter();
   const formik = useFormik({
-    initialValues:
-      mode === "update" ? mapValuesToForm(initialData) : initialValues,
+    initialValues: mode === "update" ? mapValuesToForm(initialData) : initialValues,
     validationSchema,
     onSubmit: (values) => {
       if (mode === "update") {
@@ -156,11 +137,7 @@ const CarePlanForm: FunctionComponent<CarePlanFormProps> = (props) => {
           />
         </div>
         <MaturityMatrixField />
-        <RichText
-          label={"Beschrijving"}
-          name={"description"}
-          className="mb-6"
-        />
+        <RichText label={"Beschrijving"} name={"description"} className="mb-6" />
         <FilesUploader
           label={"Bestanden"}
           name={"temporary_file_ids"}

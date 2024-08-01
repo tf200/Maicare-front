@@ -36,9 +36,7 @@ const allergySchema: Yup.ObjectSchema<AllergyFormType> = Yup.object().shape({
   severity: Yup.string()
     .oneOf(DIAGNOSIS_SEVERITY_ARRAY, "Selecteer een geldige ernst")
     .required("Geef alstublieft de ernst van de allergie op"),
-  reaction: Yup.string().required(
-    "Geef alstublieft de reactie op de allergie op"
-  ),
+  reaction: Yup.string().required("Geef alstublieft de reactie op de allergie op"),
   notes: Yup.string().required("Geef alstublieft notities voor de allergie op"),
 });
 
@@ -48,27 +46,16 @@ type Props = {
   mode: string;
 };
 
-const AllergyForm: FunctionComponent<Props> = ({
-  clientId,
-  allergieId,
-  mode,
-}) => {
+const AllergyForm: FunctionComponent<Props> = ({ clientId, allergieId, mode }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetAllergie(allergieId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetAllergie(allergieId, clientId);
 
   const { mutate: create, isLoading: isCreating } = useCreateAllergy(clientId);
   const { mutate: update, isLoading: isPatching } = usePatchAllergie(clientId);
 
   const onSubmit = useCallback(
-    (
-      values: AllergyFormType,
-      { resetForm }: FormikHelpers<AllergyFormType>
-    ) => {
+    (values: AllergyFormType, { resetForm }: FormikHelpers<AllergyFormType>) => {
       if (mode === "edit") {
         update(
           {
@@ -105,20 +92,11 @@ const AllergyForm: FunctionComponent<Props> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={allergySchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit} className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <Select

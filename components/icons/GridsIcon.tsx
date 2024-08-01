@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const GridsIcon: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 18,
-}) => {
+const GridsIcon: FunctionComponent<IconProps> = ({ width = 18, height = 18 }) => {
   return (
     <svg
       className="fill-current"

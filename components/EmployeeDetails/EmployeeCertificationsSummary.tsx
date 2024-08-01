@@ -11,9 +11,7 @@ type Props = {
   employeeId: number;
 };
 
-const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
-  employeeId,
-}) => {
+const EmployeeCertificationsSummary: FunctionComponent<Props> = ({ employeeId }) => {
   const { data, isLoading } = useListCertificates(employeeId);
   const router = useRouter();
   if (isLoading) return <Loader />;
@@ -28,11 +26,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
             onClick={() => router.push(`/employees/${employeeId}/certificates`)}
             className="grid grid-cols-3 hover:bg-gray-3 p-4 dark:hover:bg-slate-700 cursor-pointer rounded-xl"
           >
-            <DetailCell
-              ignoreIfEmpty={true}
-              label={"Titel"}
-              value={certificate.name}
-            />
+            <DetailCell ignoreIfEmpty={true} label={"Titel"} value={certificate.name} />
 
             <DetailCell
               ignoreIfEmpty={true}

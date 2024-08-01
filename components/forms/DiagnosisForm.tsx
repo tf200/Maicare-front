@@ -37,12 +37,8 @@ const initialValues: FormType = {
 
 export const diagnosisSchema: Yup.ObjectSchema<FormType> = Yup.object().shape({
   id: Yup.number(),
-  title: Yup.string().required(
-    "Geef alstublieft een samenvatting van de diagnose"
-  ),
-  description: Yup.string().required(
-    "Geef alstublieft de conditie van de patiënt"
-  ),
+  title: Yup.string().required("Geef alstublieft een samenvatting van de diagnose"),
+  description: Yup.string().required("Geef alstublieft de conditie van de patiënt"),
   diagnosis_code: Yup.string()
     .max(10, "Diagnosecode mag niet langer zijn dan 10 tekens")
     .required("Geef alstublieft de diagnosecode"),
@@ -59,23 +55,12 @@ type PropsType = {
   mode: string;
 };
 
-export const DiagnosisForm: FunctionComponent<PropsType> = ({
-  clientId,
-  mode,
-  diagnosisId,
-}) => {
+export const DiagnosisForm: FunctionComponent<PropsType> = ({ clientId, mode, diagnosisId }) => {
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isError,
-  } = useGetDiagnosis(diagnosisId, clientId);
+  const { data, isLoading: isDataLoading, isError } = useGetDiagnosis(diagnosisId, clientId);
 
-  const { mutate: create, isLoading: isCreating } = useCreateDiagnosis(
-    clientId,
-    "mock-clinician"
-  );
+  const { mutate: create, isLoading: isCreating } = useCreateDiagnosis(clientId, "mock-clinician");
 
   const { mutate: update, isLoading: isPatching } = usePatchDiagnosis(clientId);
 
@@ -109,20 +94,11 @@ export const DiagnosisForm: FunctionComponent<PropsType> = ({
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={diagnosisSchema}
     >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        touched,
-        handleSubmit,
-        errors,
-      }) => (
+      {({ values, handleChange, handleBlur, touched, handleSubmit, errors }) => (
         <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <InputField

@@ -11,15 +11,11 @@ interface OrganisationFilterProps {
   filters: EmployeesSearchParams;
 }
 
-const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
-  onFiltersChange,
-  filters,
-}) => {
+const OrganisationFilter: React.FC<OrganisationFilterProps> = ({ onFiltersChange, filters }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const { data, isLoading } = useListRoles();
-  const { data: employeesData, isFetching: isFetchingEmployees } =
-    useEmployeesList(filters);
+  const { data: employeesData, isFetching: isFetchingEmployees } = useEmployeesList(filters);
   if (isLoading) return;
   return !selectedGroup ? (
     <>
@@ -67,13 +63,7 @@ const OrganisationFilter: React.FC<OrganisationFilterProps> = ({
   );
 };
 
-const FolderList = ({
-  folders,
-  isOpen,
-  setSelectedGroup,
-  onFiltersChange,
-  filters,
-}) => {
+const FolderList = ({ folders, isOpen, setSelectedGroup, onFiltersChange, filters }) => {
   if (!isOpen) return null;
   if (!folders) return null;
   return (

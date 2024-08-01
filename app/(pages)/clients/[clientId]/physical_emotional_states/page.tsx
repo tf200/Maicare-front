@@ -39,8 +39,7 @@ const STATE_RECORD = {
 const Page: FunctionComponent<{
   params: { clientId: string };
 }> = ({ params: { clientId } }) => {
-  const { data, pagination, isLoading, isFetching } =
-    useClientStates(+clientId);
+  const { data, pagination, isLoading, isFetching } = useClientStates(+clientId);
   const { mutate: deleteState } = useDeleteClientState();
   const { open: openDeleteConfirmation } = useModal(
     getDangerActionConfirmationModal({
@@ -84,7 +83,7 @@ const Page: FunctionComponent<{
             >
               <PencilSquare className={"w-4.5 h-4.5"} />
             </IconButton>
-            <IconButton 
+            <IconButton
               className="bg-red-500"
               onClick={() => {
                 openDeleteConfirmation({
@@ -94,7 +93,7 @@ const Page: FunctionComponent<{
                 });
               }}
             >
-              <Trash className={"w-5 h-5" } />
+              <Trash className={"w-5 h-5"} />
             </IconButton>
           </div>
         ),
@@ -132,26 +131,14 @@ const Page: FunctionComponent<{
 
 export default Page;
 
-const StateModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
-  const {
-    initialData: clientState,
-    mode = "add",
-  }: FormProps<ClientStateResDto> = additionalProps;
-  const { mutate: create, isLoading: isCreating } = useCreateClientState(
-    additionalProps.clientId
-  );
-  const { mutate: update, isLoading: isUpdating } = useUpdateClientState(
-    clientState?.id
-  );
+const StateModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
+  const { initialData: clientState, mode = "add" }: FormProps<ClientStateResDto> = additionalProps;
+  const { mutate: create, isLoading: isCreating } = useCreateClientState(additionalProps.clientId);
+  const { mutate: update, isLoading: isUpdating } = useUpdateClientState(clientState?.id);
   const formik = useFormik({
     initialValues: {
       type: clientState?.type || "physical",
-      created: clientState?.created
-        ? dayjs(clientState?.created).format("YYYY-MM-DD")
-        : "",
+      created: clientState?.created ? dayjs(clientState?.created).format("YYYY-MM-DD") : "",
       value: clientState?.value || 0,
       content: clientState?.content || "",
     },
@@ -178,15 +165,12 @@ const StateModal: FunctionComponent<ModalProps> = ({
     },
   });
 
-  const { values, setFieldValue, handleBlur, handleChange, handleSubmit } =
-    formik;
+  const { values, setFieldValue, handleBlur, handleChange, handleSubmit } = formik;
 
   return (
     <FormModal
       {...props}
-      title={
-        values.type === "physical" ? "Fysieke toestand" : "Emotionele toestand"
-      }
+      title={values.type === "physical" ? "Fysieke toestand" : "Emotionele toestand"}
     >
       {mode === "add" && (
         <div className="flex justify-end mb-6">
@@ -217,11 +201,7 @@ const StateModal: FunctionComponent<ModalProps> = ({
           />
           <RatingStars
             required={true}
-            label={
-              values.type === "physical"
-                ? "Fysieke toestand"
-                : "Emotionele toestand"
-            }
+            label={values.type === "physical" ? "Fysieke toestand" : "Emotionele toestand"}
             name="value"
             className="mb-4"
           />
@@ -234,9 +214,7 @@ const StateModal: FunctionComponent<ModalProps> = ({
             onBlur={handleBlur}
             required={true}
             placeholder={
-              values.type === "physical"
-                ? "Hoe voel je je vandaag?"
-                : "Wat houdt je bezig?"
+              values.type === "physical" ? "Hoe voel je je vandaag?" : "Wat houdt je bezig?"
             }
             rows={6}
           />

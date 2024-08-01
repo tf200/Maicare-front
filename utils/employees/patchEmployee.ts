@@ -4,10 +4,7 @@ import { EmployeeFormType } from "@/types/employees/employee-form-type";
 import { EmployeeResDto } from "@/types/employees/employee-res.dto";
 
 export async function patchEmployee(data: EmployeeFormType) {
-  const response = await api.patch<EmployeeResDto>(
-    `/employee/employees_RUD/${data.id}/`,
-    data
-  );
+  const response = await api.patch<EmployeeResDto>(`/employee/employees_RUD/${data.id}/`, data);
 
   return response.data;
 }

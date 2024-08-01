@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 import { ClientDetailsResDto } from "@/types/clients/client-details-res-dto";
 
 export const getClientDetails = async (clientId: number) => {
-  const response = await api.get<ClientDetailsResDto>(
-    `client/client_details/${clientId}/`
-  );
+  const response = await api.get<ClientDetailsResDto>(`client/client_details/${clientId}/`);
   return response.data;
 };
 

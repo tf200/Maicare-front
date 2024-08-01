@@ -14,10 +14,7 @@ const fetchDocuments =
     return response.data;
   };
 
-export const useDocumentList = (
-  clientId: string,
-  params?: PaginationParams
-) => {
+export const useDocumentList = (clientId: string, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

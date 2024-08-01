@@ -9,19 +9,13 @@ import { DEFAULT_PAGINATION_PARAMS } from "@/consts";
 const fetchDiagnosis =
   (clientId: number, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
-    const response = await api.get<DiagnosisListResDto>(
-      `client/diagnosis_list/${clientId}/`,
-      {
-        params,
-      }
-    );
+    const response = await api.get<DiagnosisListResDto>(`client/diagnosis_list/${clientId}/`, {
+      params,
+    });
     return response.data;
   };
 
-export const useDiagnosisList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useDiagnosisList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

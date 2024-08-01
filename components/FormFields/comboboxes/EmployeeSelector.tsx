@@ -10,12 +10,7 @@ type Props = {
   required?: boolean;
 };
 
-const EmployeeSelector: FunctionComponent<Props> = ({
-  name,
-  className,
-  label,
-  required,
-}) => {
+const EmployeeSelector: FunctionComponent<Props> = ({ name, className, label, required }) => {
   const [filter, setFilter] = useState<EmployeesSearchParams>({
     search: "",
     out_of_service: false,

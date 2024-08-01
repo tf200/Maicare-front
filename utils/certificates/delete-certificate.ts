@@ -2,9 +2,7 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 async function deleteCertificate(certificateId: number) {
-  const response = await api.delete(
-    `employee/certificationsRUD/${certificateId}/`
-  );
+  const response = await api.delete(`employee/certificationsRUD/${certificateId}/`);
   return response.data;
 }
 

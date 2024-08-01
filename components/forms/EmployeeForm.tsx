@@ -100,26 +100,14 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={
-        mode == "edit" ? (data ? data : initialValues) : initialValues
-      }
+      initialValues={mode == "edit" ? (data ? data : initialValues) : initialValues}
       onSubmit={onSubmit}
       validationSchema={employeeSchema}
     >
-      {({
-        values,
-        handleSubmit,
-        handleChange,
-        errors,
-        touched,
-        handleBlur,
-      }) => {
+      {({ values, handleSubmit, handleChange, errors, touched, handleBlur }) => {
         return (
           <>
-            <form
-              onSubmit={handleSubmit}
-              className="grid grid-cols-1 gap-9 sm:grid-cols-2"
-            >
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-9 sm:grid-cols-2">
               <div className="flex flex-col gap-9">
                 <Panel title={"Identificatie"} containerClassName="px-7 py-4">
                   <InputField
@@ -146,9 +134,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     value={values.employment_number}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      touched.employment_number && errors.employment_number
-                    }
+                    error={touched.employment_number && errors.employment_number}
                   />
                   <FormikLocation />
                   <FormikCheckboxItem
@@ -203,9 +189,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={
-                      touched.date_of_birth &&
-                      errors.date_of_birth &&
-                      errors.date_of_birth + ""
+                      touched.date_of_birth && errors.date_of_birth && errors.date_of_birth + ""
                     }
                   />
 
@@ -222,13 +206,9 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                   disabled={isCreating || isPatching}
                   isLoading={isCreating || isPatching}
                   formNoValidate={true}
-                  loadingText={
-                    mode === "edit" ? "Bijwerken..." : "Toevoegen..."
-                  }
+                  loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
                 >
-                  {mode === "edit"
-                    ? "Werknemer bijwerken"
-                    : "Medewerker Opslaan"}
+                  {mode === "edit" ? "Werknemer bijwerken" : "Medewerker Opslaan"}
                 </Button>
               </div>
               <div className="flex flex-col gap-9">
@@ -254,10 +234,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     value={values.private_email_address}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      touched.private_email_address &&
-                      errors.private_email_address
-                    }
+                    error={touched.private_email_address && errors.private_email_address}
                   />
                   <InputField
                     label={"Authenticatie Telefoonnummer"}
@@ -269,8 +246,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     onBlur={handleBlur}
                     placeholder={"Authenticatie Telefoonnummer"}
                     error={
-                      touched.authentication_phone_number &&
-                      errors.authentication_phone_number
+                      touched.authentication_phone_number && errors.authentication_phone_number
                     }
                   />
                   <InputField
@@ -282,9 +258,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     value={values.work_phone_number}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      touched.work_phone_number && errors.work_phone_number
-                    }
+                    error={touched.work_phone_number && errors.work_phone_number}
                   />
                   <InputField
                     label={"Privé Telefoonnummer"}
@@ -295,10 +269,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     value={values.private_phone_number}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      touched.private_phone_number &&
-                      errors.private_phone_number
-                    }
+                    error={touched.private_phone_number && errors.private_phone_number}
                   />
                   <InputField
                     label={"Huis Telefoonnummer"}
@@ -309,10 +280,7 @@ const EmployeeForm: FunctionComponent<PropsType> = ({ employeeId, mode }) => {
                     value={values.home_telephone_number}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      touched.home_telephone_number &&
-                      errors.home_telephone_number
-                    }
+                    error={touched.home_telephone_number && errors.home_telephone_number}
                   />
                 </Panel>
               </div>

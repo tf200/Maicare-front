@@ -15,11 +15,11 @@ const Notifications: FunctionComponent<Props> = ({ notifications }) => {
       <div className=" flex justify-between items-center px-4 py-2">
         <h5 className="font-medium text-bodydark2">Meldingen</h5>
         <Link
-            href="/notifications"
-            className="flex flex-col px-3 py-1 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-2xl border  "
-          >
-              Bekijk alles
-          </Link>
+          href="/notifications"
+          className="flex flex-col px-3 py-1 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-2xl border  "
+        >
+          Bekijk alles
+        </Link>
       </div>
 
       <ul className="flex h-auto flex-col overflow-y-auto">
@@ -37,9 +37,7 @@ type NotificationItemProps = {
   notification: NotificationItem;
 };
 
-const NotificationItem: FunctionComponent<NotificationItemProps> = ({
-  notification,
-}) => {
+const NotificationItem: FunctionComponent<NotificationItemProps> = ({ notification }) => {
   const { mutate: markAsRead } = useMarkAsRead();
   const { reportMedication } = useMedicalRecordNotif();
   return (
@@ -56,9 +54,7 @@ const NotificationItem: FunctionComponent<NotificationItemProps> = ({
         className="flex flex-col border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
         href="#"
       >
-        <p className="text-sm mb-0 text-black dark:text-white">
-          {notification.title}
-        </p>
+        <p className="text-sm mb-0 text-black dark:text-white">{notification.title}</p>
         <p className="text-sm mb-2.5 max-h-20 overflow-hidden line-clamp-4 text-ellipsis">
           {notification.content}
         </p>

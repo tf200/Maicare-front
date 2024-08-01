@@ -49,7 +49,6 @@
 }
 .datatable-table tbody tr {
   @apply dark:hover:bg-gray-700;
-
 }
 
 .datatable-sorter,

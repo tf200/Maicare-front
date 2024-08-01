@@ -7,19 +7,13 @@ import { useQuery } from "react-query";
 const fetchInvolvedEmployeesList =
   (clientId: number, params: PaginationParams = DEFAULT_PAGINATION_PARAMS) =>
   async () => {
-    const response = await api.get(
-      `employee/clientassignment_list/${clientId}/`,
-      {
-        params,
-      }
-    );
+    const response = await api.get(`employee/clientassignment_list/${clientId}/`, {
+      params,
+    });
     return response.data;
   };
 
-export const useInvolvedEmployeesList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useInvolvedEmployeesList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

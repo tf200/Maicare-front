@@ -11,9 +11,7 @@ type Props = {
   params: { clientId: string; contractId: string };
 };
 
-const Page: FunctionComponent<Props> = ({
-  params: { clientId, contractId },
-}) => {
+const Page: FunctionComponent<Props> = ({ params: { clientId, contractId } }) => {
   const { data: contract, isLoading: isContractLoading } = useContractDetails(
     +clientId,
     +contractId
@@ -31,10 +29,7 @@ const Page: FunctionComponent<Props> = ({
           )
         }
       >
-        <ContractDetails
-          clientId={parseInt(clientId)}
-          contractId={parseInt(contractId)}
-        />
+        <ContractDetails clientId={parseInt(clientId)} contractId={parseInt(contractId)} />
         <WorkingHours contractId={parseInt(contractId)} />
       </Panel>
     </div>

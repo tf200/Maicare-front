@@ -51,9 +51,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({
           setSearchedKey(event.target.value);
           setSelected(null);
           setShowAlert(true);
-          setValue(
-            event.target.value == "" ? defaultValue : event.target.value
-          );
+          setValue(event.target.value == "" ? defaultValue : event.target.value);
         }}
         value={value == defaultValue ? "" : value}
         error={error}

@@ -3,7 +3,16 @@ import IconButton from "./buttons/IconButton";
 import { Download, LoaderCircle, Printer } from "lucide-react";
 import { getQuestionnaireTemplate } from "@/utils/questionnairs/templates/getQuestionnaireTemplate";
 
-export type TemplateType = "risk_assessment" | "collaboration_agreement" | "consent_declaration" | "data_sharing_statement" | "incident_report" | "maturity_matrix" | "client_details" | "goals_and_objectives_content" | "multi_maturity_matrix";
+export type TemplateType =
+  | "risk_assessment"
+  | "collaboration_agreement"
+  | "consent_declaration"
+  | "data_sharing_statement"
+  | "incident_report"
+  | "maturity_matrix"
+  | "client_details"
+  | "goals_and_objectives_content"
+  | "multi_maturity_matrix";
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;
@@ -18,26 +27,27 @@ export default function QuestionnaireDownloadButton({
   const [pdfTemplate, setPdfTemplate] = useState<string | null>();
 
   const handlePrintQuestionnaire = () => {
-    if(pdfTemplate) {
+    if (pdfTemplate) {
       // open in a new tab
-      var link = document.createElement('a');
+      var link = document.createElement("a");
       link.href = pdfTemplate;
-      link.target = '_blank';
+      link.target = "_blank";
       link.download = pdfTemplate;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    }else{
+    } else {
       setIsPrintTemplateLoading(true);
       getQuestionnaireTemplate({ questionnaireId: questId, templateType: type })
-      .then(({ link }) => {
-        setPdfTemplate(link);
-      })
-      .catch((error) => {
-        console.error(error);
-      }).finally(() => {
-        setIsPrintTemplateLoading(false);
-      });
+        .then(({ link }) => {
+          setPdfTemplate(link);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsPrintTemplateLoading(false);
+        });
     }
   };
 

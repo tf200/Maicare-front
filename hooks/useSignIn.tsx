@@ -1,11 +1,7 @@
 import axios from "axios";
 import api from "@/utils/api";
 
-const UseSignIn = async (
-  authData: {},
-  setIsLoading: any,
-  setAlertState: any
-) => {
+const UseSignIn = async (authData: {}, setIsLoading: any, setAlertState: any) => {
   setIsLoading(true);
   setAlertState(["", ""]);
 
@@ -21,10 +17,7 @@ const UseSignIn = async (
     })
     .catch((error) => {
       setIsLoading(false);
-      setAlertState([
-        "No active account found with the given credentials",
-        "red",
-      ]);
+      setAlertState(["No active account found with the given credentials", "red"]);
     });
 };
 

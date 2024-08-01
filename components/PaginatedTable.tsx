@@ -54,14 +54,10 @@ function PaginatedTable<TData>({
       {data.results?.length == 0 && (
         <LargeAlertMessage
           firstLine={"Oops!"}
-          secondLine={
-            alertMessage ? alertMessage : "Sorry, geen resultaten gevonden!"
-          }
+          secondLine={alertMessage ? alertMessage : "Sorry, geen resultaten gevonden!"}
         />
       )}
-      <div className="flex flex-wrap justify-between items-center p-4">
-        {pagination}
-      </div>
+      <div className="flex flex-wrap justify-between items-center p-4">{pagination}</div>
     </>
   );
 }

@@ -1,11 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import {
-  Marker,
-  Popup,
-  TileLayer,
-  MapContainer,
-  useMapEvents,
-} from "react-leaflet";
+import { Marker, Popup, TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
@@ -27,14 +21,8 @@ const icon = L.icon({
 
 const Amsterdam: [number, number] = [52.37161673882133, 4.891405105590821];
 
-const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({
-  clientId,
-}) => {
-  const {
-    data: clientDetails,
-    isLoading,
-    refetch,
-  } = useClientDetails(clientId);
+const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({ clientId }) => {
+  const { data: clientDetails, isLoading, refetch } = useClientDetails(clientId);
   const [position, setPosition] = useState<[number, number]>(undefined);
 
   useEffect(() => {
@@ -62,17 +50,15 @@ const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({
       .then(() => {
         toast.success("Locatie is succesvol bijgewerkt");
         refetch();
-      }).catch((e) => {
+      })
+      .catch((e) => {
         toast.error("Er is een fout opgetreden bij het updaten van de locatie");
       });
-  }
+  };
 
   const center: [number, number] =
     clientDetails?.gps_position.length == 2
-      ? [
-          parseFloat(clientDetails.gps_position[0]),
-          parseFloat(clientDetails.gps_position[1]),
-        ]
+      ? [parseFloat(clientDetails.gps_position[0]), parseFloat(clientDetails.gps_position[1])]
       : Amsterdam;
 
   if (isLoading || !clientDetails) return null;
@@ -93,10 +79,7 @@ const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({
         scrollWheelZoom={true}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MarkerOnPosition
-          position={position}
-          setPosition={setPosition}
-        />
+        <MarkerOnPosition position={position} setPosition={setPosition} />
       </MapContainer>
     </Panel>
   );
