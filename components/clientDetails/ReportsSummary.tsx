@@ -25,9 +25,7 @@ const ReportsSummary: FunctionComponent<Props> = ({ clientId }) => {
   return (
     <ul className="flex flex-col gap-2">
       {data?.map((report, i) => (
-        <>
-          <ReportsItem key={i} reports={report} />
-        </>
+        <ReportsItem key={i} reports={report} />
       ))}
     </ul>
   );
