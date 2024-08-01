@@ -43,29 +43,29 @@ const SignIn: React.FC = () => {
         </p>
       </div>
       <h2 className="text-2xl font-bold text-slate-800  mb-9 dark:text-white sm:text-title-xl2">
-        Sign In to the website
+        Meld u aan op de website
       </h2>
 
       <form onSubmit={formik.handleSubmit}>
         <InputFieldBig
-          label="User Name"
+          label="gebruikersnaam"
           type="text"
           name="username"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.username && formik.errors.username ? formik.errors.username : null}
-          placeholder="Enter your user name"
+          placeholder="Typ je gebruikersnaam"
           icon={<MailIcon />}
         />
 
         <InputFieldBig
-          label="Type Password"
+          label="Typ je wachtwoord"
           type="password"
           name="password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.password && formik.errors.password ? formik.errors.password : null}
-          placeholder="6+ Characters, 1 Capital letter"
+          placeholder="6+ tekens, 1 hoofdletter"
           className="mb-8"
           icon={<LockIcon />}
         />
