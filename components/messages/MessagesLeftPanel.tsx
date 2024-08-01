@@ -3,13 +3,33 @@
 import React, { FunctionComponent, useMemo } from "react";
 import { UserProfile } from "@/types/UserProfile";
 import { getTime } from "@/utils/message-time";
-import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import ProfilePicture from "@/components/ProfilePicture";
 import EmployeesSearch from "@/components/searchDropdown/EmployeesSearch";
 import api from "@/utils/api";
 import { useQuery } from "react-query";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { create } from 'zustand'
+
+
+// define a store
+type Store = {
+  conversations: ConversationItem []
+  currentConversation: ConversationItem | null
+  setCurrentConversation: (employeeId: number) => void
+}
+
+const useChatConversation = create<Store>((set) => ({
+  conversations: [],
+  currentConversation: null,
+  setCurrentConversation: (employeeId) => set((state) => {
+    const conversation = state.conversations.find((conversation) => {
+      return (conversation.involved_details[0]?.id === employeeId) || (conversation.involved_details[1]?.id === employeeId);
+    });
+    return { currentConversation: conversation };
+  }),
+}))
+
 
 type ConversationItem = {
   id: number;
@@ -30,9 +50,22 @@ export function useConversations(employeeId: number) {
 }
 
 const MessagesLeftPanel: FunctionComponent = (props) => {
-  const { data: chatProfiles } = useEmployeesList();
   const { data: user } = useMyInfo();
   const { data: conversations } = useConversations(user?.user);
+  const [currentConversationEmployee, setCurrentConversationEmployee] = React.useState<UserProfile | null>(null);
+
+  const router = useRouter();
+
+  const renderNewConversation = () => {
+    const conversationFromHistory = conversations?.results.find((conversation) => {
+      return (conversation.involved_details[0]?.id === currentConversationEmployee?.id) || (conversation.involved_details[1]?.id === currentConversationEmployee?.id);
+    });
+    if(conversationFromHistory[0]){
+      router.push(`/conversations/${conversationFromHistory[0]?.id}`);
+      return <></>
+    }
+  };
+
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
       <div className="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">
@@ -47,11 +80,12 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
       </div>
       <div className="flex max-h-full flex-col overflow-auto p-5">
         <form className="sticky mb-7">
-          <EmployeesSearch />
+          <EmployeesSearch setNewConversationEmployee={setCurrentConversationEmployee}/>
         </form>
         <div className="no-scrollbar max-h-full space-y-2.5 overflow-auto">
+
           {conversations?.results.map((conversation, item) => {
-            return <ConversationItem key={conversation.id} conversation={conversation} />;
+            return <ConversationItem key={conversation.id} conversation={conversation} setNewConversationEmployee={setCurrentConversationEmployee} isTheCurrentConversation={((conversation.involved_details[0]?.id === currentConversationEmployee?.id) || (conversation.involved_details[1]?.id === currentConversationEmployee?.id))}/>;
           })}
         </div>
       </div>
@@ -63,32 +97,36 @@ export default MessagesLeftPanel;
 
 type ConversationItemProps = {
   conversation: ConversationItem;
+  isTheCurrentConversation?: boolean;
+  setNewConversationEmployee: (employee: UserProfile) => void;
 };
 
-const ConversationItem: FunctionComponent<ConversationItemProps> = ({ conversation }) => {
+const ConversationItem: FunctionComponent<ConversationItemProps> = ({ conversation, isTheCurrentConversation, setNewConversationEmployee }) => {
   const { data: user } = useMyInfo();
-  const otherParticipant = useMemo(
+  const participant = useMemo(
     () => conversation.involved_details?.find((profile) => profile.id !== user?.user),
     [user, conversation]
   );
-  return <ChatProfile conversationId={conversation.id} participant={otherParticipant} />;
-};
 
-type Props = {
-  participant: UserProfile;
-  conversationId: number;
-};
-
-const ChatProfile: FunctionComponent<Props> = ({ participant, conversationId }) => {
+  const conversationId = conversation.id;
   const isOnline = true;
   const lastSeen = "2021-10-10T10:10:10";
-  const lastSentMessage = "Hello, how are you?";
+  const lastSentMessage = "";
+
+  const router = useRouter();
+
+  const handleClick = () => { 
+    setNewConversationEmployee(participant);
+    router.push(`/conversations/${conversationId}`);
+  }
+
   return (
-    <Link
-      href={`/conversations/${conversationId}`}
-      className="flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark"
+    <button
+      onClick={handleClick}
+      className={ "w-full flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark" + (isTheCurrentConversation ? " bg-gray-2 dark:bg-strokedark" : "")}
+      
     >
-      {participant ? (
+      {participant && (
         <>
           <div className="relative mr-3.5 h-11 w-full max-w-11 rounded-full">
             <ProfilePicture
@@ -107,9 +145,8 @@ const ChatProfile: FunctionComponent<Props> = ({ participant, conversationId }) 
             {lastSentMessage && <p className="text-sm">{lastSentMessage}</p>}
           </div>
         </>
-      ) : (
-        <>{/* This should be ignored */}</>
-      )}
-    </Link>
+      ) 
+      }
+    </button>
   );
 };

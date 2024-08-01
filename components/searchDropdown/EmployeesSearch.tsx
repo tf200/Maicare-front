@@ -2,19 +2,26 @@ import React, { FunctionComponent } from "react";
 import SearchDropdown from "@/components/searchDropdown/SearchDropdown";
 import { useSearchEmployeeOptions } from "@/hooks/useSearchEmployeeOptions";
 import { useRouter } from "next/navigation";
-import { EmployeeResDto } from "@/types/employees/employee-res.dto";
+import { useMyInfo } from "@/utils/user-info/getUserInfo";
+import { UserProfile } from "@/types/UserProfile";
 
-const EmployeesSearch: FunctionComponent = (props) => {
+type EmployeesSearchProps = {
+  setNewConversationEmployee: ( employee: UserProfile ) => void;
+};
+
+function EmployeesSearch ({ setNewConversationEmployee }: EmployeesSearchProps) {
   const { setSearchQuery, options, searchQuery } = useSearchEmployeeOptions();
+  const { data: user } = useMyInfo();
   const router = useRouter();
   return (
     <SearchDropdown
-      options={options}
+      options={options?.filter((option) => option?.value?.id !== user?.id)}
       placeholder={"Zoeken..."}
       handleQueryChange={(e) => {
         setSearchQuery(e.target.value);
       }}
       onSelectItem={(value) => {
+        setNewConversationEmployee(value);
         router.push(`/conversations/new/${value.user}`);
       }}
     />

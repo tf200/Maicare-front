@@ -182,8 +182,8 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
               <div className="p-5 bg-c_red text-white font-bold rounded-lg mb-5">
                 Zorg ervoor dat u de rest van de documenttypen uploadt:
                 <ul>
-                  {NOT_UPLOADED_DOCUMENTS.map((doc) => (
-                    <li>- {doc.label}</li>
+                  {NOT_UPLOADED_DOCUMENTS.map((doc, index) => (
+                    <li key={index}>- {doc.label}</li>
                   ))}
                 </ul>
               </div>
