@@ -82,7 +82,8 @@ type Props = {
 const ChatProfile: FunctionComponent<Props> = ({ participant, conversationId }) => {
   const isOnline = true;
   const lastSeen = "2021-10-10T10:10:10";
-  const lastSentMessage = "Hello, how are you?";
+  const lastSentMessage = "";
+  console.log("participant: ",participant);
   return (
     <Link
       href={`/conversations/${conversationId}`}
