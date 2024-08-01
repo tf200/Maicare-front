@@ -3,8 +3,13 @@ import SearchDropdown from "@/components/searchDropdown/SearchDropdown";
 import { useSearchEmployeeOptions } from "@/hooks/useSearchEmployeeOptions";
 import { useRouter } from "next/navigation";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
+import { UserProfile } from "@/types/UserProfile";
 
-const EmployeesSearch: FunctionComponent = (props) => {
+type EmployeesSearchProps = {
+  setNewConversationEmployee: ( employee: UserProfile ) => void;
+};
+
+function EmployeesSearch ({ setNewConversationEmployee }: EmployeesSearchProps) {
   const { setSearchQuery, options, searchQuery } = useSearchEmployeeOptions();
   const { data: user } = useMyInfo();
   const router = useRouter();
@@ -16,6 +21,7 @@ const EmployeesSearch: FunctionComponent = (props) => {
         setSearchQuery(e.target.value);
       }}
       onSelectItem={(value) => {
+        setNewConversationEmployee(value);
         router.push(`/conversations/new/${value.user}`);
       }}
     />
