@@ -1,11 +1,6 @@
 "use client";
 
-import React, {
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { useModal } from "@/components/providers/ModalProvider";
 import ClientSelectModal from "@/components/Modals/ClientSelectModal";
 import { useRouter } from "next/navigation";
@@ -17,10 +12,7 @@ import { dateFormat } from "@/utils/timeFormatting";
 import LinkButton from "@/components/buttons/LinkButton";
 import { useClientCarePlans } from "@/utils/care-plans";
 import Link from "next/link";
-import {
-  CARE_PLAN_STATUS_TRANSLATION,
-  CARE_PLAN_STATUS_VARIANT,
-} from "@/consts";
+import { CARE_PLAN_STATUS_TRANSLATION, CARE_PLAN_STATUS_VARIANT } from "@/consts";
 import StatusBadge from "@/components/StatusBadge";
 import { FormikProvider, useFormik } from "formik";
 import ClientSelector from "@/components/FormFields/comboboxes/ClientSelector";
@@ -68,9 +60,7 @@ const Page: FunctionComponent = (props) => {
         cell: (ctx) => {
           return (
             <StatusBadge
-              type={
-                CARE_PLAN_STATUS_VARIANT[ctx.row.original.status] || "Outline"
-              }
+              type={CARE_PLAN_STATUS_VARIANT[ctx.row.original.status] || "Outline"}
               text={CARE_PLAN_STATUS_TRANSLATION[ctx.row.original.status]}
             />
           );
@@ -89,9 +79,7 @@ const Page: FunctionComponent = (props) => {
       }
     >
       {!selectedClient && (
-        <h2 className="mb-6 pl-4 pt-4">
-          Selecteer een cliënt om een zorgplan te zoeken
-        </h2>
+        <h2 className="mb-6 pl-4 pt-4">Selecteer een cliënt om een zorgplan te zoeken</h2>
       )}
       {data && (
         <PaginatedTable

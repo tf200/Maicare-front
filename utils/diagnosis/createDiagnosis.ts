@@ -10,10 +10,7 @@ export async function createDiagnosis(data: NewDiagnosisReqDto) {
   return response.data;
 }
 
-export const useCreateDiagnosis = (
-  client: number,
-  diagnosing_clinician: string
-) => {
+export const useCreateDiagnosis = (client: number, diagnosing_clinician: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: DiagnosisFormType) => {

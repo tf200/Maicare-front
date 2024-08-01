@@ -5,10 +5,7 @@ import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import Button from "@/components/buttons/Button";
 
-const DomainLevelsModal: FunctionComponent<ModalProps> = ({
-  open,
-  onClose,
-}) => {
+const DomainLevelsModal: FunctionComponent<ModalProps> = ({ open, onClose }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -23,8 +20,7 @@ const DomainLevelsModal: FunctionComponent<ModalProps> = ({
       console.log(value);
     },
   });
-  const { handleSubmit, handleChange, values, handleBlur, touched, errors } =
-    formik;
+  const { handleSubmit, handleChange, values, handleBlur, touched, errors } = formik;
   return (
     <FormModal open={open} onClose={onClose} title={"Add domain"}>
       <FormikProvider value={formik}>

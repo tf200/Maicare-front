@@ -1,17 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const SmileyFaceIcon: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 18,
-}) => {
+const SmileyFaceIcon: FunctionComponent<IconProps> = ({ width = 18, height = 18 }) => {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 18 18"
-      className="fill-current"
-    >
+    <svg width={width} height={height} viewBox="0 0 18 18" className="fill-current">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

@@ -13,10 +13,7 @@ const fetchEmergencyContacts =
     return response.data;
   };
 
-export const useEmergencyContactList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useEmergencyContactList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

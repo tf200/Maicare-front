@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const BellIcon: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 18,
-}) => {
+const BellIcon: FunctionComponent<IconProps> = ({ width = 18, height = 18 }) => {
   return (
     <svg
       className="fill-current duration-300 ease-in-out"

@@ -5,12 +5,9 @@ import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { PaginationParams } from "@/types/pagination-params";
 
 async function getNotifications(params: PaginationParams) {
-  const notifications = await api.get<NotificationsListDto>(
-    "/system/notifications",
-    {
-      params,
-    }
-  );
+  const notifications = await api.get<NotificationsListDto>("/system/notifications", {
+    params,
+  });
   return notifications.data;
 }
 
@@ -32,14 +29,11 @@ export const useNotifications = () => {
 };
 
 async function getLatestNotifications() {
-  const notifications = await api.get<NotificationsListDto>(
-    "/system/notifications",
-    {
-      params: {
-        page: 1, // TODO: remove this
-      },
-    }
-  );
+  const notifications = await api.get<NotificationsListDto>("/system/notifications", {
+    params: {
+      page: 1, // TODO: remove this
+    },
+  });
   return notifications.data;
 }
 

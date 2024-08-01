@@ -35,9 +35,8 @@ async function getExpenses(params?: PaginationParams & ExpensesSearchParams) {
 
 export const useGetExpenses = (filters?: ExpensesSearchParams) => {
   const pagination = usePaginationParams();
-  const query = useQuery(
-    ["expenses", { ...pagination.params, ...filters }],
-    () => getExpenses({ ...pagination.params, ...filters })
+  const query = useQuery(["expenses", { ...pagination.params, ...filters }], () =>
+    getExpenses({ ...pagination.params, ...filters })
   );
   return {
     ...query,
@@ -68,21 +67,15 @@ export const useGetExpense = (id: number) => {
 };
 
 async function updateExpense(id: number, data: PatchExpenseReqDto) {
-  const response = await api.patch<ExpenseResDto>(
-    `/system/expenses/${id}/update`,
-    data
-  );
+  const response = await api.patch<ExpenseResDto>(`/system/expenses/${id}/update`, data);
   return response.data;
 }
 
 export const useUpdateExpense = (expenseId: number) => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (data: PatchExpenseReqDto) => updateExpense(expenseId, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("expenses");
-      },
-    }
-  );
+  return useMutation((data: PatchExpenseReqDto) => updateExpense(expenseId, data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("expenses");
+    },
+  });
 };

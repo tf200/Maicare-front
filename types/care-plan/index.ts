@@ -1,13 +1,7 @@
 import { EditorState } from "draft-js";
 import { AttachmentItem } from "@/types/appointments/appointment-res-dto";
 
-export const CARE_PLAN_STATUS = [
-  "draft",
-  "accepted",
-  "active",
-  "suspended",
-  "completed",
-] as const;
+export const CARE_PLAN_STATUS = ["draft", "accepted", "active", "suspended", "completed"] as const;
 
 export type CarePlanStatus = (typeof CARE_PLAN_STATUS)[number];
 

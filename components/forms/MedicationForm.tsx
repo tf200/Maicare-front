@@ -1,11 +1,6 @@
 "use client";
 
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useCreateMedication } from "@/utils/medications/createMedication";
 import { MedicationFormType } from "@/types/medications/medication-form-type";
 import * as Yup from "yup";
@@ -38,18 +33,17 @@ const initialValues: MedicationFormType = {
   is_critical: false,
 };
 
-const medicationSchema: Yup.ObjectSchema<MedicationFormType> =
-  Yup.object().shape({
-    name: Yup.string().required("Geef alstublieft de medicatienaam op"),
-    dosage: Yup.string().required("Geef alstublieft de dosering op"),
-    start_date: Yup.string().required("Geef alstublieft de startdatum op"),
-    end_date: Yup.string().required("Geef alstublieft de einddatum op"),
-    slots: Yup.array().min(1, "Selecteer alstublieft minstens één dag"),
-    notes: Yup.string().required("Geef alstublieft notities op"),
-    administered_by: Yup.mixed(),
-    self_administered: Yup.boolean(),
-    is_critical: Yup.boolean(),
-  });
+const medicationSchema: Yup.ObjectSchema<MedicationFormType> = Yup.object().shape({
+  name: Yup.string().required("Geef alstublieft de medicatienaam op"),
+  dosage: Yup.string().required("Geef alstublieft de dosering op"),
+  start_date: Yup.string().required("Geef alstublieft de startdatum op"),
+  end_date: Yup.string().required("Geef alstublieft de einddatum op"),
+  slots: Yup.array().min(1, "Selecteer alstublieft minstens één dag"),
+  notes: Yup.string().required("Geef alstublieft notities op"),
+  administered_by: Yup.mixed(),
+  self_administered: Yup.boolean(),
+  is_critical: Yup.boolean(),
+});
 
 type Props = {
   clientId: number;
@@ -57,30 +51,20 @@ type Props = {
   medicationId?: number;
 };
 
-const MedicationForm: FunctionComponent<Props> = ({
-  clientId,
-  medicationId,
-  mode,
-}) => {
+const MedicationForm: FunctionComponent<Props> = ({ clientId, medicationId, mode }) => {
   const router = useRouter();
 
-  const { data, isLoading: isDataLoading } = useGetMedication(
-    medicationId,
-    clientId
-  );
+  const { data, isLoading: isDataLoading } = useGetMedication(medicationId, clientId);
 
-  const { mutate: create, isLoading: isCreating } =
-    useCreateMedication(clientId);
+  const { mutate: create, isLoading: isCreating } = useCreateMedication(clientId);
 
-  const { mutate: update, isLoading: isPatching } =
-    usePatchMedication(clientId);
+  const { mutate: update, isLoading: isPatching } = usePatchMedication(clientId);
 
+  const [administredByEveryone, setAdministredByEveryone] = useState(true);
 
-  const [administredByEveryone, setAdministredByEveryone] = useState(true)
-
-    const onSubmit = useCallback((values, { resetForm }) => {
-      if (administredByEveryone)
-        values.administered_by = null
+  const onSubmit = useCallback(
+    (values, { resetForm }) => {
+      if (administredByEveryone) values.administered_by = null;
 
       if (mode === "edit") {
         update(
@@ -112,21 +96,12 @@ const MedicationForm: FunctionComponent<Props> = ({
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues:
-      mode == "edit" ? (data ? data : initialValues) : initialValues,
+    initialValues: mode == "edit" ? (data ? data : initialValues) : initialValues,
     validationSchema: medicationSchema,
     onSubmit,
   });
 
-  const {
-    values,
-    handleChange,
-    setValues,
-    handleBlur,
-    touched,
-    handleSubmit,
-    errors,
-  } = formik;
+  const { values, handleChange, setValues, handleBlur, touched, handleSubmit, errors } = formik;
 
   useEffect(() => {
     if (!values.start_date || !values.end_date) {
@@ -136,20 +111,15 @@ const MedicationForm: FunctionComponent<Props> = ({
       return {
         ...prev,
         slots: prev.slots.filter((slot) =>
-          dayjs(slot.date).isBetween(
-            values.start_date,
-            values.end_date,
-            "day",
-            "[]"
-          )
+          dayjs(slot.date).isBetween(values.start_date, values.end_date, "day", "[]")
         ),
       };
     });
   }, [values.start_date, values.end_date]);
 
   useEffect(() => {
-    setAdministredByEveryone(!formik.values.administered_by)
-  }, [formik.values.administered_by])
+    setAdministredByEveryone(!formik.values.administered_by);
+  }, [formik.values.administered_by]);
 
   return (
     <FormikProvider value={formik}>
@@ -191,11 +161,7 @@ const MedicationForm: FunctionComponent<Props> = ({
               onBlur={handleBlur}
               min={dayjs().format("YYYY-MM-DD")}
               max={values.end_date}
-              error={
-                touched.start_date &&
-                errors.start_date &&
-                errors.start_date + ""
-              }
+              error={touched.start_date && errors.start_date && errors.start_date + ""}
             />
             <InputField
               className={"w-full xl:w-1/2"}
@@ -207,9 +173,7 @@ const MedicationForm: FunctionComponent<Props> = ({
               value={(values.end_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={
-                touched.end_date && errors.end_date && errors.end_date + ""
-              }
+              error={touched.end_date && errors.end_date && errors.end_date + ""}
             />
           </div>
           {values.start_date && values.end_date && (
@@ -222,10 +186,10 @@ const MedicationForm: FunctionComponent<Props> = ({
               error={touched.slots && errors.slots}
             />
           )}
-          
+
           <CheckBoxInputFieldThin
             className={"mb-6"}
-            label={"Beheerd door iedereen (met de toestemming \"medische meldingen ontvangen\".)"}
+            label={'Beheerd door iedereen (met de toestemming "medische meldingen ontvangen".)'}
             onChange={(e) => setAdministredByEveryone(e.target.checked)}
             checked={administredByEveryone}
           />

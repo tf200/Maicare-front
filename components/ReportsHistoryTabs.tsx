@@ -36,10 +36,7 @@ const ReportsHistoryTabs: FunctionComponent = () => {
           href: `/clients/${clientId}/reports-record/observations`,
         },
       ]}
-      title={
-        `Rapportagegeschiedenis` +
-        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
-      }
+      title={`Rapportagegeschiedenis` + (data ? ` voor ${data.first_name} ${data.last_name}` : "")}
     />
   );
 };

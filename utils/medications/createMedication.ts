@@ -3,13 +3,8 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 import { MedicationsResDto } from "@/types/medications/medications-res-dto";
 
-async function createMedication(
-  data: NewMedicationReqDto
-): Promise<MedicationsResDto> {
-  const response = await api.post<MedicationsResDto>(
-    "client/medication_create/",
-    data
-  );
+async function createMedication(data: NewMedicationReqDto): Promise<MedicationsResDto> {
+  const response = await api.post<MedicationsResDto>("client/medication_create/", data);
   return response.data;
 }
 

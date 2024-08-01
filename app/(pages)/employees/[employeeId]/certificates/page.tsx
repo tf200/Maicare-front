@@ -12,9 +12,7 @@ type Props = {
   };
 };
 
-const CertificatesPage: FunctionComponent<Props> = ({
-  params: { employeeId },
-}) => {
+const CertificatesPage: FunctionComponent<Props> = ({ params: { employeeId } }) => {
   const query = useListCertificates(+employeeId);
   return (
     <EmployeeBackground

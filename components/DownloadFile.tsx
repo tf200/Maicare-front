@@ -19,10 +19,7 @@ const DownloadFile: FunctionComponent<{
       <div className="font-bold">{file.name}</div>
       {file.tag && (
         <div className="flex">
-          <StatusBadge
-            text={AGREEMENT_FILES_TAGS_RECORD[file.tag]}
-            type={"Info"}
-          />
+          <StatusBadge text={AGREEMENT_FILES_TAGS_RECORD[file.tag]} type={"Info"} />
         </div>
       )}
     </Link>

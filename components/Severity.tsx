@@ -20,9 +20,7 @@ const labelsRacord: Record<DiagnosisSeverity, string> = {
 };
 
 const Severity: FunctionComponent<Props> = ({ severity }) => {
-  return (
-    <StatusBadge text={labelsRacord[severity]} type={mappingRecord[severity]} />
-  );
+  return <StatusBadge text={labelsRacord[severity]} type={mappingRecord[severity]} />;
 };
 
 export default Severity;

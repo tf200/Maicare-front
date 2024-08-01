@@ -9,18 +9,11 @@ import { useParams } from "next/navigation";
 
 const EditContract: FunctionComponent = () => {
   const { clientId, contractId } = useParams();
-  const { data } = useContractDetails(
-    parseInt(clientId as string),
-    parseInt(contractId as string)
-  );
+  const { data } = useContractDetails(parseInt(clientId as string), parseInt(contractId as string));
   return (
     <>
       <Breadcrumb pageName="Contract Bewerken" />
-      <Panel
-        title={"Bewerk zijn contract"}
-        containerClassName="px-7 py-4"
-        className="col-span-2"
-      >
+      <Panel title={"Bewerk zijn contract"} containerClassName="px-7 py-4" className="col-span-2">
         {data && (
           <ContractForm
             mode="update"

@@ -1,11 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 
-const GroupIcon: FunctionComponent<IconProps> = ({
-  width = 24,
-  height = 24,
-  className,
-}) => {
+const GroupIcon: FunctionComponent<IconProps> = ({ width = 24, height = 24, className }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

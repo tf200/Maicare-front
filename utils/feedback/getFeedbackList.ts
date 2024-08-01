@@ -9,19 +9,13 @@ async function getFeedbackList(
   clientId: number,
   params: PaginationParams = DEFAULT_PAGINATION_PARAMS
 ) {
-  const res = await api.get<FeedbackListResDto>(
-    `employee/feedback_list/${clientId}`,
-    {
-      params,
-    }
-  );
+  const res = await api.get<FeedbackListResDto>(`employee/feedback_list/${clientId}`, {
+    params,
+  });
   return res.data;
 }
 
-export const useFeedbackList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useFeedbackList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

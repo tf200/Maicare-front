@@ -30,24 +30,17 @@ async function patchClientProfilePicture(
 ) {
   const profilePicture = new FormData();
   profilePicture.append("profile_picture", profile_picture);
-  const response = await api.patch(
-    `/client/client_update/${clientId}/`,
-    profilePicture,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
-      },
-    }
-  );
+  const response = await api.patch(`/client/client_update/${clientId}/`, profilePicture, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
 
   return response.data;
 }
 
-export const usePatchClientProfilePicture = (
-  clientId: number,
-  onSuccess?: () => void
-) => {
+export const usePatchClientProfilePicture = (clientId: number, onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({

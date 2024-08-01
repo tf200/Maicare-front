@@ -22,10 +22,7 @@ const ClientStatusHistory: FunctionComponent<{
   return (
     <div>
       {show.map((status) => (
-        <div
-          key={status.id}
-          className="flex justify-between py-3 px-7 border-b border-stroke"
-        >
+        <div key={status.id} className="flex justify-between py-3 px-7 border-b border-stroke">
           <p className="text-sm">{STATUS_RECORD[status.status]}</p>
           <p className="text-sm">
             <strong>{dateFormat(status.start_date)}</strong>

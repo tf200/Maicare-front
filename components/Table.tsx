@@ -48,7 +48,7 @@ function Table<T>({
                 width={36}
                 height={36}
                 className={clsx({
-                  "rotate-[-90deg]": row.getIsExpanded()
+                  "rotate-[-90deg]": row.getIsExpanded(),
                 })}
               />
             </div>
@@ -74,10 +74,10 @@ function Table<T>({
   return (
     <div className="w-full overflow-x-auto">
       <table
-      className={clsx(
-        "w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8 yyyyyyy",
-        className
-      )}
+        className={clsx(
+          "w-full px-4 overflow-hidden break-words border-collapse table-auto datatable-table datatable-one md:overflow-auto md:table-fixed md:px-8 yyyyyyy",
+          className
+        )}
       >
         <thead className="px-4 border-separate">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -98,17 +98,12 @@ function Table<T>({
                         {...{
                           className:
                             "flex items-center relative " +
-                            (header.column.getCanSort()
-                              ? "cursor-pointer select-none"
-                              : ""),
+                            (header.column.getCanSort() ? "cursor-pointer select-none" : ""),
                           onClick: header.column.getToggleSortingHandler(),
                         }}
                       >
                         <div className="w-full">
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          {flexRender(header.column.columnDef.header, header.getContext())}
                         </div>
                         <div className="absolute top-0 right-0 w-6 ml-auto">
                           {{
@@ -157,10 +152,7 @@ function Table<T>({
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     );
                   })}

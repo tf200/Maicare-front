@@ -128,12 +128,7 @@ const NewGroupModal: FC<ModalProps> = ({ additionalProps, ...props }) => {
           props.onClose();
         }}
       >
-        <InputField
-          required={true}
-          label={"Naam"}
-          name={"name"}
-          placeholder={"Naam"}
-        />
+        <InputField required={true} label={"Naam"} name={"name"} placeholder={"Naam"} />
 
         <div className="flex gap-4 mt-6 justify-center">
           <Button buttonType={"Outline"} onClick={props.onClose}>

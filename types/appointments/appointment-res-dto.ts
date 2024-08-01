@@ -9,10 +9,7 @@ export type AttachmentItem = {
   tag?: string;
 };
 
-export type AppointmentResDto = Omit<
-  NewAppointmentReqDto,
-  "temporary_file_ids"
-> & {
+export type AppointmentResDto = Omit<NewAppointmentReqDto, "temporary_file_ids"> & {
   id: number;
   attachments: AttachmentItem[];
 };

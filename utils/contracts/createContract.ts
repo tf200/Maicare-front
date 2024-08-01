@@ -4,10 +4,7 @@ import { ContractResDto } from "@/types/contracts/contract-res.dto";
 import { useMutation, useQueryClient } from "react-query";
 
 async function createContract(data: NewContractReqDto) {
-  const response = await api.post<ContractResDto>(
-    "clients/contracts/add",
-    data
-  );
+  const response = await api.post<ContractResDto>("clients/contracts/add", data);
   return response.data;
 }
 

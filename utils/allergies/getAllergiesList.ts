@@ -5,12 +5,9 @@ import { PaginationParams } from "@/types/pagination-params";
 import { usePaginationParams } from "@/hooks/usePaginationParams";
 
 async function getAllergiesList(clientId: number, params: PaginationParams) {
-  const response = await api.get<AllergiesListResDto>(
-    `client/allergy_list/${clientId}`,
-    {
-      params,
-    }
-  );
+  const response = await api.get<AllergiesListResDto>(`client/allergy_list/${clientId}`, {
+    params,
+  });
   return response.data;
 }
 
@@ -19,10 +16,7 @@ async function getAllergiesList(clientId: number, params: PaginationParams) {
  * @param clientId
  * @param params Override pagination params
  */
-export const useAllergiesList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useAllergiesList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

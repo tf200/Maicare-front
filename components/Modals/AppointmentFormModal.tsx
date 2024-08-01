@@ -1,9 +1,7 @@
 import React, { FunctionComponent, PropsWithChildren, useMemo } from "react";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import AppointmentForm, {
-  AppointmentFormProps,
-} from "@/components/forms/AppointmentForm";
+import AppointmentForm, { AppointmentFormProps } from "@/components/forms/AppointmentForm";
 import { useAppointmentDetails } from "@/utils/appointments/getAppointmentDetails";
 
 type Props = ModalProps & {
@@ -34,16 +32,10 @@ const AppointmentFormModal: FunctionComponent<PropsWithChildren<Props>> = ({
   }, [data]);
   return (
     <FormModal
-      title={
-        additionalProps?.mode === "edit"
-          ? "Afspraak bewerken"
-          : "Maak een nieuwe afspraak"
-      }
+      title={additionalProps?.mode === "edit" ? "Afspraak bewerken" : "Maak een nieuwe afspraak"}
       {...props}
     >
-      {(additionalProps?.mode === "create" || canUpdate) && (
-        <AppointmentForm {...formProps} />
-      )}
+      {(additionalProps?.mode === "create" || canUpdate) && <AppointmentForm {...formProps} />}
     </FormModal>
   );
 };

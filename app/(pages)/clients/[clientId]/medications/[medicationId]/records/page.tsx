@@ -35,9 +35,7 @@ const STATUS_TYPE_MAPPING: Record<MedicationRecord["status"], BadgeType> = {
   taken: "Success",
 };
 
-const Page: FunctionComponent<Props> = ({
-  params: { clientId, medicationId },
-}) => {
+const Page: FunctionComponent<Props> = ({ params: { clientId, medicationId } }) => {
   const { data, pagination, isFetching } = useMedicationRecords(+medicationId);
   const columns = useMemo<ColumnDef<MedicationRecord>[]>(() => {
     return [
@@ -106,10 +104,7 @@ const MedicationDetails: FunctionComponent<{
         <div className="flex gap-4 p-5">
           <DetailCell label={"Naam"} value={data.name} />
           <DetailCell label={"Dosering"} value={data.dosage} />
-          <DetailCell
-            label={"Startdatum"}
-            value={dateFormat(data.start_date)}
-          />
+          <DetailCell label={"Startdatum"} value={dateFormat(data.start_date)} />
           <DetailCell label={"Einddatum"} value={dateFormat(data.end_date)} />
         </div>
       )}

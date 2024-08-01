@@ -6,9 +6,7 @@ type PropsType = {
   params: { clientId: string };
 };
 
-const UpdateClients: FunctionComponent<PropsType> = ({
-  params: { clientId },
-}) => {
+const UpdateClients: FunctionComponent<PropsType> = ({ params: { clientId } }) => {
   return (
     <>
       <Breadcrumb pageName="Cliënt Bijwerken" />

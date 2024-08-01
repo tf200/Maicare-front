@@ -9,9 +9,7 @@ type Props = {
   };
 };
 
-const EmployeeDetailsPage: FunctionComponent<Props> = ({
-  params: { employeeId },
-}) => {
+const EmployeeDetailsPage: FunctionComponent<Props> = ({ params: { employeeId } }) => {
   return (
     <>
       <Breadcrumb pageName="Medewerkerdetails" />

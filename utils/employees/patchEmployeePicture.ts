@@ -21,8 +21,7 @@ const patchEmployeePic = async (employeeId: number, profilePicture: string) => {
 export const usePatchEmployeePic = (employeeId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (profilePicture: string) =>
-      patchEmployeePic(employeeId, profilePicture),
+    mutationFn: (profilePicture: string) => patchEmployeePic(employeeId, profilePicture),
     onSuccess: () => {
       queryClient.invalidateQueries(["employees"]);
     },

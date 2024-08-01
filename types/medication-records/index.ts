@@ -12,10 +12,7 @@ export type MedicationRecord = {
 
 export type MedicationRecords = Paginated<MedicationRecord>;
 
-export type PatchMedicationRecordDto = Pick<
-  MedicationRecord,
-  "status" | "reason"
->;
+export type PatchMedicationRecordDto = Pick<MedicationRecord, "status" | "reason">;
 
 export type MedicationRecordParams = {
   created?: string;

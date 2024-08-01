@@ -44,8 +44,12 @@ const ReportsItem: FunctionComponent<ReportsItemProps> = ({ reports }) => {
 
   return (
     <li className="grid grid-cols-3 px-4 py-2 cursor-pointer hover:bg-gray-3 dark:hover:bg-slate-700 rounded-2xl">
-      <div className="font-medium text-gray-600 dark:text-slate-300">{shortDateTimeFormat(reports.date)}</div>
-      <div className="col-span-2 text-gray-600 dark:text-slate-300 truncate">{reports.report_text}</div>
+      <div className="font-medium text-gray-600 dark:text-slate-300">
+        {shortDateTimeFormat(reports.date)}
+      </div>
+      <div className="col-span-2 text-gray-600 dark:text-slate-300 truncate">
+        {reports.report_text}
+      </div>
     </li>
   );
 };

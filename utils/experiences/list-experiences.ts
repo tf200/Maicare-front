@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 import { ExpListDto } from "@/types/experiences/exp-list.dto";
 
 async function listExperiences(employeeId: number) {
-  const response = await api.get<ExpListDto>(
-    `employee/experiences/${employeeId}/`
-  );
+  const response = await api.get<ExpListDto>(`employee/experiences/${employeeId}/`);
   return response.data;
 }
 

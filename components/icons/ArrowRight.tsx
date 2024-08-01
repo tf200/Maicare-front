@@ -2,11 +2,7 @@ import React, { FunctionComponent } from "react";
 import { IconProps } from "@/types/IconProps";
 import clsx from "clsx";
 
-const ArrowRight: FunctionComponent<IconProps> = ({
-  width = 18,
-  height = 7,
-  className,
-}) => {
+const ArrowRight: FunctionComponent<IconProps> = ({ width = 18, height = 7, className }) => {
   return (
     <svg
       className={clsx("fill-current", className)}

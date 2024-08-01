@@ -5,12 +5,9 @@ import { usePaginationParams } from "@/hooks/usePaginationParams";
 import { EpisodesListResDto } from "@/types/episodes/episodes-list-res-dto";
 
 async function getEpisodeList(clientId: number, params: PaginationParams) {
-  const response = await api.get<EpisodesListResDto>(
-    `employee/emotionalstate_list/${clientId}`,
-    {
-      params,
-    }
-  );
+  const response = await api.get<EpisodesListResDto>(`employee/emotionalstate_list/${clientId}`, {
+    params,
+  });
   return response.data;
 }
 
@@ -19,10 +16,7 @@ async function getEpisodeList(clientId: number, params: PaginationParams) {
  * @param clientId
  * @param params Override pagination params
  */
-export const useEpisodesList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useEpisodesList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

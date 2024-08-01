@@ -23,6 +23,4 @@ export type ClientStateReqDto = {
 
 export type ClientStateListResDto = Paginated<ClientStateResDto>;
 
-export type UpdateClientStateReqDto = Partial<
-  Omit<ClientStateResDto, "client_id">
->;
+export type UpdateClientStateReqDto = Partial<Omit<ClientStateResDto, "client_id">>;

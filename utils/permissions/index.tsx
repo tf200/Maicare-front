@@ -9,9 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 async function getAllPermission() {
-  const response = await api.get<PermissionsListDto>(
-    "/system/administration/permissions"
-  );
+  const response = await api.get<PermissionsListDto>("/system/administration/permissions");
   return response.data;
 }
 
@@ -20,9 +18,7 @@ export const usePermissions = () => {
 };
 
 async function getGroupDetails(groupId: number) {
-  const response = await api.get<GroupDetailsResDto>(
-    `/system/administration/groups/${groupId}`
-  );
+  const response = await api.get<GroupDetailsResDto>(`/system/administration/groups/${groupId}`);
   return response.data;
 }
 
@@ -69,9 +65,7 @@ export const useUpdateGroup = (groupId: number) => {
 };
 
 async function getGroups() {
-  const response = await api.get<GroupListResDto>(
-    "/system/administration/groups"
-  );
+  const response = await api.get<GroupListResDto>("/system/administration/groups");
   return response.data;
 }
 
@@ -80,9 +74,7 @@ export const useGroups = () => {
 };
 
 async function deleteGroup(groupId: number) {
-  const response = await api.delete(
-    `/system/administration/groups/${groupId}/delete`
-  );
+  const response = await api.delete(`/system/administration/groups/${groupId}/delete`);
   return response.data;
 }
 
@@ -104,13 +96,10 @@ async function deleteRoleAssignment(roleAssignmentId: number) {
 
 export const useDeleteRoleAssignment = (employeeId: number) => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (assignmentId: number) => deleteRoleAssignment(assignmentId),
-    {
-      onSuccess: () => {
-        console.log("invalidateQueries");
-        queryClient.invalidateQueries(["employees", employeeId, "teams"]);
-      },
-    }
-  );
+  return useMutation((assignmentId: number) => deleteRoleAssignment(assignmentId), {
+    onSuccess: () => {
+      console.log("invalidateQueries");
+      queryClient.invalidateQueries(["employees", employeeId, "teams"]);
+    },
+  });
 };

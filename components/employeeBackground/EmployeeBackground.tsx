@@ -41,27 +41,14 @@ function EmployeeBackground<TData, TInitialValue, TError>({
   return (
     <Panel title={title} containerClassName="py-4 px-7">
       <div className="mb-4.5">
-        <Button
-          className="w-72 block ml-auto"
-          onClick={() => setIsAdding((is) => !is)}
-        >
+        <Button className="w-72 block ml-auto" onClick={() => setIsAdding((is) => !is)}>
           {isAdding ? cancelText : addButtonText}
         </Button>
       </div>
-      {isAdding && (
-        <FormComponent
-          employeeId={+employeeId}
-          onSuccess={() => setIsAdding(false)}
-        />
-      )}
+      {isAdding && <FormComponent employeeId={+employeeId} onSuccess={() => setIsAdding(false)} />}
       {data && <ListComponent data={data} />}
       {isLoading && <Loader />}
-      {error && (
-        <LargeErrorMessage
-          firstLine="Something went wrong"
-          secondLine={errorText}
-        />
-      )}
+      {error && <LargeErrorMessage firstLine="Something went wrong" secondLine={errorText} />}
     </Panel>
   );
 }

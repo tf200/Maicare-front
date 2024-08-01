@@ -18,10 +18,7 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           title={"Diagnose"}
           containerClassName="px-7 py-4"
           sideActions={
-            <LinkButton
-              text={"Volledige Diagnosegeschiedenis"}
-              href={`medical-record/diagnosis`}
-            />
+            <LinkButton text={"Volledige Diagnosegeschiedenis"} href={`medical-record/diagnosis`} />
           }
         >
           <DiagnosisSummary clientId={parseInt(clientId)} />
@@ -30,10 +27,7 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           title={"Medicatie"}
           containerClassName="px-7 py-4"
           sideActions={
-            <LinkButton
-              text={"Volledige Medicatielijst"}
-              href={`medical-record/medications`}
-            />
+            <LinkButton text={"Volledige Medicatielijst"} href={`medical-record/medications`} />
           }
         >
           <MedicationsSummary clientId={parseInt(clientId)} />
@@ -44,10 +38,7 @@ const Page: FunctionComponent<Props> = ({ params: { clientId } }) => {
           title={"Allergieën"}
           containerClassName="px-7 py-4"
           sideActions={
-            <LinkButton
-              text={"Volledige Allergielijst"}
-              href={`medical-record/allergies`}
-            />
+            <LinkButton text={"Volledige Allergielijst"} href={`medical-record/allergies`} />
           }
         >
           <AllergiesSummary clientId={parseInt(clientId)} />

@@ -24,16 +24,10 @@ import { InvoiceStatus } from "@/components/invoiceStatus";
 import { InvoiceType } from "@/types/InvoiceStatus";
 import { cleanQueryParams } from "@/utils/cleanQueryParams";
 
-async function getContractInvoices(
-  contractId: number,
-  paginationParams?: PaginationParams
-) {
-  const response = await api.get<InvoicesResDto>(
-    `/client/invoices/${contractId}`,
-    {
-      params: paginationParams,
-    }
-  );
+async function getContractInvoices(contractId: number, paginationParams?: PaginationParams) {
+  const response = await api.get<InvoicesResDto>(`/client/invoices/${contractId}`, {
+    params: paginationParams,
+  });
   return response.data;
 }
 
@@ -105,20 +99,10 @@ const Filter: FunctionComponent<FilterProps> = ({ onSubmit }) => {
     initialValues,
     onSubmit,
   });
-  const {
-    handleSubmit,
-    handleReset,
-    submitForm,
-    handleChange,
-    values,
-    handleBlur,
-  } = formik;
+  const { handleSubmit, handleReset, submitForm, handleChange, values, handleBlur } = formik;
   return (
     <FormikProvider value={formik}>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-wrap items-center gap-4 p-4"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-wrap items-center gap-4 p-4">
         <Select
           label={"Status"}
           options={INVOICE_STATUS_OPTIONS}
@@ -159,9 +143,7 @@ export function InvoicesList(props: {
       {
         accessorKey: "invoice_number",
         header: "Factuurnummer",
-        cell: (data) => (
-          <span className="font-bold">{("#" + data.getValue()) as string}</span>
-        ),
+        cell: (data) => <span className="font-bold">{("#" + data.getValue()) as string}</span>,
       },
       {
         accessorKey: "issue_date",
@@ -176,9 +158,7 @@ export function InvoicesList(props: {
       {
         accessorKey: "status",
         header: "Status",
-        cell: (data) => (
-          <InvoiceStatus status={data.getValue() as InvoiceType} />
-        ),
+        cell: (data) => <InvoiceStatus status={data.getValue() as InvoiceType} />,
       },
       {
         accessorKey: "sender_name",

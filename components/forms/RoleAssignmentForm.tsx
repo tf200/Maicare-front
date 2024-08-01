@@ -21,35 +21,29 @@ const initialValues: RoleAssignmentFormType = {
   end_date_always: false,
 };
 
-const roleAssignmentSchema: yup.ObjectSchema<RoleAssignmentFormType> =
-  yup.object({
-    // Team is required
-    group_id: yup.string().required("Team is verplicht"),
-    start_date: yup
-      .string()
-      .when(["start_date_always"], ([start_date_always]) => {
-        return start_date_always
-          ? yup.string().notRequired()
-          : yup.string().required("Startdatum is verplicht");
-      }),
-    end_date: yup.string().when(["end_date_always"], ([end_date_always]) => {
-      return end_date_always
-        ? yup.string().notRequired()
-        : yup.string().required("Einddatum is verplicht");
-    }),
-    start_date_always: yup.boolean(),
-    end_date_always: yup.boolean(),
-  });
+const roleAssignmentSchema: yup.ObjectSchema<RoleAssignmentFormType> = yup.object({
+  // Team is required
+  group_id: yup.string().required("Team is verplicht"),
+  start_date: yup.string().when(["start_date_always"], ([start_date_always]) => {
+    return start_date_always
+      ? yup.string().notRequired()
+      : yup.string().required("Startdatum is verplicht");
+  }),
+  end_date: yup.string().when(["end_date_always"], ([end_date_always]) => {
+    return end_date_always
+      ? yup.string().notRequired()
+      : yup.string().required("Einddatum is verplicht");
+  }),
+  start_date_always: yup.boolean(),
+  end_date_always: yup.boolean(),
+});
 
 type Props = {
   employeeId: number;
   onSuccess?: () => void;
 };
 
-function mapFormToDto(
-  values: RoleAssignmentFormType,
-  employeeId: number
-): NewAssignReqDto {
+function mapFormToDto(values: RoleAssignmentFormType, employeeId: number): NewAssignReqDto {
   return {
     group_id: +values.group_id,
     employee_id: employeeId,
@@ -58,19 +52,14 @@ function mapFormToDto(
   };
 }
 
-const RoleAssignmentForm: FunctionComponent<Props> = ({
-  employeeId,
-  onSuccess,
-}) => {
+const RoleAssignmentForm: FunctionComponent<Props> = ({ employeeId, onSuccess }) => {
   const { data: roles, isLoading: rolesLoading } = useGroups();
   const rolesOptions = useMemo<SelectionOption[]>(() => {
     const options = roles?.map((role) => ({
       label: ORGANIGRAM_TRANSLATE[role.name] ?? role.name,
       value: role.id + "",
     }));
-    return options
-      ? [{ label: "Selecteer Team", value: "" }, ...options]
-      : undefined;
+    return options ? [{ label: "Selecteer Team", value: "" }, ...options] : undefined;
   }, [roles]);
   const { mutate, isLoading } = useCreateRoleAssignment(employeeId);
   const roleAssignmentForm = useFormik({
@@ -83,8 +72,7 @@ const RoleAssignmentForm: FunctionComponent<Props> = ({
     },
   });
 
-  const { handleSubmit, values, handleChange, handleBlur, errors, touched } =
-    roleAssignmentForm;
+  const { handleSubmit, values, handleChange, handleBlur, errors, touched } = roleAssignmentForm;
   return (
     <FormikProvider value={roleAssignmentForm}>
       <form onSubmit={handleSubmit} className="lg:max-w-4xl">

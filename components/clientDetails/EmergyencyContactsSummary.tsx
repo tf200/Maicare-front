@@ -22,9 +22,7 @@ const EmergencyContactsSummary: FunctionComponent<Props> = ({ clientId }) => {
         return (
           <li
             key={contact.id}
-            onClick={() =>
-              router.push(`/clients/${clientId}/emergency/${contact.id}`)
-            }
+            onClick={() => router.push(`/clients/${clientId}/emergency/${contact.id}`)}
             className="grid grid-cols-2 hover:bg-gray-3 dark:hover:bg-slate-700 p-4 cursor-pointer rounded-xl"
           >
             <DetailCell

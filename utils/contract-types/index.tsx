@@ -7,9 +7,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 async function getContractTypes() {
-  const response = await api.get<ContractTypesResDto>(
-    "clients/contracts/contract-types"
-  );
+  const response = await api.get<ContractTypesResDto>("clients/contracts/contract-types");
   return response.data;
 }
 

@@ -6,12 +6,9 @@ import { PaginationParams } from "@/types/pagination-params";
 import { cleanQueryParams } from "@/utils/cleanQueryParams";
 
 async function getAutomaticReports(clientId: number, params: PaginationParams) {
-  const response = await api.get<Paginated<any>>(
-    `/ai/generated_summaries/${clientId}`,
-    {
-      params: cleanQueryParams(params),
-    }
-  );
+  const response = await api.get<Paginated<any>>(`/ai/generated_summaries/${clientId}`, {
+    params: cleanQueryParams(params),
+  });
   return response.data;
 }
 
@@ -31,9 +28,7 @@ export const useAutomaticReports = (clientId: number) => {
 };
 
 async function generateAutomaticReports(data: AutomaticReportsReqDto) {
-  await api.post(
-    `/ai/generate_report_summary/${data.client_id}/${data.from}/${data.to}`
-  );
+  await api.post(`/ai/generate_report_summary/${data.client_id}/${data.from}/${data.to}`);
 }
 
 export const useGenerateAutomaticReports = (clientId: number) => {

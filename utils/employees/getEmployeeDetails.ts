@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 import { NewEmployeesRequest } from "@/types/employees/new-employees-request";
 
 export const getClientDetails = async (employeeId: number) => {
-  const response = await api.get<NewEmployeesRequest>(
-    `employee/employees_RUD/${employeeId}/`
-  );
+  const response = await api.get<NewEmployeesRequest>(`employee/employees_RUD/${employeeId}/`);
   return response.data;
 };
 

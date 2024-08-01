@@ -10,19 +10,13 @@ async function getMeasurementList(
   clientId: number,
   params: PaginationParams = DEFAULT_PAGINATION_PARAMS
 ) {
-  const res = await api.get<MeasurmentListResDto>(
-    `employee/measurment_list/${clientId}`,
-    {
-      params,
-    }
-  );
+  const res = await api.get<MeasurmentListResDto>(`employee/measurment_list/${clientId}`, {
+    params,
+  });
   return res.data;
 }
 
-export const useMeasurementList = (
-  clientId: number,
-  params?: PaginationParams
-) => {
+export const useMeasurementList = (clientId: number, params?: PaginationParams) => {
   const pagination = usePaginationParams();
   const parsedParams = pagination.params;
 

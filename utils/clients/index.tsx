@@ -3,9 +3,7 @@ import { ClientStatusList } from "@/types/clients";
 import { useQuery } from "react-query";
 
 async function getClientStatusHistory(clientId: number) {
-  const response = await api.get<ClientStatusList>(
-    `/clients/${clientId}/profile-status-history`
-  );
+  const response = await api.get<ClientStatusList>(`/clients/${clientId}/profile-status-history`);
   return response.data;
 }
 

@@ -133,7 +133,7 @@ const ClientsPage: FunctionComponent = () => {
             onRowClick={handleRowClick}
             data={data.results}
             columns={columnDef}
-            className={styles.table+"min-w-[500px]"}
+            className={styles.table + "min-w-[500px]"}
           />
         )}
 

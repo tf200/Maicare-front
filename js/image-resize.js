@@ -132,16 +132,11 @@ const ImageResize = () => {
       redraw = false;
 
       if (clicked && clicked.isResizing) {
-        if (clicked.onRightEdge)
-          pane.style.width = Math.max(x, minWidth) + "px";
-        if (clicked.onBottomEdge)
-          pane.style.height = Math.max(y, minHeight) + "px";
+        if (clicked.onRightEdge) pane.style.width = Math.max(x, minWidth) + "px";
+        if (clicked.onBottomEdge) pane.style.height = Math.max(y, minHeight) + "px";
 
         if (clicked.onLeftEdge) {
-          var currentWidth = Math.max(
-            clicked.cx - e.clientX + clicked.w,
-            minWidth
-          );
+          var currentWidth = Math.max(clicked.cx - e.clientX + clicked.w, minWidth);
           if (currentWidth > minWidth) {
             pane.style.width = currentWidth + "px";
             pane.style.left = e.clientX + "px";
@@ -149,10 +144,7 @@ const ImageResize = () => {
         }
 
         if (clicked.onTopEdge) {
-          var currentHeight = Math.max(
-            clicked.cy - e.clientY + clicked.h,
-            minHeight
-          );
+          var currentHeight = Math.max(clicked.cy - e.clientY + clicked.h, minHeight);
           if (currentHeight > minHeight) {
             pane.style.height = currentHeight + "px";
             pane.style.top = e.clientY + "px";
@@ -184,23 +176,11 @@ const ImageResize = () => {
           ghostpane.style.opacity = 0.2;
         } else if (b.right > rightScreenEdge) {
           // hintRight();
-          setBounds(
-            ghostpane,
-            window.innerWidth / 2,
-            0,
-            window.innerWidth / 2,
-            window.innerHeight
-          );
+          setBounds(ghostpane, window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
           ghostpane.style.opacity = 0.2;
         } else if (b.bottom > bottomScreenEdge) {
           // hintBottom();
-          setBounds(
-            ghostpane,
-            0,
-            window.innerHeight / 2,
-            window.innerWidth,
-            window.innerWidth / 2
-          );
+          setBounds(ghostpane, 0, window.innerHeight / 2, window.innerWidth, window.innerWidth / 2);
           ghostpane.style.opacity = 0.2;
         } else {
           hintHide();
@@ -273,23 +253,11 @@ const ImageResize = () => {
           preSnapped = snapped;
         } else if (b.right > rightScreenEdge) {
           // hintRight();
-          setBounds(
-            pane,
-            window.innerWidth / 2,
-            0,
-            window.innerWidth / 2,
-            window.innerHeight
-          );
+          setBounds(pane, window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
           preSnapped = snapped;
         } else if (b.bottom > bottomScreenEdge) {
           // hintBottom();
-          setBounds(
-            pane,
-            0,
-            window.innerHeight / 2,
-            window.innerWidth,
-            window.innerWidth / 2
-          );
+          setBounds(pane, 0, window.innerHeight / 2, window.innerWidth, window.innerWidth / 2);
           preSnapped = snapped;
         } else {
           preSnapped = null;

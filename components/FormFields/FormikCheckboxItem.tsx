@@ -24,21 +24,12 @@ const FormikCheckboxItem: FunctionComponent<CheckBoxPropsType> = ({
   return (
     <label htmlFor={id} className={cn("flex cursor-pointer", className)}>
       <div className="relative pt-0.5">
-        <Field
-          type="checkbox"
-          name={name}
-          id={id}
-          className="sr-only taskCheckbox"
-          {...props}
-        />
+        <Field type="checkbox" name={name} id={id} className="sr-only taskCheckbox" {...props} />
         <div
-          className={clsx(
-            "flex items-center justify-center w-5 h-5 mr-3 border rounded box",
-            {
-              "border-primary bg-primary dark:border-primary": value,
-              "border-stroke dark:border-strokedark": !value,
-            }
-          )}
+          className={clsx("flex items-center justify-center w-5 h-5 mr-3 border rounded box", {
+            "border-primary bg-primary dark:border-primary": value,
+            "border-stroke dark:border-strokedark": !value,
+          })}
         >
           <span
             className={cn("text-white dark:text-white", {

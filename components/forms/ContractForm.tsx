@@ -46,10 +46,7 @@ import {
 } from "@/utils/contract-types";
 import { ModalProps } from "@/types/modal-props";
 import FormModal from "@/components/Modals/FormModal";
-import {
-  ContractTypeCreateReqDto,
-  ContractTypeItem,
-} from "@/types/contract-type";
+import { ContractTypeCreateReqDto, ContractTypeItem } from "@/types/contract-type";
 import IconButton from "@/components/buttons/IconButton";
 import TrashIcon from "@/components/icons/TrashIcon";
 import Loader from "@/components/common/Loader";
@@ -78,83 +75,66 @@ const initialValues: ContractFormType = {
   hours: "",
 };
 
-export const contractSchema: Yup.ObjectSchema<ContractFormType> =
-  Yup.object().shape({
-    start_date: Yup.string().required("Geef alstublieft de startdatum op"),
-    end_date: Yup.string().required("Geef alstublieft de startdatum op"),
-    care_type: Yup.string()
-      .oneOf(CARE_TYPE_ARRAY)
-      .required("Geef alstublieft het zorgtype op"),
-    rate_type: Yup.string()
-      .oneOf(RATE_TYPE_ARRAY)
-      .test(
-        "valid_rate_type",
-        "Geef alstublieft het tarieftype op",
-        (value, ctx) => {
-          if (value && ctx.parent.care_type) {
-            return (
-              CARE_RATE_BY_TYPE[ctx.parent.care_type]?.includes(value) ?? false
-            );
-          }
-          return false;
-        }
-      )
-      .required("Geef alstublieft het tarieftype op"),
-    rate_value: Yup.string().required("Geef alstublieft het tarief op"),
-    added_attachments: Yup.array(),
-    removed_attachments: Yup.array(),
-    reminder_period: Yup.string()
-      .required("Geef alstublieft de herinneringsperiode op")
-      .test(
-        "within-range",
-        "Herinneringsperiode moet binnen de contractperiode vallen",
-        function (value, ctx) {
-          const start = ctx.parent.start_date;
-          const end = ctx.parent.end_date;
-          if (start && end && value) {
-            return dayjs(start).isBefore(dayjs(end).subtract(+value, "days"));
-          }
-          return true;
-        }
-      ),
-    contract_name: Yup.string().required("Geef alstublieft de contractnaam op"),
-    type: Yup.string().required("Geef alstublieft het type op"),
-    is_default_tax: Yup.boolean(),
-    tax: Yup.string().test(
-      "required_if_not_default",
-      "Geef alstublieft de BTW op",
+export const contractSchema: Yup.ObjectSchema<ContractFormType> = Yup.object().shape({
+  start_date: Yup.string().required("Geef alstublieft de startdatum op"),
+  end_date: Yup.string().required("Geef alstublieft de startdatum op"),
+  care_type: Yup.string().oneOf(CARE_TYPE_ARRAY).required("Geef alstublieft het zorgtype op"),
+  rate_type: Yup.string()
+    .oneOf(RATE_TYPE_ARRAY)
+    .test("valid_rate_type", "Geef alstublieft het tarieftype op", (value, ctx) => {
+      if (value && ctx.parent.care_type) {
+        return CARE_RATE_BY_TYPE[ctx.parent.care_type]?.includes(value) ?? false;
+      }
+      return false;
+    })
+    .required("Geef alstublieft het tarieftype op"),
+  rate_value: Yup.string().required("Geef alstublieft het tarief op"),
+  added_attachments: Yup.array(),
+  removed_attachments: Yup.array(),
+  reminder_period: Yup.string()
+    .required("Geef alstublieft de herinneringsperiode op")
+    .test(
+      "within-range",
+      "Herinneringsperiode moet binnen de contractperiode vallen",
       function (value, ctx) {
-        if (ctx.parent.is_default_tax) {
-          return true;
+        const start = ctx.parent.start_date;
+        const end = ctx.parent.end_date;
+        if (start && end && value) {
+          return dayjs(start).isBefore(dayjs(end).subtract(+value, "days"));
         }
-        return !!value;
+        return true;
       }
     ),
-    status: Yup.string().oneOf(["draft", "approved", "terminated"]),
-    financing_act: Yup.string().oneOf(FINANCING_LAW_TYPES),
-    financing_option: Yup.string().oneOf(FINANCING_OPTION_TYPES),
-    hours_type: Yup.string().oneOf(HOURS_TERM_TYPES),
-    hours: Yup.string(),
-  });
+  contract_name: Yup.string().required("Geef alstublieft de contractnaam op"),
+  type: Yup.string().required("Geef alstublieft het type op"),
+  is_default_tax: Yup.boolean(),
+  tax: Yup.string().test(
+    "required_if_not_default",
+    "Geef alstublieft de BTW op",
+    function (value, ctx) {
+      if (ctx.parent.is_default_tax) {
+        return true;
+      }
+      return !!value;
+    }
+  ),
+  status: Yup.string().oneOf(["draft", "approved", "terminated"]),
+  financing_act: Yup.string().oneOf(FINANCING_LAW_TYPES),
+  financing_option: Yup.string().oneOf(FINANCING_OPTION_TYPES),
+  hours_type: Yup.string().oneOf(HOURS_TERM_TYPES),
+  hours: Yup.string(),
+});
 
 type PropsType = {
   clientId: number;
 } & FormProps<ContractResDto>;
 
-const ContractForm: FunctionComponent<PropsType> = ({
-  clientId,
-  mode = "add",
-  initialData,
-}) => {
+const ContractForm: FunctionComponent<PropsType> = ({ clientId, mode = "add", initialData }) => {
   const parsedInitialValues = useMemo(() => {
-    return initialData
-      ? { ...initialValues, ...mapToForm(initialData) }
-      : initialValues;
+    return initialData ? { ...initialValues, ...mapToForm(initialData) } : initialValues;
   }, [initialData]);
   const { mutate: create, isLoading: isCreating } = useCreateContract(clientId);
-  const { mutate: update, isLoading: isUpdating } = useUpdateContract(
-    initialData?.id
-  );
+  const { mutate: update, isLoading: isUpdating } = useUpdateContract(initialData?.id);
   const router = useRouter();
   const { data: contactData } = useClientContact(clientId);
   const onSubmit = (value: ContractFormType) => {
@@ -186,8 +166,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
     ];
   }, [contractTypes]);
 
-  const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
-    formik;
+  const { values, handleChange, handleBlur, touched, handleSubmit, errors } = formik;
 
   const { data: clientData } = useClientDetails(clientId);
 
@@ -195,10 +174,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
 
   return (
     <FormikProvider value={formik}>
-      <form
-        onSubmit={handleSubmit}
-        className="grid gap-10 grid-cols-1 lg:grid-cols-2"
-      >
+      <form onSubmit={handleSubmit} className="grid gap-10 grid-cols-1 lg:grid-cols-2">
         <div>
           <ContactAssignment
             clientId={clientId}
@@ -228,11 +204,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={values.contract_name}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={
-                touched.contract_name &&
-                errors.contract_name &&
-                errors.contract_name + ""
-              }
+              error={touched.contract_name && errors.contract_name && errors.contract_name + ""}
             />
           </div>
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -253,9 +225,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               onBlur={handleBlur}
               unit={"dagen"}
               error={
-                touched.reminder_period &&
-                errors.reminder_period &&
-                errors.reminder_period + ""
+                touched.reminder_period && errors.reminder_period && errors.reminder_period + ""
               }
             />
           </div>
@@ -271,11 +241,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               onBlur={handleBlur}
               min={dayjs().format("YYYY-MM-DD")}
               max={values.end_date}
-              error={
-                touched.start_date &&
-                errors.start_date &&
-                errors.start_date + ""
-              }
+              error={touched.start_date && errors.start_date && errors.start_date + ""}
             />
             <InputField
               label={"Einddatum"}
@@ -287,9 +253,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={(values.end_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={
-                touched.end_date && errors.end_date && errors.end_date + ""
-              }
+              error={touched.end_date && errors.end_date && errors.end_date + ""}
             />
           </div>
           <Select
@@ -302,9 +266,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
             value={values.care_type}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={
-              touched.care_type && errors.care_type && errors.care_type + ""
-            }
+            error={touched.care_type && errors.care_type && errors.care_type + ""}
           />
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
             <Select
@@ -324,9 +286,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
                   },
                 ]
               }
-              error={
-                touched.rate_type && errors.rate_type && errors.rate_type + ""
-              }
+              error={touched.rate_type && errors.rate_type && errors.rate_type + ""}
             />
             <InputField
               className={"w-full xl:w-1/2"}
@@ -341,11 +301,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={values.rate_value}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={
-                touched.rate_value &&
-                errors.rate_value &&
-                errors.rate_value + ""
-              }
+              error={touched.rate_value && errors.rate_value && errors.rate_value + ""}
             />
           </div>
           <div className="mb-6 flex flex-col gap-6 xl:flex-row">
@@ -385,11 +341,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               value={values.financing_act}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={
-                touched.financing_act &&
-                errors.financing_act &&
-                errors.financing_act + ""
-              }
+              error={touched.financing_act && errors.financing_act && errors.financing_act + ""}
             />
             <Select
               className="w-full xl:w-1/2"
@@ -402,9 +354,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               error={
-                touched.financing_option &&
-                errors.financing_option &&
-                errors.financing_option + ""
+                touched.financing_option && errors.financing_option && errors.financing_option + ""
               }
             />
           </div>
@@ -419,11 +369,7 @@ const ContractForm: FunctionComponent<PropsType> = ({
                 value={values.hours_type}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={
-                  touched.hours_type &&
-                  errors.hours_type &&
-                  errors.hours_type + ""
-                }
+                error={touched.hours_type && errors.hours_type && errors.hours_type + ""}
               />
               <InputField
                 className="w-full xl:w-1/2"
@@ -483,15 +429,12 @@ export const WhenNotification: FunctionComponent<{
   values: ContractFormType;
 }> = ({ values }) => {
   if (values.end_date && values.start_date && values.reminder_period) {
-    const reminderDate = dayjs(values.end_date)
-      .subtract(+values.reminder_period, "days")
-      .toDate();
+    const reminderDate = dayjs(values.end_date).subtract(+values.reminder_period, "days").toDate();
     return (
       <div className="flex flex-col gap-2 px-4 py-3 info-box">
         <p>
-          <InfoIcon className="inline-block relative -top-0.5" />{" "}
-          <strong>Herinnering:</strong> U ontvangt een herinnering op{" "}
-          {dateFormat(reminderDate)}
+          <InfoIcon className="inline-block relative -top-0.5" /> <strong>Herinnering:</strong> U
+          ontvangt een herinnering op {dateFormat(reminderDate)}
         </p>
       </div>
     );
@@ -512,21 +455,16 @@ const ManageContractType: FunctionComponent = () => {
       <p>
         <InfoIcon className="inline-block relative -top-0.5" />{" "}
         <span>
-          Beheer contracttypen?{" "}
-          <div className="inline-block text-primary">Klik hier!</div>
+          Beheer contracttypen? <div className="inline-block text-primary">Klik hier!</div>
         </span>
       </p>
     </button>
   );
 };
 
-const ManageContractTypeModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const ManageContractTypeModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const { data, isLoading } = useContractTypes();
-  const { mutate: createContractType, isLoading: isCreating } =
-    useCreateContractType();
+  const { mutate: createContractType, isLoading: isCreating } = useCreateContractType();
   const formik = useFormik<ContractTypeCreateReqDto>({
     initialValues: {
       name: "",
@@ -545,10 +483,7 @@ const ManageContractTypeModal: FunctionComponent<ModalProps> = ({
   return (
     <FormModal {...props} title={"Beheer Contracttypen"}>
       <FormikProvider value={formik}>
-        <form
-          onSubmit={formik.handleSubmit}
-          className="border-b border-stroke pb-6 mb-6"
-        >
+        <form onSubmit={formik.handleSubmit} className="border-b border-stroke pb-6 mb-6">
           <InputField
             label={"Naam"}
             id={"name"}
@@ -583,18 +518,13 @@ const ManageContractTypeModal: FunctionComponent<ModalProps> = ({
         </div>
       )}
       {data?.length === 0 && (
-        <p className="text-sm text-gray-2 dark:text-gray-4">
-          Geen contracttypen gevonden
-        </p>
+        <p className="text-sm text-gray-2 dark:text-gray-4">Geen contracttypen gevonden</p>
       )}
     </FormModal>
   );
 };
 
-const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({
-  name,
-  id,
-}) => {
+const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({ name, id }) => {
   const { mutate: deleteContractType, isLoading } = useDeleteContractType();
   return (
     <div className="flex justify-between items-center border p-4 rounded-lg bg-white border-stroke py-3">

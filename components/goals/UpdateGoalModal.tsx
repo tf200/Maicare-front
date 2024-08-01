@@ -4,10 +4,7 @@ import FormModal from "@/components/Modals/FormModal";
 import { GoalsListItem } from "@/types/goals";
 import GoalsForm from "@/components/goals/GoalsForm";
 
-const UpdateGoalModal: FunctionComponent<ModalProps> = ({
-  additionalProps,
-  ...props
-}) => {
+const UpdateGoalModal: FunctionComponent<ModalProps> = ({ additionalProps, ...props }) => {
   const goal: GoalsListItem = additionalProps.goal;
   return (
     <FormModal {...props} title={"Doel bijwerken"}>

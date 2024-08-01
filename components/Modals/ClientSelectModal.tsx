@@ -9,11 +9,7 @@ const initialValues = {
   client: "",
 };
 
-const ClientSelectModal: FunctionComponent<ModalProps> = ({
-  open,
-  onClose,
-  additionalProps,
-}) => {
+const ClientSelectModal: FunctionComponent<ModalProps> = ({ open, onClose, additionalProps }) => {
   const formik = useFormik({
     initialValues,
     onSubmit: () => {

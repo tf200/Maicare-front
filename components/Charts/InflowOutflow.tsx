@@ -149,8 +149,7 @@ const InflowOutflow: FunctionComponent = (props) => {
             <p className="font-semibold text-primary">Kosten</p>
             {data && (
               <p className="text-sm font-medium">
-                {monthYearFormat(data[0]?.date)} -{" "}
-                {monthYearFormat(data[data.length - 1]?.date)}
+                {monthYearFormat(data[0]?.date)} - {monthYearFormat(data[data.length - 1]?.date)}
               </p>
             )}
           </div>
@@ -163,8 +162,7 @@ const InflowOutflow: FunctionComponent = (props) => {
             <p className="font-semibold text-secondary">Inkomen</p>
             {data && (
               <p className="text-sm font-medium">
-                {monthYearFormat(data[0]?.date)} -{" "}
-                {monthYearFormat(data[data.length - 1]?.date)}
+                {monthYearFormat(data[0]?.date)} - {monthYearFormat(data[data.length - 1]?.date)}
               </p>
             )}
           </div>

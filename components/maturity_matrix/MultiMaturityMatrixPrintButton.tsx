@@ -9,13 +9,9 @@ type MultiMaturityMatrixPrintButtonProps = {
   questIds: number[];
 };
 
-
-
-
 function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintButtonProps) {
   const [isPrintTemplateLoading, setIsPrintTemplateLoading] = useState(false);
   const [pdfTemplate, setPdfTemplate] = useState<string | null>();
-
 
   const handleWarning = () => {
     toast.warning("Please select atleast one questionnaire", {
@@ -28,12 +24,12 @@ function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintBu
     });
   };
 
-  const handelPrintPdf = async() => {
-    if(pdfTemplate) {
+  const handelPrintPdf = async () => {
+    if (pdfTemplate) {
       // open in a new tab
-      var link = document.createElement('a');
+      var link = document.createElement("a");
       link.href = pdfTemplate;
-      link.target = '_blank';
+      link.target = "_blank";
       link.download = pdfTemplate;
       document.body.appendChild(link);
       link.click();
@@ -41,7 +37,7 @@ function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintBu
       setTimeout(() => {
         setPdfTemplate(null);
       }, 1000);
-    }else{
+    } else {
       toast.error("Pdf template not found", {
         position: "top-right",
         autoClose: 5000, // Duration in milliseconds
@@ -56,50 +52,54 @@ function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintBu
   const generateTemplateHandler = async () => {
     setIsPrintTemplateLoading(true);
     getQuestionnairesTemplate({ questionnairesId: questIds, templateType: "multi_maturity_matrix" })
-    .then(({ link }) => {
-      setPdfTemplate(link);
-    })
-    .catch((error) => {
-      toast.error(error, {
-        position: "top-right",
-        autoClose: 5000, // Duration in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
+      .then(({ link }) => {
+        setPdfTemplate(link);
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: "top-right",
+          autoClose: 5000, // Duration in milliseconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      })
+      .finally(() => {
+        setIsPrintTemplateLoading(false);
       });
-    }).finally(() => {
-      setIsPrintTemplateLoading(false);
-    });
   };
-  
 
-  if(!questIds || questIds.length === 0) {
+  if (!questIds || questIds.length === 0) {
     return (
-      <div data-tooltip-id="printerButton" >
+      <div data-tooltip-id="printerButton">
         <IconButton
           className="bg-strokedark cursor-pointer opacity-40"
-          onClick={() => { handleWarning(); }}
-          >
+          onClick={() => {
+            handleWarning();
+          }}
+        >
           <Printer className="h-6 w-6" />
         </IconButton>
-        <Tooltip id="printerButton" place="left" content="meervoudig afdrukken"/>
+        <Tooltip id="printerButton" place="left" content="meervoudig afdrukken" />
       </div>
-    )
+    );
   }
 
-  return ( 
+  return (
     <>
       {!pdfTemplate && !isPrintTemplateLoading && (
-          <div data-tooltip-id="printerButton">
-            <IconButton
-              className="bg-strokedark"
-              onClick={() => { generateTemplateHandler(); }}
-              >
-              <Printer className="h-6 w-6" />
-            </IconButton>
-            <Tooltip id="printerButton" place="left" content="meervoudig afdrukken"/>
-          </div>  
+        <div data-tooltip-id="printerButton">
+          <IconButton
+            className="bg-strokedark"
+            onClick={() => {
+              generateTemplateHandler();
+            }}
+          >
+            <Printer className="h-6 w-6" />
+          </IconButton>
+          <Tooltip id="printerButton" place="left" content="meervoudig afdrukken" />
+        </div>
       )}
       {!pdfTemplate && isPrintTemplateLoading && (
         <IconButton className="bg-strokedark">
@@ -107,11 +107,17 @@ function MultiMaturityMatrixPrintButton({ questIds }: MultiMaturityMatrixPrintBu
         </IconButton>
       )}
       {pdfTemplate && (
-          <IconButton className="bg-strokedark" onClick={() => { handelPrintPdf(); }} >
-            <Download className="h-6 w-6"/>
-          </IconButton>
+        <IconButton
+          className="bg-strokedark"
+          onClick={() => {
+            handelPrintPdf();
+          }}
+        >
+          <Download className="h-6 w-6" />
+        </IconButton>
       )}
-    </>);
+    </>
+  );
 }
 
 export default MultiMaturityMatrixPrintButton;

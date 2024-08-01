@@ -4,10 +4,7 @@ import { AppointmentResDto } from "@/types/appointments/appointment-res-dto";
 import { useMutation, useQueryClient } from "react-query";
 
 async function updateAppointment(data: UpdateAppointmentReqDto) {
-  const response = await api.patch<AppointmentResDto>(
-    `appointments/patch/${data.id}/`,
-    data
-  );
+  const response = await api.patch<AppointmentResDto>(`appointments/patch/${data.id}/`, data);
   return response.data;
 }
 

@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 import { EducationListDto } from "@/types/educations";
 
 async function listEducations(employeeId: number) {
-  const response = await api.get<EducationListDto>(
-    `employee/educations/${employeeId}/`
-  );
+  const response = await api.get<EducationListDto>(`employee/educations/${employeeId}/`);
   return response.data;
 }
 

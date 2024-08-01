@@ -30,9 +30,7 @@ const FilesDeleter: FunctionComponent<Props> = ({
 
   const remainingFiles = useMemo(() => {
     if (!alreadyUploadedFiles) return [];
-    return alreadyUploadedFiles.filter(
-      (file) => !fieldProps.value?.includes(file.id)
-    );
+    return alreadyUploadedFiles.filter((file) => !fieldProps.value?.includes(file.id));
   }, [fieldProps.value]);
 
   return remainingFiles.map((file) => (

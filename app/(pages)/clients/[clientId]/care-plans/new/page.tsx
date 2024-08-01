@@ -17,15 +17,8 @@ const NewCarePlan: FunctionComponent<{
     <>
       <Breadcrumb pageName="Nieuw Zorgplan Registreren" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
-        <Panel
-          title={"Nieuw Zorgplan Registreren"}
-          containerClassName="px-7 py-4"
-        >
-          <CarePlanForm
-            onSuccess={() => {}}
-            mode={"add"}
-            clientId={+clientId}
-          />
+        <Panel title={"Nieuw Zorgplan Registreren"} containerClassName="px-7 py-4">
+          <CarePlanForm onSuccess={() => {}} mode={"add"} clientId={+clientId} />
         </Panel>
       </div>
     </>

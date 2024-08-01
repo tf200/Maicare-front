@@ -1,10 +1,5 @@
 import dayjs from "dayjs";
-import {
-  dayFormat,
-  dayMonthFormat,
-  fullDateTimeFormat,
-  timeFormat,
-} from "@/utils/timeFormatting";
+import { dayFormat, dayMonthFormat, fullDateTimeFormat, timeFormat } from "@/utils/timeFormatting";
 
 const isToday = (date: string) => {
   return dayjs().isSame(date, "day");

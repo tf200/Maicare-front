@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  InputHTMLAttributes,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, InputHTMLAttributes, useMemo, useState } from "react";
 import FormikTagInput from "@/components/FormFields/FormikTagInput";
 import { useClientsList } from "@/utils/clients/getClientsList";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -46,9 +41,5 @@ export default ClientsTagInput;
 
 const ClientTag: FunctionComponent<{ id: number }> = ({ id }) => {
   const { data, isLoading } = useClientDetails(id);
-  return (
-    <div>
-      {isLoading ? "Loading..." : data?.first_name + " " + data?.last_name}
-    </div>
-  );
+  return <div>{isLoading ? "Loading..." : data?.first_name + " " + data?.last_name}</div>;
 };

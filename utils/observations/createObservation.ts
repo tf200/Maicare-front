@@ -4,13 +4,8 @@ import { NewObservationsReqDto } from "@/types/observations/new-observations-req
 import { ObservationsResDto } from "../../types/observations/observations-res-dto";
 import { ObservationFormType } from "@/components/forms/ObservationForm";
 
-async function createObservation(
-  data: NewObservationsReqDto
-): Promise<ObservationsResDto> {
-  const response = await api.post<ObservationsResDto>(
-    "employee/observations_cl/",
-    data
-  );
+async function createObservation(data: NewObservationsReqDto): Promise<ObservationsResDto> {
+  const response = await api.post<ObservationsResDto>("employee/observations_cl/", data);
 
   return response.data;
 }

@@ -37,10 +37,7 @@ const MedicalHistoryTabs: FunctionComponent = () => {
           href: `/clients/${clientId}/medical-record/episodes`,
         },
       ]}
-      title={
-        `Medische Geschiedenis` +
-        (data ? ` voor ${data.first_name} ${data.last_name}` : "")
-      }
+      title={`Medische Geschiedenis` + (data ? ` voor ${data.first_name} ${data.last_name}` : "")}
     />
   );
 };

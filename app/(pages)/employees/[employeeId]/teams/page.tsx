@@ -86,11 +86,7 @@ type RolesListProps = {
   employeeId: number;
 };
 
-const RolesList: FunctionComponent<RolesListProps> = ({
-  title,
-  roles,
-  employeeId,
-}) => {
+const RolesList: FunctionComponent<RolesListProps> = ({ title, roles, employeeId }) => {
   const { mutate: deleteAssignment } = useDeleteRoleAssignment(employeeId);
 
   const { open: openDeleteModal } = useModal(
@@ -111,7 +107,7 @@ const RolesList: FunctionComponent<RolesListProps> = ({
       {roles.length > 0 && (
         <table className="datatable-table">
           <thead>
-            <tr >
+            <tr>
               {/* Role */}
               <th>Rol</th>
               {/* Period */}
@@ -122,9 +118,7 @@ const RolesList: FunctionComponent<RolesListProps> = ({
           <tbody>
             {roles.map((role) => (
               <tr key={role.id} className="dark:hover-bg-slate-700">
-                <td>
-                  {ORGANIGRAM_TRANSLATE[role.group_name] ?? role.group_name}
-                </td>
+                <td>{ORGANIGRAM_TRANSLATE[role.group_name] ?? role.group_name}</td>
                 {/* From Always - indefinitely */}
                 <td>
                   {role.start_date ? (

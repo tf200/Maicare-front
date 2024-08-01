@@ -1,11 +1,7 @@
 "use client";
 
 import React, { FunctionComponent, useEffect, useState } from "react";
-import {
-  useGroupDetails,
-  usePermissions,
-  useUpdateGroup,
-} from "@/utils/permissions";
+import { useGroupDetails, usePermissions, useUpdateGroup } from "@/utils/permissions";
 import { ADMIN, ORGANIGRAM_TRANSLATE, PERMISSION_TRANS } from "@/consts";
 import CheckboxItem from "@/components/FormFields/CheckboxItem";
 import Loader from "@/components/common/Loader";
@@ -26,10 +22,8 @@ const PermissionManagement: FunctionComponent<{
   groupId: number;
 }> = ({ groupId }) => {
   const { data: permissions, isLoading: isLoadingPerms } = usePermissions();
-  const { data: groupDetails, isLoading: isLoadingGroups } =
-    useGroupDetails(groupId);
-  const { mutate: updateGroup, isLoading: isUpdatingGroup } =
-    useUpdateGroup(groupId);
+  const { data: groupDetails, isLoading: isLoadingGroups } = useGroupDetails(groupId);
+  const { mutate: updateGroup, isLoading: isUpdatingGroup } = useUpdateGroup(groupId);
 
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   useEffect(() => {

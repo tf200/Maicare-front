@@ -55,9 +55,7 @@ const List = () => {
         return (
           <div className={"overflow-x-auto"}>
             <div className="mb-5">
-              <b className="block">
-                ### Object REPR (ID: #{data.object_id}) ###
-              </b>
+              <b className="block">### Object REPR (ID: #{data.object_id}) ###</b>
               <i>{data.object_repr}</i>
             </div>
             <div className="mb-5">

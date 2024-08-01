@@ -2,11 +2,7 @@
 
 import React, { FunctionComponent } from "react";
 import Panel from "@/components/Panel";
-import {
-  useCarePlan,
-  useCarePlanDelete,
-  useCarePlanPatch,
-} from "@/utils/care-plans";
+import { useCarePlan, useCarePlanDelete, useCarePlanPatch } from "@/utils/care-plans";
 import Loader from "@/components/common/Loader";
 import DetailCell from "@/components/DetailCell";
 import {
@@ -119,9 +115,7 @@ const PlanDetails: FunctionComponent<{
               value={
                 <>
                   <div className="flex flex-wrap gap-4">
-                    {data?.attachments.map((attachment) => (
-                      <DownloadFile file={attachment} />
-                    ))}
+                    {data?.attachments.map((attachment) => <DownloadFile file={attachment} />)}
                   </div>
                 </>
               }

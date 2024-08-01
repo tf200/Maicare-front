@@ -11,9 +11,7 @@ type Props = {
   employeeId: number;
 };
 
-const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
-  employeeId,
-}) => {
+const EmployeeCertificationsSummary: FunctionComponent<Props> = ({ employeeId }) => {
   const { data, isLoading } = useListEducations(employeeId);
   const router = useRouter();
   if (isLoading) return <Loader />;
@@ -33,9 +31,7 @@ const EmployeeCertificationsSummary: FunctionComponent<Props> = ({
               label={"Periode"}
               value={
                 education?.start_date || education?.end_date
-                  ? dateFormat(education?.start_date) +
-                    " - " +
-                    dateFormat(education?.end_date)
+                  ? dateFormat(education?.start_date) + " - " + dateFormat(education?.end_date)
                   : "Niet gespecificeerd"
               }
             />

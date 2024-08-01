@@ -12,9 +12,7 @@ type Props = {
   };
 };
 
-const ExperiencesPage: FunctionComponent<Props> = ({
-  params: { employeeId },
-}) => {
+const ExperiencesPage: FunctionComponent<Props> = ({ params: { employeeId } }) => {
   const query = useListExperiences(+employeeId);
   return (
     <EmployeeBackground

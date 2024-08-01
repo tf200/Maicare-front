@@ -19,8 +19,7 @@ const EpisodesSummary: FunctionComponent<Props> = ({ clientId, count }) => {
     page_size: count || 5,
   });
   if (isLoading) return <Loader />;
-  if (data.results?.length === 0)
-    return <div>No recorded episode for client</div>;
+  if (data.results?.length === 0) return <div>No recorded episode for client</div>;
   return (
     <ul className="flex flex-col gap-2">
       {data.results?.map((episode) => {
@@ -36,9 +35,7 @@ type EmotionalStateItemProps = {
   episode: EpisodesResDto;
 };
 
-const EpisodesItem: FunctionComponent<EmotionalStateItemProps> = ({
-  episode,
-}) => {
+const EpisodesItem: FunctionComponent<EmotionalStateItemProps> = ({ episode }) => {
   return (
     <li className="grid grid-cols-3 px-4 py-4 cursor-pointer hover:bg-gray-3 dark:hover:bg-slate-700 items-center rounded-2xl">
       <div>{dateFormat(episode.date)}</div>

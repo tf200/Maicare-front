@@ -30,10 +30,7 @@ function authErrorInterceptor(error: any) {
   return Promise.reject<any>(error);
 }
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  authErrorInterceptor
-);
+axiosInstance.interceptors.response.use((response) => response, authErrorInterceptor);
 
 export default axiosInstance;
 
