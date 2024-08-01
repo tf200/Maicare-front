@@ -16,13 +16,18 @@ import { create } from 'zustand'
 type Store = {
   conversations: ConversationItem []
   currentConversation: ConversationItem | null
-  setCurrentConversation: (conversation: ConversationItem) => void
+  setCurrentConversation: (employeeId: number) => void
 }
 
 const useChatConversation = create<Store>((set) => ({
   conversations: [],
   currentConversation: null,
-  setCurrentConversation: (conversation) => set({ currentConversation: conversation }),
+  setCurrentConversation: (employeeId) => set((state) => {
+    const conversation = state.conversations.find((conversation) => {
+      return (conversation.involved_details[0]?.id === employeeId) || (conversation.involved_details[1]?.id === employeeId);
+    });
+    return { currentConversation: conversation };
+  }),
 }))
 
 
@@ -58,8 +63,6 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
     if(conversationFromHistory[0]){
       router.push(`/conversations/${conversationFromHistory[0]?.id}`);
       return <></>
-    }else{
-      return <ConversationItem key={0} conversation={currentConversationEmployee}  isTheCurrentConversation={true}/>
     }
   };
 
