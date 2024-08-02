@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent, useEffect, useMemo } from "react";
 import { UserProfile } from "@/types/UserProfile";
 import { getTime } from "@/utils/message-time";
 import ProfilePicture from "@/components/ProfilePicture";
@@ -9,29 +9,10 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 import { useMyInfo } from "@/utils/user-info/getUserInfo";
 import { useRouter } from "next/navigation";
-import { create } from 'zustand'
 
 
-// define a store
-type Store = {
-  conversations: ConversationItem []
-  currentConversation: ConversationItem | null
-  setCurrentConversation: (employeeId: number) => void
-}
 
-const useChatConversation = create<Store>((set) => ({
-  conversations: [],
-  currentConversation: null,
-  setCurrentConversation: (employeeId) => set((state) => {
-    const conversation = state.conversations.find((conversation) => {
-      return (conversation.involved_details[0]?.id === employeeId) || (conversation.involved_details[1]?.id === employeeId);
-    });
-    return { currentConversation: conversation };
-  }),
-}))
-
-
-type ConversationItem = {
+export type ConversationItem = {
   id: number;
   involved_details: UserProfile[];
 };
@@ -51,20 +32,18 @@ export function useConversations(employeeId: number) {
 
 const MessagesLeftPanel: FunctionComponent = (props) => {
   const { data: user } = useMyInfo();
-  const { data: conversations } = useConversations(user?.user);
-  const [currentConversationEmployee, setCurrentConversationEmployee] = React.useState<UserProfile | null>(null);
+  const [currentPath, setCurrentPath] = React.useState<string | null>(window.location.pathname);
+  const { data: conversations, refetch } = useConversations(user?.user);
+  const [currentConversationEmployee, setCurrentConversationEmployee] = React.useState<UserProfile | UserProfile & { user: number } | any>(null);
+  
 
-  const router = useRouter();
+  useEffect(() => {
 
-  const renderNewConversation = () => {
-    const conversationFromHistory = conversations?.results.find((conversation) => {
-      return (conversation.involved_details[0]?.id === currentConversationEmployee?.id) || (conversation.involved_details[1]?.id === currentConversationEmployee?.id);
-    });
-    if(conversationFromHistory[0]){
-      router.push(`/conversations/${conversationFromHistory[0]?.id}`);
-      return <></>
+    if(window.location.pathname !== currentPath){
+      refetch();
+      setCurrentPath(window.location.pathname);
     }
-  };
+  }, [window.location.pathname]);
 
   return (
     <div className="hidden h-full flex-col xl:flex xl:w-1/4">
@@ -80,12 +59,12 @@ const MessagesLeftPanel: FunctionComponent = (props) => {
       </div>
       <div className="flex max-h-full flex-col overflow-auto p-5">
         <form className="sticky mb-7">
-          <EmployeesSearch setNewConversationEmployee={setCurrentConversationEmployee}/>
+          <EmployeesSearch setNewConversationEmployee={setCurrentConversationEmployee} conversations={conversations?.results}/>
         </form>
         <div className="no-scrollbar max-h-full space-y-2.5 overflow-auto">
 
           {conversations?.results.map((conversation, item) => {
-            return <ConversationItem key={conversation.id} conversation={conversation} setNewConversationEmployee={setCurrentConversationEmployee} isTheCurrentConversation={((conversation.involved_details[0]?.id === currentConversationEmployee?.id) || (conversation.involved_details[1]?.id === currentConversationEmployee?.id))}/>;
+            return <ConversationItem key={conversation.id} conversation={conversation} setNewConversationEmployee={setCurrentConversationEmployee} isTheCurrentConversation={((conversation.involved_details[0]?.id === currentConversationEmployee?.user) || (conversation.involved_details[0]?.id === currentConversationEmployee?.id) || (conversation.involved_details[1]?.id === currentConversationEmployee?.user) || (conversation.involved_details[1]?.id === currentConversationEmployee?.id))}/>;
           })}
         </div>
       </div>
@@ -120,33 +99,29 @@ const ConversationItem: FunctionComponent<ConversationItemProps> = ({ conversati
     router.push(`/conversations/${conversationId}`);
   }
 
-  return (
+  return <>
+  { participant && 
     <button
       onClick={handleClick}
-      className={ "w-full flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark" + (isTheCurrentConversation ? " bg-gray-2 dark:bg-strokedark" : "")}
-      
-    >
-      {participant && (
-        <>
-          <div className="relative mr-3.5 h-11 w-full max-w-11 rounded-full">
-            <ProfilePicture
-              profilePicture={participant.profile_picture}
-              className="h-full w-full object-cover object-center"
-              width={44}
-              height={44}
-            />
-            <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"></span>
-          </div>
-          <div className="w-full">
-            <h5 className="text-sm font-medium text-slate-800  dark:text-white">
-              {participant.first_name} {participant.last_name}
-            </h5>
-            {lastSeen && !isOnline && <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>}
-            {lastSentMessage && <p className="text-sm">{lastSentMessage}</p>}
-          </div>
-        </>
-      ) 
-      }
+      className={ "w-full flex cursor-pointer items-center rounded py-2 px-4 hover:bg-gray-2 dark:hover:bg-strokedark" + (isTheCurrentConversation ? " bg-gray-100 dark:bg-strokedark border-l-[3px] border-primary" : "")} 
+      >
+      <div className="relative mr-3.5 h-11 max-w-11 rounded-full">
+        <ProfilePicture
+          profilePicture={participant.profile_picture}
+          className="h-full w-full object-cover object-center"
+          width={44}
+          height={44}
+        />
+        <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"></span>
+      </div>
+      <div className="">
+        <h5 className="text-sm font-medium text-slate-800  dark:text-white">
+          {participant.first_name} {participant.last_name}
+        </h5>
+        {lastSeen && !isOnline && <p className="text-sm">{`Last seen ${getTime(lastSeen)}`}</p>}
+        {lastSentMessage && <p className="text-sm">{lastSentMessage}</p>}
+      </div>
     </button>
-  );
+  }
+  </>
 };
