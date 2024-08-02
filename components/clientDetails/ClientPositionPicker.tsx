@@ -67,7 +67,7 @@ const ClientPositionPicker: FunctionComponent<{ clientId: number }> = ({ clientI
       <button
         onClick={handleClientUpdatePosition}
         className="px-4 py-2 rounded-lg bg-primary font-medium text-white disabled:bg-blue-400 disabled:opacity-55"
-        disabled={(position?.length && clientDetails?.gps_position.length &&  ((position[0] !== parseFloat(clientDetails.gps_position[0])) || (position[1] !== parseFloat(clientDetails.gps_position[1])))) ? false : true }
+        disabled={(position?.length &&  ((position[0] !== parseFloat(clientDetails.gps_position[0])) || (position[1] !== parseFloat(clientDetails.gps_position[1])))) ? false : true }
       >
         Opslaan
       </button>
