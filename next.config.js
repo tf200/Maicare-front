@@ -8,9 +8,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "healtystorages.s3.amazonaws.com",
-        port: "",
+        // Allow loading images from any domain/subdomain.
+        hostname: "**",
       },
     ],
   },
