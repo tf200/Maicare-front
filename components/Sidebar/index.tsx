@@ -32,6 +32,7 @@ import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
 import styles from "./styles.module.scss";
 import SmileyFace from "@/components/icons/SmileyFace";
 import GearIcon from "@/components/icons/GearIcon";
+import { Goal } from "lucide-react";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -436,6 +437,15 @@ const ClientMenu: FunctionComponent = () => {
             permission: consts.CLIENT_VIEW,
             getIsActive: (pathname) => {
               return pathname === `/clients/${clientId}`;
+            },
+          },
+          {
+            completeHref: `/clients/${clientId}/goals`,
+            icon: <Goal width={18} height={18} />,
+            children: "Doelen",
+            permission: consts.CLIENT_VIEW,
+            getIsActive: (pathname) => {
+              return pathname.startsWith(`/clients/${clientId}/goals`);
             },
           },
           {
