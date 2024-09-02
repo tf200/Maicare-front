@@ -16,8 +16,8 @@ export const GeneralInfosShema = {
   youngster_name: Yup.string().required("moet dit veld invullen"),
   date_of_birth: Yup.string().required("moet dit veld invullen"),
   gender: Yup.string().required("moet dit veld invullen"),
-  date_of_intake: Yup.string().required("moet dit veld invullen"),
-  intaker_position_name: Yup.string().required("moet dit veld invullen"),
+  intaker_name: Yup.string().required("moet dit veld invullen"),
+  intaker_function: Yup.string().required("moet dit veld invullen"),
 };
 
 export default function GeneralInfos({
@@ -92,17 +92,30 @@ export default function GeneralInfos({
             onBlur={handleBlur}
             error={touched.date_of_intake && errors.date_of_intake}
           />
-          <InputField
-            label="Naam en functie van de intaker"
-            className={"w-full"}
-            id={"intaker_position_name"}
-            required={true}
-            type={"text"}
-            value={values.intaker_position_name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.intaker_position_name && errors.intaker_position_name}
-          />
+          <div className="flex gap-4">
+            <InputField
+              label="Naam intaker"
+              className={"w-full"}
+              id={"intaker_name"}
+              required={true}
+              type={"text"}
+              value={values.intaker_name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.intaker_name && errors.intaker_name}
+            />
+            <InputField
+              label="functie van de intaker"
+              className={"w-full"}
+              id={"intaker_function"}
+              required={true}
+              type={"text"}
+              value={values.intaker_function}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.intaker_function && errors.intaker_function}
+            />
+          </div>
         </div>
       </div>
     </Panel>

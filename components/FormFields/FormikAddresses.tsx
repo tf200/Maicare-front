@@ -89,7 +89,6 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
                 city: "",
                 zip_code: "",
               });
-              console.log(values.addresses);
             }
             }
           >

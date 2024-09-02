@@ -21,10 +21,8 @@ const ProfilePicture: FunctionComponent<Props> = ({
       width={width}
       height={height}
       src={profilePicture}
-      className={cn(
-        `object-cover object-center rounded-full w-${width / 4} h-${height / 4}`,
-        className
-      )}
+      className={cn("object-cover object-center rounded-full", className)}
+      style={{ width: `${width}px`, height: `${height}px` }}
       alt={"Profile picture"}
     />
   ) : (
