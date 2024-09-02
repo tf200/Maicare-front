@@ -1,4 +1,5 @@
 import { DepartureEntries } from "@/types/departure_entries";
+import { AddressType } from "./client-form-type";
 
 export type NewClientsRequest = {
   first_name: string;
@@ -7,6 +8,7 @@ export type NewClientsRequest = {
   organisation: string;
   location: number;
   legal_measure: string;
+  addresses: AddressType[];
   birthplace: string;
   departement: string;
   gender: string;

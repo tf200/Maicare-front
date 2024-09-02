@@ -21,6 +21,7 @@ import FilesUploader from "@/components/FormFields/FilesUploader";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
 import { useMyPermissions } from "../SecureWrapper";
 import FormikLegalMeasure from "../FormFields/FormikLegalMeasure";
+import FormikAddresses from "../FormFields/FormikAddresses";
 
 const initialValues: ClientFormType = {
   first_name: "",
@@ -44,6 +45,7 @@ const initialValues: ClientFormType = {
   source: "",
   added_identity_documents: [],
   removed_identity_documents: [],
+  addresses: []
 };
 
 export const clientsSchema: Yup.ObjectSchema<ClientFormType> = Yup.object().shape({
@@ -61,6 +63,7 @@ export const clientsSchema: Yup.ObjectSchema<ClientFormType> = Yup.object().shap
   organisation: Yup.string(),
   gender: Yup.string(),
   city: Yup.string(),
+  addresses: Yup.array(),
   Zipcode: Yup.string(),
   infix: Yup.string(),
   streetname: Yup.string(),
@@ -340,53 +343,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
               </Panel>
 
               <Panel containerClassName="p-6.5 pb-5" title={"Adresgegevens"}>
-                <InputField
-                  label={"Straatnaam"}
-                  id={"streetname"}
-                  placeholder={"Straatnaam"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.streetname}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.streetname && errors.streetname}
-                />
-
-                <InputField
-                  label={"Huisnummer"}
-                  id={"street_number"}
-                  placeholder={"Huisnummer"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.street_number}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.street_number && errors.street_number}
-                />
-
-                <InputField
-                  label={"Stad"}
-                  id={"city"}
-                  placeholder={"Stad"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.city && errors.city}
-                />
-
-                <InputField
-                  label={"Postcode"}
-                  id={"Zipcode"}
-                  placeholder={"Postcode"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.Zipcode}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.Zipcode && errors.Zipcode}
-                />
+                <FormikAddresses/>
               </Panel>
             </div>
             <Button
