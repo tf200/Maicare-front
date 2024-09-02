@@ -3,11 +3,10 @@
 import * as Yup from "yup";
 import React, { FunctionComponent, useCallback, useEffect, useMemo } from "react";
 import Panel from "@/components/Panel";
-import { Formik, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import InputField from "@/components/FormFields/InputField";
 import { FormikHelpers } from "formik/dist/types";
 import { useCreateClients } from "@/utils/clients/createClients";
-import { NewClientsRequest } from "@/types/clients/new-clients-request";
 import Button from "../buttons/Button";
 import { useRouter } from "next/navigation";
 import Select from "@/components/FormFields/Select";
@@ -16,13 +15,13 @@ import { useClientDetails } from "@/utils/clients/getClientDetails";
 import FormikRadioGroup from "../FormFields/FormikRadioGroup";
 import { usePatchClient } from "@/utils/clients/patchClient";
 import { ClientFormType } from "@/types/clients/client-form-type";
-import { useLocations } from "@/utils/locations";
-import { SelectionOption } from "@/types/selection-option";
 import FormikLocation from "@/components/FormFields/FormikLocation";
 import { omit } from "@/utils/omit";
 import FilesUploader from "@/components/FormFields/FilesUploader";
 import FilesDeleter from "@/components/FormFields/FilesDeleter";
 import { useMyPermissions } from "../SecureWrapper";
+import FormikLegalMeasure from "../FormFields/FormikLegalMeasure";
+import FormikAddresses from "../FormFields/FormikAddresses";
 
 const initialValues: ClientFormType = {
   first_name: "",
@@ -30,6 +29,7 @@ const initialValues: ClientFormType = {
   email: "",
   organisation: "",
   location: "",
+  legal_measure: "",
   birthplace: "",
   departement: "",
   gender: "",
@@ -45,6 +45,7 @@ const initialValues: ClientFormType = {
   source: "",
   added_identity_documents: [],
   removed_identity_documents: [],
+  addresses: []
 };
 
 export const clientsSchema: Yup.ObjectSchema<ClientFormType> = Yup.object().shape({
@@ -56,11 +57,13 @@ export const clientsSchema: Yup.ObjectSchema<ClientFormType> = Yup.object().shap
   departement: Yup.string(),
   filenumber: Yup.string(),
   location: Yup.string(),
+  legal_measure: Yup.string(),
   birthplace: Yup.string(),
   date_of_birth: Yup.string().required("Geef alstublieft een geboortedatum op"),
   organisation: Yup.string(),
   gender: Yup.string(),
   city: Yup.string(),
+  addresses: Yup.array(),
   Zipcode: Yup.string(),
   infix: Yup.string(),
   streetname: Yup.string(),
@@ -240,6 +243,18 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
                   onBlur={handleBlur}
                   error={touched.date_of_birth && errors.date_of_birth && errors.date_of_birth + ""}
                 />
+                <InputField
+                  label={"Geboorteplaats"}
+                  id={"birthplace"}
+                  placeholder={"Geboorteplaats"}
+                  type={"text"}
+                  className="w-full mb-4.5"
+                  value={values.birthplace}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.birthplace && errors.birthplace}
+                />
+
                 <div className="mb-4.5">
                   <label className="mb-2.5 block text-slate-800  dark:text-white">
                     Dossiernummer
@@ -302,18 +317,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
             <div className="flex flex-col gap-9">
               <Panel containerClassName="p-6.5 pb-5" title={"Locatiegegevens"}>
                 <FormikLocation />
-                <InputField
-                  label={"Geboorteplaats"}
-                  id={"birthplace"}
-                  placeholder={"Geboorteplaats"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.birthplace}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.birthplace && errors.birthplace}
-                />
-
+                <FormikLegalMeasure/>
                 <InputField
                   label={"Afdeling"}
                   id={"departement"}
@@ -339,53 +343,7 @@ export const ClientsForm: FunctionComponent<PropsType> = ({ clientId, mode }) =>
               </Panel>
 
               <Panel containerClassName="p-6.5 pb-5" title={"Adresgegevens"}>
-                <InputField
-                  label={"Straatnaam"}
-                  id={"streetname"}
-                  placeholder={"Straatnaam"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.streetname}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.streetname && errors.streetname}
-                />
-
-                <InputField
-                  label={"Huisnummer"}
-                  id={"street_number"}
-                  placeholder={"Huisnummer"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.street_number}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.street_number && errors.street_number}
-                />
-
-                <InputField
-                  label={"Stad"}
-                  id={"city"}
-                  placeholder={"Stad"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.city && errors.city}
-                />
-
-                <InputField
-                  label={"Postcode"}
-                  id={"Zipcode"}
-                  placeholder={"Postcode"}
-                  type={"text"}
-                  className="w-full mb-4.5"
-                  value={values.Zipcode}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.Zipcode && errors.Zipcode}
-                />
+                <FormikAddresses/>
               </Panel>
             </div>
             <Button

@@ -1,11 +1,10 @@
-import { DepartureEntries } from "@/types/departure_entries";
-
 export type ClientFormType = {
   first_name: string;
   last_name: string;
   email: string;
   organisation: string;
   location: string;
+  legal_measure: string;
   birthplace: string;
   departement: string;
   gender: string;
@@ -16,6 +15,7 @@ export type ClientFormType = {
   date_of_birth: string;
   city: string;
   Zipcode: string;
+  addresses: AddressType[];
   infix: string;
   streetname: string;
   street_number: string;
@@ -24,3 +24,10 @@ export type ClientFormType = {
   departure_reason?: string;
   departure_report?: string;
 };
+
+export type AddressType = {
+  belongs_to: string;
+  address: string;
+  city: string;
+  zip_code: string;
+}
