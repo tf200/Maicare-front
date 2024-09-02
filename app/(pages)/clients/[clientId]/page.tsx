@@ -26,7 +26,6 @@ import { SecureFragment, useMyPermissions } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import UpdateClientStatus from "@/components/clientDetails/UpdateClientStatus";
 import ClientStatusHistory from "@/components/clientDetails/ClientStatusHistory";
-import Button from "@/components/buttons/Button";
 import InvolvedEmployeesSummary from "@/components/clientDetails/InvolvedEmployeesSummary";
 import ClientPositionPicker from "@/components/clientDetails/ClientPositionPicker";
 import ClientDeparture from "@/components/clientDetails/ClientDeparture";
@@ -45,10 +44,7 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
   const { mutate: deleteClient, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteClient();
 
   const {
-    pagination,
-    isFetching,
     isLoading: isListLoading,
-    isError,
     data,
   } = useDocumentList(clientId, {
     page_size: 1000,

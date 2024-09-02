@@ -6,6 +6,7 @@ export type NewClientsRequest = {
   email: string;
   organisation: string;
   location: number;
+  legal_measure: string;
   birthplace: string;
   departement: string;
   gender: string;

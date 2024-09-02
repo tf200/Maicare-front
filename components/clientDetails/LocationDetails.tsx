@@ -31,6 +31,11 @@ const LocationDetails: FunctionComponent<Props> = ({ clientId }) => {
           label={"Afdeling"}
           value={data.departement || "Niet gespecificeerd"}
         />
+        <DetailCell
+          ignoreIfEmpty={true}
+          label={"Wettelijke maatregel"}
+          value={data.legal_measure || "Niet gespecificeerd"}
+        />
       </div>
     );
   }

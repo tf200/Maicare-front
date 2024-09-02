@@ -6,6 +6,7 @@ export type ClientFormType = {
   email: string;
   organisation: string;
   location: string;
+  legal_measure: string;
   birthplace: string;
   departement: string;
   gender: string;
