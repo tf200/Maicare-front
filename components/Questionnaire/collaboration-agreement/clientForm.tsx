@@ -13,7 +13,7 @@ export const clientInitialValue = {
 
 export const clientShema = {
   client_full_name: Yup.string().required("moet dit veld invullen"),
-  client_SKN: Yup.string().required("moet dit veld invullen"),
+  client_SKN: Yup.string().optional(),
   client_number: Yup.string().required("moet dit veld invullen"),
   client_phone: Yup.string().required("moet dit veld invullen"),
 };
@@ -62,7 +62,7 @@ export default function ClientForm({
               label="SKN"
               className={"w-1/2"}
               id={"client_SKN"}
-              required={true}
+              required={false}
               type={"text"}
               value={values.client_SKN}
               onChange={handleChange}

@@ -508,12 +508,12 @@ const ClientMenu: FunctionComponent = () => {
             children: "Vragenlijsten",
             permission: consts.CLIENT_VIEW,
           },
-          {
-            completeHref: `/clients/${clientId}/physical_emotional_states`,
-            icon: <SmileyFace className={"w-4.5 h-4.5"} />,
-            children: "Fysieke & Emotionele",
-            permission: consts.CLIENT_VIEW,
-          },
+          // {
+          //   completeHref: `/clients/${clientId}/physical_emotional_states`,
+          //   icon: <SmileyFace className={"w-4.5 h-4.5"} />,
+          //   children: "Fysieke & Emotionele",
+          //   permission: consts.CLIENT_VIEW,
+          // },
         ]}
         title={
           <Link href={"/clients"} className="flex items-center">
