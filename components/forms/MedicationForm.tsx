@@ -159,8 +159,8 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId, medicationId, mode
               value={(values.start_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              min={dayjs().format("YYYY-MM-DD")}
-              max={values.end_date}
+              //min={dayjs().format("YYYY-MM-DD")}
+              //max={values.end_date}
               error={touched.start_date && errors.start_date && errors.start_date + ""}
             />
             <InputField
@@ -169,7 +169,7 @@ const MedicationForm: FunctionComponent<Props> = ({ clientId, medicationId, mode
               required={true}
               type={"date"}
               label={"Einddatum"}
-              min={values.start_date}
+              //min={values.start_date}
               value={(values.end_date ?? "") + ""}
               onChange={handleChange}
               onBlur={handleBlur}
