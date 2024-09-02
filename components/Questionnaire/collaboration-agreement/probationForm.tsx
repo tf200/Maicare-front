@@ -17,7 +17,7 @@ export const ProbationShema = {
 
 export default function ProbationForm({ handleChange, values, handleBlur, touched, errors }) {
   return (
-    <Panel title={"2. Reclassering"}>
+    <Panel title={"2. Verwijzer"}>
       <div className="mb-4.5 mt-4.5 flex flex-col gap-6 px-6.5">
         <div className="flex flex-col gap-4">
           <InputField
