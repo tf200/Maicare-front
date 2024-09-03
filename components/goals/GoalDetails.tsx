@@ -15,13 +15,11 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
-import QuestionnaireDownloadButton from "../QuestionnaireDownloadButton";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
   maturityMatrixId?: string;
-  readonly?: boolean;
-}> = ({ goal, maturityMatrixId, readonly=false }) => {
+}> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,
     isLoading: isDeleting,
@@ -79,7 +77,7 @@ const GoalDetails: FunctionComponent<{
                       objective,
                       clientId: goal.client_id,
                       maturityMatrixId,
-                      readonly,
+                      readonly: !goal.is_approved,
                     });
                   }}
                   className={cn(
@@ -91,7 +89,7 @@ const GoalDetails: FunctionComponent<{
               </div>
               <div className="mr-2">
                 <IconButton
-                  disabled={readonly}
+                  disabled={!goal.is_approved}
                   onClick={() => {
                     openObjectiveModal({
                       objective,
