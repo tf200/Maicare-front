@@ -30,4 +30,5 @@ export type AddressType = {
   address: string;
   city: string;
   zip_code: string;
+  phone_number: string;
 }
