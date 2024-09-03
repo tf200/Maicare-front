@@ -9,6 +9,7 @@ import { useEmployeesList } from "@/utils/employees/getEmployeesList";
 import { useLocationStats } from "@/utils/locations/getLocationStats";
 import { SecureFragment, useMyPermissions } from "../SecureWrapper";
 import { DASHBOARD_VIEW } from "@/consts";
+import { useRouter } from "next/navigation";
 
 function greeting() {
   const time = new Date().getHours();
@@ -58,6 +59,7 @@ const DashboardOverview: React.FC = () => {
                 capacity={locationStat.location_capacity}
                 expenses={locationStat.total_expenses}
                 revenue={locationStat.total_revenue}
+                locationId={locationStat.location_id}
               />
             ))}
           </div>
@@ -83,9 +85,11 @@ const LocationWidget: FunctionComponent<{
   capacity?: number;
   expenses?: number;
   revenue?: number;
-}> = ({ title, clients, employees, percentage, capacity, expenses, revenue }) => {
+  locationId: number;
+}> = ({ title, clients, employees, percentage, capacity, expenses, revenue, locationId  }) => {
+  const router = useRouter();
   return (
-    <div className="rounded-2xl border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5">
+    <div className="rounded-2xl border cursor-pointer border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5" onClick={()=>router.push('/clients?location='+locationId)}>
       <div className="flex items-end justify-between">
         <div>
           <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">{title}</h3>
