@@ -116,7 +116,6 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               <GoalDetails
                 goal={row.original}
                 maturityMatrixId={row.original.selected_maturity_matrix_assessment?.toString()}
-                readonly={!row.original.is_approved}
               />
             )}
           />
