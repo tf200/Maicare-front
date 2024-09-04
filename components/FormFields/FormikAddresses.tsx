@@ -67,6 +67,19 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
                 error={touched.addresses?.[index]?.zip_code}
               />
 
+              <InputField
+                label={"Telefoonnummer"}
+                id={`addresses.${index}.phone_number`}
+                name={`addresses.${index}.phone_number`}
+                placeholder={"Telefoonnummer"}
+                type={"text"}
+                className="w-full mb-4.5"
+                value={address.phone_number}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.addresses?.[index]?.phone_number}
+              />
+
               <button
                 type="button"
                 className="text-red-500 m-2 w-full text-center "
@@ -88,6 +101,7 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
                 address: "",
                 city: "",
                 zip_code: "",
+                phone_number: "",
               });
             }
             }
