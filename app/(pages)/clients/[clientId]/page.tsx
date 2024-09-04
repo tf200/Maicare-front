@@ -40,6 +40,7 @@ type Props = {
 const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const router = useRouter();
   const { hasPerm } = useMyPermissions();
+  console.log("clientId", clientId);
 
   const { mutate: deleteClient, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteClient();
 
@@ -158,7 +159,6 @@ const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) =
               <ContractsSummary clientId={parseInt(clientId)} />
             </Panel>
           </SecureFragment>
-
           <Panel
             title={`Documenten (${data?.results.length}/${TOTAL_REQUIRED_DOCUMENTS})`}
             containerClassName="px-7 py-4"

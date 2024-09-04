@@ -2,20 +2,15 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
 import "dayjs/locale/en";
-import PaginatedTable from "@/components/PaginatedTable";
 import { useGoalsList } from "@/utils/goal/getGoalsList";
-import { useModal } from "@/components/providers/ModalProvider";
 import Button from "@/components/buttons/Button";
-import NewGoalModal from "@/components/goals/NewGoalModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
 import { useGetDomain, useGetSelectedAssessmentByGoalId } from "@/utils/domains";
-import GoalProgressModal from "@/components/goals/GoalProgressModal";
-import DomainLevels from "@/components/goals/DomainLevels";
 import DetailCell from "@/components/DetailCell";
-import SecureWrapper, { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment } from "@/components/SecureWrapper";
 import { APPROVE_GOALS } from "@/consts";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
@@ -23,6 +18,7 @@ import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
 import { capitalizeFirstLetter, parseGoalIds } from "@/utils";
 import Icon from "@/components/Icon";
+import Table from "@/components/Table";
 
 type Props = {
   params: { clientId: string };
@@ -30,21 +26,15 @@ type Props = {
 
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const searchParams = new URLSearchParams(window.location.search);
-  const { data: assessment, isLoading } = useGetSelectedAssessmentByGoalId(
-    parseInt(searchParams.get("goal_id"))
-  );
-
+  
+  console.log("clientId", clientId);
   const {
-    pagination,
+    goals,
     isFetching,
     isLoading: isListLoading,
     isError,
-    data,
-  } = useGoalsList(parseInt(clientId), {
-    selected_assessment_id: assessment?.id,
-  });
+  } = useGoalsList(parseInt(clientId));
 
-  // const { open: openGoalProgressModal } = useModal(GoalProgressModal);
   const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
@@ -94,7 +84,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 )}
                 {goal.is_approved && (
                   <div className="ml-auto text-meta-3 font-bold flex items-center gap-2">
-                    {/*  approved V*/}
+                    {/*  approved V */}
                     <CheckIcon /> Goedgekeurd
                   </div>
                 )}
@@ -105,7 +95,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
     ];
   }, []);
-
+  // log assessment
   // const { open: openGoalModal } = useModal(NewGoalModal);
 
   return (
@@ -117,20 +107,17 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             <Loader />
           </div>
         )}
-        {data && (
-          <PaginatedTable
-            data={data}
+        {goals && (
+          <Table
+            data={goals}
             className={styles.table}
             columns={columnDef}
-            page={pagination.page ?? 1}
-            isFetching={isFetching}
             renderRowDetails={(row) => (
               <GoalDetails
                 goal={row.original}
-                maturityMatrixId={assessment.maturitymatrix_id?.toString()}
+                maturityMatrixId={row.original.selected_maturity_matrix_assessment?.toString()}
               />
             )}
-            onPageChange={(page) => pagination.setPage(page)}
           />
         )}
         {isError && (

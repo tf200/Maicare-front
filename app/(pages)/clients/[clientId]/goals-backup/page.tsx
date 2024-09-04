@@ -21,6 +21,7 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
+import Table from "@/components/Table";
 
 type Props = {
   params: { clientId: string };
@@ -28,11 +29,10 @@ type Props = {
 
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const {
-    pagination,
     isFetching,
     isLoading: isListLoading,
     isError,
-    data,
+    goals,
   } = useGoalsList(parseInt(clientId));
 
   const { open: openGoalProgressModal } = useModal(GoalProgressModal);
@@ -118,15 +118,12 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             <Loader />
           </div>
         )}
-        {data && (
-          <PaginatedTable
-            data={data}
+        {goals && (
+          <Table
+            data={goals}
             className={styles.table}
             columns={columnDef}
-            page={pagination.page ?? 1}
-            isFetching={isFetching}
             renderRowDetails={(row) => <GoalDetails goal={row.original} />}
-            onPageChange={(page) => pagination.setPage(page)}
           />
         )}
         {isError && (

@@ -15,7 +15,6 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
-import QuestionnaireDownloadButton from "../QuestionnaireDownloadButton";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -78,10 +77,11 @@ const GoalDetails: FunctionComponent<{
                       objective,
                       clientId: goal.client_id,
                       maturityMatrixId,
+                      readonly: !goal.is_approved,
                     });
                   }}
                   className={cn(
-                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1"
+                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 "
                   )}
                 >
                   <Icon name="line-chart" />
@@ -89,6 +89,7 @@ const GoalDetails: FunctionComponent<{
               </div>
               <div className="mr-2">
                 <IconButton
+                  disabled={!goal.is_approved}
                   onClick={() => {
                     openObjectiveModal({
                       objective,
@@ -96,7 +97,7 @@ const GoalDetails: FunctionComponent<{
                       clientId: goal.client_id,
                     });
                   }}
-                  className="text-left flex flex-grow justify-between items-center"
+                  className="text-left flex flex-grow justify-between items-center disabled:opacity-80"
                 >
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
