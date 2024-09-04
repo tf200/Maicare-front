@@ -1,36 +1,42 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from "react";
 
 export function useUrlQuery<T>(key: string, defaultValue: T) {
-  const searchParams = new URLSearchParams(window.location.search) // this shouldn't be memoized
+  const searchParams = new URLSearchParams(window.location.search); // this shouldn't be memoized
 
   const [query, setQueryState] = useState<T>(() => {
     try {
-      let storedValue = searchParams.get(key)
-      if (storedValue != null) return JSON.parse(storedValue) as T
+      let storedValue = searchParams.get(key);
+      if (storedValue != null) return JSON.parse(storedValue) as T;
     } catch (error) {}
 
-    return defaultValue
-  })
+    return defaultValue;
+  });
 
   const setQuery = useCallback(
     (value: T | ((prev: T) => T)) => {
-      const searchParams = new URLSearchParams(window.location.search) // this shouldn't be memoized
+      const searchParams = new URLSearchParams(window.location.search); // this shouldn't be memoized
 
       // Call if it's a function
       if (typeof value === "function") {
-        value = (value as Function)(query)
+        value = (value as Function)(query);
       }
 
-      searchParams.set(key, JSON.stringify(value))
+      searchParams.set(key, JSON.stringify(value));
 
       // Sorting the search params to avoid re-ordering
-      searchParams.sort()
+      searchParams.sort();
 
-      window.history.replaceState({}, "", `${window.location.pathname}?${searchParams.toString()}`)
-      return setQueryState(value)
+      window.history.replaceState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
+      return setQueryState(value);
     },
-    [key, query],
-  )
+    [key, query]
+  );
 
-  return [query, setQuery] as const
+  const removeQuery = useCallback(() => {
+    const searchParams = new URLSearchParams(window.location.search); // this shouldn't be memoized
+
+    searchParams.delete(key);
+  }, [key]);
+
+  return [query, setQuery, removeQuery] as const;
 }
