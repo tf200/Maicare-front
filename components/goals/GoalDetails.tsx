@@ -67,10 +67,9 @@ const GoalDetails: FunctionComponent<{
               <div className="font-bold flex-grow">
                 <Icon name="move-right" /> {objective.title}
               </div>
-              <div className="mr-2">
-                <IconButton
-                  disabled={!goal.is_approved}
-                  
+              { goal.is_approved && (
+                <div className="mr-2">
+                <IconButton                  
                   onClick={(e) => {
                     e.stopPropagation();
                     openObjectiveProgressModal({
@@ -82,12 +81,13 @@ const GoalDetails: FunctionComponent<{
                     });
                   }}
                   className={cn(
-                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 disabled:opacity-80"
+                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 "
                   )}
                 >
                   <Icon name="line-chart" />
                 </IconButton>
               </div>
+              ) }
               <div className="mr-2">
                 <IconButton
                   onClick={() => {
