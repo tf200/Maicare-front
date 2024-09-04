@@ -89,7 +89,7 @@ const LocationWidget: FunctionComponent<{
 }> = ({ title, clients, employees, percentage, capacity, expenses, revenue, locationId  }) => {
   const router = useRouter();
   return (
-    <div className="rounded-2xl border cursor-pointer border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5" onClick={()=>router.push('/clients?location='+locationId)}>
+    <div className="rounded-2xl border cursor-pointer border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-7.5" onClick={()=>window.location.href = '/clients?location='+locationId}>
       <div className="flex items-end justify-between">
         <div>
           <h3 className="mb-4 text-title-lg font-bold text-black dark:text-white">{title}</h3>
