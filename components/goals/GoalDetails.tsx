@@ -15,13 +15,11 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
-import QuestionnaireDownloadButton from "../QuestionnaireDownloadButton";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
   maturityMatrixId?: string;
-  readonly?: boolean;
-}> = ({ goal, maturityMatrixId, readonly=false }) => {
+}> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,
     isLoading: isDeleting,
