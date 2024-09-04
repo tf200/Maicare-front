@@ -48,22 +48,19 @@ const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({ additionalProps
             setSelectedOption(option.value as OptionType);
           }}
         />
-        { additionalProps.readOnly && (
-           <Button
-           className={"ml-auto disabled:opacity-80"}
-           disabled={additionalProps.readonly}
-           onClick={() => {
-             openReportModal({
-               clientId: additionalProps.clientId,
-               objectiveId: objective.id,
-               objective,
-               maturityMatrixId: additionalProps.maturityMatrixId,
-             });
-           }}
-         >
-           <span>Voeg wekelijkse rapportage toe</span>
-         </Button>
-        )}
+        <Button
+          className={"ml-auto"}
+          onClick={() => {
+            openReportModal({
+              clientId: additionalProps.clientId,
+              objectiveId: objective.id,
+              objective,
+              maturityMatrixId: additionalProps.maturityMatrixId,
+            });
+          }}
+        >
+          <span>Voeg wekelijkse rapportage toe</span>
+        </Button>
       </div>
       {data && selectedOption === "chart" && (
         <div className="p-4 bg-white rounded">
