@@ -35,6 +35,7 @@ export type GoalsListItem = {
   reviewed_by_name: string;
   created_by_id: number;
   reviewed_by_id: number;
+  selected_maturity_matrix_assessment: number;
   is_approved: boolean;
 };
 

@@ -49,8 +49,7 @@ const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({ additionalProps
           }}
         />
         <Button
-          className={"ml-auto disabled:opacity-80"}
-          disabled={!additionalProps.readonly}
+          className={"ml-auto"}
           onClick={() => {
             openReportModal({
               clientId: additionalProps.clientId,

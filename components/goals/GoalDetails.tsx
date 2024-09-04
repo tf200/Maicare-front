@@ -71,6 +71,8 @@ const GoalDetails: FunctionComponent<{
               </div>
               <div className="mr-2">
                 <IconButton
+                  disabled={!goal.is_approved}
+                  
                   onClick={(e) => {
                     e.stopPropagation();
                     openObjectiveProgressModal({
@@ -79,11 +81,10 @@ const GoalDetails: FunctionComponent<{
                       objective,
                       clientId: goal.client_id,
                       maturityMatrixId,
-                      readonly,
                     });
                   }}
                   className={cn(
-                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 "
+                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 disabled:opacity-80"
                   )}
                 >
                   <Icon name="line-chart" />
@@ -91,7 +92,6 @@ const GoalDetails: FunctionComponent<{
               </div>
               <div className="mr-2">
                 <IconButton
-                  disabled={readonly}
                   onClick={() => {
                     openObjectiveModal({
                       objective,
