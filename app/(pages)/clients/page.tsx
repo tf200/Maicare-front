@@ -32,7 +32,6 @@ const ClientsPage: FunctionComponent = () => {
     status__in,
     location,
   });
-
   const router = useRouter();
 
   const columnDef = useMemo<ColumnDef<ClientsResDto>[]>(() => {
@@ -113,8 +112,14 @@ const ClientsPage: FunctionComponent = () => {
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters
+              search={search}
+              location={location}
+              status={status__in
+                ?.split(", ")
+                .map((item) => item.trim())
+                .filter((item) => item.length > 0)}
               onFiltersChange={(filters) => {
-                if(filters.search !== undefined) setSearch(filters.search);
+                if (filters.search !== undefined) setSearch(filters.search);
                 if (filters.status__in !== undefined) setStatusIn(filters.status__in);
                 if (filters.location !== undefined) setLocation(filters.location);
                 setPage(1);
