@@ -36,7 +36,7 @@ export function useUrlQuery<T>(key: string, defaultValue: T) {
     const searchParams = new URLSearchParams(window.location.search); // this shouldn't be memoized
 
     searchParams.delete(key);
-  }, []);
+  }, [key]);
 
   return [query, setQuery, removeQuery] as const;
 }
