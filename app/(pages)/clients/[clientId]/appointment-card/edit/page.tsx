@@ -1,5 +1,6 @@
 "use client";
 
+
 import React from "react";
 import { Formik, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -8,6 +9,8 @@ import Loader from "@/components/common/Loader";
 import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
 import { toast } from "react-toastify";
+import IconButton from "@/components/buttons/IconButton";
+import { TrashIcon } from "lucide-react";
 
 export default function AppointmentCardEditPage({
   params: { clientId },
@@ -17,68 +20,86 @@ export default function AppointmentCardEditPage({
   const { appointment, updateAppointment, isLoading, isError } = useClientAppointment(clientId);
 
   if (isLoading) return <Loader />;
-  if (isError) return <div className="text-red-600">We failed to load appointment details</div>;
+  if (isError) return <div className="text-red-600">Het is niet gelukt om de afspraakgegevens te laden</div>;
+
+  // Transform appointment data to extract content for initial values
+  const transformAppointmentData = (data) => {
+    return data ? data.map((item) => item.content) : [];
+  };
 
   return (
     <Formik
       initialValues={{
-        general: (appointment.general || []).map(content => ({ content })),
-        important_contacts: (appointment.important_contacts || []).map(content => ({ content })),
-        household: (appointment.household || []).map(content => ({ content })),
-        organization_agreements: (appointment.organization_agreements || []).map(content => ({ content })),
-        probation_service_agreements: (appointment.probation_service_agreements || []).map(content => ({ content })),
-        appointments_regarding_treatment: (appointment.appointments_regarding_treatment || []).map(content => ({ content })),
-        school_stage: (appointment.school_stage || []).map(content => ({ content })),
-        travel: (appointment.travel || []).map(content => ({ content })),
-        leave: (appointment.leave || []).map(content => ({ content })),
+        general: transformAppointmentData(appointment.general),
+        important_contacts: transformAppointmentData(appointment.important_contacts),
+        household: transformAppointmentData(appointment.household),
+        organization_agreements: transformAppointmentData(appointment.organization_agreements),
+        probation_service_agreements: transformAppointmentData(
+          appointment.probation_service_agreements
+        ),
+        appointments_regarding_treatment: transformAppointmentData(
+          appointment.appointments_regarding_treatment
+        ),
+        school_stage: transformAppointmentData(appointment.school_stage),
+        travel: transformAppointmentData(appointment.travel),
+        leave: transformAppointmentData(appointment.leave),
       }}
       validationSchema={Yup.object({
-        general: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        important_contacts: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        household: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        organization_agreements: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        probation_service_agreements: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        appointments_regarding_treatment: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        school_stage: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        travel: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
-        leave: Yup.array().of(Yup.object({
-          content: Yup.string().required("Required"),
-        })),
+        general: Yup.array().of(Yup.string().required("Verplicht")),
+        important_contacts: Yup.array().of(Yup.string().required("Verplicht")),
+        household: Yup.array().of(Yup.string().required("Verplicht")),
+        organization_agreements: Yup.array().of(Yup.string().required("Verplicht")),
+        probation_service_agreements: Yup.array().of(Yup.string().required("Verplicht")),
+        appointments_regarding_treatment: Yup.array().of(Yup.string().required("Verplicht")),
+        school_stage: Yup.array().of(Yup.string().required("Verplicht")),
+        travel: Yup.array().of(Yup.string().required("Verplicht")),
+        leave: Yup.array().of(Yup.string().required("Verplicht")),
       })}
       onSubmit={async (values, { setSubmitting }) => {
-       
-        
+        // Transform form values back to original structure
+        const transformFormValues = (formValues) => {
+          return formValues.map((content) => ({ content }));
+        };
+
+        const formattedValues = {
+          general: transformFormValues(values.general),
+          important_contacts: transformFormValues(values.important_contacts),
+          household: transformFormValues(values.household),
+          organization_agreements: transformFormValues(values.organization_agreements),
+          probation_service_agreements: transformFormValues(values.probation_service_agreements),
+          appointments_regarding_treatment: transformFormValues(
+            values.appointments_regarding_treatment
+          ),
+          school_stage: transformFormValues(values.school_stage),
+          travel: transformFormValues(values.travel),
+          leave: transformFormValues(values.leave),
+        };
+
         try {
-          console.log("Formatted values", values);
-          await updateAppointment(values);
-          toast.success("Appointment details updated successfully");
+          console.log("Formatted values", formattedValues);
+          await updateAppointment(formattedValues);
+          toast.success("Afspraakdetails succesvol bijgewerkt");
         } catch (error) {
-          console.error("Failed to update appointment details", error);
-          toast.error("Failed to update appointment details: " + error, { autoClose: 5000 });
+          console.error("Het is niet gelukt om de afspraakdetails bij te werken", error);
+          toast.error("Het is niet gelukt om de afspraakdetails bij te werken: " + error, { autoClose: 5000 });
         }
         setSubmitting(false);
       }}
     >
       {({ values, handleChange, handleBlur, errors, touched, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <Panel title={"Afspraak Bewerken"}>
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+          <Panel
+            title={"Afspraak Bewerken"}
+            sideActions={
+              <button
+                type="submit"
+                className="my-4 bg-blue-700 text-white py-2 px-4 rounded-lg float-right"
+              >
+                Wijzigingen Opslaan
+              </button>
+            }
+          >
+            <div className="w-full gap-4 p-4">
               {Object.keys(values).map((key) => (
                 <FieldArray key={key} name={key}>
                   {({ push, remove }) => (
@@ -86,41 +107,46 @@ export default function AppointmentCardEditPage({
                       <h3 className="font-semibold text-gray-600 capitalize">
                         {key.replace("_", " ")}
                       </h3>
-                      {values[key].length === 0 ? (
-                        <div className="text-gray-500 italic">
-                          No items available for {key.replace("_", " ")}.
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {values[key].map((item, index) => (
-                            <div key={index} className="flex flex-col">
-                              <InputField
-                                label={`Item ${index + 1}`}
-                                name={`${key}.${index}.content`}
-                                type="text"
-                                value={item.content}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={touched[key]?.[index]?.content && errors[key]?.[index]?.content}
-                                className="mb-2"
-                              />
-                              <button
-                                type="button"
-                                className="text-red-500 text-sm mt-1 self-end"
-                                onClick={() => remove(index)}
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      <div className="overflow-x-auto">
+                        <table className="w-full border border-gray-300">
+                          <tbody>
+                            {values[key].length > 0 ? (
+                              values[key].map((content, index) => (
+                                <tr key={index} className="border-b border-gray-300">
+                                  <td className="p-2">
+                                    <InputField
+                                      name={`${key}.${index}`}
+                                      type="text"
+                                      value={content}
+                                      onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      error={touched[key]?.[index] && errors[key]?.[index]}
+                                      className="w-full border-none focus:ring-0 focus:border-transparent"
+                                    />
+                                  </td>
+                                  <td className="px-4 w-20 text-right">
+                                    <IconButton buttonType="Danger" onClick={() => remove(index)}>
+                                      <TrashIcon className="w-5 h-5" />
+                                    </IconButton>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr className="border-b border-gray-300">
+                                <td className="p-2 text-gray-500" colSpan={2}>
+                                  Geen gegevens beschikbaar
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
                       <button
                         type="button"
-                        className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
-                        onClick={() => push({ content: "" })}
+                        className="mt-2 text-blue-700 bg-blue-100 dark:bg-gray-800 w-full py-1 px-4 rounded-lg"
+                        onClick={() => push("")}
                       >
-                        Add Item
+                        Item Toevoegen
                       </button>
                     </div>
                   )}
@@ -128,12 +154,6 @@ export default function AppointmentCardEditPage({
               ))}
             </div>
           </Panel>
-          <button
-            type="submit"
-            className="my-4 bg-blue-700 text-white py-2 px-4 rounded-lg float-right"
-          >
-            Save Changes
-          </button>
         </form>
       )}
     </Formik>
