@@ -19,7 +19,7 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
                 label={"Behoort Tot"}
                 id={`addresses.${index}.belongs_to`}
                 name={`addresses.${index}.belongs_to`}
-                placeholder={"Behoort Tot"}
+                placeholder={"bijv. moeder, broer"}
                 type={"text"}
                 className="w-full mb-4.5"
                 value={address.belongs_to}
@@ -67,6 +67,19 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
                 error={touched.addresses?.[index]?.zip_code}
               />
 
+              <InputField
+                label={"Telefoonnummer"}
+                id={`addresses.${index}.phone_number`}
+                name={`addresses.${index}.phone_number`}
+                placeholder={"Telefoonnummer"}
+                type={"text"}
+                className="w-full mb-4.5"
+                value={address.phone_number}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.addresses?.[index]?.phone_number}
+              />
+
               <button
                 type="button"
                 className="text-red-500 m-2 w-full text-center "
@@ -74,23 +87,22 @@ const FormikAddresses: FunctionComponent<{ className?: string; required?: boolea
               >
                 Verwijder Adres
               </button>
-              <hr className="m-2"/>
+              <hr className="m-2" />
             </div>
           ))}
 
           <button
             type="button"
             className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg w-full"
-            onClick={() =>
-            {
+            onClick={() => {
               push({
                 belongs_to: "",
                 address: "",
                 city: "",
                 zip_code: "",
+                phone_number: "",
               });
-            }
-            }
+            }}
           >
             Voeg Adres Toe
           </button>

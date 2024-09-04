@@ -39,6 +39,11 @@ const AddressDetails: FunctionComponent<Props> = ({ clientId }) => {
             label={"Stad"}
             value={address.city || "Niet gespecificeerd"}
           />
+          <DetailCell
+            ignoreIfEmpty={true}
+            label={"Telefoonnummer"}
+            value={address.phone_number || "Niet gespecificeerd"}
+          />
         </div>
       </div>
       ))

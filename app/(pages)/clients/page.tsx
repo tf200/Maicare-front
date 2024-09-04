@@ -22,9 +22,13 @@ import { mappingGender } from "@/utils/gender";
 import { SecureFragment } from "@/components/SecureWrapper";
 import * as consts from "@/consts/permissions";
 import Loader from "@/components/common/Loader";
+import { useUrlQuery } from "@/hooks";
 
 const ClientsPage: FunctionComponent = () => {
-  const [filters, setFilters] = useState<ClientsSearchParams>();
+  const [search, setSearch] =useUrlQuery<string>("search", undefined);
+  const [status__in, setStatusIn] =useUrlQuery<string>("status", undefined); 
+  const [location, setLocation] =useUrlQuery<number>("location", undefined);
+  const filters = { search, status__in, location }; 
   const debouncedParams = useDebounce(filters, 500);
   const { page, setPage, data, isError, isFetching, isLoading } = useClientsList(debouncedParams);
 
@@ -109,7 +113,9 @@ const ClientsPage: FunctionComponent = () => {
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters
               onFiltersChange={(filters) => {
-                setFilters((prev) => ({ ...prev, ...filters }));
+                setSearch((prev) => filters.search);
+                setStatusIn((prev) => filters.status__in);
+                setLocation((prev) => filters.location);
                 setPage(1);
               }}
             />
