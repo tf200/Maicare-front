@@ -32,7 +32,7 @@ import ClipBoardDocsIcon from "@/components/icons/ClipBoardDocsIcon";
 import styles from "./styles.module.scss";
 import SmileyFace from "@/components/icons/SmileyFace";
 import GearIcon from "@/components/icons/GearIcon";
-import { Goal } from "lucide-react";
+import { Calendar, Goal } from "lucide-react";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -440,15 +440,6 @@ const ClientMenu: FunctionComponent = () => {
             },
           },
           {
-            completeHref: `/clients/${clientId}/goals`,
-            icon: <Goal width={18} height={18} />,
-            children: "Doelen",
-            permission: consts.CLIENT_VIEW,
-            getIsActive: (pathname) => {
-              return pathname.startsWith(`/clients/${clientId}/goals`);
-            },
-          },
-          {
             completeHref: `/clients/${clientId}/medical-record`,
             icon: <HeartIcon width={18} height={18} />,
             children: "Medisch Dossier",
@@ -461,6 +452,24 @@ const ClientMenu: FunctionComponent = () => {
                 pathname.startsWith(`/clients/${clientId}/allergies`) ||
                 pathname.startsWith(`/clients/${clientId}/episodes`)
               );
+            },
+          },
+          {
+            completeHref: `/clients/${clientId}/appointment-card`,
+            icon: <Calendar width={18} height={18} />,
+            children: "Afsprakenkaart",
+            permission: consts.CLIENT_VIEW,
+            getIsActive: (pathname) => {
+              return pathname.startsWith(`/clients/${clientId}/appointment-card`);
+            },
+          },
+          {
+            completeHref: `/clients/${clientId}/goals`,
+            icon: <Goal width={18} height={18} />,
+            children: "Doelen",
+            permission: consts.CLIENT_VIEW,
+            getIsActive: (pathname) => {
+              return pathname.startsWith(`/clients/${clientId}/goals`);
             },
           },
           {
