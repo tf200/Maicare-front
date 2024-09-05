@@ -15,6 +15,7 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
+import { useMaturityMatrixDetails } from "@/utils/domains";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
@@ -26,6 +27,8 @@ const GoalDetails: FunctionComponent<{
     isSuccess: isDeleted,
   } = useDeleteGoal(goal.client_id);
 
+  const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
+  console.log("maturity matrix ", matrixDetails);
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
   const { open: newObjectiveModal } = useModal(NewObjectiveModal);

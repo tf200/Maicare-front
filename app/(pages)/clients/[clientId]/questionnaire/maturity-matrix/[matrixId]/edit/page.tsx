@@ -5,13 +5,13 @@ import Panel from "@/components/Panel";
 import Button from "@/components/buttons/Button";
 import AdvancedMaturityMatrixField from "@/components/maturity_matrix/AdvancedMaturityMatrixField";
 import {
-  MaturityMatrixPayload,
-  useCreateMaturityMatrix,
   useMaturityMatrixDetails,
   useUpdateMaturityMatrix,
+  MaturityMatrixPatch,
+  useArchiveMaturityMatrix, // <-- Import archive function
 } from "@/utils/domains";
 import axios from "axios";
-import { Formik, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -28,14 +28,16 @@ export default function EditMaturityMatrixPage({
 }: EditMaturityMatrixPageProps) {
   const router = useRouter();
   const { mutate: updateMaturityMatrix, isLoading: isUpdating } = useUpdateMaturityMatrix(matrixId);
+  const { mutate: archiveMaturityMatrix, isLoading: isArchiving } = useArchiveMaturityMatrix(matrixId); // <-- Archive mutation
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(matrixId);
 
-  const formik = useFormik<MaturityMatrixPayload>({
+  const formik = useFormik<MaturityMatrixPatch>({
     initialValues: !isLoading
       ? {
           client_id: clientId,
           start_date: matrixDetails.start_date,
           end_date: matrixDetails.end_date,
+          is_archived: matrixDetails.is_archived || false, // <-- Initialize is_archived
           maturity_matrix: matrixDetails.selected_assessments.map((assessment) => ({
             domain_id: assessment.domain_id,
             level: assessment.level,
@@ -46,6 +48,7 @@ export default function EditMaturityMatrixPage({
           client_id: clientId,
           start_date: "",
           end_date: "",
+          is_archived: false,
           maturity_matrix: [],
         },
     enableReinitialize: true,
@@ -55,12 +58,14 @@ export default function EditMaturityMatrixPage({
       maturity_matrix: Yup.array().min(1, "Please select a domain to work on!").required(),
     }),
     onSubmit: (values) => {
-      updateMaturityMatrix(values, {
-        onSuccess() {
-          toast.success("Maturity matrix successfully updated!");
-          router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
-        },
-      });
+      if (!values.is_archived) {
+        updateMaturityMatrix(values, {
+          onSuccess() {
+            toast.success("Maturity matrix successfully updated!");
+            router.push(`/clients/${clientId}/questionnaire/maturity-matrix`);
+          },
+        });
+      }
     },
   });
 
@@ -70,26 +75,41 @@ export default function EditMaturityMatrixPage({
     toast.error(error.message);
   }
 
-  // Show formik errors
-  if (formik.errors) {
-    // Object.keys(formik.errors).forEach((key) => {
-    //   toast.error(formik.errors[key]);
-    // });
-    console.log(formik.errors);
-  }
+  const handleArchive = () => {
+    archiveMaturityMatrix({ ...values, is_archived: true }, {
+      onSuccess: () => {
+        toast.success("Maturity matrix archived!");
+        formik.setFieldValue("is_archived", true); // <-- Set is_archived to true
+      },
+    });
+  };
 
   return (
     <Panel
       title="Volwassenheidsmatrix bijwerken"
       sideActions={
-        <Button
-          onClick={() => formik.handleSubmit()}
-          type="button"
-          form="add-maturity-matrix-form"
-          className="btn btn-primary"
-        >
-          {isUpdating ? "Updating..." : "Update"}
-        </Button>
+        <>
+        { matrixDetails && !matrixDetails.is_archived && <div className="flex justify-between gap-2">
+          {/* Archive Button */}
+          <Button
+            onClick={handleArchive}
+            type="button"
+            className="btn btn-warning"
+          >
+            {isArchiving ? "Archiving..." : "Mark as Archived"}
+          </Button>
+
+          {/* Update Button (disabled when archived) */}
+          <Button
+            onClick={() => formik.handleSubmit()}
+            type="button"
+            form="add-maturity-matrix-form"
+            className="btn btn-primary"
+          >
+            {isUpdating ? "Updating..." : "Update"}
+          </Button>
+        </div> }
+        </>
       }
     >
       <div className="p-5">
@@ -109,6 +129,7 @@ export default function EditMaturityMatrixPage({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.start_date && errors.start_date}
+                  disabled={values.is_archived} // <-- Disable when archived
                 />
                 <InputField
                   label={"Eind datum"}
@@ -120,6 +141,7 @@ export default function EditMaturityMatrixPage({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.end_date && errors.end_date}
+                  disabled={values.is_archived} // <-- Disable when archived
                 />
               </div>
               <AdvancedMaturityMatrixField

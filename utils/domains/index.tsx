@@ -115,6 +115,14 @@ export type MaturityMatrixPayload = {
   maturity_matrix: selectedAssessmentDto[];
 };
 
+export type MaturityMatrixPatch = {
+  client_id?: number;
+  start_date?: string;
+  is_archived?: boolean;
+  end_date?: string;
+  maturity_matrix?: selectedAssessmentDto[];
+};
+
 async function createMaturityMatrix(payload: MaturityMatrixPayload) {
   const req = await api.post("/clients/questionnaires/maturity-matrices/add", payload);
   return req.data;
@@ -230,6 +238,7 @@ export type MaturityMatrixDto = {
   start_date: string;
   end_date: string;
   is_approved: boolean;
+  is_archived: boolean;
   updated: string;
   created: string;
   selected_assessments: SelectedAssessmentDto[];
@@ -257,7 +266,7 @@ export function useMaturityMatrixDetails(matrixId: number) {
   return useQuery(["maturity_matrix_details", matrixId], () => getMaturityMatrixDetails(matrixId));
 }
 
-async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPayload) {
+async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPatch) {
   const response = await api.put<MaturityMatrixDto>(
     `/clients/questionnaires/maturity-matrices/${matrixId}/update`,
     payload
@@ -267,7 +276,17 @@ async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPay
 
 export function useUpdateMaturityMatrix(matrixId: number) {
   const queryClient = useQueryClient();
-  return useMutation((payload: MaturityMatrixPayload) => updateMaturityMatrix(matrixId, payload), {
+  return useMutation((payload: MaturityMatrixPatch) => updateMaturityMatrix(matrixId, payload), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["maturity_matrix_list"]);
+      queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
+    },
+  });
+}
+
+export function useArchiveMaturityMatrix(matrixId: number) {
+  const queryClient = useQueryClient();
+  return useMutation((payload: MaturityMatrixPatch) => updateMaturityMatrix(matrixId, payload), {
     onSuccess: () => {
       queryClient.invalidateQueries(["maturity_matrix_list"]);
       queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
