@@ -2,42 +2,36 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
 import "dayjs/locale/en";
-import PaginatedTable from "@/components/PaginatedTable";
 import { useGoalsList } from "@/utils/goal/getGoalsList";
-import { useModal } from "@/components/providers/ModalProvider";
 import Button from "@/components/buttons/Button";
-import NewGoalModal from "@/components/goals/NewGoalModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
-import { useGetDomain } from "@/utils/domains";
-import GoalProgressModal from "@/components/goals/GoalProgressModal";
-import DomainLevels from "@/components/goals/DomainLevels";
+import { useGetDomain, useGetSelectedAssessmentByGoalId, useMaturityMatrixDetails } from "@/utils/domains";
 import DetailCell from "@/components/DetailCell";
-import SecureWrapper, { SecureFragment } from "@/components/SecureWrapper";
+import { SecureFragment } from "@/components/SecureWrapper";
 import { APPROVE_GOALS } from "@/consts";
 import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
+import { capitalizeFirstLetter, parseGoalIds } from "@/utils";
+import Icon from "@/components/Icon";
 import Table from "@/components/Table";
 
-type Props = {
-  params: { clientId: string };
+type MaturityMatrixGoalsPageProps = {
+  params: { matrixId: string, assessmentId: string, clientId: string };
 };
 
-const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const {
-    isFetching,
-    isLoading: isListLoading,
-    isError,
-    goals,
-  } = useGoalsList(parseInt(clientId));
-
-  const { open: openGoalProgressModal } = useModal(GoalProgressModal);
+export default function MaturityMatrixGoalsPage ({
+  params: { matrixId, assessmentId, clientId },
+}: MaturityMatrixGoalsPageProps) {
+  
   const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
-  console.log("goals", goals);
+  const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(matrixId));
+  const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals
+
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -49,7 +43,9 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             <div>
               <h3 className="font-bold flex text-lg mb-6 justify-between">
                 <div className="block">
-                  <div>{goal.title}</div>
+                  <div>
+                    <Icon name="flag-triangle-right" /> {capitalizeFirstLetter(goal.title)}
+                  </div>
                   <Domain id={goal.domain_id} />
                 </div>
                 <button
@@ -84,7 +80,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
                 )}
                 {goal.is_approved && (
                   <div className="ml-auto text-meta-3 font-bold flex items-center gap-2">
-                    {/*  approved V*/}
+                    {/*  approved V */}
                     <CheckIcon /> Goedgekeurd
                   </div>
                 )}
@@ -95,26 +91,14 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
       },
     ];
   }, []);
-
-  const { open: openGoalModal } = useModal(NewGoalModal);
+  // log assessment
+  // const { open: openGoalModal } = useModal(NewGoalModal);
 
   return (
     <>
-      <DomainLevels clientId={+clientId} />
-      <Panel
-        className="w-full"
-        title={"Doelenlijst"}
-        sideActions={
-          <Button
-            onClick={() => {
-              openGoalModal({ clientId });
-            }}
-          >
-            Nieuw Doel Toevoegen
-          </Button>
-        }
-      >
-        {isListLoading && (
+      {/* <DomainLevels clientId={+clientId} /> */}
+      <Panel className="w-full" title={"Doelenlijst"}>
+        {!goals && (
           <div className="p-4 sm:p-6 xl:p-7.5">
             <Loader />
           </div>
@@ -124,7 +108,12 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             data={goals}
             className={styles.table}
             columns={columnDef}
-            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={"000"} />}
+            renderRowDetails={(row) => (
+              <GoalDetails
+                goal={row.original}
+                maturityMatrixId={row.original.selected_maturity_matrix_assessment?.toString()}
+              />
+            )}
           />
         )}
         {isError && (
@@ -137,7 +126,6 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   );
 };
 
-export default GoalsPage;
 
 const Domain: FunctionComponent<{ id: number }> = ({ id }) => {
   const { data } = useGetDomain(id);

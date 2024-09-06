@@ -86,6 +86,7 @@ export const useClientLevels = (clientId: number) => {
 export type selectedAssessment = Prettify<
   SetDomainLevelReqDto & {
     goal_ids: number[];
+    assessment_id: number;
   }
 >;
 
@@ -217,19 +218,42 @@ export type SelectedAssessmentDto = {
   domain_id: number;
   level: number;
   maturitymatrix_id: number;
-  goals: {
-    domain_id: number;
-    client_id: number;
-    main_goal_rating: number;
-    created_by_id: number | null;
-    reviewed_by_id: number | null;
-    created_by_name: string | null;
-    reviewed_by_name: string | null;
-    id: number;
-    title: string;
-    desc: string;
-  }[];
+  goals: GoalDto[];
 };
+
+// objective Dto type
+
+export type ObjectiveDto = {
+  client_id: number;
+  created: string;
+  desc: string;
+  goal_id: number;
+  id: number;
+  rating: number;
+  title: string;
+  updated: string;
+}
+
+// response goals
+export type GoalDto = {
+  domain_id: number;
+  client_id: number;
+  main_goal_rating: number;
+  created: string;
+  updated: string;
+  is_approved: boolean;
+  objectives: ObjectiveDto[];
+  created_by_id: number | null;
+  reviewed_by_id: number | null;
+  created_by_name: string | null;
+  reviewed_by_name: string | null;
+  selected_maturity_matrix_assessment: number;
+  id: number;
+  title: string;
+  desc: string;
+}
+
+
 
 // Response Dto type
 export type MaturityMatrixDto = {

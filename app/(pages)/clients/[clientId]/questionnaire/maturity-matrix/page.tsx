@@ -8,9 +8,11 @@ import { Pencil, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import MultiMaturityMatrixPrintButton from "@/components/maturity_matrix/MultiMaturityMatrixPrintButton";
+import Badge from "@/components/Badge";
 
 export default function MaturityMatrixPage({ params: { clientId } }) {
   const { data: maturity_matrix_list, isLoading } = useMaturityMatrixList(clientId);
+  console.log("maturity_matrix_list", maturity_matrix_list);
 
   const [items, setItems] = useState([]);
 
@@ -64,6 +66,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                 <th>#ID</th>
                 <th>Start datum</th>
                 <th>Eind datum</th>
+                <th>is Gearchiveerd</th>
                 {/* <th>Goedgekeurd</th> */}
                 <th>Acties</th>
               </tr>
@@ -89,7 +92,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
                   </td>
                   <td>{matrix.start_date}</td>
                   <td>{matrix.end_date}</td>
-                  {/* <td>{matrix.is_approved ? "Ja" : "Nee"}</td> */}
+                  <td>{matrix.is_archived ? <Badge variant="warning">Ja</Badge> : <Badge variant="outline">Nee</Badge>}</td>
                   <td
                     style={{
                       display: "flex",

@@ -19,7 +19,7 @@ import { useMaturityMatrixDetails } from "@/utils/domains";
 
 const GoalDetails: FunctionComponent<{
   goal: GoalsListItem;
-  maturityMatrixId?: string;
+  maturityMatrixId: string;
 }> = ({ goal, maturityMatrixId }) => {
   const {
     mutate: deleteGoal,

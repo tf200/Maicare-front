@@ -30,7 +30,7 @@ export default function EditMaturityMatrixPage({
   const { mutate: updateMaturityMatrix, isLoading: isUpdating } = useUpdateMaturityMatrix(matrixId);
   const { mutate: archiveMaturityMatrix, isLoading: isArchiving } = useArchiveMaturityMatrix(matrixId); // <-- Archive mutation
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(matrixId);
-
+  console.log("matrixDetails", matrixDetails);
   const formik = useFormik<MaturityMatrixPatch>({
     initialValues: !isLoading
       ? {
@@ -42,6 +42,7 @@ export default function EditMaturityMatrixPage({
             domain_id: assessment.domain_id,
             level: assessment.level,
             goal_ids: assessment.goals.map((goal) => goal.id),
+            assessment_id: assessment.id,
           })),
         }
       : {
@@ -147,6 +148,7 @@ export default function EditMaturityMatrixPage({
               <AdvancedMaturityMatrixField
                 mode="edit"
                 clientId={clientId}
+                matrixId={matrixId}
                 name="maturity_matrix"
                 className="overflow-x-auto"
               />
