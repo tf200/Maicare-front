@@ -28,7 +28,7 @@ export default function MaturityMatrixGoalsPage ({
   params: { matrixId, assessmentId, clientId },
 }: MaturityMatrixGoalsPageProps) {
   
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), parseInt(matrixId));
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(matrixId));
   const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals
 
@@ -111,7 +111,7 @@ export default function MaturityMatrixGoalsPage ({
             renderRowDetails={(row) => (
               <GoalDetails
                 goal={row.original}
-                maturityMatrixId={row.original.selected_maturity_matrix_assessment?.toString()}
+                maturityMatrixId={matrixId}
               />
             )}
           />

@@ -10,7 +10,7 @@ import InputField from "@/components/FormFields/InputField";
 import Panel from "@/components/Panel";
 import { toast } from "react-toastify";
 import IconButton from "@/components/buttons/IconButton";
-import { TrashIcon } from "lucide-react";
+import { Plus, TrashIcon } from "lucide-react";
 
 export default function AppointmentCardEditPage({
   params: { clientId },
@@ -22,62 +22,30 @@ export default function AppointmentCardEditPage({
   if (isLoading) return <Loader />;
   if (isError) return <div className="text-red-600">Het is niet gelukt om de afspraakgegevens te laden</div>;
 
-  // Transform appointment data to extract content for initial values
-  const transformAppointmentData = (data) => {
-    return data ? data.map((item) => item.content) : [];
-  };
-
   return (
     <Formik
-      initialValues={{
-        general: transformAppointmentData(appointment.general),
-        important_contacts: transformAppointmentData(appointment.important_contacts),
-        household: transformAppointmentData(appointment.household),
-        organization_agreements: transformAppointmentData(appointment.organization_agreements),
-        probation_service_agreements: transformAppointmentData(
-          appointment.probation_service_agreements
-        ),
-        appointments_regarding_treatment: transformAppointmentData(
-          appointment.appointments_regarding_treatment
-        ),
-        school_stage: transformAppointmentData(appointment.school_stage),
-        travel: transformAppointmentData(appointment.travel),
-        leave: transformAppointmentData(appointment.leave),
-      }}
+      initialValues={appointment}
       validationSchema={Yup.object({
-        general: Yup.array().of(Yup.string().required("Verplicht")),
-        important_contacts: Yup.array().of(Yup.string().required("Verplicht")),
-        household: Yup.array().of(Yup.string().required("Verplicht")),
-        organization_agreements: Yup.array().of(Yup.string().required("Verplicht")),
-        probation_service_agreements: Yup.array().of(Yup.string().required("Verplicht")),
-        appointments_regarding_treatment: Yup.array().of(Yup.string().required("Verplicht")),
-        school_stage: Yup.array().of(Yup.string().required("Verplicht")),
-        travel: Yup.array().of(Yup.string().required("Verplicht")),
-        leave: Yup.array().of(Yup.string().required("Verplicht")),
+        general: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        important_contacts: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        household: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        organization_agreements: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        probation_service_agreements: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        appointments_regarding_treatment: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        school_stage: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        travel: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
+        leave: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
       })}
       onSubmit={async (values, { setSubmitting }) => {
         // Transform form values back to original structure
         const transformFormValues = (formValues) => {
           return formValues.map((content) => ({ content }));
         };
-
-        const formattedValues = {
-          general: transformFormValues(values.general),
-          important_contacts: transformFormValues(values.important_contacts),
-          household: transformFormValues(values.household),
-          organization_agreements: transformFormValues(values.organization_agreements),
-          probation_service_agreements: transformFormValues(values.probation_service_agreements),
-          appointments_regarding_treatment: transformFormValues(
-            values.appointments_regarding_treatment
-          ),
-          school_stage: transformFormValues(values.school_stage),
-          travel: transformFormValues(values.travel),
-          leave: transformFormValues(values.leave),
-        };
+        console.log("Values", values);
 
         try {
-          console.log("Formatted values", formattedValues);
-          await updateAppointment(formattedValues);
+          console.log("Formatted values", values);
+          await updateAppointment(values);
           toast.success("Afspraakdetails succesvol bijgewerkt");
         } catch (error) {
           console.error("Het is niet gelukt om de afspraakdetails bij te werken", error);
@@ -111,13 +79,13 @@ export default function AppointmentCardEditPage({
                         <table className="w-full border border-gray-300">
                           <tbody>
                             {values[key].length > 0 ? (
-                              values[key].map((content, index) => (
+                              values[key].map((item, index) => (
                                 <tr key={index} className="border-b border-gray-300">
                                   <td className="p-2">
                                     <InputField
                                       name={`${key}.${index}`}
                                       type="text"
-                                      value={content}
+                                      value={item?.content}
                                       onChange={handleChange}
                                       onBlur={handleBlur}
                                       error={touched[key]?.[index] && errors[key]?.[index]}
@@ -134,7 +102,7 @@ export default function AppointmentCardEditPage({
                             ) : (
                               <tr className="border-b border-gray-300">
                                 <td className="p-2 text-gray-500" colSpan={2}>
-                                  Geen gegevens beschikbaar
+                                  -
                                 </td>
                               </tr>
                             )}
@@ -143,10 +111,10 @@ export default function AppointmentCardEditPage({
                       </div>
                       <button
                         type="button"
-                        className="mt-2 text-blue-700 bg-blue-100 dark:bg-gray-800 w-full py-1 px-4 rounded-lg"
+                        className="mt-2 text-blue-700 bg-blue-100 dark:bg-gray-800 w-full py-1 px-4 rounded-lg flex justify-center items-center content-center gap-1"
                         onClick={() => push("")}
                       >
-                        Item Toevoegen
+                       <Plus size={18}/> <span>Item Toevoegen</span>
                       </button>
                     </div>
                   )}

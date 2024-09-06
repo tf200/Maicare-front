@@ -182,7 +182,7 @@ async function approveGoal(goalId: number) {
   return response.data;
 }
 
-export const useApproveGoal = (clientId: number) => {
+export const useApproveGoal = (clientId: number, matrixId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (goalId: number) => {
@@ -190,6 +190,7 @@ export const useApproveGoal = (clientId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([clientId, "goals"]);
+      queryClient.invalidateQueries(["maturity_matrix", matrixId]);
     },
   });
 };
