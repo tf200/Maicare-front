@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 import MultiMaturityMatrixPrintButton from "@/components/maturity_matrix/MultiMaturityMatrixPrintButton";
 import Badge from "@/components/Badge";
+import { useModal } from "@/components/providers/ModalProvider";
+import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
 
 export default function MaturityMatrixPage({ params: { clientId } }) {
   const { data: maturity_matrix_list, isLoading } = useMaturityMatrixList(clientId);
@@ -32,6 +34,7 @@ export default function MaturityMatrixPage({ params: { clientId } }) {
       })
     );
   };
+
 
   return (
     <Panel

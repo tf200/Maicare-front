@@ -10,34 +10,34 @@ export default function Badge({ children, variant = "primary" }: BadgeProps) {
 
   switch (variant) {
     case 'primary':
-      className += " bg-blue-600 text-white"
+      className += " bg-blue-200 text-blue-600"
       break
     case 'secondary':
-      className += " bg-gray-600 text-white"
+      className += " bg-gray-200 text-gray-600"
       break
     case 'outline':
       className += " border border-gray-500 text-gray-500"
       break
     case 'success':
-      className += " bg-green-500 text-white"
+      className += " bg-green-200 text-green-600"
       break
     case 'danger':
-      className += " bg-red-500 text-white"
+      className += " bg-red-200 text-red-600"
       break
     case 'warning':
-      className += " bg-yellow-500 text-white"
+      className += " bg-yellow-200 text-yellow-600"
       break
     case 'info':
-      className += " bg-teal-500 text-white"
+      className += " bg-teal-200 text-teal-600"
       break
     case 'light':
-      className += " bg-gray-100 text-gray-700"
+      className += " bg-gray-100 text-gray-600"
       break
     case 'dark':
-      className += " bg-black text-white"
+      className += " bg-gray-800 text-gray-200"
       break
     default:
-      className += " bg-blue-600 text-white"
+      className += " bg-blue-200 text-blue-600"
   }
 
   return <span className={className}>{children}</span>
