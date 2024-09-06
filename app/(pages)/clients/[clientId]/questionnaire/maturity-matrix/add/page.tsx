@@ -117,8 +117,7 @@ export default function AddMaturityMatrixPage({
               className="overflow-x-auto"
               // Dates are useful for Smart Formula
               startDate={values.start_date}
-              endDate={values.end_date}
-            />
+              endDate={values.end_date}/>
           </form>
         </FormikProvider>
       </div>

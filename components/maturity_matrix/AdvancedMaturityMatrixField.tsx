@@ -6,6 +6,7 @@ import { selectedAssessment } from "@/utils/domains";
 type AdvancedMaturityMatrixFieldProps = {
   name: string;
   clientId: number;
+  matrixId?: number;
   className?: string;
   mode?: ModeType;
   startDate?: string;
@@ -15,6 +16,7 @@ type AdvancedMaturityMatrixFieldProps = {
 export default function AdvancedMaturityMatrixField({
   name,
   clientId,
+  matrixId,
   className = "",
   mode = "create",
   ...rest
@@ -31,6 +33,7 @@ export default function AdvancedMaturityMatrixField({
       <MaturityMatrixTable
         mode={mode}
         clientId={clientId}
+        matrixId={matrixId}
         selectedAssessments={field.value}
         // onChange={({ selectedAssessment, isNew }) => {
         //   // console.log("on Change:", selectedAssessment);

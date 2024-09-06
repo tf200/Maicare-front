@@ -86,6 +86,7 @@ export const useClientLevels = (clientId: number) => {
 export type selectedAssessment = Prettify<
   SetDomainLevelReqDto & {
     goal_ids: number[];
+    assessment_id: number;
   }
 >;
 
@@ -113,6 +114,14 @@ export type MaturityMatrixPayload = {
   start_date: string;
   end_date: string;
   maturity_matrix: selectedAssessmentDto[];
+};
+
+export type MaturityMatrixPatch = {
+  client_id?: number;
+  start_date?: string;
+  is_archived?: boolean;
+  end_date?: string;
+  maturity_matrix?: selectedAssessmentDto[];
 };
 
 async function createMaturityMatrix(payload: MaturityMatrixPayload) {
@@ -209,19 +218,42 @@ export type SelectedAssessmentDto = {
   domain_id: number;
   level: number;
   maturitymatrix_id: number;
-  goals: {
-    domain_id: number;
-    client_id: number;
-    main_goal_rating: number;
-    created_by_id: number | null;
-    reviewed_by_id: number | null;
-    created_by_name: string | null;
-    reviewed_by_name: string | null;
-    id: number;
-    title: string;
-    desc: string;
-  }[];
+  goals: GoalDto[];
 };
+
+// objective Dto type
+
+export type ObjectiveDto = {
+  client_id: number;
+  created: string;
+  desc: string;
+  goal_id: number;
+  id: number;
+  rating: number;
+  title: string;
+  updated: string;
+}
+
+// response goals
+export type GoalDto = {
+  domain_id: number;
+  client_id: number;
+  main_goal_rating: number;
+  created: string;
+  updated: string;
+  is_approved: boolean;
+  objectives: ObjectiveDto[];
+  created_by_id: number | null;
+  reviewed_by_id: number | null;
+  created_by_name: string | null;
+  reviewed_by_name: string | null;
+  selected_maturity_matrix_assessment: number;
+  id: number;
+  title: string;
+  desc: string;
+}
+
+
 
 // Response Dto type
 export type MaturityMatrixDto = {
@@ -230,6 +262,7 @@ export type MaturityMatrixDto = {
   start_date: string;
   end_date: string;
   is_approved: boolean;
+  is_archived: boolean;
   updated: string;
   created: string;
   selected_assessments: SelectedAssessmentDto[];
@@ -257,7 +290,7 @@ export function useMaturityMatrixDetails(matrixId: number) {
   return useQuery(["maturity_matrix_details", matrixId], () => getMaturityMatrixDetails(matrixId));
 }
 
-async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPayload) {
+async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPatch) {
   const response = await api.put<MaturityMatrixDto>(
     `/clients/questionnaires/maturity-matrices/${matrixId}/update`,
     payload
@@ -267,7 +300,17 @@ async function updateMaturityMatrix(matrixId: number, payload: MaturityMatrixPay
 
 export function useUpdateMaturityMatrix(matrixId: number) {
   const queryClient = useQueryClient();
-  return useMutation((payload: MaturityMatrixPayload) => updateMaturityMatrix(matrixId, payload), {
+  return useMutation((payload: MaturityMatrixPatch) => updateMaturityMatrix(matrixId, payload), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["maturity_matrix_list"]);
+      queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
+    },
+  });
+}
+
+export function useArchiveMaturityMatrix(matrixId: number) {
+  const queryClient = useQueryClient();
+  return useMutation((payload: MaturityMatrixPatch) => updateMaturityMatrix(matrixId, payload), {
     onSuccess: () => {
       queryClient.invalidateQueries(["maturity_matrix_list"]);
       queryClient.invalidateQueries(["maturity_matrix_details", matrixId]);
