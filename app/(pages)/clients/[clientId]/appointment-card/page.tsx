@@ -4,6 +4,10 @@ import React, { useCallback } from "react";
 import Panel from "@/components/Panel";
 import { useClientAppointment } from "@/hooks/useClientAppointment";
 import LinkButton from "@/components/buttons/LinkButton";
+import QuestionnaireDownloadButton from "@/components/QuestionnaireDownloadButton";
+import Link from "next/link";
+import IconButton from "@/components/buttons/IconButton";
+import PencilSquare from "@/components/icons/PencilSquare";
 
 export default function ClientAppointmentCardPage({
   params: { clientId },
@@ -42,9 +46,15 @@ export default function ClientAppointmentCardPage({
     <Panel
       title={`Afsprakenkaart Chrystal voor cliënt ${clientId}`}
       header={
-        <div className="flex w-full justify-end">
-          <LinkButton text={"Bewerken"} href={`/clients/${clientId}/appointment-card/edit`} />
+        <div className="flex w-full justify-end gap-2">
+          <QuestionnaireDownloadButton type="appointment_card"  questId={+clientId}/>
+          <Link href={`/clients/${clientId}/appointment-card/edit`}>
+            <IconButton>
+              <PencilSquare className="w-5 h-5" />
+            </IconButton>
+          </Link>
         </div>
+        
       }
     >
       <div className="p-6  gap-6">
