@@ -1,3 +1,4 @@
+import { AppointmentCardDTO } from "@/types/appointment_card"
 import axiosInstance from "@/utils/api"
 import { useQuery, useQueryClient } from "react-query"
 
@@ -32,6 +33,9 @@ export function useClientAppointment(clientId: number) {
 
 
 async function fetchClientAppointment(clientId: number) {
-  const { data } = await axiosInstance.get(`/clients/${clientId}/appointment-card`)
+  const { data } = await axiosInstance.get<AppointmentCardDTO>(`/clients/${clientId}/appointment-card`)
+  delete data.client
+  delete data.updated
+  delete data.id
   return data
 }
