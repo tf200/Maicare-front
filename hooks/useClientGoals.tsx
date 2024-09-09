@@ -13,7 +13,6 @@ export function useClientGoals(clientId: number) {
       retry: false,
     },
   )
-  console.log("goals", data)
 
   return {
     goals: data,

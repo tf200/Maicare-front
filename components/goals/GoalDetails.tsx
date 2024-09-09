@@ -17,17 +17,16 @@ import Icon from "../Icon";
 import { cn } from "@/utils/cn";
 import { useMaturityMatrixDetails } from "@/utils/domains";
 
-const GoalDetails: FunctionComponent<{
-  goal: GoalsListItem;
-  maturityMatrixId: string;
-}> = ({ goal, maturityMatrixId }) => {
-  const {
-    mutate: deleteGoal,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteGoal(goal.client_id);
+const GoalDetails: FunctionComponent<{ goalId: number; maturityMatrixId: string, assessmentId: string }> = ({ goalId, maturityMatrixId, assessmentId }) => {
+  
+  const { data: matrixDetails } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
 
-  const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
+  const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals;
+  const goal = goals?.find((goal) => goal.id === goalId);
+
+  
+  const { mutate: deleteGoal, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteGoal(goal.client_id);
+
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
   const { open: newObjectiveModal } = useModal(NewObjectiveModal);
@@ -38,6 +37,8 @@ const GoalDetails: FunctionComponent<{
     })
   );
   const { open: openObjectiveProgressModal } = useModal(ObjectiveProgressModal);
+
+
 
   return (
     <div>
@@ -94,23 +95,23 @@ const GoalDetails: FunctionComponent<{
                   </div>
                 </>
               )}
-              { !matrixDetails?.is_archived && (
-                <div className="mr-2">
-                    <IconButton
-                      onClick={() => {
-                        openObjectiveModal({
-                          objective,
-                          goalId: goal.id,
-                          clientId: goal.client_id,
-                          isArchived: matrixDetails?.is_archived,
-                        });
-                      }}
-                      className="text-left flex flex-grow justify-between items-center disabled:opacity-80"
-                    >
-                      <PencilSquare className="w-5 h-5" />
-                    </IconButton>
-                </div>
-              )}
+              
+              <div className="mr-2">
+                  <IconButton
+                    onClick={() => {
+                      openObjectiveModal({
+                        objective,
+                        goalId: goal.id,
+                        clientId: goal.client_id,
+                        isArchived: matrixDetails?.is_archived,
+                      });
+                    }}
+                    className="text-left flex flex-grow justify-between items-center disabled:opacity-80"
+                  >
+                    <PencilSquare className="w-5 h-5" />
+                  </IconButton>
+              </div>
+              
                 
               <div
                 // onClick={(e) => {

@@ -14,6 +14,7 @@ const UpdateObjectiveModal: FunctionComponent<ModalProps> = ({ additionalProps, 
         mode="edit"
         initialData={objective}
         onSuccess={props.onClose}
+        isArchived={additionalProps.isArchived}
       />
     </FormModal>
   );

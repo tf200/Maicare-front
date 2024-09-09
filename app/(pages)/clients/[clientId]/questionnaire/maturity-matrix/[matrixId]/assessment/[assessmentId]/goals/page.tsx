@@ -2,7 +2,6 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
 import "dayjs/locale/en";
-import { useGoalsList } from "@/utils/goal/getGoalsList";
 import Button from "@/components/buttons/Button";
 import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
@@ -16,7 +15,7 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
-import { capitalizeFirstLetter, parseGoalIds } from "@/utils";
+import { capitalizeFirstLetter } from "@/utils";
 import Icon from "@/components/Icon";
 import Table from "@/components/Table";
 
@@ -31,7 +30,6 @@ export default function MaturityMatrixGoalsPage ({
   const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), parseInt(matrixId));
   const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(matrixId));
   const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals
-
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -64,7 +62,7 @@ export default function MaturityMatrixGoalsPage ({
               <div className="mb-6 mt-6 flex gap-4">
                 <DetailCell value={goal.created_by_name} label={"Aangemaakt door"} />
                 <DetailCell value={goal.reviewed_by_name} label={"Goedgekeurd door"} />
-                {!goal.is_approved && (
+                {!goal.is_approved && !matrixDetails?.is_archived && (
                   <SecureFragment permission={APPROVE_GOALS}>
                     <Button
                       onClick={(e) => {
@@ -110,8 +108,9 @@ export default function MaturityMatrixGoalsPage ({
             columns={columnDef}
             renderRowDetails={(row) => (
               <GoalDetails
-                goal={row.original}
+                goalId={row.original.id}
                 maturityMatrixId={matrixId}
+                assessmentId={assessmentId}
               />
             )}
           />

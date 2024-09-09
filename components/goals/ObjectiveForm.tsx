@@ -26,7 +26,8 @@ const ObjectiveForm: FunctionComponent<{
   onSuccess?: () => void;
   mode?: "edit" | "create";
   initialData?: ObjectiveItem;
-}> = ({ clientId, goalId, onSuccess, mode = "create", initialData }) => {
+  isArchived?: boolean;
+}> = ({ clientId, goalId, onSuccess, mode = "create", initialData, isArchived }) => {
   const { mutate: create, isLoading: isCreating } = useCreateObjective(clientId, goalId);
   const { mutate: update, isLoading: isUpdating } = useUpdateObjective(clientId, initialData?.id);
   const { mutate: deleteObjective } = useDeleteObjective(clientId);
@@ -64,6 +65,7 @@ const ObjectiveForm: FunctionComponent<{
           required={true}
           type="text"
           name="title"
+          disabled={isArchived}
           placeholder={"Titel"}
           label={"Titel"}
           className={"mb-6"}
@@ -77,6 +79,7 @@ const ObjectiveForm: FunctionComponent<{
           placeholder={"Geef alstublieft een omschrijving"}
           required={true}
           rows={6}
+          disabled={isArchived}
           name="desc"
           className={"mb-4"}
           inputClassName="h-[500px]"
@@ -86,7 +89,7 @@ const ObjectiveForm: FunctionComponent<{
           error={touched.desc && errors.desc}
         />
         <div className="flex justify-center gap-4">
-          {initialData && mode === "edit" && (
+          {initialData && mode === "edit" && !isArchived && (
             <Button
               buttonType={"Danger"}
               onClick={() => {
@@ -101,14 +104,16 @@ const ObjectiveForm: FunctionComponent<{
               Verwijderen
             </Button>
           )}
-          <Button
-            isLoading={isCreating || isUpdating}
-            disabled={isCreating || isUpdating}
-            type="submit"
-            formNoValidate={true}
-          >
-            Verzenden
-          </Button>
+          { !isArchived && (
+            <Button
+              isLoading={isCreating || isUpdating}
+              disabled={isCreating || isUpdating}
+              type="submit"
+              formNoValidate={true}
+            >
+              Verzenden
+            </Button>
+          )}
         </div>
       </form>
     </FormikProvider>

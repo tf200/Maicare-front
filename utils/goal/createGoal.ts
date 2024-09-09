@@ -15,7 +15,7 @@ export const useCreateGoal = (clientId: number) => {
       return createGoal(clientId, data);
     },
     onSuccess: (data: NewGoalsReqDto) => {
-      queryClient.invalidateQueries([clientId, "goals"]);
+      queryClient.invalidateQueries(["maturity_matrix_details"]);
     },
   });
 };

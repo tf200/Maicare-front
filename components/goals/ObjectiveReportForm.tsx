@@ -31,12 +31,13 @@ const ObjectiveReportForm: FunctionComponent<Props> = ({
     mutate: create,
     isLoading: isCreating,
     isError: cantCreate,
-  } = useAddObjectiveReport(clientId, objective.id);
+  } = useAddObjectiveReport(clientId, objective.id, parseInt(maturityMatrixId));
 
   const { mutate: update, isLoading: isUpdating } = useUpdateObjectiveReport(
     clientId,
     objective.id,
-    initialData?.id
+    initialData?.id,
+    maturityMatrixId
   );
   const [week, setWeek] = useState<string>("");
   const [error, setError] = useState<string>("");
