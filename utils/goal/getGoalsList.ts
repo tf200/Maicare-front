@@ -15,8 +15,6 @@ const fetchGoalsList =
     };
 
 export const useGoalsList = (clientId: number) => {
-  
-
   const { data, ...rest } = useQuery({
     queryKey: [clientId, "goals"],
     queryFn: fetchGoalsList(clientId),

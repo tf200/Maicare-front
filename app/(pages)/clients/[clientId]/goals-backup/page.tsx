@@ -123,7 +123,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             data={goals}
             className={styles.table}
             columns={columnDef}
-            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={"000"} />}
+            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={"000"} assessmentId="000" />}
           />
         )}
         {isError && (

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { GoalsListItem } from "@/types/goals";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
@@ -17,15 +17,10 @@ import Icon from "../Icon";
 import { cn } from "@/utils/cn";
 import { useMaturityMatrixDetails } from "@/utils/domains";
 
-const GoalDetails: FunctionComponent<{ goalId: number; maturityMatrixId: string, assessmentId: string }> = ({ goalId, maturityMatrixId, assessmentId }) => {
+const GoalDetails: FunctionComponent<{ goal: GoalsListItem; maturityMatrixId: string, assessmentId: string }> = ({ goal, maturityMatrixId, assessmentId }) => {
   
-  const { data: matrixDetails } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
-
-  const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals;
-  const goal = goals?.find((goal) => goal.id === goalId);
-
   
-  const { mutate: deleteGoal, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteGoal(goal.client_id);
+  const { mutate: deleteGoal, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteGoal(goal?.client_id);
 
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
@@ -38,7 +33,7 @@ const GoalDetails: FunctionComponent<{ goalId: number; maturityMatrixId: string,
   );
   const { open: openObjectiveProgressModal } = useModal(ObjectiveProgressModal);
 
-
+  const { data: matrixDetails, isLoading } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
 
   return (
     <div>

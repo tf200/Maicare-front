@@ -21,10 +21,10 @@ import Icon from "@/components/Icon";
 import Table from "@/components/Table";
 
 type Props = {
-  params: { clientId: string, matrixId: string };
+  params: { clientId: string };
 };
 
-const GoalsPage: FunctionComponent<Props> = ({ params: { clientId, matrixId } }) => {
+const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const searchParams = new URLSearchParams(window.location.search);
   
   const {
@@ -33,8 +33,9 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId, matrixId } })
     isLoading: isListLoading,
     isError,
   } = useGoalsList(parseInt(clientId));
+  console.log("goals", goals);
 
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), parseInt(matrixId));
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), 0);
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -114,7 +115,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId, matrixId } })
             renderRowDetails={(row) => (
               <GoalDetails
                 goal={row.original}
-                maturityMatrixId={matrixId}
+                assessmentId={`${row.original.selected_maturity_matrix_assessment}`}
+                maturityMatrixId={`${row.original.maturity_matrix}`}
               />
             )}
           />

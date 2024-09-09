@@ -108,7 +108,7 @@ export default function MaturityMatrixGoalsPage ({
             columns={columnDef}
             renderRowDetails={(row) => (
               <GoalDetails
-                goalId={row.original.id}
+                goal={row.original}
                 maturityMatrixId={matrixId}
                 assessmentId={assessmentId}
               />

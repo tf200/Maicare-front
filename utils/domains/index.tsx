@@ -248,6 +248,7 @@ export type GoalDto = {
   created_by_name: string | null;
   reviewed_by_name: string | null;
   selected_maturity_matrix_assessment: number;
+  maturity_matrix: number;
   id: number;
   title: string;
   desc: string;
