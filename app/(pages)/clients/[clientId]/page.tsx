@@ -40,7 +40,6 @@ type Props = {
 const ClientDetailsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   const router = useRouter();
   const { hasPerm } = useMyPermissions();
-  console.log("clientId", clientId);
 
   const { mutate: deleteClient, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteClient();
 

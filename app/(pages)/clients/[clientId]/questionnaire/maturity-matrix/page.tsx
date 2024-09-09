@@ -14,7 +14,6 @@ import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActi
 
 export default function MaturityMatrixPage({ params: { clientId } }) {
   const { data: maturity_matrix_list, isLoading } = useMaturityMatrixList(clientId);
-  console.log("maturity_matrix_list", maturity_matrix_list);
 
   const [items, setItems] = useState([]);
 

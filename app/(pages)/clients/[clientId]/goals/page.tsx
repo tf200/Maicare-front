@@ -27,7 +27,6 @@ type Props = {
 const GoalsPage: FunctionComponent<Props> = ({ params: { clientId, matrixId } }) => {
   const searchParams = new URLSearchParams(window.location.search);
   
-  console.log("clientId", clientId);
   const {
     goals,
     isFetching,

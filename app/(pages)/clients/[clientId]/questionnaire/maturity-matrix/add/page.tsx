@@ -44,9 +44,7 @@ export default function AddMaturityMatrixPage({
         .required("Dit veld is verplicht"),
     }),
     onSubmit: (values) => {
-      console.log("values : ", values);
       const maturityMatrixes = values.maturity_matrix;
-      console.log("maturityMatrix : ", maturityMatrixes);
 
       for (let index = 0; index < maturityMatrixes.length; index++) {
         const domain = maturityMatrixes[index];

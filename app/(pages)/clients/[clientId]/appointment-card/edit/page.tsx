@@ -41,10 +41,8 @@ export default function AppointmentCardEditPage({
         const transformFormValues = (formValues) => {
           return formValues.map((content) => ({ content }));
         };
-        console.log("Values", values);
 
         try {
-          console.log("Formatted values", values);
           await updateAppointment(values);
           toast.success("Afspraakdetails succesvol bijgewerkt");
         } catch (error) {

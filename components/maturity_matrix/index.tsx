@@ -74,8 +74,6 @@ export default function MaturityMatrixTable({
   endDate,
 }: MaturityMatrixTableProps) {
   const { data: domains, isLoading } = useDomains();
-  console.log("domains", domains);
-  console.log("selectedAssessments", selectedAssessments);
 
   const handleSelectedAssessmentsChange = useCallback(
     (selectedAssessment: selectedAssessment, domain: MDomain, level: MLevel) => {
@@ -224,7 +222,6 @@ function MatrixItem({
   matrixId: number;
   assessmentId: number;
 }) {
-  console.log("assessment", assessment);
   const router = useRouter();
   const { domain_id: domainId, level: levelId } = assessment; // for backward compatibility
 

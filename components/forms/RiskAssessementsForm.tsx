@@ -98,7 +98,6 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
-    console.log("values");
     const payload = { client_id: clientId, ...values };
 
     const onSuccess = () => {
@@ -116,7 +115,6 @@ const RiskAssessementsForm: React.FC<Props> = ({ clientId, riskId, mode }) => {
       onSubmit={onSubmit}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => {
-        console.log(errors);
         return (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols lg:grid-cols-2 gap-4 mb-4">

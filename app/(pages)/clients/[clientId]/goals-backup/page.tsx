@@ -36,8 +36,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   } = useGoalsList(parseInt(clientId));
 
   const { open: openGoalProgressModal } = useModal(GoalProgressModal);
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
-  console.log("goals", goals);
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), 0);
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
