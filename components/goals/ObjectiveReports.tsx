@@ -13,7 +13,8 @@ const ObjectiveReports: FunctionComponent<{
   clientId: number;
   objectiveId: number;
   objective: ObjectiveItem;
-}> = ({ data, clientId, objectiveId, objective }) => {
+  isArchived?: boolean;
+}> = ({ data, clientId, objectiveId, objective, isArchived }) => {
   const {
     mutate: deleteReport,
     isLoading: isDeleting,
@@ -66,18 +67,20 @@ const ObjectiveReports: FunctionComponent<{
           return (
             <div>
               <div>{content}</div>
-              <div className="mt-6 flex justify-end">
-                <IconButton
-                  buttonType={"Danger"}
-                  onClick={() => {
-                    deleteReport(id);
-                  }}
-                  isLoading={isDeleting}
-                  disabled={isDeleted || isDeleting}
-                >
-                  <TrashIcon />
-                </IconButton>
+              { !isArchived && (
+                <div className="mt-6 flex justify-end">
+                  <IconButton
+                    buttonType={"Danger"}
+                    onClick={() => {
+                      deleteReport(id);
+                    }}
+                    isLoading={isDeleting}
+                    disabled={isDeleted || isDeleting}
+                  >
+                    <TrashIcon />
+                  </IconButton>
               </div>
+              )}
             </div>
           );
         }}

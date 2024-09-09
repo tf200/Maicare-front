@@ -74,6 +74,7 @@ const ObjectiveProgressModal: FunctionComponent<ModalProps> = ({ additionalProps
           data={data}
           clientId={additionalProps.clientId}
           objectiveId={additionalProps.objectiveId}
+          isArchived={additionalProps.is_archived}
           objective={objective}
         />
       )}
