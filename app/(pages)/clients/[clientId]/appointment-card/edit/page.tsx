@@ -12,6 +12,19 @@ import { toast } from "react-toastify";
 import IconButton from "@/components/buttons/IconButton";
 import { Plus, TrashIcon } from "lucide-react";
 
+const translationMap = {
+  general: "Algemeen",
+  important_contacts: "Belangrijke contacten",
+  household: "Huishouden",
+  organization_agreements: "Organisatieafspraken",
+  probation_service_agreements: "Afspraken met reclassering",
+  appointments_regarding_treatment: "Afspraken betreffende behandeling",
+  school_stage: "Schoolfase",
+  travel: "Reizen",
+  leave: "Verlof",
+};
+
+
 export default function AppointmentCardEditPage({
   params: { clientId },
 }: {
@@ -43,7 +56,7 @@ export default function AppointmentCardEditPage({
       })}
       onSubmit={async (values, { setSubmitting }) => {
         const updates = {};
-        Object.keys(values).forEach((key) => {
+        Object.keys(values)?.forEach((key) => {
           updates[key] = values[key].filter((item) => !item?.is_dynamic);
         });
         try {
@@ -70,12 +83,12 @@ export default function AppointmentCardEditPage({
             }
           >
             <div className="w-full gap-4 p-4">
-              { values && Object.keys(values).map((key) => (
+              { values && Object.keys(values)?.map((key) => (
                 <FieldArray key={key} name={key}>
                   {({ push, remove }) => (
                     <div className="mb-6">
                       <h3 className="font-semibold text-gray-600 capitalize">
-                        {key.replace("_", " ")}
+                      {translationMap[key] || key.replace("_", " ")}
                       </h3>
                       <div className="overflow-x-auto">
                         <table className="w-full border border-gray-300">
