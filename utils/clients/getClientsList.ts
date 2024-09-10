@@ -3,6 +3,7 @@ import api from "@/utils/api";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ClientsSearchParams } from "@/types/clients/clients-search-params";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const fetchClients =
   (params?: ClientsSearchParams, page = 1) =>

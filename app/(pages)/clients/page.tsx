@@ -12,8 +12,6 @@ import { PAGE_SIZE, STATUS_RECORD } from "@/consts";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/components/ProfilePicture";
 import ClientFilters from "@/components/ClientFilters";
-import { ClientsSearchParams } from "@/types/clients/clients-search-params";
-import { useDebounce } from "@/hooks/useDebounce";
 import { getAge } from "@/utils/getAge";
 import styles from "./styles.module.css";
 import LargeAlertMessage from "@/components/LargeErrorMessage";
@@ -25,13 +23,15 @@ import Loader from "@/components/common/Loader";
 import { useUrlQuery } from "@/hooks";
 
 const ClientsPage: FunctionComponent = () => {
-  const [search, setSearch] =useUrlQuery<string>("search", undefined);
-  const [status__in, setStatusIn] =useUrlQuery<string>("status", undefined); 
-  const [location, setLocation] =useUrlQuery<number>("location", undefined);
-  const filters = { search, status__in, location }; 
-  const debouncedParams = useDebounce(filters, 500);
-  const { page, setPage, data, isError, isFetching, isLoading } = useClientsList(debouncedParams);
+  const [search, setSearch] = useUrlQuery("search", "");
+  const [status__in, setStatusIn] = useUrlQuery("status", "");
+  const [location, setLocation] = useUrlQuery<number>("location", null);
 
+  const { page, setPage, data, isError, isFetching, isLoading } = useClientsList({
+    search,
+    status__in,
+    location,
+  });
   const router = useRouter();
 
   const columnDef = useMemo<ColumnDef<ClientsResDto>[]>(() => {
@@ -112,10 +112,16 @@ const ClientsPage: FunctionComponent = () => {
         header={
           <div className="flex grow justify-between flex-wrap gap-4">
             <ClientFilters
+              search={search}
+              location={location}
+              status={status__in
+                ?.split(", ")
+                .map((item) => item.trim())
+                .filter((item) => item.length > 0)}
               onFiltersChange={(filters) => {
-                setSearch((prev) => filters.search);
-                setStatusIn((prev) => filters.status__in);
-                setLocation((prev) => filters.location);
+                if (filters.search !== undefined) setSearch(filters.search);
+                if (filters.status__in !== undefined) setStatusIn(filters.status__in);
+                if (filters.location !== undefined) setLocation(filters.location);
                 setPage(1);
               }}
             />

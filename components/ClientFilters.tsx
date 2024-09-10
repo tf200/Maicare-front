@@ -8,12 +8,13 @@ import { STATUS_OPTIONS } from "@/consts";
 
 type Props = {
   onFiltersChange: (filters: ClientsSearchParams) => void;
+  search: string;
+  location: number;
+  status: string[];
 };
 
-const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
-  const [selected, setSelected] = useState<SelectionOption["value"][]>([]);
-  const [search, setSearch] = useState("");
-  const [location, setLocation] = useState<number>();
+const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange, search, location, status}) => {
+  const [selected, setSelected] = useState<SelectionOption["value"][]>(status || []);
   return (
     <div className="flex flex-wrap items-center gap-8">
       <InputField
@@ -21,8 +22,8 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
         // placeholder="Search Clients ..."
         type="search"
         className="lg:min-w-75"
+        value={search}
         onChange={(e) => {
-          setSearch(e.target.value);
           onFiltersChange({
             search: e.target.value,
           });
@@ -31,8 +32,8 @@ const ClientFilters: FunctionComponent<Props> = ({ onFiltersChange }) => {
       <LocationSelect
         label={"Locatie"}
         className={"lg:min-w-75 [&_label]:hidden"}
+        value={location}
         onChange={(e) => {
-          setLocation(+e.target.value || undefined);
           onFiltersChange({
             location: +e.target.value || undefined,
           });
