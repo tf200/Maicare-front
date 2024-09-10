@@ -42,13 +42,12 @@ export default function AppointmentCardEditPage({
         leave: Yup.array().of(Yup.object({ content: Yup.string().required('Verplicht')}).required("Verplicht")),
       })}
       onSubmit={async (values, { setSubmitting }) => {
-        // Transform form values back to original structure
-        const transformFormValues = (formValues) => {
-          return formValues.map((content) => ({ content }));
-        };
-
+        const updates = {};
+        Object.keys(values).forEach((key) => {
+          updates[key] = values[key].filter((item) => !item?.is_dynamic);
+        });
         try {
-          await updateAppointment(values);
+          await updateAppointment(updates);
           toast.success("Afspraakdetails succesvol bijgewerkt");
         } catch (error) {
           console.error("Het is niet gelukt om de afspraakdetails bij te werken", error);
@@ -97,9 +96,11 @@ export default function AppointmentCardEditPage({
                                     />
                                   </td>
                                   <td className="px-4 w-20 text-right">
-                                    <IconButton buttonType="Danger" className="disabled:opacity-50" onClick={() => remove(index)} disabled={item?.is_dynamic}>
-                                      <TrashIcon className="w-5 h-5" />
-                                    </IconButton>
+                                    { !item?.is_dynamic && (
+                                      <IconButton buttonType="Danger" onClick={() => remove(index)} >
+                                        <TrashIcon className="w-5 h-5" />
+                                      </IconButton>
+                                    )}
                                   </td>
                                 </tr>
                               ))
