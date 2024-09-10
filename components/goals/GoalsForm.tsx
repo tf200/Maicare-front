@@ -8,7 +8,6 @@ import Button from "@/components/buttons/Button";
 import { useCreateGoal } from "@/utils/goal/createGoal";
 import { useRouter } from "next/navigation";
 import { usePatchGoal } from "@/utils/goal/patchGoal";
-import Select from "@/components/FormFields/Select";
 import { useClientDomains } from "@/utils/domains";
 import { GoalsFormType, GoalsListItem } from "@/types/goals";
 

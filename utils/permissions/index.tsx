@@ -98,7 +98,6 @@ export const useDeleteRoleAssignment = (employeeId: number) => {
   const queryClient = useQueryClient();
   return useMutation((assignmentId: number) => deleteRoleAssignment(assignmentId), {
     onSuccess: () => {
-      console.log("invalidateQueries");
       queryClient.invalidateQueries(["employees", employeeId, "teams"]);
     },
   });

@@ -512,7 +512,7 @@ const ManageContractTypeModal: FunctionComponent<ModalProps> = ({ additionalProp
           <h3 className="text-lg font-bold mb-4">Contracttypen</h3>
           <div className="flex flex-col gap-2">
             {data?.map((contractType) => (
-              <ContractTypeItem key={contractType.id} {...contractType} />
+              <ContractItem key={contractType.id} {...contractType} />
             ))}
           </div>
         </div>
@@ -524,7 +524,7 @@ const ManageContractTypeModal: FunctionComponent<ModalProps> = ({ additionalProp
   );
 };
 
-const ContractTypeItem: FunctionComponent<ContractTypeItem> = ({ name, id }) => {
+const ContractItem: FunctionComponent<ContractTypeItem> = ({ name, id }) => {
   const { mutate: deleteContractType, isLoading } = useDeleteContractType();
   return (
     <div className="flex justify-between items-center border p-4 rounded-lg bg-white border-stroke py-3">

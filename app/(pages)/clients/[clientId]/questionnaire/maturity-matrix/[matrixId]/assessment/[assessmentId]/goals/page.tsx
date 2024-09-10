@@ -2,13 +2,12 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Panel from "@/components/Panel";
 import "dayjs/locale/en";
-import { useGoalsList } from "@/utils/goal/getGoalsList";
 import Button from "@/components/buttons/Button";
 import { ColumnDef } from "@tanstack/react-table";
 import { GoalsListItem } from "@/types/goals";
 import styles from "./styles.module.scss";
 import GoalDetails from "@/components/goals/GoalDetails";
-import { useGetDomain, useGetSelectedAssessmentByGoalId } from "@/utils/domains";
+import { useGetDomain, useGetSelectedAssessmentByGoalId, useMaturityMatrixDetails } from "@/utils/domains";
 import DetailCell from "@/components/DetailCell";
 import { SecureFragment } from "@/components/SecureWrapper";
 import { APPROVE_GOALS } from "@/consts";
@@ -16,26 +15,21 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import { cn } from "@/utils/cn";
 import { useApproveGoal } from "@/utils/goal";
 import Loader from "@/components/common/Loader";
-import { capitalizeFirstLetter, parseGoalIds } from "@/utils";
+import { capitalizeFirstLetter } from "@/utils";
 import Icon from "@/components/Icon";
 import Table from "@/components/Table";
 
-type Props = {
-  params: { clientId: string };
+type MaturityMatrixGoalsPageProps = {
+  params: { matrixId: string, assessmentId: string, clientId: string };
 };
 
-const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
-  const searchParams = new URLSearchParams(window.location.search);
+export default function MaturityMatrixGoalsPage ({
+  params: { matrixId, assessmentId, clientId },
+}: MaturityMatrixGoalsPageProps) {
   
-  const {
-    goals,
-    isFetching,
-    isLoading: isListLoading,
-    isError,
-  } = useGoalsList(parseInt(clientId));
-  console.log("goals", goals);
-
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), 0);
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), parseInt(matrixId));
+  const { data: matrixDetails, isLoading, isError, error } = useMaturityMatrixDetails(parseInt(matrixId));
+  const goals = matrixDetails?.selected_assessments.find((assessment)=>assessment.id === parseInt(assessmentId)).goals
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -68,7 +62,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
               <div className="mb-6 mt-6 flex gap-4">
                 <DetailCell value={goal.created_by_name} label={"Aangemaakt door"} />
                 <DetailCell value={goal.reviewed_by_name} label={"Goedgekeurd door"} />
-                {!goal.is_approved && (
+                {!goal.is_approved && !matrixDetails?.is_archived && (
                   <SecureFragment permission={APPROVE_GOALS}>
                     <Button
                       onClick={(e) => {
@@ -102,7 +96,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     <>
       {/* <DomainLevels clientId={+clientId} /> */}
       <Panel className="w-full" title={"Doelenlijst"}>
-        {isListLoading && (
+        {!goals && (
           <div className="p-4 sm:p-6 xl:p-7.5">
             <Loader />
           </div>
@@ -115,8 +109,8 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             renderRowDetails={(row) => (
               <GoalDetails
                 goal={row.original}
-                assessmentId={`${row.original.selected_maturity_matrix_assessment}`}
-                maturityMatrixId={`${row.original.maturity_matrix}`}
+                maturityMatrixId={matrixId}
+                assessmentId={assessmentId}
               />
             )}
           />
@@ -131,7 +125,6 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   );
 };
 
-export default GoalsPage;
 
 const Domain: FunctionComponent<{ id: number }> = ({ id }) => {
   const { data } = useGetDomain(id);

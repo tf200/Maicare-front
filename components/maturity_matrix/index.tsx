@@ -52,6 +52,7 @@ type MaturityMatrixTableProps = {
   mode?: ModeType;
   startDate?: string;
   endDate?: string;
+  matrixId: number;
 };
 
 const M_LEVELS = [
@@ -64,6 +65,7 @@ const M_LEVELS = [
 
 export default function MaturityMatrixTable({
   clientId,
+  matrixId,
   onSelectedAssessmentsChange,
   onChange,
   selectedAssessments,
@@ -153,12 +155,14 @@ export default function MaturityMatrixTable({
                   key={`${domain.id}-${level.level}`}
                   selected={isClientLevelSelected(selectedAssessments, domain.id, level.level)}
                   clientId={clientId}
+                  matrixId={matrixId}
+                  assessmentId={5}
                   startDate={startDate}
                   endDate={endDate}
                   assessment={getClientSelectedAssessment(
                     selectedAssessments,
                     domain.id,
-                    level.level
+                    level.level,
                   )}
                   setAssessment={(assessment) => {
                     handleSelectedAssessmentsChange(assessment, domain, level);
@@ -203,6 +207,7 @@ function MatrixItem({
   mode = "create",
   startDate,
   endDate,
+  matrixId,
 }: {
   children: React.ReactNode;
   clientId: number;
@@ -214,6 +219,8 @@ function MatrixItem({
   mode?: ModeType;
   startDate?: string;
   endDate?: string;
+  matrixId: number;
+  assessmentId: number;
 }) {
   const router = useRouter();
   const { domain_id: domainId, level: levelId } = assessment; // for backward compatibility
@@ -234,6 +241,7 @@ function MatrixItem({
                 domain_id: domainId,
                 level: levelId,
                 goal_ids: goal_ids,
+                assessment_id: null
               });
 
               closeSmartFormulaModal();
@@ -259,6 +267,7 @@ function MatrixItem({
             domain_id: domainId,
             level: levelId,
             goal_ids: [],
+            assessment_id: 0
           });
         }
       }}
@@ -303,7 +312,7 @@ function MatrixItem({
                 className="px-4 py-2 bg-purple-600 text-purple-100 hover:bg-purple-700 rounded-lg font-bold mb-2"
                 onClick={() => {
                   // This should have been Accessment ID instead of goal_ids
-                  router.push(`/clients/${clientId}/goals?goal_id=${assessment.goal_ids[0]}`);
+                  router.push(`/clients/${clientId}/questionnaire/maturity-matrix/${matrixId}/assessment/${assessment.assessment_id}/goals`);
                 }}
               >
                 <Icon name="flag-triangle-right" /> {assessment.goal_ids.length}{" "}
@@ -363,6 +372,7 @@ function getClientSelectedAssessment(
       domain_id: domainId,
       level: levelId,
       goal_ids: [],
+      assessment_id: 0
     };
   }
 }

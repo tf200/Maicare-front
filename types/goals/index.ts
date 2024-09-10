@@ -29,6 +29,7 @@ export type GoalsListItem = {
   main_goal_rating: number;
   title: string;
   selected_maturity_matrix_assessment: number;
+  maturity_matrix: number;
   desc: string;
   updated: string;
   created: string;

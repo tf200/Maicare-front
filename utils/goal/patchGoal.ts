@@ -8,7 +8,6 @@ const patchGoal = async (goalId: number, data: UpdateGoalReqDto) => {
 };
 
 export const usePatchGoal = (clientId: number, goalId: number) => {
-  console.log("clientId", clientId, "goalId", goalId);
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: UpdateGoalReqDto) => patchGoal(goalId, data),

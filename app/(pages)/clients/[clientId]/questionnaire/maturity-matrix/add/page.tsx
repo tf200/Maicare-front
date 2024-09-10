@@ -44,9 +44,7 @@ export default function AddMaturityMatrixPage({
         .required("Dit veld is verplicht"),
     }),
     onSubmit: (values) => {
-      console.log("values : ", values);
       const maturityMatrixes = values.maturity_matrix;
-      console.log("maturityMatrix : ", maturityMatrixes);
 
       for (let index = 0; index < maturityMatrixes.length; index++) {
         const domain = maturityMatrixes[index];
@@ -117,8 +115,7 @@ export default function AddMaturityMatrixPage({
               className="overflow-x-auto"
               // Dates are useful for Smart Formula
               startDate={values.start_date}
-              endDate={values.end_date}
-            />
+              endDate={values.end_date}/>
           </form>
         </FormikProvider>
       </div>

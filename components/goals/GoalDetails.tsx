@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { GoalsListItem } from "@/types/goals";
 import { useModal } from "@/components/providers/ModalProvider";
 import { getDangerActionConfirmationModal } from "@/components/Modals/DangerActionConfirmation";
@@ -15,16 +15,12 @@ import NewObjectiveModal from "@/components/goals/NewObjectiveModal";
 import ObjectiveProgressModal from "@/components/goals/ObjectiveProgressModal";
 import Icon from "../Icon";
 import { cn } from "@/utils/cn";
+import { useMaturityMatrixDetails } from "@/utils/domains";
 
-const GoalDetails: FunctionComponent<{
-  goal: GoalsListItem;
-  maturityMatrixId?: string;
-}> = ({ goal, maturityMatrixId }) => {
-  const {
-    mutate: deleteGoal,
-    isLoading: isDeleting,
-    isSuccess: isDeleted,
-  } = useDeleteGoal(goal.client_id);
+const GoalDetails: FunctionComponent<{ goal: GoalsListItem; maturityMatrixId: string, assessmentId: string }> = ({ goal, maturityMatrixId, assessmentId }) => {
+  
+  
+  const { mutate: deleteGoal, isLoading: isDeleting, isSuccess: isDeleted } = useDeleteGoal(goal?.client_id);
 
   const { open: openObjectiveModal } = useModal(UpdateObjectiveModal);
   const { open: updateGoalModal } = useModal(UpdateGoalModal);
@@ -37,12 +33,14 @@ const GoalDetails: FunctionComponent<{
   );
   const { open: openObjectiveProgressModal } = useModal(ObjectiveProgressModal);
 
+  const { data: matrixDetails, isLoading } = useMaturityMatrixDetails(parseInt(maturityMatrixId as string));
+
   return (
     <div>
       <div className="mb-6 ">
         <h3 className="flex justify-between text-lg font-bold mb-4">
           <span>Objectieven</span>
-          {!goal.is_approved && (
+          {!goal.is_approved && !matrixDetails?.is_archived && (
             <Button
               className={styles.button}
               onClick={() => {
@@ -67,41 +65,49 @@ const GoalDetails: FunctionComponent<{
               <div className="font-bold flex-grow">
                 <Icon name="move-right" /> {objective.title}
               </div>
-              { goal.is_approved && (
-                <div className="mr-2">
-                <IconButton                  
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openObjectiveProgressModal({
-                      objectiveId: objective.id,
-                      objectiveTitle: objective.title,
-                      objective,
-                      clientId: goal.client_id,
-                      maturityMatrixId,
-                    });
-                  }}
-                  className={cn(
-                    "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 "
-                  )}
-                >
-                  <Icon name="line-chart" />
-                </IconButton>
-              </div>
-              ) }
+            
+              { goal.is_approved &&  (
+                <>
+                  <div className="mr-2">
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openObjectiveProgressModal({
+                          objectiveId: objective.id,
+                          objectiveTitle: objective.title,
+                          objective,
+                          clientId: goal.client_id,
+                          maturityMatrixId,
+                          is_archived: matrixDetails?.is_archived,
+                        });
+                      }}
+                      className={cn(
+                        "text-left flex flex-grow justify-between items-center rounded-full w-9 h-9 p-1 "
+                      )}
+                    >
+                      <Icon name="line-chart" />
+                    </IconButton>
+                  </div>
+                </>
+              )}
+              
               <div className="mr-2">
-                <IconButton
-                  onClick={() => {
-                    openObjectiveModal({
-                      objective,
-                      goalId: goal.id,
-                      clientId: goal.client_id,
-                    });
-                  }}
-                  className="text-left flex flex-grow justify-between items-center disabled:opacity-80"
-                >
-                  <PencilSquare className="w-5 h-5" />
-                </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      openObjectiveModal({
+                        objective,
+                        goalId: goal.id,
+                        clientId: goal.client_id,
+                        isArchived: matrixDetails?.is_archived,
+                      });
+                    }}
+                    className="text-left flex flex-grow justify-between items-center disabled:opacity-80"
+                  >
+                    <PencilSquare className="w-5 h-5" />
+                  </IconButton>
               </div>
+              
+                
               <div
                 // onClick={(e) => {
                 //   e.stopPropagation();
@@ -121,30 +127,34 @@ const GoalDetails: FunctionComponent<{
         </ul>
       </div>
       <div className="flex gap-4 justify-end items-center">
-        <IconButton
-          buttonType="Danger"
-          onClick={(e) => {
-            e.stopPropagation();
-            deleteGoalModal({
-              onConfirm: () => {
-                deleteGoal(goal.id);
-              },
-            });
-          }}
-          disabled={isDeleted}
-          isLoading={isDeleting}
-        >
-          {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
-        </IconButton>
-        {/* <QuestionnaireDownloadButton type="goals_and_objectives_content" questId={+maturityMatrixId} /> */}
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation();
-            updateGoalModal({ goal });
-          }}
-        >
-          <PencilSquare className="w-5 h-5" />
-        </IconButton>
+        { !matrixDetails?.is_archived && (
+          <>
+            <IconButton
+              buttonType="Danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteGoalModal({
+                  onConfirm: () => {
+                    deleteGoal(goal.id);
+                  },
+                });
+              }}
+              disabled={isDeleted}
+              isLoading={isDeleting}
+            >
+              {isDeleted ? <CheckIcon className="w-5 h-5" /> : <TrashIcon className="w-5 h-5" />}
+            </IconButton>
+            {/* <QuestionnaireDownloadButton type="goals_and_objectives_content" questId={+maturityMatrixId} /> */}
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                updateGoalModal({ goal });
+              }}
+            >
+              <PencilSquare className="w-5 h-5" />
+            </IconButton>
+          </>
+        )}
       </div>
     </div>
   );

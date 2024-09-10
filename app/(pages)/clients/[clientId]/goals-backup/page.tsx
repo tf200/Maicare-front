@@ -36,7 +36,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
   } = useGoalsList(parseInt(clientId));
 
   const { open: openGoalProgressModal } = useModal(GoalProgressModal);
-  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId));
+  const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), 0);
 
   const columnDef = useMemo<ColumnDef<GoalsListItem>[]>(() => {
     return [
@@ -123,7 +123,7 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
             data={goals}
             className={styles.table}
             columns={columnDef}
-            renderRowDetails={(row) => <GoalDetails goal={row.original} />}
+            renderRowDetails={(row) => <GoalDetails goal={row.original} maturityMatrixId={"000"} assessmentId="000" />}
           />
         )}
         {isError && (
