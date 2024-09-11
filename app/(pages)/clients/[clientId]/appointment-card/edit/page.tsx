@@ -11,6 +11,7 @@ import Panel from "@/components/Panel";
 import { toast } from "react-toastify";
 import IconButton from "@/components/buttons/IconButton";
 import { Plus, TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const translationMap = {
   general: "Algemeen",
@@ -30,6 +31,7 @@ export default function AppointmentCardEditPage({
 }: {
   params: { clientId: number };
 }) {
+  const router = useRouter();
   const { appointment, updateAppointment, isLoading, isError } = useClientAppointment(clientId);
 
   if (isLoading) return <Loader />;
@@ -62,6 +64,7 @@ export default function AppointmentCardEditPage({
         try {
           await updateAppointment(updates);
           toast.success("Afspraakdetails succesvol bijgewerkt");
+          router.back();
         } catch (error) {
           console.error("Het is niet gelukt om de afspraakdetails bij te werken", error);
           toast.error("Het is niet gelukt om de afspraakdetails bij te werken: " + error, { autoClose: 5000 });
