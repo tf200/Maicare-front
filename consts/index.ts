@@ -776,3 +776,15 @@ export const DOCUMENT_LABEL_OPTIONS = [
   { label: "Samenwerkingsovereenkomst", value: "cooperation_agreement" },
   { label: "Overige", value: "other" },
 ];
+
+export const SERVICE_OPTIONS = [
+  { value: "Ambulante begeleiding", label: "Ambulante begeleiding" },
+  { value: "Beschermd wonen", label: "Beschermd wonen" },
+  { value: "Begeleid wonen ", label: "Begeleid wonen " }
+];
+export const FINANCE_OPTIONS = [
+  { value: "Jeugdwet ZIN", label: "Jeugdwet ZIN" },
+  { value: "PGB Jeugdwet", label: "PGB Jeugdwet" },
+  { value: "WLZ PGB", label: "WLZ PGB" },
+  { value: "Anderen", label: "Anderen" },
+];

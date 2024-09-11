@@ -13,7 +13,8 @@ export type TemplateType =
   | "client_details"
   | "goals_and_objectives_content"
   | "multi_maturity_matrix"
-  | "appointment_card";
+  | "appointment_card"
+  | "youth_care_application"
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;

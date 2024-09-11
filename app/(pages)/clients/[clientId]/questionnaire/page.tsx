@@ -40,6 +40,16 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "maturity-matrix",
     desc: "Nieuwe Zelfduurzaamheidsmatrix voor deze klant",
   },
+  {
+    label: "Aanmeldformulier ",
+    urlKey: "registration-form",
+    desc: "Aanmeldformulier voor 24/7 Jeugdzorginstelling",
+  },
+  {
+    label: "Intakeformulier ",
+    urlKey: "intake-form",
+    desc: "Intakeformulier voor 24/7 Jeugdzorginstelling",
+  },
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {
