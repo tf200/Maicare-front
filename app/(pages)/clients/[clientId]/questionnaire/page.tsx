@@ -47,7 +47,7 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
   },
   {
     label: "Intakeformulier ",
-    urlKey: "intake-form",
+    urlKey: "youth-care-intake",
     desc: "Intakeformulier voor 24/7 Jeugdzorginstelling",
   },
 ];
