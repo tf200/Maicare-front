@@ -10,8 +10,11 @@ export const useCreateYouthCareIntake = (clientId: number) => {
   const createYouthCareIntake = useCallback(
     async (values: YouthCareIntakeType) => {
       const response = await api.post<YouthCareIntakeType>(
-        `/clients/${clientId}/questionnaires/youth-care-intakes/add`,
-        values
+        `/clients/questionnairs/youth-care-intakes/add`,
+        {
+          ...values,
+          client: clientId,
+        }
       );
       return response.data;
     },

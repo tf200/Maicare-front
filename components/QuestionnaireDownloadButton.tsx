@@ -15,6 +15,7 @@ export type TemplateType =
   | "multi_maturity_matrix"
   | "appointment_card"
   | "youth_care_application"
+  | "youth_care_intake"
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;

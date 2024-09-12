@@ -6,7 +6,10 @@ import Button from "../buttons/Button";
 
 import { useRouter } from "next/navigation";
 
-import GeneralInfos, { GeneralInfosInitialValue, GeneralInfosShema, } from "../Questionnaire/youth-care-intake/GeneralInfos";
+import GeneralInfos, {
+  GeneralInfosInitialValue,
+  GeneralInfosShema,
+} from "../Questionnaire/youth-care-intake/GeneralInfos";
 import { useCreateYouthCareIntake } from "@/utils/questionnairs/youth-care-intake/useAddYouthCareIntake";
 import { useGetSingleYouthCareIntake } from "@/utils/questionnairs/youth-care-intake/useGetYouthCareIntake";
 import { useUpdateYouthCareIntake } from "@/utils/questionnairs/youth-care-intake/useUpdateYouthCareIntake";
@@ -29,9 +32,14 @@ const YouthCareIntakeForm: React.FC<Props> = ({ clientId, YouthCareIntakeFormId,
   const FORMS = [{ name: "GeneralInfos", component: GeneralInfos, clientId }];
 
   const router = useRouter();
-  const { mutate: createYouthCareIntakeForm, isLoading: isCreating } = useCreateYouthCareIntake(clientId);
-  const { data: singleYouthCareIntakeForm, isLoading: isSingleColab } = useGetSingleYouthCareIntake(YouthCareIntakeFormId, clientId);
-  const { mutate: updateYouthCareIntakeForm, isLoading: isUpdating } = useUpdateYouthCareIntake(clientId);
+  const { mutate: createYouthCareIntakeForm, isLoading: isCreating } =
+    useCreateYouthCareIntake(clientId);
+  const { data: singleYouthCareIntakeForm, isLoading: isSingleColab } = useGetSingleYouthCareIntake(
+    YouthCareIntakeFormId,
+    clientId
+  );
+  const { mutate: updateYouthCareIntakeForm, isLoading: isUpdating } =
+    useUpdateYouthCareIntake(clientId, YouthCareIntakeFormId);
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
@@ -75,9 +83,7 @@ const YouthCareIntakeForm: React.FC<Props> = ({ clientId, YouthCareIntakeFormId,
               formNoValidate={true}
               loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              {mode === "edit"
-                ? "Update instroom jeugdzorg"
-                : "instroom jeugdzorg maken"}
+              {mode === "edit" ? "Update instroom jeugdzorg" : "instroom jeugdzorg maken"}
             </Button>
           </form>
         );

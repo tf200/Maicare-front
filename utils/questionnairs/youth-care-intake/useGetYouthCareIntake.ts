@@ -2,14 +2,14 @@ import api from "@/utils/api";
 import { useQuery } from "react-query";
 
 const fetchYouthCareIntake = (YouthCareIntakeId: number) => async () => {
-  const response = await api.get(`/clients/questionnaires/youth-care-intakes/${YouthCareIntakeId}/details
+  const response = await api.get(`/clients/questionnairs/youth-care-intakes/${YouthCareIntakeId}/details
   `);
   return response.data;
 };
 
 export const useGetSingleYouthCareIntake = (YouthCareIntakeId: number, clientId: number) => {
   const query = useQuery({
-    queryKey: [clientId, "registration-form", YouthCareIntakeId],
+    queryKey: [clientId, "youth-care-intake", YouthCareIntakeId],
     queryFn: fetchYouthCareIntake(YouthCareIntakeId),
     keepPreviousData: true,
     enabled: !!YouthCareIntakeId,

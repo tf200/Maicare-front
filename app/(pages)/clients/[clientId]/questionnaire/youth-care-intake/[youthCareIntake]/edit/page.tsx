@@ -1,19 +1,19 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import RegistrationForm from "@/components/forms/registration-form";
+import YouthCareIntakeForm from "@/components/forms/youthCareIntakeForm";
 
 const UpdateEpisodePage: FunctionComponent = ({
   params,
 }: {
-  params: { clientId: string; registrationFormId: number };
+  params: { clientId: string; youthCareIntake: number };
 }) => {
   return (
     <>
-      <Breadcrumb pageName="Registratieformulier bijwerken" />
+      <Breadcrumb pageName="Update Intake Jeugdzorg" />
       <div className="grid grid-cols-1 gap-9">
-        <RegistrationForm
+        <YouthCareIntakeForm
           mode={"edit"}
-          registrationFormId={params.registrationFormId}
+          YouthCareIntakeFormId={params.youthCareIntake}
           clientId={parseInt(params.clientId)}
         />
       </div>

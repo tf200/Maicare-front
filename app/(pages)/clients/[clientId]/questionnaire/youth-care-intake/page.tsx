@@ -68,13 +68,13 @@ const YouthCareIntakeForm: FunctionComponent<Props> = ({ params: { clientId } })
           return (
             <div className="flex gap-3">
               <Link
-                href={`/clients/${clientId}/questionnaire/registration-form/${info.row.id}/edit`}
+                href={`/clients/${clientId}/questionnaire/youth-care-intake/${info.row.id}/edit`}
               >
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-              <QuestionnaireDownloadButton type="youth_care_application" questId={+info.row.id} />
+              <QuestionnaireDownloadButton type="youth_care_intake" questId={+info.row.id} />
               <IconButton
                 className="bg-red-600"
                 onClick={() => {
