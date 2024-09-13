@@ -43,7 +43,6 @@ const YouthCareIntakeForm: React.FC<Props> = ({ clientId, YouthCareIntakeFormId,
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
-    console.log("form submitted: ", values);
     const payload = { client_id: clientId, ...values };
     const onSuccess = () => {
       router.push(`/clients/${clientId}/questionnaire/youth-care-intake`);

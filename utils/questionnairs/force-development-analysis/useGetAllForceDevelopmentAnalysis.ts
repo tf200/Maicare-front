@@ -14,7 +14,7 @@ type ForceDevelopmentAnalysisTypRes = {
 
 export const getAllForceDevelopmentAnalysis = async (clientId: number, params: PaginationParams) => {
   const response = await api.get<ForceDevelopmentAnalysisTypRes>(
-    `/clients/${clientId}/questionnaires/force-development-analysis`,
+    `/clients/${clientId}/questionnaires/force-development-analyses`,
     {
       params,
     }
@@ -27,7 +27,7 @@ export const useGetAllForceDevelopmentAnalysis = (clientId: number, params?: Pag
   const parsedParams = pagination.params;
 
   const query = useQuery({
-    queryKey: [clientId, "force-development-analysis", params ?? parsedParams],
+    queryKey: [clientId, "force-development-analyses", params ?? parsedParams],
     queryFn: () => getAllForceDevelopmentAnalysis(clientId, params ?? parsedParams),
     keepPreviousData: true,
   });

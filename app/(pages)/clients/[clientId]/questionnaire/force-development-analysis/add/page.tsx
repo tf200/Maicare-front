@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import YouthCareIntakeForm from "@/components/forms/youthCareIntakeForm";
+import ForceDevelopmentAnalysisForm from "@/components/forms/forceDevelopmentAnalyses";
 
 type Props = {
   params: {
@@ -11,9 +11,9 @@ type Props = {
 const NewRegistrationForm: FunctionComponent<Props> = ({ params: { clientId } }) => {
   return (
     <>
-      <Breadcrumb pageName="nieuw registratieformulier" />
+      <Breadcrumb pageName="Nieuwe Krachtontwikkelingsanalyses" />
       <div className="grid grid-cols-1 gap-9">
-        <YouthCareIntakeForm clientId={parseInt(clientId)} mode={"new"} />
+        <ForceDevelopmentAnalysisForm clientId={parseInt(clientId)} mode={"new"} />
       </div>
     </>
   );

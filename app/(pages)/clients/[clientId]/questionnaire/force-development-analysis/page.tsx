@@ -19,10 +19,10 @@ import Link from "next/link";
 import React, { FunctionComponent, useMemo } from "react";
 
 type Props = {
-  params: { forceDevelopmentAnalysisId: string, clientId: string };
+  params: { clientId: string };
 };
-const ForceDevelopmentAnalysisForm: FunctionComponent<Props> = ({ params: { forceDevelopmentAnalysisId, clientId } }) => {
-  const { mutate: deleteForceDevelopmentAnalysis } = useDeleteForceDevelopmentAnalysis(parseInt(forceDevelopmentAnalysisId));
+const ForceDevelopmentAnalysisForm: FunctionComponent<Props> = ({ params: { clientId } }) => {
+  const { mutate: deleteForceDevelopmentAnalysis } = useDeleteForceDevelopmentAnalysis(parseInt(clientId));
   const { data, pagination, isError, isLoading, isFetching } = useGetAllForceDevelopmentAnalysis(
     parseInt(clientId)
   );
@@ -37,28 +37,26 @@ const ForceDevelopmentAnalysisForm: FunctionComponent<Props> = ({ params: { forc
   const columnDef = useMemo<ColumnDef<ForceDevelopmentAnalysisType>[]>(() => {
     return [
       {
-        accessorKey: "name",
-        header: "naam",
+        accessorKey: "id",
+        header: "ID",
       },
       {
-        accessorKey: "date_of_birth",
-        header: "geboortedatum",
-      },
-      {
-        accessorKey: "gender",
-        header: "geslacht",
-      },
-      {
-        accessorKey: "email",
-        header: "e-mail",
-      },
-      {
-        accessorKey: "phone_number",
-        header: "telefoonnummer",
+        accessorKey: "table",
+        header: "Tafel",
+        // chow the length of the table
+        cell: (info) => {
+          const table = info.getValue() as { length: number };
+          return `${table.length} rijen`;
+        },
       },
       {
         accessorKey: "created",
-        header: "gecreëerd",
+        header: "Aanmaakdatum",
+        cell: (info) => fullDateFormat(info.getValue() as string),
+      },
+      {
+        accessorKey: "updated",
+        header: "Aanmaakdatum",
         cell: (info) => fullDateFormat(info.getValue() as string),
       },
       {
@@ -68,13 +66,13 @@ const ForceDevelopmentAnalysisForm: FunctionComponent<Props> = ({ params: { forc
           return (
             <div className="flex gap-3">
               <Link
-                href={`/clients/${clientId}/questionnaire/youth-care-intake/${info.row.id}/edit`}
+                href={`/clients/${clientId}/questionnaire/force-development-analysis/${info.row.id}/edit`}
               >
                 <IconButton>
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-              <QuestionnaireDownloadButton type="youth_care_intake" questId={+info.row.id} />
+              <QuestionnaireDownloadButton type="force_development_analysis" questId={+info.row.id} />
               <IconButton
                 className="bg-red-600"
                 onClick={() => {
@@ -96,11 +94,11 @@ const ForceDevelopmentAnalysisForm: FunctionComponent<Props> = ({ params: { forc
 
   return (
     <Panel
-      title={"Inname Jeugdzorg"}
+      title={"Krachtontwikkelingsanalyses"}
       sideActions={
         <LinkButton
-          text="nieuwe inname jeugdzorg"
-          href={"./youth-care-intake/add"}
+          text="Nieuwe Krachtontwikkelingsanalyses"
+          href={"./force-development-analysis/add"}
           className="ml-auto"
         />
       }

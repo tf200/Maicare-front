@@ -33,7 +33,6 @@ const GoalsPage: FunctionComponent<Props> = ({ params: { clientId } }) => {
     isLoading: isListLoading,
     isError,
   } = useGoalsList(parseInt(clientId));
-  console.log("goals", goals);
 
   const { mutate: approveGoal, isLoading: isApprovingGoal } = useApproveGoal(parseInt(clientId), 0);
 
