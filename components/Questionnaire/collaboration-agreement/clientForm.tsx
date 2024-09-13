@@ -29,7 +29,6 @@ export default function ClientForm({
 }) {
   const { data, isLoading } = useClientDetails(client_id);
 
-  console.log(values);
 
   useEffect(() => {
     if (data) {

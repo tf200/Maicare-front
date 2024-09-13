@@ -20,7 +20,6 @@ export default function TestPage() {
       ],
     },
     onSubmit: (values) => {
-      console.log(values);
     },
   });
 

@@ -50,6 +50,11 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "youth-care-intake",
     desc: "Intakeformulier voor 24/7 Jeugdzorginstelling",
   },
+  {
+    label: "krachtenontwikkelingsanalyse ",
+    urlKey: "force-development-analysis",
+    desc: "een instrument dat wordt gebruikt om de sterke punten, hulpbronnen en vaardigheden van een persoon te identificeren.",
+  },
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {

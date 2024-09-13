@@ -6,15 +6,18 @@ import Button from "../buttons/Button";
 
 import { useRouter } from "next/navigation";
 
-import GeneralInfos, { GeneralInfosInitialValue, GeneralInfosShema, } from "../Questionnaire/registration-form/GeneralInfos";
-import { useCreateRegistrationForm } from "@/utils/questionnairs/registration-form/useAddRegistrationForm";
-import { useGetSingleRegistrationForm } from "@/utils/questionnairs/registration-form/useGetRegistrationForm";
-import { useUpdateRegistrationForm } from "@/utils/questionnairs/registration-form/useUpdateRegistrationForm";
+import { useCreateForceDevelopmentAnalysis } from "@/utils/questionnairs/force-development-analysis/useAddForceDevelopmentAnalysis";
+import { useGetForceDevelopmentAnalysis } from "@/utils/questionnairs/force-development-analysis/useGetForceDevelopmentAnalysis";
+import { useUpdateForceDevelopmentAnalysis } from "@/utils/questionnairs/force-development-analysis/useUpdateForceDevelopmentAnalysis";
+import GeneralInfos, {
+  GeneralInfosInitialValue,
+  GeneralInfosShema,
+} from "../Questionnaire/force-development-analyses/GeneralInfos";
 
 type Props = {
   clientId: number;
   mode?: string;
-  registrationFormId?: number;
+  forceDevelopmentAnalysis?: number;
 };
 
 const initialValues = {
@@ -25,35 +28,43 @@ const formSchema = Yup.object().shape({
   ...GeneralInfosShema,
 });
 
-const RegistrationForm: React.FC<Props> = ({ clientId, registrationFormId, mode }) => {
+const ForceDevelopmentAnalysisForm: React.FC<Props> = ({
+  clientId,
+  forceDevelopmentAnalysis,
+  mode,
+}) => {
   const FORMS = [{ name: "GeneralInfos", component: GeneralInfos, clientId }];
 
   const router = useRouter();
-  const { mutate: createRegistrationForm, isLoading: isCreating } = useCreateRegistrationForm(clientId);
-  const { data: singleRegistrationForm, isLoading: isSingleColab } = useGetSingleRegistrationForm(registrationFormId, clientId);
-  const { mutate: updateRegistrationForm, isLoading: isUpdating } = useUpdateRegistrationForm(clientId);
+  const { mutate: createForceDevelopmentAnalysesForm, isLoading: isCreating } =
+    useCreateForceDevelopmentAnalysis(clientId);
+  const { data: forceDevelopmentAnalysesDetails, isLoading: isSingleColab } =
+    useGetForceDevelopmentAnalysis(forceDevelopmentAnalysis, clientId);
+  const { mutate: updateForceDevelopmentAnalysesForm, isLoading: isUpdating } =
+    useUpdateForceDevelopmentAnalysis(clientId, forceDevelopmentAnalysis);
   const isLoading = isUpdating || isCreating;
 
   const onSubmit = (values) => {
     const payload = { client_id: clientId, ...values };
     const onSuccess = () => {
-      router.push(`/clients/${clientId}/questionnaire/registration-form`);
+      router.push(`/clients/${clientId}/questionnaire/force-development-analysis`);
     };
-    if (!singleRegistrationForm) return createRegistrationForm(payload, { onSuccess });
-    return updateRegistrationForm(payload, { onSuccess });
+    if (!forceDevelopmentAnalysesDetails)
+      return createForceDevelopmentAnalysesForm(payload, { onSuccess });
+    return updateForceDevelopmentAnalysesForm(payload, { onSuccess });
   };
   if (isSingleColab) return <p>Loading...</p>;
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={singleRegistrationForm ?? initialValues}
+      initialValues={forceDevelopmentAnalysesDetails ?? initialValues}
       validationSchema={formSchema}
       onSubmit={onSubmit}
     >
       {({ values, handleChange, handleBlur, touched, handleSubmit, errors, setFieldValue }) => {
         return (
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div className="mb-4">
               {FORMS.map(({ name, component: Component }) => (
                 <Component
                   key={name}
@@ -74,9 +85,7 @@ const RegistrationForm: React.FC<Props> = ({ clientId, registrationFormId, mode 
               formNoValidate={true}
               loadingText={mode === "edit" ? "Bijwerken..." : "Toevoegen..."}
             >
-              {mode === "edit"
-                ? "Aanvraagformulier bijwerken"
-                : "Aanvraagformulier maken"}
+              {mode === "edit" ? "Update instroom jeugdzorg" : "instroom jeugdzorg maken"}
             </Button>
           </form>
         );
@@ -85,4 +94,4 @@ const RegistrationForm: React.FC<Props> = ({ clientId, registrationFormId, mode 
   );
 };
 
-export default RegistrationForm;
+export default ForceDevelopmentAnalysisForm;

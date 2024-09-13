@@ -16,6 +16,7 @@ export type TemplateType =
   | "appointment_card"
   | "youth_care_application"
   | "youth_care_intake"
+  | "force_development_analysis"
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;

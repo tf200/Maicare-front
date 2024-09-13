@@ -17,7 +17,6 @@ const DomainLevelsModal: FunctionComponent<ModalProps> = ({ open, onClose }) => 
       }),
     },
     onSubmit: (value) => {
-      console.log(value);
     },
   });
   const { handleSubmit, handleChange, values, handleBlur, touched, errors } = formik;
