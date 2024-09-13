@@ -17,6 +17,7 @@ export type TemplateType =
   | "youth_care_application"
   | "youth_care_intake"
   | "force_development_analysis"
+  | "stress_management_plans"
 
 type QuestionnaireDownloadButtonProps = {
   type: TemplateType;
