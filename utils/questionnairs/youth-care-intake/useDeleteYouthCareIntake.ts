@@ -2,7 +2,7 @@ import api from "@/utils/api";
 import { useMutation, useQueryClient } from "react-query";
 
 async function deleteYouthCareIntake(dataId: number) {
-  const response = await api.delete(`/clients/questionnaires/youth-care-intakes/${dataId}/delete`);
+  const response = await api.delete(`/clients/questionnairs/youth-care-intakes/${dataId}/delete`);
   return response.data;
 }
 
