@@ -66,7 +66,7 @@ const StressManagementPlans: FunctionComponent<Props> = ({ params: { clientId } 
                   <PencilSquare className="w-5 h-5" />
                 </IconButton>
               </Link>
-              <QuestionnaireDownloadButton type="stress_management_plans" questId={+info.row.id} />
+              <QuestionnaireDownloadButton type="stress_management_plan" questId={+info.row.id} />
               <IconButton
                 className="bg-red-600"
                 onClick={() => {
