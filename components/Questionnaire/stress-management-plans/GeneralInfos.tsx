@@ -18,7 +18,6 @@ export const GeneralInfosInitialValue = {
   long_term_solutions: [],
   // 3 - step
   support_team_inquiries: [],
-  satisfaction_level: true,
   support_contacts: [],
   support_inquiries2: [
     { question: "Rustig blijft", helped: true },
@@ -32,28 +31,41 @@ export const GeneralInfosInitialValue = {
   ],
   // 4 - step
   stress_mountain_position: "",
-  level_of_satisfaction: { response: "", description: "" },
-  additional_needs: { response: "", description: "" },
+  level_of_satisfaction: { response: true, description: "" },
+  additional_needs: { response: true, description: "" },
   // 5 - step
   plans: [],
 };
 
 export const GeneralInfosShema = {
-  increased_tension_situation: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  increased_tension_symptoms: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  visible_symptoms_to_others: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  stress_world_reactions: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  short_term_solutions: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  long_term_solutions: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
-  support_team_inquiries: Yup.array().of(Yup.string()).required("moet dit veld invullen"),
+  increased_tension_situation: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+  increased_tension_symptoms: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+  visible_symptoms_to_others: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+  stress_world_reactions: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+
+  short_term_solutions: Yup.array().of(Yup.string().min(1)).required("moet dit veld invullen"),
+  long_term_solutions: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+  
+  support_team_inquiries: Yup.array().of(Yup.string()).min(1).required("moet dit veld invullen"),
+  support_contacts: Yup.array(),
+  support_inquiries2: Yup.array().of(
+    Yup.object().shape({
+      question: Yup.string().required("moet dit veld invullen"),
+      helped: Yup.boolean().required("moet dit veld invullen"),
+    })
+  ).min(1).required("moet dit veld invullen"),
+
+  stress_mountain_position: Yup.string().required("Veld moet ingevuld worden"),
   level_of_satisfaction: Yup.object().shape({
-    response: Yup.string().required("Veld moet ingevuld worden"),
+    response: Yup.boolean().required("Veld moet ingevuld worden"),
     description: Yup.string().required("Veld moet ingevuld worden"),
   }),
   additional_needs: Yup.object().shape({
     response: Yup.string().required("Veld moet ingevuld worden"),
     description: Yup.string().required("Veld moet ingevuld worden"),
   }),
+
+  plans: Yup.array(),
 };
 
 const extraData = {
