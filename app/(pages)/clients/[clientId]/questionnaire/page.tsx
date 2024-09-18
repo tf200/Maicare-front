@@ -55,6 +55,11 @@ const StaticQuestionnaireMenu: QuestionnaireMenu[] = [
     urlKey: "force-development-analysis",
     desc: "een instrument dat wordt gebruikt om de sterke punten, hulpbronnen en vaardigheden van een persoon te identificeren.",
   },
+  {
+    label: "Stressmanagementplannen",
+    urlKey: "stress-management-plans",
+    desc: "Nieuw zorgplan maken voor deze klant",
+  }
 ];
 
 const QuestionnaireMenu: FunctionComponent<Props> = ({ params: { clientId } }) => {
