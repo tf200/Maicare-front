@@ -9,7 +9,7 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: "http://127.0.0.1:8005",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
